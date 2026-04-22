@@ -1,0 +1,581 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum Role {
+  USER
+  AGENT
+  COUNSELLOR
+  PARTNER
+  ADMIN
+}
+
+enum PackageCategory {
+  WELLNESS
+  CANCER_RISK
+  REPRODUCTIVE
+  CARDIAC
+  DRUG_SENSITIVITY
+}
+
+enum SampleType {
+  BLOOD
+  SALIVA
+  SWAB
+}
+
+enum SlotWindow {
+  MORNING     // 8AM-12PM
+  AFTERNOON   // 12PM-4PM
+  EVENING     // 4PM-7PM
+}
+
+enum OrderStatus {
+  BOOKED
+  AGENT_ASSIGNED
+  AGENT_EN_ROUTE
+  SAMPLE_COLLECTED
+  AT_LAB
+  REPORT_READY
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  CAPTURED
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum MarkerResult {
+  LOW
+  MODERATE
+  HIGH
+  TYPICAL
+}
+
+enum CouponType {
+  FLAT
+  PERCENT
+}
+
+enum AgentStatus {
+  ACTIVE
+  INACTIVE
+  ON_LEAVE
+}
+
+enum ConsultationStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum NotificationChannel {
+  WHATSAPP
+  EMAIL
+  SMS
+}
+
+enum NotificationStatus {
+  QUEUED
+  SENT
+  FAILED
+  DELIVERED
+  READ
+}
+
+// =============================================================================
+// AUTH — NextAuth v5 required tables + our extensions
+// =============================================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  // KYG-specific
+  phone        String?  @unique
+  phoneVerified DateTime?
+  passwordHash String?  // null for OAuth-only users
+  role         Role     @default(USER)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  // NextAuth relations
+  accounts Account[]
+  sessions Session[]
+
+  // Business relations
+  addresses          Address[]
+  orders             Order[]
+  reports            Report[]
+  consultations      Consultation[]     @relation("UserConsultations")
+  agentProfile       AgentProfile?
+  counsellorProfile  CounsellorProfile?
+  labPartnerProfile  LabPartner?
+  reviewedReports    Report[]           @relation("CounsellorReviewer")
+  counsellorSessions Consultation[]     @relation("CounsellorSessions")
+  notifications      Notification[]
+  uploadedReports    Report[]           @relation("UploadedBy")
+
+  @@index([role])
+  @@index([phone])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// =============================================================================
+// PROFILES — role-specific data
+// =============================================================================
+
+model AgentProfile {
+  userId                String      @id
+  zone                  String
+  status                AgentStatus @default(ACTIVE)
+  rating                Float       @default(0)
+  onTimeRate            Float       @default(1)
+  collectionsThisMonth  Int         @default(0)
+  collectionsTotal      Int         @default(0)
+  joinedAt              DateTime    @default(now())
+  aadhaarVerified       Boolean     @default(false)
+  policeVerified        Boolean     @default(false)
+  dmltCertUrl           String?
+  profilePhotoUrl       String?
+
+  user          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders        Order[]               @relation("AssignedAgent")
+  availability  AgentAvailability[]
+
+  @@index([zone])
+  @@index([status])
+}
+
+model AgentAvailability {
+  id       String     @id @default(cuid())
+  agentId  String
+  window   SlotWindow
+  active   Boolean    @default(true)
+
+  agent AgentProfile @relation(fields: [agentId], references: [userId], onDelete: Cascade)
+
+  @@unique([agentId, window])
+}
+
+model CounsellorProfile {
+  userId       String   @id
+  credentials  String
+  specialty    String
+  languages    String[] // e.g. ["English", "Hindi", "Malayalam"]
+  experience   String
+  photoUrl     String?
+  bio          String?
+  active       Boolean  @default(true)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([active])
+}
+
+// Lab partners — process samples, upload reports.
+// One-to-one with a User whose role = PARTNER.
+model LabPartner {
+  userId        String   @id
+  labName       String
+  accreditation String   // e.g. "NABL, CAP, ISO 15189"
+  contactEmail  String
+  contactPhone  String
+  addressLine   String
+  city          String
+  pincode       String
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders Order[] @relation("ProcessingLab")
+
+  @@index([active])
+}
+
+// =============================================================================
+// ADDRESSES
+// =============================================================================
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  fullName  String
+  phone     String
+  line1     String
+  line2     String?
+  area      String
+  city      String   @default("Delhi NCR")
+  pincode   String
+  landmark  String?
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders Order[]
+
+  @@index([userId])
+  @@index([pincode])
+}
+
+// =============================================================================
+// CATALOG — Packages / Tests
+// =============================================================================
+
+model Package {
+  id              String          @id @default(cuid())
+  slug            String          @unique
+  name            String
+  category        PackageCategory
+  tagline         String
+  description     String          @db.Text
+  price           Int             // in paise (₹1 = 100)
+  compareAtPrice  Int?
+  tatMinDays      Int             @default(7)
+  tatMaxDays      Int             @default(14)
+  sampleType      SampleType
+  biomarkerCount  Int
+  highlights      Json            // string[]
+  biomarkerList   Json            // string[] of gene codes
+  faq             Json            // [{q, a}]
+  coverImageUrl   String?
+  popular         Boolean         @default(false)
+  recommended     Boolean         @default(false)
+  active          Boolean         @default(true)
+  position        Int             @default(0)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  orders Order[]
+
+  @@index([active])
+  @@index([category])
+}
+
+// =============================================================================
+// ORDERS
+// =============================================================================
+
+model Order {
+  id                String      @id @default(cuid())
+  orderNumber       String      @unique // Human-facing: KYG-2026-000412
+  userId            String
+  packageId         String
+  addressId         String
+  agentId           String?
+  labPartnerId      String?
+  couponCode        String?
+
+  // Pricing (all in paise)
+  subtotal          Int
+  discount          Int         @default(0)
+  collectionFee     Int         @default(0)
+  total             Int
+
+  // Slot
+  slotDate          DateTime    @db.Date
+  slotWindow        SlotWindow
+
+  // Status
+  status            OrderStatus @default(BOOKED)
+  cancelReason      String?
+
+  // External refs
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  shiprocketAwb     String?
+  consentFormUrl    String?     // S3 URL
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  paidAt    DateTime?
+  collectedAt DateTime?
+  deliveredAt DateTime?
+
+  user       User          @relation(fields: [userId], references: [id])
+  package    Package       @relation(fields: [packageId], references: [id])
+  address    Address       @relation(fields: [addressId], references: [id])
+  agent      AgentProfile? @relation("AssignedAgent", fields: [agentId], references: [userId])
+  labPartner LabPartner?   @relation("ProcessingLab", fields: [labPartnerId], references: [userId])
+  events     OrderEvent[]
+  payments   Payment[]
+  report     Report?
+
+  @@index([userId])
+  @@index([agentId])
+  @@index([labPartnerId])
+  @@index([status])
+  @@index([slotDate])
+  @@index([orderNumber])
+}
+
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  label     String
+  meta      Json?
+  actorId   String?  // userId of whoever triggered it
+  createdAt DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}
+
+// =============================================================================
+// PAYMENTS
+// =============================================================================
+
+model Payment {
+  id                String        @id @default(cuid())
+  orderId           String
+  amount            Int           // paise
+  currency          String        @default("INR")
+  status            PaymentStatus @default(PENDING)
+  method            String?       // upi, card, netbanking, emi, wallet
+  razorpayOrderId   String?
+  razorpayPaymentId String?       @unique
+  razorpaySignature String?
+  errorCode         String?
+  errorDescription  String?
+  capturedAt        DateTime?
+  createdAt         DateTime      @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([status])
+}
+
+// =============================================================================
+// REPORTS
+// =============================================================================
+
+model Report {
+  id                 String    @id @default(cuid())
+  reportNumber       String    @unique // RPT-000412
+  orderId            String    @unique
+  userId             String
+  packageName        String    // denormalised at delivery time
+  pdfKey             String    // S3 object key
+  summary            Json      // string[] — plain-English bullets
+  criticalFinding    Boolean   @default(false)
+  counsellorNotes    String?   @db.Text
+  uploadedById       String?   // admin who uploaded
+  reviewedById       String?   // counsellor who QC'd
+  deliveredAt        DateTime?
+  emailSentAt        DateTime?
+  whatsappSentAt     DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  order       Order          @relation(fields: [orderId], references: [id])
+  user        User           @relation(fields: [userId], references: [id])
+  uploadedBy  User?          @relation("UploadedBy", fields: [uploadedById], references: [id])
+  reviewedBy  User?          @relation("CounsellorReviewer", fields: [reviewedById], references: [id])
+  markers     ReportMarker[]
+
+  @@index([userId])
+  @@index([deliveredAt])
+}
+
+model ReportMarker {
+  id        String       @id @default(cuid())
+  reportId  String
+  name      String
+  gene      String
+  result    MarkerResult
+  summary   String       @db.Text
+  action    String       @db.Text
+  position  Int          @default(0)
+
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId])
+}
+
+// =============================================================================
+// CONSULTATIONS
+// =============================================================================
+
+model Consultation {
+  id              String             @id @default(cuid())
+  userId          String
+  counsellorId    String
+  durationMinutes Int                @default(30)
+  price           Int                // paise
+  language        String             @default("English")
+  scheduledAt     DateTime
+  status          ConsultationStatus @default(SCHEDULED)
+  meetingLink     String?
+  actionPlanUrl   String?
+  notes           String?            @db.Text
+
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user       User              @relation("UserConsultations", fields: [userId], references: [id])
+  counsellor User              @relation("CounsellorSessions", fields: [counsellorId], references: [id])
+
+  @@index([userId])
+  @@index([counsellorId])
+  @@index([scheduledAt])
+  @@index([status])
+}
+
+// =============================================================================
+// COUPONS
+// =============================================================================
+
+model Coupon {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  type        CouponType
+  value       Int        // paise if FLAT, percentage (0-100) if PERCENT
+  minOrder    Int?       // minimum order value (paise)
+  maxDiscount Int?       // cap for PERCENT (paise)
+  expiresAt   DateTime?
+  usageLimit  Int?
+  usageCount  Int        @default(0)
+  active      Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+
+  @@index([active])
+  @@index([code])
+}
+
+// =============================================================================
+// SERVICE AREA (Delhi NCR pincodes)
+// =============================================================================
+
+model ServiceArea {
+  id        String   @id @default(cuid())
+  pincode   String   @unique
+  area      String
+  city      String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([active])
+}
+
+// NOTE: Blog content lives in Sanity CMS — see sanity/ folder. No BlogPost table here.
+
+// =============================================================================
+// NOTIFICATIONS / COMMS LOG
+// =============================================================================
+
+model Notification {
+  id          String              @id @default(cuid())
+  userId      String?
+  channel     NotificationChannel
+  template    String              // e.g. BOOKING_CONFIRMED, REPORT_READY
+  to          String              // phone or email
+  status      NotificationStatus  @default(QUEUED)
+  payload     Json
+  providerId  String?             // WhatsApp message id, SES message id
+  sentAt      DateTime?
+  deliveredAt DateTime?
+  errorMessage String?
+  createdAt   DateTime            @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([template])
+}
+
+// =============================================================================
+// B2B / PARTNER LEADS
+// =============================================================================
+
+model PartnerLead {
+  id           String   @id @default(cuid())
+  companyName  String
+  industry     String
+  contactName  String
+  email        String
+  phone        String?
+  teamSize     String?
+  monthlyVolume String?
+  message      String?  @db.Text
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+// =============================================================================
+// CONTACT FORM MESSAGES
+// =============================================================================
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  topic     String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+  resolved  Boolean  @default(false)
+
+  @@index([resolved])
+}

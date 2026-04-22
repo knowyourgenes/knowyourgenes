@@ -1,0 +1,335 @@
+# KYG Website Sitemap
+
+```
+Target Launch: May 14, 2026
+Service Area: Delhi NCR Only
+Roles: Guest, User, Collection Agent, Counsellor, Admin
+```
+
+---
+
+## Visual Sitemap
+
+```
+kyg.in
+│
+├── PUBLIC PAGES (No Auth Required)
+│   │
+│   ├── / ................................. Homepage
+│   │   ├── Hero + CTA
+│   │   ├── Featured Packages
+│   │   ├── How It Works (summary)
+│   │   ├── Trust Signals
+│   │   └── Testimonials
+│   │
+│   ├── MARKETING
+│   │   ├── /how-it-works ................ Order → Pay → Agent Visits → Report
+│   │   ├── /why-kyg ..................... Differentiators
+│   │   ├── /science ..................... Lab Certs, Methodology
+│   │   ├── /about ....................... Team, Mission, Story
+│   │   ├── /contact ..................... Form, Map, Phone, Email
+│   │   ├── /press ....................... Media Coverage
+│   │   ├── /quiz ........................ Risk Assessment → Package Recommendation
+│   │   └── /partner-with-us ............. B2B Lead Capture
+│   │
+│   ├── COMMERCE
+│   │   ├── /packages .................... All Test Packages (Catalog)
+│   │   │   └── /packages/[slug] ......... Package Detail
+│   │   │       ├── Description
+│   │   │       ├── Biomarkers Tested
+│   │   │       ├── Sample Report Preview
+│   │   │       ├── Price + Add to Cart
+│   │   │       └── FAQ
+│   │   │
+│   │   ├── /cart ........................ Shopping Cart
+│   │   │   ├── Line Items
+│   │   │   ├── Promo Code Input
+│   │   │   └── Price Summary
+│   │   │
+│   │   ├── /checkout .................... Checkout Flow
+│   │   │   ├── Address (Delhi Pin Code Validation)
+│   │   │   ├── Collection Slot Selection
+│   │   │   │   ├── Morning (8AM-12PM)
+│   │   │   │   ├── Afternoon (12PM-4PM)
+│   │   │   │   └── Evening (4PM-7PM)
+│   │   │   ├── Order Summary
+│   │   │   └── Razorpay Payment
+│   │   │
+│   │   ├── /checkout/success ............ Order Confirmation
+│   │   │   ├── Order ID
+│   │   │   ├── Collection Slot Confirmed
+│   │   │   └── Next Steps
+│   │   │
+│   │   └── /track/[orderId] ............. Public Order Tracking
+│   │       ├── Kit Delivery Status (Shiprocket)
+│   │       ├── Collection Appointment Status
+│   │       └── Sample → Lab → Report Status
+│   │
+│   ├── CONTENT
+│   │   ├── /blog ........................ Blog Listing
+│   │   │   ├── Categories
+│   │   │   │   ├── Genetic Literacy
+│   │   │   │   ├── Wellness
+│   │   │   │   ├── Research
+│   │   │   │   └── Stories
+│   │   │   ├── Search
+│   │   │   └── Pagination
+│   │   │
+│   │   ├── /blog/[slug] ................ Blog Post
+│   │   │   ├── Article Content
+│   │   │   ├── Author Info
+│   │   │   ├── Share Buttons
+│   │   │   └── Related Posts
+│   │   │
+│   │   ├── /faq ......................... FAQ (Accordion)
+│   │   │   ├── Testing
+│   │   │   ├── Privacy
+│   │   │   ├── Reports
+│   │   │   ├── Shipping
+│   │   │   └── Pricing
+│   │   │
+│   │   └── /counsellor .................. Genetic Counselling
+│   │       ├── What is Counselling
+│   │       ├── Counsellor Profiles
+│   │       └── Booking CTA
+│   │
+│   ├── LEGAL
+│   │   ├── /privacy ..................... Privacy Policy
+│   │   ├── /terms ....................... Terms of Service
+│   │   └── /cookies ..................... Cookie Policy
+│   │
+│   └── AUTH
+│       ├── /login ....................... Login (Email + Google + OTP)
+│       ├── /signup ...................... Register (Name, Email, Phone, Password)
+│       └── /forgot-password ............. Password Reset Flow
+│
+│
+├── USER DASHBOARD (Role: User)
+│   │
+│   ├── /dashboard ....................... Overview
+│   │   ├── Active Orders
+│   │   ├── Upcoming Collection Appointment
+│   │   ├── Recent Reports
+│   │   └── Loyalty Points
+│   │
+│   ├── /dashboard/orders ................ Order History
+│   │   ├── Status Badges
+│   │   ├── Collection Slot Info
+│   │   └── Tracking Links
+│   │
+│   ├── /dashboard/orders/[id] ........... Order Detail
+│   │   ├── Order Info
+│   │   ├── Kit Delivery Tracking
+│   │   ├── Collection Appointment
+│   │   └── Sample Status
+│   │
+│   ├── /dashboard/reports ............... Report History
+│   │   ├── All Reports
+│   │   └── Download PDF
+│   │
+│   ├── /dashboard/reports/[id] .......... Report Detail
+│   │   ├── Full Report View
+│   │   ├── Actionable Insights
+│   │   └── Share with Doctor
+│   │
+│   ├── /dashboard/profile ............... Profile Management
+│   │   ├── Personal Info
+│   │   ├── Health Profile
+│   │   └── Communication Preferences
+│   │
+│   ├── /dashboard/family ................ Family History (Phase 2)
+│   │
+│   ├── /dashboard/loyalty ............... Loyalty / Rewards (Phase 2)
+│   │
+│   └── /dashboard/bookings .............. Counsellor Appointments (Phase 2)
+│
+│
+├── AGENT DASHBOARD (Role: Collection Agent)
+│   │
+│   ├── /agent ........................... Agent Overview
+│   │   ├── Today's Assigned Collections
+│   │   ├── Pending / Completed Count
+│   │   └── Route Summary
+│   │
+│   ├── /agent/collections ............... All Assignments
+│   │   ├── Pending
+│   │   ├── En Route
+│   │   ├── Collected
+│   │   └── Delivered to Lab
+│   │
+│   ├── /agent/collections/[id] .......... Collection Detail
+│   │   ├── Customer Name + Phone
+│   │   ├── Address + Map Link
+│   │   ├── Order Details
+│   │   ├── Sample Type
+│   │   ├── Collection Instructions
+│   │   └── [Mark as Collected] Button
+│   │
+│   ├── /agent/schedule .................. Daily Schedule
+│   │   ├── Calendar View
+│   │   └── Availability Management
+│   │
+│   └── /agent/profile ................... Agent Profile
+│       ├── Personal Info
+│       ├── ID Verification
+│       └── Active / Inactive Status
+│
+│
+└── ADMIN PANEL (Role: Admin)
+    │
+    ├── /admin ........................... Admin Dashboard
+    │   ├── Order Stats
+    │   ├── Revenue
+    │   ├── User Counts
+    │   └── Today's Collections Overview
+    │
+    ├── /admin/orders .................... Order Management
+    │   ├── All Orders (Filterable)
+    │   ├── Update Status
+    │   └── Trigger Shiprocket Actions
+    │
+    ├── /admin/users ..................... User Management
+    │   ├── View All Users
+    │   └── Assign Roles
+    │
+    ├── /admin/agents .................... Agent Management
+    │   ├── View All Agents
+    │   ├── Add New Agent
+    │   ├── Deactivate Agent
+    │   └── Performance Stats
+    │
+    ├── /admin/collections ............... Collection Scheduling
+    │   ├── Assign Agents to Orders
+    │   ├── Daily Route View
+    │   └── Reschedule
+    │
+    ├── /admin/reports ................... Report Management
+    │   └── Upload PDF → Link to User + Order
+    │
+    ├── /admin/content ................... Blog Management
+    │   ├── Create / Edit / Delete Posts
+    │   └── Manage Categories
+    │
+    ├── /admin/packages .................. Package Management
+    │   ├── Add / Edit / Remove Packages
+    │   ├── Pricing
+    │   └── Availability Toggle
+    │
+    ├── /admin/coupons ................... Promo Code Management
+    │   ├── Create / Edit Codes
+    │   ├── Discount Type (% / Flat)
+    │   └── Expiry / Usage Limits
+    │
+    └── /admin/service-area .............. Service Area Config
+        ├── Delhi NCR Pin Codes
+        ├── Add / Remove Pin Codes
+        ├── Bulk Import
+        └── City Expansion Ready
+```
+
+---
+
+## Route Count Summary
+
+| Section | Routes | Auth Required |
+|---|---|---|
+| Public - Marketing | 9 | No |
+| Public - Commerce | 6 | No (checkout needs auth) |
+| Public - Content | 4 | No |
+| Public - Legal | 3 | No |
+| Auth | 3 | No |
+| User Dashboard | 9 | User role |
+| Agent Dashboard | 5 | Agent role |
+| Admin Panel | 10 | Admin role |
+| **Total** | **49** | |
+
+---
+
+## 7-Day Launch Routes (Tier 1 — What Ships)
+
+```
+DAY 1-7 BUILD          WEEK 2 ADD-ON          PHASE 2
+─────────────          ──────────────          ───────
+/                      /blog                   /dashboard/family
+/how-it-works          /blog/[slug]            /dashboard/loyalty
+/about                 /faq                    /dashboard/bookings
+/contact               /counsellor             /partner-with-us
+/packages              /quiz                   /admin/content
+/packages/[slug]       /press                  /admin/coupons
+/cart                  /science
+/checkout              /why-kyg
+/checkout/success
+/track/[orderId]
+/login
+/signup
+/forgot-password
+/privacy
+/terms
+/cookies
+/dashboard
+/dashboard/orders
+/dashboard/orders/[id]
+/dashboard/reports
+/dashboard/reports/[id]
+/dashboard/profile
+/agent
+/agent/collections
+/agent/collections/[id]
+/agent/schedule
+/agent/profile
+/admin
+/admin/orders
+/admin/users
+/admin/agents
+/admin/collections
+/admin/reports
+/admin/packages
+/admin/service-area
+
+= 33 routes              = 8 routes              = 3 routes
+```
+
+---
+
+## Page → Component Dependency Map
+
+```
+SHARED LAYOUTS
+├── RootLayout ........................ <html>, fonts, metadata, analytics
+├── MarketingLayout ................... Header + Footer (public nav)
+├── DashboardLayout ................... Sidebar + Topbar (user nav)
+├── AgentLayout ....................... Mobile-first topbar (agent nav)
+└── AdminLayout ....................... Sidebar + Topbar (admin nav)
+
+SHARED COMPONENTS
+├── Navbar ............................ Logo, nav links, cart icon, auth button
+├── Footer ............................ Links, social, contact, legal
+├── PackageCard ....................... Used on homepage + /packages
+├── CartDrawer ........................ Slide-out cart (available on all pages)
+├── PinCodeChecker .................... Delhi validation (checkout + homepage)
+├── SlotPicker ........................ Collection time window selector
+├── OrderStatusBadge .................. Reused across user, agent, admin
+├── OrderTimeline ..................... Visual status tracker
+├── ShiprocketTracker ................. Kit delivery tracking embed
+└── RazorpayButton .................... Payment trigger
+```
+
+---
+
+## SEO Sitemap (XML) — Public Routes Only
+
+These are the routes that should appear in the XML sitemap for search engines:
+
+```
+Priority 1.0  — /
+Priority 0.9  — /packages, /how-it-works, /why-kyg
+Priority 0.8  — /packages/[slug] (each package), /science, /about
+Priority 0.7  — /blog, /quiz, /contact, /counsellor
+Priority 0.6  — /blog/[slug] (each post), /faq, /press
+Priority 0.5  — /partner-with-us
+Priority 0.3  — /privacy, /terms, /cookies
+
+EXCLUDED from sitemap:
+  /cart, /checkout/*, /track/*, /login, /signup, /forgot-password
+  /dashboard/*, /agent/*, /admin/*
+```
