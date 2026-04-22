@@ -1,0 +1,1567 @@
+﻿
+
+KNOW YOUR GENES
+
+
+User Journey Document
+
+
+D2C  ·  At-Home Sample Collection  ·  Phlebotomist Visit Model
+
+
+Version 1.0  |  Launch: 14 May 2026
+
+
+Model
+
+
+Direct-to-Consumer (D2C) — No Kit Dispatch
+
+
+Sample Collection
+
+
+Phlebotomist / trained professional visits customer at home or workplace
+
+
+No Physical Kit
+
+
+Customer books online → we come to them → sample collected on-site → report delivered digitally
+
+
+Post-Report
+
+
+Customer can book a paid consultation with a genetic counselor through the KYG platform
+
+
+
+
+
+  00  Journey Overview — How It Works in 6 Steps
+
+
+The KYG D2C journey is built around maximum convenience and minimum friction. There is no physical kit to mail. The user books a test, a trained professional arrives at their location, the sample is collected, the lab processes the report, and the user receives a clear, jargon-free report. They can then book a consultation with a genetic counselor to understand and act on their results.
+
+
+
+
+
+Step
+
+
+Stage
+
+
+What Happens
+
+
+Where
+
+
+Fulfilment
+
+
+01
+
+
+Discover &amp; Explore
+
+
+User finds KYG via ad / search / influencer. Lands on website. Explores tests.
+
+
+Website / App
+
+
+Digital
+
+
+02
+
+
+Select &amp; Book
+
+
+User picks a test, selects date + time slot, enters address, pays online.
+
+
+Website Checkout
+
+
+Digital
+
+
+03
+
+
+Confirmation &amp; Prep
+
+
+User gets booking confirmation via WhatsApp + Email. Pre-visit instructions sent.
+
+
+WhatsApp + Email
+
+
+Digital
+
+
+04
+
+
+Sample Collection
+
+
+KYG-trained phlebotomist arrives at user&apos;s home/office. Sample collected on-site.
+
+
+User&apos;s Location
+
+
+Physical
+
+
+05
+
+
+Lab Processing &amp; Report
+
+
+Sample sent to partner lab. Report generated in 7–14 days. Delivered digitally.
+
+
+Lab + Platform
+
+
+Digital
+
+
+06
+
+
+Consultation (Optional)
+
+
+User books a 30-min paid session with genetic counselor to interpret results + get action plan.
+
+
+Video Call
+
+
+Digital
+
+
+
+
+
+
+
+
+  01  Detailed User Journey — Stage by Stage
+
+
+Each stage is broken down into the user&apos;s actions, the platform&apos;s response, the team responsible, the touchpoints involved, and the success criteria the agency must achieve.
+
+
+
+
+
+Stage 1 — Discover &amp; Explore
+
+
+NOTE  This is where the user first encounters KYG. The goal is one thing: make them curious enough to learn more. Do NOT ask them to buy at this stage.
+
+
+
+
+
+Element
+
+
+Detail
+
+
+User Action
+
+
+Sees a KYG ad (Instagram Reel / Google Search / Influencer post / WhatsApp forward). Clicks through.
+
+
+Entry Points
+
+
+Instagram Ad → Landing Page
+Google Search → Test-specific page
+Influencer post → Home Page
+Word of mouth → WhatsApp → Website link
+
+
+What They See First
+
+
+Homepage with a clear hero message: &apos;Book a DNA Test. We Come to You.&apos; CTA: &apos;Explore Tests&apos; or &apos;Book Now&apos;
+
+
+What They Do on Site
+
+
+Browse test categories (Wellness, Cancer Risk, Reproductive, Cardiac, Drug Sensitivity). Read how it works. Watch a short explainer video.
+
+
+Trust Signals Needed
+
+
+NABL / CAP / PCPNDT badge. Doctor advisor names + photos. &apos;No needle if saliva test&apos; badge. Turnaround time displayed. Privacy guarantee.
+
+
+Drop-Off Prevention
+
+
+If user leaves without clicking: Meta retargeting ad fires within 24 hours. If user leaves landing page: exit-intent popup — &apos;Not sure? Talk to us on WhatsApp — free.&apos;
+
+
+Key Metric
+
+
+Landing page session &gt; 90 seconds. Scroll depth &gt; 60%. Bounce rate &lt; 55%.
+
+
+
+
+
+Stage 2 — Test Selection &amp; Booking
+
+
+NOTE  This is the most critical conversion point. The user has decided they want a test. Remove all friction. Every extra click here loses a customer.
+
+
+
+
+
+Element
+
+
+Detail
+
+
+Step 2A — Choose Test
+
+
+User browses test menu. Each test shows: Name, What it tests, Who it is for, Price, Turnaround time. &apos;Most Popular&apos; and &apos;Recommended for You&apos; tags help decision.
+
+
+Step 2B — Help Me Choose (Optional)
+
+
+If user is unsure, they can take a 3-question quiz: &apos;What&apos;s your primary concern?&apos; → Wellness / Family history / Planning a baby / Medication. Quiz recommends the right test.
+
+
+Step 2C — Date &amp; Time Slot
+
+
+Calendar shows available slots. User picks: Date + Morning / Afternoon / Evening window. Location: User enters home or office address.
+
+
+Step 2D — Personal Details
+
+
+Name, Age, Gender, Mobile number (for WhatsApp), Email. No medical history form at this stage — keep it simple.
+
+
+Step 2E — Payment
+
+
+Price displayed clearly. Options: UPI (GPay / PhonePe), Debit/Credit Card, Net Banking, No-cost EMI (for orders &gt; ₹10,000). Promo code field. Proceed to Pay button.
+
+
+Step 2F — Order Confirmed
+
+
+Order confirmation screen: Booking ID, Test name, Date + Time, Address, Phlebotomist will arrive within the selected window. &apos;Add to Google Calendar&apos; button.
+
+
+Key Metric
+
+
+Add-to-cart → Checkout rate &gt; 60%. Checkout → Payment rate &gt; 75%. Cart abandonment recovery via WhatsApp within 30 minutes.
+
+
+
+
+
+Booking Flow — Step by Step (WEM to Build)
+
+
+Screen #
+
+
+Screen Name
+
+
+Primary CTA
+
+
+Fallback if User Hesitates
+
+
+1
+
+
+Test Listing Page
+
+
+Select This Test →
+
+
+WhatsApp button: &apos;Not sure? Chat with us&apos;
+
+
+2
+
+
+Test Detail Page
+
+
+Book Now →
+
+
+Free counselor call CTA: &apos;Speak to an expert first&apos;
+
+
+3
+
+
+Slot Selection
+
+
+Confirm Date &amp; Time →
+
+
+Show next 3 available slots prominently
+
+
+4
+
+
+Address Entry
+
+
+Continue →
+
+
+Google Maps autocomplete — reduce typing friction
+
+
+5
+
+
+Personal Details
+
+
+Continue →
+
+
+Minimal fields — Name, Phone, Email only
+
+
+6
+
+
+Payment Page
+
+
+Pay ₹[Amount] →
+
+
+EMI option shown. Promo code field. Trust badges visible.
+
+
+7
+
+
+Confirmation Page
+
+
+View My Booking / Add to Calendar
+
+
+WhatsApp opt-in checkbox — checked by default
+
+
+
+
+
+Stage 3 — Confirmation &amp; Pre-Visit Preparation
+
+
+NOTE  The window between booking and sample collection is where anxiety lives. Use this time to build confidence, reduce no-shows, and prepare the user correctly so the sample collection goes smoothly.
+
+
+
+
+
+Trigger
+
+
+What is Sent
+
+
+Channel
+
+
+Timing
+
+
+Team Responsible
+
+
+Booking Confirmed
+
+
+Booking confirmation message: Test name, date, time window, address, Booking ID, &apos;What to expect&apos; summary
+
+
+WhatsApp + Email
+
+
+Immediately
+
+
+WEM (auto)
+
+
+24 Hrs Before Visit
+
+
+Reminder: &apos;Your KYG appointment is tomorrow. Our professional will arrive between [time]. Here&apos;s how to prepare.&apos;
+
+
+WhatsApp
+
+
+T-24 hours
+
+
+WEM (auto)
+
+
+Pre-Visit Instructions
+
+
+Fasting requirements (if any). Hydration advice. Comfortable clothing. Have your Booking ID ready on your phone.
+
+
+WhatsApp
+
+
+T-24 hours
+
+
+WEM (auto)
+
+
+2 Hrs Before Visit
+
+
+Final reminder: &apos;We&apos;re on our way. Our professional [Name] will arrive in your time window. Call/WhatsApp if you need to reschedule: [number]&apos;
+
+
+WhatsApp
+
+
+T-2 hours
+
+
+WEM (auto)
+
+
+Phlebotomist En Route
+
+
+Live notification: &apos;[Name] is heading to your location.&apos; (If tracking available: &apos;Track here&apos;)
+
+
+WhatsApp
+
+
+On dispatch
+
+
+Operations
+
+
+Cancellation / Reschedule
+
+
+If user cancels before T-4 hours: full refund. Rescheduling link sent instantly.
+
+
+WhatsApp + Email
+
+
+On request
+
+
+WEM (auto)
+
+
+
+
+
+WhatsApp Message Templates — Pre-Visit (MCM to Write)
+
+
+Message Name
+
+
+Message Content (Template)
+
+
+Booking Confirmed
+
+
+Hi [Name]! ✅ Your KYG booking is confirmed.
+
+Test: [Test Name]
+Date: [Date]
+Time: [Window]
+Address: [Address]
+Booking ID: [ID]
+
+We will send preparation instructions shortly. Questions? Reply to this message.
+
+
+Pre-Visit Instructions
+
+
+Hi [Name], your KYG appointment is tomorrow! 🧬
+
+Please note:
+• [Fasting requirement if applicable]
+• Drink water normally
+• Wear comfortable clothing
+• Keep your Booking ID [ID] handy
+
+See you tomorrow between [Time Window]!
+
+
+Day-of Reminder
+
+
+Hi [Name], today&apos;s the day! 🌟
+
+Our trained professional [Professional Name] will be at your location between [Time Window].
+
+Need to reschedule? Reply RESCHEDULE.
+Need help? Reply HELP.
+
+
+
+
+
+Stage 4 — At-Home Sample Collection (The Physical Stage)
+
+
+NOTE  This is the only physical touchpoint in the entire journey. The phlebotomist or trained professional IS the brand at this moment. Their professionalism, punctuality, and bedside manner directly determine the customer&apos;s trust and likelihood of repeat purchase and referral.
+
+
+
+
+
+Sub-Step
+
+
+What Happens
+
+
+Standard Required
+
+
+Arrival
+
+
+Professional arrives within the booked time window. Identifies themselves with name + KYG ID card.
+
+
+On time within window. Uniformed. ID badge visible. Polite greeting.
+
+
+Identity Verification
+
+
+Professional asks user to confirm name and Booking ID. Scans QR code on user&apos;s confirmation WhatsApp.
+
+
+Mandatory — no Booking ID = no sample collected.
+
+
+Explain the Process
+
+
+Brief 2-minute explanation of what will happen. What sample is being collected (blood draw / saliva / swab). How long it takes.
+
+
+Must be explained in user&apos;s preferred language — Hindi or English minimum.
+
+
+Consent Form
+
+
+User signs a digital consent form on the professional&apos;s device. User&apos;s copy emailed/WhatsApp&apos;d instantly.
+
+
+Mandatory. No sample collected without signed consent.
+
+
+Sample Collection
+
+
+Sample collected using sterile, single-use equipment. Proper labelling with Booking ID + user name + date + time.
+
+
+Zero cross-contamination protocol. NABL-compliant collection procedure.
+
+
+Post-Collection Care
+
+
+Blood draw: cotton + bandage applied. User is asked to sit for 2 minutes. Water offered if available.
+
+
+Professional carries basic first aid. No rushing the user post-draw.
+
+
+Sample Labelling + Sealing
+
+
+Sample sealed in biohazard-compliant bag. Labelled with Booking ID. Chain of custody document initiated.
+
+
+Tamper-evident seal. Booking ID matches the label — checked twice.
+
+
+Departure &amp; Notification
+
+
+Professional thanks user. Immediately triggers WhatsApp: &apos;Your sample has been collected and is on its way to our lab. Booking ID: [ID].&apos;
+
+
+Notification sent within 5 minutes of collection completion.
+
+
+
+
+
+Phlebotomist Quality Standards (Operations to Define)
+
+
+Standard
+
+
+Requirement
+
+
+Qualification
+
+
+Certified phlebotomist or DMLT (Diploma in Medical Laboratory Technology). Minimum 1 year experience.
+
+
+Training
+
+
+KYG-specific training: brand communication, consent process, digital tools, customer handling, emergency protocols.
+
+
+Equipment
+
+
+Sterile single-use needles / collection tubes / swabs. Biohazard collection bag. Digital consent tablet/phone. KYG ID card. Uniform / branded attire.
+
+
+Punctuality SLA
+
+
+Must arrive within the booked time window. If delayed by &gt; 30 minutes, customer notified and offered reschedule or ₹200 discount.
+
+
+Behavior Standard
+
+
+Polite, professional, non-judgmental. Must not discuss test results or give any health opinion. Must speak in user&apos;s language preference.
+
+
+Background Check
+
+
+Police verification mandatory. KYG retains records.
+
+
+
+
+
+Stage 5 — Lab Processing &amp; Report Delivery
+
+
+NOTE  The user is waiting. This is the highest anxiety window. Proactive, timely updates during this stage dramatically reduce &apos;Where is my report?&apos; queries and increase NPS.
+
+
+
+
+
+Step
+
+
+What Happens
+
+
+User Communication
+
+
+TAT (Days)
+
+
+Sample Received by Lab
+
+
+Partner lab receives and logs the sample. Booking ID matched. Chain of custody signed.
+
+
+WhatsApp: &apos;Your sample has reached the lab. Processing begins now. ✅&apos;
+
+
+Day 1
+
+
+Sample Processing
+
+
+Lab runs the appropriate genetic panel. QC checks completed.
+
+
+No user communication — internal only
+
+
+Day 1–10
+
+
+Report Generated
+
+
+Lab generates the raw data. KYG team converts into user-friendly plain-language report.
+
+
+WhatsApp: &apos;Great news! Your report is being prepared and will be ready within [X] days.&apos;
+
+
+Day 7–12
+
+
+Report Review
+
+
+KYG genetic counselor does a mandatory quality check on the report before delivery. Flags any critical findings.
+
+
+Internal — counselor review. If critical finding: priority consultation call initiated proactively.
+
+
+Day 10–13
+
+
+Report Delivered
+
+
+Report delivered via: Secure link on WhatsApp + Email + Login to KYG account dashboard. PDF download available.
+
+
+WhatsApp: &apos;Your KYG report is ready! View it here: [link]. Book a consultation to understand your results.&apos;
+
+
+Day 7–14
+
+
+Critical Finding Protocol
+
+
+If report contains a high-risk finding (e.g. BRCA positive): counselor calls user directly before digital report is sent.
+
+
+Proactive phone call from counselor. Digital report released AFTER the call.
+
+
+Immediately on identification
+
+
+
+
+
+Report Design Standard (VIM to Build)
+
+
+Section of Report
+
+
+Content Required
+
+
+Language Standard
+
+
+Cover Page
+
+
+User name, Test name, Report date, Booking ID, Lab name + accreditation logos, KYG logo
+
+
+Clean, professional, reassuring design
+
+
+Your Summary (Plain English)
+
+
+3-5 bullet points: what this test looked at and what we found — in simple language. No jargon.
+
+
+A 12-year-old must be able to understand it
+
+
+What This Means for You
+
+
+Practical explanation of each marker result. Low / Moderate / High indicator with a color code (Green / Yellow / Red).
+
+
+Warm, non-alarmist tone. Never say &apos;You will get cancer.&apos;
+
+
+Recommended Next Steps
+
+
+Specific, actionable: &apos;Schedule a cardiology check-up within 6 months.&apos; &apos;Increase Vitamin D intake.&apos; NOT vague advice.
+
+
+Empowering. Action-oriented.
+
+
+Book a Consultation (CTA)
+
+
+Prominent CTA: &apos;Book a 30-minute session with a KYG Genetic Counselor to understand this fully.&apos;
+
+
+Clear, inviting — not pushy
+
+
+Scientific Data Appendix
+
+
+Full technical results, gene variants found, reference ranges. For medical professionals.
+
+
+Technical — separate from main report sections
+
+
+Disclaimer
+
+
+Standard medical disclaimer. &apos;This report is for informational purposes. Not a substitute for professional medical advice.&apos;
+
+
+Legally required. Placed at end.
+
+
+
+
+
+Stage 6 — Post-Report Consultation (Optional, Paid)
+
+
+NOTE  This is NOT part of the test price. It is a separate, premium paid service. However, it is the highest-value interaction in the entire journey — it drives upsells, referrals, and LTV. The &apos;Book a Consultation&apos; CTA must appear on the report page, the delivery WhatsApp message, and in the follow-up sequence.
+
+
+
+
+
+Element
+
+
+Detail
+
+
+What is Offered
+
+
+30-minute or 60-minute video consultation with a KYG-certified genetic counselor or specialist doctor. Available in English, Hindi, and regional languages.
+
+
+Who Conducts It
+
+
+Certified Genetic Counselors (M.Sc. Genetic Counseling, BGCI certified). For clinical results: specialist doctors (oncologist / cardiologist / gynaecologist) as needed.
+
+
+Pricing
+
+
+30-minute session: ₹999 – ₹1,499. 60-minute session: ₹1,999 – ₹2,499. (Exact pricing to be set by client. Agency to build pricing page and booking flow.)
+
+
+Booking Flow
+
+
+User clicks &apos;Book Consultation&apos; on report page → Calendar with available counselor slots → Select language preference → Pay → Zoom/Google Meet link sent via WhatsApp + Email.
+
+
+What Happens in the Session
+
+
+Counselor walks through report findings in plain language. Answers all user questions. Recommends follow-up tests if needed. Provides personalized action plan document post-call.
+
+
+Post-Consultation
+
+
+Counselor sends a written Action Plan within 24 hours: 3–5 specific health actions the user should take based on their results.
+
+
+Upsell Opportunity (Counselor Script)
+
+
+During the call, counselor identifies additional tests the user or their family may benefit from. Refers them with a family discount code.
+
+
+Key Metric
+
+
+Report-to-consultation booking rate &gt; 30%. Consultation CSAT &gt; 4.5/5. Post-consultation upsell conversion &gt; 15%.
+
+
+
+
+
+
+
+
+  02  Retention — The Loop That Keeps Users Coming Back
+
+
+A one-time test purchase is the beginning, not the end. The post-consultation journey is where LTV is built. Every interaction after Stage 6 should deepen the relationship and create reasons to return.
+
+
+
+
+
+Retention Trigger
+
+
+Action
+
+
+Channel
+
+
+Timing
+
+
+Post-Report (No Consultation)
+
+
+WhatsApp follow-up: &apos;Have questions about your report? Book a 30-min call with a counselor — ₹999.&apos; + link
+
+
+WhatsApp
+
+
+3 days post-report
+
+
+Post-Consultation
+
+
+Send Action Plan PDF. WhatsApp: &apos;Here are your next steps. We recommend checking back in 6 months.&apos;
+
+
+WhatsApp + Email
+
+
+24 hrs post-call
+
+
+Family Referral Nudge
+
+
+WhatsApp: &apos;Found something in your results your family should know about? Share this discount with them: [code].&apos;
+
+
+WhatsApp
+
+
+7 days post-report
+
+
+30-Day Check-in
+
+
+Email: &apos;How are you doing? Have you started your action steps? Any questions? We&apos;re here.&apos;
+
+
+Email
+
+
+30 days post-report
+
+
+6-Month Re-Test Prompt
+
+
+WhatsApp: &apos;It&apos;s been 6 months since your KYG test. Ready for your next check-in? [Recommended follow-up test].&apos;
+
+
+WhatsApp
+
+
+6 months post-test
+
+
+New Science Update
+
+
+Email: &apos;New research relevant to your results. We&apos;ve updated your insights — log in to see.&apos;
+
+
+Email
+
+
+Quarterly
+
+
+Subscription Upsell
+
+
+WhatsApp: &apos;Get your DNA re-analysed every year as science evolves. Subscribe to KYG Annual for ₹1,499/year.&apos;
+
+
+WhatsApp + In-app
+
+
+90 days post-test
+
+
+Birthday / Health Occasion
+
+
+WhatsApp: &apos;Happy Birthday [Name]! Give yourself the gift of knowing — upgrade to our Premium Panel today.&apos;
+
+
+WhatsApp
+
+
+User birthday
+
+
+
+
+
+  03  Exception Handling — What Can Go Wrong
+
+
+Every failure scenario must have a defined recovery protocol before launch. These must be built into the WEM backend and customer support SOPs.
+
+
+
+
+
+Scenario
+
+
+What Happens
+
+
+Resolution
+
+
+Responsible
+
+
+Phlebotomist is late (&gt;30 min)
+
+
+System flags delay. Customer is notified.
+
+
+WhatsApp apology + ₹200 discount code for next order. Option to reschedule free.
+
+
+Operations
+
+
+User not available at appointment time
+
+
+Phlebotomist calls + WhatsApp. Waits 15 minutes.
+
+
+If no response: marks as no-show. Auto reschedule link sent. No refund (policy in T&amp;C).
+
+
+WEM (auto) + Ops
+
+
+Sample rejected by lab (quality issue)
+
+
+Lab flags sample as insufficient or degraded.
+
+
+Customer informed. Free re-collection scheduled within 72 hours. No extra charge.
+
+
+Operations + Lab
+
+
+Report delayed beyond 14 days
+
+
+System flags overdue report at Day 12.
+
+
+WhatsApp apology. Updated ETA given. ₹500 discount on next test.
+
+
+WEM (auto) + Customer Support
+
+
+User receives report — does not understand it
+
+
+User WhatsApps confusion or concern.
+
+
+Customer support offers free 10-min orientation call. If result is serious, escalate to counselor immediately.
+
+
+Customer Support + Counselor
+
+
+Critical / high-risk finding in report
+
+
+Counselor reviews report before delivery.
+
+
+Counselor calls user directly BEFORE releasing report digitally. Empathetic, careful conversation first.
+
+
+Genetic Counselor
+
+
+Payment failure at checkout
+
+
+Payment gateway returns error.
+
+
+Retry payment page. WhatsApp message: &apos;Your order is saved. Complete payment here: [link].&apos; Valid for 24 hours.
+
+
+WEM (auto)
+
+
+User requests cancellation/refund
+
+
+User contacts within 24 hours of booking.
+
+
+Full refund if phlebotomist not yet dispatched. 50% refund if phlebotomist en route. No refund after collection.
+
+
+Customer Support
+
+
+
+
+
+  04  Team Responsibility Map — Who Owns What
+
+
+
+
+
+Journey Stage
+
+
+WEM (Web / Tech)
+
+
+VIM (Design)
+
+
+MCM (Content)
+
+
+Ops / Partner
+
+
+1. Discover &amp; Explore
+
+
+Landing pages, speed, SEO tags
+
+
+Ad creatives, page visuals, how-it-works illustrations
+
+
+Ad copy, headlines, explainer video script
+
+
+—
+
+
+2. Test Selection &amp; Booking
+
+
+Shopify booking flow, calendar, payment, address capture
+
+
+Booking UI, test cards, slot selector design
+
+
+Test descriptions, pricing copy, quiz copy
+
+
+—
+
+
+3. Confirmation &amp; Pre-Visit
+
+
+WhatsApp automation, reminder triggers, reschedule flow
+
+
+WhatsApp message card designs
+
+
+WhatsApp message copy, pre-visit instructions
+
+
+Phlebotomist scheduling system
+
+
+4. Sample Collection
+
+
+Phlebotomist app / digital consent form, sample tracking trigger
+
+
+KYG ID card design, uniform branding
+
+
+Consent form copy, collection instructions
+
+
+Phlebotomist dispatch, SLA compliance
+
+
+5. Report Delivery
+
+
+Secure report portal, PDF generation, WhatsApp link trigger
+
+
+Report design template, data visualization
+
+
+Plain-language report copy, action step text
+
+
+Lab partner — sample processing + QC
+
+
+6. Consultation Booking
+
+
+Consultation booking flow, payment, calendar, meeting link
+
+
+Consultation booking page UI
+
+
+Counselor profile copy, session description
+
+
+Genetic Counselor — session delivery
+
+
+Retention Loop
+
+
+Automated WhatsApp sequences, email flows, account dashboard
+
+
+Retention email templates, WhatsApp card designs
+
+
+Retention copy — all messages + action plans
+
+
+Counselor — Action Plan document
+
+
+
+
+
+  05  Full Journey — Success Metrics at a Glance
+
+
+
+
+
+Stage
+
+
+Key Metric
+
+
+Target
+
+
+Tool to Measure
+
+
+1. Discover
+
+
+Landing page bounce rate
+
+
+&lt; 55%
+
+
+GA4
+
+
+1. Discover
+
+
+Average session duration
+
+
+&gt; 90 seconds
+
+
+GA4
+
+
+2. Book
+
+
+Test page → Checkout rate
+
+
+&gt; 60%
+
+
+Shopify / GA4
+
+
+2. Book
+
+
+Checkout → Payment completion
+
+
+&gt; 75%
+
+
+Shopify
+
+
+2. Book
+
+
+Average Order Value
+
+
+&gt; ₹10,000
+
+
+Shopify
+
+
+3. Confirm
+
+
+No-show rate (user absent for collection)
+
+
+&lt; 5%
+
+
+Operations log
+
+
+3. Confirm
+
+
+WhatsApp open rate (reminders)
+
+
+&gt; 85%
+
+
+WhatsApp Business API
+
+
+4. Collection
+
+
+On-time arrival rate
+
+
+&gt; 90%
+
+
+Operations log
+
+
+4. Collection
+
+
+Sample rejection rate
+
+
+&lt; 3%
+
+
+Lab partner report
+
+
+4. Collection
+
+
+Post-collection satisfaction (1-question survey)
+
+
+&gt; 4.5 / 5
+
+
+WhatsApp survey
+
+
+5. Report
+
+
+Report delivered within 14 days
+
+
+&gt; 95% of orders
+
+
+Operations dashboard
+
+
+5. Report
+
+
+Report clarity rating
+
+
+&gt; 80% &apos;Easy to understand&apos;
+
+
+Post-report survey
+
+
+6. Consultation
+
+
+Report to consultation booking rate
+
+
+&gt; 30%
+
+
+Shopify + CRM
+
+
+6. Consultation
+
+
+Consultation CSAT
+
+
+&gt; 4.5 / 5
+
+
+Post-session survey
+
+
+Retention
+
+
+Referral rate
+
+
+&gt; 10%
+
+
+Referral code tracking
+
+
+Retention
+
+
+6-month return / re-test rate
+
+
+&gt; 20%
+
+
+Shopify repeat orders
+
+
+Overall
+
+
+Net Promoter Score (NPS)
+
+
+&gt; 70
+
+
+Monthly NPS survey
+
+
+Overall
+
+
+Customer Acquisition Cost (CAC)
+
+
+&lt; ₹2,500
+
+
+Ads Manager + Shopify
+
+
+
+
+
+
+
+
+Know Your Genes  ·  User Journey v1.0  ·  D2C Phlebotomist Model  ·  Confidential
+
+
+Prepared by: Agency  |  Reviewed by: Account Manager  |  Launch: 14 May 2026
+
+
+
+
+
+
+

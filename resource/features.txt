@@ -1,0 +1,334 @@
+KYG WEBSITE — FEATURE LIST
+===========================
+Target launch: 14 May 2026
+Service area: Delhi NCR only
+Model: D2C, at-home phlebotomist collection (no mail-in kit)
+Legend: [T1] Tier-1 launch (day 1–7)  ·  [W2] Week-2 add-on  ·  [P2] Phase 2
+
+---------------------------------------------------------
+1. PUBLIC / MARKETING
+---------------------------------------------------------
+[T1] Homepage
+    - Hero: "Book a DNA test. We come to you." + dual CTAs
+    - Pincode checker (Delhi NCR validation) — inline
+    - Trust-signal strip: NABL, TAT, biomarker count, samples done
+    - Featured packages (3 most-booked)
+    - How-it-works (4-step summary)
+    - Testimonials
+    - Quiz CTA + Counsellor CTA
+    - Exit-intent "Chat on WhatsApp" popup (stretch)
+    - Meta retargeting pixel + GA4 events
+
+[T1] /how-it-works
+    - 7-step detailed journey (Discover → Consult)
+    - "What to expect on collection day" — 6 sub-steps
+    - Phlebotomist quality standards callout
+
+[W2] /why-kyg
+    - 6 differentiators
+    - KYG-vs-alternatives comparison table
+    - Conversion CTA
+
+[W2] /science
+    - Methodology (sample types, NGS/PCR, ACMG classification, counsellor QC)
+    - Accreditations grid (NABL, CAP, ISO 15189, PCPNDT)
+    - Scientific advisors
+
+[T1] /about
+    - Mission + beliefs
+    - Team grid
+    - Milestones timeline
+
+[T1] /contact
+    - Contact form (Name, Email, Phone, Topic, Message)
+    - Care / Press / Office blocks
+    - Embedded map
+
+[W2] /press
+    - Media coverage list
+    - Media-kit download
+
+[W2] /quiz
+    - 1-question risk assessment (4-option)
+    - Instant package recommendation
+    - Retake button
+
+[P2] /partner-with-us
+    - B2B lead form (corporate wellness / clinics / insurance)
+    - Use-case cards
+
+---------------------------------------------------------
+2. COMMERCE
+---------------------------------------------------------
+[T1] /packages — catalog
+    - Category chips (Wellness, Cancer, Reproductive, Cardiac, Drug)
+    - PackageCard grid with Popular / Recommended tags
+    - Price, TAT, sample type, biomarker count per card
+
+[T1] /packages/[slug] — detail
+    - Hero: category, name, tagline
+    - Sticky price card with "Add to cart"
+    - "What this test covers" (bulleted)
+    - Biomarkers-tested chip list
+    - Sample-report preview
+    - Per-package FAQ
+
+[T1] /cart
+    - Line items with remove
+    - Promo code input + apply
+    - Price summary card (sticky)
+    - EMI indicator
+
+[T1] /checkout
+    - Step 1: Address (Delhi pincode validation)
+    - Step 2: Slot picker (5 dates × 3 windows)
+    - Step 3: Payment (UPI / Card / Netbanking / EMI via Razorpay)
+    - Order summary sticky sidebar
+
+[T1] /checkout/success
+    - Order ID, slot, address
+    - Next-steps guide
+    - CTAs to dashboard / track
+
+[T1] /track/[orderId]
+    - Status badge + visual timeline
+    - Shiprocket AWB / chain-of-custody card
+    - WhatsApp support + reschedule CTAs
+    - Public (no-auth) access via order ID
+
+---------------------------------------------------------
+3. CONTENT
+---------------------------------------------------------
+[W2] /blog
+    - Category filter (Genetic Literacy, Wellness, Research, Stories)
+    - Search + pagination
+    - Card grid with read-time + author
+
+[W2] /blog/[slug]
+    - Hero with category + meta
+    - Prose body
+    - Share buttons (Twitter, LinkedIn, WhatsApp)
+    - Related posts
+
+[W2] /faq
+    - Accordion by category (Testing, Privacy, Reports, Shipping, Pricing)
+
+[W2] /counsellor
+    - What-is-counselling explainer
+    - Pricing (30-min / 60-min sessions)
+    - Counsellor profiles (credentials, languages, experience)
+    - "Book a session" CTA
+
+---------------------------------------------------------
+4. LEGAL
+---------------------------------------------------------
+[T1] /privacy      — data collection, usage, rights, deletion flow
+[T1] /terms        — eligibility, service area, refund policy, medical disclaimer
+[T1] /cookies      — cookie categories + opt-outs
+
+---------------------------------------------------------
+5. AUTH
+---------------------------------------------------------
+[T1] /login
+    - Email/phone + password
+    - Remember me + forgot-password link
+    - Google SSO
+    - OTP login
+
+[T1] /signup
+    - Name, Email, Phone, Password
+    - Terms + Privacy consent
+
+[T1] /forgot-password
+    - Email-based reset flow
+
+---------------------------------------------------------
+6. USER DASHBOARD (role: User)
+---------------------------------------------------------
+[T1] /dashboard — overview
+    - KPIs: active orders, reports, loyalty points
+    - Upcoming-collection card (agent, slot, track)
+    - Recent reports list
+
+[T1] /dashboard/orders
+    - Order list with status badges + track links
+
+[T1] /dashboard/orders/[id]
+    - Order info, amount paid, slot, agent
+    - Timeline
+    - Reschedule / download-invoice actions
+
+[T1] /dashboard/reports
+    - All reports with View + Download PDF
+
+[T1] /dashboard/reports/[id]
+    - Plain-English summary (5 bullets)
+    - Marker-by-marker cards with Low/Moderate/High color code
+    - Actionable insights
+    - Download PDF + Share-with-doctor (secure link)
+    - Book-a-consultation CTA
+
+[T1] /dashboard/profile
+    - Personal info
+    - Health profile (blood group, family history)
+    - Communication preferences (WhatsApp, email, research opt-in)
+    - Data-deletion "danger zone"
+
+[P2] /dashboard/family   — family-tree / pedigree builder
+[P2] /dashboard/loyalty  — points balance, earn-ways, redemption
+[P2] /dashboard/bookings — counsellor session management
+
+---------------------------------------------------------
+7. AGENT DASHBOARD (role: Collection Agent)  —  mobile-first
+---------------------------------------------------------
+[T1] /agent — today
+    - Today's totals (Total / Pending / Done)
+    - Route summary (ordered list of stops)
+    - CTA to full collections list
+
+[T1] /agent/collections
+    - Status tabs: Pending / En route / Collected / At lab
+    - Assignment cards
+
+[T1] /agent/collections/[id]
+    - Customer block (Call / WhatsApp buttons)
+    - Address (Open in Maps)
+    - Order details + sample type
+    - Collection instructions
+    - Sticky action bar: En route / Mark as collected
+
+[T1] /agent/schedule
+    - 7-day calendar with job counts
+    - Availability toggles per time window
+
+[T1] /agent/profile
+    - Personal info
+    - ID verification status (Aadhaar, police, DMLT cert)
+    - Performance (rating, on-time, monthly count)
+    - Active / inactive toggle
+
+---------------------------------------------------------
+8. ADMIN PANEL (role: Admin)
+---------------------------------------------------------
+[T1] /admin — dashboard
+    - KPIs: orders, revenue, users, active agents
+    - Today's collections
+    - Revenue by category (bar chart)
+
+[T1] /admin/orders
+    - Filterable table (status, date, agent)
+    - Search by ID / customer
+    - Inline status updates
+    - Shiprocket trigger action
+    - CSV export
+
+[T1] /admin/users
+    - Table with role selector, orders count, joined-at
+
+[T1] /admin/agents
+    - Agent list with zone, rating, on-time%, monthly count
+    - Add / deactivate agent
+    - Performance drill-down
+
+[T1] /admin/collections
+    - 3-column board by time window
+    - Agent assignment per order
+    - Daily-route map
+    - Date + zone filter
+
+[T1] /admin/reports
+    - Upload PDF → link to order/user
+    - Queue of reports awaiting counsellor QC
+
+[T1] /admin/packages
+    - Table with price, TAT, sample, active toggle
+    - Add / edit / remove
+
+[T1] /admin/service-area
+    - Pincode list (add single / bulk CSV import / remove)
+    - City-expansion readiness block
+
+[P2] /admin/coupons
+    - Code, type (flat / %), value, expiry, usage limits
+
+[P2] /admin/content
+    - Blog CRUD (create / edit / delete posts, manage categories)
+
+---------------------------------------------------------
+9. CROSS-CUTTING / PLATFORM FEATURES
+---------------------------------------------------------
+Auth & roles
+    - Role-gated routes: User, Agent, Admin, Counsellor, Guest
+    - Email/Google/OTP login
+    - Password reset via email
+
+Payments
+    - Razorpay integration (UPI, card, net banking, EMI)
+    - Promo-code engine (flat & percent, usage caps, expiry)
+    - Receipts + GST-compliant invoices
+
+Notifications (WhatsApp + Email automations via WhatsApp Business API)
+    - Order confirmation (immediate)
+    - Pre-visit instructions (T-24h)
+    - Day-of reminder (T-2h)
+    - Phlebotomist en-route ping
+    - Sample-received / report-ready alerts
+    - Reschedule / cancellation flows
+    - 3-day, 30-day, 6-month post-report follow-ups
+    - Cart-abandonment recovery (30-min window)
+
+Order lifecycle & tracking
+    - Unified state machine (Booked → Agent assigned → En route → Collected → At lab → Report ready / Cancelled)
+    - Shiprocket chain-of-custody hand-off
+    - Public tracking URL (no auth)
+
+Reporting (clinical)
+    - Counsellor mandatory QC before release
+    - Critical-finding protocol: counsellor calls before digital delivery
+    - Plain-English summary + technical appendix
+    - Color-coded Low/Moderate/High indicators
+    - PDF export + secure doctor-share links
+
+Phlebotomist operations
+    - On-time SLA: auto ₹200 discount if >30 min late
+    - No-show flow (15-min wait, auto-reschedule link)
+    - Sample-rejection flow (free re-collection in 72 hrs)
+    - Digital consent form (tablet/phone, e-signed)
+    - Tamper-evident seals + QR-based sample labelling
+
+Privacy & compliance
+    - End-to-end encryption at rest + in transit
+    - User-initiated data deletion
+    - Sample-destruction policy (60 days post-report unless opted in)
+    - PCPNDT / ACMG / NABL compliance
+    - Research opt-in (anonymous, separate consent)
+
+SEO & marketing
+    - XML sitemap (public routes only; prioritised per launch doc)
+    - Open Graph / Twitter cards
+    - GA4 + Meta Pixel + Google Ads conversion events
+    - Exit-intent + cart-abandonment retargeting
+    - Structured data (Product, FAQ, Organization)
+
+Performance & UX
+    - Server components + streaming (Next.js 16)
+    - Prefetched navigation, loading.tsx skeletons for dynamic routes
+    - Mobile-first agent UI, responsive dashboards
+    - Accessibility: WCAG 2.1 AA targets
+
+Observability
+    - Error boundary per segment (error.tsx)
+    - Structured logs for order-state transitions
+    - Operations dashboard for TAT & SLA monitoring
+
+---------------------------------------------------------
+10. KPIS TO INSTRUMENT FROM DAY ONE
+---------------------------------------------------------
+Discovery       — bounce < 55%, session > 90s
+Booking         — test → checkout > 60%, checkout → pay > 75%, AOV > ₹10,000
+Confirmation    — no-show < 5%, WhatsApp open > 85%
+Collection      — on-time > 90%, sample rejection < 3%, CSAT > 4.5/5
+Report          — <14-day delivery > 95%, clarity rating > 80% "easy"
+Consultation    — report → booking > 30%, CSAT > 4.5/5
+Retention       — referral > 10%, 6-month re-test > 20%
+Overall         — NPS > 70, CAC < ₹2,500
