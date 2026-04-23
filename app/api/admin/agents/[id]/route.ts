@@ -27,11 +27,26 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
   });
 }
 
-export async function DELETE(_req: Request, { params }: { params: Params }) {
+// Soft: AgentProfile.status=INACTIVE. Permanent: delete User (cascades profile).
+export async function DELETE(req: Request, { params }: { params: Params }) {
   return handle(async () => {
     const guard = await requireApiRole(['ADMIN']);
     if (isResponse(guard)) return guard;
     const { id } = await params;
+    const permanent = new URL(req.url).searchParams.get('permanent') === 'true';
+
+    if (permanent) {
+      try {
+        await prisma.user.delete({ where: { id } });
+        return ok({ id, deleted: true });
+      } catch (e) {
+        if ((e as { code?: string }).code === 'P2003') {
+          throw new Error('Cannot delete permanently: this agent has orders assigned. Deactivate instead.');
+        }
+        throw e;
+      }
+    }
+
     await prisma.agentProfile.update({ where: { userId: id }, data: { status: 'INACTIVE' } });
     return ok({ id, status: 'INACTIVE' });
   });

@@ -23,11 +23,19 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
   });
 }
 
-export async function DELETE(_req: Request, { params }: { params: Params }) {
+// Soft: active=false. Permanent: full delete.
+export async function DELETE(req: Request, { params }: { params: Params }) {
   return handle(async () => {
     const guard = await requireApiRole(['ADMIN']);
     if (isResponse(guard)) return guard;
     const { id } = await params;
+    const permanent = new URL(req.url).searchParams.get('permanent') === 'true';
+
+    if (permanent) {
+      const coupon = await prisma.coupon.delete({ where: { id } });
+      return ok(coupon);
+    }
+
     const coupon = await prisma.coupon.update({ where: { id }, data: { active: false } });
     return ok(coupon);
   });

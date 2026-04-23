@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { auth } from '@/auth';
 import Providers from '@/components/Providers';
 import './globals.css';
 
@@ -22,15 +23,20 @@ export const metadata: Metadata = {
     'Book a DNA test. We come to you. NABL-certified labs, plain-language reports, optional genetic counselling. Delhi NCR only.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch session once on the server and seed SessionProvider with it.
+  // `auth()` is request-cached, so layouts/pages calling it again are free.
+  // Avoids the dev-mode ClientFetchError when /api/auth/session is mid-compile.
+  const session = await auth();
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-slate-900">
-        <Providers>{children}</Providers>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   );

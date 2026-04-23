@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 function LoginForm() {
   const router = useRouter();
@@ -46,7 +47,7 @@ function LoginForm() {
       />
       <div className="w-full max-w-md">
         <Link href="/" className="mb-8 flex items-center justify-center gap-2" prefetch={false}>
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+          <span className="flex h-10 w-10 items-center justify-center rounded bg-primary text-primary-foreground">
             <FlaskConical className="h-5 w-5" />
           </span>
           <span className="text-lg font-semibold">Know Your Genes</span>
@@ -65,8 +66,9 @@ function LoginForm() {
                   id="identifier"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="admin@kyg.in or 9876543210"
+                  placeholder="you@example.com or 9876543210"
                   autoComplete="username"
+                  className="h-11"
                   required
                 />
               </div>
@@ -78,18 +80,19 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
+                  className="h-11"
                   required
                 />
               </div>
 
               {error && (
-                <div className="flex items-center gap-2 rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  {error}
-                </div>
+                <Alert variant="destructive">
+                  <AlertCircle />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
               )}
 
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button type="submit" size="lg" className="h-11 w-full" disabled={loading}>
                 {loading ? 'Signing in…' : 'Sign in'}
               </Button>
             </form>
@@ -98,16 +101,16 @@ function LoginForm() {
               <Separator className="flex-1" /> OR <Separator className="flex-1" />
             </div>
 
-            <Button variant="outline" className="w-full" onClick={() => signIn('google', { callbackUrl: from })}>
+            <Button
+              variant="outline"
+              size="lg"
+              className="h-11 w-full"
+              onClick={() => signIn('google', { callbackUrl: from })}
+            >
               <GoogleIcon className="h-4 w-4" /> Continue with Google
             </Button>
           </CardContent>
         </Card>
-
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          Seeded test logins in{' '}
-          <code className="rounded bg-muted px-1 py-0.5 font-mono text-[10px]">prisma/seed.ts</code>
-        </p>
       </div>
     </div>
   );

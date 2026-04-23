@@ -27,12 +27,26 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
   });
 }
 
-// Archive (soft delete) by setting active=false. Keeps order history intact.
-export async function DELETE(_req: Request, { params }: { params: Params }) {
+// DELETE: soft-delete by default (active=false). ?permanent=true hard-deletes.
+export async function DELETE(req: Request, { params }: { params: Params }) {
   return handle(async () => {
     const guard = await requireApiRole(['ADMIN']);
     if (isResponse(guard)) return guard;
     const { id } = await params;
+    const permanent = new URL(req.url).searchParams.get('permanent') === 'true';
+
+    if (permanent) {
+      try {
+        const pkg = await prisma.package.delete({ where: { id } });
+        return ok(pkg);
+      } catch (e) {
+        if ((e as { code?: string }).code === 'P2003') {
+          throw new Error('Cannot delete permanently: this package has orders referencing it. Deactivate instead.');
+        }
+        throw e;
+      }
+    }
+
     const pkg = await prisma.package.update({ where: { id }, data: { active: false } });
     return ok(pkg);
   });

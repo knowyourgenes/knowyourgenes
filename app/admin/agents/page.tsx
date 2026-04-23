@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Plus, Loader2, CheckCircle2, XCircle } from 'lucide-react';
+import { Plus, Loader2, CheckCircle2, XCircle, Pencil, Trash2 } from 'lucide-react';
 
 import PageHeader from '@/components/admin/PageHeader';
 import DataTable from '@/components/admin/DataTable';
+import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 type Agent = {
   id: string;
@@ -56,12 +57,16 @@ export default function AdminAgentsPage() {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<Form>(EMPTY);
+  const [deleteTarget, setDeleteTarget] = useState<Agent | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
   async function load() {
     setLoading(true);
     const res = await fetch('/api/admin/agents');
     const json = await res.json();
     if (json.ok) setItems(json.data);
+    else toast.error(json.error ?? 'Failed to load agents');
     setLoading(false);
   }
 
@@ -114,10 +119,35 @@ export default function AdminAgentsPage() {
     load();
   }
 
-  async function deactivate(a: Agent) {
-    if (!confirm(`Deactivate ${a.name}?`)) return;
-    await fetch(`/api/admin/agents/${a.id}`, { method: 'DELETE' });
-    toast.success('Agent deactivated');
+  async function handleDelete(permanent: boolean) {
+    if (!deleteTarget) return;
+    const q = permanent ? '?permanent=true' : '';
+    const res = await fetch(`/api/admin/agents/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!json.ok) {
+      toast.error(json.error ?? 'Delete failed');
+      return;
+    }
+    toast.success(permanent ? 'Agent deleted' : 'Agent deactivated');
+    setDeleteTarget(null);
+    load();
+  }
+
+  async function handleBulkDelete(permanent: boolean) {
+    const q = permanent ? '?permanent=true' : '';
+    const results = await Promise.allSettled(
+      selectedIds.map((id) =>
+        fetch(`/api/admin/agents/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
+      )
+    );
+    const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
+    const done = results.length - failed;
+    const noun = (n: number) => (n === 1 ? 'agent' : 'agents');
+    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    else toast.error(`${done} done, ${failed} failed`);
+    setBulkDeleteOpen(false);
+    setSelectedIds([]);
     load();
   }
 
@@ -140,6 +170,14 @@ export default function AdminAgentsPage() {
       ) : (
         <DataTable
           rows={items}
+          selectable
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
+          bulkActions={
+            <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
+              <Trash2 className="h-3.5 w-3.5" /> Delete
+            </Button>
+          }
           columns={[
             {
               key: 'name',
@@ -206,30 +244,37 @@ export default function AdminAgentsPage() {
           ]}
           rowAction={(a) => (
             <div className="flex justify-end gap-2">
-              <Button size="sm" variant="ghost" onClick={() => openEdit(a)}>
-                Edit
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                onClick={() => openEdit(a)}
+                aria-label="Edit"
+                title="Edit"
+              >
+                <Pencil className="h-3.5 w-3.5" />
               </Button>
-              {a.agentProfile?.status === 'ACTIVE' && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-destructive hover:text-destructive"
-                  onClick={() => deactivate(a)}
-                >
-                  Deactivate
-                </Button>
-              )}
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                className="text-destructive hover:text-destructive"
+                onClick={() => setDeleteTarget(a)}
+                aria-label="Delete"
+                title="Delete"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
             </div>
           )}
         />
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-2xl">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-2xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>{form.id ? 'Edit agent' : 'New agent'}</DialogTitle>
           </DialogHeader>
-          <form id="a-form" onSubmit={save} className="grid gap-4 py-2">
+          <DialogBody>
+          <form id="a-form" onSubmit={save} className="grid gap-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label htmlFor="name">Full name</Label>
@@ -302,7 +347,8 @@ export default function AdminAgentsPage() {
               </label>
             </div>
           </form>
-          <DialogFooter>
+          </DialogBody>
+          <DialogFooter className="m-0 shrink-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
@@ -313,6 +359,24 @@ export default function AdminAgentsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <DeleteConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(o) => !o && setDeleteTarget(null)}
+        title={deleteTarget ? `Delete "${deleteTarget.name}"?` : 'Delete'}
+        itemLabel="This agent"
+        onConfirm={handleDelete}
+      />
+
+      <DeleteConfirmDialog
+        open={bulkDeleteOpen}
+        onOpenChange={setBulkDeleteOpen}
+        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'agent' : 'agents'}?`}
+        itemLabel={
+          selectedIds.length === 1 ? 'This agent' : `These ${selectedIds.length} agents`
+        }
+        onConfirm={handleBulkDelete}
+      />
     </>
   );
 }

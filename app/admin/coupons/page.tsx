@@ -3,16 +3,17 @@
 import { useEffect, useState } from 'react';
 import type { Coupon } from '@prisma/client';
 import { toast } from 'sonner';
-import { Plus, Loader2 } from 'lucide-react';
+import { Plus, Loader2, Pencil, Trash2 } from 'lucide-react';
 
 import PageHeader from '@/components/admin/PageHeader';
 import DataTable from '@/components/admin/DataTable';
+import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 type Form = {
@@ -30,7 +31,7 @@ type Form = {
 const EMPTY: Form = {
   code: '',
   type: 'FLAT',
-  value: 10000,
+  value: 100,
   minOrder: null,
   maxDiscount: null,
   expiresAt: '',
@@ -44,12 +45,16 @@ export default function AdminCouponsPage() {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<Form>(EMPTY);
+  const [deleteTarget, setDeleteTarget] = useState<Coupon | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
   async function load() {
     setLoading(true);
     const res = await fetch('/api/admin/coupons');
     const json = await res.json();
     if (json.ok) setItems(json.data);
+    else toast.error(json.error ?? 'Failed to load coupons');
     setLoading(false);
   }
 
@@ -66,9 +71,9 @@ export default function AdminCouponsPage() {
       id: c.id,
       code: c.code,
       type: c.type,
-      value: c.value,
-      minOrder: c.minOrder,
-      maxDiscount: c.maxDiscount,
+      value: c.type === 'FLAT' ? c.value / 100 : c.value,
+      minOrder: c.minOrder != null ? c.minOrder / 100 : null,
+      maxDiscount: c.maxDiscount != null ? c.maxDiscount / 100 : null,
       expiresAt: c.expiresAt ? new Date(c.expiresAt).toISOString().slice(0, 10) : '',
       usageLimit: c.usageLimit,
       active: c.active,
@@ -82,9 +87,9 @@ export default function AdminCouponsPage() {
     const body = {
       code: form.code,
       type: form.type,
-      value: Number(form.value),
-      minOrder: form.minOrder ? Number(form.minOrder) : null,
-      maxDiscount: form.maxDiscount ? Number(form.maxDiscount) : null,
+      value: form.type === 'FLAT' ? Math.round(Number(form.value) * 100) : Number(form.value),
+      minOrder: form.minOrder ? Math.round(Number(form.minOrder) * 100) : null,
+      maxDiscount: form.maxDiscount ? Math.round(Number(form.maxDiscount) * 100) : null,
       expiresAt: form.expiresAt || null,
       usageLimit: form.usageLimit ? Number(form.usageLimit) : null,
       active: form.active,
@@ -103,10 +108,35 @@ export default function AdminCouponsPage() {
     load();
   }
 
-  async function archive(c: Coupon) {
-    if (!confirm(`Deactivate "${c.code}"?`)) return;
-    await fetch(`/api/admin/coupons/${c.id}`, { method: 'DELETE' });
-    toast.success('Coupon deactivated');
+  async function handleDelete(permanent: boolean) {
+    if (!deleteTarget) return;
+    const q = permanent ? '?permanent=true' : '';
+    const res = await fetch(`/api/admin/coupons/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!json.ok) {
+      toast.error(json.error ?? 'Delete failed');
+      return;
+    }
+    toast.success(permanent ? 'Coupon deleted' : 'Coupon deactivated');
+    setDeleteTarget(null);
+    load();
+  }
+
+  async function handleBulkDelete(permanent: boolean) {
+    const q = permanent ? '?permanent=true' : '';
+    const results = await Promise.allSettled(
+      selectedIds.map((id) =>
+        fetch(`/api/admin/coupons/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
+      )
+    );
+    const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
+    const done = results.length - failed;
+    const noun = (n: number) => (n === 1 ? 'coupon' : 'coupons');
+    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    else toast.error(`${done} done, ${failed} failed`);
+    setBulkDeleteOpen(false);
+    setSelectedIds([]);
     load();
   }
 
@@ -117,7 +147,7 @@ export default function AdminCouponsPage() {
     <>
       <PageHeader
         title="Coupons"
-        subtitle="Promo codes. Values in paise for FLAT, 0–100 for PERCENT."
+        subtitle="Promo codes. Enter amounts in rupees (₹) for FLAT, 0–100 for PERCENT."
         actions={
           <Button onClick={openCreate}>
             <Plus className="h-4 w-4" /> New coupon
@@ -132,6 +162,14 @@ export default function AdminCouponsPage() {
       ) : (
         <DataTable
           rows={items}
+          selectable
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
+          bulkActions={
+            <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
+              <Trash2 className="h-3.5 w-3.5" /> Delete
+            </Button>
+          }
           columns={[
             {
               key: 'code',
@@ -166,30 +204,37 @@ export default function AdminCouponsPage() {
           ]}
           rowAction={(c) => (
             <div className="flex justify-end gap-2">
-              <Button size="sm" variant="ghost" onClick={() => openEdit(c)}>
-                Edit
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                onClick={() => openEdit(c)}
+                aria-label="Edit"
+                title="Edit"
+              >
+                <Pencil className="h-3.5 w-3.5" />
               </Button>
-              {c.active && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-destructive hover:text-destructive"
-                  onClick={() => archive(c)}
-                >
-                  Archive
-                </Button>
-              )}
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                className="text-destructive hover:text-destructive"
+                onClick={() => setDeleteTarget(c)}
+                aria-label="Delete"
+                title="Delete"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
             </div>
           )}
         />
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-xl">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>{form.id ? 'Edit coupon' : 'New coupon'}</DialogTitle>
           </DialogHeader>
-          <form id="coupon-form" onSubmit={save} className="grid gap-4 py-2">
+          <DialogBody>
+          <form id="coupon-form" onSubmit={save} className="grid gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="code">Code (A–Z, 0–9, _)</Label>
               <Input
@@ -211,38 +256,41 @@ export default function AdminCouponsPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="FLAT">Flat (paise)</SelectItem>
+                    <SelectItem value="FLAT">Flat (₹)</SelectItem>
                     <SelectItem value="PERCENT">Percent (0–100)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="value">Value</Label>
+                <Label htmlFor="value">Value ({form.type === 'FLAT' ? '₹' : '%'})</Label>
                 <Input
                   id="value"
                   type="number"
+                  step={form.type === 'FLAT' ? '0.01' : '1'}
+                  min="0"
                   value={form.value}
                   onChange={(e) => setForm({ ...form, value: Number(e.target.value) })}
                   required
                 />
-                {form.type === 'FLAT' && (
-                  <p className="text-xs text-muted-foreground">= ₹{Math.floor(form.value / 100)}</p>
-                )}
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="min">Min order (paise)</Label>
+                <Label htmlFor="min">Min order (₹)</Label>
                 <Input
                   id="min"
                   type="number"
+                  step="0.01"
+                  min="0"
                   value={form.minOrder ?? ''}
                   onChange={(e) => setForm({ ...form, minOrder: e.target.value ? Number(e.target.value) : null })}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="max">Max discount (paise)</Label>
+                <Label htmlFor="max">Max discount (₹)</Label>
                 <Input
                   id="max"
                   type="number"
+                  step="0.01"
+                  min="0"
                   value={form.maxDiscount ?? ''}
                   onChange={(e) => setForm({ ...form, maxDiscount: e.target.value ? Number(e.target.value) : null })}
                 />
@@ -271,7 +319,8 @@ export default function AdminCouponsPage() {
               Active
             </label>
           </form>
-          <DialogFooter>
+          </DialogBody>
+          <DialogFooter className="m-0 shrink-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
@@ -282,6 +331,24 @@ export default function AdminCouponsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <DeleteConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(o) => !o && setDeleteTarget(null)}
+        title={deleteTarget ? `Delete coupon "${deleteTarget.code}"?` : 'Delete'}
+        itemLabel="This coupon"
+        onConfirm={handleDelete}
+      />
+
+      <DeleteConfirmDialog
+        open={bulkDeleteOpen}
+        onOpenChange={setBulkDeleteOpen}
+        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'coupon' : 'coupons'}?`}
+        itemLabel={
+          selectedIds.length === 1 ? 'This coupon' : `These ${selectedIds.length} coupons`
+        }
+        onConfirm={handleBulkDelete}
+      />
     </>
   );
 }
