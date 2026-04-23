@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOut } from 'next-auth/react';
 import type { Role } from '@prisma/client';
 import {
   LayoutDashboard,
@@ -14,22 +13,12 @@ import {
   FileText,
   Ticket,
   MapPin,
-  LogOut,
   FlaskConical,
   BadgeCheck,
   Building2,
+  ExternalLink,
 } from 'lucide-react';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import {
   Sidebar,
   SidebarContent,
@@ -49,13 +38,18 @@ type NavItem = {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   roles: Role[];
+  // Only match on exact path — use when href is a prefix of other items.
+  exact?: boolean;
+  external?: boolean;
 };
 type NavGroup = { label: string; items: NavItem[] };
 
 const GROUPS: NavGroup[] = [
   {
     label: 'Overview',
-    items: [{ href: '/admin', label: 'Dashboard', icon: LayoutDashboard, roles: ['ADMIN', 'COUNSELLOR', 'PARTNER'] }],
+    items: [
+      { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['ADMIN', 'COUNSELLOR', 'PARTNER'] },
+    ],
   },
   {
     label: 'Operations',
@@ -88,23 +82,16 @@ const GROUPS: NavGroup[] = [
   },
 ];
 
-export default function AppSidebar({ role, name, email }: { role: Role; name: string; email: string }) {
+export default function AppSidebar({ role }: { role: Role; name?: string; email?: string }) {
   const pathname = usePathname();
-
-  const initials = name
-    .split(' ')
-    .map((n) => n[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
 
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" render={<Link href="/admin" />}>
-              <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <SidebarMenuButton size="lg" render={<Link href="/admin/dashboard" />}>
+              <div className="flex aspect-square size-8 items-center justify-center rounded bg-primary text-primary-foreground">
                 <FlaskConical className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -126,7 +113,9 @@ export default function AppSidebar({ role, name, email }: { role: Role; name: st
               <SidebarGroupContent>
                 <SidebarMenu>
                   {items.map((it) => {
-                    const active = pathname === it.href || pathname.startsWith(it.href + '/');
+                    const active = it.exact
+                      ? pathname === it.href
+                      : pathname === it.href || pathname.startsWith(it.href + '/');
                     const Icon = it.icon;
                     return (
                       <SidebarMenuItem key={it.href}>
@@ -144,38 +133,19 @@ export default function AppSidebar({ role, name, email }: { role: Role; name: st
         })}
       </SidebarContent>
 
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger render={<SidebarMenuButton size="lg" />}>
-                <Avatar className="h-8 w-8 rounded-md">
-                  <AvatarFallback className="rounded-md bg-primary/10 text-xs text-primary">{initials}</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{name}</span>
-                  <span className="truncate text-xs text-muted-foreground">{role}</span>
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent side="top" align="end" className="w-56" sideOffset={8}>
-                <DropdownMenuGroup>
-                  <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium">{name}</p>
-                      <p className="text-xs text-muted-foreground">{email}</p>
-                    </div>
-                  </DropdownMenuLabel>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/login' })}>
-                  <LogOut className="h-4 w-4" />
-                  Sign out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SidebarMenuButton
+              tooltip="API docs"
+              render={<Link href="/api-docs" target="_blank" rel="noreferrer" />}
+            >
+              <ExternalLink />
+              <span>API docs</span>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarFooter>
+      </SidebarFooter> */}
 
       <SidebarRail />
     </Sidebar>

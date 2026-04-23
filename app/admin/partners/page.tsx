@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Plus, Loader2, FlaskConical } from 'lucide-react';
+import { Plus, Loader2, FlaskConical, Pencil, Trash2 } from 'lucide-react';
 
 import PageHeader from '@/components/admin/PageHeader';
 import DataTable from '@/components/admin/DataTable';
+import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
+  DialogBody,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -71,12 +73,16 @@ export default function AdminPartnersPage() {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<Form>(EMPTY);
+  const [deleteTarget, setDeleteTarget] = useState<Partner | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
   async function load() {
     setLoading(true);
     const res = await fetch('/api/admin/partners');
     const json = await res.json();
     if (json.ok) setItems(json.data);
+    else toast.error(json.error ?? 'Failed to load partners');
     setLoading(false);
   }
 
@@ -137,10 +143,35 @@ export default function AdminPartnersPage() {
     load();
   }
 
-  async function deactivate(p: Partner) {
-    if (!confirm(`Deactivate ${p.labPartnerProfile?.labName}?`)) return;
-    await fetch(`/api/admin/partners/${p.id}`, { method: 'DELETE' });
-    toast.success('Partner deactivated');
+  async function handleDelete(permanent: boolean) {
+    if (!deleteTarget) return;
+    const q = permanent ? '?permanent=true' : '';
+    const res = await fetch(`/api/admin/partners/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!json.ok) {
+      toast.error(json.error ?? 'Delete failed');
+      return;
+    }
+    toast.success(permanent ? 'Partner deleted' : 'Partner deactivated');
+    setDeleteTarget(null);
+    load();
+  }
+
+  async function handleBulkDelete(permanent: boolean) {
+    const q = permanent ? '?permanent=true' : '';
+    const results = await Promise.allSettled(
+      selectedIds.map((id) =>
+        fetch(`/api/admin/partners/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
+      )
+    );
+    const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
+    const done = results.length - failed;
+    const noun = (n: number) => (n === 1 ? 'partner' : 'partners');
+    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    else toast.error(`${done} done, ${failed} failed`);
+    setBulkDeleteOpen(false);
+    setSelectedIds([]);
     load();
   }
 
@@ -163,13 +194,21 @@ export default function AdminPartnersPage() {
       ) : (
         <DataTable
           rows={items}
+          selectable
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
+          bulkActions={
+            <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
+              <Trash2 className="h-3.5 w-3.5" /> Delete
+            </Button>
+          }
           columns={[
             {
               key: 'lab',
               header: 'Lab',
               render: (p) => (
                 <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 text-primary">
+                  <div className="flex h-9 w-9 items-center justify-center rounded bg-primary/10 text-primary">
                     <FlaskConical className="h-4 w-4" />
                   </div>
                   <div>
@@ -224,19 +263,25 @@ export default function AdminPartnersPage() {
           ]}
           rowAction={(p) => (
             <div className="flex justify-end gap-2">
-              <Button size="sm" variant="ghost" onClick={() => openEdit(p)}>
-                Edit
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                onClick={() => openEdit(p)}
+                aria-label="Edit"
+                title="Edit"
+              >
+                <Pencil className="h-3.5 w-3.5" />
               </Button>
-              {p.labPartnerProfile?.active && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-destructive hover:text-destructive"
-                  onClick={() => deactivate(p)}
-                >
-                  Deactivate
-                </Button>
-              )}
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                className="text-destructive hover:text-destructive"
+                onClick={() => setDeleteTarget(p)}
+                aria-label="Delete"
+                title="Delete"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
             </div>
           )}
           empty="No lab partners yet."
@@ -244,8 +289,8 @@ export default function AdminPartnersPage() {
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-3xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>{form.id ? 'Edit lab partner' : 'New lab partner'}</DialogTitle>
             <DialogDescription>
               {form.id
@@ -254,8 +299,9 @@ export default function AdminPartnersPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <form id="partner-form" onSubmit={save} className="grid gap-4 py-2">
-            <div className="rounded-lg border bg-muted/30 p-3">
+          <DialogBody>
+          <form id="partner-form" onSubmit={save} className="grid gap-4">
+            <div className="rounded border bg-muted/30 p-3">
               <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Account</p>
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
@@ -303,7 +349,7 @@ export default function AdminPartnersPage() {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-muted/30 p-3">
+            <div className="rounded border bg-muted/30 p-3">
               <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Lab details</p>
               <div className="grid grid-cols-2 gap-3">
                 <div className="col-span-2 space-y-1.5">
@@ -376,8 +422,9 @@ export default function AdminPartnersPage() {
               </div>
             </div>
           </form>
+          </DialogBody>
 
-          <DialogFooter>
+          <DialogFooter className="m-0 shrink-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
@@ -388,6 +435,26 @@ export default function AdminPartnersPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <DeleteConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(o) => !o && setDeleteTarget(null)}
+        title={deleteTarget ? `Delete "${deleteTarget.labPartnerProfile?.labName}"?` : 'Delete'}
+        itemLabel="This lab partner"
+        onConfirm={handleDelete}
+      />
+
+      <DeleteConfirmDialog
+        open={bulkDeleteOpen}
+        onOpenChange={setBulkDeleteOpen}
+        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'lab partner' : 'lab partners'}?`}
+        itemLabel={
+          selectedIds.length === 1
+            ? 'This lab partner'
+            : `These ${selectedIds.length} lab partners`
+        }
+        onConfirm={handleBulkDelete}
+      />
     </>
   );
 }

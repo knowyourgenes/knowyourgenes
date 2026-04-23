@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import type { Package } from '@prisma/client';
 import { toast } from 'sonner';
-import { Plus, Loader2 } from 'lucide-react';
+import { Plus, Loader2, Pencil, Trash2 } from 'lucide-react';
 
 import PageHeader from '@/components/admin/PageHeader';
 import DataTable from '@/components/admin/DataTable';
+import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,6 +16,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
+  DialogBody,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -66,9 +68,12 @@ const rupees = (p: number) => `₹${Math.floor(p / 100).toLocaleString('en-IN')}
 export default function AdminPackagesPage() {
   const [items, setItems] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteTarget, setDeleteTarget] = useState<Package | null>(null);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<FormState>(EMPTY);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -95,8 +100,8 @@ export default function AdminPackagesPage() {
       category: p.category,
       tagline: p.tagline,
       description: p.description,
-      price: p.price,
-      compareAtPrice: p.compareAtPrice,
+      price: p.price / 100,
+      compareAtPrice: p.compareAtPrice != null ? p.compareAtPrice / 100 : null,
       tatMinDays: p.tatMinDays,
       tatMaxDays: p.tatMaxDays,
       sampleType: p.sampleType,
@@ -119,8 +124,8 @@ export default function AdminPackagesPage() {
       category: form.category,
       tagline: form.tagline,
       description: form.description,
-      price: Number(form.price),
-      compareAtPrice: form.compareAtPrice ? Number(form.compareAtPrice) : null,
+      price: Math.round(Number(form.price) * 100),
+      compareAtPrice: form.compareAtPrice ? Math.round(Number(form.compareAtPrice) * 100) : null,
       tatMinDays: Number(form.tatMinDays),
       tatMaxDays: Number(form.tatMaxDays),
       sampleType: form.sampleType,
@@ -156,12 +161,35 @@ export default function AdminPackagesPage() {
     load();
   }
 
-  async function archive(p: Package) {
-    if (!confirm(`Archive "${p.name}"? It will disappear from the public catalog.`)) return;
-    const res = await fetch(`/api/admin/packages/${p.id}`, { method: 'DELETE' });
+  async function handleDelete(permanent: boolean) {
+    if (!deleteTarget) return;
+    const q = permanent ? '?permanent=true' : '';
+    const res = await fetch(`/api/admin/packages/${deleteTarget.id}${q}`, { method: 'DELETE' });
     const json = await res.json();
-    if (!json.ok) return toast.error(json.error ?? 'Archive failed');
-    toast.success('Package archived');
+    if (!json.ok) {
+      toast.error(json.error ?? 'Delete failed');
+      return;
+    }
+    toast.success(permanent ? 'Package deleted' : 'Package deactivated');
+    setDeleteTarget(null);
+    load();
+  }
+
+  async function handleBulkDelete(permanent: boolean) {
+    const q = permanent ? '?permanent=true' : '';
+    const results = await Promise.allSettled(
+      selectedIds.map((id) =>
+        fetch(`/api/admin/packages/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
+      )
+    );
+    const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
+    const done = results.length - failed;
+    const noun = (n: number) => (n === 1 ? 'package' : 'packages');
+    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    else toast.error(`${done} done, ${failed} failed`);
+    setBulkDeleteOpen(false);
+    setSelectedIds([]);
     load();
   }
 
@@ -169,7 +197,7 @@ export default function AdminPackagesPage() {
     <>
       <PageHeader
         title="Packages"
-        subtitle="Test catalog. Prices entered in paise (₹1 = 100)."
+        subtitle="Test catalog. Enter prices in rupees (₹)."
         actions={
           <Button onClick={openCreate}>
             <Plus className="h-4 w-4" /> New package
@@ -184,6 +212,14 @@ export default function AdminPackagesPage() {
       ) : (
         <DataTable
           rows={items}
+          selectable
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
+          bulkActions={
+            <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
+              <Trash2 className="h-3.5 w-3.5" /> Delete
+            </Button>
+          }
           columns={[
             {
               key: 'name',
@@ -239,19 +275,25 @@ export default function AdminPackagesPage() {
           ]}
           rowAction={(p) => (
             <div className="flex justify-end gap-2">
-              <Button size="sm" variant="ghost" onClick={() => openEdit(p)}>
-                Edit
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                onClick={() => openEdit(p)}
+                aria-label="Edit"
+                title="Edit"
+              >
+                <Pencil className="h-3.5 w-3.5" />
               </Button>
-              {p.active && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-destructive hover:text-destructive"
-                  onClick={() => archive(p)}
-                >
-                  Archive
-                </Button>
-              )}
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                className="text-destructive hover:text-destructive"
+                onClick={() => setDeleteTarget(p)}
+                aria-label="Delete"
+                title="Delete"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
             </div>
           )}
           empty="No packages yet. Click + New package."
@@ -259,13 +301,14 @@ export default function AdminPackagesPage() {
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-3xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>{form.id ? 'Edit package' : 'New package'}</DialogTitle>
             <DialogDescription>Fields marked by red are required.</DialogDescription>
           </DialogHeader>
 
-          <form id="pkg-form" onSubmit={save} className="grid gap-4 py-2">
+          <DialogBody>
+          <form id="pkg-form" onSubmit={save} className="grid gap-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label htmlFor="slug">Slug (kebab-case)</Label>
@@ -316,23 +359,24 @@ export default function AdminPackagesPage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="price">Price (paise)</Label>
+                <Label htmlFor="price">Price (₹)</Label>
                 <Input
                   id="price"
                   type="number"
+                  step="0.01"
+                  min="0"
                   value={form.price}
                   onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
                   required
                 />
-                <p className="text-xs text-muted-foreground">
-                  = ₹{Math.floor(form.price / 100).toLocaleString('en-IN')}
-                </p>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="compare">Compare-at (paise, optional)</Label>
+                <Label htmlFor="compare">Compare-at (₹, optional)</Label>
                 <Input
                   id="compare"
                   type="number"
+                  step="0.01"
+                  min="0"
                   value={form.compareAtPrice ?? ''}
                   onChange={(e) => setForm({ ...form, compareAtPrice: e.target.value ? Number(e.target.value) : null })}
                 />
@@ -428,8 +472,9 @@ export default function AdminPackagesPage() {
               </label>
             </div>
           </form>
+          </DialogBody>
 
-          <DialogFooter>
+          <DialogFooter className="m-0 shrink-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
@@ -440,6 +485,24 @@ export default function AdminPackagesPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <DeleteConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(o) => !o && setDeleteTarget(null)}
+        title={deleteTarget ? `Delete "${deleteTarget.name}"?` : 'Delete'}
+        itemLabel="This package"
+        onConfirm={handleDelete}
+      />
+
+      <DeleteConfirmDialog
+        open={bulkDeleteOpen}
+        onOpenChange={setBulkDeleteOpen}
+        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'package' : 'packages'}?`}
+        itemLabel={
+          selectedIds.length === 1 ? 'This package' : `These ${selectedIds.length} packages`
+        }
+        onConfirm={handleBulkDelete}
+      />
     </>
   );
 }

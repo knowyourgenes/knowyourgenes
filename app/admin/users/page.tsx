@@ -37,6 +37,7 @@ export default function AdminUsersPage() {
     const res = await fetch(`/api/admin/users?${p.toString()}`);
     const json = await res.json();
     if (json.ok) setRows(json.data.items);
+    else toast.error(json.error ?? 'Failed to load users');
     setLoading(false);
   }
 

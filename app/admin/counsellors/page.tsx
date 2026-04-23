@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Plus, Loader2 } from 'lucide-react';
+import { Plus, Loader2, Pencil, Trash2 } from 'lucide-react';
 
 import PageHeader from '@/components/admin/PageHeader';
 import DataTable from '@/components/admin/DataTable';
+import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Dialog,
+  DialogBody,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -78,12 +80,16 @@ export default function AdminCounsellorsPage() {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<Form>(EMPTY);
+  const [deleteTarget, setDeleteTarget] = useState<Counsellor | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
   async function load() {
     setLoading(true);
     const res = await fetch('/api/admin/counsellors');
     const json = await res.json();
     if (json.ok) setItems(json.data);
+    else toast.error(json.error ?? 'Failed to load counsellors');
     setLoading(false);
   }
 
@@ -160,10 +166,35 @@ export default function AdminCounsellorsPage() {
     load();
   }
 
-  async function deactivate(c: Counsellor) {
-    if (!confirm(`Deactivate ${c.name}?`)) return;
-    await fetch(`/api/admin/counsellors/${c.id}`, { method: 'DELETE' });
-    toast.success('Counsellor deactivated');
+  async function handleDelete(permanent: boolean) {
+    if (!deleteTarget) return;
+    const q = permanent ? '?permanent=true' : '';
+    const res = await fetch(`/api/admin/counsellors/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!json.ok) {
+      toast.error(json.error ?? 'Delete failed');
+      return;
+    }
+    toast.success(permanent ? 'Counsellor deleted' : 'Counsellor deactivated');
+    setDeleteTarget(null);
+    load();
+  }
+
+  async function handleBulkDelete(permanent: boolean) {
+    const q = permanent ? '?permanent=true' : '';
+    const results = await Promise.allSettled(
+      selectedIds.map((id) =>
+        fetch(`/api/admin/counsellors/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
+      )
+    );
+    const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
+    const done = results.length - failed;
+    const noun = (n: number) => (n === 1 ? 'counsellor' : 'counsellors');
+    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    else toast.error(`${done} done, ${failed} failed`);
+    setBulkDeleteOpen(false);
+    setSelectedIds([]);
     load();
   }
 
@@ -186,6 +217,14 @@ export default function AdminCounsellorsPage() {
       ) : (
         <DataTable
           rows={items}
+          selectable
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
+          bulkActions={
+            <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
+              <Trash2 className="h-3.5 w-3.5" /> Delete
+            </Button>
+          }
           columns={[
             {
               key: 'name',
@@ -234,33 +273,40 @@ export default function AdminCounsellorsPage() {
           ]}
           rowAction={(c) => (
             <div className="flex justify-end gap-2">
-              <Button size="sm" variant="ghost" onClick={() => openEdit(c)}>
-                Edit
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                onClick={() => openEdit(c)}
+                aria-label="Edit"
+                title="Edit"
+              >
+                <Pencil className="h-3.5 w-3.5" />
               </Button>
-              {c.counsellorProfile?.active && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-destructive hover:text-destructive"
-                  onClick={() => deactivate(c)}
-                >
-                  Deactivate
-                </Button>
-              )}
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                className="text-destructive hover:text-destructive"
+                onClick={() => setDeleteTarget(c)}
+                aria-label="Delete"
+                title="Delete"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
             </div>
           )}
         />
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-2xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+          <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>{form.id ? 'Edit counsellor' : 'New counsellor'}</DialogTitle>
             <DialogDescription>
               {form.id ? 'Update profile details.' : 'Creates a User + CounsellorProfile. They log in with this email.'}
             </DialogDescription>
           </DialogHeader>
-          <form id="c-form" onSubmit={save} className="grid gap-4 py-2">
+          <DialogBody>
+          <form id="c-form" onSubmit={save} className="grid gap-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label htmlFor="name">Full name</Label>
@@ -362,7 +408,8 @@ export default function AdminCounsellorsPage() {
               </div>
             </div>
           </form>
-          <DialogFooter>
+          </DialogBody>
+          <DialogFooter className="m-0 shrink-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
@@ -373,6 +420,24 @@ export default function AdminCounsellorsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <DeleteConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(o) => !o && setDeleteTarget(null)}
+        title={deleteTarget ? `Delete "${deleteTarget.name}"?` : 'Delete'}
+        itemLabel="This counsellor"
+        onConfirm={handleDelete}
+      />
+
+      <DeleteConfirmDialog
+        open={bulkDeleteOpen}
+        onOpenChange={setBulkDeleteOpen}
+        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'counsellor' : 'counsellors'}?`}
+        itemLabel={
+          selectedIds.length === 1 ? 'This counsellor' : `These ${selectedIds.length} counsellors`
+        }
+        onConfirm={handleBulkDelete}
+      />
     </>
   );
 }

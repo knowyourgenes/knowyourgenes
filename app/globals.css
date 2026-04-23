@@ -152,4 +152,22 @@ body {
   html {
     @apply font-sans;
   }
+
+  /* Everything a user can click should feel clickable.
+     Disabled buttons keep their default cursor so they don't lie. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  [role='menuitem']:not([aria-disabled='true']),
+  [role='tab']:not([aria-disabled='true']),
+  [role='option']:not([aria-disabled='true']),
+  a[href],
+  summary,
+  label[for],
+  [data-slot='button']:not(:disabled):not([aria-disabled='true']),
+  [data-slot='select-trigger']:not(:disabled),
+  [data-slot='dropdown-menu-trigger']:not(:disabled),
+  [data-slot='sidebar-menu-button']:not(:disabled),
+  [data-slot='dialog-close']:not(:disabled) {
+    cursor: pointer;
+  }
 }

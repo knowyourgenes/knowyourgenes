@@ -67,7 +67,9 @@ export default function AdminOrdersPage() {
     ]);
     const [ordersJson, agentsJson] = await Promise.all([ordersRes.json(), agentsRes.json()]);
     if (ordersJson.ok) setOrders(ordersJson.data.items);
+    else toast.error(ordersJson.error ?? 'Failed to load orders');
     if (agentsJson.ok) setAgents(agentsJson.data);
+    else toast.error(agentsJson.error ?? 'Failed to load agents');
     setLoading(false);
   }
 
