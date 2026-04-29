@@ -148,7 +148,7 @@ export default function AdminOrdersPage() {
               header: 'Customer',
               render: (o) => (
                 <div>
-                  <div className="font-medium">{o.user.name ?? '—'}</div>
+                  <div className="font-medium">{o.user.name ?? '-'}</div>
                   <div className="text-xs text-muted-foreground">{o.user.email}</div>
                 </div>
               ),
@@ -190,7 +190,7 @@ export default function AdminOrdersPage() {
               render: (o) => (
                 <Select value="" onValueChange={(v) => v && assignAgent(o.id, v)}>
                   <SelectTrigger className="h-8 w-[180px]">
-                    <span className="text-sm">{o.agent?.user.name ?? '— Assign —'}</span>
+                    <span className="text-sm">{o.agent?.user.name ?? '- Assign -'}</span>
                   </SelectTrigger>
                   <SelectContent>
                     {agents.map((a) => (

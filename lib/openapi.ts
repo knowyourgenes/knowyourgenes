@@ -323,7 +323,7 @@ export function getOpenApiSpec() {
       title: 'KYG Admin API',
       version: '0.1.0',
       description:
-        'Admin-only endpoints. All require an authenticated session with role ADMIN (most) or COUNSELLOR/PARTNER (scoped). Sign in via /login first — session cookie is reused here.',
+        'Admin-only endpoints. All require an authenticated session with role ADMIN (most) or COUNSELLOR/PARTNER (scoped). Sign in via /login first - session cookie is reused here.',
     },
     servers: [{ url: '/' }],
     tags: [

@@ -245,7 +245,7 @@ kyg.in
 
 ---
 
-## 7-Day Launch Routes (Tier 1 — What Ships)
+## 7-Day Launch Routes (Tier 1 - What Ships)
 
 ```
 DAY 1-7 BUILD          WEEK 2 ADD-ON          PHASE 2
@@ -316,18 +316,18 @@ SHARED COMPONENTS
 
 ---
 
-## SEO Sitemap (XML) — Public Routes Only
+## SEO Sitemap (XML) - Public Routes Only
 
 These are the routes that should appear in the XML sitemap for search engines:
 
 ```
-Priority 1.0  — /
-Priority 0.9  — /packages, /how-it-works, /why-kyg
-Priority 0.8  — /packages/[slug] (each package), /science, /about
-Priority 0.7  — /blog, /quiz, /contact, /counsellor
-Priority 0.6  — /blog/[slug] (each post), /faq, /press
-Priority 0.5  — /partner-with-us
-Priority 0.3  — /privacy, /terms, /cookies
+Priority 1.0  - /
+Priority 0.9  - /packages, /how-it-works, /why-kyg
+Priority 0.8  - /packages/[slug] (each package), /science, /about
+Priority 0.7  - /blog, /quiz, /contact, /counsellor
+Priority 0.6  - /blog/[slug] (each post), /faq, /press
+Priority 0.5  - /partner-with-us
+Priority 0.3  - /privacy, /terms, /cookies
 
 EXCLUDED from sitemap:
   /cart, /checkout/*, /track/*, /login, /signup, /forgot-password

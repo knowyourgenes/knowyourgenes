@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Loader2, AlertTriangle } from 'lucide-react';
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,17 +12,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
 
 /**
- * Generic delete confirmation with a "permanently delete" escape hatch.
+ * Generic "deactivate" confirmation.
  *
- *   - Default (checkbox off) → soft delete (deactivate / archive). Reversible.
- *   - Checkbox on             → hard delete. Destructive, cannot be undone.
+ * KYG policy: nothing is ever hard-deleted - data is our key asset. Every
+ * "remove" across the admin soft-deletes (sets `active=false` or flips a
+ * status flag). The record stays queryable and the admin can reactivate it
+ * any time.
  *
- * The component doesn't know about the resource — the caller wires `onConfirm`
- * to the right API call (e.g. DELETE /api/admin/packages/{id}?permanent=true).
+ * Filename is kept as DeleteConfirmDialog for import stability; the UX is
+ * deactivate-only.
  */
 export default function DeleteConfirmDialog({
   open,
@@ -31,27 +31,25 @@ export default function DeleteConfirmDialog({
   itemLabel,
   description,
   onConfirm,
+  actionLabel = 'Deactivate',
+  loadingLabel = 'Deactivating…',
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  /** Short noun shown in the dynamic description. e.g. "package", "counsellor". */
+  /** Short noun shown in the default description. e.g. "This package". */
   itemLabel?: string;
   description?: string;
-  onConfirm: (permanent: boolean) => Promise<void> | void;
+  onConfirm: () => Promise<void> | void;
+  actionLabel?: string;
+  loadingLabel?: string;
 }) {
-  const [permanent, setPermanent] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  // Reset checkbox every time the dialog opens so it doesn't carry state across items.
-  useEffect(() => {
-    if (open) setPermanent(false);
-  }, [open]);
 
   async function handleConfirm() {
     setLoading(true);
     try {
-      await onConfirm(permanent);
+      await onConfirm();
     } finally {
       setLoading(false);
     }
@@ -63,9 +61,7 @@ export default function DeleteConfirmDialog({
   }
 
   const noun = itemLabel ?? 'This item';
-  const defaultDescription = permanent
-    ? `${noun} will be permanently removed from the database. This cannot be undone.`
-    : `${noun} will be deactivated and hidden across the app. You can reactivate it later.`;
+  const defaultDescription = `${noun} will be deactivated and hidden across the app. The data is preserved and you can reactivate it any time.`;
 
   return (
     <AlertDialog open={open} onOpenChange={handleOpenChange}>
@@ -74,33 +70,6 @@ export default function DeleteConfirmDialog({
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{description ?? defaultDescription}</AlertDialogDescription>
         </AlertDialogHeader>
-
-        <div className="rounded border border-destructive/30 bg-destructive/5 p-3">
-          <div className="flex items-start gap-2">
-            <Checkbox
-              id="delete-permanent"
-              checked={permanent}
-              onCheckedChange={(c) => setPermanent(c === true)}
-              className="mt-0.5"
-              disabled={loading}
-            />
-            <div className="flex-1">
-              <Label htmlFor="delete-permanent" className="cursor-pointer text-sm font-medium text-destructive">
-                Permanently delete
-              </Label>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                Removes the record from the database entirely. Destructive and irreversible.
-              </p>
-              {permanent && (
-                <div className="mt-2 flex items-start gap-1.5 text-xs text-destructive">
-                  <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                  <span>If anything references this record (e.g. orders), deletion will fail.</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
         <AlertDialogFooter>
           <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
           <AlertDialogAction
@@ -109,13 +78,7 @@ export default function DeleteConfirmDialog({
             className="bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/40"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            {loading
-              ? permanent
-                ? 'Deleting…'
-                : 'Deactivating…'
-              : permanent
-                ? 'Delete permanently'
-                : 'Deactivate'}
+            {loading ? loadingLabel : actionLabel}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

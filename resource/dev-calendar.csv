@@ -4,22 +4,22 @@ Date,Day,Week,Phase,Diwakar's Task,Parallel / Upstream,Deliverable by EOD,Status
 2026-04-22,Wed,W1,Pre-design setup,"Sample data files for packages, blog, orders, reports, agents, users, FAQ. Plug pricing/bundles from Manpreet into packages.ts.","Testing name+pricing+bundles (#7 Manpreet). Trademark submission (#6 Manpreet).",All pages render with realistic mock content,Not started
 2026-04-23,Thu,W1,Pre-design setup,"Content pass 1 integration: home copy, how-it-works, why-kyg, science, about, quiz.","Content phase 1 (#8 Teesha/Manpreet).","Marketing pages copy-complete (placeholder visuals)",Not started
 2026-04-24,Fri,W1,Pre-design setup,"Legal pages (#10) copy in. Brand kit tokens wired into globals.css. Counsellor+Partnerships data seeded.","Brand kit (#9 Hemant). Legal content (#10 Manpreet). Counsellors list (#11). Partnerships list (#12).","Theme switched to brand colors; /privacy /terms /cookies /counsellor /partner-with-us live",Not started
-2026-04-25,Sat,W1,OFF,—,—,—,Weekend
-2026-04-26,Sun,W1,OFF,—,—,—,Weekend
+2026-04-25,Sat,W1,OFF,-,-,-,Weekend
+2026-04-26,Sun,W1,OFF,-,-,-,Weekend
 2026-04-27,Mon,W2,Infra,"S3/VPS provisioning with Manpreet (#14). Pick stack: Node runtime on VPS, S3 for reports PDF+assets, Postgres (RDS/managed). Set up SSH, firewall, basic hardening.","Cloud account + billing owner (Manpreet).","Prod VPS + Postgres + S3 bucket created",Not started
 2026-04-28,Tue,W2,Infra,"Deploy boilerplate to staging.kyg.in. DNS, SSL (Let's Encrypt/Caddy), env vars, GitHub Actions CI/CD. Phone/number setup support (#13).","Domain DNS access. New phone no. (#13 Manpreet).","staging.kyg.in reachable with SSL; CI pipeline green",Not started
 2026-04-29,Wed,W2,Design kickoff,"FIGMA BATCH 1 EXPECTED: Homepage + Marketing shell (nav/footer, how-it-works, why-kyg, about). Re-style home page to match Figma. Pixel-sync nav/footer.","Hemant delivers Figma Batch 1 (#15).","Home page matches Figma 1:1 on staging",Not started
-2026-04-30,Thu,W2,Design kickoff,"FIGMA BATCH 2 EXPECTED: Commerce — /packages, /packages/[slug]. Re-style packages catalog + detail. Implement biomarker chips, sample-report preview.","Hemant delivers Figma Batch 2.","Packages catalog + detail match design",Not started
+2026-04-30,Thu,W2,Design kickoff,"FIGMA BATCH 2 EXPECTED: Commerce - /packages, /packages/[slug]. Re-style packages catalog + detail. Implement biomarker chips, sample-report preview.","Hemant delivers Figma Batch 2.","Packages catalog + detail match design",Not started
 2026-05-01,Fri,W2,Frontend sprint start,"Frontend sprint officially begins (#16). Razorpay BFG GST onboarding submitted (#17). FIGMA BATCH 3 EXPECTED: cart + checkout + success. Implement cart UI.","Razorpay KYC docs ready (finance). Hemant Batch 3.","Cart page Figma-accurate; Razorpay KYC submitted",Not started
-2026-05-02,Sat,W2,OFF,—,—,—,Weekend
-2026-05-03,Sun,W2,OFF,—,—,—,Weekend
+2026-05-02,Sat,W2,OFF,-,-,-,Weekend
+2026-05-03,Sun,W2,OFF,-,-,-,Weekend
 2026-05-04,Mon,W3,Backend kickoff,"Backend sprint starts (#18). Auth (phone-OTP + optional email/password), orders API, packages API, reports API. FIGMA BATCH 4: User dashboard.","Hemant Batch 4.","Auth + orders CRUD API live on staging",Not started
-2026-05-05,Tue,W3,Backend,"Backend day 2 (#18 end). Role-based access (User/Agent/Admin/Counsellor). Shiprocket chain-of-custody stub. WhatsApp Business API webhook scaffolding. Wire dashboard UI to real APIs.",—,"Dashboard reads live orders + reports; roles enforced",Not started
+2026-05-05,Tue,W3,Backend,"Backend day 2 (#18 end). Role-based access (User/Agent/Admin/Counsellor). Shiprocket chain-of-custody stub. WhatsApp Business API webhook scaffolding. Wire dashboard UI to real APIs.",-,"Dashboard reads live orders + reports; roles enforced",Not started
 2026-05-06,Wed,W3,Design close,"LAST FIGMA BATCH (#15 deadline): Agent + Admin. Re-style /agent mobile flows + /admin tables. Checkout flow end-to-end with real order creation.","Hemant final Figma batch.","/agent and /admin Figma-aligned; real orders creatable",Not started
 2026-05-07,Thu,W3,Integration,"Razorpay sandbox integration: order creation, payment capture, webhook verify, failure retry link. WhatsApp confirmation template wiring. Admin panel polish.","Razorpay test keys received.","Test payment ₹1 flows end-to-end via Razorpay sandbox",Not started
 2026-05-08,Fri,W3,Integration,"Razorpay GO-LIVE (#17 deadline): prod keys, live ₹1 smoke test, refund flow. STAKEHOLDER REVIEW (#16 milestone: user website + user dashboard). Fix review feedback (P0 same day).","Razorpay prod approval. Teesha/Manpreet/Hemant on review call.","Live payments working; review signed off with action list",Not started
-2026-05-09,Sat,W3,OFF,—,—,—,Weekend
-2026-05-10,Sun,W4,OFF,—,—,—,Weekend (nominal ""testing start"" per plan — real testing begins Mon)
+2026-05-09,Sat,W3,OFF,-,-,-,Weekend
+2026-05-10,Sun,W4,OFF,-,-,-,Weekend (nominal ""testing start"" per plan - real testing begins Mon)
 2026-05-11,Mon,W4,Testing D1,"Frontend sprint ends (#16 deadline). FEATURE FREEZE. Full internal QA: guest→book→pay→track→report flow. Agent mobile flow. Admin CRUD. Cross-browser.",Team UAT begins.,"Bug triage list (P0/P1/P2); P0s being fixed",Not started
 2026-05-12,Tue,W4,Testing D2,"Fix P0 + P1 bugs. Load test checkout. Test critical-finding protocol (counsellor review gate). WhatsApp templates dry-run (real number).",Teesha/Manpreet UAT continues.,P0 closed; P1 mostly closed,Not started
 2026-05-13,Wed,W4,Testing D3 + Deploy,"Final regression pass. Production deploy (DNS cutover kyg.in → prod VPS). Post-deploy smoke: home, checkout ₹1, report view, admin login. Hotfix P1s.",Go/no-go meeting EOD.,"Production live at kyg.in; smoke tests green",Not started

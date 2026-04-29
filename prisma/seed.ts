@@ -12,9 +12,9 @@ const packages = [
     slug: 'wellness-starter',
     name: 'Wellness Starter',
     category: PackageCategory.WELLNESS,
-    tagline: 'Your first DNA test — nutrition, fitness, skin & sleep.',
+    tagline: 'Your first DNA test - nutrition, fitness, skin & sleep.',
     description:
-      'A friendly entry point into genetic testing. 80+ traits across diet, movement, and lifestyle — in plain English.',
+      'A friendly entry point into genetic testing. 80+ traits across diet, movement, and lifestyle - in plain English.',
     price: 899900,
     compareAtPrice: 1199900,
     tatMinDays: 7,
@@ -24,13 +24,13 @@ const packages = [
     popular: true,
     highlights: [
       'Nutrient sensitivity (lactose, gluten, caffeine)',
-      'Fitness type — endurance vs. power',
+      'Fitness type - endurance vs. power',
       'Sleep chronotype & recovery',
       'Skin ageing & UV sensitivity',
     ],
     biomarkerList: ['MTHFR', 'FTO', 'ACTN3', 'PPARGC1A', 'CLOCK', 'MC1R', 'APOE', 'TCF7L2'],
     faq: [
-      { q: 'Is this test painful?', a: 'No. Saliva sample — no needle.' },
+      { q: 'Is this test painful?', a: 'No. Saliva sample - no needle.' },
       { q: 'Who is this for?', a: 'Anyone curious about their body. 18+ recommended.' },
     ],
   },
@@ -54,7 +54,7 @@ const packages = [
       'Longevity markers',
     ],
     biomarkerList: ['MTHFR', 'VDR', 'COMT', 'BDNF', 'APOE', 'FOXO3', 'SIRT1', 'IL6'],
-    faq: [{ q: 'Is a consultation included?', a: 'No — counselling is a separate paid service.' }],
+    faq: [{ q: 'Is a consultation included?', a: 'No - counselling is a separate paid service.' }],
   },
   {
     slug: 'cancer-risk-hereditary',
@@ -86,7 +86,7 @@ const packages = [
     slug: 'cardiac-health',
     name: 'Cardiac Health Panel',
     category: PackageCategory.CARDIAC,
-    tagline: 'Familial cardiovascular risk — lipids, arrhythmia, cardiomyopathy.',
+    tagline: 'Familial cardiovascular risk - lipids, arrhythmia, cardiomyopathy.',
     description: 'For families with a history of heart disease, sudden cardiac events, or unexplained fainting.',
     price: 1999900,
     tatMinDays: 10,
@@ -100,7 +100,7 @@ const packages = [
       'Coronary artery disease risk score',
     ],
     biomarkerList: ['LDLR', 'APOB', 'PCSK9', 'KCNQ1', 'KCNH2', 'SCN5A', 'MYH7', 'MYBPC3'],
-    faq: [{ q: 'Is a cardiologist included?', a: 'For critical findings, yes — at no extra cost.' }],
+    faq: [{ q: 'Is a cardiologist included?', a: 'For critical findings, yes - at no extra cost.' }],
   },
   {
     slug: 'reproductive-carrier',
@@ -124,7 +124,7 @@ const packages = [
     faq: [
       {
         q: 'Should both partners test?',
-        a: 'Yes — a single result only tells you half the picture.',
+        a: 'Yes - a single result only tells you half the picture.',
       },
     ],
   },
@@ -133,7 +133,7 @@ const packages = [
     name: 'Drug Sensitivity (Pharmacogenomics)',
     category: PackageCategory.DRUG_SENSITIVITY,
     tagline: 'How your body responds to 80+ common medications.',
-    description: "From painkillers to antidepressants — know which drugs work, which don't, and which to avoid.",
+    description: "From painkillers to antidepressants - know which drugs work, which don't, and which to avoid.",
     price: 1199900,
     compareAtPrice: 1499900,
     tatMinDays: 7,
@@ -150,21 +150,56 @@ const packages = [
     faq: [
       {
         q: 'Do I need a prescription?',
-        a: 'No — but share the report with your doctor before changing any medication.',
+        a: 'No - but share the report with your doctor before changing any medication.',
       },
     ],
   },
 ];
 
 const delhiNcrPincodes = [
-  { pincode: '110001', area: 'Connaught Place', city: 'Delhi' },
-  { pincode: '110002', area: 'Darya Ganj', city: 'Delhi' },
-  { pincode: '110070', area: 'Vasant Kunj', city: 'Delhi' },
-  { pincode: '122001', area: 'DLF Phase 1-3', city: 'Gurgaon' },
-  { pincode: '122002', area: 'Sushant Lok', city: 'Gurgaon' },
-  { pincode: '201301', area: 'Sector 62', city: 'Noida' },
-  { pincode: '201304', area: 'Greater Noida West', city: 'Noida' },
-  { pincode: '121001', area: 'Sector 1-9', city: 'Faridabad' },
+  {
+    pincode: '110001',
+    area: 'Connaught Place',
+    district: 'New Delhi',
+    state: 'Delhi',
+    city: 'New Delhi',
+    active: true,
+  },
+  {
+    pincode: '110002',
+    area: 'Darya Ganj',
+    district: 'Central Delhi',
+    state: 'Delhi',
+    city: 'Central Delhi',
+    active: true,
+  },
+  {
+    pincode: '110070',
+    area: 'Vasant Kunj',
+    district: 'South West Delhi',
+    state: 'Delhi',
+    city: 'South West Delhi',
+    active: true,
+  },
+  { pincode: '122001', area: 'DLF Phase 1-3', district: 'Gurugram', state: 'Haryana', city: 'Gurugram', active: true },
+  { pincode: '122002', area: 'Sushant Lok', district: 'Gurugram', state: 'Haryana', city: 'Gurugram', active: true },
+  {
+    pincode: '201301',
+    area: 'Sector 62',
+    district: 'Gautam Buddh Nagar',
+    state: 'Uttar Pradesh',
+    city: 'Gautam Buddh Nagar',
+    active: true,
+  },
+  {
+    pincode: '201304',
+    area: 'Greater Noida West',
+    district: 'Gautam Buddh Nagar',
+    state: 'Uttar Pradesh',
+    city: 'Gautam Buddh Nagar',
+    active: true,
+  },
+  { pincode: '121001', area: 'Sector 1-9', district: 'Faridabad', state: 'Haryana', city: 'Faridabad', active: true },
 ];
 
 async function main() {
@@ -349,7 +384,7 @@ async function main() {
   });
   console.log(`  ✓ Coupons: 2`);
 
-  console.log('  ℹ Blog content lives in Sanity — seed it from the Studio at /studio');
+  console.log('  ℹ Blog content lives in Sanity - seed it from the Studio at /studio');
   console.log('✅ Seed complete.\n');
   console.log('  Admin login:       admin@kyg.in             /  Admin@12345');
   console.log('  Counsellor login:  priya@kyg.in             /  Counsellor@123');

@@ -143,32 +143,28 @@ export default function AdminPartnersPage() {
     load();
   }
 
-  async function handleDelete(permanent: boolean) {
+  async function handleDeactivate() {
     if (!deleteTarget) return;
-    const q = permanent ? '?permanent=true' : '';
-    const res = await fetch(`/api/admin/partners/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/partners/${deleteTarget.id}`, { method: 'DELETE' });
     const json = await res.json();
     if (!json.ok) {
-      toast.error(json.error ?? 'Delete failed');
+      toast.error(json.error ?? 'Deactivate failed');
       return;
     }
-    toast.success(permanent ? 'Partner deleted' : 'Partner deactivated');
+    toast.success('Partner deactivated');
     setDeleteTarget(null);
     load();
   }
 
-  async function handleBulkDelete(permanent: boolean) {
-    const q = permanent ? '?permanent=true' : '';
+  async function handleBulkDeactivate() {
     const results = await Promise.allSettled(
-      selectedIds.map((id) =>
-        fetch(`/api/admin/partners/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
-      )
+      selectedIds.map((id) => fetch(`/api/admin/partners/${id}`, { method: 'DELETE' }).then((r) => r.json()))
     );
     const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
     const done = results.length - failed;
     const noun = (n: number) => (n === 1 ? 'partner' : 'partners');
-    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
-    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    if (failed === 0) toast.success(`${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to deactivate ${failed} ${noun(failed)}`);
     else toast.error(`${done} done, ${failed} failed`);
     setBulkDeleteOpen(false);
     setSelectedIds([]);
@@ -199,7 +195,7 @@ export default function AdminPartnersPage() {
           onSelectionChange={setSelectedIds}
           bulkActions={
             <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
-              <Trash2 className="h-3.5 w-3.5" /> Delete
+              <Trash2 className="h-3.5 w-3.5" /> Deactivate
             </Button>
           }
           columns={[
@@ -263,13 +259,7 @@ export default function AdminPartnersPage() {
           ]}
           rowAction={(p) => (
             <div className="flex justify-end gap-2">
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                onClick={() => openEdit(p)}
-                aria-label="Edit"
-                title="Edit"
-              >
+              <Button size="icon-sm" variant="ghost" onClick={() => openEdit(p)} aria-label="Edit" title="Edit">
                 <Pencil className="h-3.5 w-3.5" />
               </Button>
               <Button
@@ -277,8 +267,8 @@ export default function AdminPartnersPage() {
                 variant="ghost"
                 className="text-destructive hover:text-destructive"
                 onClick={() => setDeleteTarget(p)}
-                aria-label="Delete"
-                title="Delete"
+                aria-label="Deactivate"
+                title="Deactivate"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </Button>
@@ -300,128 +290,128 @@ export default function AdminPartnersPage() {
           </DialogHeader>
 
           <DialogBody>
-          <form id="partner-form" onSubmit={save} className="grid gap-4">
-            <div className="rounded border bg-muted/30 p-3">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Account</p>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor="name">Contact name</Label>
-                  <Input
-                    id="name"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="email">Login email {form.id && '(read-only)'}</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    disabled={!!form.id}
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="phone">Login phone</Label>
-                  <Input
-                    id="phone"
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    required
-                  />
-                </div>
-                {!form.id && (
+            <form id="partner-form" onSubmit={save} className="grid gap-4">
+              <div className="rounded border bg-muted/30 p-3">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Account</p>
+                <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1.5">
-                    <Label htmlFor="pwd">Temporary password</Label>
+                    <Label htmlFor="name">Contact name</Label>
                     <Input
-                      id="pwd"
-                      type="password"
-                      minLength={8}
-                      value={form.password}
-                      onChange={(e) => setForm({ ...form, password: e.target.value })}
+                      id="name"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
                       required
                     />
                   </div>
-                )}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="email">Login email {form.id && '(read-only)'}</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      disabled={!!form.id}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="phone">Login phone</Label>
+                    <Input
+                      id="phone"
+                      value={form.phone}
+                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                      required
+                    />
+                  </div>
+                  {!form.id && (
+                    <div className="space-y-1.5">
+                      <Label htmlFor="pwd">Temporary password</Label>
+                      <Input
+                        id="pwd"
+                        type="password"
+                        minLength={8}
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                        required
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div className="rounded border bg-muted/30 p-3">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Lab details</p>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="col-span-2 space-y-1.5">
-                  <Label htmlFor="labName">Lab name</Label>
-                  <Input
-                    id="labName"
-                    value={form.labName}
-                    onChange={(e) => setForm({ ...form, labName: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="col-span-2 space-y-1.5">
-                  <Label htmlFor="accr">Accreditation (comma separated)</Label>
-                  <Input
-                    id="accr"
-                    placeholder="NABL, CAP, ISO 15189"
-                    value={form.accreditation}
-                    onChange={(e) => setForm({ ...form, accreditation: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="cEmail">Ops email</Label>
-                  <Input
-                    id="cEmail"
-                    type="email"
-                    value={form.contactEmail}
-                    onChange={(e) => setForm({ ...form, contactEmail: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="cPhone">Ops phone</Label>
-                  <Input
-                    id="cPhone"
-                    value={form.contactPhone}
-                    onChange={(e) => setForm({ ...form, contactPhone: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="col-span-2 space-y-1.5">
-                  <Label htmlFor="addr">Address</Label>
-                  <Input
-                    id="addr"
-                    value={form.addressLine}
-                    onChange={(e) => setForm({ ...form, addressLine: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="city">City</Label>
-                  <Input
-                    id="city"
-                    value={form.city}
-                    onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="pin">Pincode</Label>
-                  <Input
-                    id="pin"
-                    className="font-mono"
-                    maxLength={6}
-                    value={form.pincode}
-                    onChange={(e) => setForm({ ...form, pincode: e.target.value.replace(/\D/g, '') })}
-                    required
-                  />
+              <div className="rounded border bg-muted/30 p-3">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Lab details</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="col-span-2 space-y-1.5">
+                    <Label htmlFor="labName">Lab name</Label>
+                    <Input
+                      id="labName"
+                      value={form.labName}
+                      onChange={(e) => setForm({ ...form, labName: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="col-span-2 space-y-1.5">
+                    <Label htmlFor="accr">Accreditation (comma separated)</Label>
+                    <Input
+                      id="accr"
+                      placeholder="NABL, CAP, ISO 15189"
+                      value={form.accreditation}
+                      onChange={(e) => setForm({ ...form, accreditation: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="cEmail">Ops email</Label>
+                    <Input
+                      id="cEmail"
+                      type="email"
+                      value={form.contactEmail}
+                      onChange={(e) => setForm({ ...form, contactEmail: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="cPhone">Ops phone</Label>
+                    <Input
+                      id="cPhone"
+                      value={form.contactPhone}
+                      onChange={(e) => setForm({ ...form, contactPhone: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="col-span-2 space-y-1.5">
+                    <Label htmlFor="addr">Address</Label>
+                    <Input
+                      id="addr"
+                      value={form.addressLine}
+                      onChange={(e) => setForm({ ...form, addressLine: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="city">City</Label>
+                    <Input
+                      id="city"
+                      value={form.city}
+                      onChange={(e) => setForm({ ...form, city: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="pin">Pincode</Label>
+                    <Input
+                      id="pin"
+                      className="font-mono"
+                      maxLength={6}
+                      value={form.pincode}
+                      onChange={(e) => setForm({ ...form, pincode: e.target.value.replace(/\D/g, '') })}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
           </DialogBody>
 
           <DialogFooter className="m-0 shrink-0">
@@ -439,21 +429,17 @@ export default function AdminPartnersPage() {
       <DeleteConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title={deleteTarget ? `Delete "${deleteTarget.labPartnerProfile?.labName}"?` : 'Delete'}
+        title={deleteTarget ? `Deactivate "${deleteTarget.labPartnerProfile?.labName}"?` : 'Deactivate'}
         itemLabel="This lab partner"
-        onConfirm={handleDelete}
+        onConfirm={handleDeactivate}
       />
 
       <DeleteConfirmDialog
         open={bulkDeleteOpen}
         onOpenChange={setBulkDeleteOpen}
-        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'lab partner' : 'lab partners'}?`}
-        itemLabel={
-          selectedIds.length === 1
-            ? 'This lab partner'
-            : `These ${selectedIds.length} lab partners`
-        }
-        onConfirm={handleBulkDelete}
+        title={`Deactivate ${selectedIds.length} ${selectedIds.length === 1 ? 'lab partner' : 'lab partners'}?`}
+        itemLabel={selectedIds.length === 1 ? 'This lab partner' : `These ${selectedIds.length} lab partners`}
+        onConfirm={handleBulkDeactivate}
       />
     </>
   );

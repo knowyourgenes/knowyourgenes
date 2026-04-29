@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import type { Role } from '@prisma/client';
 import {
@@ -13,7 +14,6 @@ import {
   FileText,
   Ticket,
   MapPin,
-  FlaskConical,
   BadgeCheck,
   Building2,
   ExternalLink,
@@ -38,7 +38,7 @@ type NavItem = {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   roles: Role[];
-  // Only match on exact path — use when href is a prefix of other items.
+  // Only match on exact path - use when href is a prefix of other items.
   exact?: boolean;
   external?: boolean;
 };
@@ -48,7 +48,12 @@ const GROUPS: NavGroup[] = [
   {
     label: 'Overview',
     items: [
-      { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['ADMIN', 'COUNSELLOR', 'PARTNER'] },
+      {
+        href: '/admin/dashboard',
+        label: 'Dashboard',
+        icon: LayoutDashboard,
+        roles: ['ADMIN', 'COUNSELLOR', 'PARTNER'],
+      },
     ],
   },
   {
@@ -91,13 +96,14 @@ export default function AppSidebar({ role }: { role: Role; name?: string; email?
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" render={<Link href="/admin/dashboard" />}>
-              <div className="flex aspect-square size-8 items-center justify-center rounded bg-primary text-primary-foreground">
-                <FlaskConical className="size-4" />
-              </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">KYG Admin</span>
-                <span className="truncate text-xs text-muted-foreground">Know Your Genes</span>
-              </div>
+              <Image
+                src="/kyglogo.webp"
+                alt="KYG - Know Your Genes"
+                width={140}
+                height={40}
+                className="h-10 w-auto object-contain"
+                style={{ width: 'auto' }}
+              />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

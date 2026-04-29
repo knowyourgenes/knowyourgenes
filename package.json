@@ -14,6 +14,7 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
+    "db:seed-pincodes": "tsx prisma/seed-pincodes.ts",
     "db:reset": "prisma migrate reset --force"
   },
   "dependencies": {

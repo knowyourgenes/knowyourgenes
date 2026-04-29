@@ -108,32 +108,28 @@ export default function AdminCouponsPage() {
     load();
   }
 
-  async function handleDelete(permanent: boolean) {
+  async function handleDeactivate() {
     if (!deleteTarget) return;
-    const q = permanent ? '?permanent=true' : '';
-    const res = await fetch(`/api/admin/coupons/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/coupons/${deleteTarget.id}`, { method: 'DELETE' });
     const json = await res.json();
     if (!json.ok) {
-      toast.error(json.error ?? 'Delete failed');
+      toast.error(json.error ?? 'Deactivate failed');
       return;
     }
-    toast.success(permanent ? 'Coupon deleted' : 'Coupon deactivated');
+    toast.success('Coupon deactivated');
     setDeleteTarget(null);
     load();
   }
 
-  async function handleBulkDelete(permanent: boolean) {
-    const q = permanent ? '?permanent=true' : '';
+  async function handleBulkDeactivate() {
     const results = await Promise.allSettled(
-      selectedIds.map((id) =>
-        fetch(`/api/admin/coupons/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
-      )
+      selectedIds.map((id) => fetch(`/api/admin/coupons/${id}`, { method: 'DELETE' }).then((r) => r.json()))
     );
     const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
     const done = results.length - failed;
     const noun = (n: number) => (n === 1 ? 'coupon' : 'coupons');
-    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
-    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    if (failed === 0) toast.success(`${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to deactivate ${failed} ${noun(failed)}`);
     else toast.error(`${done} done, ${failed} failed`);
     setBulkDeleteOpen(false);
     setSelectedIds([]);
@@ -167,7 +163,7 @@ export default function AdminCouponsPage() {
           onSelectionChange={setSelectedIds}
           bulkActions={
             <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
-              <Trash2 className="h-3.5 w-3.5" /> Delete
+              <Trash2 className="h-3.5 w-3.5" /> Deactivate
             </Button>
           }
           columns={[
@@ -178,11 +174,11 @@ export default function AdminCouponsPage() {
             },
             { key: 'type', header: 'Type', render: (c) => <Badge variant="outline">{c.type}</Badge> },
             { key: 'value', header: 'Value', render: (c) => <span className="font-medium">{formatValue(c)}</span> },
-            { key: 'min', header: 'Min order', render: (c) => (c.minOrder ? `₹${Math.floor(c.minOrder / 100)}` : '—') },
+            { key: 'min', header: 'Min order', render: (c) => (c.minOrder ? `₹${Math.floor(c.minOrder / 100)}` : '-') },
             {
               key: 'expires',
               header: 'Expires',
-              render: (c) => (c.expiresAt ? new Date(c.expiresAt).toLocaleDateString('en-IN') : '—'),
+              render: (c) => (c.expiresAt ? new Date(c.expiresAt).toLocaleDateString('en-IN') : '-'),
             },
             {
               key: 'usage',
@@ -204,13 +200,7 @@ export default function AdminCouponsPage() {
           ]}
           rowAction={(c) => (
             <div className="flex justify-end gap-2">
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                onClick={() => openEdit(c)}
-                aria-label="Edit"
-                title="Edit"
-              >
+              <Button size="icon-sm" variant="ghost" onClick={() => openEdit(c)} aria-label="Edit" title="Edit">
                 <Pencil className="h-3.5 w-3.5" />
               </Button>
               <Button
@@ -218,8 +208,8 @@ export default function AdminCouponsPage() {
                 variant="ghost"
                 className="text-destructive hover:text-destructive"
                 onClick={() => setDeleteTarget(c)}
-                aria-label="Delete"
-                title="Delete"
+                aria-label="Deactivate"
+                title="Deactivate"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </Button>
@@ -234,91 +224,91 @@ export default function AdminCouponsPage() {
             <DialogTitle>{form.id ? 'Edit coupon' : 'New coupon'}</DialogTitle>
           </DialogHeader>
           <DialogBody>
-          <form id="coupon-form" onSubmit={save} className="grid gap-4">
-            <div className="space-y-1.5">
-              <Label htmlFor="code">Code (A–Z, 0–9, _)</Label>
-              <Input
-                id="code"
-                className="font-mono"
-                value={form.code}
-                onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })}
-                required
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
+            <form id="coupon-form" onSubmit={save} className="grid gap-4">
               <div className="space-y-1.5">
-                <Label>Type</Label>
-                <Select
-                  value={form.type}
-                  onValueChange={(v) => setForm({ ...form, type: (v as 'FLAT' | 'PERCENT') ?? 'FLAT' })}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="FLAT">Flat (₹)</SelectItem>
-                    <SelectItem value="PERCENT">Percent (0–100)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="value">Value ({form.type === 'FLAT' ? '₹' : '%'})</Label>
+                <Label htmlFor="code">Code (A–Z, 0–9, _)</Label>
                 <Input
-                  id="value"
-                  type="number"
-                  step={form.type === 'FLAT' ? '0.01' : '1'}
-                  min="0"
-                  value={form.value}
-                  onChange={(e) => setForm({ ...form, value: Number(e.target.value) })}
+                  id="code"
+                  className="font-mono"
+                  value={form.code}
+                  onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })}
                   required
                 />
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="min">Min order (₹)</Label>
-                <Input
-                  id="min"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={form.minOrder ?? ''}
-                  onChange={(e) => setForm({ ...form, minOrder: e.target.value ? Number(e.target.value) : null })}
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label>Type</Label>
+                  <Select
+                    value={form.type}
+                    onValueChange={(v) => setForm({ ...form, type: (v as 'FLAT' | 'PERCENT') ?? 'FLAT' })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="FLAT">Flat (₹)</SelectItem>
+                      <SelectItem value="PERCENT">Percent (0–100)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="value">Value ({form.type === 'FLAT' ? '₹' : '%'})</Label>
+                  <Input
+                    id="value"
+                    type="number"
+                    step={form.type === 'FLAT' ? '0.01' : '1'}
+                    min="0"
+                    value={form.value}
+                    onChange={(e) => setForm({ ...form, value: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="min">Min order (₹)</Label>
+                  <Input
+                    id="min"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={form.minOrder ?? ''}
+                    onChange={(e) => setForm({ ...form, minOrder: e.target.value ? Number(e.target.value) : null })}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="max">Max discount (₹)</Label>
+                  <Input
+                    id="max"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={form.maxDiscount ?? ''}
+                    onChange={(e) => setForm({ ...form, maxDiscount: e.target.value ? Number(e.target.value) : null })}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="exp">Expires</Label>
+                  <Input
+                    id="exp"
+                    type="date"
+                    value={form.expiresAt}
+                    onChange={(e) => setForm({ ...form, expiresAt: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="limit">Usage limit</Label>
+                  <Input
+                    id="limit"
+                    type="number"
+                    value={form.usageLimit ?? ''}
+                    onChange={(e) => setForm({ ...form, usageLimit: e.target.value ? Number(e.target.value) : null })}
+                  />
+                </div>
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="max">Max discount (₹)</Label>
-                <Input
-                  id="max"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={form.maxDiscount ?? ''}
-                  onChange={(e) => setForm({ ...form, maxDiscount: e.target.value ? Number(e.target.value) : null })}
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="exp">Expires</Label>
-                <Input
-                  id="exp"
-                  type="date"
-                  value={form.expiresAt}
-                  onChange={(e) => setForm({ ...form, expiresAt: e.target.value })}
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="limit">Usage limit</Label>
-                <Input
-                  id="limit"
-                  type="number"
-                  value={form.usageLimit ?? ''}
-                  onChange={(e) => setForm({ ...form, usageLimit: e.target.value ? Number(e.target.value) : null })}
-                />
-              </div>
-            </div>
-            <label className="flex items-center gap-2 text-sm">
-              <Checkbox checked={form.active} onCheckedChange={(c) => setForm({ ...form, active: c === true })} />
-              Active
-            </label>
-          </form>
+              <label className="flex items-center gap-2 text-sm">
+                <Checkbox checked={form.active} onCheckedChange={(c) => setForm({ ...form, active: c === true })} />
+                Active
+              </label>
+            </form>
           </DialogBody>
           <DialogFooter className="m-0 shrink-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
@@ -335,19 +325,17 @@ export default function AdminCouponsPage() {
       <DeleteConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title={deleteTarget ? `Delete coupon "${deleteTarget.code}"?` : 'Delete'}
+        title={deleteTarget ? `Deactivate coupon "${deleteTarget.code}"?` : 'Deactivate'}
         itemLabel="This coupon"
-        onConfirm={handleDelete}
+        onConfirm={handleDeactivate}
       />
 
       <DeleteConfirmDialog
         open={bulkDeleteOpen}
         onOpenChange={setBulkDeleteOpen}
-        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'coupon' : 'coupons'}?`}
-        itemLabel={
-          selectedIds.length === 1 ? 'This coupon' : `These ${selectedIds.length} coupons`
-        }
-        onConfirm={handleBulkDelete}
+        title={`Deactivate ${selectedIds.length} ${selectedIds.length === 1 ? 'coupon' : 'coupons'}?`}
+        itemLabel={selectedIds.length === 1 ? 'This coupon' : `These ${selectedIds.length} coupons`}
+        onConfirm={handleBulkDeactivate}
       />
     </>
   );

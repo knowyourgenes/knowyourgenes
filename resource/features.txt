@@ -1,4 +1,4 @@
-KYG WEBSITE — FEATURE LIST
+KYG WEBSITE - FEATURE LIST
 ===========================
 Target launch: 14 May 2026
 Service area: Delhi NCR only
@@ -10,7 +10,7 @@ Legend: [T1] Tier-1 launch (day 1–7)  ·  [W2] Week-2 add-on  ·  [P2] Phase 2
 ---------------------------------------------------------
 [T1] Homepage
     - Hero: "Book a DNA test. We come to you." + dual CTAs
-    - Pincode checker (Delhi NCR validation) — inline
+    - Pincode checker (Delhi NCR validation) - inline
     - Trust-signal strip: NABL, TAT, biomarker count, samples done
     - Featured packages (3 most-booked)
     - How-it-works (4-step summary)
@@ -21,7 +21,7 @@ Legend: [T1] Tier-1 launch (day 1–7)  ·  [W2] Week-2 add-on  ·  [P2] Phase 2
 
 [T1] /how-it-works
     - 7-step detailed journey (Discover → Consult)
-    - "What to expect on collection day" — 6 sub-steps
+    - "What to expect on collection day" - 6 sub-steps
     - Phlebotomist quality standards callout
 
 [W2] /why-kyg
@@ -60,12 +60,12 @@ Legend: [T1] Tier-1 launch (day 1–7)  ·  [W2] Week-2 add-on  ·  [P2] Phase 2
 ---------------------------------------------------------
 2. COMMERCE
 ---------------------------------------------------------
-[T1] /packages — catalog
+[T1] /packages - catalog
     - Category chips (Wellness, Cancer, Reproductive, Cardiac, Drug)
     - PackageCard grid with Popular / Recommended tags
     - Price, TAT, sample type, biomarker count per card
 
-[T1] /packages/[slug] — detail
+[T1] /packages/[slug] - detail
     - Hero: category, name, tagline
     - Sticky price card with "Add to cart"
     - "What this test covers" (bulleted)
@@ -122,9 +122,9 @@ Legend: [T1] Tier-1 launch (day 1–7)  ·  [W2] Week-2 add-on  ·  [P2] Phase 2
 ---------------------------------------------------------
 4. LEGAL
 ---------------------------------------------------------
-[T1] /privacy      — data collection, usage, rights, deletion flow
-[T1] /terms        — eligibility, service area, refund policy, medical disclaimer
-[T1] /cookies      — cookie categories + opt-outs
+[T1] /privacy      - data collection, usage, rights, deletion flow
+[T1] /terms        - eligibility, service area, refund policy, medical disclaimer
+[T1] /cookies      - cookie categories + opt-outs
 
 ---------------------------------------------------------
 5. AUTH
@@ -145,7 +145,7 @@ Legend: [T1] Tier-1 launch (day 1–7)  ·  [W2] Week-2 add-on  ·  [P2] Phase 2
 ---------------------------------------------------------
 6. USER DASHBOARD (role: User)
 ---------------------------------------------------------
-[T1] /dashboard — overview
+[T1] /dashboard - overview
     - KPIs: active orders, reports, loyalty points
     - Upcoming-collection card (agent, slot, track)
     - Recent reports list
@@ -174,14 +174,14 @@ Legend: [T1] Tier-1 launch (day 1–7)  ·  [W2] Week-2 add-on  ·  [P2] Phase 2
     - Communication preferences (WhatsApp, email, research opt-in)
     - Data-deletion "danger zone"
 
-[P2] /dashboard/family   — family-tree / pedigree builder
-[P2] /dashboard/loyalty  — points balance, earn-ways, redemption
-[P2] /dashboard/bookings — counsellor session management
+[P2] /dashboard/family   - family-tree / pedigree builder
+[P2] /dashboard/loyalty  - points balance, earn-ways, redemption
+[P2] /dashboard/bookings - counsellor session management
 
 ---------------------------------------------------------
-7. AGENT DASHBOARD (role: Collection Agent)  —  mobile-first
+7. AGENT DASHBOARD (role: Collection Agent)  -  mobile-first
 ---------------------------------------------------------
-[T1] /agent — today
+[T1] /agent - today
     - Today's totals (Total / Pending / Done)
     - Route summary (ordered list of stops)
     - CTA to full collections list
@@ -210,7 +210,7 @@ Legend: [T1] Tier-1 launch (day 1–7)  ·  [W2] Week-2 add-on  ·  [P2] Phase 2
 ---------------------------------------------------------
 8. ADMIN PANEL (role: Admin)
 ---------------------------------------------------------
-[T1] /admin — dashboard
+[T1] /admin - dashboard
     - KPIs: orders, revenue, users, active agents
     - Today's collections
     - Revenue by category (bar chart)
@@ -324,11 +324,11 @@ Observability
 ---------------------------------------------------------
 10. KPIS TO INSTRUMENT FROM DAY ONE
 ---------------------------------------------------------
-Discovery       — bounce < 55%, session > 90s
-Booking         — test → checkout > 60%, checkout → pay > 75%, AOV > ₹10,000
-Confirmation    — no-show < 5%, WhatsApp open > 85%
-Collection      — on-time > 90%, sample rejection < 3%, CSAT > 4.5/5
-Report          — <14-day delivery > 95%, clarity rating > 80% "easy"
-Consultation    — report → booking > 30%, CSAT > 4.5/5
-Retention       — referral > 10%, 6-month re-test > 20%
-Overall         — NPS > 70, CAC < ₹2,500
+Discovery       - bounce < 55%, session > 90s
+Booking         - test → checkout > 60%, checkout → pay > 75%, AOV > ₹10,000
+Confirmation    - no-show < 5%, WhatsApp open > 85%
+Collection      - on-time > 90%, sample rejection < 3%, CSAT > 4.5/5
+Report          - <14-day delivery > 95%, clarity rating > 80% "easy"
+Consultation    - report → booking > 30%, CSAT > 4.5/5
+Retention       - referral > 10%, 6-month re-test > 20%
+Overall         - NPS > 70, CAC < ₹2,500

@@ -3,7 +3,7 @@ import authConfig from '@/auth.config';
 
 // Proxy runs on the edge for page routes only.
 // API routes skip the proxy entirely and do their own auth via requireApiRole()
-// inside each handler — this saves ~150ms per API call since NextAuth isn't
+// inside each handler - this saves ~150ms per API call since NextAuth isn't
 // invoked for endpoints that already check the session cookie directly.
 export const { auth: proxy } = NextAuth(authConfig);
 

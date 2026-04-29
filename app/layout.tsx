@@ -16,11 +16,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Know Your Genes — DNA Tests, At-Home Collection in Delhi NCR',
+    default: 'Know Your Genes - DNA Tests, At-Home Collection in Delhi NCR',
     template: '%s | Know Your Genes',
   },
   description:
     'Book a DNA test. We come to you. NABL-certified labs, plain-language reports, optional genetic counselling. Delhi NCR only.',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
 export default async function RootLayout({

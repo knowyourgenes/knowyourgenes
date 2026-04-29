@@ -1,6 +1,6 @@
 /**
  * Embedded Sanity Studio at /studio.
- * Studio is a fully client-rendered SPA — NextStudio lives behind a
+ * Studio is a fully client-rendered SPA - NextStudio lives behind a
  * "use client" boundary so it's not evaluated at build time.
  */
 

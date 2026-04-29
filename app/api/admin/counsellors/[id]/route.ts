@@ -27,27 +27,12 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
   });
 }
 
-// Soft: set CounsellorProfile.active=false (keep audit trail).
-// Permanent: delete User row — CounsellorProfile cascades via @relation.
-export async function DELETE(req: Request, { params }: { params: Params }) {
+// Deactivate only - sets CounsellorProfile.active=false. KYG policy never hard-deletes.
+export async function DELETE(_req: Request, { params }: { params: Params }) {
   return handle(async () => {
     const guard = await requireApiRole(['ADMIN']);
     if (isResponse(guard)) return guard;
     const { id } = await params;
-    const permanent = new URL(req.url).searchParams.get('permanent') === 'true';
-
-    if (permanent) {
-      try {
-        await prisma.user.delete({ where: { id } });
-        return ok({ id, deleted: true });
-      } catch (e) {
-        if ((e as { code?: string }).code === 'P2003') {
-          throw new Error('Cannot delete permanently: this counsellor has consultations or reviews. Deactivate instead.');
-        }
-        throw e;
-      }
-    }
-
     await prisma.counsellorProfile.update({ where: { userId: id }, data: { active: false } });
     return ok({ id, active: false });
   });

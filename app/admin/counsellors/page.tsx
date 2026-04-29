@@ -166,32 +166,28 @@ export default function AdminCounsellorsPage() {
     load();
   }
 
-  async function handleDelete(permanent: boolean) {
+  async function handleDeactivate() {
     if (!deleteTarget) return;
-    const q = permanent ? '?permanent=true' : '';
-    const res = await fetch(`/api/admin/counsellors/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/counsellors/${deleteTarget.id}`, { method: 'DELETE' });
     const json = await res.json();
     if (!json.ok) {
-      toast.error(json.error ?? 'Delete failed');
+      toast.error(json.error ?? 'Deactivate failed');
       return;
     }
-    toast.success(permanent ? 'Counsellor deleted' : 'Counsellor deactivated');
+    toast.success('Counsellor deactivated');
     setDeleteTarget(null);
     load();
   }
 
-  async function handleBulkDelete(permanent: boolean) {
-    const q = permanent ? '?permanent=true' : '';
+  async function handleBulkDeactivate() {
     const results = await Promise.allSettled(
-      selectedIds.map((id) =>
-        fetch(`/api/admin/counsellors/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
-      )
+      selectedIds.map((id) => fetch(`/api/admin/counsellors/${id}`, { method: 'DELETE' }).then((r) => r.json()))
     );
     const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
     const done = results.length - failed;
     const noun = (n: number) => (n === 1 ? 'counsellor' : 'counsellors');
-    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
-    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    if (failed === 0) toast.success(`${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to deactivate ${failed} ${noun(failed)}`);
     else toast.error(`${done} done, ${failed} failed`);
     setBulkDeleteOpen(false);
     setSelectedIds([]);
@@ -202,7 +198,7 @@ export default function AdminCounsellorsPage() {
     <>
       <PageHeader
         title="Counsellors"
-        subtitle="BGCI-certified genetic counsellors — they review reports + run consultations."
+        subtitle="BGCI-certified genetic counsellors - they review reports + run consultations."
         actions={
           <Button onClick={openCreate}>
             <Plus className="h-4 w-4" /> New counsellor
@@ -222,7 +218,7 @@ export default function AdminCounsellorsPage() {
           onSelectionChange={setSelectedIds}
           bulkActions={
             <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
-              <Trash2 className="h-3.5 w-3.5" /> Delete
+              <Trash2 className="h-3.5 w-3.5" /> Deactivate
             </Button>
           }
           columns={[
@@ -273,13 +269,7 @@ export default function AdminCounsellorsPage() {
           ]}
           rowAction={(c) => (
             <div className="flex justify-end gap-2">
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                onClick={() => openEdit(c)}
-                aria-label="Edit"
-                title="Edit"
-              >
+              <Button size="icon-sm" variant="ghost" onClick={() => openEdit(c)} aria-label="Edit" title="Edit">
                 <Pencil className="h-3.5 w-3.5" />
               </Button>
               <Button
@@ -287,8 +277,8 @@ export default function AdminCounsellorsPage() {
                 variant="ghost"
                 className="text-destructive hover:text-destructive"
                 onClick={() => setDeleteTarget(c)}
-                aria-label="Delete"
-                title="Delete"
+                aria-label="Deactivate"
+                title="Deactivate"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </Button>
@@ -306,108 +296,108 @@ export default function AdminCounsellorsPage() {
             </DialogDescription>
           </DialogHeader>
           <DialogBody>
-          <form id="c-form" onSubmit={save} className="grid gap-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <Label htmlFor="name">Full name</Label>
-                <Input
-                  id="name"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="email">Email {form.id && '(read-only)'}</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  disabled={!!form.id}
-                  required
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="phone">Phone</Label>
-                <Input
-                  id="phone"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  required
-                />
-              </div>
-              {!form.id && (
+            <form id="c-form" onSubmit={save} className="grid gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <Label htmlFor="password">Temporary password (min 8)</Label>
+                  <Label htmlFor="name">Full name</Label>
                   <Input
-                    id="password"
-                    type="password"
-                    value={form.password}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    id="name"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
                     required
-                    minLength={8}
                   />
                 </div>
-              )}
-              <div className="col-span-2 space-y-1.5">
-                <Label htmlFor="creds">Credentials</Label>
-                <Input
-                  id="creds"
-                  placeholder="M.Sc. Genetic Counselling, BGCI certified"
-                  value={form.credentials}
-                  onChange={(e) => setForm({ ...form, credentials: e.target.value })}
-                  required
-                />
+                <div className="space-y-1.5">
+                  <Label htmlFor="email">Email {form.id && '(read-only)'}</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    disabled={!!form.id}
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input
+                    id="phone"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    required
+                  />
+                </div>
+                {!form.id && (
+                  <div className="space-y-1.5">
+                    <Label htmlFor="password">Temporary password (min 8)</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      value={form.password}
+                      onChange={(e) => setForm({ ...form, password: e.target.value })}
+                      required
+                      minLength={8}
+                    />
+                  </div>
+                )}
+                <div className="col-span-2 space-y-1.5">
+                  <Label htmlFor="creds">Credentials</Label>
+                  <Input
+                    id="creds"
+                    placeholder="M.Sc. Genetic Counselling, BGCI certified"
+                    value={form.credentials}
+                    onChange={(e) => setForm({ ...form, credentials: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="specialty">Specialty</Label>
+                  <Input
+                    id="specialty"
+                    value={form.specialty}
+                    onChange={(e) => setForm({ ...form, specialty: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="experience">Experience</Label>
+                  <Input
+                    id="experience"
+                    placeholder="11 years"
+                    value={form.experience}
+                    onChange={(e) => setForm({ ...form, experience: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="col-span-2 space-y-1.5">
+                  <Label htmlFor="languages">Languages (comma separated)</Label>
+                  <Input
+                    id="languages"
+                    value={form.languages}
+                    onChange={(e) => setForm({ ...form, languages: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="col-span-2 space-y-1.5">
+                  <Label htmlFor="photo">Photo URL</Label>
+                  <Input
+                    id="photo"
+                    placeholder="https://…"
+                    value={form.photoUrl}
+                    onChange={(e) => setForm({ ...form, photoUrl: e.target.value })}
+                  />
+                </div>
+                <div className="col-span-2 space-y-1.5">
+                  <Label htmlFor="bio">Bio</Label>
+                  <Textarea
+                    id="bio"
+                    rows={3}
+                    value={form.bio}
+                    onChange={(e) => setForm({ ...form, bio: e.target.value })}
+                  />
+                </div>
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="specialty">Specialty</Label>
-                <Input
-                  id="specialty"
-                  value={form.specialty}
-                  onChange={(e) => setForm({ ...form, specialty: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="experience">Experience</Label>
-                <Input
-                  id="experience"
-                  placeholder="11 years"
-                  value={form.experience}
-                  onChange={(e) => setForm({ ...form, experience: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="col-span-2 space-y-1.5">
-                <Label htmlFor="languages">Languages (comma separated)</Label>
-                <Input
-                  id="languages"
-                  value={form.languages}
-                  onChange={(e) => setForm({ ...form, languages: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="col-span-2 space-y-1.5">
-                <Label htmlFor="photo">Photo URL</Label>
-                <Input
-                  id="photo"
-                  placeholder="https://…"
-                  value={form.photoUrl}
-                  onChange={(e) => setForm({ ...form, photoUrl: e.target.value })}
-                />
-              </div>
-              <div className="col-span-2 space-y-1.5">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                  id="bio"
-                  rows={3}
-                  value={form.bio}
-                  onChange={(e) => setForm({ ...form, bio: e.target.value })}
-                />
-              </div>
-            </div>
-          </form>
+            </form>
           </DialogBody>
           <DialogFooter className="m-0 shrink-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
@@ -424,19 +414,17 @@ export default function AdminCounsellorsPage() {
       <DeleteConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title={deleteTarget ? `Delete "${deleteTarget.name}"?` : 'Delete'}
+        title={deleteTarget ? `Deactivate "${deleteTarget.name}"?` : 'Deactivate'}
         itemLabel="This counsellor"
-        onConfirm={handleDelete}
+        onConfirm={handleDeactivate}
       />
 
       <DeleteConfirmDialog
         open={bulkDeleteOpen}
         onOpenChange={setBulkDeleteOpen}
-        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'counsellor' : 'counsellors'}?`}
-        itemLabel={
-          selectedIds.length === 1 ? 'This counsellor' : `These ${selectedIds.length} counsellors`
-        }
-        onConfirm={handleBulkDelete}
+        title={`Deactivate ${selectedIds.length} ${selectedIds.length === 1 ? 'counsellor' : 'counsellors'}?`}
+        itemLabel={selectedIds.length === 1 ? 'This counsellor' : `These ${selectedIds.length} counsellors`}
+        onConfirm={handleBulkDeactivate}
       />
     </>
   );

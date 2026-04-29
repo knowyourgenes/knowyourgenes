@@ -119,32 +119,28 @@ export default function AdminAgentsPage() {
     load();
   }
 
-  async function handleDelete(permanent: boolean) {
+  async function handleDeactivate() {
     if (!deleteTarget) return;
-    const q = permanent ? '?permanent=true' : '';
-    const res = await fetch(`/api/admin/agents/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/agents/${deleteTarget.id}`, { method: 'DELETE' });
     const json = await res.json();
     if (!json.ok) {
-      toast.error(json.error ?? 'Delete failed');
+      toast.error(json.error ?? 'Deactivate failed');
       return;
     }
-    toast.success(permanent ? 'Agent deleted' : 'Agent deactivated');
+    toast.success('Agent deactivated');
     setDeleteTarget(null);
     load();
   }
 
-  async function handleBulkDelete(permanent: boolean) {
-    const q = permanent ? '?permanent=true' : '';
+  async function handleBulkDeactivate() {
     const results = await Promise.allSettled(
-      selectedIds.map((id) =>
-        fetch(`/api/admin/agents/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
-      )
+      selectedIds.map((id) => fetch(`/api/admin/agents/${id}`, { method: 'DELETE' }).then((r) => r.json()))
     );
     const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
     const done = results.length - failed;
     const noun = (n: number) => (n === 1 ? 'agent' : 'agents');
-    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
-    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    if (failed === 0) toast.success(`${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to deactivate ${failed} ${noun(failed)}`);
     else toast.error(`${done} done, ${failed} failed`);
     setBulkDeleteOpen(false);
     setSelectedIds([]);
@@ -175,7 +171,7 @@ export default function AdminAgentsPage() {
           onSelectionChange={setSelectedIds}
           bulkActions={
             <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
-              <Trash2 className="h-3.5 w-3.5" /> Delete
+              <Trash2 className="h-3.5 w-3.5" /> Deactivate
             </Button>
           }
           columns={[
@@ -195,7 +191,7 @@ export default function AdminAgentsPage() {
             {
               key: 'rating',
               header: 'Rating',
-              render: (a) => (a.agentProfile?.rating ? `${a.agentProfile.rating.toFixed(1)} ★` : '—'),
+              render: (a) => (a.agentProfile?.rating ? `${a.agentProfile.rating.toFixed(1)} ★` : '-'),
             },
             {
               key: 'onTime',
@@ -244,13 +240,7 @@ export default function AdminAgentsPage() {
           ]}
           rowAction={(a) => (
             <div className="flex justify-end gap-2">
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                onClick={() => openEdit(a)}
-                aria-label="Edit"
-                title="Edit"
-              >
+              <Button size="icon-sm" variant="ghost" onClick={() => openEdit(a)} aria-label="Edit" title="Edit">
                 <Pencil className="h-3.5 w-3.5" />
               </Button>
               <Button
@@ -258,8 +248,8 @@ export default function AdminAgentsPage() {
                 variant="ghost"
                 className="text-destructive hover:text-destructive"
                 onClick={() => setDeleteTarget(a)}
-                aria-label="Delete"
-                title="Delete"
+                aria-label="Deactivate"
+                title="Deactivate"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </Button>
@@ -274,79 +264,79 @@ export default function AdminAgentsPage() {
             <DialogTitle>{form.id ? 'Edit agent' : 'New agent'}</DialogTitle>
           </DialogHeader>
           <DialogBody>
-          <form id="a-form" onSubmit={save} className="grid gap-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <Label htmlFor="name">Full name</Label>
-                <Input
-                  id="name"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  required
-                />
+            <form id="a-form" onSubmit={save} className="grid gap-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="name">Full name</Label>
+                  <Input
+                    id="name"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input
+                    id="phone"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    required
+                  />
+                </div>
+                {!form.id && (
+                  <>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="pwd">Temporary password</Label>
+                      <Input
+                        id="pwd"
+                        type="password"
+                        minLength={8}
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+                <div className="col-span-2 space-y-1.5">
+                  <Label htmlFor="zone">Zone</Label>
+                  <Input
+                    id="zone"
+                    placeholder="Gurgaon / South Delhi / Noida"
+                    value={form.zone}
+                    onChange={(e) => setForm({ ...form, zone: e.target.value })}
+                    required
+                  />
+                </div>
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="phone">Phone</Label>
-                <Input
-                  id="phone"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  required
-                />
+              <div className="flex gap-6">
+                <label className="flex items-center gap-2 text-sm">
+                  <Checkbox
+                    checked={form.aadhaarVerified}
+                    onCheckedChange={(c) => setForm({ ...form, aadhaarVerified: c === true })}
+                  />
+                  Aadhaar verified
+                </label>
+                <label className="flex items-center gap-2 text-sm">
+                  <Checkbox
+                    checked={form.policeVerified}
+                    onCheckedChange={(c) => setForm({ ...form, policeVerified: c === true })}
+                  />
+                  Police verified
+                </label>
               </div>
-              {!form.id && (
-                <>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="pwd">Temporary password</Label>
-                    <Input
-                      id="pwd"
-                      type="password"
-                      minLength={8}
-                      value={form.password}
-                      onChange={(e) => setForm({ ...form, password: e.target.value })}
-                      required
-                    />
-                  </div>
-                </>
-              )}
-              <div className="col-span-2 space-y-1.5">
-                <Label htmlFor="zone">Zone</Label>
-                <Input
-                  id="zone"
-                  placeholder="Gurgaon / South Delhi / Noida"
-                  value={form.zone}
-                  onChange={(e) => setForm({ ...form, zone: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="flex gap-6">
-              <label className="flex items-center gap-2 text-sm">
-                <Checkbox
-                  checked={form.aadhaarVerified}
-                  onCheckedChange={(c) => setForm({ ...form, aadhaarVerified: c === true })}
-                />
-                Aadhaar verified
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <Checkbox
-                  checked={form.policeVerified}
-                  onCheckedChange={(c) => setForm({ ...form, policeVerified: c === true })}
-                />
-                Police verified
-              </label>
-            </div>
-          </form>
+            </form>
           </DialogBody>
           <DialogFooter className="m-0 shrink-0">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
@@ -363,19 +353,17 @@ export default function AdminAgentsPage() {
       <DeleteConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title={deleteTarget ? `Delete "${deleteTarget.name}"?` : 'Delete'}
+        title={deleteTarget ? `Deactivate "${deleteTarget.name}"?` : 'Deactivate'}
         itemLabel="This agent"
-        onConfirm={handleDelete}
+        onConfirm={handleDeactivate}
       />
 
       <DeleteConfirmDialog
         open={bulkDeleteOpen}
         onOpenChange={setBulkDeleteOpen}
-        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'agent' : 'agents'}?`}
-        itemLabel={
-          selectedIds.length === 1 ? 'This agent' : `These ${selectedIds.length} agents`
-        }
-        onConfirm={handleBulkDelete}
+        title={`Deactivate ${selectedIds.length} ${selectedIds.length === 1 ? 'agent' : 'agents'}?`}
+        itemLabel={selectedIds.length === 1 ? 'This agent' : `These ${selectedIds.length} agents`}
+        onConfirm={handleBulkDeactivate}
       />
     </>
   );
