@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Loader2, Search } from 'lucide-react';
+import { Loader2, Search, Power, PowerOff } from 'lucide-react';
 
 import PageHeader from '@/components/admin/PageHeader';
 import DataTable from '@/components/admin/DataTable';
+import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -18,16 +19,20 @@ type Row = {
   phone: string | null;
   role: string;
   createdAt: string;
+  deletedAt: string | null;
   _count: { orders: number };
 };
 
 const ROLES = ['USER', 'AGENT', 'COUNSELLOR', 'PARTNER', 'ADMIN'];
+type ActiveFilter = 'all' | 'active' | 'inactive';
 
 export default function AdminUsersPage() {
   const [rows, setRows] = useState<Row[]>([]);
   const [q, setQ] = useState('');
   const [role, setRole] = useState('ALL');
+  const [activeFilter, setActiveFilter] = useState<ActiveFilter>('all');
   const [loading, setLoading] = useState(true);
+  const [target, setTarget] = useState<Row | null>(null);
 
   async function load() {
     setLoading(true);
@@ -52,14 +57,48 @@ export default function AdminUsersPage() {
       body: JSON.stringify({ role: newRole }),
     });
     const json = await res.json();
-    if (!json.ok) return toast.error(json.error ?? 'Update failed');
+    if (!json.ok) {
+      toast.error(json.error ?? 'Update failed');
+      return;
+    }
     toast.success('Role updated');
     load();
   }
 
+  async function toggleActive(u: Row, active: boolean) {
+    const res = await fetch(`/api/admin/users/${u.id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active }),
+    });
+    const json = await res.json();
+    if (!json.ok) {
+      toast.error(json.error ?? 'Update failed');
+      return;
+    }
+    toast.success(active ? 'User reactivated' : 'User deactivated');
+    load();
+  }
+
+  async function handleDeactivate() {
+    if (!target) return;
+    await toggleActive(target, false);
+    setTarget(null);
+  }
+
+  const visibleRows =
+    activeFilter === 'all'
+      ? rows
+      : activeFilter === 'active'
+        ? rows.filter((r) => r.deletedAt === null)
+        : rows.filter((r) => r.deletedAt !== null);
+
   return (
     <>
-      <PageHeader title="Users" subtitle="Every account. Change roles inline." />
+      <PageHeader
+        title="Users"
+        subtitle="Every account. Change roles inline. Deactivate to block sign-in - data is preserved."
+      />
 
       <div className="mb-4 flex flex-wrap gap-2">
         <div className="relative max-w-xs flex-1">
@@ -72,7 +111,7 @@ export default function AdminUsersPage() {
           />
         </div>
         <Select value={role} onValueChange={(v) => setRole(v ?? 'ALL')}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-45">
             <SelectValue placeholder="All roles" />
           </SelectTrigger>
           <SelectContent>
@@ -82,6 +121,16 @@ export default function AdminUsersPage() {
                 {r}
               </SelectItem>
             ))}
+          </SelectContent>
+        </Select>
+        <Select value={activeFilter} onValueChange={(v) => setActiveFilter((v as ActiveFilter) ?? 'all')}>
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="active">Active only</SelectItem>
+            <SelectItem value="inactive">Deactivated only</SelectItem>
           </SelectContent>
         </Select>
         <Button variant="outline" onClick={load}>
@@ -95,14 +144,14 @@ export default function AdminUsersPage() {
         </div>
       ) : (
         <DataTable
-          rows={rows}
+          rows={visibleRows}
           columns={[
             {
               key: 'name',
               header: 'Name',
               render: (r) => (
                 <div>
-                  <div className="font-medium">{r.name ?? '—'}</div>
+                  <div className="font-medium">{r.name ?? '-'}</div>
                   <div className="text-xs text-muted-foreground">{r.email}</div>
                 </div>
               ),
@@ -112,8 +161,8 @@ export default function AdminUsersPage() {
               key: 'role',
               header: 'Role',
               render: (r) => (
-                <Select value={r.role} onValueChange={(v) => v && changeRole(r.id, v)}>
-                  <SelectTrigger className="h-8 w-[140px]">
+                <Select value={r.role} onValueChange={(v) => v && changeRole(r.id, v)} disabled={r.deletedAt !== null}>
+                  <SelectTrigger className="h-8 w-35">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -128,6 +177,16 @@ export default function AdminUsersPage() {
             },
             { key: 'orders', header: 'Orders', render: (r) => <Badge variant="secondary">{r._count.orders}</Badge> },
             {
+              key: 'status',
+              header: 'Status',
+              render: (r) =>
+                r.deletedAt === null ? (
+                  <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100">Active</Badge>
+                ) : (
+                  <Badge variant="secondary">Deactivated</Badge>
+                ),
+            },
+            {
               key: 'created',
               header: 'Joined',
               render: (r) => (
@@ -137,9 +196,51 @@ export default function AdminUsersPage() {
               ),
             },
           ]}
+          rowAction={(r) =>
+            r.deletedAt === null ? (
+              <div className="flex justify-end">
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  className="text-destructive hover:text-destructive"
+                  onClick={() => setTarget(r)}
+                  aria-label="Deactivate"
+                  title="Deactivate"
+                >
+                  <PowerOff className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+            ) : (
+              <div className="flex justify-end">
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  className="text-emerald-600 hover:text-emerald-700"
+                  onClick={() => toggleActive(r, true)}
+                  aria-label="Reactivate"
+                  title="Reactivate"
+                >
+                  <Power className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+            )
+          }
           empty="No users match these filters."
         />
       )}
+
+      <DeleteConfirmDialog
+        open={!!target}
+        onOpenChange={(o) => !o && setTarget(null)}
+        title={target ? `Deactivate ${target.name ?? target.email}?` : 'Deactivate'}
+        itemLabel="This user"
+        description={
+          target
+            ? `${target.name ?? target.email} will no longer be able to sign in. The account and all history (orders, reports, consultations) are preserved. You can reactivate any time.`
+            : undefined
+        }
+        onConfirm={handleDeactivate}
+      />
     </>
   );
 }

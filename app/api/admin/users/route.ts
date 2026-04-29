@@ -39,6 +39,7 @@ export async function GET(req: Request) {
           role: true,
           createdAt: true,
           emailVerified: true,
+          deletedAt: true,
           _count: { select: { orders: true } },
         },
       }),

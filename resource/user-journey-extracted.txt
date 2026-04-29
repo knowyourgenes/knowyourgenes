@@ -15,7 +15,7 @@ Version 1.0  |  Launch: 14 May 2026
 Model
 
 
-Direct-to-Consumer (D2C) — No Kit Dispatch
+Direct-to-Consumer (D2C) - No Kit Dispatch
 
 
 Sample Collection
@@ -39,7 +39,7 @@ Customer can book a paid consultation with a genetic counselor through the KYG p
 
 
 
-  00  Journey Overview — How It Works in 6 Steps
+  00  Journey Overview - How It Works in 6 Steps
 
 
 The KYG D2C journey is built around maximum convenience and minimum friction. There is no physical kit to mail. The user books a test, a trained professional arrives at their location, the sample is collected, the lab processes the report, and the user receives a clear, jargon-free report. They can then book a consultation with a genetic counselor to understand and act on their results.
@@ -159,7 +159,7 @@ Digital
 
 
 
-  01  Detailed User Journey — Stage by Stage
+  01  Detailed User Journey - Stage by Stage
 
 
 Each stage is broken down into the user&apos;s actions, the platform&apos;s response, the team responsible, the touchpoints involved, and the success criteria the agency must achieve.
@@ -168,7 +168,7 @@ Each stage is broken down into the user&apos;s actions, the platform&apos;s resp
 
 
 
-Stage 1 — Discover &amp; Explore
+Stage 1 - Discover &amp; Explore
 
 
 NOTE  This is where the user first encounters KYG. The goal is one thing: make them curious enough to learn more. Do NOT ask them to buy at this stage.
@@ -219,7 +219,7 @@ NABL / CAP / PCPNDT badge. Doctor advisor names + photos. &apos;No needle if sal
 Drop-Off Prevention
 
 
-If user leaves without clicking: Meta retargeting ad fires within 24 hours. If user leaves landing page: exit-intent popup — &apos;Not sure? Talk to us on WhatsApp — free.&apos;
+If user leaves without clicking: Meta retargeting ad fires within 24 hours. If user leaves landing page: exit-intent popup - &apos;Not sure? Talk to us on WhatsApp - free.&apos;
 
 
 Key Metric
@@ -231,7 +231,7 @@ Landing page session &gt; 90 seconds. Scroll depth &gt; 60%. Bounce rate &lt; 55
 
 
 
-Stage 2 — Test Selection &amp; Booking
+Stage 2 - Test Selection &amp; Booking
 
 
 NOTE  This is the most critical conversion point. The user has decided they want a test. Remove all friction. Every extra click here loses a customer.
@@ -246,37 +246,37 @@ Element
 Detail
 
 
-Step 2A — Choose Test
+Step 2A - Choose Test
 
 
 User browses test menu. Each test shows: Name, What it tests, Who it is for, Price, Turnaround time. &apos;Most Popular&apos; and &apos;Recommended for You&apos; tags help decision.
 
 
-Step 2B — Help Me Choose (Optional)
+Step 2B - Help Me Choose (Optional)
 
 
 If user is unsure, they can take a 3-question quiz: &apos;What&apos;s your primary concern?&apos; → Wellness / Family history / Planning a baby / Medication. Quiz recommends the right test.
 
 
-Step 2C — Date &amp; Time Slot
+Step 2C - Date &amp; Time Slot
 
 
 Calendar shows available slots. User picks: Date + Morning / Afternoon / Evening window. Location: User enters home or office address.
 
 
-Step 2D — Personal Details
+Step 2D - Personal Details
 
 
-Name, Age, Gender, Mobile number (for WhatsApp), Email. No medical history form at this stage — keep it simple.
+Name, Age, Gender, Mobile number (for WhatsApp), Email. No medical history form at this stage - keep it simple.
 
 
-Step 2E — Payment
+Step 2E - Payment
 
 
 Price displayed clearly. Options: UPI (GPay / PhonePe), Debit/Credit Card, Net Banking, No-cost EMI (for orders &gt; ₹10,000). Promo code field. Proceed to Pay button.
 
 
-Step 2F — Order Confirmed
+Step 2F - Order Confirmed
 
 
 Order confirmation screen: Booking ID, Test name, Date + Time, Address, Phlebotomist will arrive within the selected window. &apos;Add to Google Calendar&apos; button.
@@ -291,7 +291,7 @@ Add-to-cart → Checkout rate &gt; 60%. Checkout → Payment rate &gt; 75%. Cart
 
 
 
-Booking Flow — Step by Step (WEM to Build)
+Booking Flow - Step by Step (WEM to Build)
 
 
 Screen #
@@ -351,7 +351,7 @@ Address Entry
 Continue →
 
 
-Google Maps autocomplete — reduce typing friction
+Google Maps autocomplete - reduce typing friction
 
 
 5
@@ -363,7 +363,7 @@ Personal Details
 Continue →
 
 
-Minimal fields — Name, Phone, Email only
+Minimal fields - Name, Phone, Email only
 
 
 6
@@ -387,13 +387,13 @@ Confirmation Page
 View My Booking / Add to Calendar
 
 
-WhatsApp opt-in checkbox — checked by default
+WhatsApp opt-in checkbox - checked by default
 
 
 
 
 
-Stage 3 — Confirmation &amp; Pre-Visit Preparation
+Stage 3 - Confirmation &amp; Pre-Visit Preparation
 
 
 NOTE  The window between booking and sample collection is where anxiety lives. Use this time to build confidence, reduce no-shows, and prepare the user correctly so the sample collection goes smoothly.
@@ -510,7 +510,7 @@ WEM (auto)
 
 
 
-WhatsApp Message Templates — Pre-Visit (MCM to Write)
+WhatsApp Message Templates - Pre-Visit (MCM to Write)
 
 
 Message Name
@@ -561,7 +561,7 @@ Need help? Reply HELP.
 
 
 
-Stage 4 — At-Home Sample Collection (The Physical Stage)
+Stage 4 - At-Home Sample Collection (The Physical Stage)
 
 
 NOTE  This is the only physical touchpoint in the entire journey. The phlebotomist or trained professional IS the brand at this moment. Their professionalism, punctuality, and bedside manner directly determine the customer&apos;s trust and likelihood of repeat purchase and referral.
@@ -594,7 +594,7 @@ Identity Verification
 Professional asks user to confirm name and Booking ID. Scans QR code on user&apos;s confirmation WhatsApp.
 
 
-Mandatory — no Booking ID = no sample collected.
+Mandatory - no Booking ID = no sample collected.
 
 
 Explain the Process
@@ -603,7 +603,7 @@ Explain the Process
 Brief 2-minute explanation of what will happen. What sample is being collected (blood draw / saliva / swab). How long it takes.
 
 
-Must be explained in user&apos;s preferred language — Hindi or English minimum.
+Must be explained in user&apos;s preferred language - Hindi or English minimum.
 
 
 Consent Form
@@ -639,7 +639,7 @@ Sample Labelling + Sealing
 Sample sealed in biohazard-compliant bag. Labelled with Booking ID. Chain of custody document initiated.
 
 
-Tamper-evident seal. Booking ID matches the label — checked twice.
+Tamper-evident seal. Booking ID matches the label - checked twice.
 
 
 Departure &amp; Notification
@@ -702,7 +702,7 @@ Police verification mandatory. KYG retains records.
 
 
 
-Stage 5 — Lab Processing &amp; Report Delivery
+Stage 5 - Lab Processing &amp; Report Delivery
 
 
 NOTE  The user is waiting. This is the highest anxiety window. Proactive, timely updates during this stage dramatically reduce &apos;Where is my report?&apos; queries and increase NPS.
@@ -741,7 +741,7 @@ Sample Processing
 Lab runs the appropriate genetic panel. QC checks completed.
 
 
-No user communication — internal only
+No user communication - internal only
 
 
 Day 1–10
@@ -765,7 +765,7 @@ Report Review
 KYG genetic counselor does a mandatory quality check on the report before delivery. Flags any critical findings.
 
 
-Internal — counselor review. If critical finding: priority consultation call initiated proactively.
+Internal - counselor review. If critical finding: priority consultation call initiated proactively.
 
 
 Day 10–13
@@ -822,7 +822,7 @@ Clean, professional, reassuring design
 Your Summary (Plain English)
 
 
-3-5 bullet points: what this test looked at and what we found — in simple language. No jargon.
+3-5 bullet points: what this test looked at and what we found - in simple language. No jargon.
 
 
 A 12-year-old must be able to understand it
@@ -852,7 +852,7 @@ Book a Consultation (CTA)
 Prominent CTA: &apos;Book a 30-minute session with a KYG Genetic Counselor to understand this fully.&apos;
 
 
-Clear, inviting — not pushy
+Clear, inviting - not pushy
 
 
 Scientific Data Appendix
@@ -861,7 +861,7 @@ Scientific Data Appendix
 Full technical results, gene variants found, reference ranges. For medical professionals.
 
 
-Technical — separate from main report sections
+Technical - separate from main report sections
 
 
 Disclaimer
@@ -876,10 +876,10 @@ Legally required. Placed at end.
 
 
 
-Stage 6 — Post-Report Consultation (Optional, Paid)
+Stage 6 - Post-Report Consultation (Optional, Paid)
 
 
-NOTE  This is NOT part of the test price. It is a separate, premium paid service. However, it is the highest-value interaction in the entire journey — it drives upsells, referrals, and LTV. The &apos;Book a Consultation&apos; CTA must appear on the report page, the delivery WhatsApp message, and in the follow-up sequence.
+NOTE  This is NOT part of the test price. It is a separate, premium paid service. However, it is the highest-value interaction in the entire journey - it drives upsells, referrals, and LTV. The &apos;Book a Consultation&apos; CTA must appear on the report page, the delivery WhatsApp message, and in the follow-up sequence.
 
 
 
@@ -945,7 +945,7 @@ Report-to-consultation booking rate &gt; 30%. Consultation CSAT &gt; 4.5/5. Post
 
 
 
-  02  Retention — The Loop That Keeps Users Coming Back
+  02  Retention - The Loop That Keeps Users Coming Back
 
 
 A one-time test purchase is the beginning, not the end. The post-consultation journey is where LTV is built. Every interaction after Stage 6 should deepen the relationship and create reasons to return.
@@ -969,7 +969,7 @@ Timing
 Post-Report (No Consultation)
 
 
-WhatsApp follow-up: &apos;Have questions about your report? Book a 30-min call with a counselor — ₹999.&apos; + link
+WhatsApp follow-up: &apos;Have questions about your report? Book a 30-min call with a counselor - ₹999.&apos; + link
 
 
 WhatsApp
@@ -1029,7 +1029,7 @@ WhatsApp
 New Science Update
 
 
-Email: &apos;New research relevant to your results. We&apos;ve updated your insights — log in to see.&apos;
+Email: &apos;New research relevant to your results. We&apos;ve updated your insights - log in to see.&apos;
 
 
 Email
@@ -1053,7 +1053,7 @@ WhatsApp + In-app
 Birthday / Health Occasion
 
 
-WhatsApp: &apos;Happy Birthday [Name]! Give yourself the gift of knowing — upgrade to our Premium Panel today.&apos;
+WhatsApp: &apos;Happy Birthday [Name]! Give yourself the gift of knowing - upgrade to our Premium Panel today.&apos;
 
 
 WhatsApp
@@ -1065,7 +1065,7 @@ User birthday
 
 
 
-  03  Exception Handling — What Can Go Wrong
+  03  Exception Handling - What Can Go Wrong
 
 
 Every failure scenario must have a defined recovery protocol before launch. These must be built into the WEM backend and customer support SOPs.
@@ -1134,7 +1134,7 @@ WhatsApp apology. Updated ETA given. ₹500 discount on next test.
 WEM (auto) + Customer Support
 
 
-User receives report — does not understand it
+User receives report - does not understand it
 
 
 User WhatsApps confusion or concern.
@@ -1185,7 +1185,7 @@ Customer Support
 
 
 
-  04  Team Responsibility Map — Who Owns What
+  04  Team Responsibility Map - Who Owns What
 
 
 
@@ -1218,7 +1218,7 @@ Ad creatives, page visuals, how-it-works illustrations
 Ad copy, headlines, explainer video script
 
 
-—
+-
 
 
 2. Test Selection &amp; Booking
@@ -1233,7 +1233,7 @@ Booking UI, test cards, slot selector design
 Test descriptions, pricing copy, quiz copy
 
 
-—
+-
 
 
 3. Confirmation &amp; Pre-Visit
@@ -1278,7 +1278,7 @@ Report design template, data visualization
 Plain-language report copy, action step text
 
 
-Lab partner — sample processing + QC
+Lab partner - sample processing + QC
 
 
 6. Consultation Booking
@@ -1293,7 +1293,7 @@ Consultation booking page UI
 Counselor profile copy, session description
 
 
-Genetic Counselor — session delivery
+Genetic Counselor - session delivery
 
 
 Retention Loop
@@ -1305,16 +1305,16 @@ Automated WhatsApp sequences, email flows, account dashboard
 Retention email templates, WhatsApp card designs
 
 
-Retention copy — all messages + action plans
+Retention copy - all messages + action plans
 
 
-Counselor — Action Plan document
+Counselor - Action Plan document
 
 
 
 
 
-  05  Full Journey — Success Metrics at a Glance
+  05  Full Journey - Success Metrics at a Glance
 
 
 

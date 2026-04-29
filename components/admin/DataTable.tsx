@@ -5,13 +5,7 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-r
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 type Column<T> = {
   key: string;
@@ -34,6 +28,14 @@ export default function DataTable<T extends { id?: string }>({
   selectedIds = [],
   onSelectionChange,
   bulkActions,
+  // Server-side pagination: when `total` is provided, `rows` is already the
+  // current page, no client-side slicing happens, and pagination controls are
+  // driven by `page`/`pageSize` + the onChange callbacks.
+  total: serverTotal,
+  page: serverPage,
+  pageSize: serverPageSize,
+  onPageChange,
+  onPageSizeChange,
 }: {
   rows: T[];
   columns: Column<T>[];
@@ -51,27 +53,35 @@ export default function DataTable<T extends { id?: string }>({
   onSelectionChange?: (ids: string[]) => void;
   /** Rendered in the bulk-action bar when selection > 0. */
   bulkActions?: React.ReactNode;
+  /** Server-pagination mode (controlled). Provide all four together. */
+  total?: number;
+  page?: number;
+  pageSize?: number;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
 }) {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState<number>(defaultPageSize);
+  const isServer = serverTotal !== undefined;
 
-  const total = rows.length;
+  const [internalPage, setInternalPage] = useState(1);
+  const [internalPageSize, setInternalPageSize] = useState<number>(defaultPageSize);
+
+  const pageSize = isServer ? (serverPageSize ?? defaultPageSize) : internalPageSize;
+  const total = isServer ? serverTotal! : rows.length;
   const pageCount = Math.max(1, Math.ceil(total / pageSize));
-  const currentPage = Math.min(page, pageCount);
+  const requestedPage = isServer ? (serverPage ?? 1) : internalPage;
+  const currentPage = Math.min(requestedPage, pageCount);
 
   const pageRows = useMemo(() => {
-    if (!paginate) return rows;
+    if (isServer || !paginate) return rows;
     const start = (currentPage - 1) * pageSize;
     return rows.slice(start, start + pageSize);
-  }, [rows, currentPage, pageSize, paginate]);
+  }, [rows, currentPage, pageSize, paginate, isServer]);
 
   const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds]);
   const selectablePageRows = pageRows.filter((r) => r.id !== undefined);
   const allOnPageSelected =
-    selectablePageRows.length > 0 &&
-    selectablePageRows.every((r) => selectedSet.has(r.id as string));
-  const someOnPageSelected =
-    selectablePageRows.some((r) => selectedSet.has(r.id as string)) && !allOnPageSelected;
+    selectablePageRows.length > 0 && selectablePageRows.every((r) => selectedSet.has(r.id as string));
+  const someOnPageSelected = selectablePageRows.some((r) => selectedSet.has(r.id as string)) && !allOnPageSelected;
 
   function toggleRow(id: string) {
     const next = new Set(selectedSet);
@@ -96,11 +106,22 @@ export default function DataTable<T extends { id?: string }>({
 
   const from = total === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const to = Math.min(currentPage * pageSize, total);
-  const colSpan =
-    columns.length + (showSerial ? 1 : 0) + (selectable ? 1 : 0) + (rowAction ? 1 : 0);
+  const colSpan = columns.length + (showSerial ? 1 : 0) + (selectable ? 1 : 0) + (rowAction ? 1 : 0);
 
   function go(next: number) {
-    setPage(Math.min(Math.max(1, next), pageCount));
+    const clamped = Math.min(Math.max(1, next), pageCount);
+    if (isServer) onPageChange?.(clamped);
+    else setInternalPage(clamped);
+  }
+
+  function changePageSize(next: number) {
+    if (isServer) {
+      onPageSizeChange?.(next);
+      onPageChange?.(1);
+    } else {
+      setInternalPageSize(next);
+      setInternalPage(1);
+    }
   }
 
   const selectedCount = selectedIds.length;
@@ -203,8 +224,7 @@ export default function DataTable<T extends { id?: string }>({
                 value={String(pageSize)}
                 onValueChange={(v) => {
                   if (!v) return;
-                  setPageSize(Number(v));
-                  setPage(1);
+                  changePageSize(Number(v));
                 }}
               >
                 <SelectTrigger className="h-8 w-[72px]">

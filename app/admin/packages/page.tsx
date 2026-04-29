@@ -161,32 +161,28 @@ export default function AdminPackagesPage() {
     load();
   }
 
-  async function handleDelete(permanent: boolean) {
+  async function handleDeactivate() {
     if (!deleteTarget) return;
-    const q = permanent ? '?permanent=true' : '';
-    const res = await fetch(`/api/admin/packages/${deleteTarget.id}${q}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/packages/${deleteTarget.id}`, { method: 'DELETE' });
     const json = await res.json();
     if (!json.ok) {
-      toast.error(json.error ?? 'Delete failed');
+      toast.error(json.error ?? 'Deactivate failed');
       return;
     }
-    toast.success(permanent ? 'Package deleted' : 'Package deactivated');
+    toast.success('Package deactivated');
     setDeleteTarget(null);
     load();
   }
 
-  async function handleBulkDelete(permanent: boolean) {
-    const q = permanent ? '?permanent=true' : '';
+  async function handleBulkDeactivate() {
     const results = await Promise.allSettled(
-      selectedIds.map((id) =>
-        fetch(`/api/admin/packages/${id}${q}`, { method: 'DELETE' }).then((r) => r.json())
-      )
+      selectedIds.map((id) => fetch(`/api/admin/packages/${id}`, { method: 'DELETE' }).then((r) => r.json()))
     );
     const failed = results.filter((r) => r.status === 'rejected' || !r.value?.ok).length;
     const done = results.length - failed;
     const noun = (n: number) => (n === 1 ? 'package' : 'packages');
-    if (failed === 0) toast.success(permanent ? `${done} ${noun(done)} deleted` : `${done} ${noun(done)} deactivated`);
-    else if (done === 0) toast.error(`Failed to delete ${failed} ${noun(failed)}`);
+    if (failed === 0) toast.success(`${done} ${noun(done)} deactivated`);
+    else if (done === 0) toast.error(`Failed to deactivate ${failed} ${noun(failed)}`);
     else toast.error(`${done} done, ${failed} failed`);
     setBulkDeleteOpen(false);
     setSelectedIds([]);
@@ -217,7 +213,7 @@ export default function AdminPackagesPage() {
           onSelectionChange={setSelectedIds}
           bulkActions={
             <Button variant="destructive" size="sm" onClick={() => setBulkDeleteOpen(true)}>
-              <Trash2 className="h-3.5 w-3.5" /> Delete
+              <Trash2 className="h-3.5 w-3.5" /> Deactivate
             </Button>
           }
           columns={[
@@ -275,13 +271,7 @@ export default function AdminPackagesPage() {
           ]}
           rowAction={(p) => (
             <div className="flex justify-end gap-2">
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                onClick={() => openEdit(p)}
-                aria-label="Edit"
-                title="Edit"
-              >
+              <Button size="icon-sm" variant="ghost" onClick={() => openEdit(p)} aria-label="Edit" title="Edit">
                 <Pencil className="h-3.5 w-3.5" />
               </Button>
               <Button
@@ -289,8 +279,8 @@ export default function AdminPackagesPage() {
                 variant="ghost"
                 className="text-destructive hover:text-destructive"
                 onClick={() => setDeleteTarget(p)}
-                aria-label="Delete"
-                title="Delete"
+                aria-label="Deactivate"
+                title="Deactivate"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </Button>
@@ -308,170 +298,172 @@ export default function AdminPackagesPage() {
           </DialogHeader>
 
           <DialogBody>
-          <form id="pkg-form" onSubmit={save} className="grid gap-4">
-            <div className="grid grid-cols-2 gap-3">
+            <form id="pkg-form" onSubmit={save} className="grid gap-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="slug">Slug (kebab-case)</Label>
+                  <Input
+                    id="slug"
+                    value={form.slug}
+                    onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    id="name"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label>Category</Label>
+                  <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v ?? 'WELLNESS' })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="WELLNESS">Wellness</SelectItem>
+                      <SelectItem value="CANCER_RISK">Cancer risk</SelectItem>
+                      <SelectItem value="REPRODUCTIVE">Reproductive</SelectItem>
+                      <SelectItem value="CARDIAC">Cardiac</SelectItem>
+                      <SelectItem value="DRUG_SENSITIVITY">Drug sensitivity</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label>Sample type</Label>
+                  <Select value={form.sampleType} onValueChange={(v) => setForm({ ...form, sampleType: v ?? 'BLOOD' })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="BLOOD">Blood</SelectItem>
+                      <SelectItem value="SALIVA">Saliva</SelectItem>
+                      <SelectItem value="SWAB">Swab</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="price">Price (₹)</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={form.price}
+                    onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="compare">Compare-at (₹, optional)</Label>
+                  <Input
+                    id="compare"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={form.compareAtPrice ?? ''}
+                    onChange={(e) =>
+                      setForm({ ...form, compareAtPrice: e.target.value ? Number(e.target.value) : null })
+                    }
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="tat-min">TAT min (days)</Label>
+                  <Input
+                    id="tat-min"
+                    type="number"
+                    value={form.tatMinDays}
+                    onChange={(e) => setForm({ ...form, tatMinDays: Number(e.target.value) })}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="tat-max">TAT max (days)</Label>
+                  <Input
+                    id="tat-max"
+                    type="number"
+                    value={form.tatMaxDays}
+                    onChange={(e) => setForm({ ...form, tatMaxDays: Number(e.target.value) })}
+                  />
+                </div>
+                <div className="space-y-1.5 col-span-2">
+                  <Label htmlFor="bm-count">Biomarker count</Label>
+                  <Input
+                    id="bm-count"
+                    type="number"
+                    value={form.biomarkerCount}
+                    onChange={(e) => setForm({ ...form, biomarkerCount: Number(e.target.value) })}
+                  />
+                </div>
+              </div>
+
               <div className="space-y-1.5">
-                <Label htmlFor="slug">Slug (kebab-case)</Label>
+                <Label htmlFor="tagline">Tagline</Label>
                 <Input
-                  id="slug"
-                  value={form.slug}
-                  onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                  id="tagline"
+                  value={form.tagline}
+                  onChange={(e) => setForm({ ...form, tagline: e.target.value })}
                   required
                 />
               </div>
+
               <div className="space-y-1.5">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  rows={3}
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
                   required
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label>Category</Label>
-                <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v ?? 'WELLNESS' })}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="WELLNESS">Wellness</SelectItem>
-                    <SelectItem value="CANCER_RISK">Cancer risk</SelectItem>
-                    <SelectItem value="REPRODUCTIVE">Reproductive</SelectItem>
-                    <SelectItem value="CARDIAC">Cardiac</SelectItem>
-                    <SelectItem value="DRUG_SENSITIVITY">Drug sensitivity</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1.5">
-                <Label>Sample type</Label>
-                <Select value={form.sampleType} onValueChange={(v) => setForm({ ...form, sampleType: v ?? 'BLOOD' })}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="BLOOD">Blood</SelectItem>
-                    <SelectItem value="SALIVA">Saliva</SelectItem>
-                    <SelectItem value="SWAB">Swab</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="price">Price (₹)</Label>
-                <Input
-                  id="price"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={form.price}
-                  onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
-                  required
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="compare">Compare-at (₹, optional)</Label>
-                <Input
-                  id="compare"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={form.compareAtPrice ?? ''}
-                  onChange={(e) => setForm({ ...form, compareAtPrice: e.target.value ? Number(e.target.value) : null })}
+                <Label htmlFor="highlights">Highlights (one per line)</Label>
+                <Textarea
+                  id="highlights"
+                  rows={4}
+                  className="font-mono text-xs"
+                  value={form.highlights}
+                  onChange={(e) => setForm({ ...form, highlights: e.target.value })}
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="tat-min">TAT min (days)</Label>
+                <Label htmlFor="bm-list">Biomarker list (comma separated)</Label>
                 <Input
-                  id="tat-min"
-                  type="number"
-                  value={form.tatMinDays}
-                  onChange={(e) => setForm({ ...form, tatMinDays: Number(e.target.value) })}
+                  id="bm-list"
+                  className="font-mono text-xs"
+                  placeholder="BRCA1, BRCA2, TP53"
+                  value={form.biomarkerList}
+                  onChange={(e) => setForm({ ...form, biomarkerList: e.target.value })}
                 />
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="tat-max">TAT max (days)</Label>
-                <Input
-                  id="tat-max"
-                  type="number"
-                  value={form.tatMaxDays}
-                  onChange={(e) => setForm({ ...form, tatMaxDays: Number(e.target.value) })}
-                />
+
+              <div className="flex gap-6 pt-2">
+                <label className="flex items-center gap-2 text-sm">
+                  <Checkbox checked={form.popular} onCheckedChange={(c) => setForm({ ...form, popular: c === true })} />
+                  Popular
+                </label>
+                <label className="flex items-center gap-2 text-sm">
+                  <Checkbox
+                    checked={form.recommended}
+                    onCheckedChange={(c) => setForm({ ...form, recommended: c === true })}
+                  />
+                  Recommended
+                </label>
+                <label className="flex items-center gap-2 text-sm">
+                  <Checkbox checked={form.active} onCheckedChange={(c) => setForm({ ...form, active: c === true })} />
+                  Active
+                </label>
               </div>
-              <div className="space-y-1.5 col-span-2">
-                <Label htmlFor="bm-count">Biomarker count</Label>
-                <Input
-                  id="bm-count"
-                  type="number"
-                  value={form.biomarkerCount}
-                  onChange={(e) => setForm({ ...form, biomarkerCount: Number(e.target.value) })}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="tagline">Tagline</Label>
-              <Input
-                id="tagline"
-                value={form.tagline}
-                onChange={(e) => setForm({ ...form, tagline: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                rows={3}
-                value={form.description}
-                onChange={(e) => setForm({ ...form, description: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="highlights">Highlights (one per line)</Label>
-              <Textarea
-                id="highlights"
-                rows={4}
-                className="font-mono text-xs"
-                value={form.highlights}
-                onChange={(e) => setForm({ ...form, highlights: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="bm-list">Biomarker list (comma separated)</Label>
-              <Input
-                id="bm-list"
-                className="font-mono text-xs"
-                placeholder="BRCA1, BRCA2, TP53"
-                value={form.biomarkerList}
-                onChange={(e) => setForm({ ...form, biomarkerList: e.target.value })}
-              />
-            </div>
-
-            <div className="flex gap-6 pt-2">
-              <label className="flex items-center gap-2 text-sm">
-                <Checkbox checked={form.popular} onCheckedChange={(c) => setForm({ ...form, popular: c === true })} />
-                Popular
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <Checkbox
-                  checked={form.recommended}
-                  onCheckedChange={(c) => setForm({ ...form, recommended: c === true })}
-                />
-                Recommended
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <Checkbox checked={form.active} onCheckedChange={(c) => setForm({ ...form, active: c === true })} />
-                Active
-              </label>
-            </div>
-          </form>
+            </form>
           </DialogBody>
 
           <DialogFooter className="m-0 shrink-0">
@@ -489,19 +481,17 @@ export default function AdminPackagesPage() {
       <DeleteConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title={deleteTarget ? `Delete "${deleteTarget.name}"?` : 'Delete'}
+        title={deleteTarget ? `Deactivate "${deleteTarget.name}"?` : 'Deactivate'}
         itemLabel="This package"
-        onConfirm={handleDelete}
+        onConfirm={handleDeactivate}
       />
 
       <DeleteConfirmDialog
         open={bulkDeleteOpen}
         onOpenChange={setBulkDeleteOpen}
-        title={`Delete ${selectedIds.length} ${selectedIds.length === 1 ? 'package' : 'packages'}?`}
-        itemLabel={
-          selectedIds.length === 1 ? 'This package' : `These ${selectedIds.length} packages`
-        }
-        onConfirm={handleBulkDelete}
+        title={`Deactivate ${selectedIds.length} ${selectedIds.length === 1 ? 'package' : 'packages'}?`}
+        itemLabel={selectedIds.length === 1 ? 'This package' : `These ${selectedIds.length} packages`}
+        onConfirm={handleBulkDeactivate}
       />
     </>
   );

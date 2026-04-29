@@ -1,35 +1,22 @@
-import Link from "next/link";
-import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  ShoppingCart,
-  FileText,
-  Sparkles,
-  Calendar,
-  ArrowRight,
-  Microscope,
-} from "lucide-react";
+import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
+import { auth } from '@/auth';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ShoppingCart, FileText, Sparkles, Calendar, ArrowRight, Microscope } from 'lucide-react';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-const statusVariant: Record<string, "default" | "secondary" | "outline" | "destructive"> = {
-  BOOKED: "secondary",
-  AGENT_ASSIGNED: "outline",
-  AGENT_EN_ROUTE: "outline",
-  SAMPLE_COLLECTED: "outline",
-  AT_LAB: "outline",
-  REPORT_READY: "default",
-  CANCELLED: "destructive",
-  REFUNDED: "destructive",
+const statusVariant: Record<string, 'default' | 'secondary' | 'outline' | 'destructive'> = {
+  BOOKED: 'secondary',
+  AGENT_ASSIGNED: 'outline',
+  AGENT_EN_ROUTE: 'outline',
+  SAMPLE_COLLECTED: 'outline',
+  AT_LAB: 'outline',
+  REPORT_READY: 'default',
+  CANCELLED: 'destructive',
+  REFUNDED: 'destructive',
 };
 
 export default async function DashboardOverviewPage() {
@@ -39,7 +26,7 @@ export default async function DashboardOverviewPage() {
   const [orders, reports, upcoming] = await Promise.all([
     prisma.order.findMany({
       where: { userId },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
       take: 5,
       select: {
         id: true,
@@ -54,7 +41,7 @@ export default async function DashboardOverviewPage() {
     }),
     prisma.report.findMany({
       where: { userId, deliveredAt: { not: null } },
-      orderBy: { deliveredAt: "desc" },
+      orderBy: { deliveredAt: 'desc' },
       take: 3,
       select: {
         id: true,
@@ -66,10 +53,10 @@ export default async function DashboardOverviewPage() {
     prisma.order.findFirst({
       where: {
         userId,
-        status: { in: ["BOOKED", "AGENT_ASSIGNED", "AGENT_EN_ROUTE"] },
+        status: { in: ['BOOKED', 'AGENT_ASSIGNED', 'AGENT_EN_ROUTE'] },
         slotDate: { gte: new Date() },
       },
-      orderBy: { slotDate: "asc" },
+      orderBy: { slotDate: 'asc' },
       select: {
         id: true,
         orderNumber: true,
@@ -82,19 +69,15 @@ export default async function DashboardOverviewPage() {
     }),
   ]);
 
-  const activeOrders = orders.filter(
-    (o) => !["REPORT_READY", "CANCELLED", "REFUNDED"].includes(o.status)
-  ).length;
+  const activeOrders = orders.filter((o) => !['REPORT_READY', 'CANCELLED', 'REFUNDED'].includes(o.status)).length;
 
-  const name = session!.user.name?.split(" ")[0] ?? "there";
+  const name = session!.user.name?.split(' ')[0] ?? 'there';
 
   return (
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">Hi {name} 👋</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Here's what's happening with your tests.
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">Here's what's happening with your tests.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -145,17 +128,17 @@ export default async function DashboardOverviewPage() {
               <div>
                 <p className="text-xs text-muted-foreground">Slot</p>
                 <p className="mt-1 font-medium">
-                  {new Date(upcoming.slotDate).toLocaleDateString("en-IN", { dateStyle: "medium" })}
+                  {new Date(upcoming.slotDate).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
                 </p>
                 <p className="text-xs text-muted-foreground">{upcoming.slotWindow}</p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Agent</p>
-                <p className="mt-1 font-medium">{upcoming.agent?.user.name ?? "Assigning soon…"}</p>
+                <p className="mt-1 font-medium">{upcoming.agent?.user.name ?? 'Assigning soon…'}</p>
               </div>
             </div>
             <div className="mt-4">
-              <Badge variant={statusVariant[upcoming.status] ?? "secondary"}>{upcoming.status}</Badge>
+              <Badge variant={statusVariant[upcoming.status] ?? 'secondary'}>{upcoming.status}</Badge>
             </div>
           </CardContent>
         </Card>
@@ -167,10 +150,7 @@ export default async function DashboardOverviewPage() {
             <CardTitle>Recent orders</CardTitle>
             <CardDescription>Your last 5 bookings.</CardDescription>
           </div>
-          <Link
-            href="/dashboard/orders"
-            className="text-sm font-medium text-primary hover:underline"
-          >
+          <Link href="/dashboard/orders" className="text-sm font-medium text-primary hover:underline">
             View all →
           </Link>
         </CardHeader>
@@ -195,15 +175,13 @@ export default async function DashboardOverviewPage() {
                   <div className="min-w-0 flex-1">
                     <p className="font-medium">{o.package.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      <span className="font-mono">{o.orderNumber}</span> ·{" "}
-                      {new Date(o.createdAt).toLocaleDateString("en-IN", { dateStyle: "medium" })}
+                      <span className="font-mono">{o.orderNumber}</span> ·{' '}
+                      {new Date(o.createdAt).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
                     </p>
                   </div>
                   <div className="flex items-center gap-4">
-                    <Badge variant={statusVariant[o.status] ?? "secondary"}>{o.status}</Badge>
-                    <span className="text-sm font-medium">
-                      ₹{Math.floor(o.total / 100).toLocaleString("en-IN")}
-                    </span>
+                    <Badge variant={statusVariant[o.status] ?? 'secondary'}>{o.status}</Badge>
+                    <span className="text-sm font-medium">₹{Math.floor(o.total / 100).toLocaleString('en-IN')}</span>
                   </div>
                 </li>
               ))}
@@ -218,10 +196,7 @@ export default async function DashboardOverviewPage() {
             <CardTitle>Recent reports</CardTitle>
             <CardDescription>Your latest delivered results.</CardDescription>
           </div>
-          <Link
-            href="/dashboard/reports"
-            className="text-sm font-medium text-primary hover:underline"
-          >
+          <Link href="/dashboard/reports" className="text-sm font-medium text-primary hover:underline">
             View all →
           </Link>
         </CardHeader>
@@ -237,10 +212,10 @@ export default async function DashboardOverviewPage() {
                   <div>
                     <p className="font-medium">{r.packageName}</p>
                     <p className="text-xs text-muted-foreground">
-                      <span className="font-mono">{r.reportNumber}</span> · Delivered{" "}
+                      <span className="font-mono">{r.reportNumber}</span> · Delivered{' '}
                       {r.deliveredAt
-                        ? new Date(r.deliveredAt).toLocaleDateString("en-IN", { dateStyle: "medium" })
-                        : "—"}
+                        ? new Date(r.deliveredAt).toLocaleDateString('en-IN', { dateStyle: 'medium' })
+                        : '-'}
                     </p>
                   </div>
                   <Link

@@ -1,26 +1,20 @@
-import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ClipboardList } from "lucide-react";
+import { prisma } from '@/lib/prisma';
+import { auth } from '@/auth';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ClipboardList } from 'lucide-react';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-const statusVariant: Record<string, "default" | "secondary" | "outline" | "destructive"> = {
-  BOOKED: "secondary",
-  AGENT_ASSIGNED: "outline",
-  AGENT_EN_ROUTE: "outline",
-  SAMPLE_COLLECTED: "outline",
-  AT_LAB: "outline",
-  REPORT_READY: "default",
-  CANCELLED: "destructive",
-  REFUNDED: "destructive",
+const statusVariant: Record<string, 'default' | 'secondary' | 'outline' | 'destructive'> = {
+  BOOKED: 'secondary',
+  AGENT_ASSIGNED: 'outline',
+  AGENT_EN_ROUTE: 'outline',
+  SAMPLE_COLLECTED: 'outline',
+  AT_LAB: 'outline',
+  REPORT_READY: 'default',
+  CANCELLED: 'destructive',
+  REFUNDED: 'destructive',
 };
 
 export default async function UserOrdersPage() {
@@ -29,7 +23,7 @@ export default async function UserOrdersPage() {
 
   const orders = await prisma.order.findMany({
     where: { userId },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: 'desc' },
     select: {
       id: true,
       orderNumber: true,
@@ -47,9 +41,7 @@ export default async function UserOrdersPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Your orders</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Every test you've booked — past and upcoming.
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">Every test you've booked - past and upcoming.</p>
       </div>
 
       {orders.length === 0 ? (
@@ -73,31 +65,29 @@ export default async function UserOrdersPage() {
                   <CardTitle className="text-base">{o.package.name}</CardTitle>
                   <CardDescription className="font-mono text-xs">{o.orderNumber}</CardDescription>
                 </div>
-                <Badge variant={statusVariant[o.status] ?? "secondary"}>{o.status}</Badge>
+                <Badge variant={statusVariant[o.status] ?? 'secondary'}>{o.status}</Badge>
               </CardHeader>
               <CardContent className="grid gap-3 sm:grid-cols-4">
                 <div>
                   <p className="text-xs text-muted-foreground">Slot</p>
                   <p className="text-sm font-medium">
-                    {new Date(o.slotDate).toLocaleDateString("en-IN", { dateStyle: "medium" })}
+                    {new Date(o.slotDate).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
                   </p>
                   <p className="text-xs text-muted-foreground">{o.slotWindow}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Agent</p>
-                  <p className="text-sm font-medium">{o.agent?.user.name ?? "—"}</p>
+                  <p className="text-sm font-medium">{o.agent?.user.name ?? '-'}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Booked</p>
                   <p className="text-sm font-medium">
-                    {new Date(o.createdAt).toLocaleDateString("en-IN", { dateStyle: "medium" })}
+                    {new Date(o.createdAt).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
                   </p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Amount</p>
-                  <p className="text-sm font-medium">
-                    ₹{Math.floor(o.total / 100).toLocaleString("en-IN")}
-                  </p>
+                  <p className="text-sm font-medium">₹{Math.floor(o.total / 100).toLocaleString('en-IN')}</p>
                 </div>
               </CardContent>
             </Card>

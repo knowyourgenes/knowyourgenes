@@ -5,81 +5,90 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* KYG brand */
-  --brand: oklch(0.68 0.13 180); /* teal-500-ish */
-  --brand-dark: oklch(0.55 0.14 180);
-  --brand-soft: oklch(0.96 0.04 180);
+  /* =============================================================
+     KYG brand palette
+     -------------------------------------------------------------
+     Primary Teal  #0E4D4B   brand dark      - buttons, links, CTAs
+     Teal Light    #2FB5AB   brand accent    - hovers, focus, highlights
+     Mint          #E6F4F3   soft surface    - muted bg, subtle panels
+     Charcoal      #222222   body text
+     Gray          #7A7A7A   secondary text
+     ============================================================= */
+  --brand: oklch(0.68 0.12 181); /* Teal Light   #2FB5AB */
+  --brand-dark: oklch(0.31 0.052 184); /* Primary Teal #0E4D4B */
+  --brand-soft: oklch(0.96 0.011 186); /* Mint         #E6F4F3 */
 
-  /* shadcn defaults, tuned for KYG (primary = brand teal) */
   --background: oklch(1 0 0);
-  --foreground: oklch(0.15 0.02 240);
+  --foreground: oklch(0.21 0 0); /* Charcoal */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.02 240);
+  --card-foreground: oklch(0.21 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.02 240);
+  --popover-foreground: oklch(0.21 0 0);
 
-  --primary: oklch(0.55 0.14 180); /* teal */
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.97 0.01 240);
-  --secondary-foreground: oklch(0.2 0.02 240);
-  --muted: oklch(0.97 0.01 240);
-  --muted-foreground: oklch(0.5 0.01 240);
-  --accent: oklch(0.97 0.01 240);
-  --accent-foreground: oklch(0.2 0.02 240);
+  --primary: oklch(0.31 0.052 184); /* Primary Teal */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.96 0.011 186); /* Mint */
+  --secondary-foreground: oklch(0.31 0.052 184); /* Primary Teal on Mint */
+  --muted: oklch(0.96 0.011 186); /* Mint */
+  --muted-foreground: oklch(0.54 0 0); /* Gray */
+  --accent: oklch(0.96 0.011 186); /* Mint */
+  --accent-foreground: oklch(0.31 0.052 184);
   --destructive: oklch(0.58 0.22 25);
 
-  --border: oklch(0.92 0.01 240);
-  --input: oklch(0.92 0.01 240);
-  --ring: oklch(0.68 0.13 180);
+  --border: oklch(0.92 0.008 186);
+  --input: oklch(0.92 0.008 186);
+  --ring: oklch(0.68 0.12 181); /* Teal Light focus ring */
 
-  --chart-1: oklch(0.68 0.13 180);
-  --chart-2: oklch(0.62 0.18 40);
-  --chart-3: oklch(0.55 0.15 260);
-  --chart-4: oklch(0.7 0.15 100);
-  --chart-5: oklch(0.65 0.2 330);
+  --chart-1: oklch(0.31 0.052 184); /* Primary Teal */
+  --chart-2: oklch(0.68 0.12 181); /* Teal Light */
+  --chart-3: oklch(0.54 0 0); /* Gray */
+  --chart-4: oklch(0.62 0.18 40); /* warm accent - orders, revenue charts */
+  --chart-5: oklch(0.65 0.2 330); /* magenta accent - rare categories */
 
   --radius: 0.625rem;
 
   --sidebar: oklch(0.99 0 0);
-  --sidebar-foreground: oklch(0.2 0.02 240);
-  --sidebar-primary: oklch(0.55 0.14 180);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.96 0.04 180); /* brand-soft */
-  --sidebar-accent-foreground: oklch(0.3 0.12 180);
-  --sidebar-border: oklch(0.92 0.01 240);
-  --sidebar-ring: oklch(0.68 0.13 180);
+  --sidebar-foreground: oklch(0.21 0 0);
+  --sidebar-primary: oklch(0.31 0.052 184);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.96 0.011 186);
+  --sidebar-accent-foreground: oklch(0.31 0.052 184);
+  --sidebar-border: oklch(0.92 0.008 186);
+  --sidebar-ring: oklch(0.68 0.12 181);
 }
 
 .dark {
-  --background: oklch(0.145 0.02 240);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0.02 240);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0.02 240);
-  --popover-foreground: oklch(0.985 0 0);
+  /* Charcoal-based dark palette. Teal Light pops on dark surfaces, so it
+     becomes the primary in dark mode (like most dark-mode brand treatments). */
+  --background: oklch(0.17 0 0);
+  --foreground: oklch(0.96 0.011 186); /* Mint */
+  --card: oklch(0.21 0 0); /* Charcoal */
+  --card-foreground: oklch(0.96 0.011 186);
+  --popover: oklch(0.21 0 0);
+  --popover-foreground: oklch(0.96 0.011 186);
 
-  --primary: oklch(0.72 0.14 180);
-  --primary-foreground: oklch(0.15 0.02 240);
-  --secondary: oklch(0.269 0.02 240);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0.02 240);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0.02 240);
-  --accent-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.68 0.12 181); /* Teal Light */
+  --primary-foreground: oklch(0.21 0 0);
+  --secondary: oklch(0.27 0 0);
+  --secondary-foreground: oklch(0.96 0.011 186);
+  --muted: oklch(0.27 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.27 0 0);
+  --accent-foreground: oklch(0.96 0.011 186);
   --destructive: oklch(0.704 0.191 22.216);
 
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.72 0.14 180);
+  --ring: oklch(0.68 0.12 181);
 
-  --sidebar: oklch(0.205 0.02 240);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.72 0.14 180);
-  --sidebar-primary-foreground: oklch(0.15 0.02 240);
-  --sidebar-accent: oklch(0.269 0.02 240);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar: oklch(0.21 0 0);
+  --sidebar-foreground: oklch(0.96 0.011 186);
+  --sidebar-primary: oklch(0.68 0.12 181);
+  --sidebar-primary-foreground: oklch(0.21 0 0);
+  --sidebar-accent: oklch(0.27 0 0);
+  --sidebar-accent-foreground: oklch(0.96 0.011 186);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.72 0.14 180);
+  --sidebar-ring: oklch(0.68 0.12 181);
 }
 
 @theme inline {

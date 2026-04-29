@@ -1,19 +1,13 @@
-import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { prisma } from '@/lib/prisma';
+import { auth } from '@/auth';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default async function UserProfilePage() {
   const session = await auth();
@@ -52,25 +46,29 @@ export default async function UserProfilePage() {
           <form className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label htmlFor="name">Full name</Label>
-              <Input id="name" defaultValue={user.name ?? ""} />
+              <Input id="name" defaultValue={user.name ?? ''} />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="email">
                 Email
                 {user.emailVerified && (
-                  <Badge variant="outline" className="ml-2 text-[10px]">Verified</Badge>
+                  <Badge variant="outline" className="ml-2 text-[10px]">
+                    Verified
+                  </Badge>
                 )}
               </Label>
-              <Input id="email" type="email" defaultValue={user.email ?? ""} disabled />
+              <Input id="email" type="email" defaultValue={user.email ?? ''} disabled />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="phone">
                 Phone
                 {user.phoneVerified && (
-                  <Badge variant="outline" className="ml-2 text-[10px]">Verified</Badge>
+                  <Badge variant="outline" className="ml-2 text-[10px]">
+                    Verified
+                  </Badge>
                 )}
               </Label>
-              <Input id="phone" defaultValue={user.phone ?? ""} />
+              <Input id="phone" defaultValue={user.phone ?? ''} />
             </div>
             <div className="sm:col-span-2">
               <Button disabled>Save changes</Button>
@@ -82,22 +80,18 @@ export default async function UserProfilePage() {
       <Card>
         <CardHeader>
           <CardTitle>Communication preferences</CardTitle>
-          <CardDescription>
-            How we reach you about orders, reports, and health tips.
-          </CardDescription>
+          <CardDescription>How we reach you about orders, reports, and health tips.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           {[
-            { label: "Order updates on WhatsApp", enabled: true },
-            { label: "Email receipts", enabled: true },
-            { label: "Monthly newsletter", enabled: false },
-            { label: "Research opt-in (anonymous)", enabled: false },
+            { label: 'Order updates on WhatsApp', enabled: true },
+            { label: 'Email receipts', enabled: true },
+            { label: 'Monthly newsletter', enabled: false },
+            { label: 'Research opt-in (anonymous)', enabled: false },
           ].map((p) => (
             <div key={p.label} className="flex items-center justify-between">
               <span>{p.label}</span>
-              <Badge variant={p.enabled ? "default" : "secondary"}>
-                {p.enabled ? "On" : "Off"}
-              </Badge>
+              <Badge variant={p.enabled ? 'default' : 'secondary'}>{p.enabled ? 'On' : 'Off'}</Badge>
             </div>
           ))}
         </CardContent>
@@ -109,13 +103,15 @@ export default async function UserProfilePage() {
           <CardDescription>Delete your data permanently. This cannot be undone.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button variant="destructive" disabled>Request data deletion</Button>
+          <Button variant="destructive" disabled>
+            Request data deletion
+          </Button>
         </CardContent>
       </Card>
 
       <Separator />
       <p className="text-xs text-muted-foreground">
-        Member since {new Date(user.createdAt).toLocaleDateString("en-IN", { dateStyle: "long" })}
+        Member since {new Date(user.createdAt).toLocaleDateString('en-IN', { dateStyle: 'long' })}
       </p>
     </div>
   );

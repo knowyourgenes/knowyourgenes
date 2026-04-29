@@ -47,45 +47,52 @@ export default async function AdminDashboardPage({ searchParams }: { searchParam
   const rangeTo = to ? new Date(new Date(to).setHours(23, 59, 59, 999)) : null;
   const hasRange = !!(rangeFrom && rangeTo);
 
-  const orderDateWhere = hasRange
-    ? { createdAt: { gte: rangeFrom!, lte: rangeTo! } }
-    : {};
+  const orderDateWhere = hasRange ? { createdAt: { gte: rangeFrom!, lte: rangeTo! } } : {};
 
-  const [ordersCount, usersCount, agentsCount, packagesCount, revenue, todayCollections, recent] =
-    await Promise.all([
-      prisma.order.count({ where: orderDateWhere }),
-      prisma.user.count({ where: { role: 'USER' } }),
-      prisma.agentProfile.count({ where: { status: 'ACTIVE' } }),
-      prisma.package.count({ where: { active: true } }),
-      prisma.order.aggregate({
-        _sum: { total: true },
-        where: { paidAt: { not: null }, ...orderDateWhere },
-      }),
-      prisma.order.count({
-        where: {
-          slotDate: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0)),
-            lt: new Date(new Date().setHours(24, 0, 0, 0)),
-          },
+  const [ordersCount, usersCount, agentsCount, packagesCount, revenue, todayCollections, recent] = await Promise.all([
+    prisma.order.count({ where: orderDateWhere }),
+    prisma.user.count({ where: { role: 'USER' } }),
+    prisma.agentProfile.count({ where: { status: 'ACTIVE' } }),
+    prisma.package.count({ where: { active: true } }),
+    prisma.order.aggregate({
+      _sum: { total: true },
+      where: { paidAt: { not: null }, ...orderDateWhere },
+    }),
+    prisma.order.count({
+      where: {
+        slotDate: {
+          gte: new Date(new Date().setHours(0, 0, 0, 0)),
+          lt: new Date(new Date().setHours(24, 0, 0, 0)),
         },
-      }),
-      prisma.order.findMany({
-        where: orderDateWhere,
-        take: 8,
-        orderBy: { createdAt: 'desc' },
-        include: {
-          user: { select: { name: true, email: true } },
-          package: { select: { name: true } },
-        },
-      }),
-    ]);
+      },
+    }),
+    prisma.order.findMany({
+      where: orderDateWhere,
+      take: 8,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: { select: { name: true, email: true } },
+        package: { select: { name: true } },
+      },
+    }),
+  ]);
 
   const rupees = (paise: number | null | undefined) =>
     paise ? `₹${Math.floor(paise / 100).toLocaleString('en-IN')}` : '₹0';
 
   const kpis = [
-    { key: 'orders', label: hasRange ? 'Orders in range' : 'Total orders', value: ordersCount.toString(), icon: iconMap.orders },
-    { key: 'revenue', label: hasRange ? 'Revenue in range' : 'Revenue (paid)', value: rupees(revenue._sum.total), icon: iconMap.revenue },
+    {
+      key: 'orders',
+      label: hasRange ? 'Orders in range' : 'Total orders',
+      value: ordersCount.toString(),
+      icon: iconMap.orders,
+    },
+    {
+      key: 'revenue',
+      label: hasRange ? 'Revenue in range' : 'Revenue (paid)',
+      value: rupees(revenue._sum.total),
+      icon: iconMap.revenue,
+    },
     { key: 'users', label: 'Active users', value: usersCount.toString(), icon: iconMap.users },
     { key: 'agents', label: 'Active agents', value: agentsCount.toString(), icon: iconMap.agents },
     { key: 'packages', label: 'Active packages', value: packagesCount.toString(), icon: iconMap.packages },

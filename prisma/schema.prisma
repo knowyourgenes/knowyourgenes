@@ -97,7 +97,7 @@ enum NotificationStatus {
 }
 
 // =============================================================================
-// AUTH — NextAuth v5 required tables + our extensions
+// AUTH - NextAuth v5 required tables + our extensions
 // =============================================================================
 
 model User {
@@ -177,7 +177,7 @@ model VerificationToken {
 }
 
 // =============================================================================
-// PROFILES — role-specific data
+// PROFILES - role-specific data
 // =============================================================================
 
 model AgentProfile {
@@ -228,7 +228,7 @@ model CounsellorProfile {
   @@index([active])
 }
 
-// Lab partners — process samples, upload reports.
+// Lab partners - process samples, upload reports.
 // One-to-one with a User whose role = PARTNER.
 model LabPartner {
   userId        String   @id
@@ -274,7 +274,7 @@ model Address {
 }
 
 // =============================================================================
-// CATALOG — Packages / Tests
+// CATALOG - Packages / Tests
 // =============================================================================
 
 model Package {
@@ -413,7 +413,7 @@ model Report {
   userId             String
   packageName        String    // denormalised at delivery time
   pdfKey             String    // S3 object key
-  summary            Json      // string[] — plain-English bullets
+  summary            Json      // string[] - plain-English bullets
   criticalFinding    Boolean   @default(false)
   counsellorNotes    String?   @db.Text
   uploadedById       String?   // admin who uploaded
@@ -503,21 +503,29 @@ model Coupon {
 }
 
 // =============================================================================
-// SERVICE AREA (Delhi NCR pincodes)
+// SERVICE AREA - master pincode table (all of India)
 // =============================================================================
+// Seeded once from the data.gov.in Pincode Directory (~155K rows).
+// `active` defaults to false - admin opts in which pincodes accept orders.
+// Runtime serviceability check: SELECT active FROM service_area WHERE pincode = ?
 
 model ServiceArea {
   id        String   @id @default(cuid())
   pincode   String   @unique
-  area      String
-  city      String
-  active    Boolean  @default(true)
+  area      String   // officename, e.g. "Connaught Place"
+  district  String   @default("")
+  state     String   @default("")
+  city      String   @default("") // kept for backward compat; usually == district
+  active    Boolean  @default(false)
   createdAt DateTime @default(now())
 
   @@index([active])
+  @@index([state])
+  @@index([district])
+  @@index([state, district])
 }
 
-// NOTE: Blog content lives in Sanity CMS — see sanity/ folder. No BlogPost table here.
+// NOTE: Blog content lives in Sanity CMS - see sanity/ folder. No BlogPost table here.
 
 // =============================================================================
 // NOTIFICATIONS / COMMS LOG

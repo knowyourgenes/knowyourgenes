@@ -18,6 +18,21 @@ const normalizePhone = (s: string) => s.replace(/\D/g, '').replace(/^91/, '');
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(prisma),
+  callbacks: {
+    ...authConfig.callbacks,
+    // Block deactivated users from signing in via any provider (Google included).
+    // Credentials provider already checks deletedAt inside authorize(); this
+    // covers OAuth sign-ins where authorize isn't called.
+    async signIn({ user }) {
+      if (!user?.id) return true; // new OAuth user being created - let adapter proceed
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { deletedAt: true },
+      });
+      if (dbUser?.deletedAt) return false;
+      return true;
+    },
+  },
   providers: [
     ...authConfig.providers,
     Credentials({
@@ -36,6 +51,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
 
         if (!user || !user.passwordHash) return null;
+
+        // Deactivated accounts (deletedAt set) cannot sign in.
+        if (user.deletedAt) return null;
 
         const ok = await bcrypt.compare(password, user.passwordHash);
         if (!ok) return null;

@@ -5,7 +5,7 @@ import { auth } from '@/auth';
 import type { Role } from '@prisma/client';
 
 // ---------------------------------------------------------------------------
-// Response helpers — consistent JSON shape across every admin endpoint.
+// Response helpers - consistent JSON shape across every admin endpoint.
 // ---------------------------------------------------------------------------
 
 export function ok<T>(data: T, init?: ResponseInit) {

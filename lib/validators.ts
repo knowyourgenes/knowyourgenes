@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 // ---------------------------------------------------------------------------
-// Enums mirrored from Prisma (kept in sync manually — source of truth is Prisma)
+// Enums mirrored from Prisma (kept in sync manually - source of truth is Prisma)
 // ---------------------------------------------------------------------------
 
 export const RoleEnum = z.enum(['USER', 'AGENT', 'COUNSELLOR', 'PARTNER', 'ADMIN']);
@@ -199,8 +199,10 @@ export const couponUpdate = couponCreate.partial();
 export const serviceAreaCreate = z.object({
   pincode: z.string().regex(/^\d{6}$/, 'Must be a 6-digit pincode'),
   area: z.string().min(1),
-  city: z.string().min(1),
-  active: z.boolean().default(true),
+  district: z.string().default(''),
+  state: z.string().default(''),
+  city: z.string().default(''),
+  active: z.boolean().default(false),
 });
 
 export const serviceAreaBulk = z.object({
@@ -209,8 +211,30 @@ export const serviceAreaBulk = z.object({
 
 export const serviceAreaUpdate = z.object({
   area: z.string().optional(),
+  district: z.string().optional(),
+  state: z.string().optional(),
   city: z.string().optional(),
   active: z.boolean().optional(),
+});
+
+export const serviceAreaQuery = z.object({
+  q: z.string().optional(), // search pincode / area / district
+  state: z.string().optional(),
+  district: z.string().optional(),
+  active: z
+    .enum(['true', 'false'])
+    .optional()
+    .transform((v) => (v === 'true' ? true : v === 'false' ? false : undefined)),
+  skip: z.coerce.number().int().min(0).default(0),
+  take: z.coerce.number().int().min(1).max(500).default(100),
+});
+
+export const serviceAreaBulkToggle = z.object({
+  // Scope: apply to pincodes matching these filters. At least one must be set.
+  state: z.string().optional(),
+  district: z.string().optional(),
+  pincodes: z.array(z.string().regex(/^\d{6}$/)).optional(),
+  active: z.boolean(),
 });
 
 // ---------------------------------------------------------------------------

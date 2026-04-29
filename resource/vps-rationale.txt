@@ -1,0 +1,157 @@
+KYG — Why a VPS is the right choice for this project
+=====================================================
+
+This document captures the positive case for hosting Know Your Genes
+(Next.js + Prisma + Postgres + lab/partner integrations) on a VPS rather
+than a serverless platform.
+
+
+1. Data residency & compliance (genetic + health data)
+------------------------------------------------------
+- Genetic and health data carries heavy regulatory expectations in India
+  (DPDP Act, ICMR guidelines, CDSCO licensing posture).
+- A VPS in an Indian region (DigitalOcean BLR, AWS Lightsail Mumbai,
+  E2E Networks, Hostinger India, CtrlS, ESDS) keeps PII + genomic data
+  on Indian infrastructure end-to-end.
+- Single-tenant control over disk encryption, backups, and access logs
+  is easier to defend in an audit than a serverless multi-tenant runtime.
+
+
+2. Static outbound IP for partner / payment / SMS APIs
+------------------------------------------------------
+- NABL labs, pathology partners, Razorpay/PayU, MSG91/Gupshup, Mappls,
+  and government APIs frequently require IP allowlisting.
+- Serverless platforms rotate egress IPs; a VPS gives a fixed IP (or a
+  small known range) that partners can whitelist once.
+
+
+3. Long-running and background work
+-----------------------------------
+- Report PDF generation (Puppeteer/Chromium), bulk pincode imports,
+  CSV exports, lab-result polling, courier-status sync, and counsellor
+  scheduling jobs all exceed typical serverless timeouts (10-60s).
+- A VPS runs BullMQ / cron workers as plain Node processes with no
+  artificial time limits.
+
+
+4. Warm Prisma connection pool
+------------------------------
+- Prisma + Postgres on serverless requires PgBouncer or Prisma Data
+  Proxy to avoid exhausting connections on cold starts.
+- A long-lived Node process on a VPS keeps a single warm pool — simpler
+  config, lower latency, fewer surprises during traffic spikes.
+
+
+5. Predictable, flat-rate cost
+------------------------------
+- Vercel/serverless bills by invocation, bandwidth, and function-GB-seconds.
+  A growing D2C funnel (test catalog browsing, location gates, image-heavy
+  pages) burns bandwidth fast.
+- A 4 vCPU / 8 GB VPS in India is roughly Rs. 1,000-2,500/month and
+  comfortably hosts the app + Postgres + Redis + workers + nginx for
+  the early-stage traffic profile.
+
+
+6. Co-located services on one private network
+----------------------------------------------
+- App server, Postgres, Redis (sessions, queues, rate-limits), and an
+  nginx reverse proxy can live on one box or one private VPC.
+- No cross-network egress charges, sub-millisecond DB latency, simpler
+  firewalling, single backup target.
+
+
+7. Persistent connections (websockets / SSE)
+--------------------------------------------
+- Future features benefit from persistent connections:
+  - live agent tracking on the day of sample pickup
+  - counsellor <-> patient chat during a session
+  - partner dashboard live order feed
+- These map cleanly to a VPS; serverless platforms either disallow them
+  or charge per connection-hour.
+
+
+8. Custom binaries and system dependencies
+------------------------------------------
+- Likely needed during the project's lifetime:
+  - Chromium / Puppeteer for branded PDF reports
+  - wkhtmltopdf or Gotenberg as a fallback
+  - ImageMagick / sharp native modules for report assets
+  - ffmpeg if counselling sessions ever record audio/video
+- Installing and pinning these on a VPS is trivial; on serverless it is
+  a constant fight with bundle size and cold-start time.
+
+
+9. Operational control and observability
+-----------------------------------------
+- Direct access to system logs, slow-query logs, pg_stat_statements,
+  iostat, journalctl — invaluable when diagnosing a partner API issue
+  at 2am or a slow report query.
+- Self-hosted Grafana + Loki + Prometheus on the same box for free,
+  no per-metric SaaS billing.
+
+
+10. Migration path is not a dead end
+------------------------------------
+- A VPS today does not block moving to Kubernetes, ECS, or a managed
+  Postgres later. The code stays the same Node + Prisma app.
+- The reverse (serverless -> VPS) is harder, because serverless code
+  often grows assumptions (no filesystem, short timeouts, stateless
+  request handlers) that have to be unwound.
+
+
+Recommended starting shape
+--------------------------
+- 1 VPS in an Indian region, 4 vCPU / 8 GB RAM / 80-160 GB SSD
+- Ubuntu LTS, ufw firewall, fail2ban
+- nginx (TLS via certbot) -> Node (PM2 or systemd) -> Next.js
+- Postgres 16 on the same box initially, daily pg_dump to S3-compatible
+  storage (Backblaze B2 / Wasabi / AWS S3 Mumbai)
+- Redis for sessions, BullMQ queues, and rate-limits
+- A separate worker process for PDF generation and lab polling
+- Cloudflare in front for DNS, WAF, and CDN of static assets
+
+
+Actual pricing (Hostinger KVM 2, India - Mumbai region)
+-------------------------------------------------------
+Plan:           KVM 2 (VPS hosting)
+Server region:  India - Mumbai (best latency ~35 ms)
+Billing period: 24 months (prepaid)
+
+Headline price:        Rs. 2,099 / month (list)
+Promo price:           Rs.   639.20 / month (introductory, 24 mo)
+Savings vs list:       Rs. 35,035.20 over the 24-month term
+Renewal price:         Rs. 1,199 / month (for the next 2 years on renewal)
+
+Order summary at checkout:
+  KVM 2, 24-month period .................. Rs. 50,376  ->  Rs. 15,340.80
+  Domain name (free for 1 year) ........... Rs.  5,589  ->  Rs.      0.00
+  Domain privacy protection ............... Rs.      0.00
+  Taxes ................................... Rs.      0.00
+  REFERRALDISCOUNT (-20%) ................. -Rs.  3,835.20
+  -------------------------------------------------------------
+  Total (24 months, prepaid) .............. Rs. 15,340.80
+  Effective monthly cost .................. ~Rs. 639 / month
+
+Included / extras:
+  - Free domain for the first year
+  - 30-day money-back guarantee
+  - Optional daily auto-backup add-on: Rs. 529 / month (recommended,
+    not included in the total above)
+
+Cost framing for KYG:
+  - Year 1 + Year 2 prepaid app+infra cost: Rs. 15,340.80
+    -> roughly Rs. 640 / month all-in for the first 2 years
+  - Add daily auto-backup (Rs. 529/mo) -> ~Rs. 1,170 / month effective
+  - Renewal year 3+: Rs. 1,199 / month base (+ backup if kept)
+  - Compare to a Vercel Pro seat (USD 20/mo ~= Rs. 1,700) plus
+    function-invocation, bandwidth, and image-optimization overage
+    once real D2C traffic kicks in -> the VPS is meaningfully cheaper
+    and bills predictably.
+
+
+Bottom line
+-----------
+For a regulated D2C health product with partner integrations, scheduled
+field operations, and report generation, a VPS gives more control,
+lower predictable cost, simpler compliance posture, and no artificial
+runtime limits. It is the right baseline for KYG.

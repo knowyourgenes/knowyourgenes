@@ -56,7 +56,7 @@ export default function DateRangeFilter() {
   /**
    * Custom day-click handler that overrides react-day-picker's default range
    * behavior. The default gets confused when a user clicks inside an already-
-   * complete range — it sometimes moves the wrong edge. Ours is deterministic:
+   * complete range - it sometimes moves the wrong edge. Ours is deterministic:
    *
    *   - No selection yet, OR range already complete → start a new range
    *     (this is the "7–20 picked, click 9 → start fresh from 9" case)
@@ -106,15 +106,14 @@ export default function DateRangeFilter() {
 
   const hasApplied = !!(applied?.from && applied?.to);
   const hasStaged = !!(staged?.from && staged?.to);
-  const label = hasApplied
-    ? `${format(applied!.from!, 'd MMM')} – ${format(applied!.to!, 'd MMM yyyy')}`
-    : 'All time';
+  const label = hasApplied ? `${format(applied!.from!, 'd MMM')} – ${format(applied!.to!, 'd MMM yyyy')}` : 'All time';
 
-  const stagedLabel = staged?.from && staged?.to
-    ? `${format(staged.from, 'd MMM')} – ${format(staged.to, 'd MMM yyyy')}`
-    : staged?.from
-      ? `${format(staged.from, 'd MMM')} → pick end date`
-      : 'Pick a start date';
+  const stagedLabel =
+    staged?.from && staged?.to
+      ? `${format(staged.from, 'd MMM')} – ${format(staged.to, 'd MMM yyyy')}`
+      : staged?.from
+        ? `${format(staged.from, 'd MMM')} → pick end date`
+        : 'Pick a start date';
 
   return (
     <div className="flex items-center gap-2">
@@ -143,7 +142,7 @@ export default function DateRangeFilter() {
             ))}
           </div>
 
-          {/* Calendar — controlled, custom click handler */}
+          {/* Calendar - controlled, custom click handler */}
           <Calendar
             mode="range"
             numberOfMonths={2}

@@ -1,4 +1,4 @@
-// Edge-safe config — no Prisma, no bcrypt.
+// Edge-safe config - no Prisma, no bcrypt.
 // Used by middleware.ts. Full auth with Credentials provider lives in auth.ts.
 
 import type { NextAuthConfig } from 'next-auth';
@@ -9,7 +9,7 @@ export default {
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
-      // Google's standard scopes — email, profile, openid.
+      // Google's standard scopes - email, profile, openid.
       // Phone number is NOT returned by these scopes.
       authorization: {
         params: {
@@ -30,9 +30,9 @@ export default {
       const role = (auth?.user as { role?: string } | undefined)?.role;
 
       // Three shells (see architecture notes):
-      //  /dashboard — consumer (users)
-      //  /agent     — field ops (mobile-first), agents only
-      //  /admin     — desk ops (admins + counsellors + lab partners)
+      //  /dashboard - consumer (users)
+      //  /agent     - field ops (mobile-first), agents only
+      //  /admin     - desk ops (admins + counsellors + lab partners)
       //               Sidebar tabs are filtered by role inside /admin.
       const gates: { prefix: string; roles: string[] }[] = [
         { prefix: '/admin', roles: ['ADMIN', 'COUNSELLOR', 'PARTNER'] },

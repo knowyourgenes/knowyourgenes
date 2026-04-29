@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, Suspense } from 'react';
-import { FlaskConical, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const from = params.get('from') ?? '/admin';
+  const from = params.get('from') ?? '/';
 
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
@@ -46,11 +47,16 @@ function LoginForm() {
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,var(--color-brand-soft),transparent_70%)]"
       />
       <div className="w-full max-w-md">
-        <Link href="/" className="mb-8 flex items-center justify-center gap-2" prefetch={false}>
-          <span className="flex h-10 w-10 items-center justify-center rounded bg-primary text-primary-foreground">
-            <FlaskConical className="h-5 w-5" />
-          </span>
-          <span className="text-lg font-semibold">Know Your Genes</span>
+        <Link href="/" className="mb-8 flex items-center justify-center" prefetch={false}>
+          <Image
+            src="/kyglogo.webp"
+            alt="Know Your Genes"
+            width={200}
+            height={56}
+            className="h-14 w-auto object-contain"
+            style={{ width: 'auto' }}
+            priority
+          />
         </Link>
 
         <Card>

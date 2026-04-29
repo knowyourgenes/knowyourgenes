@@ -17,7 +17,7 @@ export default function SwaggerViewer() {
     script.src = `https://unpkg.com/swagger-ui-dist@${SWAGGER_VERSION}/swagger-ui-bundle.js`;
     script.async = true;
     script.onload = () => {
-      // @ts-expect-error — SwaggerUIBundle is injected globally
+      // @ts-expect-error - SwaggerUIBundle is injected globally
       window.ui = window.SwaggerUIBundle({
         url: '/api/openapi.json',
         dom_id: '#swagger-ui',
