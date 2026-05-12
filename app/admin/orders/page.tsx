@@ -28,9 +28,16 @@ type Agent = { id: string; name: string | null; agentProfile: { zone: string } |
 
 const STATUSES = [
   'BOOKED',
+  // Kit-by-post leg
+  'KIT_DISPATCHED',
+  'KIT_DELIVERED',
+  'SAMPLE_PICKED_UP',
+  'SAMPLE_IN_TRANSIT',
+  // At-home phlebotomist leg
   'AGENT_ASSIGNED',
   'AGENT_EN_ROUTE',
   'SAMPLE_COLLECTED',
+  // Common
   'AT_LAB',
   'REPORT_READY',
   'CANCELLED',
@@ -39,6 +46,10 @@ const STATUSES = [
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'outline' | 'destructive'> = {
   BOOKED: 'secondary',
+  KIT_DISPATCHED: 'outline',
+  KIT_DELIVERED: 'outline',
+  SAMPLE_PICKED_UP: 'outline',
+  SAMPLE_IN_TRANSIT: 'outline',
   AGENT_ASSIGNED: 'outline',
   AGENT_EN_ROUTE: 'outline',
   SAMPLE_COLLECTED: 'outline',

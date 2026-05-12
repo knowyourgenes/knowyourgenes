@@ -22,6 +22,8 @@ const packages = [
     sampleType: SampleType.SALIVA,
     biomarkerCount: 80,
     popular: true,
+    fulfillmentType: 'KIT_BY_POST' as const,
+    kitShippingFee: 19900, // ₹199 covers forward + reverse Delhivery
     highlights: [
       'Nutrient sensitivity (lactose, gluten, caffeine)',
       'Fitness type - endurance vs. power',
@@ -114,6 +116,8 @@ const packages = [
     tatMaxDays: 14,
     sampleType: SampleType.SALIVA,
     biomarkerCount: 220,
+    fulfillmentType: 'EITHER' as const,
+    kitShippingFee: 19900,
     highlights: [
       'Cystic fibrosis, SMA, Thalassemia',
       'Fragile X, Duchenne muscular dystrophy',

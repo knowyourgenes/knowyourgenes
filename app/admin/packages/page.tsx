@@ -43,6 +43,8 @@ type FormState = {
   popular: boolean;
   recommended: boolean;
   active: boolean;
+  fulfillmentType: string;
+  kitShippingFee: number; // rupees in the form, paise on wire
 };
 
 const EMPTY: FormState = {
@@ -61,9 +63,13 @@ const EMPTY: FormState = {
   popular: false,
   recommended: false,
   active: true,
+  fulfillmentType: 'AT_HOME_PHLEBOTOMIST',
+  kitShippingFee: 0,
 };
 
 const rupees = (p: number) => `₹${Math.floor(p / 100).toLocaleString('en-IN')}`;
+const fulfillmentLabel = (t: string) =>
+  t === 'AT_HOME_PHLEBOTOMIST' ? 'At-home' : t === 'KIT_BY_POST' ? 'Kit by post' : 'Either';
 
 export default function AdminPackagesPage() {
   const [items, setItems] = useState<Package[]>([]);
@@ -111,6 +117,8 @@ export default function AdminPackagesPage() {
       popular: p.popular,
       recommended: p.recommended,
       active: p.active,
+      fulfillmentType: p.fulfillmentType,
+      kitShippingFee: p.kitShippingFee / 100,
     });
     setOpen(true);
   }
@@ -142,6 +150,8 @@ export default function AdminPackagesPage() {
       popular: form.popular,
       recommended: form.recommended,
       active: form.active,
+      fulfillmentType: form.fulfillmentType,
+      kitShippingFee: Math.round(Number(form.kitShippingFee) * 100),
     };
 
     const url = form.id ? `/api/admin/packages/${form.id}` : '/api/admin/packages';
@@ -242,6 +252,11 @@ export default function AdminPackagesPage() {
             },
             { key: 'sampleType', header: 'Sample', render: (p) => <Badge variant="secondary">{p.sampleType}</Badge> },
             {
+              key: 'fulfillmentType',
+              header: 'Fulfillment',
+              render: (p) => <Badge variant="outline">{fulfillmentLabel(p.fulfillmentType)}</Badge>,
+            },
+            {
               key: 'tat',
               header: 'TAT',
               render: (p) => (
@@ -291,7 +306,7 @@ export default function AdminPackagesPage() {
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-3xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+        <DialogContent className="sm:max-w-7xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
           <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>{form.id ? 'Edit package' : 'New package'}</DialogTitle>
             <DialogDescription>Fields marked by red are required.</DialogDescription>
@@ -399,6 +414,36 @@ export default function AdminPackagesPage() {
                     type="number"
                     value={form.biomarkerCount}
                     onChange={(e) => setForm({ ...form, biomarkerCount: Number(e.target.value) })}
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label>Fulfillment</Label>
+                  <Select
+                    value={form.fulfillmentType}
+                    onValueChange={(v) => setForm({ ...form, fulfillmentType: v ?? 'AT_HOME_PHLEBOTOMIST' })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="AT_HOME_PHLEBOTOMIST">At-home (phlebotomist visits)</SelectItem>
+                      <SelectItem value="KIT_BY_POST">Kit by post (Delhivery 2-way)</SelectItem>
+                      <SelectItem value="EITHER">Either (user chooses at checkout)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="kit-fee">Kit shipping fee (₹)</Label>
+                  <Input
+                    id="kit-fee"
+                    type="number"
+                    step="1"
+                    min="0"
+                    placeholder="0"
+                    value={form.kitShippingFee}
+                    onChange={(e) => setForm({ ...form, kitShippingFee: Number(e.target.value) })}
+                    disabled={form.fulfillmentType === 'AT_HOME_PHLEBOTOMIST'}
                   />
                 </div>
               </div>

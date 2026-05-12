@@ -39,6 +39,7 @@ const COLS = [
       { href: '/privacy', label: 'Privacy policy' },
       { href: '/terms', label: 'Terms of service' },
       { href: '/refunds', label: 'Refund policy' },
+      { href: '/shipping', label: 'Shipping & delivery' },
       { href: '/consent', label: 'Genetic testing consent' },
     ],
   },
@@ -49,7 +50,7 @@ export default function SiteFooter() {
 
   return (
     <footer className="mt-24 border-t bg-muted/20">
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 md:px-6 md:py-16">
+      <div className="mx-auto w-full max-w-7xl px-4 py-12 md:px-6 md:py-16">
         <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]">
           {/* Brand block */}
           <div>
@@ -122,7 +123,12 @@ export default function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <p>© {year} Know Your Genes Pvt. Ltd. All rights reserved.</p>
+          <p>
+            © {year} BFG Market Consult Pvt. Ltd. All rights reserved.{' '}
+            <span className="text-foreground/80">
+              KnowYourGenes is a brand operated by BFG Market Consult Pvt. Ltd.
+            </span>
+          </p>
           <p>
             Serving Delhi NCR · <span className="font-medium text-foreground/80">CDSCO licensed</span> · NABL-accredited
             partner labs
