@@ -40,13 +40,47 @@ enum SlotWindow {
 
 enum OrderStatus {
   BOOKED
+  // KIT-by-post fulfillment leg
+  KIT_DISPATCHED       // forward shipment handed to courier
+  KIT_DELIVERED        // kit delivered to user
+  SAMPLE_PICKED_UP     // reverse pickup completed at user's door
+  SAMPLE_IN_TRANSIT    // sample en route to lab
+  // AT-HOME phlebotomist leg
   AGENT_ASSIGNED
   AGENT_EN_ROUTE
   SAMPLE_COLLECTED
+  // Common downstream
   AT_LAB
   REPORT_READY
   CANCELLED
   REFUNDED
+}
+
+enum FulfillmentType {
+  AT_HOME_PHLEBOTOMIST  // Phlebotomist visits user's home
+  KIT_BY_POST           // Kit shipped to user, sample reverse-picked
+  EITHER                // Package supports both; user chooses at checkout
+}
+
+enum ShipmentLeg {
+  FORWARD   // lab/warehouse -> user (kit going out)
+  REVERSE   // user -> lab (sample coming back)
+}
+
+enum ShipmentCourier {
+  DELHIVERY
+}
+
+enum ShipmentStatus {
+  CREATED          // local record created, not yet handed to courier
+  MANIFESTED       // courier acknowledged, AWB issued
+  PICKUP_SCHEDULED // pickup request placed (reverse leg only)
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  RTO              // return to origin (forward leg failed)
+  CANCELLED
+  FAILED
 }
 
 enum PaymentStatus {
@@ -298,6 +332,13 @@ model Package {
   recommended     Boolean         @default(false)
   active          Boolean         @default(true)
   position        Int             @default(0)
+  // How this package can be fulfilled. AT_HOME means an agent collects in person;
+  // KIT_BY_POST means a kit is couriered to the user and reverse-picked. EITHER lets
+  // the user pick at checkout.
+  fulfillmentType FulfillmentType @default(AT_HOME_PHLEBOTOMIST)
+  // Extra fee (paise) added to subtotal when this package is fulfilled by post.
+  // Covers forward + reverse courier cost. Ignored for AT_HOME orders.
+  kitShippingFee  Int             @default(0)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
 
@@ -335,6 +376,10 @@ model Order {
   status            OrderStatus @default(BOOKED)
   cancelReason      String?
 
+  // Fulfillment chosen for this order (locked at checkout). Drives whether we
+  // dispatch a kit via Delhivery or assign a phlebotomist agent.
+  fulfillmentMode   FulfillmentType @default(AT_HOME_PHLEBOTOMIST)
+
   // External refs
   razorpayOrderId   String?
   razorpayPaymentId String?
@@ -354,6 +399,7 @@ model Order {
   labPartner LabPartner?   @relation("ProcessingLab", fields: [labPartnerId], references: [userId])
   events     OrderEvent[]
   payments   Payment[]
+  shipments  Shipment[]
   report     Report?
 
   @@index([userId])
@@ -375,6 +421,112 @@ model OrderEvent {
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@index([orderId])
+}
+
+// =============================================================================
+// LABS - KYG-owned facilities. Kits ship FROM a Lab on the forward leg and
+// samples are reverse-picked TO a Lab. Distinct from LabPartner (external
+// processing partners with their own user logins).
+// =============================================================================
+
+model Lab {
+  id                 String   @id @default(cuid())
+  name               String
+  slug               String   @unique
+  addressLine        String
+  city               String
+  state              String   @default("Delhi")
+  pincode            String
+  phone              String
+  contactEmail       String?
+  // Name of the pickup-location registered with the courier (Delhivery's
+  // "client warehouse name"). Must match exactly what's set up in their portal.
+  pickupLocationName String   @unique
+  isDefault          Boolean  @default(false)
+  active             Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  shipments Shipment[]
+
+  @@index([active])
+}
+
+// =============================================================================
+// SHIPMENTS - Delhivery (forward kit + reverse sample). One Order can have
+// multiple Shipments: typically one FORWARD (kit out) + one REVERSE (sample back).
+// =============================================================================
+
+model Shipment {
+  id              String          @id @default(cuid())
+  orderId         String
+  labId           String?         // KYG lab this shipment is from/to. Nullable
+                                  // for legacy rows; new shipments always set it.
+  leg             ShipmentLeg
+  courier         ShipmentCourier @default(DELHIVERY)
+  status          ShipmentStatus  @default(CREATED)
+
+  // Courier identifiers
+  awb             String?         @unique // Delhivery waybill
+  refNumber       String          @unique // our internal ref sent to courier (KYG-<orderNumber>-FWD/REV)
+  pickupRequestId String?         // reverse-leg pickup request id from /fm/request/new/
+
+  // Snapshot of pickup + drop addresses at the time of shipment creation, so
+  // edits to Address later don't change history.
+  pickupName      String
+  pickupPhone     String
+  pickupLine      String
+  pickupCity      String
+  pickupPincode   String
+  dropName        String
+  dropPhone       String
+  dropLine        String
+  dropCity        String
+  dropPincode     String
+
+  // Package metadata
+  weightGrams     Int             @default(300) // kit ~300g; sample tube ~150g
+  declaredValue   Int             @default(0)   // paise; declared for insurance / reverse
+  paymentMode     String          @default("Prepaid") // "Prepaid" | "Pickup"
+
+  // Operational
+  expectedAt      DateTime?       // ETA (forward delivery / reverse pickup window)
+  pickedUpAt      DateTime?
+  deliveredAt     DateTime?
+  cancelledAt     DateTime?
+  failureReason   String?
+
+  // Last raw tracking payload from courier (kept for debugging)
+  trackingPayload Json?
+  events          ShipmentEvent[]
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  lab   Lab?  @relation(fields: [labId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@index([labId])
+  @@index([status])
+  @@index([leg])
+  @@index([awb])
+}
+
+// One row per scan / status update from the courier (or webhook).
+model ShipmentEvent {
+  id         String         @id @default(cuid())
+  shipmentId String
+  status     ShipmentStatus
+  label      String         // courier-provided scan text
+  location   String?
+  occurredAt DateTime       @default(now())
+  raw        Json?
+
+  shipment Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+
+  @@index([shipmentId])
+  @@index([occurredAt])
 }
 
 // =============================================================================

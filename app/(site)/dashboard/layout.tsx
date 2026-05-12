@@ -16,7 +16,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <div className="border-b bg-background">
         <DashboardNav />
       </div>
-      <div className="mx-auto w-full max-w-6xl px-4 py-6 md:px-6 md:py-8">{children}</div>
+      <div className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8">{children}</div>
     </div>
   );
 }

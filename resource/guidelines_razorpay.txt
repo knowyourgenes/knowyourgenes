@@ -1,0 +1,188 @@
+================================================================
+RAZORPAY ACCOUNT CREATION & ONBOARDING — GUIDELINES
+For: KnowYourGenes (Healthcare > Diagnostic Center category)
+================================================================
+
+WHAT RAZORPAY ACTUALLY CHECKS DURING ONBOARDING
+-----------------------------------------------
+Razorpay's activation team reviews four things in parallel. All four
+must clear before live keys are issued.
+
+1. BUSINESS LEGITIMACY
+   - Is the legal entity real and registered?
+   - Is the entity legally allowed to operate in the chosen category?
+   - Does the entity's stated activity match the selected
+     category / subcategory on Razorpay?
+   - Do PAN, GST, and bank account all resolve to the same entity?
+
+2. WEBSITE / APP COMPLIANCE
+   - Is the website live and reachable?
+   - Are the mandatory legal pages present, complete, and reachable
+     from the footer of every page? (Details below.)
+   - Does the site clearly describe what is being sold and at what
+     price?
+
+3. SERVICE CLARITY
+   - The visitor should be able to answer, within 30 seconds:
+       a) What service does this business provide?
+       b) How much does it cost / how is it priced?
+       c) How do I contact the business?
+       d) What is the business's address?
+
+4. CATEGORY-SPECIFIC COMPLIANCE
+   - For Healthcare > Diagnostic Center: the Affiliation Certificate
+     (see guidelines_affiliate.txt for the full guide).
+   - No prohibited medical claims on the site (see below).
+
+
+DOCUMENTS YOU MUST PROVIDE
+--------------------------
+Personal KYC (of the authorized signatory):
+  - PAN card (individual)
+  - Aadhaar — front and back
+  - Valid email and Indian mobile number
+
+Business KYC:
+  - Business PAN (for Pvt Ltd / LLP / Partnership — the entity PAN,
+    not the founder's personal PAN)
+  - GST certificate (if registered; mandatory above the GST
+    threshold or if voluntarily registered)
+  - Certificate of Incorporation / LLP Agreement / Partnership Deed
+    (whichever applies to the entity type)
+  - MSME / Udyam Registration certificate (optional but helpful)
+
+Bank Proof:
+  - Cancelled cheque OR latest bank statement OR bank welcome letter
+  - Must show: account holder name (matches business name),
+    account number, and IFSC code
+
+Category-specific (Healthcare > Diagnostic Center):
+  - Affiliation Certificate — see guidelines_affiliate.txt
+
+
+MANDATORY WEBSITE PAGES
+-----------------------
+These pages must exist, be linked from the site footer, and contain
+real content (placeholder Lorem Ipsum will trigger rejection). For
+healthcare these are scrutinized more strictly than other categories.
+
+  1. Privacy Policy
+       - What personal data and health data you collect
+       - How you store it, who has access, how long you keep it
+       - User rights (access, correction, deletion)
+       - Mention of compliance with the DPDP Act, 2023
+
+  2. Terms & Conditions (Terms of Service)
+       - Scope of services offered
+       - User obligations
+       - Disclaimers (results are diagnostic, not a substitute for
+         professional medical advice)
+       - Limitation of liability
+       - Governing law and jurisdiction (an Indian city)
+
+  3. Refund / Cancellation Policy
+       - When refunds are issued and when they are not
+       - Timeline for refunds (typically 5-7 business days)
+       - Cancellation window for sample collection / booked tests
+       - Method of refund (back to source)
+
+  4. Shipping / Service Delivery Policy
+       - Sample collection geography (which pincodes)
+       - Turnaround time for reports
+       - How reports are delivered (email, app, portal)
+
+  5. Contact Us
+       - Working email (not a personal Gmail if avoidable)
+       - Phone number that is actually answered during stated hours
+       - Full business address (must match registered address)
+
+  6. About Us
+       - Who runs the business, brief background
+       - For healthcare: name(s) of the medical / pathology lead and
+         their qualification(s) and registration number(s) helps
+         enormously with approval
+
+
+PROHIBITED CONTENT (HEALTHCARE-SPECIFIC)
+----------------------------------------
+The Drugs and Magic Remedies (Objectionable Advertisements) Act, 1954
+and Razorpay's own policy together prohibit certain claims. Any of
+these on your site is a near-automatic rejection:
+
+  - "Guaranteed cure" / "100% cure"
+  - "Permanent treatment" of any disease in Schedule J of the
+    Drugs and Cosmetics Rules (diabetes, cancer, AIDS, hypertension,
+    epilepsy, etc.)
+  - "Instant results" / "miracle test"
+  - Claims to diagnose pregnancy gender (prohibited under PCPNDT Act)
+  - Before / after photos implying treatment cure
+  - Endorsements by celebrities without medical qualifications
+  - Promotion of prescription drugs to consumers
+  - Claims that displace consulting a qualified doctor
+
+Keep medical language realistic, evidence-based, and accompanied by
+disclaimers ("Consult a qualified healthcare professional before
+acting on any test result").
+
+
+RESTRICTED BUSINESS TYPES (RAZORPAY WILL REJECT)
+------------------------------------------------
+  - Unlicensed pharmacies / sale of prescription drugs without Rx
+  - Misleading "miracle" supplements
+  - MLM / pyramid schemes (even if dressed as wellness)
+  - Gambling, adult content, illegal services
+  - Sex-determination services (criminal offence in India)
+
+
+COMMON REJECTION REASONS (RANK-ORDERED)
+---------------------------------------
+  1. Missing or incomplete legal pages (especially refund policy)
+  2. Business name mismatch across documents
+  3. Website that looks unfinished — broken links, "coming soon"
+     sections, placeholder text
+  4. Personal savings account submitted instead of current account
+     in the business name
+  5. Selected category does not match website content
+  6. Healthcare claims violating ASCI / Drugs Act
+  7. Expired or non-matching affiliation document
+
+
+ONBOARDING WORKFLOW — RECOMMENDED ORDER
+---------------------------------------
+  1. Decide legal entity type. For a healthcare platform a Pvt Ltd
+     is strongly recommended (limits personal liability and is
+     viewed more favorably by Razorpay than a sole proprietorship).
+  2. Complete incorporation and obtain PAN, GST, current account.
+  3. Build / finish the website. Ship the six mandatory pages with
+     real, healthcare-aware content. Test every link.
+  4. Sign the partner-lab agreement (if you don't operate your own
+     lab). Ensure the partner's NABL/accreditation number appears
+     in the agreement.
+  5. On Razorpay: select Healthcare > Diagnostic Center, fill KYC,
+     upload all documents. Use the cover-note approach from
+     guidelines_affiliate.txt if you are early-stage.
+  6. Expect 2-5 business days for review. If rejected, the email
+     will state the specific reason — fix only that and resubmit.
+
+
+FAST-APPROVAL BUNDLE (WHAT TO UPLOAD)
+-------------------------------------
+For a small / early-stage diagnostic platform, the smoothest path is:
+
+  [ ] Business PAN
+  [ ] GST certificate
+  [ ] Certificate of Incorporation (Pvt Ltd)
+  [ ] Cancelled cheque of business current account
+  [ ] MSME / Udyam (helpful, not mandatory)
+  [ ] Affiliation proof — see guidelines_affiliate.txt
+  [ ] Personal PAN + Aadhaar of authorized signatory
+  [ ] Live website with all six mandatory pages working
+
+================================================================
+Last reviewed: 2026-05-11
+Source basis: Razorpay public docs on KYC and account activation
+(razorpay.com/docs/payments/business-types-kyc-documents/ and
+/account-activation-support/), Drugs and Magic Remedies Act 1954,
+PCPNDT Act 1994, DPDP Act 2023, and Razorpay merchant-support
+guidance for the Diagnostic Center subcategory.
+================================================================

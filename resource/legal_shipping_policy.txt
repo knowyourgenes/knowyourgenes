@@ -1,0 +1,157 @@
+================================================================
+SHIPPING & SERVICE DELIVERY POLICY — KnowYourGenes
+Route: /shipping
+Last updated: 2026-05-12
+================================================================
+
+KnowYourGenes is a doorstep genetic testing service. We do not
+ship a "kit" to your home for you to collect and post back. A
+trained KYG phlebotomist visits your address, collects the sample,
+transports it to our partner NABL-accredited lab, and we deliver
+your report digitally. This page describes how that end-to-end
+service works and the timelines you should expect.
+
+This page is also published in compliance with Rule 6 of the
+Consumer Protection (E-Commerce) Rules, 2020, which requires us
+to disclose service-delivery timelines and modes.
+
+
+1. SERVICE AREA
+---------------
+At launch, KnowYourGenes serves the following region:
+
+  - Delhi National Capital Region (Delhi NCR) — Delhi, Gurugram,
+    Noida, Greater Noida, Ghaziabad, Faridabad.
+
+The exact list of serviceable pincodes is enforced at checkout. If
+your pincode is not serviceable, the order will not be permitted
+and your card will not be charged. You may join the waitlist for
+your pincode from the same screen and we will notify you when we
+expand.
+
+
+2. WHAT HAPPENS AFTER YOU BOOK
+------------------------------
+Step 1 — Confirmation
+   Within 5 minutes of successful payment you receive a booking
+   confirmation over email and WhatsApp, with your order ID,
+   selected time slot and the agent assignment status.
+
+Step 2 — Agent assignment
+   By the morning of your collection slot (or at least 2 hours
+   before, whichever is later), a trained phlebotomist is
+   assigned to your booking. You receive their name, photo, and
+   contact number over WhatsApp.
+
+Step 3 — Visit
+   The phlebotomist arrives at your address within the selected
+   slot window. You will be asked to verify identity (photo ID),
+   sign a digital consent form, and confirm any pre-collection
+   instructions (e.g., fasting status) you were given.
+
+Step 4 — Sample collection
+   Collection takes 10 to 20 minutes depending on sample type
+   (saliva swab or venous blood). The phlebotomist follows
+   standard biosafety protocols.
+
+Step 5 — Lab transit
+   The sample is labelled with a de-identified accession number,
+   placed in a temperature-controlled transport container, and
+   delivered to the partner NABL lab the same day or by the
+   following morning.
+
+Step 6 — Lab processing
+   The lab processes the sample, generates the variant call file,
+   and interprets it under the supervision of a reporting
+   pathologist / clinical geneticist.
+
+Step 7 — Report delivery
+   Your report is delivered via a secure link over email and
+   WhatsApp, and is also available under "My Reports" in your
+   KYG account.
+
+
+3. TURNAROUND TIME
+------------------
+The turnaround time ("TAT") shown on each package page is the
+period from sample receipt at the lab to report delivery. Typical
+ranges by category:
+
+  - Wellness panels       : 10 to 14 business days
+  - Drug sensitivity      : 10 to 14 business days
+  - Cardiac panels        : 12 to 18 business days
+  - Cancer risk panels    : 14 to 21 business days
+  - Reproductive panels   : 14 to 21 business days
+  - Comprehensive bundles : up to 28 business days
+
+TAT is indicative, not a guarantee. Clinically necessary steps
+(re-extraction, repeat sequencing, expert review) may extend it.
+We proactively notify you of any expected delay over WhatsApp and
+email.
+
+
+4. RESCHEDULING
+---------------
+You can reschedule a confirmed booking at no charge:
+  - Up to 4 hours before the slot — self-service from your
+    order page.
+  - Inside 4 hours — by writing to care@kyg.in or replying to
+    your booking WhatsApp. We will accommodate where possible;
+    no fee.
+
+If a phlebotomist arrives and you are unavailable, this counts as
+a no-show and the cancellation rules in our Refund Policy apply.
+
+
+5. CAN I BUY FOR SOMEONE ELSE?
+------------------------------
+Yes — you may book and pay for a parent, child, partner, or
+friend. At the point of booking, you will be asked to add the
+patient's details. The phlebotomist will verify the patient's ID,
+not the payer's, on arrival. Reports are sent to the email and
+mobile number provided for the patient, unless you explicitly
+elect to receive them at the payer's contact for a minor or
+dependent adult.
+
+
+6. WHAT YOU DO NOT RECEIVE BY COURIER
+-------------------------------------
+We do NOT mail you a self-collection kit. We do NOT post a
+printed report by default. If you specifically request a printed,
+notarised copy of your report for clinical use, we can courier it
+to a Delhi NCR address for an additional fee on actuals — write
+to care@kyg.in.
+
+We do NOT sell or ship physical merchandise, supplements, or any
+food / drug product through the Platform.
+
+
+7. FAILED COLLECTION
+--------------------
+If we cannot collect your sample on the scheduled date because:
+  - the address is unreachable or you are not present, OR
+  - the photo ID does not match the patient on the booking, OR
+  - you are unwell in a manner that makes collection unsafe,
+the visit is treated as a no-show under our Refund Policy. We
+will offer to reschedule within 7 days.
+
+
+8. EXTERNAL FACTORS
+-------------------
+Service may be delayed or paused without prior notice in case of
+force majeure events: civil disturbance, natural disaster,
+government-mandated lockdowns, lab outages, or any other event
+outside our reasonable control. We will communicate the expected
+resumption time and offer a no-fee reschedule or full refund.
+
+
+9. CONTACT
+----------
+BFG Market Consult Private Limited
+(operating the KnowYourGenes brand)
+SU 18, Pitam Pura, Delhi 110034, India
+CIN: U74999DL2010PTC207582
+Email: care@kyg.in
+Phone: +91 11 4000 0000 (Mon–Sat, 09:00–19:00 IST)
+
+================================================================

@@ -61,6 +61,7 @@ const GROUPS: NavGroup[] = [
     items: [
       { href: '/admin/orders', label: 'Orders', icon: ClipboardList, roles: ['ADMIN', 'COUNSELLOR'] },
       { href: '/admin/assigned-orders', label: 'Assigned Orders', icon: ClipboardList, roles: ['PARTNER'] },
+      { href: '/admin/shipments', label: 'Shipments', icon: TruckIcon, roles: ['ADMIN'] },
       { href: '/admin/reports', label: 'Reports', icon: FileText, roles: ['ADMIN', 'COUNSELLOR', 'PARTNER'] },
       { href: '/admin/review-queue', label: 'Review Queue', icon: BadgeCheck, roles: ['COUNSELLOR'] },
     ],
@@ -83,7 +84,10 @@ const GROUPS: NavGroup[] = [
   },
   {
     label: 'Config',
-    items: [{ href: '/admin/service-area', label: 'Service Area', icon: MapPin, roles: ['ADMIN'] }],
+    items: [
+      { href: '/admin/labs', label: 'Labs', icon: Building2, roles: ['ADMIN'] },
+      { href: '/admin/service-area', label: 'Service Area', icon: MapPin, roles: ['ADMIN'] },
+    ],
   },
 ];
 

@@ -16,7 +16,7 @@ export default function DashboardNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="mx-auto w-full max-w-6xl overflow-x-auto px-4 md:px-6">
+    <nav className="mx-auto w-full max-w-7xl overflow-x-auto px-4 md:px-6">
       <ul className="-mb-px flex gap-1">
         {NAV.map((it) => {
           const active = it.exact ? pathname === it.href : pathname.startsWith(it.href);

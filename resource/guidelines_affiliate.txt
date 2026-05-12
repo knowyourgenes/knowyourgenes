@@ -1,0 +1,141 @@
+================================================================
+AFFILIATION CERTIFICATE — GUIDELINES
+For: Razorpay onboarding, Category = Healthcare, Subcategory = Diagnostic Center
+================================================================
+
+WHY RAZORPAY ASKS FOR THIS
+--------------------------
+When you select Healthcare > Diagnostic Center, Razorpay's compliance
+team needs to verify three things before activating payments:
+
+  1. Your diagnostic/lab business is a real, legally registered entity.
+  2. You are authorized to collect payments for diagnostic services.
+  3. You comply with applicable healthcare regulations in India.
+
+The "Affiliation Certificate" upload slot is where you prove the
+business is genuinely connected to a recognized diagnostic / medical
+setup. Razorpay does not publish the exact accepted-document list for
+this category — the items below are the documents merchants have
+successfully used (confirmed via Razorpay support and community
+reports). Any ONE of them is usually sufficient.
+
+
+ACCEPTED DOCUMENTS (UPLOAD ANY ONE YOU HAVE)
+--------------------------------------------
+Strongest proofs (preferred):
+  - NABL accreditation certificate
+      (National Accreditation Board for Testing and Calibration
+      Laboratories — gold standard for diagnostic labs)
+  - NABH certificate (for hospital-affiliated diagnostic units)
+  - Clinical Establishment Registration Certificate
+      (issued under the Clinical Establishments Act, 2010, or the
+      equivalent State Act — e.g., Bombay Nursing Homes Act,
+      Karnataka Private Medical Establishments Act, etc.)
+  - Diagnostic Center / Pathology Lab registration certificate
+      issued by the State Health Department or municipal authority
+
+Acceptable alternatives:
+  - Shop & Establishment License where the listed business activity
+    explicitly mentions "diagnostic", "pathology", "lab", or
+    "healthcare services"
+  - GST certificate where the principal business activity / HSN-SAC
+    code maps to healthcare or diagnostic services
+  - Partnership deed / Certificate of Incorporation that names
+    diagnostic services as a business object
+  - Doctor / Pathologist affiliation letter on letterhead
+    (signed by an MD Pathology / qualified medical practitioner who
+    oversees lab operations, with their registration number)
+  - Lab authorization / empanelment certificate
+
+If you are a BOOKING / AGGREGATOR PLATFORM (not running your own lab):
+  - Partnership / service agreement with the actual diagnostic lab(s)
+    you book through — this is the document you upload as the
+    affiliation proof. Multi-lab platforms can upload one agreement
+    and list the others in cover note.
+
+
+WHAT THE DOCUMENT MUST CLEARLY SHOW
+-----------------------------------
+Razorpay reviewers look for these fields on the page:
+
+  - Business / entity name (legal name, not just brand name)
+  - Type of activity — must say diagnostic / lab / pathology /
+    healthcare (NOT just "general trading" or "services")
+  - Full business address
+  - Registration / license / accreditation number
+  - Name of issuing authority (NABL, State Health Dept, etc.)
+  - Date of issue and validity / expiry date if applicable
+  - Signature / seal of the issuing authority
+
+CRITICAL — NAME CONSISTENCY:
+The business name on the affiliation document must match (or be a
+clear variant of) the name on:
+  - Razorpay merchant account
+  - PAN card
+  - GST certificate
+  - Bank account / cancelled cheque
+
+If names differ (e.g., brand name vs. legal entity), upload a one-page
+declaration on letterhead linking them, plus board resolution or
+partnership minute if applicable.
+
+
+IF YOU ARE EARLY-STAGE / DON'T HAVE LAB LICENSES YET
+----------------------------------------------------
+This is the realistic case for many startups. Razorpay does manually
+review and approve early-stage healthcare businesses. Upload the
+strongest bundle you can assemble:
+
+  1. GST certificate
+  2. MSME / Udyam Registration certificate
+  3. Certificate of Incorporation (Pvt Ltd) OR LLP agreement OR
+     partnership deed
+  4. Vendor / partner agreement with at least one accredited
+     diagnostic lab (sample collection partner, fulfillment lab, etc.)
+  5. Screenshots of the live website showing diagnostic services,
+     pricing, and contact details
+  6. A cover note (PDF, on letterhead) explaining the model:
+     "We are a diagnostic booking platform. Sample collection and
+     reporting is performed by partner lab [Name], NABL accredited,
+     accreditation # XYZ. Agreement attached."
+
+Bundle these into a single PDF and upload to the Affiliation
+Certificate slot. The cover note is the most important piece — it
+tells the reviewer what they are looking at.
+
+
+COMMON MISTAKES THAT TRIGGER REJECTION
+--------------------------------------
+  - Uploading a generic Shop & Establishment license that doesn't
+    mention healthcare / diagnostics
+  - Document where the business name doesn't match Razorpay /
+    GST / bank records
+  - Expired license / accreditation
+  - Photo of document at an angle, blurry, or with missing pages
+  - Uploading only Aadhaar / PAN (those go in personal KYC, not
+    affiliation)
+  - Lab partner agreement without both parties' signatures and
+    company seals
+
+
+CHECKLIST BEFORE YOU UPLOAD
+---------------------------
+  [ ] Document is a clear, full-page scan or PDF (not a phone photo
+      with shadows)
+  [ ] Business name on document matches Razorpay account
+  [ ] Document explicitly mentions diagnostic / lab / healthcare
+  [ ] Registration number is visible
+  [ ] Document is currently valid (not expired)
+  [ ] If using a partner-lab agreement: both parties signed and
+      dated, includes lab's NABL/accreditation reference
+  [ ] File size under Razorpay's upload limit (typically 5 MB),
+      format PDF / JPG / PNG
+
+================================================================
+Last reviewed: 2026-05-11
+Source basis: Razorpay public docs on business-types KYC (which
+confirm category-specific certificates are required) + Razorpay
+merchant-support guidance for the Diagnostic Center subcategory.
+Razorpay does not publish the exhaustive accepted-document list
+for this subcategory publicly.
+================================================================

@@ -10,6 +10,10 @@ export const SampleTypeEnum = z.enum(['BLOOD', 'SALIVA', 'SWAB']);
 export const SlotWindowEnum = z.enum(['MORNING', 'AFTERNOON', 'EVENING']);
 export const OrderStatusEnum = z.enum([
   'BOOKED',
+  'KIT_DISPATCHED',
+  'KIT_DELIVERED',
+  'SAMPLE_PICKED_UP',
+  'SAMPLE_IN_TRANSIT',
   'AGENT_ASSIGNED',
   'AGENT_EN_ROUTE',
   'SAMPLE_COLLECTED',
@@ -20,6 +24,20 @@ export const OrderStatusEnum = z.enum([
 ]);
 export const CouponTypeEnum = z.enum(['FLAT', 'PERCENT']);
 export const AgentStatusEnum = z.enum(['ACTIVE', 'INACTIVE', 'ON_LEAVE']);
+export const FulfillmentTypeEnum = z.enum(['AT_HOME_PHLEBOTOMIST', 'KIT_BY_POST', 'EITHER']);
+export const ShipmentLegEnum = z.enum(['FORWARD', 'REVERSE']);
+export const ShipmentCourierEnum = z.enum(['DELHIVERY']);
+export const ShipmentStatusEnum = z.enum([
+  'CREATED',
+  'MANIFESTED',
+  'PICKUP_SCHEDULED',
+  'IN_TRANSIT',
+  'OUT_FOR_DELIVERY',
+  'DELIVERED',
+  'RTO',
+  'CANCELLED',
+  'FAILED',
+]);
 
 // ---------------------------------------------------------------------------
 // Packages
@@ -48,6 +66,8 @@ export const packageCreate = z.object({
   recommended: z.boolean().default(false),
   active: z.boolean().default(true),
   position: z.number().int().default(0),
+  fulfillmentType: FulfillmentTypeEnum.default('AT_HOME_PHLEBOTOMIST'),
+  kitShippingFee: z.number().int().min(0).default(0), // paise
 });
 
 export const packageUpdate = packageCreate.partial();
@@ -235,6 +255,76 @@ export const serviceAreaBulkToggle = z.object({
   district: z.string().optional(),
   pincodes: z.array(z.string().regex(/^\d{6}$/)).optional(),
   active: z.boolean(),
+});
+
+// ---------------------------------------------------------------------------
+// Labs (KYG-owned facilities — distinct from LabPartner)
+// ---------------------------------------------------------------------------
+
+export const labCreate = z.object({
+  name: z.string().min(2).max(120),
+  slug: z
+    .string()
+    .min(1)
+    .regex(/^[a-z0-9-]+$/, 'Must be kebab-case'),
+  addressLine: z.string().min(1),
+  city: z.string().min(1),
+  state: z.string().default('Delhi'),
+  pincode: z.string().regex(/^\d{6}$/, 'Must be a 6-digit pincode'),
+  phone: z.string().min(10).max(15),
+  contactEmail: z.string().email().optional().nullable(),
+  pickupLocationName: z.string().min(1).max(64),
+  isDefault: z.boolean().default(false),
+  active: z.boolean().default(true),
+});
+
+export const labUpdate = labCreate.partial();
+
+// ---------------------------------------------------------------------------
+// Shipments (admin actions)
+// ---------------------------------------------------------------------------
+
+// Create a shipment for an order. The client decides which leg to create:
+// FORWARD when an order with KIT fulfillment becomes paid; REVERSE when admin
+// confirms the user has self-collected the sample and the kit is ready to be
+// picked up.
+export const shipmentCreate = z.object({
+  leg: ShipmentLegEnum,
+  // Which KYG lab is the pickup origin (FORWARD) / drop destination (REVERSE).
+  // Omit to use the active default lab.
+  labId: z.string().optional(),
+  weightGrams: z.number().int().min(50).max(5000).optional(),
+  declaredValue: z.number().int().min(0).optional(), // paise
+  // Optional override of pickup/drop addresses. By default forward uses
+  // warehouse->user-address and reverse uses user-address->warehouse.
+  pickup: z
+    .object({
+      name: z.string().min(1),
+      phone: z.string().min(10),
+      line: z.string().min(1),
+      city: z.string().min(1),
+      pincode: z.string().regex(/^\d{6}$/),
+    })
+    .optional(),
+  drop: z
+    .object({
+      name: z.string().min(1),
+      phone: z.string().min(10),
+      line: z.string().min(1),
+      city: z.string().min(1),
+      pincode: z.string().regex(/^\d{6}$/),
+    })
+    .optional(),
+});
+
+export const shipmentQuery = z.object({
+  orderId: z.string().optional(),
+  leg: ShipmentLegEnum.optional(),
+  status: ShipmentStatusEnum.optional(),
+  awb: z.string().optional(),
+  q: z.string().optional(), // search by AWB / refNumber / orderNumber
+  skip: z.coerce.number().int().min(0).default(0),
+  take: z.coerce.number().int().min(1).max(100).default(25),
 });
 
 // ---------------------------------------------------------------------------

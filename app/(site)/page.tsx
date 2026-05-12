@@ -11,7 +11,7 @@ export default function HomePage() {
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,var(--color-brand-soft),transparent_70%)]"
       />
-      <div className="mx-auto w-full max-w-3xl text-center">
+      <div className="mx-auto w-full max-w-7xl text-center">
         <Badge variant="secondary" className="mb-4">
           Launching 14 May 2026 · Delhi NCR
         </Badge>

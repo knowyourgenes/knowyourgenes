@@ -279,7 +279,7 @@ export default function AdminPartnersPage() {
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-3xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+        <DialogContent className="sm:max-w-7xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
           <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>{form.id ? 'Edit lab partner' : 'New lab partner'}</DialogTitle>
             <DialogDescription>

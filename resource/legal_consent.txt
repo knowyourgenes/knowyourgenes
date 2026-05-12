@@ -1,0 +1,173 @@
+================================================================
+GENETIC TESTING CONSENT — KnowYourGenes
+Route: /consent  (linked from footer; also signed digitally at the
+                  point of sample collection)
+Last updated: 2026-05-12
+================================================================
+
+This document is the informed consent you give KnowYourGenes
+("KYG", operated by BFG Market Consult Private Limited (operating the KnowYourGenes brand)) before we collect and analyse
+your DNA. You must read and accept this consent before the
+phlebotomist draws your sample. A signed digital copy is retained
+in your account.
+
+If you are booking for a minor or a dependent adult unable to
+consent themselves, the parent, legal guardian, or attorney-in-fact
+provides this consent on their behalf.
+
+
+1. WHAT YOU ARE CONSENTING TO
+-----------------------------
+By signing this consent you confirm that:
+
+  (a) You are providing a biological sample (saliva and/or blood)
+      voluntarily and free of coercion.
+  (b) You authorise KnowYourGenes and its partner NABL-accredited
+      laboratory to extract DNA from this sample, sequence it,
+      and analyse it against the panel(s) of genes corresponding
+      to the package you have purchased.
+  (c) You authorise KnowYourGenes to generate a written report
+      from this analysis and deliver it to you over the email,
+      WhatsApp, and account login you have provided.
+  (d) You authorise the de-identified storage of your sample at
+      the partner lab for up to 60 days, and the storage of your
+      raw genetic data ("VCF") on KYG-controlled servers in India
+      for as long as you maintain your account, unless you ask
+      for it to be deleted.
+
+
+2. WHAT YOU UNDERSTAND
+----------------------
+You confirm that you have read and understood the following:
+
+  - The genetic test is for informational and investigational
+    purposes only. It is not a medical diagnosis.
+  - The report should be interpreted by a qualified healthcare
+    professional. KnowYourGenes does not practise medicine.
+  - Genetic findings are probabilistic. They indicate
+    predisposition, not certainty. The absence of a risk variant
+    does not mean you are protected from the relevant condition.
+  - A report may reveal information that is unexpected,
+    distressing, or that has implications for biological
+    relatives (especially in cancer-risk and reproductive
+    panels). You acknowledge this possibility and choose to
+    proceed.
+  - Genetic information may have implications for life insurance
+    or other matters in jurisdictions outside India. You have
+    considered this before consenting.
+  - You have the option of pre-test and post-test counselling
+    with a qualified genetic counsellor. For cancer-risk and
+    reproductive panels, KYG strongly recommends both.
+
+
+3. WHAT KNOWYOURGENES WILL NOT DO
+---------------------------------
+KnowYourGenes will not:
+
+  - Perform pre-natal sex determination of a foetus. This is
+    prohibited under the PCPNDT Act, 1994 and KYG will not
+    process any request that breaches this law.
+  - Sell or share your genetic data with insurers, lenders, or
+    advertisers.
+  - Use your genetic data to train any third-party AI / ML
+    model.
+  - Use your genetic data for research without your separate,
+    opt-in consent (see clause 5).
+  - Disclose your report to any third party (including a
+    spouse, parent of an adult, or employer) without your
+    explicit written authorisation, except where compelled by
+    a court order or applicable law.
+
+
+4. RISKS AND LIMITATIONS
+------------------------
+You acknowledge that:
+
+  - A small fraction of samples (around 1 in 200) fail at the
+    extraction or sequencing step and require re-collection.
+  - The genes analysed are limited to the panel of your
+    purchased package. The test does not screen for all known
+    genetic conditions.
+  - Variants of uncertain significance ("VUS") may be reported.
+    A VUS means the evidence is currently inconclusive and may
+    be reclassified in the future as more research accumulates.
+  - Variants associated with serious adult-onset conditions
+    (some cancer-risk and cardiac variants) carry implications
+    for biological relatives. KYG cannot contact your relatives
+    on your behalf.
+  - The report is based on the scientific evidence current at
+    the time of issue. Future re-analysis is available on
+    request, subject to fees in force at that time.
+
+
+5. OPTIONAL — RESEARCH PARTICIPATION (SEPARATE OPT-IN)
+------------------------------------------------------
+You may, separately and entirely at your option, consent to your
+de-identified genetic data and self-reported phenotype information
+being included in research datasets that KYG or its academic
+partners may use to improve genetic interpretation for Indian
+populations.
+
+  [ ] I separately consent to research use (de-identified).
+  [ ] I do NOT consent. (Default if left unticked.)
+
+Research consent is independent of the test purchase. You can
+withdraw research consent at any time from your account, and
+your data will be removed from any future dataset; data already
+included in a closed dataset cannot retroactively be removed but
+will remain de-identified.
+
+
+6. WITHDRAWAL OF CONSENT
+------------------------
+You may withdraw consent for the storage of your genetic data, or
+for any specific use of it, at any time, by writing to
+privacy@kyg.in or from "Privacy" in your account settings.
+
+  - Withdrawal of storage consent: your raw genetic data and
+    report are deleted within 60 days. Statutory minimums
+    (invoice records, audit logs) are retained.
+  - Withdrawal of consent during processing: if your sample is
+    already at the lab, processing will be halted where
+    technically possible. Fees for work already performed may
+    not be refundable; see Refund Policy.
+  - Withdrawal does not affect lawful processing already
+    completed before withdrawal.
+
+
+7. CONFIRMATION
+---------------
+By signing this consent (digitally at the time of sample
+collection, or by ticking "I have read and accept the Genetic
+Testing Consent" at booking), you confirm:
+
+  - I have read and understood this consent.
+  - I have had the opportunity to ask questions and they have
+    been answered to my satisfaction.
+  - I am freely consenting to the test and to the use of my
+    sample and data as described above.
+  - I am the patient, or I am the parent / legal guardian /
+    authorised representative of the patient and entitled to
+    provide consent on their behalf.
+
+Patient name              : ____________________________________
+Patient date of birth     : ____________________________________
+Patient ID (Aadhaar last 4
+or PAN / passport ref)    : ____________________________________
+Signed by patient /
+parent / guardian         : ____________________________________
+Relationship to patient
+(if not self)             : ____________________________________
+Date                      : ____________________________________
+KYG Phlebotomist ID       : ____________________________________
+
+
+8. CONTACT
+----------
+BFG Market Consult Private Limited (operating the KnowYourGenes brand)
+SU 18, Pitam Pura, Delhi 110034, India
+CIN: U74999DL2010PTC207582
+Email: privacy@kyg.in / care@kyg.in
+Phone: +91 11 4000 0000 (Mon–Sat, 09:00–19:00 IST)
+
+================================================================

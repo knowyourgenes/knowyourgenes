@@ -1,0 +1,94 @@
+================================================================
+CONTACT US — KnowYourGenes
+Route: /contact
+Last updated: 2026-05-12
+================================================================
+
+This is the page content for /contact. The contact form fields
+(Name, Email, Phone, Topic, Message) are already specified in
+features.txt under [T1] /contact — this file gives you the static
+text content that should sit alongside the form.
+
+
+PAGE HEADING
+------------
+We're here to help.
+
+
+SUBHEAD
+-------
+Questions about a package, an active booking, a report you have
+received, or partnership opportunities — write to us, call, or use
+the form below. We respond to every message.
+
+
+CONTACT CARDS (three blocks)
+----------------------------
+
+CARE
+   For all booking-related queries, reschedules, refunds, and
+   help with a report you have received.
+
+   Email     : care@kyg.in
+   Phone     : +91 11 4000 0000
+   WhatsApp  : +91 11 4000 0000
+   Hours     : Monday to Saturday, 09:00 to 19:00 IST
+
+PARTNERSHIPS & PRESS
+   For corporate wellness programmes, clinic / hospital
+   integrations, media coverage, and research collaborations.
+
+   Partnerships : partners@kyg.in
+   Press        : press@kyg.in
+
+REGISTERED OFFICE
+   BFG Market Consult Private Limited
+   (operating the KnowYourGenes brand)
+   SU 18, Pitam Pura, Delhi 110034, India
+   CIN: U74999DL2010PTC207582
+   GSTIN: [GSTIN — fill in before publishing]
+
+
+CONTACT FORM (placement)
+------------------------
+Place the contact form (per features.txt T1 spec) below the cards.
+Topic dropdown options (suggested):
+   - Question about a package
+   - Help with an existing booking
+   - Question about my report
+   - Refund or cancellation
+   - Partnership / corporate
+   - Press / media
+   - Data privacy or DPDP Act request
+   - Other
+
+
+PRIVACY & GRIEVANCE
+-------------------
+For privacy-related requests (data access, deletion, withdrawal of
+consent) or grievances under the Digital Personal Data Protection
+Act, 2023, please write to:
+
+   Grievance Officer
+   [GRIEVANCE OFFICER NAME]
+   Email: grievance@kyg.in
+   Email: privacy@kyg.in
+   We respond to all DPDP requests within 30 days.
+
+
+MAP
+---
+Embed a Google Map of the registered office address below the
+form (per features.txt T1 spec).
+
+
+RESPONSE EXPECTATIONS (small print, below form)
+-----------------------------------------------
+We acknowledge every message within 1 business day. Complex
+queries (report corrections, DPDP requests) may take up to 30
+days for a complete response.
+
+If you have a medical emergency, do not use this form. Call
+your doctor or India's national emergency number 112.
+
+================================================================

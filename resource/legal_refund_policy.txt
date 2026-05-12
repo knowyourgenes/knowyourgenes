@@ -1,0 +1,157 @@
+================================================================
+REFUND & CANCELLATION POLICY — KnowYourGenes
+Route: /refunds
+Last updated: 2026-05-12
+================================================================
+
+This Refund & Cancellation Policy applies to all bookings made on
+kyg.in or the KnowYourGenes app. It is published in compliance
+with Rule 5(3) of the Consumer Protection (E-Commerce) Rules,
+2020. By making a payment on the Platform, you agree to this
+policy.
+
+We have written this policy plainly. The goal is that you should
+not have to read it twice to know where you stand.
+
+
+1. CANCELLATION BY YOU (BEFORE SAMPLE COLLECTION)
+-------------------------------------------------
+You may cancel a booking yourself from your order page at any time
+before the phlebotomist is dispatched.
+
+  - Cancelled at least 4 hours before the scheduled slot:
+        Full refund (100%) to the original payment method.
+
+  - Cancelled between 1 and 4 hours before the slot:
+        Refund of the booking amount less a flat ₹200 dispatch
+        coordination fee, refunded to the original payment method.
+
+  - Cancelled less than 1 hour before the slot, OR no-show
+    (you are unavailable at the address):
+        Refund of 50% of the booking amount. The remaining 50%
+        is retained as a phlebotomist visit cost.
+
+  - Cancellation after the sample has been collected and sent
+    to the lab:
+        Not eligible for refund. Lab processing has begun.
+
+
+2. CANCELLATION BY US
+---------------------
+We will issue a full refund (100%) without any deduction if:
+  - We are unable to dispatch a phlebotomist to your pincode.
+  - The slot you booked becomes unavailable and you do not wish
+    to reschedule.
+  - Our partner lab is unable to process the test type you
+    selected.
+  - We discover at intake that you are below 18 with no
+    parent/guardian present, or the photo ID does not match —
+    and you choose not to proceed under a corrected booking.
+
+If we cancel at any point after sample collection (for example,
+lab error, sample contamination, sequencing failure), we will at
+your option either re-collect at no charge or refund 100% of the
+amount paid.
+
+
+3. SAMPLE INTEGRITY ISSUES
+--------------------------
+Approximately 1 in 200 samples cannot be processed due to factors
+outside our control (insufficient DNA yield, contamination during
+transport, etc.). In these cases:
+
+  - We will contact you within 5 business days of the sample
+    reaching the lab.
+  - We will offer a free re-collection at a slot of your choice.
+  - If you prefer not to re-collect, we will refund 100%.
+
+
+4. REFUND OF REPORTS
+--------------------
+A genetic report cannot be "returned". We do not refund a
+delivered report based solely on the customer's interpretation of
+the findings, dissatisfaction with the result, or a change of
+mind. Refunds against a delivered report are limited to:
+
+  - Deficiency in the report (incorrect biomarker reported,
+    missing section, data corruption): full or partial refund at
+    our discretion after review, plus re-issue of the corrected
+    report at no charge.
+
+  - Late delivery beyond the stated turnaround time without our
+    proactive communication: at your option, a 25% partial refund
+    and the report when ready, or 100% refund and we abandon the
+    order.
+
+  - Demonstrable laboratory error: 100% refund and free
+    re-collection.
+
+Report-related refund claims must be raised within 7 calendar days
+of report delivery, by writing to care@kyg.in with a description
+of the issue.
+
+
+5. REFUND TIMELINE & METHOD
+---------------------------
+  - Refund processing is initiated within 3 business days of
+    eligibility being confirmed.
+  - Refunds are issued to the original payment method used at
+    checkout. UPI and net banking refunds typically reflect in
+    5–7 business days; card refunds may take up to 10 business
+    days depending on the issuing bank.
+  - If the original method is not available (for example, the
+    card has expired), we will request alternative bank details
+    and refund via NEFT/UPI.
+  - We do not refund through cheque or cash.
+
+
+6. COUPONS & DISCOUNTS
+----------------------
+  - Refunded amounts are net of any coupon, promotional discount,
+    or store credit that was applied to the original payment.
+  - A used coupon is restored to your account only if the booking
+    is fully cancelled by us before sample collection.
+  - Store credit issued by KYG (for example, as goodwill or
+    referral reward) is non-refundable to a bank account.
+
+
+7. PRE-TEST / POST-TEST COUNSELLING
+-----------------------------------
+Counselling sessions are non-refundable once held. If you cancel a
+scheduled counselling session at least 12 hours in advance, the
+session is rescheduled at no charge. A no-show or cancellation
+inside 12 hours forfeits the session fee.
+
+
+8. HOW TO REQUEST A REFUND
+--------------------------
+You can request a refund or cancellation in two ways:
+
+  - From your order page on kyg.in or the app, using the
+    "Cancel order" or "Report an issue" button.
+  - By writing to care@kyg.in with your order ID, registered
+    mobile number, and a brief description of the reason.
+
+We will acknowledge your request within 1 business day and confirm
+the outcome within 5 business days.
+
+
+9. ESCALATION
+-------------
+If you are not satisfied with how a refund request has been
+handled, write to grievance@kyg.in. Our Grievance Officer will
+review and respond within 15 days. You retain all your statutory
+rights under the Consumer Protection Act, 2019.
+
+
+10. CONTACT
+-----------
+BFG Market Consult Private Limited
+(operating the KnowYourGenes brand)
+SU 18, Pitam Pura, Delhi 110034, India
+CIN: U74999DL2010PTC207582
+Email: care@kyg.in
+Phone: +91 11 4000 0000 (Mon–Sat, 09:00–19:00 IST)
+Grievance: grievance@kyg.in
+
+================================================================

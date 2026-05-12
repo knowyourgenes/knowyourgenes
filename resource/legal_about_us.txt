@@ -1,0 +1,142 @@
+================================================================
+ABOUT US — KnowYourGenes
+Route: /about
+Last updated: 2026-05-12
+================================================================
+
+This is the page content for /about. Use it as copy for the
+sections defined in features.txt under [T1] /about (mission +
+beliefs, team grid, milestones timeline).
+
+
+HERO
+----
+Headline:
+   DNA testing, made simple.
+
+Subhead:
+   We bring an NABL-accredited genetic test to your doorstep
+   across Delhi NCR, with reports written for human beings —
+   not the doctor your test report assumes you have on speed
+   dial.
+
+
+WHO WE ARE
+----------
+KnowYourGenes ("KYG") is a brand operated by BFG Market Consult
+Private Limited, a company incorporated in India under the
+Companies Act, 2013, bearing CIN U74999DL2010PTC207582 and
+registered with the Registrar of Companies, NCT of Delhi and
+Haryana since 20 August 2010. Our registered office is at
+SU 18, Pitam Pura, Delhi 110034.
+
+We are a Delhi NCR–based D2C genetic testing service. We launched
+in May 2026 with a single belief: that the friction between you
+and an evidence-based genetic test is mostly logistical, and
+solvable. Most Indians who could benefit from a DNA test never
+take one because the experience is built around clinics, not
+patients. We are changing that.
+
+
+WHAT WE DO
+----------
+We work with NABL-accredited partner labs and licensed clinical
+geneticists to offer panel-based DNA tests covering:
+
+  - Wellness — nutrition, fitness, sleep, stress, vitamin and
+    mineral metabolism.
+  - Drug sensitivity — pharmacogenomic markers relevant to
+    common prescription medicines.
+  - Cardiac — inherited risk markers for cardiovascular disease.
+  - Cancer risk — hereditary cancer-syndrome screening (BRCA,
+    Lynch, and related panels).
+  - Reproductive — pre-conception carrier screening and family
+    planning panels, offered strictly within the framework of
+    the PCPNDT Act, 1994.
+
+A trained phlebotomist visits your address. The sample goes to
+the lab. A report comes back to your phone in 10 to 21 business
+days depending on the panel. Optional pre-test and post-test
+counselling is available with qualified genetic counsellors.
+
+
+HOW WE'RE DIFFERENT
+-------------------
+1. At-home, not in-clinic.
+   A KYG phlebotomist comes to you, on your schedule.
+
+2. Plain-language reports.
+   Reports are written to be read by you first, with a
+   structured handover summary if you choose to share with your
+   doctor.
+
+3. NABL-accredited processing.
+   Every sample is processed at an NABL-accredited partner
+   laboratory, under the supervision of a reporting pathologist.
+
+4. Your data, your choice.
+   We do not sell your data, do not share with insurers, and do
+   not use it to train any third-party AI model. You can have
+   your genetic data deleted any time, from your account.
+
+5. Indian data, Indian rules.
+   All data is stored and processed in India, in compliance with
+   the Digital Personal Data Protection Act, 2023.
+
+
+OUR BELIEFS
+-----------
+  - Information is not a diagnosis. A report is a starting
+    point for a conversation with your doctor — not a verdict.
+  - Genetic risk is probabilistic, not predictive. We will not
+    tell you that you will get a disease. We will tell you what
+    your DNA suggests about predisposition, and what the
+    evidence says you can do about it.
+  - Counselling matters. Especially for cancer-risk and
+    reproductive panels, the report is the easy part — the
+    conversation is the important part. We bake in counselling
+    where it counts.
+
+
+ACCREDITATIONS & COMPLIANCE
+---------------------------
+  - NABL-accredited partner laboratories (accreditation numbers
+    available on request).
+  - ISO 15189 medical-lab quality system at processing partner.
+  - Operations compliant with the Clinical Establishments Act,
+    2010 (and applicable Delhi NCR state rules), the PCPNDT Act,
+    1994, and the Digital Personal Data Protection Act, 2023.
+  - Payments processed by Razorpay, a PCI-DSS Level 1 compliant
+    payment gateway.
+
+
+TEAM (placeholder grid)
+-----------------------
+Replace with founder and core-team bios. Each tile should carry:
+name, role, one-line credentials, photo. For the clinical
+advisory board, include MBBS / MD Pathology / MSc Genetics or
+equivalent qualification and the medical-council registration
+number — this materially helps Razorpay reviewers and
+also reads as credible to patients.
+
+
+MILESTONES (placeholder)
+------------------------
+  2026 May  — KnowYourGenes launches in Delhi NCR with at-home
+              sample collection.
+  [next]    — Expand to ___ pincodes / ___ cities.
+  [next]    — Launch corporate wellness programme.
+  [next]    — Add ___ panel.
+
+
+CONTACT
+-------
+BFG Market Consult Private Limited
+(operating the KnowYourGenes brand)
+SU 18, Pitam Pura, Delhi 110034, India
+CIN: U74999DL2010PTC207582
+GSTIN: [GSTIN — fill in before publishing]
+Email: care@kyg.in
+Phone: +91 11 4000 0000
+
+================================================================
