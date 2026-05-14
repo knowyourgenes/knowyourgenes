@@ -258,7 +258,7 @@ export const serviceAreaBulkToggle = z.object({
 });
 
 // ---------------------------------------------------------------------------
-// Labs (KYG-owned facilities — distinct from LabPartner)
+// Labs (KYG-owned facilities - distinct from LabPartner)
 // ---------------------------------------------------------------------------
 
 export const labCreate = z.object({
@@ -328,6 +328,47 @@ export const shipmentQuery = z.object({
 });
 
 // ---------------------------------------------------------------------------
+// Campaigns (marketing attribution — UTM link generator)
+// ---------------------------------------------------------------------------
+
+export const campaignCreate = z.object({
+  name: z.string().min(2).max(120),
+  slug: z
+    .string()
+    .min(2)
+    .max(64)
+    .regex(/^[a-z0-9-]+$/, 'Must be lowercase kebab-case (a-z, 0-9, dashes)'),
+  source: z
+    .string()
+    .min(1)
+    .max(64)
+    .regex(/^[a-z0-9_-]+$/, 'Lowercase letters, numbers, _ and - only'),
+  medium: z
+    .string()
+    .min(1)
+    .max(64)
+    .regex(/^[a-z0-9_-]+$/, 'Lowercase letters, numbers, _ and - only'),
+  term: z.string().max(120).optional().nullable(),
+  content: z.string().max(120).optional().nullable(),
+  destination: z.string().min(1).max(200).regex(/^\//, 'Must start with / (a path, not a full URL)').default('/'),
+  notes: z.string().max(2000).optional().nullable(),
+  active: z.boolean().default(true),
+});
+
+export const campaignUpdate = campaignCreate.partial();
+
+export const campaignQuery = z.object({
+  q: z.string().optional(),
+  source: z.string().optional(),
+  active: z
+    .enum(['true', 'false'])
+    .optional()
+    .transform((v) => (v === 'true' ? true : v === 'false' ? false : undefined)),
+  skip: z.coerce.number().int().min(0).default(0),
+  take: z.coerce.number().int().min(1).max(200).default(50),
+});
+
+// ---------------------------------------------------------------------------
 // Type exports for API route authors
 // ---------------------------------------------------------------------------
 
@@ -336,3 +377,4 @@ export type CounsellorCreate = z.infer<typeof counsellorCreate>;
 export type AgentCreate = z.infer<typeof agentCreate>;
 export type CouponCreate = z.infer<typeof couponCreate>;
 export type ServiceAreaCreate = z.infer<typeof serviceAreaCreate>;
+export type CampaignCreate = z.infer<typeof campaignCreate>;

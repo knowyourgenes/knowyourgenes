@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { auth } from '@/auth';
 import Providers from '@/components/Providers';
+import AttributionBeacon from '@/components/AttributionBeacon';
 import './globals.css';
 
 const geistSans = Geist({
@@ -42,6 +43,7 @@ export default async function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-slate-900">
         <Providers session={session}>{children}</Providers>
+        <AttributionBeacon />
       </body>
     </html>
   );

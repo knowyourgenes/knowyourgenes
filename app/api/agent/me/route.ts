@@ -21,9 +21,9 @@ export async function GET() {
       }),
       prisma.agentAvailability.findMany({ where: { agentId: userId } }),
     ]);
-    if (!profile) throw new Error('Agent profile not found — contact admin');
+    if (!profile) throw new Error('Agent profile not found - contact admin');
 
-    // Today bounds (server local time — consider a tz lib in production)
+    // Today bounds (server local time - consider a tz lib in production)
     const now = new Date();
     const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);

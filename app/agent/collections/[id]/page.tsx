@@ -151,7 +151,7 @@ export default function AgentCollectionDetailPage() {
                     month: 'short',
                   })}
                 </span>{' '}
-                — {e.label}
+                - {e.label}
               </li>
             ))}
           </ul>

@@ -1,5 +1,5 @@
 ================================================================
-SHIPPING & SERVICE DELIVERY POLICY — KnowYourGenes
+SHIPPING & SERVICE DELIVERY POLICY - KnowYourGenes
 Route: /shipping
 Last updated: 2026-05-12
 ================================================================
@@ -20,7 +20,7 @@ to disclose service-delivery timelines and modes.
 ---------------
 At launch, KnowYourGenes serves the following region:
 
-  - Delhi National Capital Region (Delhi NCR) — Delhi, Gurugram,
+  - Delhi National Capital Region (Delhi NCR) - Delhi, Gurugram,
     Noida, Greater Noida, Ghaziabad, Faridabad.
 
 The exact list of serviceable pincodes is enforced at checkout. If
@@ -32,40 +32,40 @@ expand.
 
 2. WHAT HAPPENS AFTER YOU BOOK
 ------------------------------
-Step 1 — Confirmation
+Step 1 - Confirmation
    Within 5 minutes of successful payment you receive a booking
    confirmation over email and WhatsApp, with your order ID,
    selected time slot and the agent assignment status.
 
-Step 2 — Agent assignment
+Step 2 - Agent assignment
    By the morning of your collection slot (or at least 2 hours
    before, whichever is later), a trained phlebotomist is
    assigned to your booking. You receive their name, photo, and
    contact number over WhatsApp.
 
-Step 3 — Visit
+Step 3 - Visit
    The phlebotomist arrives at your address within the selected
    slot window. You will be asked to verify identity (photo ID),
    sign a digital consent form, and confirm any pre-collection
    instructions (e.g., fasting status) you were given.
 
-Step 4 — Sample collection
+Step 4 - Sample collection
    Collection takes 10 to 20 minutes depending on sample type
    (saliva swab or venous blood). The phlebotomist follows
    standard biosafety protocols.
 
-Step 5 — Lab transit
+Step 5 - Lab transit
    The sample is labelled with a de-identified accession number,
    placed in a temperature-controlled transport container, and
    delivered to the partner NABL lab the same day or by the
    following morning.
 
-Step 6 — Lab processing
+Step 6 - Lab processing
    The lab processes the sample, generates the variant call file,
    and interprets it under the supervision of a reporting
    pathologist / clinical geneticist.
 
-Step 7 — Report delivery
+Step 7 - Report delivery
    Your report is delivered via a secure link over email and
    WhatsApp, and is also available under "My Reports" in your
    KYG account.
@@ -93,9 +93,9 @@ email.
 4. RESCHEDULING
 ---------------
 You can reschedule a confirmed booking at no charge:
-  - Up to 4 hours before the slot — self-service from your
+  - Up to 4 hours before the slot - self-service from your
     order page.
-  - Inside 4 hours — by writing to care@kyg.in or replying to
+  - Inside 4 hours - by writing to care@kyg.in or replying to
     your booking WhatsApp. We will accommodate where possible;
     no fee.
 
@@ -105,7 +105,7 @@ a no-show and the cancellation rules in our Refund Policy apply.
 
 5. CAN I BUY FOR SOMEONE ELSE?
 ------------------------------
-Yes — you may book and pay for a parent, child, partner, or
+Yes - you may book and pay for a parent, child, partner, or
 friend. At the point of booking, you will be asked to add the
 patient's details. The phlebotomist will verify the patient's ID,
 not the payer's, on arrival. Reports are sent to the email and
@@ -119,7 +119,7 @@ dependent adult.
 We do NOT mail you a self-collection kit. We do NOT post a
 printed report by default. If you specifically request a printed,
 notarised copy of your report for clinical use, we can courier it
-to a Delhi NCR address for an additional fee on actuals — write
+to a Delhi NCR address for an additional fee on actuals - write
 to care@kyg.in.
 
 We do NOT sell or ship physical merchandise, supplements, or any

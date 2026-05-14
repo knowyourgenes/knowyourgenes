@@ -11,7 +11,7 @@ import { putObject, reportKey, R2_CONFIGURED } from '@/lib/r2';
  *     criticalFinding  ("true"/"false", optional)
  *
  * Uploads the PDF to R2 and creates a Report row linked to the order's user.
- * The report is created in undelivered state — admin sends it separately
+ * The report is created in undelivered state - admin sends it separately
  * via the "send to user" action (email + WhatsApp; not yet implemented).
  */
 const MAX_BYTES = 25 * 1024 * 1024;
@@ -91,7 +91,7 @@ export async function POST(req: Request) {
   });
 }
 
-// RPT-NNNNNN — sequential, gap-tolerant. Fine for dev; replace with a real
+// RPT-NNNNNN - sequential, gap-tolerant. Fine for dev; replace with a real
 // sequence when concurrency matters.
 async function nextReportNumber(): Promise<string> {
   const last = await prisma.report.findFirst({

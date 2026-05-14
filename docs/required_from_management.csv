@@ -1,0 +1,114 @@
+ID,Category,Item,Format/Spec,Why we need it,Owner,Priority,Status,Notes
+1.1,Company Legal,Certificate of Incorporation (CoI),Original PDF MCA-issued,"Razorpay, Shiprocket/Delhivery, current account, NABL tie-ups",CS,Launch-blocker,Done,CIN U74999DL2010PTC207582 confirmed
+1.2,Company Legal,Memorandum of Association (MoA) current copy,PDF,"Confirm Objects clause covers genetic testing / diagnostic / health services. If not, file MGT-14 amendment",CS+L,Launch-blocker,Todo,CIN class U74999 = consulting; MoA must explicitly cover diagnostic activity or amendment needed (2-3 weeks)
+1.3,Company Legal,Articles of Association (AoA),PDF,Banks and Razorpay sometimes ask,CS,Important,Todo,
+1.4,Company Legal,Board resolution authorising bank account + payment-gateway signatories,PDF on company letterhead signed,Razorpay onboarding for Pvt Ltd,CS,Launch-blocker,Todo,
+1.5,Company Legal,List of current directors with DINs,PDF,KYC verification,CS,Important,Todo,
+1.6,Company Legal,Shareholding pattern,PDF,Razorpay may ask if shareholders > 1,CS,Nice-to-have,Todo,
+1.7,Company Legal,Latest MCA Form INC-22 / INC-22A (active status),PDF,Proves company is Active on MCA,CS,Important,Todo,
+2.1,Tax Registrations,Company PAN card,Scan both sides,Every integration,CS,Launch-blocker,Todo,
+2.2,Tax Registrations,TAN (Tax Deduction Account Number),Scan,TDS on counsellor / vendor payments,CS,Important,Todo,
+2.3,Tax Registrations,GST Registration Certificate (GSTIN),PDF,"Razorpay, Shiprocket, customer invoicing",CS,Launch-blocker,Todo,
+2.4,Tax Registrations,Confirm GST SAC codes include 998120 (Medical & dental) or 999321 (Medical laboratory),Screenshot from GST portal,If absent file GST amendment REG-14,CS,Launch-blocker,Todo,
+2.5,Tax Registrations,MSME / Udyam Registration Certificate,PDF,Helpful for Razorpay; faster bank loans,CS,Important,Todo,
+2.6,Tax Registrations,Professional Tax registration (Delhi),PDF,Delhi Shops & Establishment requires it,CS,Nice-to-have,Todo,Only if employees on payroll in Delhi
+2.7,Tax Registrations,Shops & Establishment Registration (Delhi NCT),PDF,Required for commercial establishment in Delhi,CS,Important,Todo,
+3.1,Healthcare Compliance,Signed partner-lab agreement with NABL-accredited lab,PDF with both signatures + seals,This is Razorpay's Affiliation Certificate for healthcare,F+L,Launch-blocker,Todo,Without this Razorpay healthcare onboarding is rejected
+3.2,Healthcare Compliance,NABL accreditation certificate of partner lab,PDF from partner lab,Proves lab is accredited; attach with agreement,F,Launch-blocker,Todo,
+3.3,Healthcare Compliance,Clinical Establishment Registration (Delhi),PDF,Required under Delhi Clinical Establishments rules,F+L,Important,Todo,For partner lab OR KYG's own sample-handling facility
+3.4,Healthcare Compliance,PCPNDT compliance affidavit,One-page affidavit on stamp paper signed by director,Confirms no pre-natal sex determination,F+L,Important,Todo,Strongly recommended even though we don't do this
+3.5,Healthcare Compliance,Biomedical Waste Authorisation (partner lab),PDF from partner lab,Lab handles disposal; attach for completeness,F,Nice-to-have,Todo,
+3.7,Healthcare Compliance,Cover letter explaining operating model,1-page PDF on letterhead,Tells Razorpay reviewer who fulfils what,F,Launch-blocker,Todo,"Says: KYG sells kit, NABL partner = X, agreement attached"
+4.1,Director KYC,PAN card of authorised signatory,Scan both sides,All integrations,F,Launch-blocker,Todo,
+4.2,Director KYC,Aadhaar of authorised signatory,Scan front + back,All integrations,F,Launch-blocker,Todo,
+4.3,Director KYC,Recent passport-size photo,JPG plain background,Razorpay; banking,F,Important,Todo,
+4.4,Director KYC,Personal address proof (utility bill / DL / passport),Scan,Banking and some courier KYC,F,Important,Todo,Only if Aadhaar address differs
+4.5,Director KYC,Director Identification Number (DIN),Number from MCA,Razorpay,F,Important,Todo,
+4.6,Director KYC,Digital Signature Certificate (DSC),.pfx or token,MCA filings / GST amendments,CS,Nice-to-have,Todo,
+5.1,Banking,Current account in BFG Market Consult Pvt Ltd name,Bank welcome letter or statement,"Razorpay payout, refunds, vendor payments",F,Launch-blocker,Todo,Personal savings account is auto-rejected by Razorpay
+5.2,Banking,Cancelled cheque from current account,Scan,Razorpay verifies account holder name matches company,F,Launch-blocker,Todo,
+5.3,Banking,Bank statement last 3 months,PDF,Razorpay may ask; required for higher transaction limits,F,Important,Todo,
+5.4,Banking,IFSC code and account number,Plain text,Razorpay onboarding + env config for refund payout,F,Launch-blocker,Todo,
+5.5,Banking,UPI handle on company account,e.g. kyg@hdfcbank,UPI-based refund speed-up,F,Nice-to-have,Todo,
+7A.1,Courier - Shiprocket,Company PAN,Scan,Shiprocket KYC,F,Launch-blocker,Todo,Skip if going direct Delhivery
+7A.2,Courier - Shiprocket,GST Certificate,Scan,Shiprocket KYC,F,Launch-blocker,Todo,
+7A.3,Courier - Shiprocket,Cancelled cheque,Scan,Shiprocket KYC,F,Launch-blocker,Todo,
+7A.4,Courier - Shiprocket,Director Aadhaar + PAN,Scan,Shiprocket KYC,F,Launch-blocker,Todo,
+7A.5,Courier - Shiprocket,Pickup-location address proof,PDF (rent agreement or utility bill),Shiprocket pickup-location verification,F,Launch-blocker,Todo,
+7A.6,Courier - Shiprocket,Pickup contact person name + phone,Text,Courier coordination,O,Launch-blocker,Todo,
+7A.7,Courier - Shiprocket,Estimated monthly shipment volume,Text rough range,Shiprocket rate slab,F,Important,Todo,
+7A.8,Courier - Shiprocket,Bank account for COD settlements,Text,Shiprocket requires it,F,Important,Todo,Not used by us but required
+7B.1,Courier - Delhivery direct,All items from 7A.1-7A.8,-,Delhivery KYC,F,Launch-blocker,Todo,Only if going direct Delhivery instead of Shiprocket
+7B.2,Courier - Delhivery direct,Monthly volume commitment,Text,Negotiated rate card,F,Important,Todo,
+7B.3,Courier - Delhivery direct,Pickup-location exact name string,Text,Becomes Lab.pickupLocationName in DB,O,Launch-blocker,Todo,Must match Delhivery portal byte-for-byte
+7B.4,Courier - Delhivery direct,KAM contact details once assigned,Text,Webhook setup escalation,F,Important,Todo,
+7B.5,Courier - Delhivery direct,Signed rate-card agreement,PDF,Locks negotiated rates,F,Important,Todo,
+8.1,Kit Dispatch Facility,Physical address for kit dispatch / sample receipt,Text,"Becomes Lab.addressLine, city, pincode in DB",O,Launch-blocker,Todo,
+8.2,Kit Dispatch Facility,Phone reachable at facility (Mon-Sat),Text,Courier needs it for pickup coordination,O,Launch-blocker,Todo,
+8.3,Kit Dispatch Facility,Contact email for facility,Text,Goes on courier paperwork,O,Launch-blocker,Todo,
+8.4,Kit Dispatch Facility,Pickup window / working hours,Text,Courier pickup scheduling,O,Launch-blocker,Todo,
+8.5,Kit Dispatch Facility,Kit packaging design finalised,Physical sample + PDF specs,Lets us order inventory,B+O,Launch-blocker,Todo,
+8.6,Kit Dispatch Facility,Initial kit inventory count + reorder threshold,Text,Ops planning,O,Important,Todo,
+9.1,Lab + Counsellor,NABL partner lab legal name + address + contact,Text,Goes into LabPartner DB row,F,Launch-blocker,Todo,
+9.2,Lab + Counsellor,Partner lab MoU with TAT + rate card per panel,PDF,Defines TAT commit and pricing,F+L,Launch-blocker,Todo,
+9.3,Lab + Counsellor,Partner lab login contact (becomes LabPartner user),Name + email + phone,Lab partner uploads reports via /admin,F,Important,Todo,
+9.4,Lab + Counsellor,Sample-handling SOP from partner lab,PDF,QA reference,M,Important,Todo,
+9.5,Lab + Counsellor,Genetic counsellor profile data,"Text + JPG: name, credentials (MSc Genetics / MD), photo, languages, bio, session price",CounsellorProfile DB row,L+B,Important,Todo,
+9.6,Lab + Counsellor,Counsellor empanelment agreement,PDF,"Rate, cancellation policy, IP terms",F+L,Important,Todo,
+9.7,Lab + Counsellor,Medical / clinical advisory board details,"Text + JPG: names, qualifications, MCI/state council registration numbers, photos",For /about page; helps Razorpay approval,F+M,Important,Todo,
+10.1,Brand & Content,Final logo files,"SVG + PNG transparent, light + dark variants",Header / footer / OG images / favicon,B,Launch-blocker,Todo,
+10.2,Brand & Content,Favicon,"32x32, 192x192, 512x512 PNG + ico",Browser tab + PWA icon,B,Launch-blocker,Todo,
+10.3,Brand & Content,Open Graph / social-share images,1200x630 PNG per major route,Social sharing previews,B,Important,Todo,
+10.4,Brand & Content,Brand colours + fonts,Hex codes + font names,Tailwind config,B,Launch-blocker,Partial,Already partially in Tailwind config
+10.5,Brand & Content,Homepage hero copy final + tagline + CTAs,Text,Homepage,B,Launch-blocker,Todo,
+10.6,Brand & Content,Why KYG differentiator copy,Text,/why-kyg page,B,Important,Todo,
+10.7,Brand & Content,Founder / team photos + bios for /about,JPG + text,/about page,B+F,Important,Todo,
+10.8,Brand & Content,Sample report PDF (anonymised),PDF,Package detail Sample Report Preview,M+B,Important,Todo,
+10.9,Brand & Content,Customer testimonials with consent,Text + photo,Homepage social proof,B,Nice-to-have,Todo,
+10.1,Brand & Content,Trust-signal logos (NABL ISO CAP),PNG/SVG,Header + trust strip,B,Important,Todo,
+10.11,Brand & Content,Press / media coverage list,Text,/press page,B,Nice-to-have,Todo,
+10.12,Brand & Content,Initial 4-6 blog posts,Word / Google Doc,Sanity blog seed content,B,Important,Todo,Genetic literacy 101 / how to read a report / etc.
+11.1,Pricing & Business Rules,Final price per package (rupees incl. or plus GST),Text,Goes into Package.price (paise),F,Launch-blocker,Partial,Seed has placeholders
+11.2,Pricing & Business Rules,Kit shipping fee per package,Number in rupees,Package.kitShippingFee (paise),F,Launch-blocker,Todo,
+11.3,Pricing & Business Rules,TAT commitment per package (min and max days),Number pairs,Package.tatMinDays / tatMaxDays,F+M,Launch-blocker,Partial,Seed has placeholders
+11.4,Pricing & Business Rules,Refund window and refund cuts,Text policy,Refund policy page + admin enforcement,F+L,Launch-blocker,Drafted,"Drafted in /refunds, needs sign-off"
+11.5,Pricing & Business Rules,Counselling session price,Number,Consultation.price (paise),F,Important,Todo,
+11.6,Pricing & Business Rules,First 50 customers discount code + value,Text,Coupon row,F+B,Important,Todo,
+11.7,Pricing & Business Rules,Pincode opt-in list for launch,List of pincodes,ServiceArea.active = true rows,O,Launch-blocker,Todo,
+11.8,Pricing & Business Rules,Coupon strategy (first-order / referral / etc.),Text + values,Coupon rows,F+B,Important,Todo,
+12.1,Operational Contacts,Customer care phone number (live answered),E.164 format,Footer + all legal pages + Razorpay,O,Launch-blocker,Todo,Currently placeholder +91 11 4000 0000 everywhere
+12.2,Operational Contacts,Customer care email + working mailbox,care@kyg.in,All comms; Google Workspace or Zoho,O,Launch-blocker,Partial,Used in legal pages; mailbox setup pending
+12.3,Operational Contacts,Partnerships email,partners@kyg.in,B2B inbound,O,Important,Partial,
+12.4,Operational Contacts,Press email,press@kyg.in,Media inbound,O,Nice-to-have,Partial,
+12.5,Operational Contacts,Grievance Officer name + designation,Text,DPDP Act 2023 required disclosure,F,Launch-blocker,Todo,
+12.6,Operational Contacts,Grievance Officer email,grievance@kyg.in,DPDP Act 2023 required disclosure,F,Launch-blocker,Partial,
+12.7,Operational Contacts,Working hours,Text,Footer + contact page,O,Important,Partial,Drafted as Mon-Sat 09:00-19:00 IST
+12.8,Operational Contacts,WhatsApp Business number,E.164 format,Razorpay reviewers also check,O,Important,Todo,
+13.1,Comms Providers,WhatsApp Business API signup (Gupshup or Wati) with KYC + GST,Account credentials,WhatsApp transactional messages,F,Launch-blocker,Todo,
+13.2,Comms Providers,WhatsApp HSM templates submitted,"Template text (Booking confirmed, Kit dispatched, Sample picked up, Report ready, OTP)",WhatsApp approval typically takes 2-5 days,O+E,Launch-blocker,Todo,
+13.3,Comms Providers,Facebook Business Verification (WhatsApp display name),Account verification,WhatsApp green tick + higher limits,F,Important,Todo,
+13.4,Comms Providers,Sender domain kyg.in verified (SPF DKIM DMARC),DNS records,SendGrid / SES authentication,E,Launch-blocker,Todo,
+13.5,Comms Providers,Decide email provider (SendGrid or AWS SES),Text decision,Drives env config,F,Launch-blocker,Todo,
+13.6,Comms Providers,SMS sender ID TRAI DLT registration,TRAI registration,Required for transactional SMS templates,F,Important,Todo,
+14.1,Domain & Hosting,Domain kyg.in registered in BFG Market Consult name,Registrar screenshot,Domain in personal name is a Razorpay flag,F,Launch-blocker,Todo,
+14.2,Domain & Hosting,Domain registrar login or shared access,Account access,DNS management,F,Launch-blocker,Todo,
+14.3,Domain & Hosting,Cloudflare account with domain added,Account access,CDN + WAF + DNS,F,Launch-blocker,Todo,
+14.4,Domain & Hosting,VPS provider chosen + account (Hetzner / DO / Linode / Lightsail),Account access,Production hosting,F,Launch-blocker,Todo,
+14.5,Domain & Hosting,Google Workspace or Zoho Mail for @kyg.in,Account access,care@ grievance@ partners@ press@ mailboxes,F,Launch-blocker,Todo,
+15.1,Third-party Accounts,Razorpay merchant account (live mode),Account access,Payments,F,Launch-blocker,Todo,Use submission bundle from section 6
+15.2,Third-party Accounts,Cloudflare R2 bucket access,Account access + API token,Report PDF storage,F,Launch-blocker,Todo,
+15.3,Third-party Accounts,Mappls account + production API key,Account access,Geocoding,F,Launch-blocker,Partial,Dev key present
+15.4,Third-party Accounts,Google Cloud project with prod OAuth client,Account access,Google sign-in,F,Launch-blocker,Partial,Dev OAuth client present; needs prod redirect URI
+15.5,Third-party Accounts,Sanity project (production dataset + project ID),Account access,Blog CMS,F,Important,Todo,
+15.6,Third-party Accounts,Google Search Console + GA4,Account access,SEO + analytics,F+B,Important,Todo,
+15.7,Third-party Accounts,Meta Business Manager (Instagram + Facebook pages),Account access,Marketing,B,Important,Todo,
+15.8,Third-party Accounts,Meta retargeting pixel ID,Pixel ID,Retargeting ads,B,Important,Todo,
+15.9,Third-party Accounts,Sentry or equivalent,Account access,Error monitoring,E,Important,Todo,
+16.1,Insurance,Professional indemnity insurance,Policy,Covers misdiagnosis / report-error claims,F+L,Nice-to-have,Todo,
+16.2,Insurance,Cyber-liability insurance,Policy,Covers data breach / DPDP penalties,F+L,Nice-to-have,Todo,
+16.3,Insurance,Public liability insurance,Policy,Covers in-person injury (Phase 2 phlebotomist),F+L,Nice-to-have,Todo,
+17.1,Internal Engineering,Confirm AUTH_SECRET in .env was never used in production - if yes rotate,Confirmation + new secret,Security,F+E,Important,Todo,
+17.2,Internal Engineering,Confirm data in lost Aiven DB - any production data we need to recover,Confirmation,Disaster recovery decision,F,Launch-blocker,Blocked,Aiven hostname returns NXDOMAIN
+17.3,Internal Engineering,Report PDF footer policy - customer name + report number on every page?,Decision,Compliance preference,F+L,Important,Todo,
+17.4,Internal Engineering,Sample IDs visible to customer in dashboard?,Decision,Privacy / UX preference,F,Important,Todo,
+17.5,Internal Engineering,Report retention period beyond account closure,Decision + days,DPDP Act retention statement,F+L,Important,Todo,Current draft says 60 days

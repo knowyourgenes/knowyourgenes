@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Know Your Genes · At-Home DNA Kit · Delhi NCR · KYG</title>
+<meta name="description" content="Order an at-home genetic testing kit. Sealed kit ships to your door. Collect a saliva sample in two minutes, free pickup, report in 7-14 days with a certified genetic counselor session.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{
+  --teal:#0E4D4B;--tl:#25B5AB;--td:#093836;
+  --mint:#E6F4F3;--mw:#EEF7F6;--md:#D4EBE8;
+  --ch:#222;--gy:#7A7A7A;--wh:#FFF;
+  --paper:#FBF6EC;--cream:#FFF8F0;--peach:#FFEEDD;--sand:#FFF1DC;
+  --yellow:#F8E16C;
+  --tw:rgba(37,181,171,.10);--tg:rgba(37,181,171,.35);
+  --sc:0 2px 4px rgba(14,77,75,.04),0 12px 30px rgba(14,77,75,.09);
+  --sl:0 4px 8px rgba(14,77,75,.08),0 28px 64px rgba(14,77,75,.18);
+  --max:1280px;--g:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Figtree',system-ui,sans-serif;font-size:1rem;line-height:1.62;color:var(--ch);background:var(--mint);overflow-x:hidden}
+img,svg,canvas{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none}
+.W{max-width:var(--max);margin:0 auto;padding:0 var(--g);position:relative}
+h1,h2,h3,h4{font-family:'Figtree',sans-serif;color:var(--teal);line-height:1.06;letter-spacing:-.025em}
+h1{font-size:clamp(2.4rem,5.5vw,5rem);font-weight:700}
+h2{font-size:clamp(1.9rem,4vw,3.5rem);font-weight:700}
+h3{font-size:clamp(1.25rem,2vw,1.85rem);font-weight:700;line-height:1.18}
+h4{font-size:clamp(.95rem,1.3vw,1.22rem);font-weight:600;line-height:1.3}
+p{line-height:1.72}
+.eb{font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--tl);display:inline-flex;align-items:center;gap:10px}
+.eb::before{content:'';width:22px;height:2px;background:var(--tl);border-radius:2px}
+
+/* "BANK ACCOUNT" — circled checklist treatment with sticky note */
+.circled{position:relative;display:inline-block;color:var(--teal);padding:0 .12em;white-space:nowrap;margin-right:.25em}
+.circled::after{
+  content:'';position:absolute;left:-5%;right:-5%;top:-10%;bottom:-10%;
+  border:3px solid var(--tl);border-radius:50%;
+  transform:rotate(-2deg);opacity:.65;pointer-events:none;
+}
+.circled-stamp{
+  display:inline-flex;align-items:center;gap:6px;
+  position:relative;top:-.15em;
+  font-family:'Caveat',cursive;font-size:.32em;font-weight:700;
+  color:var(--tl);background:#fff;
+  padding:6px 14px 5px;border-radius:999px;
+  border:2px solid var(--tl);
+  transform:rotate(-4deg);
+  box-shadow:0 4px 10px rgba(37,181,171,.20);
+  vertical-align:middle;
+  letter-spacing:.02em;
+  margin-left:.05em;
+}
+.circled-stamp::before{
+  content:'✓';display:inline-block;font-family:'Figtree',sans-serif;
+  font-weight:700;color:#fff;background:var(--tl);
+  width:14px;height:14px;border-radius:50%;
+  text-align:center;line-height:14px;font-size:.65em;
+}
+
+/* MARKER HIGHLIGHT */
+.mk{position:relative;display:inline-block;padding:0 .14em;isolation:isolate}
+.mk::before{content:'';position:absolute;inset:18% -.05em 12%;background:var(--tl);opacity:.25;transform:skew(-2deg) rotate(-.6deg);z-index:-1;border-radius:3px}
+.mk.y::before{background:var(--yellow);opacity:.85}
+
+/* HAND-DRAWN UNDERLINE */
+.un{position:relative;display:inline-block}
+.un::after{content:'';position:absolute;left:-2%;right:-2%;bottom:-.15em;height:.26em;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M2,7 Q50,2 100,6 T198,5' stroke='%2325B5AB' stroke-width='3.5' stroke-linecap='round' fill='none'/></svg>");background-repeat:no-repeat;background-size:100% 100%}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:999px;font-weight:700;font-size:.95rem;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s;white-space:nowrap;letter-spacing:-.01em}
+.btn .a{transition:transform .3s cubic-bezier(.22,1,.36,1);display:inline-block}
+.btn:hover .a{transform:translateX(5px)}
+.bp{background:var(--teal);color:var(--wh);box-shadow:0 6px 0 var(--td),0 14px 30px rgba(14,77,75,.22)}
+.bp:hover{transform:translateY(-3px);box-shadow:0 9px 0 var(--td),0 22px 40px rgba(14,77,75,.28)}
+.bp:active{transform:translateY(2px);box-shadow:0 3px 0 var(--td)}
+.ba{background:var(--tl);color:var(--wh);box-shadow:0 6px 0 #1a8d85,0 14px 30px rgba(37,181,171,.3)}
+.ba:hover{transform:translateY(-3px);box-shadow:0 9px 0 #1a8d85,0 20px 40px rgba(37,181,171,.36)}
+.bw{background:var(--wh);color:var(--teal);box-shadow:0 6px 0 var(--md),0 14px 30px rgba(14,77,75,.14)}
+.bw:hover{transform:translateY(-3px)}
+.gl{color:var(--tl);font-weight:600;display:inline-flex;align-items:center;gap:6px;border-bottom:1.5px solid currentColor;padding-bottom:2px;transition:gap .2s,color .2s;font-size:.93rem}
+.gl:hover{gap:10px;color:var(--teal)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:background .3s,backdrop-filter .3s,padding .25s}
+.nav.scd{background:rgba(251,246,236,.90);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(14,77,75,.08);padding:10px 0}
+.ni{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.lb{background:var(--wh);padding:7px 16px;border-radius:14px;box-shadow:var(--sc);display:inline-flex;align-items:center;flex-shrink:0;transition:transform .2s}
+.lb:hover{transform:translateY(-1px)}
+.lb img{height:34px;width:auto;display:block}
+.nav.scd .lb img{height:30px}
+.nl{display:flex;align-items:center;gap:28px;font-weight:500;font-size:.91rem}
+.nl a{color:var(--teal);transition:color .2s;position:relative}
+.nl a::after{content:'';position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--tl);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.nl a:hover{color:var(--tl)}
+.nl a:hover::after{transform:scaleX(1)}
+.nc{background:var(--teal);color:var(--wh);padding:10px 22px;border-radius:999px;font-weight:700;font-size:.86rem;box-shadow:0 4px 0 var(--td);transition:transform .2s,box-shadow .2s}
+.nc:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--td)}
+
+/* HERO with warm gradient */
+.hero{position:relative;min-height:100vh;padding:130px 0 80px;overflow:hidden;background:linear-gradient(135deg,var(--cream) 0%,var(--paper) 38%,var(--mw) 100%)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(820px 600px at 88% 12%,rgba(248,225,108,.20),transparent 60%),radial-gradient(680px 520px at 8% 82%,rgba(37,181,171,.16),transparent 62%);pointer-events:none}
+.hg{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,5vw,80px);align-items:center;min-height:calc(100vh - 210px);position:relative;z-index:2}
+
+/* SCRIBBLE DECORATIONS */
+.scr{position:absolute;pointer-events:none;opacity:.5}
+.scr svg{width:100%;height:100%;overflow:visible}
+.scr path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.hs1{top:18%;left:50%;width:60px;height:60px;opacity:.55}
+.hs2{bottom:24%;left:42%;width:74px;height:32px;opacity:.42}
+.hs3{top:11%;right:50%;width:46px;height:46px;opacity:.5}
+.hs4{top:62%;right:46%;width:40px;height:40px;opacity:.45}
+
+.hbdg{display:inline-flex;align-items:center;gap:9px;background:var(--wh);color:var(--teal);padding:8px 16px;border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.05em;box-shadow:var(--sc);margin-bottom:22px}
+.pls{width:8px;height:8px;background:var(--tl);border-radius:50%;animation:pulse 1.9s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,181,171,.5)}70%{box-shadow:0 0 0 12px rgba(37,181,171,0)}100%{box-shadow:0 0 0 0 rgba(37,181,171,0)}}
+.hero h1{margin-bottom:24px}
+.hlead{font-size:clamp(1rem,1.4vw,1.14rem);color:var(--ch);max-width:540px;margin-bottom:36px;line-height:1.72}
+.hctas{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:44px;align-items:center}
+.htr{display:flex;flex-wrap:wrap;gap:14px 22px;font-size:.8rem;font-weight:600;color:var(--gy)}
+.hti{display:inline-flex;align-items:center;gap:7px}
+.hti svg{color:var(--tl);flex-shrink:0}
+
+/* HERO 3D NETWORK ORB */
+.hv{position:relative;aspect-ratio:1;max-width:520px;margin-left:auto;isolation:isolate}
+/* Dark contrast disc behind the orb */
+.hv::before{
+  content:'';position:absolute;inset:8%;
+  background:radial-gradient(circle at 35% 30%,#1ea29a 0%,#0E4D4B 45%,#072422 100%);
+  border-radius:50%;
+  box-shadow:
+    0 30px 80px rgba(14,77,75,.35),
+    0 0 0 1px rgba(37,181,171,.15),
+    inset 0 0 80px rgba(0,0,0,.4);
+  z-index:0;
+}
+/* Outer glow ring */
+.hv::after{
+  content:'';position:absolute;inset:-2%;
+  background:radial-gradient(circle,rgba(37,181,171,.18),transparent 60%);
+  border-radius:50%;pointer-events:none;z-index:-1;
+  filter:blur(20px);
+}
+#netCanvas{width:100%;height:100%;cursor:grab;position:relative;z-index:1}
+#netCanvas:active{cursor:grabbing}
+.hvh{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--teal);white-space:nowrap;opacity:.9;display:flex;align-items:center;gap:6px;z-index:2}
+.hvh::before{content:'';display:block;width:34px;height:7px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 7'><path d='M2,4 Q11,1.5 21,4 T32,3.5' stroke='%230E4D4B' stroke-width='1.8' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-size:100% 100%}
+
+/* MARQUEE */
+.mb{overflow:hidden;padding:22px 0}
+.mbt{background:var(--teal);color:var(--wh)}
+.mbtl{background:var(--tl);color:var(--wh)}
+.mbc{background:var(--peach);color:var(--teal)}
+.mt{display:flex;gap:48px;animation:mq 38s linear infinite;white-space:nowrap}
+.mb:hover .mt{animation-play-state:paused}
+.mt>span{font-size:clamp(1rem,2vw,1.7rem);font-weight:700;letter-spacing:-.01em;display:inline-flex;align-items:center;gap:48px;flex-shrink:0}
+.mt .sp{width:10px;height:10px;border-radius:50%;background:currentColor;opacity:.4}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS — varied warm gradients */
+.sec{padding:clamp(80px,10vh,130px) 0;position:relative;overflow:hidden}
+.bcg{background:linear-gradient(135deg,var(--cream) 0%,var(--paper) 50%,var(--mw) 100%)}
+.bmg{background:linear-gradient(155deg,var(--mw) 0%,var(--mint) 50%,#daf1ef 100%)}
+.bsg{background:linear-gradient(150deg,var(--paper) 0%,var(--mw) 100%)}
+.bw{background:var(--wh)}
+.bpg{background:linear-gradient(135deg,var(--paper) 0%,var(--cream) 100%)}
+
+.sh{max-width:800px;margin:0 auto 64px;text-align:center;position:relative}
+.sh .eb{justify-content:center;margin-bottom:20px;background:var(--tw);padding:7px 16px;border-radius:999px}
+.sh .eb::before{display:none}
+.sh h2{margin-bottom:18px}
+.sh .lead{font-size:clamp(1rem,1.3vw,1.12rem);color:var(--ch);line-height:1.72}
+
+/* REVEALS */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .85s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:translateY(0)}
+.rvs>*{opacity:0;transform:translateY(24px);transition:opacity .85s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.22,1,.36,1)}
+.rvs.in>*{opacity:1;transform:translateY(0)}
+.rvs.in>*:nth-child(1){transition-delay:.05s}
+.rvs.in>*:nth-child(2){transition-delay:.15s}
+.rvs.in>*:nth-child(3){transition-delay:.25s}
+.rvs.in>*:nth-child(4){transition-delay:.35s}
+.rvs.in>*:nth-child(5){transition-delay:.45s}
+.rvs.in>*:nth-child(6){transition-delay:.55s}
+.rvs.in>*:nth-child(7){transition-delay:.65s}
+
+/* SPOTLIGHT */
+.sp2{position:relative;isolation:isolate}
+.sp2::before{content:'';position:absolute;inset:0;background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(37,181,171,.11),transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none;border-radius:inherit;z-index:0}
+.sp2:hover::before{opacity:1}
+.sp2>*{position:relative;z-index:1}
+
+/* PROBLEM CARDS */
+.pi{max-width:760px;margin:0 auto 58px;text-align:center}
+.pi p{font-size:clamp(1rem,1.3vw,1.12rem);color:var(--ch);line-height:1.76}
+.pi p+p{margin-top:16px}
+.pcg{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pc{background:var(--wh);border-radius:36px;padding:38px 28px 32px;position:relative;box-shadow:var(--sc);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.pc:hover{transform:translateY(-9px) rotate(-.5deg);box-shadow:var(--sl)}
+.pc:nth-child(2):hover{transform:translateY(-9px) rotate(.4deg)}
+.pc:nth-child(3):hover{transform:translateY(-9px) rotate(-.35deg)}
+.pn{font-family:'Caveat',cursive;font-size:3.2rem;font-weight:700;color:var(--tl);line-height:1;margin-bottom:6px}
+.pc h4{color:var(--teal);margin-bottom:10px;font-size:1.08rem}
+.pc p{font-size:.96rem;color:var(--ch);line-height:1.65}
+.pst{position:absolute;top:-18px;right:20px;width:52px;height:52px;border-radius:50%;background:var(--tl);display:flex;align-items:center;justify-content:center;color:var(--wh);font-size:1.4rem;box-shadow:0 6px 16px rgba(37,181,171,.38);transform:rotate(-8deg);transition:transform .3s}
+.pc:hover .pst{transform:rotate(-8deg) scale(1.14)}
+.pc:nth-child(2) .pst{background:var(--teal);transform:rotate(8deg)}
+.pc:nth-child(2):hover .pst{transform:rotate(8deg) scale(1.14)}
+.pc:nth-child(3) .pst{background:var(--ch);transform:rotate(-4deg)}
+.pc:nth-child(3):hover .pst{transform:rotate(-4deg) scale(1.14)}
+
+/* EXPLAINER (split with photo) */
+.exs{max-width:980px;margin:0 auto 40px;background:var(--wh);border-radius:36px;box-shadow:var(--sc);display:grid;grid-template-columns:1.3fr 1fr;overflow:hidden}
+.ext{padding:clamp(36px,4vw,52px);position:relative}
+.ext::before{content:'"';position:absolute;top:14px;left:22px;font-size:5.5rem;font-weight:700;font-family:'Figtree',serif;color:var(--tl);opacity:.28;line-height:1;pointer-events:none}
+.ext p{font-size:clamp(1rem,1.35vw,1.15rem);color:var(--ch);line-height:1.76;position:relative}
+.ext p+p{margin-top:14px}
+.exp{position:relative;min-height:340px;overflow:hidden;background:linear-gradient(135deg,var(--mint),var(--md))}
+.exp img{width:100%;height:100%;object-fit:cover;display:block}
+.exp::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(14,77,75,.06),transparent 50%,rgba(37,181,171,.18))}
+.ept{position:absolute;bottom:18px;left:18px;right:18px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);padding:10px 14px;border-radius:8px;font-family:'Caveat',cursive;font-size:1.05rem;font-weight:700;color:var(--teal);display:flex;align-items:center;gap:8px}
+
+.pb{max-width:980px;margin:0 auto 60px;background:var(--teal);border-radius:36px;padding:clamp(28px,3vw,44px) clamp(28px,4vw,56px);color:var(--wh);font-size:clamp(1rem,1.4vw,1.18rem);font-style:italic;line-height:1.65;font-weight:500;position:relative;overflow:hidden}
+.pb::after{content:'';position:absolute;top:-60%;right:-8%;width:280px;height:280px;background:radial-gradient(circle,rgba(37,181,171,.3),transparent 70%);pointer-events:none}
+.pb::before{content:'';position:absolute;bottom:-40%;left:-5%;width:260px;height:260px;background:radial-gradient(circle,rgba(248,225,108,.14),transparent 65%);pointer-events:none}
+
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto}
+.pmk{background:var(--wh);border-radius:36px;padding:30px 24px;box-shadow:var(--sc);transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+.pmk:hover{transform:translateY(-6px);box-shadow:var(--sl)}
+.pi2{width:50px;height:50px;background:var(--tw);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:1.5rem}
+.pmk:nth-child(2) .pi2{background:rgba(248,225,108,.3)}
+.pmk:nth-child(3) .pi2{background:var(--peach)}
+.pmk h4{color:var(--teal);margin-bottom:9px}
+.pmk p{font-size:.93rem;color:var(--ch);line-height:1.65}
+
+/* COMICS */
+.cms{position:relative}
+.cms::before{content:'';position:absolute;inset:0;background:radial-gradient(600px 400px at 10% 20%,rgba(248,225,108,.14),transparent 60%),radial-gradient(500px 380px at 92% 85%,rgba(37,181,171,.10),transparent 60%);pointer-events:none}
+.cms .W{position:relative;z-index:1}
+.ch2{text-align:center;margin-bottom:44px}
+.tape{display:inline-block;background:var(--yellow);padding:7px 30px;font-family:'Caveat',cursive;font-size:1.35rem;font-weight:700;color:var(--ch);transform:rotate(-1.5deg);margin-bottom:22px;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.cts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.ct{background:var(--wh);border:2px solid var(--md);color:var(--teal);padding:8px 20px;border-radius:999px;font-size:.84rem;font-weight:700;cursor:pointer;transition:all .2s}
+.ct.act,.ct:hover{background:var(--teal);border-color:var(--teal);color:var(--wh)}
+.csp{display:none}
+.csp.act{display:block;animation:cf .45s ease}
+@keyframes cf{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.cf2{background:var(--wh);border:3px solid var(--ch);border-radius:24px;padding:14px;box-shadow:10px 10px 0 var(--teal),0 20px 50px rgba(14,77,75,.14);transition:transform .4s cubic-bezier(.22,1,.36,1);position:relative}
+.cf2:hover{transform:translate(-3px,-3px)}
+.ftap{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-1.8deg);background:var(--yellow);padding:5px 22px;font-family:'Caveat',cursive;font-size:1.05rem;font-weight:700;color:var(--ch);box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.cp2{border:2px solid var(--ch);position:relative;background:var(--wh);display:flex;flex-direction:column;transition:transform .3s;min-height:340px}
+.cp2:hover{transform:scale(1.01) rotate(-.3deg);z-index:2}
+.cp2:nth-child(even):hover{transform:scale(1.01) rotate(.3deg)}
+.cp2:not(:last-child){border-right:none}
+.cpn{position:absolute;top:8px;left:10px;width:28px;height:28px;background:var(--teal);color:var(--wh);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;z-index:2}
+.csc{flex:1;position:relative;overflow:hidden;min-height:240px}
+.csc svg{width:100%;height:100%}
+.cdl{padding:10px 12px 14px;border-top:2px solid var(--ch);background:var(--paper)}
+.cdl .wh2{font-size:.6rem;font-weight:700;color:var(--tl);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.cdl .ln{font-family:'Caveat',cursive;font-size:.92rem;font-weight:700;color:var(--ch);line-height:1.3}
+.cft{background:var(--teal);color:var(--wh);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:2px solid var(--ch);border-radius:0 0 16px 16px}
+.cft .tg{font-family:'Caveat',cursive;font-size:1.1rem;font-weight:700}
+.cft .tbs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cft .tb{background:rgba(255,255,255,.15);color:var(--wh);padding:4px 10px;border-radius:999px;font-size:.7rem;font-weight:700}
+
+/* HOW IT WORKS — KIT BASED */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative}
+.sc3{position:absolute;top:42px;left:calc(12.5% + 14px);right:calc(12.5% + 14px);height:2px;background:linear-gradient(90deg,var(--tl),var(--teal));opacity:.25;pointer-events:none}
+.sk{background:var(--wh);border-radius:36px;padding:28px 22px 30px;text-align:center;box-shadow:var(--sc);position:relative;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.sk:hover{transform:translateY(-9px);box-shadow:var(--sl)}
+.sn{width:52px;height:52px;background:var(--teal);color:var(--wh);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;margin:0 auto 18px;box-shadow:0 4px 0 var(--td),0 8px 20px rgba(14,77,75,.22);position:relative;z-index:1}
+.sk:nth-child(2) .sn{background:var(--tl);box-shadow:0 4px 0 #1a8d85,0 8px 20px rgba(37,181,171,.3)}
+.sk:nth-child(3) .sn{background:var(--ch);box-shadow:0 4px 0 #111,0 8px 20px rgba(0,0,0,.25)}
+.si{font-size:2.2rem;margin-bottom:14px}
+.sk h4{color:var(--teal);margin-bottom:10px;font-size:1.04rem}
+.sk p{font-size:.88rem;color:var(--ch);line-height:1.65}
+.snt{margin-top:14px;font-size:.8rem;color:var(--tl);font-weight:600;font-style:italic}
+
+/* TESTS */
+.tg2{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.tc{background:var(--wh);border-radius:36px;padding:26px 22px;box-shadow:var(--sc);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .2s;cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden}
+.tc::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,181,171,.10),transparent 60%);opacity:0;transition:opacity .3s}
+.tc:hover{transform:translateY(-7px);box-shadow:var(--sl);border-color:var(--tl)}
+.tc:hover::after{opacity:1}
+.te{font-size:2rem;margin-bottom:12px}
+.tc h4{color:var(--teal);margin-bottom:6px;font-size:.97rem;position:relative;z-index:2}
+.tf{font-size:.7rem;font-weight:700;color:var(--tl);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:2}
+.tc p{font-size:.86rem;color:var(--ch);line-height:1.6;position:relative;z-index:2}
+.tfe{margin-top:12px;font-style:italic;font-weight:600;color:var(--teal);font-size:.85rem;position:relative;z-index:2}
+
+/* STATS */
+.ss{background:linear-gradient(90deg,var(--tl) 0%,var(--teal) 100%);padding:52px 0;position:relative;overflow:hidden}
+.ss::before{content:'';position:absolute;inset:0;background:radial-gradient(800px 200px at 50% 0%,rgba(255,255,255,.18),transparent 60%);pointer-events:none}
+.stg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;position:relative}
+.sti{color:var(--wh)}
+.stb{font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1;margin-bottom:8px;color:var(--wh)}
+.stl{font-size:.84rem;color:rgba(255,255,255,.85);font-weight:600}
+
+/* WHY KYG COMPARE */
+.cw{max-width:1080px;margin:0 auto}
+.ch3{display:grid;grid-template-columns:1fr 44px 1fr;margin-bottom:8px}
+.cth2,.cus2{padding:10px 22px;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center}
+.cth2{color:var(--gy)}.cus2{color:var(--teal)}
+.cr{display:grid;grid-template-columns:1fr auto 1fr;margin-bottom:14px;align-items:stretch}
+.ctd,.cud{padding:18px 22px;font-size:.94rem;line-height:1.58}
+.ctd{background:var(--wh);color:var(--gy);box-shadow:0 2px 8px rgba(14,77,75,.07);border-radius:16px 0 0 16px;border:1.5px solid rgba(14,77,75,.07)}
+.cmd{display:flex;align-items:center;justify-content:center;padding:0 10px;font-size:1.1rem;background:var(--md);position:relative;z-index:1}
+.cud{background:rgba(37,181,171,.12);color:var(--teal);font-weight:600;border-radius:0 16px 16px 0;border:1.5px solid rgba(37,181,171,.2);border-left:3px solid var(--tl)}
+
+/* TRUST */
+.tp{max-width:1100px;margin:0 auto 56px;display:grid;grid-template-columns:1.1fr 1fr;border-radius:36px;overflow:hidden;box-shadow:var(--sc)}
+.tpi{position:relative;min-height:340px;overflow:hidden;background:linear-gradient(135deg,var(--mint),var(--md))}
+.tpi img{width:100%;height:100%;object-fit:cover;display:block}
+.tpi::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(14,77,75,.18),transparent 60%)}
+.tpt2{position:absolute;top:18px;left:18px;background:var(--wh);color:var(--teal);padding:7px 14px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--sc)}
+.tpt2::before{content:'';width:8px;height:8px;background:var(--tl);border-radius:50%;animation:pulse 1.9s infinite}
+.tpx{padding:clamp(36px,4vw,50px);display:flex;flex-direction:column;justify-content:center;background:var(--wh)}
+.tpx h3{margin-bottom:14px;color:var(--teal)}
+.tpx p{font-size:.96rem;line-height:1.7;color:var(--ch)}
+.tgr{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px}
+.tcd{background:var(--wh);border-radius:36px;padding:28px 22px;box-shadow:var(--sc);text-align:center;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s;border:1.5px solid transparent}
+.tcd:hover{transform:translateY(-6px) rotate(-.5deg);box-shadow:var(--sl);border-color:var(--md)}
+.tcd:nth-child(even):hover{transform:translateY(-6px) rotate(.5deg)}
+.tco{width:58px;height:58px;background:var(--tw);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.8rem}
+.tcd h4{color:var(--teal);margin-bottom:8px;font-size:1rem}
+.tcd p{font-size:.86rem;color:var(--ch);line-height:1.6}
+.tn{max-width:720px;margin:0 auto;text-align:center;font-size:clamp(1rem,1.4vw,1.16rem);color:var(--teal);font-weight:600;line-height:1.55;padding:24px 32px;background:var(--wh);border-radius:24px;border:2px dashed var(--tl)}
+
+/* TESTIMONIALS */
+.qg{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.qc{background:var(--wh);border-radius:36px;padding:34px 28px 28px;position:relative;box-shadow:var(--sc);transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+.qc:hover{transform:translateY(-6px);box-shadow:var(--sl)}
+.qm{position:absolute;top:14px;right:20px;font-size:4.5rem;line-height:1;font-weight:700;color:var(--tl);opacity:.2;font-family:serif}
+.ttg{display:inline-block;background:var(--mint);color:var(--teal);padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.05em;margin-bottom:16px}
+.qc p{font-size:.95rem;color:var(--ch);line-height:1.68;margin-bottom:22px}
+.qp{display:flex;align-items:center;gap:12px;padding-top:18px;border-top:1px solid rgba(14,77,75,.09)}
+.qa{width:48px;height:48px;border-radius:50%;flex-shrink:0;overflow:hidden;background:var(--mint);border:2px solid var(--md)}
+.qa img{width:100%;height:100%;object-fit:cover;display:block}
+.qn{font-weight:700;color:var(--teal);font-size:.95rem}
+.qmt{color:var(--gy);font-size:.8rem}
+
+/* FAQ */
+.fl{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:13px}
+.fi{background:var(--mint);border-radius:24px;overflow:hidden;transition:background .3s,box-shadow .3s}
+.fi.op{background:var(--wh);box-shadow:var(--sc);border:1px solid rgba(14,77,75,.07)}
+.fq{width:100%;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;color:var(--teal);font-weight:700;font-size:1.02rem;line-height:1.4;cursor:pointer}
+.fq:hover{background:rgba(14,77,75,.04)}
+.ftg{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--teal);color:var(--wh);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .3s}
+.fi.op .ftg{background:var(--tl);transform:rotate(45deg)}
+.fa{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.22,1,.36,1)}
+.fai{padding:0 24px 24px;font-size:.96rem;line-height:1.7;color:var(--ch)}
+.fi.op .fa{max-height:400px}
+
+/* FINAL CTA */
+.fc{background:linear-gradient(135deg,var(--teal) 0%,var(--td) 50%,var(--teal) 100%);position:relative;padding:clamp(80px,12vh,150px) 0;overflow:hidden;text-align:center}
+.fc::before{content:'';position:absolute;inset:0;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(37,181,171,.22),transparent 55%);pointer-events:none}
+.fp2{position:absolute;border-radius:50%;background:var(--tl);opacity:.45;animation:pf 14s linear infinite}
+.fp2:nth-child(1){width:6px;height:6px;top:12%;left:18%;animation-delay:0s}
+.fp2:nth-child(2){width:8px;height:8px;top:28%;left:80%;animation-delay:-3s}
+.fp2:nth-child(3){width:5px;height:5px;top:65%;left:35%;animation-delay:-5s}
+.fp2:nth-child(4){width:7px;height:7px;top:80%;left:72%;animation-delay:-8s}
+.fp2:nth-child(5){width:5px;height:5px;top:45%;left:55%;animation-delay:-11s}
+@keyframes pf{0%{transform:translate(0,0)}25%{transform:translate(22px,-30px)}50%{transform:translate(-12px,-55px)}75%{transform:translate(-28px,-30px)}100%{transform:translate(0,0)}}
+.fc .W{position:relative;z-index:2;max-width:900px}
+.fc .pre{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--tl);margin-bottom:12px}
+.fc h2{color:var(--wh);font-size:clamp(2rem,4.2vw,3.4rem);margin-bottom:20px}
+.fc .fl2{color:rgba(255,255,255,.82);max-width:620px;margin:0 auto 38px;font-size:clamp(1rem,1.3vw,1.12rem);line-height:1.7}
+.fc .fb{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.fc .fcl{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(1.3rem,2.2vw,1.8rem);color:rgba(255,255,255,.88);font-style:italic}
+
+/* FOOTER */
+footer{background:var(--ch);color:rgba(255,255,255,.65);padding:60px 0 32px}
+.fg{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.fl3 img{height:36px;width:auto;margin-bottom:14px;filter:brightness(0) invert(1)}
+.fab{font-size:.85rem;line-height:1.7;max-width:300px;color:rgba(255,255,255,.55)}
+footer h5{color:var(--wh);font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+.fln{display:flex;flex-direction:column;gap:10px}
+.fln a{font-size:.87rem;transition:color .2s}
+.fln a:hover{color:var(--tl)}
+.fbo{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:.8rem}
+.ftgl{font-style:italic;color:var(--tl);font-weight:600;font-size:.85rem}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .tg2{grid-template-columns:repeat(3,1fr)}
+  .tgr{grid-template-columns:repeat(2,1fr)}
+  .fg{grid-template-columns:1fr 1fr}
+  .exs{grid-template-columns:1fr}
+  .tp{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .hg{grid-template-columns:1fr}
+  .hv{max-width:340px;margin:0 auto}
+  .pcg{grid-template-columns:1fr}
+  .pg{grid-template-columns:1fr}
+  .sg{grid-template-columns:repeat(2,1fr)}
+  .sc3{display:none}
+  .cg{grid-template-columns:repeat(2,1fr)}
+  .cp2:not(:last-child){border-right:2px solid var(--ch)}
+  .cp2:nth-child(odd){border-right:none}
+  .tg2{grid-template-columns:repeat(2,1fr)}
+  .stg{grid-template-columns:repeat(2,1fr)}
+  .cr{grid-template-columns:1fr}
+  .cmd{display:none}
+  .ctd{border-radius:16px 16px 0 0}
+  .cud{border-radius:0 0 16px 16px;border-left:1.5px solid rgba(37,181,171,.2);border-top:3px solid var(--tl)}
+  .tgr{grid-template-columns:1fr}
+  .qg{grid-template-columns:1fr}
+  .fg{grid-template-columns:1fr}
+  .nl{display:none}
+  .ch3{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="W">
+    <div class="ni">
+      <a href="#home" class="lb" aria-label="KnowYourGenes">
+        <img src="KYG_-_Teal.svg" alt="KnowYourGenes">
+      </a>
+      <nav class="nl">
+        <a href="#how">How It Works</a>
+        <a href="#tests">Our Tests</a>
+        <a href="#why">Why KYG</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="#book" class="nc">Order Your Kit →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="scr hs1" aria-hidden="true"><svg viewBox="0 0 60 60"><path d="M8,30 Q20,8 32,30 Q44,52 56,30" stroke="#25B5AB" stroke-width="2.2"/><circle cx="8" cy="30" r="2.5" fill="#25B5AB" opacity=".6"/></svg></div>
+  <div class="scr hs2" aria-hidden="true"><svg viewBox="0 0 74 32"><path d="M5,25 Q19,6 35,18 T70,10 M62,6 L70,10 L67,18" stroke="#0E4D4B" stroke-width="2"/></svg></div>
+  <div class="scr hs3" aria-hidden="true"><svg viewBox="0 0 46 46"><path d="M23,4 L27,17 L40,17 L29,25 L33,38 L23,30 L13,38 L17,25 L6,17 L19,17 Z" stroke="#F8E16C" stroke-width="2" fill="none"/></svg></div>
+  <div class="scr hs4" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" stroke="#25B5AB" stroke-width="2"/><path d="M13,20 Q20,13 27,20 Q20,27 13,20" stroke="#25B5AB" stroke-width="1.8"/></svg></div>
+
+  <div class="W">
+    <div class="hg">
+      <div class="hcopy rv">
+        <div class="hbdg"><span class="pls"></span>India's First D2C Genomics Brand · Delhi NCR</div>
+        <h1>You know your<br><span class="circled">bank account</span><span class="circled-stamp">done</span><br>by heart. When did<br>you last get to know<br><span class="un" style="color:var(--tl)">your genes?</span></h1>
+        <p class="hlead">Order your DNA test online and a sealed KYG saliva kit ships to your door within 48 hours. Collect your sample at home in two minutes, drop it in the pre-paid return pouch, and your detailed genetic report is ready in 7 to 14 days, with a one-on-one session with a certified genetic counselor.</p>
+        <div class="hctas" id="book">
+          <a href="#" class="btn bp">Order Your DNA Kit <span class="a">→</span></a>
+          <a href="#how" class="gl">How does testing work? <span>↓</span></a>
+        </div>
+        <div class="htr">
+          <span class="hti"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Free kit shipping</span>
+          <span class="hti"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>NABL certified lab</span>
+          <span class="hti"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Report in 7–14 days</span>
+          <span class="hti"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Counselor session included</span>
+        </div>
+      </div>
+      <div class="hv rv">
+        <canvas id="netCanvas"></canvas>
+        <div class="hvh">drag to explore</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 1 -->
+<div class="mb mbc" aria-hidden="true">
+  <div class="mt">
+    <span>You have checked your bank. When did you last check your genes? <span class="sp"></span> Real genetics. Real language. Real next steps. <span class="sp"></span> Your DNA is the most personal document you own. It deserves the best care. <span class="sp"></span></span>
+    <span>You have checked your bank. When did you last check your genes? <span class="sp"></span> Real genetics. Real language. Real next steps. <span class="sp"></span> Your DNA is the most personal document you own. It deserves the best care. <span class="sp"></span></span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="sec bcg" id="problem">
+  <div class="scr" style="top:50px;left:30px;width:80px;height:60px;opacity:.45" aria-hidden="true"><svg viewBox="0 0 80 60"><path d="M10,30 Q25,5 40,30 Q55,55 70,30" stroke="#25B5AB" stroke-width="2"/></svg></div>
+  <div class="scr" style="top:60px;right:40px;width:70px;height:70px;opacity:.4" aria-hidden="true"><svg viewBox="0 0 70 70"><path d="M10,15 L30,30 M30,30 L50,15 M30,30 L50,45 M30,30 L10,45" stroke="#0E4D4B" stroke-width="1.8"/><circle cx="30" cy="30" r="3" fill="#25B5AB"/></svg></div>
+  <div class="scr" style="bottom:60px;right:55px;width:80px;height:80px;opacity:.4" aria-hidden="true"><svg viewBox="0 0 80 80"><path d="M40,10 Q60,25 50,40 Q40,55 60,70" stroke="#25B5AB" stroke-width="2"/><circle cx="40" cy="10" r="2" fill="#0E4D4B"/><circle cx="60" cy="70" r="2" fill="#0E4D4B"/></svg></div>
+  <div class="W">
+    <div class="sh rv">
+      <span class="eb">The Relatable Problem</span>
+      <h2>You have tracked everything else.<br>What about your <span class="mk">genes?</span></h2>
+    </div>
+    <div class="pi rv">
+      <p>Last year you got a regular health checkup. Blood pressure, sugar, cholesterol, maybe even an ECG. All of it useful. All of it telling you what is happening right now. None of it telling you what is coming.</p>
+      <p>That checkup has no idea whether heart disease runs silently in your family. It cannot tell whether your body processes your daily medicine the way it should. It does not know whether your children could inherit something you do not even know you carry.</p>
+      <p>That story lives in your genes. And until very recently, reading it was complicated, expensive, and full of words nobody wants to look up. <strong style="color:var(--teal)">KYG changes that.</strong></p>
+    </div>
+    <div class="pcg rvs">
+      <div class="pc sp2"><div class="pst">🧬</div><div class="pn">01</div><h4>Hereditary risk</h4><p>Heart disease or cancer runs in your family. But nobody has ever checked whether the same genetic risk runs in you.</p></div>
+      <div class="pc sp2"><div class="pst">💊</div><div class="pn">02</div><h4>Right medicine</h4><p>You have been on the same medication for years. Has anyone tested whether your genes process it well? Pharmacogenomics gives a clear answer.</p></div>
+      <div class="pc sp2"><div class="pst">🏃</div><div class="pn">03</div><h4>Personal patterns</h4><p>You eat clean and exercise, yet something feels off. The explanation a fitness app cannot give you is often sitting inside your genetics.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="mb mbtl" aria-hidden="true">
+  <div class="mt">
+    <span>Your health story is written inside your genes. We just help you read it. <span class="sp"></span> One genetic test. A lifetime of insight. Ordered from your couch. <span class="sp"></span> Our pre-paid kit ships to you. Your DNA is already at home. <span class="sp"></span></span>
+    <span>Your health story is written inside your genes. We just help you read it. <span class="sp"></span> One genetic test. A lifetime of insight. Ordered from your couch. <span class="sp"></span> Our pre-paid kit ships to you. Your DNA is already at home. <span class="sp"></span></span>
+  </div>
+</div>
+
+<!-- WHAT IS KYG -->
+<section class="sec bw" id="what">
+  <div class="scr" style="top:50px;left:30px;width:80px;height:60px;opacity:.4" aria-hidden="true"><svg viewBox="0 0 80 60"><path d="M5,15 Q25,40 5,55 M5,15 L20,5 L20,15 M5,55 L20,55 L20,45" stroke="#25B5AB" stroke-width="1.8"/></svg></div>
+  <div class="scr" style="bottom:80px;right:55px;width:80px;height:80px;opacity:.38" aria-hidden="true"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="20" stroke="#0E4D4B" stroke-width="2"/><circle cx="40" cy="40" r="32" stroke="#25B5AB" stroke-width="1.5" stroke-dasharray="3,4" fill="none"/></svg></div>
+  <div class="W">
+    <div class="sh rv">
+      <span class="eb">What is KYG</span>
+      <h2>So what does a genetic test<br>actually <span class="un">do?</span></h2>
+    </div>
+    <div class="exs rv">
+      <div class="ext">
+        <p>Think of your DNA as the original instruction manual that came with your body the day you were born. Your genes contain every single thing about you. How your heart works. How your immune system fights off disease. How your liver breaks down food, alcohol, and medicine. How likely you are to develop certain conditions later in life.</p>
+        <p>A genetic test reads parts of that instruction manual and tells you, in plain language, what it says. Not in doctor language. Not in lab language. <strong style="color:var(--teal)">In yours.</strong></p>
+      </div>
+      <div class="exp">
+        <img src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=700&h=900&fit=crop&auto=format&q=75" alt="Person reading their genetic health report at home" loading="lazy">
+        <div class="ept">📖 Your DNA, written for you.</div>
+      </div>
+    </div>
+    <div class="pb rv">Genetic testing with KYG is not about finding what is wrong with you. It is about understanding what to look after, what to improve, and what to protect for the rest of your life.</div>
+    <div class="pg rvs">
+      <div class="pmk sp2"><div class="pi2">🔍</div><h4>Clarity, not confusion</h4><p>Your genetic report is written for you, not for a specialist to decode. Plain language. Clear next steps. No medical jargon to translate.</p></div>
+      <div class="pmk sp2"><div class="pi2">⚡</div><h4>Action, not just information</h4><p>Every report includes practical steps you can actually take based on your genetics. Real recommendations, not vague wellness advice.</p></div>
+      <div class="pmk sp2"><div class="pi2">🔒</div><h4>Your genes, your decision</h4><p>You own your genetic data. We give you the information. You choose who to share it with and what to do next. Always.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMICS -->
+<section class="sec bpg cms" id="comics">
+  <div class="W">
+    <div class="ch2 rv">
+      <div class="tape">📖 The KYG Story</div>
+      <div class="sh" style="margin-bottom:0">
+        <span class="eb">Meet Real People</span>
+        <h2>Stories that sound<br>a lot like <span class="mk y">yours.</span></h2>
+      </div>
+    </div>
+    <div class="cts rv">
+      <button class="ct act" data-target="c1">The KYC Moment</button>
+      <button class="ct" data-target="c2">The Family History</button>
+      <button class="ct" data-target="c3">The Diet That Doesn't Work</button>
+      <button class="ct" data-target="c4">The Gift That Mattered</button>
+    </div>
+
+    <!-- COMIC 1 -->
+    <div class="csp act" data-comic="c1">
+      <div class="cf2"><div class="ftap">KYC karwa liya. KYG ki baari hai.</div>
+        <div class="cg">
+          <div class="cp2"><div class="cpn">1</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#EAF6F5"/><rect x="0" y="0" width="260" height="155" fill="#D4EBE8"/><rect x="32" y="20" width="58" height="68" rx="4" fill="#A8D5D1" stroke="#0E4D4B" stroke-width="2"/><line x1="61" y1="20" x2="61" y2="88" stroke="#0E4D4B" stroke-width="1.5"/><line x1="32" y1="54" x2="90" y2="54" stroke="#0E4D4B" stroke-width="1.5"/><rect x="0" y="148" width="260" height="12" rx="2" fill="#6B4C2A"/><rect x="186" y="90" width="28" height="54" rx="4" fill="#B8E0DD" stroke="#0E4D4B" stroke-width="1.5"/><ellipse cx="200" cy="90" rx="14" ry="8" fill="#0E4D4B"/><ellipse cx="105" cy="62" rx="26" ry="14" fill="#1A0804"/><ellipse cx="105" cy="76" rx="24" ry="26" fill="#C9874A"/><circle cx="97" cy="70" r="3.5" fill="#1A0804"/><circle cx="113" cy="70" r="3.5" fill="#1A0804"/><path d="M93,64 Q97,61 101,63" stroke="#1A0804" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M109,63 Q113,61 117,64" stroke="#1A0804" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="123" cy="63" rx="3" ry="5" fill="#A8D5D1"/><path d="M98,88 Q105,84 112,88" stroke="#1A0804" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="97" y="100" width="16" height="12" rx="3" fill="#C9874A"/><path d="M75,112 L80,200 L130,200 L135,112 Q120,104 105,102 Q90,104 75,112Z" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/><path d="M102,112 L105,150 L108,112" fill="#0E4D4B"/><rect x="125" y="120" width="22" height="36" rx="4" fill="#1A0804"/><rect x="127" y="124" width="18" height="28" rx="2" fill="#FF6B6B"/><text x="136" y="133" text-anchor="middle" font-family="Figtree,sans-serif" font-size="5" font-weight="700" fill="white">KYC</text><text x="136" y="140" text-anchor="middle" font-family="Figtree,sans-serif" font-size="4" fill="white">PENDING!</text><circle cx="148" cy="50" r="4" fill="white" stroke="#222" stroke-width="1.5"/><circle cx="157" cy="41" r="6" fill="white" stroke="#222" stroke-width="1.5"/><circle cx="168" cy="30" r="9" fill="white" stroke="#222" stroke-width="1.5"/><text x="168" y="34" text-anchor="middle" font-family="Caveat,cursive" font-size="9" fill="#222" font-weight="700">😱</text></svg></div><div class="cdl"><div class="wh2">Rahul</div><div class="ln">The bank froze my account! KYC is pending!</div></div></div>
+
+          <div class="cp2"><div class="cpn">2</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#EAF6F5"/><rect x="0" y="0" width="260" height="155" fill="#D4EBE8"/><rect x="180" y="130" width="14" height="20" rx="2" fill="#6B4C2A"/><ellipse cx="187" cy="118" rx="22" ry="18" fill="#2D7A1F"/><ellipse cx="172" cy="108" rx="16" ry="12" fill="#3D9A2C"/><rect x="0" y="148" width="260" height="12" rx="2" fill="#6B4C2A"/><ellipse cx="80" cy="62" rx="24" ry="13" fill="#1A0804"/><circle cx="102" cy="60" r="10" fill="#1A0804"/><ellipse cx="80" cy="76" rx="22" ry="25" fill="#D49A65"/><path d="M72,69 Q76,72 80,69" stroke="#1A0804" stroke-width="2" fill="none"/><path d="M84,69 Q88,72 92,69" stroke="#1A0804" stroke-width="2" fill="none"/><path d="M72,84 Q80,91 88,84" stroke="#1A0804" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="72" y="100" width="16" height="11" rx="3" fill="#D49A65"/><path d="M56,111 L60,200 L104,200 L108,111 Q94,103 80,101 Q66,103 56,111Z" fill="#25B5AB"/><rect x="110" y="12" width="130" height="60" rx="12" fill="white" stroke="#222" stroke-width="2"/><path d="M112,45 L96,52 L112,56" fill="white" stroke="#222" stroke-width="1.5" stroke-linejoin="round"/><text x="175" y="32" text-anchor="middle" font-family="Caveat,cursive" font-size="13" font-weight="700" fill="#222">Done! Quick job.</text><text x="175" y="50" text-anchor="middle" font-family="Caveat,cursive" font-size="13" font-weight="700" fill="#222">Now do your KYG.</text><ellipse cx="195" cy="60" rx="24" ry="13" fill="#1A0804"/><ellipse cx="195" cy="74" rx="22" ry="25" fill="#C9874A"/><circle cx="187" cy="68" r="3" fill="#1A0804"/><circle cx="203" cy="68" r="3" fill="#1A0804"/><path d="M188,84 Q195,90 202,84" stroke="#1A0804" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="187" y="98" width="16" height="11" rx="3" fill="#C9874A"/><path d="M171,110 L174,200 L218,200 L222,110 Q208,102 195,100 Q182,102 171,110Z" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/><path d="M192,110 L195,148 L198,110" fill="#0E4D4B"/></svg></div><div class="cdl"><div class="wh2">Priya</div><div class="ln">Done! Easy. By the way, have you done your KYG?</div></div></div>
+
+          <div class="cp2"><div class="cpn">3</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#EAF6F5"/><rect x="0" y="0" width="260" height="155" fill="#D4EBE8"/><rect x="0" y="148" width="260" height="12" rx="2" fill="#6B4C2A"/><ellipse cx="75" cy="62" rx="24" ry="13" fill="#1A0804"/><circle cx="97" cy="60" r="10" fill="#1A0804"/><ellipse cx="75" cy="76" rx="22" ry="25" fill="#D49A65"/><circle cx="67" cy="70" r="3" fill="#1A0804"/><circle cx="83" cy="70" r="3" fill="#1A0804"/><path d="M63,64 Q67,62 71,65" stroke="#1A0804" stroke-width="2" fill="none"/><path d="M79,62 Q84,65 88,62" stroke="#1A0804" stroke-width="2" fill="none"/><path d="M68,84 Q75,82 82,84" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="67" y="100" width="16" height="11" rx="3" fill="#D49A65"/><path d="M52,111 L56,200 L100,200 L104,111 Q90,103 75,101 Q62,103 52,111Z" fill="#25B5AB"/><text x="108" y="50" font-family="Caveat,cursive" font-size="24" font-weight="700" fill="#0E4D4B">?</text><text x="96" y="34" font-family="Caveat,cursive" font-size="18" font-weight="700" fill="#25B5AB">?</text><ellipse cx="195" cy="62" rx="24" ry="13" fill="#1A0804"/><ellipse cx="195" cy="76" rx="22" ry="25" fill="#C9874A"/><circle cx="187" cy="70" r="3" fill="#1A0804"/><circle cx="203" cy="70" r="3" fill="#1A0804"/><path d="M188,86 Q195,92 202,86" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="187" y="100" width="16" height="11" rx="3" fill="#C9874A"/><path d="M171,111 L174,200 L218,200 L222,111 Q208,103 195,101 Q182,103 171,111Z" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/><path d="M192,111 L195,149 L198,111" fill="#0E4D4B"/><rect x="114" y="8" width="138" height="76" rx="12" fill="white" stroke="#222" stroke-width="2"/><path d="M153,84 L165,96 L177,84" fill="white" stroke="#222" stroke-width="1.5" stroke-linejoin="round"/><text x="183" y="27" text-anchor="middle" font-family="Caveat,cursive" font-size="12" font-weight="700" fill="#0E4D4B">Know Your Genes!</text><text x="183" y="43" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">Kit ships home. Open it,</text><text x="183" y="57" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">collect saliva in 2 mins,</text><text x="183" y="71" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">free pickup. DNA report. Boom.</text></svg></div><div class="cdl"><div class="wh2">Priya</div><div class="ln">KYG? What is that?!</div></div></div>
+
+          <div class="cp2"><div class="cpn">4</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#0E4D4B"/><polygon points="130,10 140,100 230,100 155,155 180,250 130,190 80,250 105,155 30,100 120,100" fill="rgba(37,181,171,0.12)"/><path d="M50,50 Q65,80 50,110 Q65,140 50,170" stroke="#25B5AB" stroke-width="3" fill="none" opacity=".4"/><path d="M70,50 Q55,80 70,110 Q55,140 70,170" stroke="#25B5AB" stroke-width="3" fill="none" opacity=".4"/><line x1="52" y1="72" x2="68" y2="88" stroke="#25B5AB" stroke-width="2" opacity=".4"/><line x1="52" y1="110" x2="68" y2="110" stroke="#25B5AB" stroke-width="2" opacity=".4"/><line x1="95" y1="60" x2="95" y2="110" stroke="white" stroke-width="8" stroke-linecap="round"/><line x1="95" y1="85" x2="118" y2="60" stroke="white" stroke-width="8" stroke-linecap="round"/><line x1="95" y1="85" x2="118" y2="110" stroke="white" stroke-width="8" stroke-linecap="round"/><path d="M128,70 Q138,85 138,92" stroke="white" stroke-width="8" stroke-linecap="round" fill="none"/><path d="M148,70 Q138,85 138,92" stroke="white" stroke-width="8" stroke-linecap="round" fill="none"/><line x1="138" y1="92" x2="138" y2="110" stroke="white" stroke-width="8" stroke-linecap="round"/><rect x="133" y="77" width="3" height="12" rx="1.5" fill="#25B5AB"/><rect x="137.5" y="73" width="3" height="18" rx="1.5" fill="#25B5AB"/><rect x="142" y="77" width="3" height="12" rx="1.5" fill="#25B5AB"/><path d="M178,68 Q162,58 154,68 Q148,78 154,90 Q162,100 178,90 L178,84 L168,84" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect x="20" y="126" width="220" height="64" rx="12" fill="rgba(37,181,171,0.15)" stroke="#25B5AB" stroke-width="1.5"/><text x="130" y="148" text-anchor="middle" font-family="Caveat,cursive" font-size="14" font-weight="700" fill="white">You have checked your bank.</text><text x="130" y="166" text-anchor="middle" font-family="Caveat,cursive" font-size="14" font-weight="700" fill="#25B5AB">Time to check your genes.</text><text x="130" y="208" text-anchor="middle" font-family="Figtree,sans-serif" font-size="11" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1">#KnowTakeControl</text></svg></div><div class="cdl"><div class="wh2">Rahul</div><div class="ln">Bank is just money. This is your health, for life.</div></div></div>
+        </div>
+        <div class="cft"><span class="tg">🧬 KnowYourGenes · India's most accessible, population-specific genomics brand</span><div class="tbs"><span class="tb">Health Risk</span><span class="tb">Wellness</span><span class="tb">Fitness</span><span class="tb">Nutrition</span><span class="tb">Pharmacogenomics</span></div></div>
+      </div>
+    </div>
+
+    <!-- COMIC 2 -->
+    <div class="csp" data-comic="c2">
+      <div class="cf2"><div class="ftap">Heart disease runs in the family. Genes already know.</div>
+        <div class="cg">
+          <div class="cp2"><div class="cpn">1</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#F0F9F8"/><rect x="0" y="0" width="260" height="155" fill="#E8F5F4"/><rect x="60" y="140" width="180" height="10" rx="2" fill="#8B6C42"/><path d="M30,60 Q50,40 70,60 Q90,80 80,100" stroke="#0E4D4B" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="80" cy="105" r="8" fill="#0E4D4B"/><ellipse cx="178" cy="58" rx="24" ry="12" fill="#1A0804"/><ellipse cx="178" cy="72" rx="22" ry="25" fill="#C9874A"/><circle cx="170" cy="67" r="3" fill="#1A0804"/><circle cx="186" cy="67" r="3" fill="#1A0804"/><path d="M172,82 Q178,80 184,82" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="170" y="96" width="16" height="11" rx="3" fill="#C9874A"/><path d="M154,108 L158,200 L202,200 L206,108 Q192,100 178,98 Q164,100 154,108Z" fill="#FFFFFF"/><path d="M170,108 Q178,120 186,108" stroke="#0E4D4B" stroke-width="3" fill="none"/><rect x="5" y="10" width="145" height="68" rx="12" fill="white" stroke="#222" stroke-width="2"/><path d="M150,52 L168,48 L152,62" fill="white" stroke="#222" stroke-width="1.5" stroke-linejoin="round"/><text x="77" y="30" text-anchor="middle" font-family="Caveat,cursive" font-size="12" font-weight="700" fill="#C0392B">Father had heart attack at 48.</text><text x="77" y="46" text-anchor="middle" font-family="Caveat,cursive" font-size="12" font-weight="700" fill="#C0392B">Uncle too. Same story.</text><text x="77" y="62" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">Do you know YOUR risk?</text><ellipse cx="105" cy="108" rx="20" ry="10" fill="#2A1206"/><ellipse cx="105" cy="118" rx="18" ry="22" fill="#B87840"/><circle cx="98" cy="114" r="2.8" fill="#1A0804"/><circle cx="112" cy="114" r="2.8" fill="#1A0804"/><path d="M99,126 Q105,128 111,126" stroke="#1A0804" stroke-width="2" fill="none"/></svg></div><div class="cdl"><div class="wh2">Doctor</div><div class="ln">Your father had a heart attack at 48. Your uncle too. Do you know your genetic risk?</div></div></div>
+
+          <div class="cp2"><div class="cpn">2</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#F0F9F8"/><rect x="0" y="0" width="260" height="155" fill="#E8F5F4"/><rect x="0" y="140" width="260" height="10" rx="2" fill="#8B6C42"/><ellipse cx="85" cy="60" rx="24" ry="12" fill="#2A1206"/><ellipse cx="85" cy="74" rx="22" ry="25" fill="#B87840"/><circle cx="77" cy="68" r="3" fill="#1A0804"/><circle cx="93" cy="68" r="3" fill="#1A0804"/><path d="M74,62 Q77,60 80,63" stroke="#1A0804" stroke-width="2.5" fill="none"/><path d="M90,63 Q93,60 96,62" stroke="#1A0804" stroke-width="2.5" fill="none"/><path d="M78,84 Q85,82 92,84" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="77" y="98" width="16" height="11" rx="3" fill="#B87840"/><path d="M62,110 L65,200 L108,200 L112,110 Q98,102 85,100 Q72,102 62,110Z" fill="#6B8CAD"/><rect x="108" y="10" width="140" height="72" rx="12" fill="white" stroke="#222" stroke-width="2"/><path d="M110,50 L96,58 L110,64" fill="white" stroke="#222" stroke-width="1.5" stroke-linejoin="round"/><text x="178" y="30" text-anchor="middle" font-family="Caveat,cursive" font-size="12" font-weight="700" fill="#222">I eat well, doctor. I walk</text><text x="178" y="46" text-anchor="middle" font-family="Caveat,cursive" font-size="12" font-weight="700" fill="#222">every day. I feel fine.</text><text x="178" y="62" text-anchor="middle" font-family="Caveat,cursive" font-size="11" fill="#888">But deep down... worried 😰</text></svg></div><div class="cdl"><div class="wh2">Patient</div><div class="ln">I eat well. I walk every day. I feel fine.</div></div></div>
+
+          <div class="cp2"><div class="cpn">3</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#F0F9F8"/><rect x="0" y="0" width="260" height="155" fill="#E8F5F4"/><rect x="0" y="140" width="260" height="10" rx="2" fill="#8B6C42"/><ellipse cx="178" cy="58" rx="24" ry="12" fill="#1A0804"/><ellipse cx="178" cy="72" rx="22" ry="25" fill="#C9874A"/><circle cx="170" cy="68" r="3" fill="#1A0804"/><circle cx="186" cy="68" r="3" fill="#1A0804"/><path d="M172,84 Q178,90 184,84" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="170" y="96" width="16" height="11" rx="3" fill="#C9874A"/><path d="M154,108 L158,200 L202,200 L206,108 Q192,100 178,98 Q164,100 154,108Z" fill="#FFFFFF"/><rect x="6" y="30" width="132" height="102" rx="8" fill="#222"/><rect x="8" y="32" width="128" height="98" rx="6" fill="#E6F4F3"/><rect x="12" y="36" width="120" height="24" rx="4" fill="#0E4D4B"/><text x="72" y="52" text-anchor="middle" font-family="Figtree,sans-serif" font-size="10" font-weight="700" fill="white">KYG · Cardiac DNA Kit</text><rect x="14" y="64" width="52" height="14" rx="4" fill="#25B5AB"/><text x="40" y="74" text-anchor="middle" font-family="Figtree,sans-serif" font-size="8" font-weight="700" fill="white">Order Kit</text><text x="72" y="94" text-anchor="middle" font-family="Caveat,cursive" font-size="11" fill="#0E4D4B" font-weight="700">Kit ships home. 2 mins.</text><text x="72" y="108" text-anchor="middle" font-family="Caveat,cursive" font-size="11" fill="#0E4D4B" font-weight="700">Free pickup. Report</text><text x="72" y="122" text-anchor="middle" font-family="Caveat,cursive" font-size="11" fill="#0E4D4B" font-weight="700">in 7-14 days.</text><rect x="120" y="8" width="132" height="60" rx="12" fill="white" stroke="#222" stroke-width="2"/><path d="M155,68 L148,80 L162,68" fill="white" stroke="#222" stroke-width="1.5" stroke-linejoin="round"/><text x="186" y="26" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">A simple genetic test.</text><text x="186" y="40" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#0E4D4B">Kit ships to your home.</text><text x="186" y="56" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">20 years of clarity.</text></svg></div><div class="cdl"><div class="wh2">Doctor</div><div class="ln">A KYG cardiac DNA kit. Ships home. Saliva sample. Done in two minutes.</div></div></div>
+
+          <div class="cp2"><div class="cpn">4</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#EAF6F5"/><rect x="0" y="0" width="260" height="155" fill="#D4EBE8"/><rect x="80" y="40" width="100" height="170" rx="4" fill="#A0784A"/><rect x="84" y="44" width="92" height="160" rx="2" fill="#E6F4F3"/><circle cx="88" cy="140" r="6" fill="#D4A93A"/><rect x="100" y="158" width="64" height="50" rx="4" fill="#E6F4F3" stroke="#0E4D4B" stroke-width="2"/><rect x="100" y="158" width="64" height="14" fill="#0E4D4B"/><text x="132" y="169" text-anchor="middle" font-family="Figtree,sans-serif" font-size="9" font-weight="700" fill="white">KYG KIT</text><rect x="110" y="178" width="44" height="3" rx="1" fill="#25B5AB"/><rect x="110" y="185" width="34" height="3" rx="1" fill="#25B5AB"/><rect x="110" y="192" width="38" height="3" rx="1" fill="#25B5AB"/><text x="215" y="96" font-size="22">📦</text><text x="208" y="116" font-family="Caveat,cursive" font-size="13" font-weight="700" fill="#25B5AB">delivered!</text><ellipse cx="35" cy="60" rx="20" ry="10" fill="#2A1206"/><ellipse cx="35" cy="71" rx="18" ry="22" fill="#B87840"/><circle cx="28" cy="67" r="2.5" fill="#1A0804"/><circle cx="42" cy="67" r="2.5" fill="#1A0804"/><path d="M28,82 Q35,88 42,82" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="27" y="92" width="14" height="9" rx="2" fill="#B87840"/><path d="M18,101 L20,200 L52,200 L54,101 Q44,94 35,92 Q26,94 18,101Z" fill="#6B8CAD"/><text x="35" y="46" text-anchor="middle" font-size="18" fill="#F8E16C">★</text><rect x="0" y="10" width="76" height="40" rx="10" fill="white" stroke="#222" stroke-width="2"/><path d="M38,50 L38,62 L46,50" fill="white" stroke="#222" stroke-width="1.5" stroke-linejoin="round"/><text x="38" y="28" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#0E4D4B">Kit's here!</text><text x="38" y="42" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#0E4D4B">Sealed safe 😊</text></svg></div><div class="cdl"><div class="wh2">Patient</div><div class="ln">He ordered KYG. The kit arrived. The report changed everything.</div></div></div>
+        </div>
+        <div class="cft"><span class="tg">❤️ Knowing is better than worrying. · kyg.in</span><div class="tbs"><span class="tb">Cardiac Genetic Risk</span><span class="tb">Hereditary Cancer</span><span class="tb">Pharmacogenomics</span></div></div>
+      </div>
+    </div>
+
+    <!-- COMIC 3 -->
+    <div class="csp" data-comic="c3">
+      <div class="cf2"><div class="ftap">Same food. Same workout. Different results. Genes know why.</div>
+        <div class="cg">
+          <div class="cp2"><div class="cpn">1</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#FBF5EB"/><rect x="0" y="0" width="260" height="155" fill="#F5EDD8"/><rect x="0" y="140" width="260" height="12" rx="2" fill="#A07C4A"/><rect x="0" y="152" width="260" height="88" fill="#FDEBC7"/><ellipse cx="140" cy="144" rx="36" ry="12" fill="#4CAF50"/><ellipse cx="140" cy="138" rx="40" ry="16" fill="#81C784" stroke="#4CAF50" stroke-width="2"/><text x="140" y="143" text-anchor="middle" font-size="14">🥗</text><ellipse cx="90" cy="56" rx="26" ry="14" fill="#1A0804"/><path d="M66,56 Q60,90 64,160" stroke="#1A0804" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M114,56 Q118,90 114,160" stroke="#1A0804" stroke-width="14" stroke-linecap="round" fill="none"/><ellipse cx="90" cy="70" rx="24" ry="26" fill="#D49A65"/><circle cx="82" cy="64" r="3.5" fill="#1A0804"/><circle cx="98" cy="64" r="3.5" fill="#1A0804"/><path d="M78,58 Q82,55 86,58" stroke="#1A0804" stroke-width="2.5" fill="none"/><path d="M94,58 Q98,55 102,58" stroke="#1A0804" stroke-width="2.5" fill="none"/><path d="M83,82 Q90,77 97,82" stroke="#1A0804" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="82" y="95" width="16" height="11" rx="3" fill="#D49A65"/><path d="M66,107 L70,200 L114,200 L118,107 Q104,99 90,97 Q76,99 66,107Z" fill="#25B5AB"/><text x="150" y="50" font-family="Caveat,cursive" font-size="18" font-weight="700" fill="#C0392B">😤</text><text x="168" y="30" font-family="Caveat,cursive" font-size="28" font-weight="700" fill="#F39C12">?!</text><rect x="130" y="60" width="120" height="55" rx="10" fill="white" stroke="#ddd" stroke-width="1.5"/><text x="190" y="78" text-anchor="middle" font-family="Caveat,cursive" font-size="11" fill="#222" font-weight="700">Rohan: same food ✓</text><text x="190" y="92" text-anchor="middle" font-family="Caveat,cursive" font-size="11" fill="#27AE60" font-weight="700">Rohan: loses weight ✓</text><text x="190" y="106" text-anchor="middle" font-family="Caveat,cursive" font-size="11" fill="#C0392B" font-weight="700">Me: gains weight ✗ WHY?!</text></svg></div><div class="cdl"><div class="wh2">Sneha</div><div class="ln">Same food. Same workout as Rohan. He loses weight, I gain it. What is wrong with me?!</div></div></div>
+
+          <div class="cp2"><div class="cpn">2</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#FBF5EB"/><rect x="0" y="0" width="260" height="155" fill="#F5EDD8"/><rect x="0" y="140" width="260" height="12" rx="2" fill="#A07C4A"/><ellipse cx="75" cy="56" rx="24" ry="13" fill="#1A0804"/><ellipse cx="97" cy="52" rx="12" ry="14" fill="#1A0804"/><line x1="80" y1="48" x2="96" y2="52" stroke="#888" stroke-width="2"/><ellipse cx="75" cy="70" rx="22" ry="25" fill="#B87840"/><circle cx="67" cy="65" r="3" fill="#1A0804"/><circle cx="83" cy="65" r="3" fill="#1A0804"/><path d="M68,80 Q75,86 82,80" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="67" y="94" width="16" height="11" rx="3" fill="#B87840"/><path d="M52,106 L55,210 L98,210 L102,106 Q88,98 75,96 Q62,98 52,106Z" fill="#F39C12"/><path d="M144,56 Q138,90 142,200" stroke="#1A0804" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M172,56 Q176,90 172,200" stroke="#1A0804" stroke-width="14" stroke-linecap="round" fill="none"/><ellipse cx="158" cy="60" rx="26" ry="14" fill="#1A0804"/><ellipse cx="158" cy="74" rx="24" ry="26" fill="#D49A65"/><circle cx="150" cy="68" r="3.5" fill="#1A0804"/><circle cx="166" cy="68" r="3.5" fill="#1A0804"/><path d="M151,86 Q158,83 165,86" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="150" y="99" width="16" height="11" rx="3" fill="#D49A65"/><path d="M134,111 L138,200 L182,200 L186,111 Q172,103 158,101 Q144,103 134,111Z" fill="#25B5AB"/><rect x="4" y="10" width="132" height="52" rx="12" fill="white" stroke="#222" stroke-width="2"/><path d="M70,62 L60,74 L78,62" fill="white" stroke="#222" stroke-width="1.5" stroke-linejoin="round"/><text x="70" y="30" text-anchor="middle" font-family="Caveat,cursive" font-size="12" font-weight="700" fill="#222">Beta, our family has</text><text x="70" y="46" text-anchor="middle" font-family="Caveat,cursive" font-size="12" font-weight="700" fill="#888">always had a slower</text><text x="70" y="60" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#888">metabolism... 🤷</text></svg></div><div class="cdl"><div class="wh2">Mom</div><div class="ln">Beta, our family has always had a slower metabolism.</div></div></div>
+
+          <div class="cp2"><div class="cpn">3</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#FBF5EB"/><rect x="0" y="0" width="260" height="155" fill="#F5EDD8"/><rect x="0" y="140" width="260" height="12" rx="2" fill="#A07C4A"/><path d="M72,56 Q66,90 70,200" stroke="#1A0804" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M100,56 Q104,90 100,200" stroke="#1A0804" stroke-width="14" stroke-linecap="round" fill="none"/><ellipse cx="86" cy="60" rx="26" ry="14" fill="#1A0804"/><ellipse cx="86" cy="74" rx="24" ry="26" fill="#D49A65"/><circle cx="78" cy="68" r="3.5" fill="#1A0804"/><circle cx="94" cy="68" r="3.5" fill="#1A0804"/><rect x="96" y="62" width="22" height="34" rx="4" fill="#1A0804"/><rect x="98" y="65" width="18" height="28" rx="3" fill="#25B5AB"/><text x="107" y="84" text-anchor="middle" font-size="11">📞</text><path d="M78,90 Q86,97 94,90" stroke="#1A0804" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="78" y="99" width="16" height="11" rx="3" fill="#D49A65"/><path d="M62,111 L66,200 L110,200 L114,111 Q100,103 86,101 Q72,103 62,111Z" fill="#25B5AB"/><rect x="120" y="6" width="136" height="118" rx="12" fill="white" stroke="#222" stroke-width="2"/><rect x="126" y="12" width="124" height="64" rx="6" fill="#222"/><ellipse cx="178" cy="30" rx="14" ry="8" fill="#1A0804"/><ellipse cx="178" cy="38" rx="12" ry="14" fill="#D49A65"/><text x="195" y="44" font-family="Caveat,cursive" font-size="11" fill="white" font-weight="700">Priya</text><text x="126" y="94" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">Have you tried KYG?</text><text x="126" y="108" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#0E4D4B">Nutrition DNA kit →</text><text x="126" y="120" font-family="Caveat,cursive" font-size="10" fill="#888">Kit. 2 mins. Free pickup. 🧬</text><path d="M155,124 L138,138 L158,124" fill="white" stroke="#222" stroke-width="1.5"/></svg></div><div class="cdl"><div class="wh2">Friend</div><div class="ln">Try KYG. The nutrition DNA kit ships home. Saliva in two minutes. Specific to your DNA, not a generic plan.</div></div></div>
+
+          <div class="cp2"><div class="cpn">4</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#FBF5EB"/><rect x="0" y="0" width="260" height="155" fill="#E8F5EB"/><rect x="0" y="140" width="260" height="12" rx="2" fill="#6B8C42"/><circle cx="220" cy="50" r="40" fill="#2D7A1F" opacity=".3"/><circle cx="40" cy="60" r="30" fill="#3D9A2C" opacity=".2"/><path d="M74,56 Q68,90 72,200" stroke="#1A0804" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M102,56 Q106,90 102,200" stroke="#1A0804" stroke-width="14" stroke-linecap="round" fill="none"/><ellipse cx="88" cy="60" rx="26" ry="14" fill="#1A0804"/><ellipse cx="88" cy="74" rx="24" ry="26" fill="#D49A65"/><circle cx="80" cy="68" r="3.5" fill="#1A0804"/><circle cx="96" cy="68" r="3.5" fill="#1A0804"/><path d="M80,86 Q88,96 96,86" stroke="#1A0804" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="74" cy="84" rx="7" ry="4" fill="#FF9999" opacity=".4"/><ellipse cx="102" cy="84" rx="7" ry="4" fill="#FF9999" opacity=".4"/><rect x="80" y="99" width="16" height="11" rx="3" fill="#D49A65"/><path d="M64,111 L68,200 L112,200 L116,111 Q102,103 88,101 Q74,103 64,111Z" fill="#25B5AB"/><rect x="108" y="58" width="132" height="92" rx="8" fill="#222"/><rect x="110" y="60" width="128" height="88" rx="6" fill="#E6F4F3"/><rect x="114" y="64" width="120" height="22" rx="3" fill="#0E4D4B"/><text x="174" y="79" text-anchor="middle" font-family="Figtree,sans-serif" font-size="8" font-weight="700" fill="white">YOUR NUTRITION DNA REPORT</text><rect x="114" y="90" width="44" height="10" rx="3" fill="#25B5AB"/><text x="136" y="98" text-anchor="middle" font-family="Figtree,sans-serif" font-size="6" font-weight="700" fill="white">High Fat Metabolism</text><rect x="162" y="90" width="36" height="10" rx="3" fill="#FF9F43"/><text x="180" y="98" text-anchor="middle" font-family="Figtree,sans-serif" font-size="6" font-weight="700" fill="white">Low Caffeine</text><text x="174" y="114" text-anchor="middle" font-family="Caveat,cursive" font-size="11" fill="#0E4D4B" font-weight="700">Finally makes sense! 🎉</text><text x="174" y="126" text-anchor="middle" font-family="Caveat,cursive" font-size="10" fill="#25B5AB" font-weight="700">Your body, your plan.</text><text x="88" y="44" text-anchor="middle" font-size="22" fill="#F8E16C">✨</text></svg></div><div class="cdl"><div class="wh2">Sneha</div><div class="ln">She got her report. For the first time, her food plan actually made sense for her body.</div></div></div>
+        </div>
+        <div class="cft"><span class="tg">🥗 Stop guessing. Start knowing. · kyg.in</span><div class="tbs"><span class="tb">Nutrition DNA</span><span class="tb">Wellness & Lifestyle</span><span class="tb">Fitness & Performance</span></div></div>
+      </div>
+    </div>
+
+    <!-- COMIC 4 -->
+    <div class="csp" data-comic="c4">
+      <div class="cf2"><div class="ftap">The gift that actually matters.</div>
+        <div class="cg">
+          <div class="cp2"><div class="cpn">1</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#F0F9F8"/><rect x="0" y="0" width="260" height="155" fill="#E8F5F4"/><rect x="30" y="50" width="190" height="120" rx="6" fill="#222"/><rect x="33" y="53" width="184" height="110" rx="4" fill="#1A3A5C"/><rect x="33" y="53" width="184" height="30" fill="#2C3E50"/><text x="125" y="72" text-anchor="middle" font-family="Figtree,sans-serif" font-size="8" fill="rgba(255,255,255,0.5)">📍 London</text><ellipse cx="125" cy="82" rx="28" ry="14" fill="#1A0804"/><ellipse cx="125" cy="96" rx="26" ry="28" fill="#C9874A"/><circle cx="116" cy="90" r="4" fill="#1A0804"/><circle cx="134" cy="90" r="4" fill="#1A0804"/><path d="M116,110 Q125,118 134,110" stroke="#1A0804" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="46" y="178" width="42" height="32" rx="4" fill="#E74C3C"/><rect x="46" y="170" width="42" height="10" rx="2" fill="#C0392B"/><line x1="67" y1="170" x2="67" y2="210" stroke="#F8E16C" stroke-width="2"/><text x="67" y="200" text-anchor="middle" font-size="14">🎁</text><rect x="190" y="10" width="64" height="44" rx="10" fill="white" stroke="#222" stroke-width="2"/><path d="M212,54 L205,65 L220,54" fill="white" stroke="#222" stroke-width="1.5"/><text x="222" y="28" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">Papa, this</text><text x="222" y="43" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#0E4D4B">Diwali...</text></svg></div><div class="cdl"><div class="wh2">Son</div><div class="ln">Papa, this Diwali I want to give you something that actually matters.</div></div></div>
+
+          <div class="cp2"><div class="cpn">2</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#F0F9F8"/><rect x="0" y="0" width="260" height="155" fill="#E8F5F4"/><ellipse cx="65" cy="56" rx="26" ry="14" fill="#888"/><ellipse cx="65" cy="70" rx="24" ry="26" fill="#C9874A"/><circle cx="57" cy="64" r="3" fill="#1A0804"/><circle cx="73" cy="64" r="3" fill="#1A0804"/><path d="M58,80 Q65,76 72,80" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="57" y="92" width="16" height="11" rx="3" fill="#C9874A"/><path d="M42,103 L46,200 L88,200 L92,103 Q80,95 65,93 Q52,95 42,103Z" fill="#FFFFFF"/><ellipse cx="195" cy="56" rx="24" ry="13" fill="#888"/><circle cx="218" cy="54" r="10" fill="#1A0804"/><ellipse cx="195" cy="70" rx="22" ry="25" fill="#D49A65"/><circle cx="187" cy="64" r="3" fill="#1A0804"/><circle cx="203" cy="64" r="3" fill="#1A0804"/><path d="M188,80 Q195,76 202,80" stroke="#1A0804" stroke-width="2" fill="none"/><rect x="187" y="92" width="16" height="11" rx="3" fill="#D49A65"/><path d="M171,103 L174,200 L218,200 L222,103 Q208,95 195,93 Q182,95 171,103Z" fill="#C0392B"/><rect x="88" y="118" width="84" height="32" rx="8" fill="white" stroke="#222" stroke-width="2"/><text x="130" y="133" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#222">Beta, do not bother.</text><text x="130" y="146" text-anchor="middle" font-family="Caveat,cursive" font-size="10" fill="#888">We do not need anything.</text></svg></div><div class="cdl"><div class="wh2">Papa</div><div class="ln">Beta, do not bother. We do not need anything.</div></div></div>
+
+          <div class="cp2"><div class="cpn">3</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#F0F9F8"/><rect x="0" y="0" width="260" height="155" fill="#E8F5F4"/><rect x="55" y="18" width="150" height="200" rx="14" fill="#222"/><rect x="59" y="22" width="142" height="192" rx="11" fill="#FBF6EC"/><rect x="63" y="26" width="134" height="32" rx="6" fill="#0E4D4B"/><text x="130" y="46" text-anchor="middle" font-family="Figtree,sans-serif" font-size="11" font-weight="700" fill="white">KYG · Family DNA Kit</text><rect x="71" y="68" width="78" height="80" rx="6" fill="#E6F4F3" stroke="#0E4D4B" stroke-width="1.5"/><rect x="71" y="68" width="78" height="18" fill="#0E4D4B"/><text x="110" y="80" text-anchor="middle" font-family="Figtree,sans-serif" font-size="8" font-weight="700" fill="white">FOR PAPA &amp; MAMA</text><text x="110" y="115" text-anchor="middle" font-family="Caveat,cursive" font-size="13" fill="#0E4D4B" font-weight="700">2 kits, shipped</text><text x="110" y="130" text-anchor="middle" font-family="Caveat,cursive" font-size="12" fill="#0E4D4B" font-weight="700">to their home 📦</text><rect x="66" y="160" width="128" height="40" rx="4" fill="#25B5AB"/><text x="130" y="175" text-anchor="middle" font-family="Figtree,sans-serif" font-size="9" font-weight="700" fill="white">Order Now. Free Shipping</text><text x="130" y="190" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="white">Placed! ✓</text></svg></div><div class="cdl"><div class="wh2">Son</div><div class="ln">I have already ordered KYG kits for both of you. They ship to your door. Saliva. Two minutes. Report on WhatsApp.</div></div></div>
+
+          <div class="cp2"><div class="cpn">4</div><div class="csc"><svg viewBox="0 0 260 240" xmlns="http://www.w3.org/2000/svg"><rect width="260" height="240" fill="#FFF8EC"/><rect x="0" y="0" width="260" height="155" fill="#FFF1DC"/><rect x="0" y="148" width="260" height="10" rx="2" fill="#A07C4A"/><ellipse cx="65" cy="56" rx="26" ry="14" fill="#888"/><ellipse cx="65" cy="70" rx="24" ry="26" fill="#C9874A"/><circle cx="57" cy="64" r="3" fill="#1A0804"/><circle cx="73" cy="64" r="3" fill="#1A0804"/><path d="M58,82 Q65,88 72,82" stroke="#1A0804" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="52" cy="80" rx="6" ry="3.5" fill="#FF9999" opacity=".4"/><ellipse cx="78" cy="80" rx="6" ry="3.5" fill="#FF9999" opacity=".4"/><rect x="57" y="94" width="16" height="11" rx="3" fill="#C9874A"/><path d="M42,105 L46,200 L88,200 L92,105 Q80,97 65,95 Q52,97 42,105Z" fill="#FFFFFF"/><ellipse cx="195" cy="56" rx="24" ry="13" fill="#888"/><circle cx="218" cy="54" r="10" fill="#1A0804"/><ellipse cx="195" cy="70" rx="22" ry="25" fill="#D49A65"/><circle cx="187" cy="64" r="3" fill="#1A0804"/><circle cx="203" cy="64" r="3" fill="#1A0804"/><path d="M188,82 Q195,88 202,82" stroke="#1A0804" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="187" y="94" width="16" height="11" rx="3" fill="#D49A65"/><path d="M171,105 L174,200 L218,200 L222,105 Q208,97 195,95 Q182,97 171,105Z" fill="#C0392B"/><rect x="82" y="18" width="96" height="60" rx="8" fill="#E6F4F3" stroke="#0E4D4B" stroke-width="2"/><rect x="86" y="22" width="88" height="15" rx="3" fill="#0E4D4B"/><text x="130" y="33" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="700" fill="white">YOUR DNA REPORT</text><text x="130" y="52" text-anchor="middle" font-family="Caveat,cursive" font-size="12" fill="#0E4D4B" font-weight="700">This is genuinely</text><text x="130" y="66" text-anchor="middle" font-family="Caveat,cursive" font-size="12" fill="#25B5AB" font-weight="700">the best gift ever. ❤️</text><text x="65" y="100" text-anchor="middle" font-size="14">✨</text><text x="195" y="100" text-anchor="middle" font-size="14">✨</text></svg></div><div class="cdl"><div class="wh2">Papa</div><div class="ln">This is genuinely useful. Best gift you have ever given us.</div></div></div>
+        </div>
+        <div class="cft"><span class="tg">🎁 The gift that actually matters. · kyg.in</span><div class="tbs"><span class="tb">Family DNA Panel</span><span class="tb">Health Risk</span><span class="tb">Pharmacogenomics</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS — KIT BASED -->
+<section class="sec bmg" id="how">
+  <div class="scr" style="top:55px;left:35px;width:78px;height:58px;opacity:.45" aria-hidden="true"><svg viewBox="0 0 78 58"><path d="M8,44 Q24,8 42,28 Q58,48 72,20" stroke="#25B5AB" stroke-width="2.2"/></svg></div>
+  <div class="scr" style="bottom:65px;right:45px;width:72px;height:72px;opacity:.4" aria-hidden="true"><svg viewBox="0 0 72 72"><path d="M10,36 Q36,6 62,36 Q36,66 10,36" stroke="#0E4D4B" stroke-width="2"/><circle cx="36" cy="36" r="5" fill="#25B5AB" opacity=".5"/></svg></div>
+  <div class="W">
+    <div class="sh rv">
+      <span class="eb">How It Works</span>
+      <h2>Genetic testing, made<br><span class="mk">genuinely simple.</span></h2>
+      <p class="lead">No waiting rooms. No clinic visits. No sample collection guesswork. Just four clear steps from ordering to insight.</p>
+    </div>
+    <div class="sg rvs">
+      <div class="sc3"></div>
+      <div class="sk sp2"><div class="sn">1</div><div class="si">🛒</div><h4>Book online</h4><p>Visit kyg.in. Pick the genetic test that fits your situation. Enter your delivery address. That is the entire booking.</p><div class="snt">Takes about two minutes.</div></div>
+      <div class="sk sp2"><div class="sn">2</div><div class="si">📦</div><h4>Kit at your door</h4><p>Your sealed KYG saliva collection kit ships free within 48 hours, with crystal-clear instructions and a pre-paid return pouch included.</p><div class="snt">No clinics. No queues.</div></div>
+      <div class="sk sp2"><div class="sn">3</div><div class="si">🧬</div><h4>Collect &amp; send back</h4><p>Open the tube. Follow the simple steps. Your saliva sample takes two minutes. Seal it, drop it in the return pouch, and we arrange free pickup.</p><div class="snt">Free courier pickup arranged.</div></div>
+      <div class="sk sp2"><div class="sn">4</div><div class="si">📋</div><h4>Your genetic report</h4><p>Your report arrives in your secure KYG account and on WhatsApp in 7 to 14 days. Plain language, clear next steps, colour-coded results. Book a 30-minute video session with a certified genetic counselor anytime.</p><div class="snt">Human walkthrough included.</div></div>
+    </div>
+    <p style="text-align:center;margin-top:40px;font-style:italic;color:var(--gy);font-size:.95rem;max-width:680px;margin-left:auto;margin-right:auto">No clinic queues. No specimen kits to figure out alone. No follow-up confusion. Genetic testing the way it should have always worked.</p>
+  </div>
+</section>
+
+<!-- MARQUEE 3 -->
+<div class="mb mbt" aria-hidden="true">
+  <div class="mt">
+    <span>It is all there in your genes. The only question is when you will read it. <span class="sp"></span> Pick the genetic test that matters most to you right now. <span class="sp"></span> One genetic test. A lifetime of insight. <span class="sp"></span></span>
+    <span>It is all there in your genes. The only question is when you will read it. <span class="sp"></span> Pick the genetic test that matters most to you right now. <span class="sp"></span> One genetic test. A lifetime of insight. <span class="sp"></span></span>
+  </div>
+</div>
+
+<!-- TESTS -->
+<section class="sec bw" id="tests">
+  <div class="scr" style="top:55px;right:40px;width:75px;height:75px;opacity:.4" aria-hidden="true"><svg viewBox="0 0 75 75"><path d="M20,15 Q55,15 60,38 Q65,60 38,60 Q12,60 14,38 Q16,18 40,20" stroke="#25B5AB" stroke-width="2" fill="none"/><circle cx="55" cy="14" r="4" fill="#F8E16C"/></svg></div>
+  <div class="W">
+    <div class="sh rv">
+      <span class="eb">Test Categories</span>
+      <h2>Pick the genetic test that<br>matters most to <span class="un">you</span> right now.</h2>
+      <p class="lead">Every genetic test is different. But every test is about the same thing: knowing your body the way only your DNA can tell you.</p>
+    </div>
+    <div class="tg2 rvs">
+      <div class="tc sp2"><div class="te">🌿</div><h4>Wellness &amp; Nutrition Genetics</h4><div class="tf">For anyone who has followed a diet that worked for everyone except them</div><p>Which foods your genes process best, which vitamins you absorb easily, and how your body handles sugar, fat, and caffeine.</p><div class="tfe">A nutrition plan finally written for your body.</div></div>
+      <div class="tc sp2"><div class="te">🏋️</div><h4>Fitness &amp; Performance Genetics</h4><div class="tf">For gym goers, runners, and anyone whose body responds differently</div><p>Your natural muscle composition, recovery profile, injury risk, and the type of training your DNA is built for.</p><div class="tfe">Train smarter, not harder.</div></div>
+      <div class="tc sp2"><div class="te">✨</div><h4>Skin &amp; Hair Genetics</h4><div class="tf">For anyone spending real money on skincare</div><p>How fast your skin ages at the cellular level, your collagen profile, UV sensitivity, and the genetics behind your hair behaviour.</p><div class="tfe">Stop guessing. Start knowing.</div></div>
+      <div class="tc sp2"><div class="te">❤️</div><h4>Cardiac Genetic Risk</h4><div class="tf">For anyone with a family history of heart disease</div><p>Whether your genes carry inherited cardiac risk, which conditions to watch for, and the lifestyle changes your genetics respond to most.</p><div class="tfe">Knowing is better than worrying.</div></div>
+      <div class="tc sp2"><div class="te">🔬</div><h4>Hereditary Cancer Risk</h4><div class="tf">For women over 30 with family history</div><p>Whether you carry gene variants linked to inherited cancer risk. What to monitor and how often.</p><div class="tfe">Awareness over anxiety.</div></div>
+      <div class="tc sp2"><div class="te">👶</div><h4>Reproductive &amp; Pregnancy Genetics</h4><div class="tf">For couples planning a baby or pregnant women</div><p>Whether you carry genes for conditions that could be inherited by your child. What to plan for before or during pregnancy.</p><div class="tfe">Plan with knowledge, not fear.</div></div>
+      <div class="tc sp2"><div class="te">💊</div><h4>Pharmacogenomics: Right Medicine</h4><div class="tf">For anyone on long-term medication</div><p>Which medicines work well for your specific genetics and which ones your body struggles to process. Your doctor cannot guess this. Your DNA already knows.</p><div class="tfe">The right medicine, every time.</div></div>
+    </div>
+    <p style="text-align:center;margin-top:32px;font-size:.95rem;color:var(--gy);font-style:italic">One genetic test is often enough. Or get the whole family covered with a single booking. You decide what works for your home.</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="ss">
+  <div class="W">
+    <div class="stg rvs">
+      <div class="sti"><div class="stb">7+</div><div class="stl">Test categories, one brand</div></div>
+      <div class="sti"><div class="stb">2</div><div class="stl">Minutes to collect your sample</div></div>
+      <div class="sti"><div class="stb">14</div><div class="stl">Days max. Report delivered</div></div>
+      <div class="sti"><div class="stb">100%</div><div class="stl">Your data. Your decision. Always.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY KYG -->
+<section class="sec bcg" id="why">
+  <div class="scr" style="top:55px;left:30px;width:80px;height:60px;opacity:.45" aria-hidden="true"><svg viewBox="0 0 80 60"><path d="M5,15 Q25,40 5,55 M5,15 L20,5 L20,15 M5,55 L20,55 L20,45" stroke="#25B5AB" stroke-width="1.8"/></svg></div>
+  <div class="W">
+    <div class="sh rv">
+      <span class="eb">Why KYG</span>
+      <h2>Why choose KYG over other<br>genetic testing options?</h2>
+      <p class="lead">Fair question. Here is the honest answer.</p>
+    </div>
+    <div class="cw rv">
+      <div class="ch3"><div class="cth2">What others do</div><div></div><div class="cus2">What KYG does</div></div>
+      <div class="cr"><div class="ctd">Send a confusing kit with no collection guidance and leave you to figure it out alone.</div><div class="cmd">→</div><div class="cud">Crystal-clear KYG kit with step-by-step instructions, sealed for tamper-proof safety, free pre-paid pickup arranged for you.</div></div>
+      <div class="cr"><div class="ctd">Send a PDF full of medical codes and lab terminology.</div><div class="cmd">→</div><div class="cud">A genetic report written for you. Plain language. Colour coded. Clear actions you can actually take.</div></div>
+      <div class="cr"><div class="ctd">Disappear once the report is delivered. No follow-up.</div><div class="cmd">→</div><div class="cud">You can book a one-on-one session with a certified genetic counselor who walks through your report with you.</div></div>
+      <div class="cr"><div class="ctd">Focus on a single test category, like ancestry or wellness only.</div><div class="cmd">→</div><div class="cud">KYG covers wellness, fitness, cardiac, cancer, reproductive, skin, and pharmacogenomics in one place.</div></div>
+      <div class="cr"><div class="ctd">B2B only. Hospitals and doctors. Out of reach for everyday people.</div><div class="cmd">→</div><div class="cud">KYG is built for you. Direct to consumer. Book any genetic test directly. No referral, no hospital, no gatekeepers.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="sec bw" id="trust">
+  <div class="scr" style="top:55px;right:35px;width:80px;height:70px;opacity:.4" aria-hidden="true"><svg viewBox="0 0 80 70"><path d="M10,60 Q40,10 70,50 M60,46 L70,50 L68,62" stroke="#25B5AB" stroke-width="2"/></svg></div>
+  <div class="W">
+    <div class="sh rv">
+      <span class="eb">Trust Signals</span>
+      <h2>Your DNA deserves<br>the very <span class="mk">best hands.</span></h2>
+      <p class="lead">Every KYG genetic test is backed by certifications, lab technology, and people who take your DNA seriously.</p>
+    </div>
+    <div class="tp rv">
+      <div class="tpi"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=700&fit=crop&auto=format&q=75" alt="NABL certified laboratory" loading="lazy"><div class="tpt2">NABL Accredited Partner Lab</div></div>
+      <div class="tpx">
+        <h3>Science you can trust. Results you can act on.</h3>
+        <p>Your saliva sample is processed by an NABL accredited partner laboratory, India's top quality benchmark for diagnostic labs. Every step from sample reception to report generation follows strict quality protocols. Your data is stored to ISO 27001 and HIPAA-aligned security standards. We do not sell, share, or repurpose your genetic information. Ever.</p>
+      </div>
+    </div>
+    <div class="tgr rvs">
+      <div class="tcd sp2"><div class="tco">🏆</div><h4>NABL Accredited Lab</h4><p>Your sample is processed by a lab that has passed strict government quality audits. NABL is India's top quality benchmark for laboratories.</p></div>
+      <div class="tcd sp2"><div class="tco">🔐</div><h4>ISO 27001 &amp; HIPAA Compliant</h4><p>Your genetic data is stored and handled to international security standards. We never sell, share, or use your DNA for any other purpose.</p></div>
+      <div class="tcd sp2"><div class="tco">🧫</div><h4>FDA Approved Lab Technology</h4><p>The technology used to analyse your sample is cleared by leading global health regulators. No shortcuts on science.</p></div>
+      <div class="tcd sp2"><div class="tco">📦</div><h4>Tamper-Proof Sealed Kit</h4><p>Your collection kit ships sealed. The tube is sealed by you at collection. Your sample is secured at every step from home to lab.</p></div>
+      <div class="tcd sp2"><div class="tco">🚚</div><h4>Free Pre-Paid Return Pickup</h4><p>Once you have collected your sample, we arrange free courier pickup from your door. No trips to a drop-off point. No hidden charges.</p></div>
+      <div class="tcd sp2"><div class="tco">👩‍⚕️</div><h4>In-House Genetic Counselors</h4><p>After your report, you talk to a real human trained in genetics who explains your results in your language. One click to book.</p></div>
+    </div>
+    <div class="tn rv">We do not collect your sample and disappear. Every KYG genetic test is reviewed, certified, and backed by people who care about getting it right.</div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec bsg">
+  <div class="scr" style="top:55px;left:30px;width:75px;height:60px;opacity:.45" aria-hidden="true"><svg viewBox="0 0 75 60"><path d="M8,30 Q22,5 38,22 Q52,38 68,15" stroke="#25B5AB" stroke-width="2"/><circle cx="8" cy="30" r="2.5" fill="#25B5AB" opacity=".6"/></svg></div>
+  <div class="W">
+    <div class="sh rv">
+      <span class="eb">Testimonials</span>
+      <h2>Real people. Real results.<br><span class="un">Real stories.</span></h2>
+      <p class="lead">Placeholder testimonials for launch. Once real customer stories arrive, these will be replaced.</p>
+    </div>
+    <div class="qg rvs">
+      <div class="qc"><div class="qm">"</div><div class="ttg">Cardiac Genetic Risk Test</div><p>My father had a heart attack at 50 and I lived with that fear for years without knowing what to actually do about it. The KYG kit arrived, the collection took five minutes, and ten days later I had a genetic report that told me what I was working with. I shared it with my cardiologist and we built a real plan together. The fear is much smaller now.</p><div class="qp"><div class="qa"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&auto=format&q=80" alt="Meera S." loading="lazy"></div><div><div class="qn">Meera S.</div><div class="qmt">Delhi · Cardiac Genetic Risk Test</div></div></div></div>
+      <div class="qc"><div class="qm">"</div><div class="ttg">Fitness Genetics Test</div><p>Four years in the gym and I finally know why endurance training never gave me the results that strength training did. It is literally in my genes. My trainer laughed when I showed him the report and said it all made sense. The kit was so simple. The genetic report was the clearest health document I have ever read.</p><div class="qp"><div class="qa"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&auto=format&q=80" alt="Aditya K." loading="lazy"></div><div><div class="qn">Aditya K.</div><div class="qmt">Gurgaon · Fitness Genetics Test</div></div></div></div>
+      <div class="qc"><div class="qm">"</div><div class="ttg">Reproductive Genetic Screening</div><p>We were planning our wedding when someone mentioned carrier screening. The whole process was painless. Kit at home, two minutes each. The genetic counselor explained everything to us on a video call after the report came in. We started our marriage with full information about our genetics. That felt like a real beginning.</p><div class="qp"><div class="qa"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop&auto=format&q=80" alt="Priyanka M." loading="lazy"></div><div><div class="qn">Priyanka &amp; Rohan M.</div><div class="qmt">Noida · Reproductive Genetic Screening</div></div></div></div>
+      <div class="qc"><div class="qm">"</div><div class="ttg">Comprehensive Parent Care Panel</div><p>My son ordered this for me and my wife as a birthday gift. The kit arrived, the instructions were very clear, we both collected our samples in minutes. Our genetic reports came on WhatsApp in plain language. The counselor call answered every question we had. My son says it is the best gift he has ever given us. I think he is right.</p><div class="qp"><div class="qa"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop&auto=format&q=80" alt="Suresh P." loading="lazy"></div><div><div class="qn">Suresh P.</div><div class="qmt">Delhi · Comprehensive Parent Care Panel</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec bw" id="faq">
+  <div class="scr" style="bottom:60px;left:35px;width:80px;height:65px;opacity:.4" aria-hidden="true"><svg viewBox="0 0 80 65"><path d="M10,55 Q40,5 70,45 M63,40 L70,45 L68,56" stroke="#25B5AB" stroke-width="2"/></svg></div>
+  <div class="W">
+    <div class="sh rv">
+      <span class="eb">FAQ</span>
+      <h2>Questions you will<br>want answered <span class="un">first.</span></h2>
+    </div>
+    <div class="fl rv">
+      <div class="fi"><button class="fq">Will I actually be able to collect my own sample correctly?<span class="ftg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button><div class="fa"><div class="fai">Yes, completely. Your KYG kit includes step-by-step instructions that make sample collection straightforward. Most people are done in under two minutes. The tube is designed to make errors practically impossible. If you have any questions before, during, or after collection, our support team is available on call and WhatsApp.</div></div></div>
+      <div class="fi"><button class="fq">Who sees my DNA results? How private is my genetic data?<span class="ftg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button><div class="fa"><div class="fai">Only you. Your genetic data is stored under ISO 27001 and HIPAA-aligned security standards. We do not sell, share, or use your DNA for any other purpose. Your genes are yours, and they stay that way.</div></div></div>
+      <div class="fi"><button class="fq">I am not a science person. Will I actually understand my genetic report?<span class="ftg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button><div class="fa"><div class="fai">That is exactly why KYG exists. Your report is written in plain language. No codes, no jargon, no decoding required. Think of it as a clear health story about you, with simple explanations and concrete next steps. And if you want a human to walk you through it, our certified genetic counselors are one click away.</div></div></div>
+      <div class="fi"><button class="fq">What kind of sample is needed? Will it hurt?<span class="ftg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button><div class="fa"><div class="fai">A saliva sample. You spit gently into the collection tube included in your kit. No needles, no blood, no discomfort. The whole collection takes around two minutes. The instructions in your kit explain exactly what to do before you begin.</div></div></div>
+      <div class="fi"><button class="fq">Do I need a doctor's prescription to book a genetic test?<span class="ftg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button><div class="fa"><div class="fai">No. KYG is a direct to consumer genetic testing service. You can book any test on our website without a referral or prescription. We do recommend sharing your results with your doctor for any clinical follow-up.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="fc" id="final">
+  <div class="fp2"></div><div class="fp2"></div><div class="fp2"></div><div class="fp2"></div><div class="fp2"></div>
+  <div class="W">
+    <div class="pre">Your genes have been waiting.</div>
+    <h2>It is time to read what your<br>genes have been saying all along.</h2>
+    <p class="fl2">Book today. Your sealed KYG kit ships within 48 hours, and your detailed genetic report follows in 7 to 14 days. We are currently serving Delhi NCR, with more cities opening soon.</p>
+    <div class="fb">
+      <a href="#" class="btn ba">Book Your Genetic Test Now <span class="a">→</span></a>
+      <a href="#" class="btn bw">Not sure which test fits? Take the 3-min quiz</a>
+    </div>
+    <div class="fcl">Get to know your genes. Your family will thank you for it.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="W">
+    <div class="fg">
+      <div>
+        <div class="fl3"><img src="KYG_-_Teal.svg" alt="KnowYourGenes"></div>
+        <p class="fab">India's most accessible, population-specific genomics brand. At-home DNA testing kits. Certified lab. Certified counselors. Results in plain language.</p>
+      </div>
+      <div><h5>Tests</h5><div class="fln"><a href="#">Wellness &amp; Nutrition</a><a href="#">Fitness &amp; Performance</a><a href="#">Skin &amp; Hair</a><a href="#">Cardiac Risk</a><a href="#">Cancer Risk</a><a href="#">Reproductive</a><a href="#">Pharmacogenomics</a></div></div>
+      <div><h5>Company</h5><div class="fln"><a href="#">How It Works</a><a href="#">Why KYG</a><a href="#">About Us</a><a href="#">Our Lab Partners</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+      <div><h5>Support</h5><div class="fln"><a href="#">FAQ</a><a href="#">Contact Us</a><a href="#">WhatsApp Support</a><a href="#">Genetic Counselors</a><a href="#">Sample Collection Guide</a><a href="#">Track Your Kit</a></div></div>
+    </div>
+    <div class="fbo">
+      <span>© 2026 KnowYourGenes. All rights reserved. · Delhi NCR, India</span>
+      <span class="ftgl">#KnowTakeControl</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scd', window.scrollY > 24), { passive: true });
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv, .rvs').forEach(el => io.observe(el));
+
+document.querySelectorAll('.sp2').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+const fc = document.querySelector('.fc');
+if (fc) fc.addEventListener('mousemove', e => {
+  const r = fc.getBoundingClientRect();
+  fc.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+  fc.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+});
+
+document.querySelectorAll('.ct').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const t = tab.dataset.target;
+    document.querySelectorAll('.ct').forEach(x => x.classList.remove('act'));
+    document.querySelectorAll('.csp').forEach(x => x.classList.remove('act'));
+    tab.classList.add('act');
+    const strip = document.querySelector('.csp[data-comic="' + t + '"]');
+    if (strip) strip.classList.add('act');
+  });
+});
+
+document.querySelectorAll('.fq').forEach(q => {
+  q.addEventListener('click', () => q.closest('.fi').classList.toggle('op'));
+});
+
+/* === THREE.JS GENE NETWORK ORB — high contrast palette ===
+   Sphere of nodes connected by edges. Sits on dark teal backdrop disc.
+   Tuned with 3-tier color hierarchy: yellow hero accents, cyan mids,
+   white fillers. Drag to rotate, drifts when idle. */
+(function () {
+  const canvas = document.getElementById('netCanvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+  const wrap = canvas.parentElement;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 7;
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const N = 80;
+  const nodePos = [];
+  const nodeMeshes = [];
+  const phi = Math.PI * (3 - Math.sqrt(5));
+
+  for (let i = 0; i < N; i++) {
+    const y = 1 - (i / (N - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const theta = phi * i;
+    const x = Math.cos(theta) * r * 2.7;
+    const z = Math.sin(theta) * r * 2.7;
+    const yScaled = y * 2.7;
+    nodePos.push(new THREE.Vector3(x, yScaled, z));
+
+    // 3-tier hierarchy
+    const isYellow = i % 9 === 0;          // ~11% bright yellow heroes
+    const isCyan = !isYellow && i % 3 === 0; // ~30% bright cyan mids
+    // remaining ~60% are white fillers
+
+    const sz = isYellow ? 0.18 + Math.random() * 0.04
+             : isCyan   ? 0.13 + Math.random() * 0.03
+             :            0.075 + Math.random() * 0.03;
+
+    const geo = new THREE.SphereGeometry(sz, 16, 16);
+
+    let col, emInt;
+    if (isYellow) {
+      col = 0xFFE45C;   // bright sunny yellow
+      emInt = 1.2;
+    } else if (isCyan) {
+      col = 0x5FF0E2;   // bright cyan
+      emInt = 0.9;
+    } else {
+      col = 0xFFFFFF;   // pure white
+      emInt = 0.45;
+    }
+
+    const mat = new THREE.MeshPhongMaterial({
+      color: col,
+      emissive: col,
+      emissiveIntensity: emInt,
+      shininess: 110,
+      specular: 0xffffff,
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x, yScaled, z);
+    mesh.userData.baseEm = emInt;
+    mesh.userData.phase = Math.random() * Math.PI * 2;
+    mesh.userData.tier = isYellow ? 'yellow' : (isCyan ? 'cyan' : 'white');
+    group.add(mesh);
+    nodeMeshes.push(mesh);
+  }
+
+  // Edges — bright cyan, high opacity for visible network structure
+  const edgeMat = new THREE.LineBasicMaterial({
+    color: 0x5FF0E2,
+    transparent: true,
+    opacity: 0.55,
+  });
+  const edgeMatDim = new THREE.LineBasicMaterial({
+    color: 0xA8E8E0,
+    transparent: true,
+    opacity: 0.28,
+  });
+  for (let i = 0; i < N; i++) {
+    for (let j = i + 1; j < N; j++) {
+      const d = nodePos[i].distanceTo(nodePos[j]);
+      if (d < 1.45) {
+        const geo = new THREE.BufferGeometry().setFromPoints([nodePos[i], nodePos[j]]);
+        group.add(new THREE.Line(geo, d < 0.95 ? edgeMat : edgeMatDim));
+      }
+    }
+  }
+
+  // Lighting — bright, top-down with cyan and yellow rims
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const key = new THREE.PointLight(0x5FF0E2, 2.4, 30);
+  key.position.set(4, 5, 6);
+  scene.add(key);
+  const fill = new THREE.PointLight(0xFFE45C, 1.0, 28);
+  fill.position.set(-5, -3, 4);
+  scene.add(fill);
+  const rim = new THREE.PointLight(0xFFFFFF, 0.9, 25);
+  rim.position.set(0, 4, -5);
+  scene.add(rim);
+
+  function resize() {
+    const w = wrap.clientWidth, h = wrap.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let tRX = 0, tRY = 0, cRX = 0, cRY = 0;
+  let dragging = false, lX = 0, lY = 0, dRX = 0, dRY = 0;
+  let lastInt = performance.now();
+  let autoA = 0;
+
+  wrap.addEventListener('mousemove', e => {
+    if (dragging) return;
+    const r = wrap.getBoundingClientRect();
+    tRX = ((e.clientY - r.top) / r.height - 0.5) * 0.7;
+    tRY = ((e.clientX - r.left) / r.width - 0.5) * 0.9;
+    lastInt = performance.now();
+  });
+  canvas.addEventListener('mousedown', e => {
+    dragging = true; lX = e.clientX; lY = e.clientY;
+    canvas.style.cursor = 'grabbing';
+    lastInt = performance.now();
+  });
+  window.addEventListener('mouseup', () => {
+    dragging = false; canvas.style.cursor = 'grab';
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    dRY += (e.clientX - lX) * 0.009;
+    dRX += (e.clientY - lY) * 0.009;
+    lX = e.clientX; lY = e.clientY;
+    lastInt = performance.now();
+  });
+
+  // Touch
+  canvas.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      dragging = true;
+      lX = e.touches[0].clientX; lY = e.touches[0].clientY;
+      lastInt = performance.now();
+    }
+  }, { passive: true });
+  canvas.addEventListener('touchmove', e => {
+    if (dragging && e.touches.length === 1) {
+      dRY += (e.touches[0].clientX - lX) * 0.009;
+      dRX += (e.touches[0].clientY - lY) * 0.009;
+      lX = e.touches[0].clientX; lY = e.touches[0].clientY;
+      lastInt = performance.now();
+    }
+  }, { passive: true });
+  canvas.addEventListener('touchend', () => { dragging = false; });
+  canvas.style.cursor = 'grab';
+
+  let visible = true;
+  new IntersectionObserver(es => es.forEach(e => visible = e.isIntersecting)).observe(canvas);
+
+  function tick(t) {
+    requestAnimationFrame(tick);
+    if (!visible) return;
+    const idle = performance.now() - lastInt > 2000;
+    if (idle) autoA += 0.0042;
+    cRX += (tRX - cRX) * 0.05;
+    cRY += (tRY - cRY) * 0.05;
+    group.rotation.x = cRX + dRX;
+    group.rotation.y = cRY + dRY + autoA;
+    const time = t * 0.001;
+    nodeMeshes.forEach(m => {
+      if (m.userData.tier === 'yellow') {
+        const p = m.userData.baseEm + Math.sin(time * 1.6 + m.userData.phase) * 0.4;
+        m.material.emissiveIntensity = Math.max(0.4, p);
+      } else if (m.userData.tier === 'cyan') {
+        const p = m.userData.baseEm + Math.sin(time * 1.3 + m.userData.phase) * 0.25;
+        m.material.emissiveIntensity = Math.max(0.3, p);
+      }
+    });
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>

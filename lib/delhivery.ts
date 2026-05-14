@@ -10,7 +10,7 @@
  * Delhivery's exact endpoint paths and field names have shifted between
  * versions of their docs; treat the URLs below as the current best guess and
  * confirm against your KAM's onboarding pack before going live. The shape of
- * the *response* objects we return from this module is our own contract — the
+ * the *response* objects we return from this module is our own contract - the
  * rest of the codebase only depends on these typed return values.
  */
 import type { ShipmentLeg, ShipmentStatus as PrismaShipmentStatus } from '@prisma/client';
@@ -57,7 +57,7 @@ export interface CreateShipmentInput {
   weightGrams: number;
   declaredValue: number; // paise
   /**
-   * Delhivery's "pickup_location.name" — must match a warehouse registered
+   * Delhivery's "pickup_location.name" - must match a warehouse registered
    * in their portal. If omitted, falls back to DELHIVERY_PICKUP_LOCATION env.
    * Should be set per-Lab so multi-lab shipments work.
    */

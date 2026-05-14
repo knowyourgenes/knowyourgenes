@@ -1,5 +1,5 @@
 ================================================================
-AFFILIATION CERTIFICATE — GUIDELINES
+AFFILIATION CERTIFICATE - GUIDELINES
 For: Razorpay onboarding, Category = Healthcare, Subcategory = Diagnostic Center
 ================================================================
 
@@ -15,7 +15,7 @@ team needs to verify three things before activating payments:
 The "Affiliation Certificate" upload slot is where you prove the
 business is genuinely connected to a recognized diagnostic / medical
 setup. Razorpay does not publish the exact accepted-document list for
-this category — the items below are the documents merchants have
+this category - the items below are the documents merchants have
 successfully used (confirmed via Razorpay support and community
 reports). Any ONE of them is usually sufficient.
 
@@ -25,11 +25,11 @@ ACCEPTED DOCUMENTS (UPLOAD ANY ONE YOU HAVE)
 Strongest proofs (preferred):
   - NABL accreditation certificate
       (National Accreditation Board for Testing and Calibration
-      Laboratories — gold standard for diagnostic labs)
+      Laboratories - gold standard for diagnostic labs)
   - NABH certificate (for hospital-affiliated diagnostic units)
   - Clinical Establishment Registration Certificate
       (issued under the Clinical Establishments Act, 2010, or the
-      equivalent State Act — e.g., Bombay Nursing Homes Act,
+      equivalent State Act - e.g., Bombay Nursing Homes Act,
       Karnataka Private Medical Establishments Act, etc.)
   - Diagnostic Center / Pathology Lab registration certificate
       issued by the State Health Department or municipal authority
@@ -49,7 +49,7 @@ Acceptable alternatives:
 
 If you are a BOOKING / AGGREGATOR PLATFORM (not running your own lab):
   - Partnership / service agreement with the actual diagnostic lab(s)
-    you book through — this is the document you upload as the
+    you book through - this is the document you upload as the
     affiliation proof. Multi-lab platforms can upload one agreement
     and list the others in cover note.
 
@@ -59,7 +59,7 @@ WHAT THE DOCUMENT MUST CLEARLY SHOW
 Razorpay reviewers look for these fields on the page:
 
   - Business / entity name (legal name, not just brand name)
-  - Type of activity — must say diagnostic / lab / pathology /
+  - Type of activity - must say diagnostic / lab / pathology /
     healthcare (NOT just "general trading" or "services")
   - Full business address
   - Registration / license / accreditation number
@@ -67,7 +67,7 @@ Razorpay reviewers look for these fields on the page:
   - Date of issue and validity / expiry date if applicable
   - Signature / seal of the issuing authority
 
-CRITICAL — NAME CONSISTENCY:
+CRITICAL - NAME CONSISTENCY:
 The business name on the affiliation document must match (or be a
 clear variant of) the name on:
   - Razorpay merchant account
@@ -100,7 +100,7 @@ strongest bundle you can assemble:
      accreditation # XYZ. Agreement attached."
 
 Bundle these into a single PDF and upload to the Affiliation
-Certificate slot. The cover note is the most important piece — it
+Certificate slot. The cover note is the most important piece - it
 tells the reviewer what they are looking at.
 
 

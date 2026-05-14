@@ -17,6 +17,7 @@ import {
   BadgeCheck,
   Building2,
   ExternalLink,
+  Megaphone,
 } from 'lucide-react';
 
 import {
@@ -80,6 +81,13 @@ const GROUPS: NavGroup[] = [
     items: [
       { href: '/admin/packages', label: 'Packages', icon: PackageIcon, roles: ['ADMIN'] },
       { href: '/admin/coupons', label: 'Coupons', icon: Ticket, roles: ['ADMIN'] },
+    ],
+  },
+  {
+    label: 'Marketing',
+    items: [
+      { href: '/admin/campaigns', label: 'Campaigns', icon: Megaphone, roles: ['ADMIN'] },
+      { href: '/admin/attribution', label: 'Attribution', icon: BadgeCheck, roles: ['ADMIN'] },
     ],
   },
   {

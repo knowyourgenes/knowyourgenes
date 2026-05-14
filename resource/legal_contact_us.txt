@@ -1,12 +1,12 @@
 ================================================================
-CONTACT US — KnowYourGenes
+CONTACT US - KnowYourGenes
 Route: /contact
 Last updated: 2026-05-12
 ================================================================
 
 This is the page content for /contact. The contact form fields
 (Name, Email, Phone, Topic, Message) are already specified in
-features.txt under [T1] /contact — this file gives you the static
+features.txt under [T1] /contact - this file gives you the static
 text content that should sit alongside the form.
 
 
@@ -18,7 +18,7 @@ We're here to help.
 SUBHEAD
 -------
 Questions about a package, an active booking, a report you have
-received, or partnership opportunities — write to us, call, or use
+received, or partnership opportunities - write to us, call, or use
 the form below. We respond to every message.
 
 
@@ -46,7 +46,7 @@ REGISTERED OFFICE
    (operating the KnowYourGenes brand)
    SU 18, Pitam Pura, Delhi 110034, India
    CIN: U74999DL2010PTC207582
-   GSTIN: [GSTIN — fill in before publishing]
+   GSTIN: [GSTIN - fill in before publishing]
 
 
 CONTACT FORM (placement)

@@ -130,7 +130,7 @@ export default function AdminReportsPage() {
     <>
       <PageHeader
         title="Reports"
-        subtitle="Upload report PDFs to Cloudflare R2. Reports are private — downloads use short-lived signed URLs."
+        subtitle="Upload report PDFs to Cloudflare R2. Reports are private - downloads use short-lived signed URLs."
         actions={
           <Button onClick={() => setUploadOpen(true)}>
             <Upload className="h-4 w-4" /> Upload report
