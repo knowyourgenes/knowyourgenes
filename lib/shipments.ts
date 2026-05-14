@@ -21,7 +21,7 @@ export interface PartyAddress {
  *
  * Strategy: explicit `labId` wins. Otherwise pick the active default. If no
  * default exists, fall back to any active lab. Throws if no active lab is
- * configured — admin must create one before kit shipments can run.
+ * configured - admin must create one before kit shipments can run.
  */
 export async function resolveLab(labId?: string | null): Promise<{
   id: string;

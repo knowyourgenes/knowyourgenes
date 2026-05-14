@@ -32,7 +32,7 @@ export async function POST(req: Request, { params }: { params: Params }) {
     });
     if (!order) throw new Error('Order not found');
     if (order.fulfillmentMode === 'AT_HOME_PHLEBOTOMIST') {
-      return fail('This order uses at-home collection — no kit shipment needed', 400);
+      return fail('This order uses at-home collection - no kit shipment needed', 400);
     }
 
     // Prevent duplicate legs
@@ -106,8 +106,8 @@ export async function POST(req: Request, { params }: { params: Params }) {
           create: {
             label:
               input.leg === 'FORWARD'
-                ? `Kit dispatched — AWB ${result.awb}`
-                : `Reverse pickup scheduled — AWB ${result.awb}`,
+                ? `Kit dispatched - AWB ${result.awb}`
+                : `Reverse pickup scheduled - AWB ${result.awb}`,
             actorId: guard.id,
           },
         },

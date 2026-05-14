@@ -33,18 +33,18 @@ enum SampleType {
 }
 
 enum SlotWindow {
-  MORNING     // 8AM-12PM
-  AFTERNOON   // 12PM-4PM
-  EVENING     // 4PM-7PM
+  MORNING // 8AM-12PM
+  AFTERNOON // 12PM-4PM
+  EVENING // 4PM-7PM
 }
 
 enum OrderStatus {
   BOOKED
   // KIT-by-post fulfillment leg
-  KIT_DISPATCHED       // forward shipment handed to courier
-  KIT_DELIVERED        // kit delivered to user
-  SAMPLE_PICKED_UP     // reverse pickup completed at user's door
-  SAMPLE_IN_TRANSIT    // sample en route to lab
+  KIT_DISPATCHED // forward shipment handed to courier
+  KIT_DELIVERED // kit delivered to user
+  SAMPLE_PICKED_UP // reverse pickup completed at user's door
+  SAMPLE_IN_TRANSIT // sample en route to lab
   // AT-HOME phlebotomist leg
   AGENT_ASSIGNED
   AGENT_EN_ROUTE
@@ -57,14 +57,14 @@ enum OrderStatus {
 }
 
 enum FulfillmentType {
-  AT_HOME_PHLEBOTOMIST  // Phlebotomist visits user's home
-  KIT_BY_POST           // Kit shipped to user, sample reverse-picked
-  EITHER                // Package supports both; user chooses at checkout
+  AT_HOME_PHLEBOTOMIST // Phlebotomist visits user's home
+  KIT_BY_POST // Kit shipped to user, sample reverse-picked
+  EITHER // Package supports both; user chooses at checkout
 }
 
 enum ShipmentLeg {
-  FORWARD   // lab/warehouse -> user (kit going out)
-  REVERSE   // user -> lab (sample coming back)
+  FORWARD // lab/warehouse -> user (kit going out)
+  REVERSE // user -> lab (sample coming back)
 }
 
 enum ShipmentCourier {
@@ -72,13 +72,13 @@ enum ShipmentCourier {
 }
 
 enum ShipmentStatus {
-  CREATED          // local record created, not yet handed to courier
-  MANIFESTED       // courier acknowledged, AWB issued
+  CREATED // local record created, not yet handed to courier
+  MANIFESTED // courier acknowledged, AWB issued
   PICKUP_SCHEDULED // pickup request placed (reverse leg only)
   IN_TRANSIT
   OUT_FOR_DELIVERY
   DELIVERED
-  RTO              // return to origin (forward leg failed)
+  RTO // return to origin (forward leg failed)
   CANCELLED
   FAILED
 }
@@ -130,6 +130,28 @@ enum NotificationStatus {
   READ
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum DataSubjectRequestType {
+  ACCESS // export my data
+  CORRECTION // fix something
+  DELETION // erase me
+  PORTABILITY // give me a machine-readable copy
+  WITHDRAW_CONSENT // I take back my consent for X
+}
+
+enum DataSubjectRequestStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+
 // =============================================================================
 // AUTH - NextAuth v5 required tables + our extensions
 // =============================================================================
@@ -142,10 +164,16 @@ model User {
   image         String?
 
   // KYG-specific
-  phone        String?  @unique
+  phone         String?   @unique
   phoneVerified DateTime?
-  passwordHash String?  // null for OAuth-only users
-  role         Role     @default(USER)
+  passwordHash  String? // null for OAuth-only users
+  role          Role      @default(USER)
+
+  // Demographics — captured via post-checkout questionnaire / profile edit.
+  // Drives age-group + gender reports. Optional so existing users aren't
+  // forced to backfill before we add the form.
+  dateOfBirth DateTime? @db.Date
+  gender      Gender?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -215,32 +243,32 @@ model VerificationToken {
 // =============================================================================
 
 model AgentProfile {
-  userId                String      @id
-  zone                  String
-  status                AgentStatus @default(ACTIVE)
-  rating                Float       @default(0)
-  onTimeRate            Float       @default(1)
-  collectionsThisMonth  Int         @default(0)
-  collectionsTotal      Int         @default(0)
-  joinedAt              DateTime    @default(now())
-  aadhaarVerified       Boolean     @default(false)
-  policeVerified        Boolean     @default(false)
-  dmltCertUrl           String?
-  profilePhotoUrl       String?
+  userId               String      @id
+  zone                 String
+  status               AgentStatus @default(ACTIVE)
+  rating               Float       @default(0)
+  onTimeRate           Float       @default(1)
+  collectionsThisMonth Int         @default(0)
+  collectionsTotal     Int         @default(0)
+  joinedAt             DateTime    @default(now())
+  aadhaarVerified      Boolean     @default(false)
+  policeVerified       Boolean     @default(false)
+  dmltCertUrl          String?
+  profilePhotoUrl      String?
 
-  user          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orders        Order[]               @relation("AssignedAgent")
-  availability  AgentAvailability[]
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders       Order[]             @relation("AssignedAgent")
+  availability AgentAvailability[]
 
   @@index([zone])
   @@index([status])
 }
 
 model AgentAvailability {
-  id       String     @id @default(cuid())
-  agentId  String
-  window   SlotWindow
-  active   Boolean    @default(true)
+  id      String     @id @default(cuid())
+  agentId String
+  window  SlotWindow
+  active  Boolean    @default(true)
 
   agent AgentProfile @relation(fields: [agentId], references: [userId], onDelete: Cascade)
 
@@ -248,14 +276,14 @@ model AgentAvailability {
 }
 
 model CounsellorProfile {
-  userId       String   @id
-  credentials  String
-  specialty    String
-  languages    String[] // e.g. ["English", "Hindi", "Malayalam"]
-  experience   String
-  photoUrl     String?
-  bio          String?
-  active       Boolean  @default(true)
+  userId      String   @id
+  credentials String
+  specialty   String
+  languages   String[] // e.g. ["English", "Hindi", "Malayalam"]
+  experience  String
+  photoUrl    String?
+  bio         String?
+  active      Boolean  @default(true)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -267,7 +295,7 @@ model CounsellorProfile {
 model LabPartner {
   userId        String   @id
   labName       String
-  accreditation String   // e.g. "NABL, CAP, ISO 15189"
+  accreditation String // e.g. "NABL, CAP, ISO 15189"
   contactEmail  String
   contactPhone  String
   addressLine   String
@@ -318,15 +346,15 @@ model Package {
   category        PackageCategory
   tagline         String
   description     String          @db.Text
-  price           Int             // in paise (₹1 = 100)
+  price           Int // in paise (₹1 = 100)
   compareAtPrice  Int?
   tatMinDays      Int             @default(7)
   tatMaxDays      Int             @default(14)
   sampleType      SampleType
   biomarkerCount  Int
-  highlights      Json            // string[]
-  biomarkerList   Json            // string[] of gene codes
-  faq             Json            // [{q, a}]
+  highlights      Json // string[]
+  biomarkerList   Json // string[] of gene codes
+  faq             Json // [{q, a}]
   coverImageUrl   String?
   popular         Boolean         @default(false)
   recommended     Boolean         @default(false)
@@ -353,42 +381,59 @@ model Package {
 // =============================================================================
 
 model Order {
-  id                String      @id @default(cuid())
-  orderNumber       String      @unique // Human-facing: KYG-2026-000412
-  userId            String
-  packageId         String
-  addressId         String
-  agentId           String?
-  labPartnerId      String?
-  couponCode        String?
+  id           String  @id @default(cuid())
+  orderNumber  String  @unique // Human-facing: KYG-2026-000412
+  userId       String
+  packageId    String
+  addressId    String
+  agentId      String?
+  labPartnerId String?
+  couponCode   String?
 
   // Pricing (all in paise)
-  subtotal          Int
-  discount          Int         @default(0)
-  collectionFee     Int         @default(0)
-  total             Int
+  subtotal      Int
+  discount      Int @default(0)
+  collectionFee Int @default(0)
+  total         Int
 
   // Slot
-  slotDate          DateTime    @db.Date
-  slotWindow        SlotWindow
+  slotDate   DateTime   @db.Date
+  slotWindow SlotWindow
 
   // Status
-  status            OrderStatus @default(BOOKED)
-  cancelReason      String?
+  status       OrderStatus @default(BOOKED)
+  cancelReason String?
 
   // Fulfillment chosen for this order (locked at checkout). Drives whether we
   // dispatch a kit via Delhivery or assign a phlebotomist agent.
-  fulfillmentMode   FulfillmentType @default(AT_HOME_PHLEBOTOMIST)
+  fulfillmentMode FulfillmentType @default(AT_HOME_PHLEBOTOMIST)
 
   // External refs
   razorpayOrderId   String?
   razorpayPaymentId String?
   shiprocketAwb     String?
-  consentFormUrl    String?     // S3 URL
+  consentFormUrl    String? // S3 URL
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  paidAt    DateTime?
+  // Attribution — first-touch captured at landing, attached at order creation.
+  // attrSource/attrMedium/attrCampaign etc. are denormalised so historical
+  // attribution survives Campaign edits or deletion. campaignId is the FK
+  // when the captured utm_campaign matched a known Campaign.slug.
+  // attrPayload preserves the raw cookie JSON for forward-compatibility with
+  // any future UTM params we don't structurally store yet.
+  campaignId      String?
+  attrSource      String? // utm_source OR derived from referrer
+  attrMedium      String? // utm_medium OR derived (organic / social_organic / referral / none)
+  attrCampaign    String? // utm_campaign as it appeared in the URL
+  attrTerm        String? // utm_term
+  attrContent     String? // utm_content
+  attrReferrer    String? // document.referrer at first-touch
+  attrLandingPath String? // first path the visitor hit
+  attrFirstSeenAt DateTime? // when the attribution cookie was originally written
+  attrPayload     Json? // raw cookie payload for forward-compat
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  paidAt      DateTime?
   collectedAt DateTime?
   deliveredAt DateTime?
 
@@ -397,6 +442,7 @@ model Order {
   address    Address       @relation(fields: [addressId], references: [id])
   agent      AgentProfile? @relation("AssignedAgent", fields: [agentId], references: [userId])
   labPartner LabPartner?   @relation("ProcessingLab", fields: [labPartnerId], references: [userId])
+  campaign   Campaign?     @relation(fields: [campaignId], references: [id])
   events     OrderEvent[]
   payments   Payment[]
   shipments  Shipment[]
@@ -408,6 +454,8 @@ model Order {
   @@index([status])
   @@index([slotDate])
   @@index([orderNumber])
+  @@index([campaignId])
+  @@index([attrSource, attrMedium])
 }
 
 model OrderEvent {
@@ -415,7 +463,7 @@ model OrderEvent {
   orderId   String
   label     String
   meta      Json?
-  actorId   String?  // userId of whoever triggered it
+  actorId   String? // userId of whoever triggered it
   createdAt DateTime @default(now())
 
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
@@ -458,50 +506,50 @@ model Lab {
 // =============================================================================
 
 model Shipment {
-  id              String          @id @default(cuid())
-  orderId         String
-  labId           String?         // KYG lab this shipment is from/to. Nullable
-                                  // for legacy rows; new shipments always set it.
-  leg             ShipmentLeg
-  courier         ShipmentCourier @default(DELHIVERY)
-  status          ShipmentStatus  @default(CREATED)
+  id      String          @id @default(cuid())
+  orderId String
+  labId   String? // KYG lab this shipment is from/to. Nullable
+  // for legacy rows; new shipments always set it.
+  leg     ShipmentLeg
+  courier ShipmentCourier @default(DELHIVERY)
+  status  ShipmentStatus  @default(CREATED)
 
   // Courier identifiers
-  awb             String?         @unique // Delhivery waybill
-  refNumber       String          @unique // our internal ref sent to courier (KYG-<orderNumber>-FWD/REV)
-  pickupRequestId String?         // reverse-leg pickup request id from /fm/request/new/
+  awb             String? @unique // Delhivery waybill
+  refNumber       String  @unique // our internal ref sent to courier (KYG-<orderNumber>-FWD/REV)
+  pickupRequestId String? // reverse-leg pickup request id from /fm/request/new/
 
   // Snapshot of pickup + drop addresses at the time of shipment creation, so
   // edits to Address later don't change history.
-  pickupName      String
-  pickupPhone     String
-  pickupLine      String
-  pickupCity      String
-  pickupPincode   String
-  dropName        String
-  dropPhone       String
-  dropLine        String
-  dropCity        String
-  dropPincode     String
+  pickupName    String
+  pickupPhone   String
+  pickupLine    String
+  pickupCity    String
+  pickupPincode String
+  dropName      String
+  dropPhone     String
+  dropLine      String
+  dropCity      String
+  dropPincode   String
 
   // Package metadata
-  weightGrams     Int             @default(300) // kit ~300g; sample tube ~150g
-  declaredValue   Int             @default(0)   // paise; declared for insurance / reverse
-  paymentMode     String          @default("Prepaid") // "Prepaid" | "Pickup"
+  weightGrams   Int    @default(300) // kit ~300g; sample tube ~150g
+  declaredValue Int    @default(0) // paise; declared for insurance / reverse
+  paymentMode   String @default("Prepaid") // "Prepaid" | "Pickup"
 
   // Operational
-  expectedAt      DateTime?       // ETA (forward delivery / reverse pickup window)
-  pickedUpAt      DateTime?
-  deliveredAt     DateTime?
-  cancelledAt     DateTime?
-  failureReason   String?
+  expectedAt    DateTime? // ETA (forward delivery / reverse pickup window)
+  pickedUpAt    DateTime?
+  deliveredAt   DateTime?
+  cancelledAt   DateTime?
+  failureReason String?
 
   // Last raw tracking payload from courier (kept for debugging)
   trackingPayload Json?
   events          ShipmentEvent[]
 
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
   lab   Lab?  @relation(fields: [labId], references: [id], onDelete: SetNull)
@@ -518,7 +566,7 @@ model ShipmentEvent {
   id         String         @id @default(cuid())
   shipmentId String
   status     ShipmentStatus
-  label      String         // courier-provided scan text
+  label      String // courier-provided scan text
   location   String?
   occurredAt DateTime       @default(now())
   raw        Json?
@@ -536,10 +584,10 @@ model ShipmentEvent {
 model Payment {
   id                String        @id @default(cuid())
   orderId           String
-  amount            Int           // paise
+  amount            Int // paise
   currency          String        @default("INR")
   status            PaymentStatus @default(PENDING)
-  method            String?       // upi, card, netbanking, emi, wallet
+  method            String? // upi, card, netbanking, emi, wallet
   razorpayOrderId   String?
   razorpayPaymentId String?       @unique
   razorpaySignature String?
@@ -559,42 +607,42 @@ model Payment {
 // =============================================================================
 
 model Report {
-  id                 String    @id @default(cuid())
-  reportNumber       String    @unique // RPT-000412
-  orderId            String    @unique
-  userId             String
-  packageName        String    // denormalised at delivery time
-  pdfKey             String    // S3 object key
-  summary            Json      // string[] - plain-English bullets
-  criticalFinding    Boolean   @default(false)
-  counsellorNotes    String?   @db.Text
-  uploadedById       String?   // admin who uploaded
-  reviewedById       String?   // counsellor who QC'd
-  deliveredAt        DateTime?
-  emailSentAt        DateTime?
-  whatsappSentAt     DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  reportNumber    String    @unique // RPT-000412
+  orderId         String    @unique
+  userId          String
+  packageName     String // denormalised at delivery time
+  pdfKey          String // S3 object key
+  summary         Json // string[] - plain-English bullets
+  criticalFinding Boolean   @default(false)
+  counsellorNotes String?   @db.Text
+  uploadedById    String? // admin who uploaded
+  reviewedById    String? // counsellor who QC'd
+  deliveredAt     DateTime?
+  emailSentAt     DateTime?
+  whatsappSentAt  DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-  order       Order          @relation(fields: [orderId], references: [id])
-  user        User           @relation(fields: [userId], references: [id])
-  uploadedBy  User?          @relation("UploadedBy", fields: [uploadedById], references: [id])
-  reviewedBy  User?          @relation("CounsellorReviewer", fields: [reviewedById], references: [id])
-  markers     ReportMarker[]
+  order      Order          @relation(fields: [orderId], references: [id])
+  user       User           @relation(fields: [userId], references: [id])
+  uploadedBy User?          @relation("UploadedBy", fields: [uploadedById], references: [id])
+  reviewedBy User?          @relation("CounsellorReviewer", fields: [reviewedById], references: [id])
+  markers    ReportMarker[]
 
   @@index([userId])
   @@index([deliveredAt])
 }
 
 model ReportMarker {
-  id        String       @id @default(cuid())
-  reportId  String
-  name      String
-  gene      String
-  result    MarkerResult
-  summary   String       @db.Text
-  action    String       @db.Text
-  position  Int          @default(0)
+  id       String       @id @default(cuid())
+  reportId String
+  name     String
+  gene     String
+  result   MarkerResult
+  summary  String       @db.Text
+  action   String       @db.Text
+  position Int          @default(0)
 
   report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
 
@@ -610,7 +658,7 @@ model Consultation {
   userId          String
   counsellorId    String
   durationMinutes Int                @default(30)
-  price           Int                // paise
+  price           Int // paise
   language        String             @default("English")
   scheduledAt     DateTime
   status          ConsultationStatus @default(SCHEDULED)
@@ -624,8 +672,8 @@ model Consultation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user       User              @relation("UserConsultations", fields: [userId], references: [id])
-  counsellor User              @relation("CounsellorSessions", fields: [counsellorId], references: [id])
+  user       User @relation("UserConsultations", fields: [userId], references: [id])
+  counsellor User @relation("CounsellorSessions", fields: [counsellorId], references: [id])
 
   @@index([userId])
   @@index([counsellorId])
@@ -641,9 +689,9 @@ model Coupon {
   id          String     @id @default(cuid())
   code        String     @unique
   type        CouponType
-  value       Int        // paise if FLAT, percentage (0-100) if PERCENT
-  minOrder    Int?       // minimum order value (paise)
-  maxDiscount Int?       // cap for PERCENT (paise)
+  value       Int // paise if FLAT, percentage (0-100) if PERCENT
+  minOrder    Int? // minimum order value (paise)
+  maxDiscount Int? // cap for PERCENT (paise)
   expiresAt   DateTime?
   usageLimit  Int?
   usageCount  Int        @default(0)
@@ -652,6 +700,34 @@ model Coupon {
 
   @@index([active])
   @@index([code])
+}
+
+// =============================================================================
+// CAMPAIGNS - Marketing attribution. Each row defines a trackable UTM link
+// the admin can generate; arriving visitors who hit the matching utm_campaign
+// slug are bucketed into this row's attribution at order time.
+// =============================================================================
+
+model Campaign {
+  id          String   @id @default(cuid())
+  name        String // human-readable label, e.g. "Q2 Instagram Reels - Wellness"
+  slug        String   @unique // becomes utm_campaign value; lowercase kebab-case
+  source      String // utm_source: instagram, google, meta, whatsapp, email, etc.
+  medium      String // utm_medium: cpc, social, email, referral, organic, paid_video
+  term        String? // utm_term — typically paid-search keywords
+  content     String? // utm_content — ad creative variant
+  destination String   @default("/") // path the link lands on, e.g. "/packages/wellness-starter"
+  notes       String?  @db.Text
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String? // userId of the admin who created it
+
+  orders Order[]
+
+  @@index([active])
+  @@index([source])
+  @@index([source, medium])
 }
 
 // =============================================================================
@@ -664,7 +740,7 @@ model Coupon {
 model ServiceArea {
   id        String   @id @default(cuid())
   pincode   String   @unique
-  area      String   // officename, e.g. "Connaught Place"
+  area      String // officename, e.g. "Connaught Place"
   district  String   @default("")
   state     String   @default("")
   city      String   @default("") // kept for backward compat; usually == district
@@ -684,18 +760,18 @@ model ServiceArea {
 // =============================================================================
 
 model Notification {
-  id          String              @id @default(cuid())
-  userId      String?
-  channel     NotificationChannel
-  template    String              // e.g. BOOKING_CONFIRMED, REPORT_READY
-  to          String              // phone or email
-  status      NotificationStatus  @default(QUEUED)
-  payload     Json
-  providerId  String?             // WhatsApp message id, SES message id
-  sentAt      DateTime?
-  deliveredAt DateTime?
+  id           String              @id @default(cuid())
+  userId       String?
+  channel      NotificationChannel
+  template     String // e.g. BOOKING_CONFIRMED, REPORT_READY
+  to           String // phone or email
+  status       NotificationStatus  @default(QUEUED)
+  payload      Json
+  providerId   String? // WhatsApp message id, SES message id
+  sentAt       DateTime?
+  deliveredAt  DateTime?
   errorMessage String?
-  createdAt   DateTime            @default(now())
+  createdAt    DateTime            @default(now())
 
   user User? @relation(fields: [userId], references: [id])
 
@@ -705,20 +781,104 @@ model Notification {
 }
 
 // =============================================================================
+// ATTRIBUTION VISITS - one row per UTM-bearing landing. Captures the clicks
+// our marketing links generate, regardless of whether they convert. Distinct
+// from the kyg_attr cookie, which only persists in the browser and only lands
+// in Order rows at checkout time. Lets the admin answer "how many people
+// clicked my Instagram bio link this week?" without waiting for purchases.
+//
+// Written by POST /api/track/visit (anonymous, rate-limited). The middleware
+// runs on Edge so cannot write directly to Postgres; we use a client beacon
+// instead.
+// =============================================================================
+
+model AttributionVisit {
+  id          String   @id @default(cuid())
+  sessionId   String? // client-generated session id (sessionStorage)
+  userId      String? // filled if user is logged in at visit time
+  source      String?
+  medium      String?
+  campaign    String?
+  term        String?
+  content     String?
+  referrer    String?
+  landingPath String?
+  userAgent   String? // truncated to 200 chars
+  ipPrefix    String? // first 3 octets of IPv4 or /64 of IPv6 — privacy-preserving
+  createdAt   DateTime @default(now())
+
+  @@index([source, medium])
+  @@index([campaign])
+  @@index([createdAt])
+  @@index([sessionId])
+  @@index([userId])
+}
+
+// =============================================================================
+// ABANDONED CARTS - rows are created when a visitor adds a package but never
+// pays. Lets us run recovery campaigns and report cart-abandonment funnel
+// metrics. Soft-keyed by sessionId (cookie) so anonymous carts are tracked;
+// userId is filled when the visitor signs in.
+// =============================================================================
+
+model AbandonedCart {
+  id          String    @id @default(cuid())
+  sessionId   String // anonymous browser session id
+  userId      String?
+  items       Json // [{ packageId, qty }]
+  totalPaise  Int       @default(0)
+  email       String? // captured at any point in checkout
+  phone       String?
+  recoveredAt DateTime? // set when a matching Order is placed
+  orderId     String? // set on recovery
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([sessionId])
+  @@index([userId])
+  @@index([recoveredAt])
+}
+
+// =============================================================================
+// DATA SUBJECT REQUESTS - DPDP Act, 2023 register. Customer-initiated requests
+// for access, correction, deletion, portability or consent withdrawal.
+// Engineering builds the inbound endpoint; ops handles the work and ticks
+// the row to COMPLETED. Required for the §10.1 audit report.
+// =============================================================================
+
+model DataSubjectRequest {
+  id             String                   @id @default(cuid())
+  userId         String? // null if not yet matched to an account
+  email          String // requester's email for verification
+  type           DataSubjectRequestType
+  status         DataSubjectRequestStatus @default(PENDING)
+  notes          String?                  @db.Text
+  requestedAt    DateTime                 @default(now())
+  acknowledgedAt DateTime?
+  resolvedAt     DateTime?
+  resolvedById   String? // admin who closed the ticket
+
+  @@index([status])
+  @@index([type])
+  @@index([userId])
+  @@index([requestedAt])
+}
+
+// =============================================================================
 // B2B / PARTNER LEADS
 // =============================================================================
 
 model PartnerLead {
-  id           String   @id @default(cuid())
-  companyName  String
-  industry     String
-  contactName  String
-  email        String
-  phone        String?
-  teamSize     String?
+  id            String   @id @default(cuid())
+  companyName   String
+  industry      String
+  contactName   String
+  email         String
+  phone         String?
+  teamSize      String?
   monthlyVolume String?
-  message      String?  @db.Text
-  createdAt    DateTime @default(now())
+  message       String?  @db.Text
+  createdAt     DateTime @default(now())
 
   @@index([createdAt])
 }

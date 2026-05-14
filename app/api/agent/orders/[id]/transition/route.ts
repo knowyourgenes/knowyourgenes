@@ -7,7 +7,7 @@ type Params = Promise<{ id: string }>;
 /**
  * POST /api/agent/orders/[id]/transition
  *
- * Limited state machine — agents can only move forward through the
+ * Limited state machine - agents can only move forward through the
  * collection leg. Anything beyond SAMPLE_COLLECTED requires admin / lab.
  */
 const ALLOWED_FROM_TO: Record<string, string[]> = {

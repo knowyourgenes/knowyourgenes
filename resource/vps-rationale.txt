@@ -1,4 +1,4 @@
-KYG — Why a VPS is the right choice for this project
+KYG - Why a VPS is the right choice for this project
 =====================================================
 
 This document captures the positive case for hosting Know Your Genes
@@ -38,7 +38,7 @@ than a serverless platform.
 ------------------------------
 - Prisma + Postgres on serverless requires PgBouncer or Prisma Data
   Proxy to avoid exhausting connections on cold starts.
-- A long-lived Node process on a VPS keeps a single warm pool — simpler
+- A long-lived Node process on a VPS keeps a single warm pool - simpler
   config, lower latency, fewer surprises during traffic spikes.
 
 
@@ -84,7 +84,7 @@ than a serverless platform.
 9. Operational control and observability
 -----------------------------------------
 - Direct access to system logs, slow-query logs, pg_stat_statements,
-  iostat, journalctl — invaluable when diagnosing a partner API issue
+  iostat, journalctl - invaluable when diagnosing a partner API issue
   at 2am or a slow report query.
 - Self-hosted Grafana + Loki + Prometheus on the same box for free,
   no per-metric SaaS billing.

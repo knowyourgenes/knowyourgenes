@@ -1,5 +1,5 @@
 ================================================================
-PRIVACY POLICY — KnowYourGenes
+PRIVACY POLICY - KnowYourGenes
 Route: /privacy
 Last updated: 2026-05-12
 ================================================================
@@ -90,7 +90,7 @@ G. Communications
 3. HOW WE USE YOUR INFORMATION
 ------------------------------
 We use the information collected to:
-  - Fulfil the test you have booked — schedule the phlebotomist,
+  - Fulfil the test you have booked - schedule the phlebotomist,
     process the sample at our partner NABL-accredited lab, and
     deliver your report.
   - Provide pre-test and post-test genetic counselling, where
@@ -286,7 +286,7 @@ at least 14 days before they take effect.
 
 14. GRIEVANCE OFFICER & CONTACT
 -------------------------------
-[GRIEVANCE OFFICER NAME — fill in before publishing]
+[GRIEVANCE OFFICER NAME - fill in before publishing]
 BFG Market Consult Private Limited
 (operating the KnowYourGenes brand)
 SU 18, Pitam Pura, Delhi 110034, India

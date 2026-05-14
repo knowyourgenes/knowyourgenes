@@ -1,0 +1,117 @@
+ID,Category,Report,Answers the question,Key metrics,Filters,Granularity,Data source,Priority,Status
+1.1,Revenue & Sales,Daily revenue,How much did we make today?,"Gross revenue, net revenue, order count, AOV",Date,Day/week/month,Payment.status=CAPTURED minus REFUNDED,T1,Todo
+1.2,Revenue & Sales,Revenue by package,Which packages drive revenue?,"Revenue, units sold, % of total","Date range, category",Package,Order joined to Package,T1,Todo
+1.3,Revenue & Sales,Revenue by category,Wellness vs Cancer vs Cardiac etc.,"Revenue, AOV per category",Date range,Category,Order.package.category,T2,Todo
+1.4,Revenue & Sales,Average order value (AOV),Premium or entry-level buying pattern?,AOV trend over time,Date range,Day/week,Order.total,T2,Todo
+1.5,Revenue & Sales,Refund report,How much did we refund and why?,"Refund value, refund rate %, reason breakdown","Date range, reason",Day/month,"Payment.status IN (REFUNDED, PARTIALLY_REFUNDED)",T1,Todo
+1.6,Revenue & Sales,Payment method mix,UPI vs card vs net-banking vs EMI,Count and value per method,Date range,Day/month,Payment.method,T2,Todo
+1.7,Revenue & Sales,GST collected,For monthly GST filing,Total GST collected by SAC code,Month,Month,Order.total times GST rate,T1,Todo
+1.8,Revenue & Sales,Counselling revenue,Separate from package revenue,"Sessions booked, revenue, completion rate",Date range,Day/week,Consultation,T2,Todo
+2.1,Orders & Funnel,Orders by status,How many orders are stuck where?,"Count per status, % of total",Date range,Status,Order.status,T1,Partial
+2.2,Orders & Funnel,Conversion funnel,Where do we lose people?,Visitors -> product views -> cart adds -> checkouts -> payments,"Date range, source",Stage,Server-side events plus Order,T1,Todo (needs analytics events)
+2.3,Orders & Funnel,Cart abandonment,Who almost bought?,"Carts with no Order, recovery rate",Date range,Day,(NEW: AbandonedCart table),T2,Todo
+2.4,Orders & Funnel,Stuck-order alert,Orders not progressing in N days,"Order ID, current status, days stuck, customer",None,Real-time list,Order + OrderEvent.createdAt,T1,Todo
+2.5,Orders & Funnel,Cancellation reasons,Why are people cancelling?,"Count per reason, % of cancellations",Date range,Reason,Order.cancelReason,T2,Todo
+2.6,Orders & Funnel,Order source / attribution,Which channel drives orders?,Orders + revenue per source,Date range,Source,"(NEW: Order.source, Order.utm_*)",T1,Todo
+2.7,Orders & Funnel,First-order vs repeat,New customers vs existing?,"New customer count, repeat order rate",Date range,Day/month,Order joined to User.orders count,T2,Todo
+3.1,Customer Demographics,Age group breakdown,Who is our customer?,"% per bucket: 18-25, 26-35, 36-45, 46-55, 56+","Date range, category",Bucket,(NEW: User.dateOfBirth),T1,Todo
+3.2,Customer Demographics,Gender breakdown,Gender skew per category,% male / female / other,"Date range, category",Bucket,(NEW: User.gender),T1,Todo
+3.3,Customer Demographics,Geographic distribution,Where are orders coming from?,Orders + revenue per state/city/pincode,Date range,State -> city -> pincode,Order.address.pincode joined to ServiceArea,T1,Todo
+3.4,Customer Demographics,Top pincodes,Which pincodes are hot?,Top 20 pincodes by order count,Date range,Pincode,Order.address.pincode,T1,Todo
+3.5,Customer Demographics,City expansion candidates,Where do we have demand but no service?,"Waitlist signups per pincode, organic traffic per city",Date range,Pincode/city,(NEW: Waitlist table or analytics),T2,Todo
+3.6,Customer Demographics,Customer LTV,Lifetime value of a customer,"Avg lifetime spend, repeat purchase rate, time-to-second-purchase",Cohort month,User cohort,Order joined on User.createdAt cohort,T2,Todo
+3.7,Customer Demographics,Acquisition cohort retention,Do January customers come back?,% of cohort with 2nd purchase by month,Cohort month,Month,User.createdAt + Order.createdAt,T3,Todo
+4.1,Operations SLA,Dispatch SLA,How fast do we ship after booking?,Avg/p50/p95 hours BOOKED -> KIT_DISPATCHED,Date range,Order,OrderEvent time deltas,T1,Todo
+4.2,Operations SLA,Kit delivery SLA,How long does kit take to reach customer?,Avg/p50/p95 days KIT_DISPATCHED -> KIT_DELIVERED,"Date range, pincode",Order,Shipment.leg=FORWARD deltas,T1,Todo
+4.3,Operations SLA,Reverse pickup SLA,How fast does courier collect sample?,Avg hours KIT_DELIVERED -> SAMPLE_PICKED_UP,"Date range, pincode",Order,Shipment.leg=REVERSE,T1,Todo
+4.4,Operations SLA,Sample-to-lab SLA,Reverse leg duration,Avg/p95 days SAMPLE_PICKED_UP -> AT_LAB,"Date range, pincode",Order,Shipment.leg=REVERSE deltas,T1,Todo
+4.5,Operations SLA,Lab TAT,How long is the lab taking?,Avg/p50/p95 days AT_LAB -> REPORT_READY,"Date range, partner lab, package",Order,OrderEvent deltas,T1,Todo
+4.6,Operations SLA,End-to-end TAT,Booking -> report-in-hand,Avg/p50/p95 days BOOKED -> REPORT_READY,"Date range, package, pincode",Order,OrderEvent deltas,T1,Todo
+4.7,Operations SLA,Shipment failure rate,RTO / failed deliveries,"Failed shipments %, by courier, by reason","Date range, courier",Courier,"Shipment.status IN (RTO, FAILED)",T2,Todo
+4.8,Operations SLA,Courier comparison,Which courier performs better?,"TAT, delivery rate, RTO rate per courier",Date range,Courier,Shipment.courier,T2,Todo
+4.9,Operations SLA,Kit inventory,How many days of kits do we have?,"Kits on hand, dispatch velocity, days remaining",None,Real-time,(NEW: KitInventory table or manual count),T2,Todo
+5.1,Lab Partner Performance,Reports per partner,Volume per lab,"Reports delivered, samples received, % share","Date range, partner",Partner,Order.labPartnerId,T2,Todo
+5.2,Lab Partner Performance,Lab TAT by partner,Which partner is fastest?,Avg/p95 TAT per partner,"Date range, package",Partner,Order + OrderEvent,T2,Todo
+5.3,Lab Partner Performance,Critical findings rate,% reports flagging critical variant,% Report.criticalFinding=true per partner,"Date range, partner",Partner,Report.criticalFinding,T3,Todo
+5.4,Lab Partner Performance,Sample rejection rate,How often does a sample fail QC?,"Re-collection count, % of samples","Date range, partner",Partner,(NEW: Order.sampleRejected + reason),T2,Todo
+6.1,Counselling,Counselling attach rate,% customers booking counselling,"Bookings / total orders, by category",Date range,Package,Consultation joined to Order history,T2,Todo
+6.2,Counselling,Counsellor utilisation,Are counsellors busy?,"Sessions per counsellor per week, no-show rate","Date range, counsellor",Counsellor,Consultation.status,T2,Todo
+6.3,Counselling,No-show / cancellation rate,Are people showing up?,% sessions with NO_SHOW or CANCELLED,Date range,Counsellor,Consultation.status,T2,Todo
+6.4,Counselling,Session language mix,Which languages do we need?,Sessions per language,Date range,Language,Consultation.language,T3,Todo
+7.1,Marketing & Promotions,Coupon performance,Which codes worked?,"Uses, revenue, total discount given, CAC","Date range, code",Coupon,Coupon.usageCount + Order.couponCode,T1,Todo
+7.2,Marketing & Promotions,Coupon abuse alert,Is any code being used too aggressively?,"Codes hitting cap, codes used by repeat-same-user",Real-time,Coupon,Order.couponCode group by,T2,Todo
+7.3,Marketing & Promotions,Campaign / UTM performance,Which campaign gave best ROAS?,"Orders, revenue, AOV per utm_campaign",Date range,Campaign,(NEW: Order.utm_* fields),T1,Todo
+7.4,Marketing & Promotions,Source / channel,Where do orders come from?,Orders per source: ig/google/direct/referral/wa,Date range,Source,(NEW: Order.source),T1,Todo
+7.5,Marketing & Promotions,B2B leads pipeline,Where are corporate-wellness leads?,Leads in / qualified / converted,Date range,Stage,PartnerLead (needs status field),T3,Todo
+8.1,Communications & Support,Notification delivery,Are our messages landing?,Sent/Delivered/Failed per channel + template,"Date range, channel, template",Day,Notification.status,T1,Todo
+8.2,Communications & Support,Failed notifications drill-down,Which templates/numbers are failing?,Failed rows with reason,"Date range, channel",Notification,Notification.status=FAILED,T1,Todo
+8.3,Communications & Support,WhatsApp read rate,Are people opening our messages?,% READ of delivered per template,"Date range, template",Template,Notification.status=READ,T2,Todo
+8.4,Communications & Support,Contact form inbox,Customer-service queue,"Open messages count, oldest unanswered",Resolved flag,Real-time,ContactMessage.resolved=false,T1,Partial
+8.5,Communications & Support,Topic mix,What are customers asking about?,Contact-form topic breakdown,Date range,Topic,ContactMessage.topic,T2,Todo
+8.6,Communications & Support,First-response time,How fast does CS reply?,Avg/p95 time to mark resolved,Date range,Day,(NEW: ContactMessage.respondedAt),T2,Todo
+9.1,Agent (Phase 2),Collections per agent per day,Are agents productive?,Collections per agent per day,Date range,Agent,AgentProfile.collectionsTotal + OrderEvent,T3,Todo
+9.2,Agent (Phase 2),On-time rate per agent,Who is reliable?,On-time arrival rate %,Date range,Agent,AgentProfile.onTimeRate,T3,Todo
+9.3,Agent (Phase 2),Zone coverage,Where do we need more agents?,Active agents per zone vs order count per zone,Date range,Zone,AgentProfile.zone joined to Order pincodes,T3,Todo
+9.4,Agent (Phase 2),Agent rating distribution,Customer feedback per agent,Avg rating per agent,Date range,Agent,AgentProfile.rating,T3,Todo
+10.1,Compliance & Audit,DPDP requests log,Data access/deletion requests + TAT,"Count, TAT in days","Date range, type",Day,(NEW: DataSubjectRequest table),T2,Todo
+10.2,Compliance & Audit,Consent capture rate,% orders with signed consent attached,% with Order.consentFormUrl not null,Date range,Day,Order.consentFormUrl IS NOT NULL,T1,Todo
+10.3,Compliance & Audit,Reports delivered without counsellor review,Who got through unchecked?,Count of Report.reviewedById null,Date range,Report,Report.reviewedById IS NULL,T2,Todo
+10.4,Compliance & Audit,Refund TAT compliance,Within CPA Rules window?,TAT in days from refund request to refund issued,Date range,Day,Payment.capturedAt -> REFUNDED delta,T2,Todo
+10.5,Compliance & Audit,Admin actions audit,Who did what in /admin?,Action log,"Date range, actor",User,OrderEvent.actorId + future AdminActionLog,T2,Todo
+10.6,Compliance & Audit,Inactive admin accounts,Stale logins risk,Last login per admin,Inactivity threshold,User,User.role IN (ADMIN/etc) + Session.expires,T2,Todo
+10.7,Compliance & Audit,Data retention compliance,Customers past retention window,User count + report age,None,User,User.deletedAt + report age,T3,Todo
+11.1,Executive / KPI,Single-page exec dashboard,Founder's morning glance,Top tiles aggregator,Date range,Tile,Aggregated from all of above,T1,Partial
+11.2,Executive / KPI,Slack/WhatsApp daily digest at 09:00 IST,Push key numbers without opening admin,Subset of 11.1,Daily,Day,Cron job + WhatsApp template,T2,Todo
+11.3,Executive / KPI,Anomaly alerts,Alert when something is off,"Revenue drop > 30%, stuck orders > 5, refund spike",Real-time,Event,Threshold checks,T2,Todo
+1.9,Revenue & Sales,Report unlock revenue (NEW),A-la-carte and bundle unlocks from LTV engine,"Unlock count, revenue, top unlocked reports, attach rate",Date range,Week/month,(NEW TABLE: ReportUnlock),T2,Todo (needs schema)
+1.10,Revenue & Sales,Consultation revenue by tier (NEW),Std vs premium vs concierge revenue per counsellor,"Sessions, revenue per tier, counsellor share","Date range, tier",Week/month,Consultation + (NEW FIELD: Consultation.tier),T2,Todo (needs schema)
+1.11,Revenue & Sales,Annual updates membership revenue (NEW),The recurring revenue line,"Active members, MRR, churn, renewal rate, ARPU",Date range,Month,(NEW TABLE: Membership),T2,Todo (needs schema)
+1.12,Revenue & Sales,Family bundle revenue (NEW),Couple / sibling / family / parent add-on orders,"Bundle revenue, units, attach rate per type",Bundle type,Week/month,"(NEW FIELD: Order.bundleType OR Order.parentOrderId)",T2,Todo (needs schema)
+1.13,Revenue & Sales,B2B and corporate revenue (NEW),Corp wellness / IVF / hospital / insurer revenue,"Revenue by account, contract value, renewal date","Account, date",Account,"(NEW TABLES: B2BAccount + B2BContract)",T2,Todo (needs schema)
+1.14,Revenue & Sales,COGS and gross margin (NEW),The number that decides actual profitability,"Per-order COGS (kit + courier + lab + PG), gross margin per test","Date range, test",Order/test,"(NEW FIELDS: Package.unitCost, Order.cogs*)",T1,Todo (needs schema)
+2.8,Orders & Funnel,Self vs add-on order split (NEW),Solo orders vs family/couple/parent add-ons,"Self %, add-on %, conversion of solo to family",Date range,Type,(NEW FIELD: Order.parentOrderId or Order.bundleType),T2,Todo (needs schema)
+2.9,Orders & Funnel,Doctor referral tracking (NEW),Orders attributed to doctors / hospitals / IVF clinics,"Referrer name, orders, revenue, share due","Date range, referrer",Referrer,(NEW TABLE: Referrer + Order.referrerId),T2,Todo (needs schema)
+3.8,Customer Demographics,Customer segment health (NEW),Counts in each LTV segment + month-on-month movement,"Count per segment, churn between segments",Date range,Month,Derived view over User + Order + classification rules,T2,Todo
+3.9,Customer Demographics,Tier 1 vs Tier 2 city performance (NEW),"Volume, AOV, conversion, LTV split by city tier","Orders, AOV, LTV per tier",Date range,Tier,Order.address.city + tier lookup,T2,Todo
+4.10,Operations SLA,Reverse logistics live trace (NEW),Every sample in transit + lost-sample log + stuck flags,"In-transit count, average pickup-to-lab hours, lost samples",None,Real-time,Shipment.leg=REVERSE + alert thresholds,T1,Todo
+4.11,Operations SLA,Recollection rate ops view (NEW),% of orders needing a second sample (target <3%),"Recollection count, % of total, by reason","Date range, reason",Week,(NEW FIELD: Order.recollectionCount + Order.recollectionReason),T1,Todo (needs schema)
+5.5,Lab Partner Performance,Lab cost per report (NEW),Per-test cost paid to each partner,"Cost per test, cost per panel, partner volume","Date range, partner",Partner,(NEW TABLE: LabPartnerPricing),T1,Todo (needs schema)
+5.6,Lab Partner Performance,Inter-lab result consistency (NEW),Sample-level result comparison across partners,"Concordance %, deviating partners, flagged samples","Date range, panel",Sample,Report.markers joined cross-partner,T3,Todo
+6.5,Counselling,CSAT and NPS per counsellor (NEW),Customer satisfaction + NPS per consultation,"CSAT score, NPS, comments per counsellor","Date range, counsellor",Counsellor,(NEW TABLE: ConsultationFeedback),T2,Todo (needs schema)
+6.6,Counselling,Consultation topic mix (NEW),Top topics raised in sessions,Topic frequencies + trends,Date range,Topic,(NEW FIELD: Consultation.topics: Json),T2,Todo (needs schema)
+6.7,Counselling,Counsellor specialisation performance (NEW),Per counsellor conversion + CSAT by specialisation,"Conversion %, CSAT per specialisation","Date range, counsellor",Specialisation,CounsellorProfile.specialty + ConsultationFeedback,T3,Todo (needs schema)
+7.6,Marketing & Promotions,LTV-to-CAC ratio (NEW),Per-channel 12-month projected LTV / acquisition cost,"LTV, CAC, ratio per channel","Date range, channel",Channel,Order.attrSource + (NEW TABLE: AdSpend),T1,Todo (needs schema)
+7.7,Marketing & Promotions,Referral program report (NEW),"Active referrers, codes sent, conversions, wallet credit","Referrer count, conversion rate, credit issued vs redeemed",Date range,Day/week,(NEW TABLE: Referral),T2,Todo (needs schema)
+7.8,Marketing & Promotions,Influencer / doctor campaign tracking (NEW),Per-partner: codes issued / redemptions / revenue / ROAS,"Redemptions, revenue, ROAS per partner","Date range, partner",Partner,Campaign joined to Order + Campaign.partnerType,T2,Todo (needs schema)
+7.9,Marketing & Promotions,Content performance (NEW),Blog/video/social ranked by acquisition + engagement,"Pageviews, conversions, AOV per URL",Date range,URL,Event capture per URL + Order.attrLandingPath,T2,Todo
+8.7,Communications & Support,WhatsApp cost report (NEW),Per-message cost across template categories,"Cost per category (utility/marketing/auth), monthly trend","Date range, template type",Template,(NEW FIELD: Notification.providerCostPaise),T1,Todo (needs schema)
+8.8,Communications & Support,Unsubscribe and opt-out trend (NEW),Unsubscribe rate by channel + message type,Unsubscribe rate per channel/template,"Date range, channel",Day,(NEW TABLE: OptOutEvent),T2,Todo (needs schema)
+10.8,Compliance & Audit,Genetic counselling mandate compliance (NEW),% offered + completed pre/post-test counselling,"% offered, % completed","Date range, package",Package,Order x Consultation join,T2,Todo
+10.9,Compliance & Audit,Re-consent for research use (NEW),Who consented for what research use case + when,"Re-consent rate, expired consents",Date range,User,(NEW TABLE: ResearchConsent),T3,Todo (needs schema)
+10.10,Compliance & Audit,Data breach incident log (NEW),Every potential/confirmed data incident,"Timestamp, scope, remediation, authority notification within 72h",None,Incident,(NEW TABLE: SecurityIncident),T1,Todo (needs schema)
+11.4,Executive / KPI,Board pack monthly (NEW),Auto-generated investor/board report,"Revenue, growth, gross margin, customer adds, LTV, CAC, runway, risks",Month,Month,Aggregated from all dashboards,T2,Todo
+11.5,Executive / KPI,Cohort profitability report (NEW),Each acquisition cohort's actual contribution margin over time,"Revenue - COGS - CAC per cohort, by month",Cohort month,Month,Order + Payment + AdSpend join,T2,Todo (needs schema)
+12.1,Product & Engagement,DAU / WAU / MAU (NEW),Are we engaged or just transacted-with?,"Active user counts (daily/weekly/monthly), retention curves",Date range,Day,(NEW TABLE: AppEvent),T2,Todo (needs schema)
+12.2,Product & Engagement,Report read rate (NEW),% of unlocked reports actually opened by customer,"Reports unlocked, opened, time-to-first-view","Date range, report type",Report,(NEW FIELDS: Report.firstViewedAt + Report.viewCount),T2,Todo (needs schema)
+12.3,Product & Engagement,Time on report page (NEW),Identifies reports too dense/thin/unclear,"Avg / median time per report, drop-off depth",Date range,Report,(NEW: page-event analytics per report),T3,Todo (needs schema)
+12.4,Product & Engagement,Feature usage funnel (NEW),"Per-feature adoption, drop-off, repeat usage","Adoption %, repeat-use %, funnel drop-off",Feature,Feature,(NEW TABLE: AppEvent),T2,Todo (needs schema)
+12.5,Product & Engagement,Internal search-term report (NEW),What customers search inside the platform,"Top terms, no-result terms, conversion from search",Date range,Term,(NEW TABLE: SearchQuery log),T3,Todo (needs schema)
+12.6,Product & Engagement,Mobile app vs web usage (NEW),Where engagement happens,"Sessions, conversion, revenue by device class",Date range,Device,User-agent on session events,T3,Todo (needs schema)
+13.1,Clinical Outcomes,Clinically actionable findings rate (NEW),% of reports surfacing an actionable finding,% with HIGH or MODERATE + recommended action,"Date range, panel",Panel,Report.markers filtered,T2,Todo
+13.2,Clinical Outcomes,Critical finding follow-through (NEW),Of critical findings: how many got counsellor / physician / re-test,"% receiving follow-up call, % escalated to physician","Date range, partner",Partner,Report.criticalFinding=true joined to Consultation + (NEW: FollowUpAction),T1,Todo (needs schema)
+13.3,Clinical Outcomes,False positive / negative tracking (NEW),Where confirmatory testing showed report was wrong,"Concordance %, mis-call count, by lab","Date range, panel",Panel,(NEW TABLE: ReportConfirmation),T2,Todo (needs schema)
+13.4,Clinical Outcomes,Adverse event log (NEW),Customer harm or near-miss attributable to a report,"Severity, root cause, remediation status",None,Incident,(NEW TABLE: AdverseEvent),T1,Todo (needs schema)
+13.5,Clinical Outcomes,Report revision history (NEW),Reports re-issued after initial release,"Revision count, reason, customer notification","Date range, report",Report,(NEW: Report.parentReportId + Report.revisionNote),T3,Todo (needs schema)
+14.1,Returns & Recovery,Failed sample report (NEW),Samples that could not be processed,"Failure count, % of total, reason breakdown, partner involved","Date range, reason",Reason,(NEW FIELDS: Order.sampleRejected + Order.sampleRejectionReason),T1,Todo (needs schema)
+14.2,Returns & Recovery,Recollection rate (NEW),% of customers asked for a second sample (target <3%),"Recollection count, % of total","Date range, reason",Week,(NEW FIELD: Order.recollectionCount),T1,Todo (needs schema)
+14.3,Returns & Recovery,Customer recovery funnel (NEW),Retention rate after a failure / refund / complaint,"Retention %, LTV after recovery, next-purchase rate","Date range, failure type",Failure mode,OrderEvent + Order.userId cohort,T2,Todo
+14.4,Returns & Recovery,Win-back campaign performance (NEW),Lapsed customers reactivated via win-back,"Reactivation rate, incremental revenue",Date range,Campaign,Campaign + last-order-date cohort,T3,Todo
+15.1,"Privacy, Security & Trust",Privacy settings adoption (NEW),% of customers who actively configured privacy preferences,"Adoption rate, by preference type",Date range,User,(NEW TABLE: UserPrivacyPreference),T2,Todo (needs schema)
+15.2,"Privacy, Security & Trust",2FA adoption (NEW),% of accounts with MFA enabled,"% enabled overall, % by role",None,User,(NEW FIELD: User.twoFactorMethod),T2,Todo (needs schema)
+15.3,"Privacy, Security & Trust",Login anomaly alerts (NEW),Unusual access patterns,"New device, new geo, failed attempt clusters",Real-time,Event,(NEW TABLE: LoginEvent),T1,Todo (needs schema)
+15.4,"Privacy, Security & Trust",Third-party data sharing audit (NEW),Every data flow to a third party,"Recipient, purpose, consent basis, contract ref",None,Recipient,(NEW TABLE: DataProcessingActivity),T2,Todo (needs schema)
+15.5,"Privacy, Security & Trust",Customer data export log (NEW),Every DPDP-mandated data export,"Requestor, exporter, payload type, timestamp",Date range,Request,(NEW TABLE: DataExportRequest),T2,Todo (needs schema)
+16.1,Doctor & Partner Portal,Partner account dashboard (NEW),"Per partner: orders, revenue, share due, payouts","Orders referred, revenue, share due, payout history",Partner,Partner,(NEW TABLE: B2BAccount),T2 (T1 if B2B live),Todo (needs schema)
+16.2,Doctor & Partner Portal,Doctor prescription pattern (NEW),Which tests each doctor recommends most,"Tests prescribed, conversion %, AOV per doctor","Date range, doctor",Doctor,(NEW TABLE: Referrer + Order.referrerId),T3,Todo (needs schema)
+16.3,Doctor & Partner Portal,Corporate wellness utilisation (NEW),Per corp account: enrolment + redemption + consultation,"Enrolled, redeemed, consulted","Date range, account",Account,(NEW TABLES: B2BContract + B2BEmployee),T2 (T1 if B2B live),Todo (needs schema)
+16.4,Doctor & Partner Portal,Partner payout reconciliation (NEW),"Share calculated, invoiced, paid, disputed","Pending, paid, disputed amounts","Date range, partner",Partner,(NEW TABLE: PartnerPayout),T2,Todo (needs schema)

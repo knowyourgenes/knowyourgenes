@@ -1,5 +1,5 @@
 ================================================================
-TERMS OF SERVICE — KnowYourGenes
+TERMS OF SERVICE - KnowYourGenes
 Route: /terms
 Last updated: 2026-05-12
 ================================================================
@@ -162,9 +162,9 @@ your behalf without separate written consent.
 
 7. INTELLECTUAL PROPERTY
 ------------------------
-All content on the Platform — text, images, logos, software,
+All content on the Platform - text, images, logos, software,
 report templates, scientific commentary, and the KnowYourGenes
-name and marks — is owned by BFG Market Consult Private Limited
+name and marks - is owned by BFG Market Consult Private Limited
 or licensed to us, and is protected by Indian and international
 intellectual property law.
 

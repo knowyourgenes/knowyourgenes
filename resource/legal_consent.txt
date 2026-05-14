@@ -1,5 +1,5 @@
 ================================================================
-GENETIC TESTING CONSENT — KnowYourGenes
+GENETIC TESTING CONSENT - KnowYourGenes
 Route: /consent  (linked from footer; also signed digitally at the
                   point of sample collection)
 Last updated: 2026-05-12
@@ -100,7 +100,7 @@ You acknowledge that:
     request, subject to fees in force at that time.
 
 
-5. OPTIONAL — RESEARCH PARTICIPATION (SEPARATE OPT-IN)
+5. OPTIONAL - RESEARCH PARTICIPATION (SEPARATE OPT-IN)
 ------------------------------------------------------
 You may, separately and entirely at your option, consent to your
 de-identified genetic data and self-reported phenotype information

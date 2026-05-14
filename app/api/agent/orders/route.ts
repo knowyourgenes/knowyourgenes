@@ -5,7 +5,7 @@ import type { Prisma } from '@prisma/client';
 /**
  * GET /api/agent/orders
  *   ?status=PENDING|EN_ROUTE|COLLECTED|AT_LAB|ALL
- *   &date=YYYY-MM-DD     (optional — defaults to today)
+ *   &date=YYYY-MM-DD     (optional - defaults to today)
  *
  * Returns orders assigned to the calling agent. The "tabs" are convenience
  * groupings that map to multiple OrderStatus values:

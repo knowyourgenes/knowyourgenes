@@ -1,5 +1,5 @@
 ================================================================
-ABOUT US — KnowYourGenes
+ABOUT US - KnowYourGenes
 Route: /about
 Last updated: 2026-05-12
 ================================================================
@@ -43,14 +43,14 @@ WHAT WE DO
 We work with NABL-accredited partner labs and licensed clinical
 geneticists to offer panel-based DNA tests covering:
 
-  - Wellness — nutrition, fitness, sleep, stress, vitamin and
+  - Wellness - nutrition, fitness, sleep, stress, vitamin and
     mineral metabolism.
-  - Drug sensitivity — pharmacogenomic markers relevant to
+  - Drug sensitivity - pharmacogenomic markers relevant to
     common prescription medicines.
-  - Cardiac — inherited risk markers for cardiovascular disease.
-  - Cancer risk — hereditary cancer-syndrome screening (BRCA,
+  - Cardiac - inherited risk markers for cardiovascular disease.
+  - Cancer risk - hereditary cancer-syndrome screening (BRCA,
     Lynch, and related panels).
-  - Reproductive — pre-conception carrier screening and family
+  - Reproductive - pre-conception carrier screening and family
     planning panels, offered strictly within the framework of
     the PCPNDT Act, 1994.
 
@@ -87,13 +87,13 @@ HOW WE'RE DIFFERENT
 OUR BELIEFS
 -----------
   - Information is not a diagnosis. A report is a starting
-    point for a conversation with your doctor — not a verdict.
+    point for a conversation with your doctor - not a verdict.
   - Genetic risk is probabilistic, not predictive. We will not
     tell you that you will get a disease. We will tell you what
     your DNA suggests about predisposition, and what the
     evidence says you can do about it.
   - Counselling matters. Especially for cancer-risk and
-    reproductive panels, the report is the easy part — the
+    reproductive panels, the report is the easy part - the
     conversation is the important part. We bake in counselling
     where it counts.
 
@@ -116,17 +116,17 @@ Replace with founder and core-team bios. Each tile should carry:
 name, role, one-line credentials, photo. For the clinical
 advisory board, include MBBS / MD Pathology / MSc Genetics or
 equivalent qualification and the medical-council registration
-number — this materially helps Razorpay reviewers and
+number - this materially helps Razorpay reviewers and
 also reads as credible to patients.
 
 
 MILESTONES (placeholder)
 ------------------------
-  2026 May  — KnowYourGenes launches in Delhi NCR with at-home
+  2026 May  - KnowYourGenes launches in Delhi NCR with at-home
               sample collection.
-  [next]    — Expand to ___ pincodes / ___ cities.
-  [next]    — Launch corporate wellness programme.
-  [next]    — Add ___ panel.
+  [next]    - Expand to ___ pincodes / ___ cities.
+  [next]    - Launch corporate wellness programme.
+  [next]    - Add ___ panel.
 
 
 CONTACT
@@ -135,7 +135,7 @@ BFG Market Consult Private Limited
 (operating the KnowYourGenes brand)
 SU 18, Pitam Pura, Delhi 110034, India
 CIN: U74999DL2010PTC207582
-GSTIN: [GSTIN — fill in before publishing]
+GSTIN: [GSTIN - fill in before publishing]
 Email: care@kyg.in
 Phone: +91 11 4000 0000
 

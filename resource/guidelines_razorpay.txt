@@ -1,5 +1,5 @@
 ================================================================
-RAZORPAY ACCOUNT CREATION & ONBOARDING — GUIDELINES
+RAZORPAY ACCOUNT CREATION & ONBOARDING - GUIDELINES
 For: KnowYourGenes (Healthcare > Diagnostic Center category)
 ================================================================
 
@@ -39,11 +39,11 @@ DOCUMENTS YOU MUST PROVIDE
 --------------------------
 Personal KYC (of the authorized signatory):
   - PAN card (individual)
-  - Aadhaar — front and back
+  - Aadhaar - front and back
   - Valid email and Indian mobile number
 
 Business KYC:
-  - Business PAN (for Pvt Ltd / LLP / Partnership — the entity PAN,
+  - Business PAN (for Pvt Ltd / LLP / Partnership - the entity PAN,
     not the founder's personal PAN)
   - GST certificate (if registered; mandatory above the GST
     threshold or if voluntarily registered)
@@ -57,7 +57,7 @@ Bank Proof:
     account number, and IFSC code
 
 Category-specific (Healthcare > Diagnostic Center):
-  - Affiliation Certificate — see guidelines_affiliate.txt
+  - Affiliation Certificate - see guidelines_affiliate.txt
 
 
 MANDATORY WEBSITE PAGES
@@ -138,7 +138,7 @@ COMMON REJECTION REASONS (RANK-ORDERED)
 ---------------------------------------
   1. Missing or incomplete legal pages (especially refund policy)
   2. Business name mismatch across documents
-  3. Website that looks unfinished — broken links, "coming soon"
+  3. Website that looks unfinished - broken links, "coming soon"
      sections, placeholder text
   4. Personal savings account submitted instead of current account
      in the business name
@@ -147,7 +147,7 @@ COMMON REJECTION REASONS (RANK-ORDERED)
   7. Expired or non-matching affiliation document
 
 
-ONBOARDING WORKFLOW — RECOMMENDED ORDER
+ONBOARDING WORKFLOW - RECOMMENDED ORDER
 ---------------------------------------
   1. Decide legal entity type. For a healthcare platform a Pvt Ltd
      is strongly recommended (limits personal liability and is
@@ -162,7 +162,7 @@ ONBOARDING WORKFLOW — RECOMMENDED ORDER
      upload all documents. Use the cover-note approach from
      guidelines_affiliate.txt if you are early-stage.
   6. Expect 2-5 business days for review. If rejected, the email
-     will state the specific reason — fix only that and resubmit.
+     will state the specific reason - fix only that and resubmit.
 
 
 FAST-APPROVAL BUNDLE (WHAT TO UPLOAD)
@@ -174,7 +174,7 @@ For a small / early-stage diagnostic platform, the smoothest path is:
   [ ] Certificate of Incorporation (Pvt Ltd)
   [ ] Cancelled cheque of business current account
   [ ] MSME / Udyam (helpful, not mandatory)
-  [ ] Affiliation proof — see guidelines_affiliate.txt
+  [ ] Affiliation proof - see guidelines_affiliate.txt
   [ ] Personal PAN + Aadhaar of authorized signatory
   [ ] Live website with all six mandatory pages working
 

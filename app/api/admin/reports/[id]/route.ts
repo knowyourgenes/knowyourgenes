@@ -22,7 +22,7 @@ export async function GET(_req: Request, { params }: { params: Params }) {
   });
 }
 
-// Hard delete (R2 + db). Use with care — usually we'd soft-delete, but
+// Hard delete (R2 + db). Use with care - usually we'd soft-delete, but
 // reports are PII and should be removable on user-deletion request.
 export async function DELETE(_req: Request, { params }: { params: Params }) {
   return handle(async () => {
@@ -33,7 +33,7 @@ export async function DELETE(_req: Request, { params }: { params: Params }) {
     if (!report) throw new Error('Report not found');
 
     await deleteObject(report.pdfKey).catch(() => {
-      // Don't block delete if R2 already missing — log and continue.
+      // Don't block delete if R2 already missing - log and continue.
     });
     await prisma.report.delete({ where: { id } });
     return ok({ id });
