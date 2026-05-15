@@ -63,11 +63,11 @@ C. Health and lifestyle questionnaire data ("Health Information")
      and any context you choose to share with a counsellor.
 
 D. Genetic data ("Genetic Data")
-   - The biological sample (saliva / blood) collected by our
-     phlebotomist, the DNA sequence variants generated from it,
-     and the downstream interpretive output. Genetic Data is
-     "sensitive personal information" under the SPDI Rules and is
-     treated as such.
+   - The biological sample (saliva or buccal swab) you self-collect
+     using the kit we ship, the DNA sequence variants generated
+     from it, and the downstream interpretive output. Genetic
+     Data is "sensitive personal information" under the SPDI
+     Rules and is treated as such.
 
 E. Device and usage data
    - IP address, browser, device, operating system, referrer,
@@ -76,10 +76,9 @@ E. Device and usage data
      not opted out) for product analytics and security.
 
 F. Location data
-   - The pincode and full address required to dispatch a
-     phlebotomist. We do not track real-time location of users.
-     Our phlebotomist's location is tracked only during an active
-     collection appointment, for safety and dispatch.
+   - The pincode and full address required to ship the kit and
+     schedule the reverse pickup. We do not track real-time
+     location of users.
 
 G. Communications
    - Records of your interactions with our care team, WhatsApp
@@ -136,11 +135,13 @@ affect processing already lawfully carried out.
 5. HOW WE HANDLE SAMPLES AND GENETIC DATA
 -----------------------------------------
 A. Sample handling
-   Once collected, your sample is labelled with a unique de-
-   identified accession number. Your name and address are
-   stripped from the physical sample before it reaches the lab.
-   Only the KYG operations team and the lab's reporting
-   pathologist can re-link the accession number to your identity.
+   Each kit is labelled with a unique de-identified accession
+   number (the "kit code"). When you register the kit in your
+   KYG account, that code is linked to your identity in our
+   database — but the physical sample that travels to the lab
+   carries only the code, not your name or address. Only the
+   KYG operations team and the lab's reporting pathologist can
+   re-link the accession number to your identity.
 
 B. Storage
    Samples are stored at our partner NABL-accredited lab for a

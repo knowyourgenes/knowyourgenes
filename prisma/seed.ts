@@ -352,10 +352,11 @@ async function main() {
   }
   console.log(`  ✓ Packages: ${packages.length}`);
 
-  // SERVICE AREA PINCODES
+  // SERVICE AREA PINCODES — keyed on (pincode, area) since one pincode can
+  // cover multiple post offices / localities.
   for (const s of delhiNcrPincodes) {
     await prisma.serviceArea.upsert({
-      where: { pincode: s.pincode },
+      where: { pincode_area: { pincode: s.pincode, area: s.area } },
       update: s,
       create: s,
     });

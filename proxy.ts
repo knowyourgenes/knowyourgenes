@@ -36,8 +36,22 @@ export default proxy((req) => {
   const hasUtmInUrl =
     url.searchParams.has('utm_source') || url.searchParams.has('utm_campaign') || url.searchParams.has('utm_medium');
 
+  // Paid-click identifiers count as fresh marketing signal too — treat the
+  // same as a UTM-tagged link so last-touch refreshes on gclid/fbclid/etc.
+  const hasClickIdInUrl =
+    url.searchParams.has('gclid') ||
+    url.searchParams.has('gbraid') ||
+    url.searchParams.has('wbraid') ||
+    url.searchParams.has('fbclid') ||
+    url.searchParams.has('msclkid') ||
+    url.searchParams.has('ttclid') ||
+    url.searchParams.has('li_fat_id') ||
+    url.searchParams.has('twclid');
+
+  const hasMarketingSignal = hasUtmInUrl || hasClickIdInUrl;
+
   const shouldCapture =
-    !existing || (ATTRIBUTION_MODEL === 'last-touch' && hasUtmInUrl) || url.searchParams.has('attr_refresh');
+    !existing || (ATTRIBUTION_MODEL === 'last-touch' && hasMarketingSignal) || url.searchParams.has('attr_refresh');
 
   if (DEBUG_ATTRIBUTION) {
     // eslint-disable-next-line no-console
@@ -46,6 +60,7 @@ export default proxy((req) => {
       JSON.stringify({
         hasCookie: !!existing,
         hasUtm: hasUtmInUrl,
+        hasClickId: hasClickIdInUrl,
         shouldCapture,
         referer: req.headers.get('referer'),
       })

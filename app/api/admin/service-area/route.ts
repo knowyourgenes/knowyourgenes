@@ -16,11 +16,30 @@ export async function GET(req: Request) {
 
     const where: Prisma.ServiceAreaWhereInput = {};
     if (params.q) {
-      where.OR = [
-        { pincode: { contains: params.q } },
-        { area: { contains: params.q, mode: 'insensitive' } },
-        { district: { contains: params.q, mode: 'insensitive' } },
-      ];
+      // Pincodes are digits-only; an alphabetic query like "delhi" can never
+      // match the pincode column, so don't include that branch in the OR —
+      // it forces the planner to consider a third index that returns 0 rows.
+      // Area / district searches go through the pg_trgm GIN indexes.
+      const hasDigits = /\d/.test(params.q);
+      const isPincodePrefix = /^\d{1,6}$/.test(params.q);
+      const branches: Prisma.ServiceAreaWhereInput[] = [];
+      if (hasDigits) {
+        // For all-digit queries do a fast prefix match (uses the pincode
+        // btree index). For mixed-content queries fall back to contains.
+        branches.push(
+          isPincodePrefix ? { pincode: { startsWith: params.q } } : { pincode: { contains: params.q } }
+        );
+      }
+      // Only do the expensive ILIKE branches when the query has at least one
+      // alphabetic character.
+      const hasAlpha = /[a-zA-Z]/.test(params.q);
+      if (hasAlpha) {
+        branches.push(
+          { area: { contains: params.q, mode: 'insensitive' } },
+          { district: { contains: params.q, mode: 'insensitive' } }
+        );
+      }
+      if (branches.length > 0) where.OR = branches;
     }
     if (params.state) where.state = params.state;
     if (params.district) where.district = params.district;
@@ -47,14 +66,15 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     // Bulk upsert: { pincodes: [{pincode, area, district?, state?, city?}, ...] }
+    // Composite-keyed on (pincode, area) — same pincode with different areas
+    // becomes separate rows.
     if (Array.isArray(body?.pincodes)) {
       const { pincodes } = serviceAreaBulk.parse(body);
       const results = await prisma.$transaction(
         pincodes.map((p) =>
           prisma.serviceArea.upsert({
-            where: { pincode: p.pincode },
+            where: { pincode_area: { pincode: p.pincode, area: p.area } },
             update: {
-              area: p.area,
               district: p.district ?? '',
               state: p.state ?? '',
               city: p.city ?? p.district ?? '',

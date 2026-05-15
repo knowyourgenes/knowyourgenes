@@ -5,26 +5,37 @@ import { LegalPage } from '@/components/site/LegalPage';
 export const metadata: Metadata = {
   title: 'Genetic Testing Consent',
   description:
-    'The informed consent you give KnowYourGenes before we collect and analyse your DNA &mdash; what you are agreeing to, what you understand, and what we will not do.',
+    'The informed consent you give KnowYourGenes before we collect and analyse your DNA — captured online at checkout and re-confirmed when you register your kit on the dashboard.',
 };
 
 export default function ConsentPage() {
   return (
-    <LegalPage title="Genetic Testing Consent" updated="12 May 2026">
+    <LegalPage title="Genetic Testing Consent" updated="14 May 2026">
       <p>
         This document is the informed consent you give KnowYourGenes (&ldquo;KYG&rdquo;, operated by BFG Market Consult
-        Private Limited) before we collect and analyse your DNA. You must read and accept this consent before the
-        phlebotomist draws your sample. A signed digital copy is retained in your account.
+        Private Limited) before we analyse your DNA. Consent is captured at two points:
       </p>
+      <ul>
+        <li>
+          <strong>At checkout</strong> — by ticking &ldquo;I have read and accept the Genetic Testing Consent&rdquo;
+          before payment.
+        </li>
+        <li>
+          <strong>At kit registration</strong> — when you scan or enter your kit code in your KYG account before
+          scheduling the reverse pickup, you re-confirm this consent specifically for the sample you have just
+          collected.
+        </li>
+      </ul>
       <p>
-        If you are booking for a minor or a dependent adult unable to consent themselves, the parent, legal guardian, or
-        attorney-in-fact provides this consent on their behalf.
+        Both points produce a timestamped record that is retained in your account. If you are buying for a minor or a
+        dependent adult unable to consent themselves, the parent, legal guardian, or attorney-in-fact provides this
+        consent on their behalf at both points.
       </p>
 
       <h2>1. What you are consenting to</h2>
-      <p>By signing this consent you confirm that:</p>
+      <p>By accepting this consent you confirm that:</p>
       <ul>
-        <li>You are providing a biological sample (saliva and/or blood) voluntarily and free of coercion.</li>
+        <li>You are providing a biological sample (saliva or buccal swab) voluntarily and free of coercion.</li>
         <li>
           You authorise KnowYourGenes and its partner NABL-accredited laboratory to extract DNA from this sample,
           sequence it, and analyse it against the panel(s) of genes corresponding to the package you have purchased.
@@ -65,13 +76,18 @@ export default function ConsentPage() {
           You have the option of pre-test and post-test counselling with a qualified genetic counsellor. For cancer-risk
           and reproductive panels, KYG strongly recommends both.
         </li>
+        <li>
+          Self-collection at home depends on you following the kit instructions carefully. A sample collected
+          incorrectly may need to be re-given. Approximately 1 in 200 samples cannot be processed for reasons outside
+          our control.
+        </li>
       </ul>
 
       <h2>3. What KnowYourGenes will not do</h2>
       <p>KnowYourGenes will not:</p>
       <ul>
         <li>
-          Perform pre-natal sex determination of a foetus. This is prohibited under the PCPNDT Act, 1994 and KYG will
+          Perform pre-natal sex determination of a foetus. This is prohibited under the PCPNDT Act, 1994, and KYG will
           not process any request that breaches this law.
         </li>
         <li>Sell or share your genetic data with insurers, lenders, or advertisers.</li>
@@ -108,7 +124,7 @@ export default function ConsentPage() {
         </li>
       </ul>
 
-      <h2>5. Optional &mdash; research participation (separate opt-in)</h2>
+      <h2>5. Optional — research participation (separate opt-in)</h2>
       <p>
         You may, separately and entirely at your option, consent to your de-identified genetic data and self-reported
         phenotype information being included in research datasets that KYG or its academic partners may use to improve
@@ -141,8 +157,8 @@ export default function ConsentPage() {
 
       <h2>7. Confirmation</h2>
       <p>
-        By signing this consent (digitally at the time of sample collection, or by ticking &ldquo;I have read and accept
-        the Genetic Testing Consent&rdquo; at booking), you confirm:
+        By ticking &ldquo;I have read and accept the Genetic Testing Consent&rdquo; at checkout and by re-confirming at
+        kit registration, you confirm:
       </p>
       <ul>
         <li>I have read and understood this consent.</li>

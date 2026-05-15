@@ -31,20 +31,25 @@ You may use the Services only if:
       to provide consent themselves.
 
 You must be located in the Republic of India to use the Services.
-Sample collection is currently available only in the Delhi National
-Capital Region (Delhi NCR); see /shipping for the current list of
-serviceable pincodes.
+We ship kits to pincodes serviced by our courier partners; see
+/shipping for the live serviceability check.
 
 
 2. WHAT WE PROVIDE
 ------------------
 The Services consist of:
-  - At-home sample collection by a trained phlebotomist;
+  - A sample-collection kit (saliva or buccal swab) couriered to
+    your address, with a pre-paid return label for the reverse
+    shipment;
   - Laboratory processing of the sample at an NABL-accredited
     partner lab;
   - A genetic report containing variant-level findings and
     wellness or condition-relevant interpretation;
   - Optional pre-test and post-test genetic counselling.
+
+At-home phlebotomist collection (where a trained professional
+draws a blood sample at your address) is on our future roadmap;
+it is not currently offered.
 
 The Services do NOT include:
   - A medical diagnosis;
@@ -132,19 +137,24 @@ D. Pricing
 
 5. SAMPLE COLLECTION
 --------------------
-By booking a collection, you agree to:
-  - Be present at the address and slot you selected, with one
-    valid photo ID;
-  - Allow our phlebotomist to identify you and verify the booking
-    before drawing a sample;
-  - Follow any pre-collection instructions (for example, fasting)
-    that we communicate;
-  - Sign a digital consent form before sample draw.
+By placing an order, you agree to:
+  - Provide an accurate delivery address at which the kit can be
+    received;
+  - Collect your sample at home, following the instructions
+    enclosed in the kit. Most collections take under 5 minutes.
+  - Register the kit in your KYG account using the unique kit
+    code on the identification sticker, and re-confirm your
+    Genetic Testing Consent at that point;
+  - Schedule the reverse pickup promptly so the sample is not
+    delayed in transit;
+  - Not adulterate, mishandle, or substitute the sample. Sample
+    integrity is your responsibility from delivery to reverse
+    pickup.
 
-If the phlebotomist is unable to collect a sample because you are
-not present, the address is wrong, ID does not match, or you
-refuse to sign consent, the booking will be treated as a no-show
-under our Refund Policy.
+If the kit cannot be delivered, the sample cannot be collected,
+or the sample arrives at the lab in a state that cannot be
+processed, the order is handled under our Refund Policy —
+typically by dispatching a free re-collection kit.
 
 
 6. REPORTS

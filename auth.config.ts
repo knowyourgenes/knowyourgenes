@@ -42,7 +42,16 @@ export default {
 
       for (const g of gates) {
         if (path.startsWith(g.prefix)) {
-          if (!isLoggedIn) return false;
+          if (!isLoggedIn) {
+            // Custom redirect: NextAuth's default uses
+            // `?callbackUrl=<fully-encoded URL>` (the ugly %3A%2F%2F mess),
+            // and our /login page reads `?from` anyway. Build a clean
+            // `/login?from=/admin/service-area` ourselves. Slashes inside a
+            // query value are legal per RFC 3986, so we skip URLSearchParams
+            // (which would percent-encode them) and concatenate directly.
+            const target = path + (nextUrl.search || '');
+            return Response.redirect(`${nextUrl.origin}/login?from=${target}`);
+          }
           if (!role || !g.roles.includes(role)) {
             return Response.redirect(new URL('/', nextUrl));
           }

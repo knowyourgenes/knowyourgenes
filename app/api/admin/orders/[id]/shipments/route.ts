@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { created, fail, handle, isResponse, requireApiRole } from '@/lib/api';
-import { delhivery } from '@/lib/delhivery';
+import { courier } from '@/lib/courier';
 import { shipmentCreate } from '@/lib/validators';
 import { resolveLab } from '@/lib/shipments';
 
@@ -58,7 +58,7 @@ export async function POST(req: Request, { params }: { params: Params }) {
     const weightGrams = input.weightGrams ?? (input.leg === 'FORWARD' ? 350 : 150);
     const declaredValue = input.declaredValue ?? 0;
 
-    const result = await delhivery.createShipment({
+    const result = await courier.createShipment({
       leg: input.leg,
       refNumber,
       pickup,
@@ -73,6 +73,7 @@ export async function POST(req: Request, { params }: { params: Params }) {
         orderId,
         labId: lab.id,
         leg: input.leg,
+        courier: courier.activeCourier(),
         status: result.status,
         awb: result.awb,
         refNumber: result.refNumber,

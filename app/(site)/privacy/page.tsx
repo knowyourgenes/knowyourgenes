@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
       <ul>
         <li>visits kyg.in or any KYG sub-domain,</li>
         <li>creates a KYG account,</li>
-        <li>books a test or has a sample collected by a KYG phlebotomist,</li>
+        <li>orders a kit, registers a kit, or sends a sample to our partner lab,</li>
         <li>receives or accesses a KYG report, or</li>
         <li>interacts with KYG support, marketing or counselling channels.</li>
       </ul>
@@ -65,9 +65,9 @@ export default function PrivacyPolicyPage() {
       </p>
       <h3>D. Genetic data (&ldquo;Genetic Data&rdquo;)</h3>
       <p>
-        The biological sample (saliva / blood) collected by our phlebotomist, the DNA sequence variants generated from
-        it, and the downstream interpretive output. Genetic Data is &ldquo;sensitive personal information&rdquo; under
-        the SPDI Rules and is treated as such.
+        The biological sample (saliva or buccal swab) you self-collect using the kit we ship, the DNA sequence variants
+        generated from it, and the downstream interpretive output. Genetic Data is &ldquo;sensitive personal
+        information&rdquo; under the SPDI Rules and is treated as such.
       </p>
       <h3>E. Device and usage data</h3>
       <p>
@@ -77,9 +77,8 @@ export default function PrivacyPolicyPage() {
       </p>
       <h3>F. Location data</h3>
       <p>
-        The pincode and full address required to dispatch a phlebotomist. We do not track real-time location of users.
-        Our phlebotomist&rsquo;s location is tracked only during an active collection appointment, for safety and
-        dispatch.
+        The pincode and full address required to ship the kit and schedule the reverse pickup. We do not track real-time
+        location of users.
       </p>
       <h3>G. Communications</h3>
       <p>
@@ -91,8 +90,8 @@ export default function PrivacyPolicyPage() {
       <p>We use the information collected to:</p>
       <ul>
         <li>
-          Fulfil the test you have booked &mdash; schedule the phlebotomist, process the sample at our partner
-          NABL-accredited lab, and deliver your report.
+          Fulfil the test you have ordered &mdash; dispatch your kit, arrange the reverse pickup, route the sample to
+          our partner NABL-accredited lab, and deliver your report.
         </li>
         <li>Provide pre-test and post-test genetic counselling, where chosen.</li>
         <li>Process payments, issue invoices, and process refunds.</li>
@@ -139,9 +138,10 @@ export default function PrivacyPolicyPage() {
       <h2>5. How we handle samples and genetic data</h2>
       <h3>A. Sample handling</h3>
       <p>
-        Once collected, your sample is labelled with a unique de-identified accession number. Your name and address are
-        stripped from the physical sample before it reaches the lab. Only the KYG operations team and the lab&rsquo;s
-        reporting pathologist can re-link the accession number to your identity.
+        Each kit is labelled with a unique de-identified accession number (the &ldquo;kit code&rdquo;). When you
+        register the kit in your KYG account, that code is linked to your identity in our database — but the physical
+        sample that travels to the lab carries only the code, not your name or address. Only the KYG operations team and
+        the lab&rsquo;s reporting pathologist can re-link the accession number to your identity.
       </p>
       <h3>B. Storage</h3>
       <p>
@@ -184,9 +184,9 @@ export default function PrivacyPolicyPage() {
         <li>The genetic counsellor or clinician you have chosen to consult, if any.</li>
         <li>Razorpay, our payment gateway, for processing payments.</li>
         <li>
-          Shipping / logistics partners only to the extent of name, phone and delivery address required to dispatch a
-          kit, return a physical report, or pick up materials. The vast majority of our flow uses an in-house
-          phlebotomist; no logistics partner sees Genetic Data.
+          Shipping / logistics partners (e.g., Delhivery / Shiprocket) to the extent of name, phone and address required
+          to deliver the kit to you and reverse-pick the sample from you. The kit and reverse-shipment carry only a
+          de-identified accession number; the courier does not see Genetic Data.
         </li>
         <li>
           Communication providers (WhatsApp Business API provider, SMS gateway, email provider) for transactional and

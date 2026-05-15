@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { fail, handle, ok } from '@/lib/api';
-import { delhivery } from '@/lib/delhivery';
+import { courier as courierClient } from '@/lib/courier';
 import { z } from 'zod';
 
 /**
@@ -8,8 +8,9 @@ import { z } from 'zod';
  *
  * Combines two checks:
  *   1. Our own ServiceArea master - admin must have opted-in this pincode.
- *   2. Delhivery's pincode API - confirms the courier actually services it for
- *      the requested leg (forward = prepaid out, reverse = pickup from user).
+ *   2. The active courier's pincode API - confirms the courier actually
+ *      services it for the requested leg (forward = prepaid out, reverse =
+ *      pickup from user).
  *
  * Returns serviceable=true only when BOTH agree. The UI uses this to gate the
  * "kit-by-post" fulfillment option at checkout.
@@ -31,20 +32,27 @@ export async function GET(req: Request) {
 
     const { pincode, type } = parsed.data;
 
-    const [local, courier] = await Promise.all([
-      prisma.serviceArea.findUnique({ where: { pincode } }),
-      delhivery.serviceability(pincode).catch((e) => ({ error: e.message })),
+    // One pincode → many area rows. We treat the pincode as serviceable if
+    // ANY area row under it is active. `local` is just an arbitrary row used
+    // to surface the area/district/state names back to the caller.
+    const [activeAreaCount, local, courierResult] = await Promise.all([
+      prisma.serviceArea.count({ where: { pincode, active: true } }),
+      prisma.serviceArea.findFirst({
+        where: { pincode },
+        orderBy: [{ active: 'desc' }, { area: 'asc' }], // prefer an active row
+      }),
+      courierClient.serviceability(pincode).catch((e: Error) => ({ error: e.message })),
     ]);
 
-    const localActive = local?.active ?? false;
+    const localActive = activeAreaCount > 0;
     const courierOk =
-      'error' in courier
+      'error' in courierResult
         ? false
         : type === 'forward'
-          ? courier.prepaidForward
+          ? courierResult.prepaidForward
           : type === 'reverse'
-            ? courier.reversePickup
-            : courier.serviceable;
+            ? courierResult.reversePickup
+            : courierResult.serviceable;
 
     return ok({
       pincode,
@@ -56,8 +64,9 @@ export async function GET(req: Request) {
         district: local?.district ?? null,
         state: local?.state ?? null,
       },
-      courier: 'error' in courier ? { error: courier.error } : courier,
-      mock: delhivery.isMock(),
+      courier: 'error' in courierResult ? { error: courierResult.error } : courierResult,
+      provider: courierClient.activeCourier(),
+      mock: courierClient.isMock(),
     });
   });
 }

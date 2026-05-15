@@ -20,17 +20,24 @@ export async function POST(req: Request) {
     const geo = await mapplsReverseGeocode(parsed.data.lat, parsed.data.lng);
     if (!geo) return fail('Could not resolve location to an Indian pincode', 404);
 
-    const sa = await prisma.serviceArea.findUnique({
-      where: { pincode: geo.pincode },
-      select: { active: true, district: true, state: true, area: true },
-    });
+    // One pincode → many area rows. Serviceable if ANY row is active. We pull
+    // an arbitrary representative row (prefer active) for the area/district
+    // labels.
+    const [activeCount, sa] = await Promise.all([
+      prisma.serviceArea.count({ where: { pincode: geo.pincode, active: true } }),
+      prisma.serviceArea.findFirst({
+        where: { pincode: geo.pincode },
+        orderBy: [{ active: 'desc' }, { area: 'asc' }],
+        select: { active: true, district: true, state: true, area: true },
+      }),
+    ]);
 
     return ok({
       pincode: geo.pincode,
       area: sa?.area || geo.area,
       district: sa?.district || geo.district,
       state: sa?.state || geo.state,
-      serviceable: sa?.active === true,
+      serviceable: activeCount > 0,
     });
   });
 }
@@ -43,10 +50,14 @@ export async function GET(req: Request) {
     const pincode = (url.searchParams.get('pincode') ?? '').trim();
     if (!/^\d{6}$/.test(pincode)) return fail('Invalid pincode', 400);
 
-    const sa = await prisma.serviceArea.findUnique({
-      where: { pincode },
-      select: { pincode: true, area: true, district: true, state: true, active: true },
-    });
+    const [activeCount, sa] = await Promise.all([
+      prisma.serviceArea.count({ where: { pincode, active: true } }),
+      prisma.serviceArea.findFirst({
+        where: { pincode },
+        orderBy: [{ active: 'desc' }, { area: 'asc' }],
+        select: { pincode: true, area: true, district: true, state: true },
+      }),
+    ]);
 
     if (!sa) return ok({ pincode, serviceable: false, area: '', district: '', state: '' });
 
@@ -55,7 +66,7 @@ export async function GET(req: Request) {
       area: sa.area,
       district: sa.district,
       state: sa.state,
-      serviceable: sa.active,
+      serviceable: activeCount > 0,
     });
   });
 }

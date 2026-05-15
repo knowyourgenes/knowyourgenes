@@ -25,69 +25,63 @@ export default async function AttributionPage() {
   const decoded = payload ? payloadToAttribution(payload) : null;
 
   // -------------------------------------------------------------------------
-  // 2. Order-attribution aggregate — the actual attribution report.
-  //    Will be empty until checkout exists and Orders start landing.
+  // The four data queries below have no dependencies on each other — run them
+  // in parallel so the page's TTFB is `max(times)` rather than `sum(times)`.
   // -------------------------------------------------------------------------
-  const grouped = await prisma.order.groupBy({
-    by: ['attrSource', 'attrMedium'],
-    where: {
-      status: { notIn: ['CANCELLED', 'REFUNDED'] },
-    },
-    _count: { _all: true },
-    _sum: { total: true },
-    orderBy: { _sum: { total: 'desc' } },
-  });
+  const [grouped, recent, visitsGrouped, recentVisits] = await Promise.all([
+    // 1. Order-attribution aggregate — the actual attribution report.
+    prisma.order.groupBy({
+      by: ['attrSource', 'attrMedium'],
+      where: { status: { notIn: ['CANCELLED', 'REFUNDED'] } },
+      _count: { _all: true },
+      _sum: { total: true },
+      orderBy: { _sum: { total: 'desc' } },
+    }),
+    // 2. Recent orders with attribution — useful for spot-checking.
+    prisma.order.findMany({
+      where: { attrSource: { not: null } },
+      take: 10,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        orderNumber: true,
+        total: true,
+        attrSource: true,
+        attrMedium: true,
+        attrCampaign: true,
+        attrLandingPath: true,
+        createdAt: true,
+        campaign: { select: { name: true, slug: true } },
+      },
+    }),
+    // 3. Visit-level aggregate.
+    prisma.attributionVisit.groupBy({
+      by: ['source', 'medium'],
+      _count: { _all: true },
+      orderBy: { _count: { source: 'desc' } },
+    }),
+    // 4. Recent visits — every UTM-bearing landing.
+    prisma.attributionVisit.findMany({
+      take: 20,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        source: true,
+        medium: true,
+        campaign: true,
+        term: true,
+        content: true,
+        landingPath: true,
+        referrer: true,
+        sessionId: true,
+        createdAt: true,
+      },
+    }),
+  ]);
 
   const totalOrders = grouped.reduce((s, r) => s + r._count._all, 0);
   const totalRevenue = grouped.reduce((s, r) => s + (r._sum.total ?? 0), 0);
-
-  // -------------------------------------------------------------------------
-  // 3. Recent orders with attribution — useful for spot-checking.
-  // -------------------------------------------------------------------------
-  const recent = await prisma.order.findMany({
-    where: { attrSource: { not: null } },
-    take: 10,
-    orderBy: { createdAt: 'desc' },
-    select: {
-      id: true,
-      orderNumber: true,
-      total: true,
-      attrSource: true,
-      attrMedium: true,
-      attrCampaign: true,
-      attrLandingPath: true,
-      createdAt: true,
-      campaign: { select: { name: true, slug: true } },
-    },
-  });
-
-  // -------------------------------------------------------------------------
-  // 4. Visit-level analytics — every UTM-bearing landing, regardless of
-  //    whether it converted. Answers "how many people clicked my IG link?".
-  // -------------------------------------------------------------------------
-  const visitsGrouped = await prisma.attributionVisit.groupBy({
-    by: ['source', 'medium'],
-    _count: { _all: true },
-    orderBy: { _count: { source: 'desc' } },
-  });
   const visitsTotal = visitsGrouped.reduce((s, r) => s + r._count._all, 0);
-
-  const recentVisits = await prisma.attributionVisit.findMany({
-    take: 20,
-    orderBy: { createdAt: 'desc' },
-    select: {
-      id: true,
-      source: true,
-      medium: true,
-      campaign: true,
-      term: true,
-      content: true,
-      landingPath: true,
-      referrer: true,
-      sessionId: true,
-      createdAt: true,
-    },
-  });
 
   return (
     <>
@@ -115,7 +109,8 @@ export default async function AttributionPage() {
                   <code className="rounded bg-muted px-1">
                     /?utm_source=test&amp;utm_medium=cpc&amp;utm_campaign=verify
                   </code>{' '}
-                  to set one, or just visit <code className="rounded bg-muted px-1">/</code> to get a direct/none cookie.
+                  to set one, or just visit <code className="rounded bg-muted px-1">/</code> to get a direct/none
+                  cookie.
                 </>
               }
             />
@@ -132,24 +127,14 @@ export default async function AttributionPage() {
               <Field label="Medium">
                 <Badge variant="secondary">{decoded!.medium}</Badge>
               </Field>
-              <Field label="Campaign">
-                {decoded!.campaign ? <code>{decoded!.campaign}</code> : <Muted>—</Muted>}
-              </Field>
-              <Field label="Term">
-                {decoded!.term ? <code>{decoded!.term}</code> : <Muted>—</Muted>}
-              </Field>
-              <Field label="Content">
-                {decoded!.content ? <code>{decoded!.content}</code> : <Muted>—</Muted>}
-              </Field>
+              <Field label="Campaign">{decoded!.campaign ? <code>{decoded!.campaign}</code> : <Muted>—</Muted>}</Field>
+              <Field label="Term">{decoded!.term ? <code>{decoded!.term}</code> : <Muted>—</Muted>}</Field>
+              <Field label="Content">{decoded!.content ? <code>{decoded!.content}</code> : <Muted>—</Muted>}</Field>
               <Field label="Landing path">
                 {decoded!.landingPath ? <code>{decoded!.landingPath}</code> : <Muted>—</Muted>}
               </Field>
               <Field label="Referrer">
-                {decoded!.referrer ? (
-                  <code className="break-all text-xs">{decoded!.referrer}</code>
-                ) : (
-                  <Muted>—</Muted>
-                )}
+                {decoded!.referrer ? <code className="break-all text-xs">{decoded!.referrer}</code> : <Muted>—</Muted>}
               </Field>
               <Field label="First seen">
                 {decoded!.firstSeenAt.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
@@ -229,9 +214,7 @@ export default async function AttributionPage() {
 
       {/* ----------------------------- RECENT VISITS ----------------------------- */}
       <section className="mb-10">
-        <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-          Recent visits
-        </h2>
+        <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Recent visits</h2>
         {recentVisits.length === 0 ? (
           <Empty title="None yet" body="Visit a UTM URL to write a row." />
         ) : (
@@ -256,9 +239,7 @@ export default async function AttributionPage() {
                         <Badge variant="secondary">{v.medium ?? '—'}</Badge>
                       </div>
                     </td>
-                    <td className="px-4 py-2 text-xs">
-                      {v.campaign ? <code>{v.campaign}</code> : <Muted>—</Muted>}
-                    </td>
+                    <td className="px-4 py-2 text-xs">{v.campaign ? <code>{v.campaign}</code> : <Muted>—</Muted>}</td>
                     <td className="px-4 py-2 text-xs text-muted-foreground">
                       {v.term && <span>t: {v.term}</span>}
                       {v.term && v.content && <span> · </span>}
@@ -292,7 +273,11 @@ export default async function AttributionPage() {
               <>
                 Order rows haven&rsquo;t been created yet (no checkout endpoint in place). Once orders start landing,
                 this panel groups them by <code>attrSource</code> × <code>attrMedium</code> and shows revenue per
-                bucket. See <a href="/admin/campaigns" className="underline">Campaigns</a> to generate trackable links.
+                bucket. See{' '}
+                <a href="/admin/campaigns" className="underline">
+                  Campaigns
+                </a>{' '}
+                to generate trackable links.
               </>
             }
           />

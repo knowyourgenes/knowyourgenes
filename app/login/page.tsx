@@ -15,10 +15,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
+/**
+ * Only allow relative paths to flow through `?from`. Anything else (absolute
+ * URLs, protocol-relative `//evil.com`, or junk) falls back to '/'. Prevents
+ * the page being used as an open-redirect after a successful login.
+ */
+function safeFrom(raw: string | null): string {
+  if (!raw) return '/';
+  // Must start with a single forward slash, no double slashes (which would
+  // be protocol-relative — `//evil.com` → `https://evil.com`).
+  if (!raw.startsWith('/') || raw.startsWith('//')) return '/';
+  // No backslash trickery; some browsers normalise `\` → `/` in the URL.
+  if (raw.includes('\\')) return '/';
+  return raw;
+}
+
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const from = params.get('from') ?? '/';
+  const from = safeFrom(params.get('from'));
 
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');

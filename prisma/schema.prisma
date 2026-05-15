@@ -69,6 +69,7 @@ enum ShipmentLeg {
 
 enum ShipmentCourier {
   DELHIVERY
+  SHIPROCKET
 }
 
 enum ShipmentStatus {
@@ -739,7 +740,13 @@ model Campaign {
 
 model ServiceArea {
   id        String   @id @default(cuid())
-  pincode   String   @unique
+  // Pincode is NOT unique on its own — one Indian pincode covers many post
+  // offices / localities (e.g. 400001 has Bazargate, Elephanta Caves Po, M.P.T,
+  // Mumbai). We keep one row per (pincode, area) so admin can manage service
+  // area at locality granularity. Composite unique below prevents the same
+  // (pincode, area) from being inserted twice. Pincode alone is indexed for
+  // fast serviceability lookups.
+  pincode   String
   area      String // officename, e.g. "Connaught Place"
   district  String   @default("")
   state     String   @default("")
@@ -747,6 +754,8 @@ model ServiceArea {
   active    Boolean  @default(false)
   createdAt DateTime @default(now())
 
+  @@unique([pincode, area])
+  @@index([pincode])
   @@index([active])
   @@index([state])
   @@index([district])
