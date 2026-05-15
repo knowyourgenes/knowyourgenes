@@ -8,12 +8,18 @@
  *
  * Data source
  * -----------
- * Download the official "All India Pincode Directory" CSV from:
- *   https://www.data.gov.in/catalog/all-india-pincode-directory
+ * Default location: resource/India_pincodes.csv (committed to the repo).
  *
- * Save it as `data/pincodes.csv` in the repo root. The seeder auto-detects
- * the column layout - any CSV with a header row containing at least
- * `Pincode` and `OfficeName` (or `area`) works.
+ * The seeder auto-detects the column layout — any CSV with a header row
+ * containing at least a pincode column and an area/name column works.
+ * Recognised header aliases:
+ *   Pincode  : Pincode | PIN | PincodeNumber
+ *   Area     : Name | OfficeName | Office | Area | Locality
+ *   District : District | DistrictName
+ *   State    : State | StateName
+ *
+ * To use a different file (e.g. an updated data.gov.in dump):
+ *   https://www.data.gov.in/catalog/all-india-pincode-directory
  *
  * Usage
  * -----
@@ -22,9 +28,10 @@
  *
  * Re-seeding
  * ----------
- * `createMany` with `skipDuplicates: true` means re-running only inserts
- * NEW pincodes. Existing rows keep their admin-set `active` flag intact.
- * Pincodes change rarely (a few dozen per year) - re-seed annually.
+ * `createMany` with `skipDuplicates: true` against the (pincode, area)
+ * composite-unique means re-running only inserts NEW (pincode, area) pairs.
+ * Existing rows keep their admin-set `active` flag intact. Pincodes /
+ * localities change rarely (a few dozen per year) — re-seed annually.
  */
 
 import 'dotenv/config';
@@ -34,7 +41,7 @@ import { createReadStream, existsSync } from 'node:fs';
 import { createInterface } from 'node:readline';
 import path from 'node:path';
 
-const FILE_PATH = process.argv[2] ?? path.join(process.cwd(), 'data', 'pincodes.csv');
+const FILE_PATH = process.argv[2] ?? path.join(process.cwd(), 'resource', 'India_pincodes.csv');
 
 // data.gov.in ships ALL-CAPS state/district names. Normalise to Title Case
 // so admin filters don't have to care about source casing. Keep "and" / "of"
@@ -96,7 +103,7 @@ function resolveColumns(headers: string[]): ColMap | null {
     return undefined;
   };
   const pincode = pick(['pincode', 'pin', 'pincodenumber']);
-  const area = pick(['officename', 'office', 'area', 'locality']);
+  const area = pick(['name', 'officename', 'office', 'area', 'locality']);
   const district = pick(['districtname', 'district']);
   const state = pick(['statename', 'state']);
   if (pincode === undefined || area === undefined) return null;
@@ -106,11 +113,11 @@ function resolveColumns(headers: string[]): ColMap | null {
 async function main() {
   if (!existsSync(FILE_PATH)) {
     console.error(`❌ Pincode CSV not found at: ${FILE_PATH}\n`);
-    console.error('  Download the All India Pincode Directory from:');
-    console.error('    https://www.data.gov.in/catalog/all-india-pincode-directory');
-    console.error(`  Save as: ${path.relative(process.cwd(), FILE_PATH)}\n`);
-    console.error('  Required columns (any order): Pincode, OfficeName');
-    console.error('  Optional:                     DistrictName, StateName');
+    console.error('  Default location is resource/India_pincodes.csv (committed to the repo).');
+    console.error('  If you have an updated dump, pass its path explicitly:');
+    console.error('    pnpm db:seed-pincodes path/to/other.csv');
+    console.error('  Required columns (any order): Pincode, Name (or OfficeName / Area)');
+    console.error('  Optional:                     District, State');
     process.exit(1);
   }
 
@@ -122,8 +129,12 @@ async function main() {
   });
 
   let colMap: ColMap | null = null;
-  const byPincode = new Map<string, { pincode: string; area: string; district: string; state: string }>();
+  // One row per (pincode, area) — many Indian pincodes cover multiple post
+  // offices / localities. Dedupe key is (pincode + area) so the same locality
+  // isn't inserted twice if the source CSV has stray duplicates.
+  const byPincodeArea = new Map<string, { pincode: string; area: string; district: string; state: string }>();
   let lineNum = 0;
+  let skippedNoArea = 0;
 
   for await (const raw of rl) {
     lineNum++;
@@ -133,7 +144,7 @@ async function main() {
     if (!colMap) {
       colMap = resolveColumns(row);
       if (!colMap) {
-        console.error('❌ Could not find Pincode / OfficeName columns in header:');
+        console.error('❌ Could not find Pincode / Name (or OfficeName / Area) columns in header:');
         console.error('   ' + row.map((c) => JSON.stringify(c)).join(', '));
         process.exit(1);
       }
@@ -141,18 +152,27 @@ async function main() {
     }
     const pincode = (row[colMap.pincode] ?? '').trim();
     if (!/^\d{6}$/.test(pincode)) continue;
-    if (byPincode.has(pincode)) continue; // keep first row per pincode
-    const area = normaliseCase((row[colMap.area] ?? '').trim()) || 'Unknown';
+    const area = normaliseCase((row[colMap.area] ?? '').trim());
+    if (!area) {
+      skippedNoArea++;
+      continue;
+    }
+    const key = `${pincode}|${area.toLowerCase()}`;
+    if (byPincodeArea.has(key)) continue; // CSV row duplicate
     const district = colMap.district != null ? normaliseCase((row[colMap.district] ?? '').trim()) : '';
     const state = colMap.state != null ? normaliseCase((row[colMap.state] ?? '').trim()) : '';
-    byPincode.set(pincode, { pincode, area, district, state });
+    byPincodeArea.set(key, { pincode, area, district, state });
   }
 
+  const uniquePincodes = new Set([...byPincodeArea.values()].map((r) => r.pincode)).size;
   console.log(
-    `📊 Parsed ${byPincode.size.toLocaleString('en-IN')} unique pincodes from ${lineNum.toLocaleString('en-IN')} rows`
+    `📊 Parsed ${byPincodeArea.size.toLocaleString('en-IN')} (pincode, area) rows ` +
+      `covering ${uniquePincodes.toLocaleString('en-IN')} unique pincodes ` +
+      `from ${lineNum.toLocaleString('en-IN')} input rows` +
+      (skippedNoArea > 0 ? ` (${skippedNoArea} skipped — missing area name)` : '')
   );
 
-  const rows = [...byPincode.values()].map((r) => ({
+  const rows = [...byPincodeArea.values()].map((r) => ({
     pincode: r.pincode,
     area: r.area,
     district: r.district,

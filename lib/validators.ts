@@ -26,7 +26,7 @@ export const CouponTypeEnum = z.enum(['FLAT', 'PERCENT']);
 export const AgentStatusEnum = z.enum(['ACTIVE', 'INACTIVE', 'ON_LEAVE']);
 export const FulfillmentTypeEnum = z.enum(['AT_HOME_PHLEBOTOMIST', 'KIT_BY_POST', 'EITHER']);
 export const ShipmentLegEnum = z.enum(['FORWARD', 'REVERSE']);
-export const ShipmentCourierEnum = z.enum(['DELHIVERY']);
+export const ShipmentCourierEnum = z.enum(['DELHIVERY', 'SHIPROCKET']);
 export const ShipmentStatusEnum = z.enum([
   'CREATED',
   'MANIFESTED',
@@ -250,10 +250,17 @@ export const serviceAreaQuery = z.object({
 });
 
 export const serviceAreaBulkToggle = z.object({
-  // Scope: apply to pincodes matching these filters. At least one must be set.
+  // Scope — at least one must be set. Multiple are AND'd together.
+  //   state     : all rows in this state
+  //   district  : all rows in this district
+  //   pincodes  : all rows whose pincode is in this list (any area)
+  //   ids       : specific (pincode, area) rows by cuid — used by row-level
+  //               multi-select in the flat list where admin picked specific
+  //               area rows, not whole pincodes.
   state: z.string().optional(),
   district: z.string().optional(),
   pincodes: z.array(z.string().regex(/^\d{6}$/)).optional(),
+  ids: z.array(z.string().min(1)).optional(),
   active: z.boolean(),
 });
 
@@ -325,6 +332,31 @@ export const shipmentQuery = z.object({
   q: z.string().optional(), // search by AWB / refNumber / orderNumber
   skip: z.coerce.number().int().min(0).default(0),
   take: z.coerce.number().int().min(1).max(100).default(25),
+});
+
+// ---------------------------------------------------------------------------
+// Checkout (customer-facing order creation)
+// ---------------------------------------------------------------------------
+
+export const checkoutCreate = z.object({
+  packageId: z.string().min(1),
+  addressId: z.string().min(1),
+  slotDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD required'),
+  slotWindow: SlotWindowEnum,
+  fulfillmentMode: FulfillmentTypeEnum.optional(), // defaults from Package.fulfillmentType
+  couponCode: z
+    .string()
+    .max(32)
+    .regex(/^[A-Z0-9_]*$/, 'Coupons are uppercase alphanumeric + underscore')
+    .optional()
+    .nullable(),
+});
+
+export const checkoutVerify = z.object({
+  orderId: z.string().min(1), // KYG Order.id
+  razorpayOrderId: z.string().min(1),
+  razorpayPaymentId: z.string().min(1),
+  razorpaySignature: z.string().min(1),
 });
 
 // ---------------------------------------------------------------------------

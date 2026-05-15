@@ -113,13 +113,20 @@ export function captureFromRequest(opts: {
   const utmTerm = clean(searchParams.get('utm_term'));
   const utmContent = clean(searchParams.get('utm_content'));
 
+  // Platform click identifiers — Google Ads (gclid), Meta Ads (fbclid),
+  // Microsoft Ads (msclkid), TikTok (ttclid). When these are present without
+  // a utm_source, we know it's a paid click even if the marketer forgot to
+  // tag the URL — derive the source from the click-id family.
+  const clickIdSource = deriveFromClickIds(searchParams);
+
   const fs = Math.floor(Date.now() / 1000);
 
   // 1. UTM present — paid / tracked source
   if (utmSource || utmCampaign) {
+    const fallback = deriveFromReferrer(referer);
     return strip({
-      s: utmSource ?? deriveFromReferrer(referer).source ?? 'direct',
-      m: utmMedium ?? deriveFromReferrer(referer).medium ?? 'none',
+      s: utmSource ?? clickIdSource?.source ?? fallback.source ?? 'direct',
+      m: utmMedium ?? clickIdSource?.medium ?? fallback.medium ?? 'none',
       c: utmCampaign,
       t: utmTerm,
       ct: utmContent,
@@ -129,7 +136,18 @@ export function captureFromRequest(opts: {
     });
   }
 
-  // 2. No UTM — derive from referrer
+  // 2. No UTM but a paid-click-id is present — treat as paid traffic.
+  if (clickIdSource) {
+    return strip({
+      s: clickIdSource.source,
+      m: clickIdSource.medium,
+      r: shortenReferrer(referer),
+      lp: pathname,
+      fs,
+    });
+  }
+
+  // 3. No UTM — derive from referrer
   if (referer) {
     const d = deriveFromReferrer(referer);
     if (d.source) {
@@ -143,7 +161,7 @@ export function captureFromRequest(opts: {
     }
   }
 
-  // 3. Nothing — direct/none
+  // 4. Nothing — direct/none
   return strip({
     s: 'direct',
     m: 'none',
@@ -152,23 +170,62 @@ export function captureFromRequest(opts: {
   });
 }
 
+// Paid-click identifiers that ad platforms append automatically.
+function deriveFromClickIds(p: URLSearchParams): { source: string; medium: string } | null {
+  if (p.get('gclid')) return { source: 'google', medium: 'cpc' };
+  if (p.get('gbraid') || p.get('wbraid')) return { source: 'google', medium: 'cpc' };
+  if (p.get('fbclid')) return { source: 'facebook', medium: 'paid_social' };
+  if (p.get('msclkid')) return { source: 'bing', medium: 'cpc' };
+  if (p.get('ttclid')) return { source: 'tiktok', medium: 'paid_social' };
+  if (p.get('li_fat_id')) return { source: 'linkedin', medium: 'paid_social' };
+  if (p.get('twclid')) return { source: 'twitter', medium: 'paid_social' };
+  return null;
+}
+
 // Referrer host → { source, medium } derivation.
 // Returned medium uses *_organic suffix when not coming from a paid link, so a
 // report can cleanly separate paid vs organic from the same source name.
+//
+// Host-matching strategy: we test against the full hostname. Patterns use
+// `(?:^|\.)domain\.tld$` so subdomains (m.facebook.com, lm.instagram.com,
+// in.linkedin.com, lite.duckduckgo.com) are captured. Click-tracker subdomains
+// like l.facebook.com / lm.instagram.com fall under the same rule.
 const REFERRER_RULES: Array<{ test: RegExp; source: string; medium: string }> = [
-  { test: /(?:^|\.)google\./, source: 'google', medium: 'organic' },
+  // Search engines — match TLD variants (.com, .co.in, .co.uk, etc.) via `google\..+`.
+  { test: /(?:^|\.)google\.[a-z.]+$/, source: 'google', medium: 'organic' },
   { test: /(?:^|\.)bing\.com$/, source: 'bing', medium: 'organic' },
   { test: /(?:^|\.)duckduckgo\.com$/, source: 'duckduckgo', medium: 'organic' },
-  { test: /(?:^|\.)yahoo\./, source: 'yahoo', medium: 'organic' },
-  { test: /(?:^|\.)instagram\.com$|^l\.instagram\.com$/, source: 'instagram', medium: 'social_organic' },
-  { test: /(?:^|\.)facebook\.com$|^l\.facebook\.com$|^fb\.com$/, source: 'facebook', medium: 'social_organic' },
-  { test: /(?:^|\.)twitter\.com$|^t\.co$|^x\.com$/, source: 'twitter', medium: 'social_organic' },
+  { test: /(?:^|\.)yahoo\.[a-z.]+$/, source: 'yahoo', medium: 'organic' },
+  { test: /(?:^|\.)yandex\.[a-z.]+$/, source: 'yandex', medium: 'organic' },
+  { test: /(?:^|\.)baidu\.com$/, source: 'baidu', medium: 'organic' },
+  { test: /(?:^|\.)ecosia\.org$/, source: 'ecosia', medium: 'organic' },
+  { test: /(?:^|\.)brave\.com$|^search\.brave\.com$/, source: 'brave', medium: 'organic' },
+
+  // Social — subdomains (m.*, lm.*, l.*) get caught by the (?:^|\.) prefix.
+  { test: /(?:^|\.)instagram\.com$/, source: 'instagram', medium: 'social_organic' },
+  { test: /(?:^|\.)facebook\.com$|^fb\.com$|(?:^|\.)fb\.me$/, source: 'facebook', medium: 'social_organic' },
+  { test: /(?:^|\.)twitter\.com$|^t\.co$|(?:^|\.)x\.com$/, source: 'twitter', medium: 'social_organic' },
   { test: /(?:^|\.)linkedin\.com$|^lnkd\.in$/, source: 'linkedin', medium: 'social_organic' },
   { test: /(?:^|\.)youtube\.com$|^youtu\.be$/, source: 'youtube', medium: 'social_organic' },
   { test: /(?:^|\.)reddit\.com$/, source: 'reddit', medium: 'social_organic' },
-  { test: /^wa\.me$|web\.whatsapp\.com$|chat\.whatsapp\.com$/, source: 'whatsapp', medium: 'referral_organic' },
-  { test: /^t\.me$/, source: 'telegram', medium: 'referral_organic' },
+  { test: /(?:^|\.)pinterest\.[a-z.]+$/, source: 'pinterest', medium: 'social_organic' },
+  { test: /(?:^|\.)quora\.com$/, source: 'quora', medium: 'social_organic' },
+  { test: /(?:^|\.)tiktok\.com$/, source: 'tiktok', medium: 'social_organic' },
+  { test: /(?:^|\.)snapchat\.com$/, source: 'snapchat', medium: 'social_organic' },
+  { test: /(?:^|\.)threads\.net$/, source: 'threads', medium: 'social_organic' },
+
+  // Messaging / referral — these usually mean someone shared a link in chat.
+  { test: /^wa\.me$|(?:^|\.)whatsapp\.com$/, source: 'whatsapp', medium: 'referral_organic' },
+  { test: /^t\.me$|(?:^|\.)telegram\.org$/, source: 'telegram', medium: 'referral_organic' },
+  { test: /(?:^|\.)messenger\.com$/, source: 'messenger', medium: 'referral_organic' },
+
+  // Email clients / link wrappers — these signal email traffic.
+  { test: /(?:^|\.)mail\.google\.com$/, source: 'gmail', medium: 'email' },
+  { test: /(?:^|\.)mail\.yahoo\.com$/, source: 'yahoo_mail', medium: 'email' },
+  { test: /(?:^|\.)outlook\.live\.com$|(?:^|\.)outlook\.office\.com$/, source: 'outlook', medium: 'email' },
 ];
+
+const SAME_SITE_HOSTS = new Set(['kyg.in', 'www.kyg.in', 'localhost', '127.0.0.1']);
 
 export function deriveFromReferrer(referer: string | null): { source: string | null; medium: string } {
   if (!referer) return { source: null, medium: 'none' };
@@ -179,14 +236,15 @@ export function deriveFromReferrer(referer: string | null): { source: string | n
     return { source: null, medium: 'none' };
   }
   // Same-site referrers are not attribution sources.
-  if (host === 'kyg.in' || host === 'www.kyg.in' || host === 'localhost') {
-    return { source: null, medium: 'none' };
-  }
+  if (SAME_SITE_HOSTS.has(host)) return { source: null, medium: 'none' };
   for (const rule of REFERRER_RULES) {
     if (rule.test.test(host)) return { source: rule.source, medium: rule.medium };
   }
-  // Unknown external domain — bucket as generic referral, keep the host as the source.
-  return { source: host, medium: 'referral' };
+  // Unknown external domain — bucket as generic referral. Strip a leading
+  // "www." for cleaner reporting (so www.example.com and example.com bucket
+  // together).
+  const cleanHost = host.replace(/^www\./, '');
+  return { source: cleanHost, medium: 'referral' };
 }
 
 function clean(v: string | null): string | undefined {
@@ -283,6 +341,28 @@ export const ATTRIBUTION_COOKIE_OPTS = {
   path: '/',
   maxAge: COOKIE_MAX_AGE_SECONDS,
 };
+
+// ---------------------------------------------------------------------------
+// Server-side cookie reader — used by the checkout endpoint to attach
+// attribution to the Order row at create time.
+// ---------------------------------------------------------------------------
+
+/**
+ * Verifies and returns the attribution payload from a Next.js cookies bag.
+ * Returns null when:
+ *   - no cookie set,
+ *   - signature invalid (tampered or signed under a rotated AUTH_SECRET).
+ *
+ * Caller should treat null as "direct/unknown" — never throw.
+ */
+export function readAttributionCookie(
+  cookies: { get: (name: string) => { value: string } | undefined } | undefined | null
+): AttributionPayload | null {
+  if (!cookies) return null;
+  const raw = cookies.get(ATTRIBUTION_COOKIE)?.value;
+  if (!raw) return null;
+  return verifyAttribution(raw);
+}
 
 // ---------------------------------------------------------------------------
 // UTM link builder — used by the admin campaign builder

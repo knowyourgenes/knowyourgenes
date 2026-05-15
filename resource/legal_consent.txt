@@ -6,22 +6,29 @@ Last updated: 2026-05-12
 ================================================================
 
 This document is the informed consent you give KnowYourGenes
-("KYG", operated by BFG Market Consult Private Limited (operating the KnowYourGenes brand)) before we collect and analyse
-your DNA. You must read and accept this consent before the
-phlebotomist draws your sample. A signed digital copy is retained
-in your account.
+("KYG", operated by BFG Market Consult Private Limited) before
+we analyse your DNA. Consent is captured at two points:
 
-If you are booking for a minor or a dependent adult unable to
-consent themselves, the parent, legal guardian, or attorney-in-fact
-provides this consent on their behalf.
+  - AT CHECKOUT — by ticking "I have read and accept the Genetic
+    Testing Consent" before payment.
+  - AT KIT REGISTRATION — when you scan or enter your kit code
+    in your KYG account before scheduling the reverse pickup,
+    you re-confirm this consent specifically for the sample you
+    have just collected.
+
+Both points produce a timestamped record retained in your
+account. If you are buying for a minor or a dependent adult
+unable to consent themselves, the parent, legal guardian, or
+attorney-in-fact provides this consent on their behalf at both
+points.
 
 
 1. WHAT YOU ARE CONSENTING TO
 -----------------------------
-By signing this consent you confirm that:
+By accepting this consent you confirm that:
 
-  (a) You are providing a biological sample (saliva and/or blood)
-      voluntarily and free of coercion.
+  (a) You are providing a biological sample (saliva or buccal
+      swab) voluntarily and free of coercion.
   (b) You authorise KnowYourGenes and its partner NABL-accredited
       laboratory to extract DNA from this sample, sequence it,
       and analyse it against the panel(s) of genes corresponding
@@ -83,8 +90,10 @@ KnowYourGenes will not:
 ------------------------
 You acknowledge that:
 
-  - A small fraction of samples (around 1 in 200) fail at the
-    extraction or sequencing step and require re-collection.
+  - Self-collection at home depends on you following the kit
+    instructions carefully. A sample collected incorrectly may
+    need to be re-given. Approximately 1 in 200 samples cannot
+    be processed for reasons outside our control.
   - The genes analysed are limited to the panel of your
     purchased package. The test does not screen for all known
     genetic conditions.
@@ -137,9 +146,9 @@ privacy@kyg.in or from "Privacy" in your account settings.
 
 7. CONFIRMATION
 ---------------
-By signing this consent (digitally at the time of sample
-collection, or by ticking "I have read and accept the Genetic
-Testing Consent" at booking), you confirm:
+By ticking "I have read and accept the Genetic Testing Consent"
+at checkout and by re-confirming at kit registration, you
+confirm:
 
   - I have read and understood this consent.
   - I have had the opportunity to ask questions and they have

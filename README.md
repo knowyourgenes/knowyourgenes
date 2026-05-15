@@ -18,11 +18,14 @@ Service area     India-wide for kit shipping (limited by Delhivery serviceabilit
 
 ## Documentation
 
-| Document                                         | What's in it                                                                |
-| ------------------------------------------------ | --------------------------------------------------------------------------- |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)     | Deep technical reference. Modules, request lifecycle, state machines, gotchas. |
-| [docs/LAUNCH_CHECKLIST.md](docs/LAUNCH_CHECKLIST.md) | Step-by-step from current state to live, with priorities and owners.    |
-| [AGENTS.md](AGENTS.md)                           | Project-wide guardrail for AI-assisted edits.                              |
+| Document                                                 | What's in it                                                                       |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)             | Deep technical reference. Modules, request lifecycle, state machines, gotchas.     |
+| [docs/API.md](docs/API.md)                               | Endpoint catalog with auth roles and response shapes.                              |
+| [docs/RUNBOOKS.md](docs/RUNBOOKS.md)                     | How-to for common ops tasks: provider switching, refunds, secret rotation, etc.    |
+| [docs/PERFORMANCE.md](docs/PERFORMANCE.md)               | Measured timings, index inventory, optimisation patterns, regression-hunting steps.|
+| [docs/LAUNCH_CHECKLIST.md](docs/LAUNCH_CHECKLIST.md)     | Step-by-step from current state to live, with priorities and owners.               |
+| [AGENTS.md](AGENTS.md)                                   | Project-wide guardrail for AI-assisted edits.                                      |
 
 For business / spec context: [resource/](resource/) holds the Phase 1 spec, feature list, dev calendar, user journey, sitemap, and the legal-page source-of-truth drafts.
 
@@ -37,7 +40,7 @@ For business / spec context: [resource/](resource/) holds the Phase 1 spec, feat
 | CMS              | Sanity v5 — blog content only, embedded at `/studio`                                |
 | Payments         | Razorpay (order create + signature verify + webhook)                                |
 | File storage     | Cloudflare R2 (S3-compatible) for private report PDFs, served via presigned URLs    |
-| Courier          | Delhivery B2C surface API — forward kit + reverse sample pickup                     |
+| Courier          | Shiprocket (default, multi-courier aggregator) or Delhivery direct — switch via `COURIER_PROVIDER` |
 | Geo              | Mappls (MapMyIndia) for reverse geocoding, autosuggest, pincode serviceability      |
 | Comms            | SendGrid / SES email, WhatsApp Business API (Gupshup or Wati)                       |
 | Hosting          | VPS + Cloudflare as free CDN/proxy (Workers explicitly rejected — see memory note)  |
@@ -138,6 +141,10 @@ public/                Static assets.
 - **`/admin` is shared.** Counsellor and partner views are the same shell with a filtered sidebar — don't create separate `/counsellor` or `/partner` shells.
 - **Soft-delete users.** `User.deletedAt` blocks sign-in via all providers (Credentials and Google).
 - **Shipments snapshot addresses.** Editing `Address` after a shipment is created does not retro-rewrite pickup/drop on the shipment.
+- **One pincode → many area rows.** `ServiceArea` is composite-keyed on `(pincode, area)`. A pincode is serviceable if *any* area row under it is `active=true`. See `/api/location/serviceability`.
+- **Courier choice is per-shipment.** `Shipment.courier` is stamped at create time, so historical shipments stay routed to the right vendor for tracking even after flipping `COURIER_PROVIDER`.
+- **Attribution is captured at first landing, attached at checkout.** The signed `kyg_attr` cookie (HMAC, 30-day TTL) is read in `/api/checkout` and denormalised onto the Order row — survives cookie clearing.
+- **Admin caches in sessionStorage.** `/admin/service-area` uses stale-while-revalidate via [lib/client-cache.ts](lib/client-cache.ts). The Refresh button clears the namespace.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#conventions-and-gotchas) for the full list.
 

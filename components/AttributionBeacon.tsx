@@ -39,11 +39,38 @@ export default function AttributionBeacon() {
     if (typeof window === 'undefined') return;
 
     const params = new URLSearchParams(window.location.search);
-    const source = params.get('utm_source');
-    const campaign = params.get('utm_campaign');
+    const utmSource = params.get('utm_source');
+    const utmCampaign = params.get('utm_campaign');
+
+    // Paid click-ids (gclid, fbclid, msclkid, ttclid, gbraid, wbraid, li_fat_id, twclid)
+    // imply paid traffic even when marketers forget UTM tags. Derive a source.
+    let clickIdSource: string | null = null;
+    let clickIdMedium: string | null = null;
+    if (params.get('gclid') || params.get('gbraid') || params.get('wbraid')) {
+      clickIdSource = 'google';
+      clickIdMedium = 'cpc';
+    } else if (params.get('fbclid')) {
+      clickIdSource = 'facebook';
+      clickIdMedium = 'paid_social';
+    } else if (params.get('msclkid')) {
+      clickIdSource = 'bing';
+      clickIdMedium = 'cpc';
+    } else if (params.get('ttclid')) {
+      clickIdSource = 'tiktok';
+      clickIdMedium = 'paid_social';
+    } else if (params.get('li_fat_id')) {
+      clickIdSource = 'linkedin';
+      clickIdMedium = 'paid_social';
+    } else if (params.get('twclid')) {
+      clickIdSource = 'twitter';
+      clickIdMedium = 'paid_social';
+    }
+
+    const source = utmSource ?? clickIdSource;
+    const medium = params.get('utm_medium') ?? clickIdMedium;
 
     // Only fire when there's a marketing signal in the URL.
-    if (!source && !campaign) return;
+    if (!source && !utmCampaign) return;
 
     // Dedupe — same URL in same session shouldn't double-count refreshes.
     const url = window.location.href;
@@ -58,8 +85,8 @@ export default function AttributionBeacon() {
     const body = {
       sessionId: getOrCreateSessionId(),
       source,
-      medium: params.get('utm_medium'),
-      campaign,
+      medium,
+      campaign: utmCampaign,
       term: params.get('utm_term'),
       content: params.get('utm_content'),
       referrer: document.referrer || null,

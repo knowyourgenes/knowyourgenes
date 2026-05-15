@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { handle, isResponse, ok, requireApiRole } from '@/lib/api';
-import { delhivery } from '@/lib/delhivery';
+import { courier } from '@/lib/courier';
 
 type Params = Promise<{ id: string }>;
 
@@ -16,7 +16,7 @@ export async function POST(_req: Request, { params }: { params: Params }) {
     if (shipment.status === 'CANCELLED') return ok(shipment);
 
     if (shipment.awb) {
-      const result = await delhivery.cancel(shipment.awb);
+      const result = await courier.cancel(shipment.awb, shipment.courier);
       if (!result.ok) throw new Error('Courier cancellation failed');
     }
 

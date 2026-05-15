@@ -34,19 +34,25 @@ export default function TermsOfServicePage() {
         <li>you are an authorised attorney-in-fact for an adult unable to provide consent themselves.</li>
       </ul>
       <p>
-        You must be located in the Republic of India to use the Services. Sample collection is currently available only
-        in the Delhi National Capital Region (Delhi NCR); see <Link href="/shipping">Shipping &amp; Delivery</Link> for
-        the current list of serviceable pincodes.
+        You must be located in the Republic of India to use the Services. We ship kits to pincodes serviced by our
+        courier partners; see <Link href="/shipping">Shipping &amp; Delivery</Link> for the live serviceability check.
       </p>
 
       <h2>2. What we provide</h2>
       <p>The Services consist of:</p>
       <ul>
-        <li>At-home sample collection by a trained phlebotomist;</li>
+        <li>
+          A sample-collection kit (saliva or buccal swab) couriered to your address, with a pre-paid return label for
+          the reverse shipment;
+        </li>
         <li>Laboratory processing of the sample at an NABL-accredited partner lab;</li>
         <li>A genetic report containing variant-level findings and wellness or condition-relevant interpretation;</li>
         <li>Optional pre-test and post-test genetic counselling.</li>
       </ul>
+      <p>
+        At-home phlebotomist collection (where a trained professional draws a blood sample at your address) is on our
+        future roadmap; it is not currently offered.
+      </p>
       <p>The Services do NOT include:</p>
       <ul>
         <li>A medical diagnosis;</li>
@@ -121,17 +127,27 @@ export default function TermsOfServicePage() {
       </p>
 
       <h2>5. Sample collection</h2>
-      <p>By booking a collection, you agree to:</p>
+      <p>By placing an order, you agree to:</p>
       <ul>
-        <li>Be present at the address and slot you selected, with one valid photo ID;</li>
-        <li>Allow our phlebotomist to identify you and verify the booking before drawing a sample;</li>
-        <li>Follow any pre-collection instructions (for example, fasting) that we communicate;</li>
-        <li>Sign a digital consent form before sample draw.</li>
+        <li>Provide an accurate delivery address at which the kit can be received;</li>
+        <li>
+          Collect your sample at home, following the instructions enclosed in the kit. Most collections take under 5
+          minutes.
+        </li>
+        <li>
+          Register the kit in your KYG account using the unique kit code on the identification sticker, and re-confirm
+          your Genetic Testing Consent at that point;
+        </li>
+        <li>Schedule the reverse pickup promptly so the sample is not delayed in transit;</li>
+        <li>
+          Not adulterate, mishandle, or substitute the sample. Sample integrity is your responsibility from delivery to
+          reverse pickup.
+        </li>
       </ul>
       <p>
-        If the phlebotomist is unable to collect a sample because you are not present, the address is wrong, ID does not
-        match, or you refuse to sign consent, the booking will be treated as a no-show under our{' '}
-        <Link href="/refunds">Refund Policy</Link>.
+        If the kit cannot be delivered, the sample cannot be collected, or the sample arrives at the lab in a state that
+        cannot be processed, the order is handled under our <Link href="/refunds">Refund Policy</Link> &mdash; typically
+        by dispatching a free re-collection kit.
       </p>
 
       <h2>6. Reports</h2>
