@@ -227,7 +227,7 @@ export default function DataTable<T extends { id?: string }>({
                   changePageSize(Number(v));
                 }}
               >
-                <SelectTrigger className="h-8 w-[72px]">
+                <SelectTrigger className="h-8 w-18">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

@@ -33,6 +33,7 @@ export default function DeleteConfirmDialog({
   onConfirm,
   actionLabel = 'Deactivate',
   loadingLabel = 'Deactivating…',
+  tone = 'destructive',
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -43,6 +44,8 @@ export default function DeleteConfirmDialog({
   onConfirm: () => Promise<void> | void;
   actionLabel?: string;
   loadingLabel?: string;
+  /** 'destructive' (red) for deactivate, 'primary' for restore-style confirms. */
+  tone?: 'destructive' | 'primary';
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -63,6 +66,11 @@ export default function DeleteConfirmDialog({
   const noun = itemLabel ?? 'This item';
   const defaultDescription = `${noun} will be deactivated and hidden across the app. The data is preserved and you can reactivate it any time.`;
 
+  const actionClass =
+    tone === 'destructive'
+      ? 'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/40'
+      : '';
+
   return (
     <AlertDialog open={open} onOpenChange={handleOpenChange}>
       <AlertDialogContent>
@@ -72,11 +80,7 @@ export default function DeleteConfirmDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={handleConfirm}
-            disabled={loading}
-            className="bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/40"
-          >
+          <AlertDialogAction onClick={handleConfirm} disabled={loading} className={actionClass}>
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             {loading ? loadingLabel : actionLabel}
           </AlertDialogAction>

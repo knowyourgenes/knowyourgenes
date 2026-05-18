@@ -23,15 +23,18 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
     const body = await req.json();
     const data = labUpdate.parse(body);
 
-    const lab = await prisma.$transaction(async (tx) => {
-      if (data.isDefault === true) {
-        await tx.lab.updateMany({
-          where: { isDefault: true, NOT: { id } },
-          data: { isDefault: false },
-        });
-      }
-      return tx.lab.update({ where: { id }, data });
-    });
+    const lab =
+      data.isDefault === true
+        ? (
+            await prisma.$transaction([
+              prisma.lab.updateMany({
+                where: { isDefault: true, NOT: { id } },
+                data: { isDefault: false },
+              }),
+              prisma.lab.update({ where: { id }, data }),
+            ])
+          )[1]
+        : await prisma.lab.update({ where: { id }, data });
     return ok(lab);
   });
 }
