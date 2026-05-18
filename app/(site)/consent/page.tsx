@@ -139,7 +139,7 @@ export default function ConsentPage() {
       <h2>6. Withdrawal of consent</h2>
       <p>
         You may withdraw consent for the storage of your genetic data, or for any specific use of it, at any time, by
-        writing to <a href="mailto:privacy@kyg.in">privacy@kyg.in</a> or from &ldquo;Privacy&rdquo; in your account
+        writing to <a href="mailto:privacy@knowyourgenes.in">privacy@knowyourgenes.in</a> or from &ldquo;Privacy&rdquo; in your account
         settings.
       </p>
       <ul>
@@ -178,7 +178,7 @@ export default function ConsentPage() {
         <br />
         CIN: U74999DL2010PTC207582
         <br />
-        Email: <a href="mailto:privacy@kyg.in">privacy@kyg.in</a> / <a href="mailto:care@kyg.in">care@kyg.in</a>
+        Email: <a href="mailto:privacy@knowyourgenes.in">privacy@knowyourgenes.in</a> / <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a>
         <br />
         Phone: <a href="tel:+911140000000">+91 11 4000 0000</a> (Mon&ndash;Sat, 09:00&ndash;19:00 IST)
       </p>

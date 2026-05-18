@@ -12,7 +12,7 @@ export default function RefundPolicyPage() {
   return (
     <LegalPage title="Refund & Cancellation Policy" updated="14 May 2026">
       <p>
-        This Refund &amp; Cancellation Policy applies to all orders placed on kyg.in or the KnowYourGenes app. It is
+        This Refund &amp; Cancellation Policy applies to all orders placed on knowyourgenes.in or the KnowYourGenes app. It is
         published in compliance with Rule 5(3) of the Consumer Protection (E-Commerce) Rules, 2020. By making a payment
         on the Platform, you agree to this policy.
       </p>
@@ -119,7 +119,7 @@ export default function RefundPolicyPage() {
       </ul>
       <p>
         Report-related refund claims must be raised within 7 calendar days of report delivery, by writing to{' '}
-        <a href="mailto:care@kyg.in">care@kyg.in</a> with a description of the issue.
+        <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a> with a description of the issue.
       </p>
 
       <h2>6. Refund timeline &amp; method</h2>
@@ -162,11 +162,11 @@ export default function RefundPolicyPage() {
       <p>You can request a refund or cancellation in two ways:</p>
       <ul>
         <li>
-          From your order page on kyg.in or the app, using the &ldquo;Cancel order&rdquo; or &ldquo;Report an
+          From your order page on knowyourgenes.in or the app, using the &ldquo;Cancel order&rdquo; or &ldquo;Report an
           issue&rdquo; button.
         </li>
         <li>
-          By writing to <a href="mailto:care@kyg.in">care@kyg.in</a> with your order ID, registered mobile number, and a
+          By writing to <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a> with your order ID, registered mobile number, and a
           brief description of the reason.
         </li>
       </ul>
@@ -175,7 +175,7 @@ export default function RefundPolicyPage() {
       <h2>10. Escalation</h2>
       <p>
         If you are not satisfied with how a refund request has been handled, write to{' '}
-        <a href="mailto:grievance@kyg.in">grievance@kyg.in</a>. Our Grievance Officer will review and respond within 15
+        <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>. Our Grievance Officer will review and respond within 15
         days. You retain all your statutory rights under the Consumer Protection Act, 2019.
       </p>
 
@@ -187,11 +187,11 @@ export default function RefundPolicyPage() {
         <br />
         CIN: U74999DL2010PTC207582
         <br />
-        Email: <a href="mailto:care@kyg.in">care@kyg.in</a>
+        Email: <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a>
         <br />
         Phone: <a href="tel:+911140000000">+91 11 4000 0000</a> (Mon&ndash;Sat, 09:00&ndash;19:00 IST)
         <br />
-        Grievance: <a href="mailto:grievance@kyg.in">grievance@kyg.in</a>
+        Grievance: <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>
       </p>
 
       <p className="mt-10 text-sm text-muted-foreground">

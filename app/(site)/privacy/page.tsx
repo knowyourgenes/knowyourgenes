@@ -18,9 +18,10 @@ export default function PrivacyPolicyPage() {
         BFG Market Consult Private Limited operating under the KnowYourGenes brand.
       </p>
       <p>
-        We operate the website <strong>kyg.in</strong> and the related mobile/web application (together, the
-        &ldquo;Platform&rdquo;), through which we offer at-home sample collection and genetic testing services across
-        Delhi NCR.
+        We operate the website <strong>knowyourgenes.in </strong> and the related mobile/web application (together,
+        the &ldquo;Platform&rdquo;), through which we offer genetic testing via doorstep self-collection kits
+        couriered to your address across India. We do not currently offer at-home phlebotomist or any in-person
+        sample-collection service.
       </p>
       <p>
         This Privacy Policy explains what personal information, sensitive personal information and genetic data we
@@ -33,7 +34,7 @@ export default function PrivacyPolicyPage() {
       <h2>1. Scope</h2>
       <p>This policy applies to everyone who:</p>
       <ul>
-        <li>visits kyg.in or any KYG sub-domain,</li>
+        <li>visits knowyourgenes.in or any KYG sub-domain,</li>
         <li>creates a KYG account,</li>
         <li>orders a kit, registers a kit, or sends a sample to our partner lab,</li>
         <li>receives or accesses a KYG report, or</li>
@@ -131,7 +132,7 @@ export default function PrivacyPolicyPage() {
       </ul>
       <p>
         Wherever consent is the basis, you may withdraw it through your account or by writing to{' '}
-        <a href="mailto:grievance@kyg.in">grievance@kyg.in</a>. Withdrawal does not affect processing already lawfully
+        <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>. Withdrawal does not affect processing already lawfully
         carried out.
       </p>
 
@@ -247,7 +248,7 @@ export default function PrivacyPolicyPage() {
         <li>Escalate to the Data Protection Board of India if your grievance is not resolved.</li>
       </ul>
       <p>
-        To exercise any of these rights, write to <a href="mailto:privacy@kyg.in">privacy@kyg.in</a>. We will respond
+        To exercise any of these rights, write to <a href="mailto:privacy@knowyourgenes.in">privacy@knowyourgenes.in</a>. We will respond
         within 30 days.
       </p>
 
@@ -289,12 +290,12 @@ export default function PrivacyPolicyPage() {
         <br />
         CIN: U74999DL2010PTC207582
         <br />
-        Email: <a href="mailto:grievance@kyg.in">grievance@kyg.in</a>
+        Email: <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>
         <br />
         Phone: <a href="tel:+911140000000">+91 11 4000 0000</a> (Mon&ndash;Sat, 09:00&ndash;19:00 IST)
       </p>
       <p>
-        For privacy-specific questions, you may also write to <a href="mailto:privacy@kyg.in">privacy@kyg.in</a>.
+        For privacy-specific questions, you may also write to <a href="mailto:privacy@knowyourgenes.in">privacy@knowyourgenes.in</a>.
       </p>
 
       <p className="mt-10 text-sm text-muted-foreground">

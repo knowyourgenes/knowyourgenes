@@ -30,9 +30,8 @@ export default function ShippingPolicyPage() {
         when we expand.
       </p>
       <p>
-        At-home phlebotomist collection (where a trained professional visits your address to draw a blood sample) is on
-        our future roadmap; it is not currently offered. Today every test uses a self-collected saliva or buccal swab
-        sample.
+        Every test today uses a self-collected saliva or buccal swab sample. We do not offer at-home phlebotomist
+        collection or any in-person sample-collection service.
       </p>
 
       <h2>2. What happens after you book</h2>
@@ -115,7 +114,7 @@ export default function ShippingPolicyPage() {
       <p>
         You can update the delivery address for your kit at no charge until the kit has been handed to the courier (Step
         2). After dispatch, address changes must be coordinated with the courier; redirection may not always be
-        possible. Write to <a href="mailto:care@kyg.in">care@kyg.in</a> with your order ID for help.
+        possible. Write to <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a> with your order ID for help.
       </p>
       <p>
         You can reschedule the reverse pickup up to the moment the courier is dispatched, at no charge, from your
@@ -135,7 +134,7 @@ export default function ShippingPolicyPage() {
       <p>
         We do NOT post a printed report by default. If you specifically request a printed, notarised copy of your report
         for clinical use, we can courier it to your address for an additional fee on actuals — write to{' '}
-        <a href="mailto:care@kyg.in">care@kyg.in</a>.
+        <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a>.
       </p>
       <p>We do NOT sell or ship physical merchandise, supplements, food, or drug products through the Platform.</p>
 
@@ -168,7 +167,7 @@ export default function ShippingPolicyPage() {
         <br />
         CIN: U74999DL2010PTC207582
         <br />
-        Email: <a href="mailto:care@kyg.in">care@kyg.in</a>
+        Email: <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a>
         <br />
         Phone: <a href="tel:+911140000000">+91 11 4000 0000</a> (Mon&ndash;Sat, 09:00&ndash;19:00 IST)
       </p>
