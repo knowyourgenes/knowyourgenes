@@ -5,15 +5,15 @@ import { LegalPage } from '@/components/site/LegalPage';
 export const metadata: Metadata = {
   title: 'Terms of Service',
   description:
-    'Terms governing your use of KnowYourGenes (operated by BFG Market Consult Private Limited) &mdash; genetic testing, at-home sample collection, and counselling services.',
+    'Terms governing your use of KnowYourGenes (operated by BFG Market Consult Private Limited) &mdash; genetic testing via doorstep self-collection kits, and counselling services.',
 };
 
 export default function TermsOfServicePage() {
   return (
     <LegalPage title="Terms of Service" updated="12 May 2026">
       <p>
-        These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and use of the website kyg.in, the
-        KnowYourGenes mobile/web application, and the genetic testing and counselling services offered under the
+        These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and use of the website knowyourgenes.in,
+        the KnowYourGenes mobile/web application, and the genetic testing and counselling services offered under the
         KnowYourGenes brand (collectively, the &ldquo;Services&rdquo;). The Services are operated by{' '}
         <strong>BFG Market Consult Private Limited</strong>, a company incorporated under the Companies Act, 2013,
         bearing CIN U74999DL2010PTC207582, having its registered office at SU 18, Pitam Pura, Delhi 110034, India
@@ -50,8 +50,8 @@ export default function TermsOfServicePage() {
         <li>Optional pre-test and post-test genetic counselling.</li>
       </ul>
       <p>
-        At-home phlebotomist collection (where a trained professional draws a blood sample at your address) is on our
-        future roadmap; it is not currently offered.
+        Every test uses a self-collected saliva or buccal swab sample taken at home using the kit. We do not offer
+        at-home phlebotomist collection or any in-person sample-collection service.
       </p>
       <p>The Services do NOT include:</p>
       <ul>
@@ -105,7 +105,7 @@ export default function TermsOfServicePage() {
       <h3>A. Account</h3>
       <p>
         You must register an account with accurate name, mobile number and email. You are responsible for keeping your
-        login secure. Notify us immediately at <a href="mailto:care@kyg.in">care@kyg.in</a> if you suspect unauthorised
+        login secure. Notify us immediately at <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a> if you suspect unauthorised
         access.
       </p>
       <h3>B. Booking</h3>
@@ -275,11 +275,11 @@ export default function TermsOfServicePage() {
         <br />
         SU 18, Pitam Pura, Delhi 110034, India
         <br />
-        Email: <a href="mailto:care@kyg.in">care@kyg.in</a>
+        Email: <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a>
         <br />
         Phone: <a href="tel:+911140000000">+91 11 4000 0000</a> (Mon&ndash;Sat, 09:00&ndash;19:00 IST)
         <br />
-        Grievance Officer (DPDP Act): <a href="mailto:grievance@kyg.in">grievance@kyg.in</a>
+        Grievance Officer (DPDP Act): <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>
       </p>
     </LegalPage>
   );
