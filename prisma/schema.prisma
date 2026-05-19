@@ -191,7 +191,7 @@ model User {
   consultations      Consultation[]     @relation("UserConsultations")
   agentProfile       AgentProfile?
   counsellorProfile  CounsellorProfile?
-  labPartnerProfile  LabPartner?
+  labAdminOf         Lab?               @relation("LabAdmin")
   reviewedReports    Report[]           @relation("CounsellorReviewer")
   counsellorSessions Consultation[]     @relation("CounsellorSessions")
   notifications      Notification[]
@@ -292,21 +292,22 @@ model CounsellorProfile {
 }
 
 // Lab partners - process samples, upload reports.
-// One-to-one with a User whose role = PARTNER.
+// PARENT partner organization (e.g. "Neotech Diagnostics"). KYG signs one
+// contract per partner. A partner can run 1..N physical Lab locations, each
+// with its own address and its own per-lab login.
 model LabPartner {
-  userId        String   @id
-  labName       String
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
   accreditation String // e.g. "NABL, CAP, ISO 15189"
   contactEmail  String
   contactPhone  String
-  addressLine   String
-  city          String
-  pincode       String
   active        Boolean  @default(true)
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orders Order[] @relation("ProcessingLab")
+  locations Lab[]   @relation("PartnerLocations")
+  orders    Order[] @relation("ProcessingPartner")
 
   @@index([active])
 }
@@ -337,8 +338,26 @@ model Address {
 }
 
 // =============================================================================
-// CATALOG - Packages / Tests
+// CATALOG - Categories / Packages / Tests
 // =============================================================================
+
+// Top-level grouping for kits/packages. Replaces the static PackageCategory enum
+// so ops can add or rename categories without a code change. Wellness, Cardiac,
+// Cancer Risk, Reproductive, Drug Sensitivity etc all live here.
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?  @db.Text
+  // Emoji or short icon code rendered in cards (e.g. "🥗", "❤️", "🧬").
+  icon        String?
+  position    Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([active])
+}
 
 model Package {
   id              String          @id @default(cuid())
@@ -361,6 +380,10 @@ model Package {
   recommended     Boolean         @default(false)
   active          Boolean         @default(true)
   position        Int             @default(0)
+  // Inventory. stockQuantity is the count of kits sitting in the lab/warehouse
+  // ready to ship. lowStockThreshold drives the "Low stock" badge in admin.
+  stockQuantity      Int @default(0)
+  lowStockThreshold  Int @default(10)
   // How this package can be fulfilled. AT_HOME means an agent collects in person;
   // KIT_BY_POST means a kit is couriered to the user and reverse-picked. EITHER lets
   // the user pick at checkout.
@@ -382,14 +405,15 @@ model Package {
 // =============================================================================
 
 model Order {
-  id           String  @id @default(cuid())
-  orderNumber  String  @unique // Human-facing: KYG-2026-000412
-  userId       String
-  packageId    String
-  addressId    String
-  agentId      String?
-  labPartnerId String?
-  couponCode   String?
+  id          String  @id @default(cuid())
+  orderNumber String  @unique // Human-facing: KYG-2026-000412
+  userId      String
+  packageId   String
+  addressId   String
+  agentId     String?
+  partnerId   String? // parent partner organization (Neotech)
+  labId       String? // specific physical lab location (Neotech Saket)
+  couponCode  String?
 
   // Pricing (all in paise)
   subtotal      Int
@@ -438,20 +462,22 @@ model Order {
   collectedAt DateTime?
   deliveredAt DateTime?
 
-  user       User          @relation(fields: [userId], references: [id])
-  package    Package       @relation(fields: [packageId], references: [id])
-  address    Address       @relation(fields: [addressId], references: [id])
-  agent      AgentProfile? @relation("AssignedAgent", fields: [agentId], references: [userId])
-  labPartner LabPartner?   @relation("ProcessingLab", fields: [labPartnerId], references: [userId])
-  campaign   Campaign?     @relation(fields: [campaignId], references: [id])
-  events     OrderEvent[]
-  payments   Payment[]
-  shipments  Shipment[]
-  report     Report?
+  user      User          @relation(fields: [userId], references: [id])
+  package   Package       @relation(fields: [packageId], references: [id])
+  address   Address       @relation(fields: [addressId], references: [id])
+  agent     AgentProfile? @relation("AssignedAgent", fields: [agentId], references: [userId])
+  partner   LabPartner?   @relation("ProcessingPartner", fields: [partnerId], references: [id])
+  lab       Lab?          @relation("ProcessingLab", fields: [labId], references: [id])
+  campaign  Campaign?     @relation(fields: [campaignId], references: [id])
+  events    OrderEvent[]
+  payments  Payment[]
+  shipments Shipment[]
+  report    Report?
 
   @@index([userId])
   @@index([agentId])
-  @@index([labPartnerId])
+  @@index([partnerId])
+  @@index([labId])
   @@index([status])
   @@index([slotDate])
   @@index([orderNumber])
@@ -473,32 +499,45 @@ model OrderEvent {
 }
 
 // =============================================================================
-// LABS - KYG-owned facilities. Kits ship FROM a Lab on the forward leg and
-// samples are reverse-picked TO a Lab. Distinct from LabPartner (external
-// processing partners with their own user logins).
+// LABS - Physical lab locations operated by a LabPartner (e.g. Neotech Saket).
+// Kits ship FROM a Lab to the customer, samples reverse-pick back to the
+// same Lab, the lab runs the test, and a per-lab login uploads the raw
+// report. KYG does not own any labs.
 // =============================================================================
 
 model Lab {
-  id                 String   @id @default(cuid())
+  id        String     @id @default(cuid())
+  partnerId String
+  partner   LabPartner @relation("PartnerLocations", fields: [partnerId], references: [id], onDelete: Restrict)
+
   name               String
-  slug               String   @unique
+  slug               String  @unique
   addressLine        String
   city               String
-  state              String   @default("Delhi")
+  state              String  @default("Delhi")
   pincode            String
   phone              String
   contactEmail       String?
   // Name of the pickup-location registered with the courier (Delhivery's
   // "client warehouse name"). Must match exactly what's set up in their portal.
-  pickupLocationName String   @unique
-  isDefault          Boolean  @default(false)
-  active             Boolean  @default(true)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  pickupLocationName String  @unique
+  isDefault          Boolean @default(false)
+  active             Boolean @default(true)
+
+  // Per-lab admin login. One ID/password per physical lab. Optional so a
+  // lab can exist before its operator account is provisioned.
+  userId String? @unique
+  user   User?   @relation("LabAdmin", fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   shipments Shipment[]
+  orders    Order[]    @relation("ProcessingLab")
+  reports   Report[]   @relation("ProcessingLab")
 
   @@index([active])
+  @@index([partnerId])
 }
 
 // =============================================================================
@@ -612,6 +651,7 @@ model Report {
   reportNumber    String    @unique // RPT-000412
   orderId         String    @unique
   userId          String
+  labId           String? // physical lab that processed the sample
   packageName     String // denormalised at delivery time
   pdfKey          String // S3 object key
   summary         Json // string[] - plain-English bullets
@@ -627,11 +667,13 @@ model Report {
 
   order      Order          @relation(fields: [orderId], references: [id])
   user       User           @relation(fields: [userId], references: [id])
+  lab        Lab?           @relation("ProcessingLab", fields: [labId], references: [id])
   uploadedBy User?          @relation("UploadedBy", fields: [uploadedById], references: [id])
   reviewedBy User?          @relation("CounsellorReviewer", fields: [reviewedById], references: [id])
   markers    ReportMarker[]
 
   @@index([userId])
+  @@index([labId])
   @@index([deliveredAt])
 }
 

@@ -117,13 +117,7 @@ function resolve(spec: string, importer: string): string | null {
   else if (spec.startsWith('.')) abs = path.resolve(path.dirname(importer), spec);
   else return null; // bare npm dep
 
-  const tries = [
-    abs + '.ts',
-    abs + '.tsx',
-    path.join(abs, 'index.ts'),
-    path.join(abs, 'index.tsx'),
-    abs,
-  ];
+  const tries = [abs + '.ts', abs + '.tsx', path.join(abs, 'index.ts'), path.join(abs, 'index.tsx'), abs];
   for (const t of tries) {
     try {
       if (statSync(t).isFile()) return t;

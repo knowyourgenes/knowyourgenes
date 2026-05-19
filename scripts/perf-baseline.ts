@@ -149,8 +149,10 @@ async function main() {
   // -------------------------------------------------------------------------
 
   console.log('═══ POST-FIX: stats (single aggregate query) ═══');
-  await time('single $queryRaw aggregate', () =>
-    prisma.$queryRaw`
+  await time(
+    'single $queryRaw aggregate',
+    () =>
+      prisma.$queryRaw`
       SELECT
         COUNT(*)::bigint                                                AS total,
         COUNT(*) FILTER (WHERE active)::bigint                          AS active,
@@ -165,8 +167,10 @@ async function main() {
   console.log('');
 
   console.log('═══ POST-FIX: tree (single groupBy with FILTER) ═══');
-  await time('single $queryRaw groupBy', () =>
-    prisma.$queryRaw`
+  await time(
+    'single $queryRaw groupBy',
+    () =>
+      prisma.$queryRaw`
       SELECT
         state,
         district,

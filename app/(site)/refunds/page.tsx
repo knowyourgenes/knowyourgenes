@@ -12,9 +12,9 @@ export default function RefundPolicyPage() {
   return (
     <LegalPage title="Refund & Cancellation Policy" updated="14 May 2026">
       <p>
-        This Refund &amp; Cancellation Policy applies to all orders placed on knowyourgenes.in or the KnowYourGenes app. It is
-        published in compliance with Rule 5(3) of the Consumer Protection (E-Commerce) Rules, 2020. By making a payment
-        on the Platform, you agree to this policy.
+        This Refund &amp; Cancellation Policy applies to all orders placed on knowyourgenes.in or the KnowYourGenes app.
+        It is published in compliance with Rule 5(3) of the Consumer Protection (E-Commerce) Rules, 2020. By making a
+        payment on the Platform, you agree to this policy.
       </p>
       <p>
         We have written this plainly. Cancellation windows are pegged to the kit lifecycle — what stage your order is in
@@ -166,8 +166,8 @@ export default function RefundPolicyPage() {
           issue&rdquo; button.
         </li>
         <li>
-          By writing to <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a> with your order ID, registered mobile number, and a
-          brief description of the reason.
+          By writing to <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a> with your order ID, registered
+          mobile number, and a brief description of the reason.
         </li>
       </ul>
       <p>We will acknowledge your request within 1 business day and confirm the outcome within 5 business days.</p>
@@ -175,8 +175,8 @@ export default function RefundPolicyPage() {
       <h2>10. Escalation</h2>
       <p>
         If you are not satisfied with how a refund request has been handled, write to{' '}
-        <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>. Our Grievance Officer will review and respond within 15
-        days. You retain all your statutory rights under the Consumer Protection Act, 2019.
+        <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>. Our Grievance Officer will review
+        and respond within 15 days. You retain all your statutory rights under the Consumer Protection Act, 2019.
       </p>
 
       <h2>11. Contact</h2>

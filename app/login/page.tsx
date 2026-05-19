@@ -76,19 +76,19 @@ function LoginForm() {
         </Link>
 
         <Card>
-          <CardHeader>
+          {/* <CardHeader>
             <CardTitle>Sign in</CardTitle>
             <CardDescription>Use your email or phone with your password.</CardDescription>
-          </CardHeader>
+          </CardHeader> */}
           <CardContent className="space-y-4">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="identifier">Email or phone</Label>
+                <Label htmlFor="identifier">Email</Label>
                 <Input
                   id="identifier"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="you@example.com or 9876543210"
+                  placeholder="you@example.com"
                   autoComplete="username"
                   className="h-11"
                   required
@@ -102,6 +102,7 @@ function LoginForm() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    placeholder="• • • • • • • •"
                     autoComplete="current-password"
                     className="h-11 pr-10"
                     required

@@ -26,9 +26,7 @@ export async function GET(req: Request) {
       if (hasDigits) {
         // For all-digit queries do a fast prefix match (uses the pincode
         // btree index). For mixed-content queries fall back to contains.
-        branches.push(
-          isPincodePrefix ? { pincode: { startsWith: params.q } } : { pincode: { contains: params.q } }
-        );
+        branches.push(isPincodePrefix ? { pincode: { startsWith: params.q } } : { pincode: { contains: params.q } });
       }
       // Only do the expensive ILIKE branches when the query has at least one
       // alphabetic character.

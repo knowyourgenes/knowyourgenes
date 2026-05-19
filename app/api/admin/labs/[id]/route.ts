@@ -21,7 +21,10 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
     if (isResponse(guard)) return guard;
     const { id } = await params;
     const body = await req.json();
-    const data = labUpdate.parse(body);
+    const parsed = labUpdate.parse(body);
+    // `login` is a create-time provisioning helper, not a Lab column. Editing
+    // an existing lab's login is out of scope here — manage that on the user.
+    const { login: _login, ...data } = parsed;
 
     const lab =
       data.isDefault === true

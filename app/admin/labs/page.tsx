@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
   Dialog,
   DialogBody,
@@ -29,8 +30,15 @@ const CK = {
   prefixAll: 'labs:',
 } as const;
 
+type PartnerOption = { id: string; slug: string; name: string };
+type LabRow = Lab & {
+  partner?: PartnerOption | null;
+  user?: { id: string; email: string | null; name: string | null } | null;
+};
+
 type FormState = {
   id?: string;
+  partnerId: string;
   name: string;
   slug: string;
   addressLine: string;
@@ -42,9 +50,15 @@ type FormState = {
   pickupLocationName: string;
   isDefault: boolean;
   active: boolean;
+  // Per-lab login (create-only)
+  createLogin: boolean;
+  loginEmail: string;
+  loginPassword: string;
+  loginName: string;
 };
 
 const EMPTY: FormState = {
+  partnerId: '',
   name: '',
   slug: '',
   addressLine: '',
@@ -56,6 +70,10 @@ const EMPTY: FormState = {
   pickupLocationName: '',
   isDefault: false,
   active: true,
+  createLogin: false,
+  loginEmail: '',
+  loginPassword: '',
+  loginName: '',
 };
 
 function toSlug(value: string) {
@@ -65,16 +83,26 @@ function toSlug(value: string) {
     .replace(/^-+|-+$/g, '');
 }
 
-function toPickupName(city: string) {
-  const part = city
+// Pickup-location name follows the partner-slug + location-slug convention so
+// it stays stable and matches what's registered in the courier portal.
+function toPickupName(partnerSlug: string, citySlug: string) {
+  const p = (partnerSlug || '')
     .toUpperCase()
     .replace(/[^A-Z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-  return part ? `KYG-LAB-${part}` : '';
+  const c = (citySlug || '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  if (!p && !c) return '';
+  if (!p) return c;
+  if (!c) return p;
+  return `${p}-${c}`;
 }
 
 export default function AdminLabsPage() {
-  const [items, setItems] = useState<Lab[]>([]);
+  const [items, setItems] = useState<LabRow[]>([]);
+  const [partners, setPartners] = useState<PartnerOption[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [open, setOpen] = useState(false);
@@ -82,13 +110,13 @@ export default function AdminLabsPage() {
   const [form, setForm] = useState<FormState>(EMPTY);
   const [slugTouched, setSlugTouched] = useState(false);
   const [pickupTouched, setPickupTouched] = useState(false);
-  const [deleteTarget, setDeleteTarget] = useState<Lab | null>(null);
-  const [restoreTarget, setRestoreTarget] = useState<Lab | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<LabRow | null>(null);
+  const [restoreTarget, setRestoreTarget] = useState<LabRow | null>(null);
 
   const inflight = useRef<Map<string, Promise<unknown>>>(new Map());
 
   const load = useCallback(async (opts: { force?: boolean } = {}) => {
-    const cached = !opts.force ? cache.read<Lab[]>(CK.list) : null;
+    const cached = !opts.force ? cache.read<LabRow[]>(CK.list) : null;
     if (cached) {
       setItems(cached);
       setLoading(false);
@@ -130,20 +158,34 @@ export default function AdminLabsPage() {
     }
   }, [load]);
 
+  const loadPartners = useCallback(async () => {
+    const res = await fetch('/api/admin/partners', { cache: 'no-store' });
+    const json = await res.json();
+    if (json.ok) {
+      setPartners(
+        (json.data as Array<{ id: string; slug: string; name: string; active: boolean }>)
+          .filter((p) => p.active)
+          .map((p) => ({ id: p.id, slug: p.slug, name: p.name }))
+      );
+    }
+  }, []);
+
   useEffect(() => {
     load();
-  }, [load]);
+    loadPartners();
+  }, [load, loadPartners]);
 
   function openCreate() {
-    setForm(EMPTY);
+    setForm({ ...EMPTY, partnerId: partners[0]?.id ?? '' });
     setSlugTouched(false);
     setPickupTouched(false);
     setOpen(true);
   }
 
-  function openEdit(l: Lab) {
+  function openEdit(l: LabRow) {
     setForm({
       id: l.id,
+      partnerId: l.partnerId,
       name: l.name,
       slug: l.slug,
       addressLine: l.addressLine,
@@ -155,6 +197,11 @@ export default function AdminLabsPage() {
       pickupLocationName: l.pickupLocationName,
       isDefault: l.isDefault,
       active: l.active,
+      // Login provisioning is create-only. Edits manage the user separately.
+      createLogin: false,
+      loginEmail: '',
+      loginPassword: '',
+      loginName: '',
     });
     setSlugTouched(true);
     setPickupTouched(true);
@@ -164,7 +211,8 @@ export default function AdminLabsPage() {
   async function save(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
-    const body = {
+    const body: Record<string, unknown> = {
+      partnerId: form.partnerId,
       name: form.name,
       slug: form.slug,
       addressLine: form.addressLine,
@@ -172,11 +220,19 @@ export default function AdminLabsPage() {
       state: form.state,
       pincode: form.pincode,
       phone: form.phone,
-      contactEmail: form.contactEmail || null,
+      contactEmail: form.contactEmail,
       pickupLocationName: form.pickupLocationName,
       isDefault: form.isDefault,
       active: form.active,
     };
+
+    if (!form.id && form.createLogin) {
+      body.login = {
+        email: form.loginEmail,
+        password: form.loginPassword,
+        name: form.loginName || `${form.name} Lab`,
+      };
+    }
 
     const url = form.id ? `/api/admin/labs/${form.id}` : '/api/admin/labs';
     const res = await fetch(url, {
@@ -277,6 +333,11 @@ export default function AdminLabsPage() {
               ),
             },
             {
+              key: 'partner',
+              header: 'Partner',
+              render: (l) => <span className="text-sm">{l.partner?.name ?? '—'}</span>,
+            },
+            {
               key: 'address',
               header: 'Address',
               render: (l) => (
@@ -293,7 +354,16 @@ export default function AdminLabsPage() {
               header: 'Courier pickup name',
               render: (l) => <span className="font-mono text-xs">{l.pickupLocationName}</span>,
             },
-            { key: 'phone', header: 'Phone', render: (l) => <span className="text-sm">{l.phone}</span> },
+            {
+              key: 'login',
+              header: 'Login',
+              render: (l) =>
+                l.user?.email ? (
+                  <span className="text-xs font-mono">{l.user.email}</span>
+                ) : (
+                  <span className="text-xs text-muted-foreground">—</span>
+                ),
+            },
             {
               key: 'active',
               header: 'Status',
@@ -319,12 +389,7 @@ export default function AdminLabsPage() {
                   <Trash2 className="h-3.5 w-3.5" />
                 </Button>
               ) : (
-                <Button
-                  size="icon-sm"
-                  variant="ghost"
-                  onClick={() => setRestoreTarget(l)}
-                  title="Restore"
-                >
+                <Button size="icon-sm" variant="ghost" onClick={() => setRestoreTarget(l)} title="Restore">
                   <RotateCcw className="h-3.5 w-3.5" />
                 </Button>
               )}
@@ -345,6 +410,42 @@ export default function AdminLabsPage() {
 
           <DialogBody>
             <form id="lab-form" onSubmit={save} className="grid gap-3">
+              <div className="space-y-1.5">
+                <Label htmlFor="partner">
+                  Partner <span className="text-destructive">*</span>
+                </Label>
+                <Select
+                  value={form.partnerId}
+                  onValueChange={(v) => {
+                    const partner = partners.find((p) => p.id === v);
+                    setForm((f) => ({
+                      ...f,
+                      partnerId: v ?? '',
+                      pickupLocationName: pickupTouched
+                        ? f.pickupLocationName
+                        : toPickupName(partner?.slug ?? '', f.city),
+                    }));
+                  }}
+                >
+                  <SelectTrigger id="partner">
+                    <SelectValue placeholder="Select a partner organisation" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {partners.length === 0 ? (
+                      <div className="p-2 text-xs text-muted-foreground">
+                        No partners yet — create one under Lab Partners first.
+                      </div>
+                    ) : (
+                      partners.map((p) => (
+                        <SelectItem key={p.id} value={p.id}>
+                          {p.name}
+                        </SelectItem>
+                      ))
+                    )}
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
                   <Label htmlFor="name">
@@ -353,6 +454,7 @@ export default function AdminLabsPage() {
                   <Input
                     id="name"
                     value={form.name}
+                    placeholder="Neotech Saket"
                     onChange={(e) => {
                       const name = e.target.value;
                       setForm((f) => ({
@@ -375,7 +477,7 @@ export default function AdminLabsPage() {
                       setSlugTouched(true);
                       setForm({ ...form, slug: e.target.value });
                     }}
-                    placeholder="kyg-delhi-main"
+                    placeholder="neotech-saket"
                     required
                   />
                 </div>
@@ -403,10 +505,13 @@ export default function AdminLabsPage() {
                     value={form.city}
                     onChange={(e) => {
                       const city = e.target.value;
+                      const partner = partners.find((p) => p.id === form.partnerId);
                       setForm((f) => ({
                         ...f,
                         city,
-                        pickupLocationName: pickupTouched ? f.pickupLocationName : toPickupName(city),
+                        pickupLocationName: pickupTouched
+                          ? f.pickupLocationName
+                          : toPickupName(partner?.slug ?? '', city),
                       }));
                     }}
                     required
@@ -470,7 +575,7 @@ export default function AdminLabsPage() {
                 <Input
                   id="pickup"
                   className="font-mono text-xs"
-                  placeholder="KYG-LAB-DELHI"
+                  placeholder="NEOTECH-SAKET"
                   value={form.pickupLocationName}
                   onChange={(e) => {
                     setPickupTouched(true);
@@ -515,6 +620,59 @@ export default function AdminLabsPage() {
                   </div>
                 );
               })()}
+
+              {!form.id && (
+                <div className="space-y-3 rounded-md border bg-muted/30 p-3">
+                  <label className="flex items-center gap-2 text-sm font-medium">
+                    <Checkbox
+                      checked={form.createLogin}
+                      onCheckedChange={(c) => setForm({ ...form, createLogin: c === true })}
+                    />
+                    Create a login for this lab
+                  </label>
+                  <p className="text-xs text-muted-foreground">
+                    One PARTNER-role account scoped to this lab. The lab's operator uses it to upload reports.
+                  </p>
+                  {form.createLogin && (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="login-email">
+                          Login email <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                          id="login-email"
+                          type="email"
+                          value={form.loginEmail}
+                          onChange={(e) => setForm({ ...form, loginEmail: e.target.value })}
+                          required={form.createLogin}
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="login-pwd">
+                          Password <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                          id="login-pwd"
+                          type="password"
+                          value={form.loginPassword}
+                          onChange={(e) => setForm({ ...form, loginPassword: e.target.value })}
+                          minLength={8}
+                          required={form.createLogin}
+                        />
+                      </div>
+                      <div className="space-y-1.5 col-span-2">
+                        <Label htmlFor="login-name">Display name (optional)</Label>
+                        <Input
+                          id="login-name"
+                          value={form.loginName}
+                          onChange={(e) => setForm({ ...form, loginName: e.target.value })}
+                          placeholder={form.name ? `${form.name} Lab` : 'Neotech Saket Lab'}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </form>
           </DialogBody>
 
