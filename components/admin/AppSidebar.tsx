@@ -18,6 +18,7 @@ import {
   Building2,
   ExternalLink,
   Megaphone,
+  FolderTree,
 } from 'lucide-react';
 
 import {
@@ -73,12 +74,12 @@ const GROUPS: NavGroup[] = [
       { href: '/admin/users', label: 'Users', icon: Users, roles: ['ADMIN'] },
       { href: '/admin/agents', label: 'Agents', icon: TruckIcon, roles: ['ADMIN'] },
       { href: '/admin/counsellors', label: 'Counsellors', icon: Stethoscope, roles: ['ADMIN'] },
-      { href: '/admin/partners', label: 'Lab Partners', icon: Building2, roles: ['ADMIN'] },
     ],
   },
   {
     label: 'Catalog',
     items: [
+      { href: '/admin/categories', label: 'Categories', icon: FolderTree, roles: ['ADMIN'] },
       { href: '/admin/packages', label: 'Packages', icon: PackageIcon, roles: ['ADMIN'] },
       { href: '/admin/coupons', label: 'Coupons', icon: Ticket, roles: ['ADMIN'] },
     ],
@@ -91,8 +92,9 @@ const GROUPS: NavGroup[] = [
     ],
   },
   {
-    label: 'Config',
+    label: 'Network',
     items: [
+      { href: '/admin/partners', label: 'Lab Partners', icon: Building2, roles: ['ADMIN'] },
       { href: '/admin/labs', label: 'Labs', icon: Building2, roles: ['ADMIN'] },
       { href: '/admin/service-area', label: 'Service Area', icon: MapPin, roles: ['ADMIN'] },
     ],

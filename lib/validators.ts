@@ -40,6 +40,24 @@ export const ShipmentStatusEnum = z.enum([
 ]);
 
 // ---------------------------------------------------------------------------
+// Categories
+// ---------------------------------------------------------------------------
+
+export const categoryCreate = z.object({
+  slug: z
+    .string()
+    .min(1)
+    .regex(/^[a-z0-9-]+$/, 'Must be kebab-case'),
+  name: z.string().min(1).max(120),
+  description: z.string().max(2000).optional().nullable(),
+  icon: z.string().max(16).optional().nullable(),
+  position: z.number().int().default(0),
+  active: z.boolean().default(true),
+});
+
+export const categoryUpdate = categoryCreate.partial();
+
+// ---------------------------------------------------------------------------
 // Packages
 // ---------------------------------------------------------------------------
 
@@ -66,6 +84,8 @@ export const packageCreate = z.object({
   recommended: z.boolean().default(false),
   active: z.boolean().default(true),
   position: z.number().int().default(0),
+  stockQuantity: z.number().int().min(0).default(0),
+  lowStockThreshold: z.number().int().min(0).default(10),
   fulfillmentType: FulfillmentTypeEnum.default('AT_HOME_PHLEBOTOMIST'),
   kitShippingFee: z.number().int().min(0).default(0), // paise
 });
@@ -138,35 +158,21 @@ export const agentUpdate = z.object({
 // Lab partners (run the actual tests; upload reports)
 // ---------------------------------------------------------------------------
 
+// LabPartner = parent partner organization (e.g. Neotech). No address, no
+// login. Address + per-lab login live on the child Lab rows.
 export const partnerCreate = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  phone: z.string().min(10).max(15),
-  password: z.string().min(8),
-  labName: z.string().min(1),
+  slug: z
+    .string()
+    .min(1)
+    .regex(/^[a-z0-9-]+$/, 'Must be kebab-case'),
+  name: z.string().min(2).max(120),
   accreditation: z.string().min(1),
   contactEmail: z.string().email(),
-  contactPhone: z.string().min(10),
-  addressLine: z.string().min(1),
-  city: z.string().min(1),
-  pincode: z.string().regex(/^\d{6}$/, 'Must be a 6-digit pincode'),
+  contactPhone: z.string().min(10).max(15),
+  active: z.boolean().default(true),
 });
 
-export const partnerUpdate = z.object({
-  name: z.string().min(2).optional(),
-  phone: z.string().min(10).max(15).optional(),
-  labName: z.string().optional(),
-  accreditation: z.string().optional(),
-  contactEmail: z.string().email().optional(),
-  contactPhone: z.string().optional(),
-  addressLine: z.string().optional(),
-  city: z.string().optional(),
-  pincode: z
-    .string()
-    .regex(/^\d{6}$/)
-    .optional(),
-  active: z.boolean().optional(),
-});
+export const partnerUpdate = partnerCreate.partial();
 
 // ---------------------------------------------------------------------------
 // Orders (admin actions: status update, assign agent)
@@ -268,7 +274,10 @@ export const serviceAreaBulkToggle = z.object({
 // Labs (KYG-owned facilities - distinct from LabPartner)
 // ---------------------------------------------------------------------------
 
+// Lab = a single physical lab location under a partner. Optionally provisions
+// a per-lab login (PARTNER role) in the same call when `createLogin: true`.
 export const labCreate = z.object({
+  partnerId: z.string().min(1),
   name: z.string().min(2).max(120),
   slug: z
     .string()
@@ -279,10 +288,19 @@ export const labCreate = z.object({
   state: z.string().default('Delhi'),
   pincode: z.string().regex(/^\d{6}$/, 'Must be a 6-digit pincode'),
   phone: z.string().min(10).max(15),
-  contactEmail: z.string().email().optional().nullable(),
+  contactEmail: z.string().email(),
   pickupLocationName: z.string().min(1).max(64),
   isDefault: z.boolean().default(false),
   active: z.boolean().default(true),
+  // Optional per-lab login provisioning. When present, the API creates a
+  // PARTNER User and assigns it to Lab.userId in a single transaction.
+  login: z
+    .object({
+      email: z.string().email(),
+      password: z.string().min(8),
+      name: z.string().min(2).max(120).optional(),
+    })
+    .optional(),
 });
 
 export const labUpdate = labCreate.partial();

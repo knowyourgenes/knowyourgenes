@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 import { created, handle, isResponse, ok, requireApiRole } from '@/lib/api';
 import { labCreate } from '@/lib/validators';
@@ -13,6 +14,7 @@ export async function GET() {
       orderBy: [{ isDefault: 'desc' }, { active: 'desc' }, { name: 'asc' }],
       select: {
         id: true,
+        partnerId: true,
         name: true,
         slug: true,
         addressLine: true,
@@ -24,8 +26,11 @@ export async function GET() {
         pickupLocationName: true,
         isDefault: true,
         active: true,
+        userId: true,
         createdAt: true,
         updatedAt: true,
+        partner: { select: { id: true, slug: true, name: true } },
+        user: { select: { id: true, email: true, name: true } },
       },
     });
     return ok(items);
@@ -40,17 +45,47 @@ export async function POST(req: Request) {
     const body = await req.json();
     const data = labCreate.parse(body);
 
-    // If creating a new default, demote any existing default in the same
-    // transaction so we never have two defaults. Batched form avoids the
-    // interactive-transaction startup timeout under contended pools.
+    // Optional per-lab login. When provided, create a PARTNER user first and
+    // attach it via Lab.userId.
+    let userId: string | undefined;
+    if (data.login) {
+      const passwordHash = await bcrypt.hash(data.login.password, 12);
+      const user = await prisma.user.create({
+        data: {
+          name: data.login.name ?? `${data.name} Lab`,
+          email: data.login.email.toLowerCase(),
+          passwordHash,
+          role: 'PARTNER',
+          emailVerified: new Date(),
+        },
+      });
+      userId = user.id;
+    }
+
+    const createData = {
+      partnerId: data.partnerId,
+      name: data.name,
+      slug: data.slug,
+      addressLine: data.addressLine,
+      city: data.city,
+      state: data.state,
+      pincode: data.pincode,
+      phone: data.phone,
+      contactEmail: data.contactEmail,
+      pickupLocationName: data.pickupLocationName,
+      isDefault: data.isDefault,
+      active: data.active,
+      userId,
+    };
+
     const lab = data.isDefault
       ? (
           await prisma.$transaction([
             prisma.lab.updateMany({ where: { isDefault: true }, data: { isDefault: false } }),
-            prisma.lab.create({ data }),
+            prisma.lab.create({ data: createData }),
           ])
         )[1]
-      : await prisma.lab.create({ data });
+      : await prisma.lab.create({ data: createData });
     return created(lab);
   });
 }

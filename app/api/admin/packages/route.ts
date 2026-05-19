@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma';
 import { created, handle, isResponse, ok, requireApiRole } from '@/lib/api';
 import { packageCreate } from '@/lib/validators';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   return handle(async () => {
     const guard = await requireApiRole(['ADMIN']);

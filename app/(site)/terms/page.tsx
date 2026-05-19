@@ -12,8 +12,8 @@ export default function TermsOfServicePage() {
   return (
     <LegalPage title="Terms of Service" updated="12 May 2026">
       <p>
-        These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and use of the website knowyourgenes.in,
-        the KnowYourGenes mobile/web application, and the genetic testing and counselling services offered under the
+        These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and use of the website knowyourgenes.in, the
+        KnowYourGenes mobile/web application, and the genetic testing and counselling services offered under the
         KnowYourGenes brand (collectively, the &ldquo;Services&rdquo;). The Services are operated by{' '}
         <strong>BFG Market Consult Private Limited</strong>, a company incorporated under the Companies Act, 2013,
         bearing CIN U74999DL2010PTC207582, having its registered office at SU 18, Pitam Pura, Delhi 110034, India
@@ -105,8 +105,8 @@ export default function TermsOfServicePage() {
       <h3>A. Account</h3>
       <p>
         You must register an account with accurate name, mobile number and email. You are responsible for keeping your
-        login secure. Notify us immediately at <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a> if you suspect unauthorised
-        access.
+        login secure. Notify us immediately at <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a> if you
+        suspect unauthorised access.
       </p>
       <h3>B. Booking</h3>
       <p>

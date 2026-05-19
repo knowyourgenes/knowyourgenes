@@ -67,9 +67,7 @@ export default function DeleteConfirmDialog({
   const defaultDescription = `${noun} will be deactivated and hidden across the app. The data is preserved and you can reactivate it any time.`;
 
   const actionClass =
-    tone === 'destructive'
-      ? 'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/40'
-      : '';
+    tone === 'destructive' ? 'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/40' : '';
 
   return (
     <AlertDialog open={open} onOpenChange={handleOpenChange}>

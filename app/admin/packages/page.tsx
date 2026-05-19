@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Package } from '@prisma/client';
 import { toast } from 'sonner';
-import { Plus, Loader2, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Loader2, Pencil, Trash2, RotateCcw, RefreshCw } from 'lucide-react';
 
 import PageHeader from '@/components/admin/PageHeader';
 import DataTable from '@/components/admin/DataTable';
@@ -24,6 +24,12 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import * as cache from '@/lib/client-cache';
+
+const CK = {
+  list: 'packages:list',
+  prefixAll: 'packages:',
+} as const;
 
 type FormState = {
   id?: string;
@@ -43,6 +49,8 @@ type FormState = {
   popular: boolean;
   recommended: boolean;
   active: boolean;
+  stockQuantity: number;
+  lowStockThreshold: number;
   fulfillmentType: string;
   kitShippingFee: number; // rupees in the form, paise on wire
 };
@@ -63,6 +71,8 @@ const EMPTY: FormState = {
   popular: false,
   recommended: false,
   active: true,
+  stockQuantity: 0,
+  lowStockThreshold: 10,
   fulfillmentType: 'AT_HOME_PHLEBOTOMIST',
   kitShippingFee: 0,
 };
@@ -74,25 +84,63 @@ const fulfillmentLabel = (t: string) =>
 export default function AdminPackagesPage() {
   const [items, setItems] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<Package | null>(null);
+  const [restoreTarget, setRestoreTarget] = useState<Package | null>(null);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<FormState>(EMPTY);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
-  async function load() {
-    setLoading(true);
-    const res = await fetch('/api/admin/packages');
-    const json = await res.json();
-    if (json.ok) setItems(json.data);
-    else toast.error(json.error);
-    setLoading(false);
-  }
+  const inflight = useRef<Map<string, Promise<unknown>>>(new Map());
+
+  const load = useCallback(async (opts: { force?: boolean } = {}) => {
+    const cached = !opts.force ? cache.read<Package[]>(CK.list) : null;
+    if (cached) {
+      setItems(cached);
+      setLoading(false);
+    }
+    if (!opts.force && cached && !cache.isStale(CK.list)) return;
+
+    const key = `list|${opts.force ? 'force' : 'normal'}`;
+    if (inflight.current.has(key)) {
+      await inflight.current.get(key);
+      return;
+    }
+    const p = (async () => {
+      if (!cached) setLoading(true);
+      const res = await fetch('/api/admin/packages', { cache: 'no-store' });
+      const json = await res.json();
+      if (json.ok) {
+        cache.write(CK.list, json.data);
+        setItems(json.data);
+      } else {
+        toast.error(json.error ?? 'Failed to load packages');
+      }
+      setLoading(false);
+    })();
+    inflight.current.set(key, p);
+    try {
+      await p;
+    } finally {
+      inflight.current.delete(key);
+    }
+  }, []);
+
+  const hardRefresh = useCallback(async () => {
+    setRefreshing(true);
+    cache.clearPrefix(CK.prefixAll);
+    try {
+      await load({ force: true });
+    } finally {
+      setRefreshing(false);
+    }
+  }, [load]);
 
   useEffect(() => {
     load();
-  }, []);
+  }, [load]);
 
   function openCreate() {
     setForm(EMPTY);
@@ -117,6 +165,8 @@ export default function AdminPackagesPage() {
       popular: p.popular,
       recommended: p.recommended,
       active: p.active,
+      stockQuantity: p.stockQuantity ?? 0,
+      lowStockThreshold: p.lowStockThreshold ?? 10,
       fulfillmentType: p.fulfillmentType,
       kitShippingFee: p.kitShippingFee / 100,
     });
@@ -150,6 +200,8 @@ export default function AdminPackagesPage() {
       popular: form.popular,
       recommended: form.recommended,
       active: form.active,
+      stockQuantity: Number(form.stockQuantity),
+      lowStockThreshold: Number(form.lowStockThreshold),
       fulfillmentType: form.fulfillmentType,
       kitShippingFee: Math.round(Number(form.kitShippingFee) * 100),
     };
@@ -168,7 +220,8 @@ export default function AdminPackagesPage() {
     }
     toast.success(form.id ? 'Package updated' : 'Package created');
     setOpen(false);
-    load();
+    cache.clearPrefix(CK.prefixAll);
+    load({ force: true });
   }
 
   async function handleDeactivate() {
@@ -181,7 +234,26 @@ export default function AdminPackagesPage() {
     }
     toast.success('Package deactivated');
     setDeleteTarget(null);
-    load();
+    cache.clearPrefix(CK.prefixAll);
+    load({ force: true });
+  }
+
+  async function handleRestore() {
+    if (!restoreTarget) return;
+    const res = await fetch(`/api/admin/packages/${restoreTarget.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active: true }),
+    });
+    const json = await res.json();
+    if (!json.ok) {
+      toast.error(json.error ?? 'Restore failed');
+      return;
+    }
+    toast.success('Package restored');
+    setRestoreTarget(null);
+    cache.clearPrefix(CK.prefixAll);
+    load({ force: true });
   }
 
   async function handleBulkDeactivate() {
@@ -196,7 +268,8 @@ export default function AdminPackagesPage() {
     else toast.error(`${done} done, ${failed} failed`);
     setBulkDeleteOpen(false);
     setSelectedIds([]);
-    load();
+    cache.clearPrefix(CK.prefixAll);
+    load({ force: true });
   }
 
   return (
@@ -205,9 +278,20 @@ export default function AdminPackagesPage() {
         title="Packages"
         subtitle="Test catalog. Enter prices in rupees (₹)."
         actions={
-          <Button onClick={openCreate}>
-            <Plus className="h-4 w-4" /> New package
-          </Button>
+          <>
+            <Button
+              variant="outline"
+              onClick={hardRefresh}
+              disabled={refreshing}
+              title="Clear cache and re-fetch from server"
+            >
+              <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+              {refreshing ? 'Refreshing…' : 'Refresh'}
+            </Button>
+            <Button onClick={openCreate}>
+              <Plus className="h-4 w-4" /> New package
+            </Button>
+          </>
         }
       />
 
@@ -267,6 +351,27 @@ export default function AdminPackagesPage() {
             },
             { key: 'biomarkers', header: 'Markers', render: (p) => p.biomarkerCount },
             {
+              key: 'stock',
+              header: 'Stock',
+              render: (p) => {
+                const qty = p.stockQuantity ?? 0;
+                const low = qty <= (p.lowStockThreshold ?? 10);
+                const out = qty === 0;
+                return (
+                  <div className="flex items-center gap-2">
+                    <span className={`text-sm font-medium ${out ? 'text-destructive' : low ? 'text-amber-600' : ''}`}>
+                      {qty}
+                    </span>
+                    {out ? (
+                      <Badge variant="destructive">Out</Badge>
+                    ) : low ? (
+                      <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">Low</Badge>
+                    ) : null}
+                  </div>
+                );
+              },
+            },
+            {
               key: 'flags',
               header: 'Flags',
               render: (p) => (
@@ -280,7 +385,7 @@ export default function AdminPackagesPage() {
               key: 'active',
               header: 'Status',
               render: (p) => (
-                <Badge variant={p.active ? 'default' : 'secondary'}>{p.active ? 'Active' : 'Archived'}</Badge>
+                <Badge variant={p.active ? 'default' : 'secondary'}>{p.active ? 'Active' : 'Inactive'}</Badge>
               ),
             },
           ]}
@@ -289,16 +394,28 @@ export default function AdminPackagesPage() {
               <Button size="icon-sm" variant="ghost" onClick={() => openEdit(p)} aria-label="Edit" title="Edit">
                 <Pencil className="h-3.5 w-3.5" />
               </Button>
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                className="text-destructive hover:text-destructive"
-                onClick={() => setDeleteTarget(p)}
-                aria-label="Deactivate"
-                title="Deactivate"
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-              </Button>
+              {p.active ? (
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  className="text-destructive hover:text-destructive"
+                  onClick={() => setDeleteTarget(p)}
+                  aria-label="Deactivate"
+                  title="Deactivate"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </Button>
+              ) : (
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  onClick={() => setRestoreTarget(p)}
+                  aria-label="Restore"
+                  title="Restore"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                </Button>
+              )}
             </div>
           )}
           empty="No packages yet. Click + New package."
@@ -446,6 +563,29 @@ export default function AdminPackagesPage() {
                     disabled={form.fulfillmentType === 'AT_HOME_PHLEBOTOMIST'}
                   />
                 </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="stock-qty">Stock quantity</Label>
+                  <Input
+                    id="stock-qty"
+                    type="number"
+                    min="0"
+                    value={form.stockQuantity}
+                    onChange={(e) => setForm({ ...form, stockQuantity: Number(e.target.value) })}
+                  />
+                  <p className="text-xs text-muted-foreground">Kits currently available to ship.</p>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="stock-low">Low-stock threshold</Label>
+                  <Input
+                    id="stock-low"
+                    type="number"
+                    min="0"
+                    value={form.lowStockThreshold}
+                    onChange={(e) => setForm({ ...form, lowStockThreshold: Number(e.target.value) })}
+                  />
+                  <p className="text-xs text-muted-foreground">Warn in the table when stock falls to or below this.</p>
+                </div>
               </div>
 
               <div className="space-y-1.5">
@@ -529,6 +669,21 @@ export default function AdminPackagesPage() {
         title={deleteTarget ? `Deactivate "${deleteTarget.name}"?` : 'Deactivate'}
         itemLabel="This package"
         onConfirm={handleDeactivate}
+      />
+
+      <DeleteConfirmDialog
+        open={!!restoreTarget}
+        onOpenChange={(o) => !o && setRestoreTarget(null)}
+        title={restoreTarget ? `Restore "${restoreTarget.name}"?` : 'Restore'}
+        description={
+          restoreTarget
+            ? `"${restoreTarget.name}" will be reactivated and become available again across the app.`
+            : undefined
+        }
+        onConfirm={handleRestore}
+        actionLabel="Restore"
+        loadingLabel="Restoring…"
+        tone="primary"
       />
 
       <DeleteConfirmDialog

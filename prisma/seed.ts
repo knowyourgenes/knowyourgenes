@@ -2,19 +2,198 @@ import 'dotenv/config';
 import { PrismaClient, PackageCategory, SampleType, Role } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import bcrypt from 'bcryptjs';
+import { createReadStream, existsSync } from 'node:fs';
+import { createInterface } from 'node:readline';
+import path from 'node:path';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
-// Prices in paise (₹1 = 100).
+// ---------------------------------------------------------------------------
+// Pincode CSV loader — same parser as prisma/seed-pincodes.ts so re-running
+// the main seed picks up new locations idempotently via skipDuplicates.
+// ---------------------------------------------------------------------------
+
+const PINCODE_CSV = path.join(process.cwd(), 'resource', 'India_pincodes.csv');
+
+const LOWERS = new Set(['and', 'of', 'the']);
+function normaliseCase(s: string): string {
+  if (!s) return s;
+  return s
+    .toLowerCase()
+    .split(' ')
+    .map((w, i) => (i > 0 && LOWERS.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)))
+    .join(' ');
+}
+
+function parseCsvLine(line: string): string[] {
+  const out: string[] = [];
+  let cur = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (c === ',' && !inQuotes) {
+      out.push(cur);
+      cur = '';
+    } else {
+      cur += c;
+    }
+  }
+  out.push(cur);
+  return out;
+}
+
+type ColMap = { pincode: number; area: number; district?: number; state?: number };
+
+function resolveColumns(headers: string[]): ColMap | null {
+  const lower = headers.map((h) =>
+    h
+      .trim()
+      .toLowerCase()
+      .replace(/[\s_-]/g, '')
+  );
+  const pick = (candidates: string[]) => {
+    for (const c of candidates) {
+      const i = lower.indexOf(c);
+      if (i >= 0) return i;
+    }
+    return undefined;
+  };
+  const pincode = pick(['pincode', 'pin', 'pincodenumber']);
+  const area = pick(['name', 'officename', 'office', 'area', 'locality']);
+  const district = pick(['districtname', 'district']);
+  const state = pick(['statename', 'state']);
+  if (pincode === undefined || area === undefined) return null;
+  return { pincode, area, district, state };
+}
+
+async function seedAllIndiaPincodes(): Promise<{ inserted: number; existed: number; totalRows: number }> {
+  if (!existsSync(PINCODE_CSV)) {
+    console.log(`  ⚠ Pincode CSV not found at ${PINCODE_CSV}. Run pnpm db:seed-pincodes separately.`);
+    return { inserted: 0, existed: 0, totalRows: 0 };
+  }
+
+  const rl = createInterface({
+    input: createReadStream(PINCODE_CSV, { encoding: 'utf8' }),
+    crlfDelay: Infinity,
+  });
+
+  let colMap: ColMap | null = null;
+  const byPincodeArea = new Map<string, { pincode: string; area: string; district: string; state: string }>();
+
+  for await (const raw of rl) {
+    const line = raw.replace(/﻿/g, ''); // strip BOM
+    if (!line.trim()) continue;
+    const row = parseCsvLine(line);
+    if (!colMap) {
+      colMap = resolveColumns(row);
+      if (!colMap) {
+        console.error('  ❌ Could not find Pincode/Name columns in CSV header — skipping pincode import.');
+        return { inserted: 0, existed: 0, totalRows: 0 };
+      }
+      continue;
+    }
+    const pincode = (row[colMap.pincode] ?? '').trim();
+    if (!/^\d{6}$/.test(pincode)) continue;
+    const area = normaliseCase((row[colMap.area] ?? '').trim());
+    if (!area) continue;
+    const key = `${pincode}|${area.toLowerCase()}`;
+    if (byPincodeArea.has(key)) continue;
+    const district = colMap.district != null ? normaliseCase((row[colMap.district] ?? '').trim()) : '';
+    const state = colMap.state != null ? normaliseCase((row[colMap.state] ?? '').trim()) : '';
+    byPincodeArea.set(key, { pincode, area, district, state });
+  }
+
+  const rows = [...byPincodeArea.values()].map((r) => ({
+    pincode: r.pincode,
+    area: r.area,
+    district: r.district,
+    state: r.state,
+    city: r.district,
+    active: false,
+  }));
+
+  const BATCH = 5000;
+  let inserted = 0;
+  for (let i = 0; i < rows.length; i += BATCH) {
+    const batch = rows.slice(i, i + BATCH);
+    const res = await prisma.serviceArea.createMany({ data: batch, skipDuplicates: true });
+    inserted += res.count;
+  }
+  return { inserted, existed: rows.length - inserted, totalRows: rows.length };
+}
+
+// Delhi NCR core — matches the district names as they appear in
+// resource/India_pincodes.csv. Adjust here if launch coverage changes.
+async function activateDelhiNcr(): Promise<number> {
+  const filters = [
+    // All districts of Delhi (Central, East, New, North, North East, North West,
+    // South, South West, West Delhi).
+    { where: { state: 'Delhi' } },
+    // Haryana core NCR.
+    {
+      where: {
+        state: 'Haryana',
+        district: { in: ['Gurgaon', 'Faridabad', 'Jhajjar', 'Rewari', 'Rohtak', 'Sonipat'] },
+      },
+    },
+    // UP core NCR. (CSV uses "Gautam Buddha Nagar" + "Bagpat".)
+    {
+      where: {
+        state: 'Uttar Pradesh',
+        district: { in: ['Gautam Buddha Nagar', 'Ghaziabad', 'Meerut', 'Bulandshahr', 'Bagpat', 'Muzaffarnagar'] },
+      },
+    },
+    // Rajasthan NCR.
+    {
+      where: { state: 'Rajasthan', district: { in: ['Alwar', 'Bharatpur'] } },
+    },
+  ];
+
+  let total = 0;
+  for (const f of filters) {
+    const res = await prisma.serviceArea.updateMany({ where: f.where, data: { active: true } });
+    total += res.count;
+  }
+  return total;
+}
+
+// ---------------------------------------------------------------------------
+// Categories — top-level groupings shown on the homepage.
+// Today we only sell Wellness kits. Other categories are reserved for the
+// roadmap but not seeded so admin doesn't see empty groups in the dashboard.
+// ---------------------------------------------------------------------------
+const categories = [
+  {
+    slug: 'wellness',
+    name: 'Wellness & Nutrition',
+    description:
+      'Genetic insights into nutrition, fitness, sleep, skin and longevity. Plain-English reports you can act on tomorrow.',
+    icon: '🥗',
+    position: 0,
+    active: true,
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Packages — all under the Wellness category for launch.
+// Prices in paise (₹1 = 100). Stock counted in kits sitting at the lab.
+// ---------------------------------------------------------------------------
 const packages = [
   {
     slug: 'wellness-starter',
     name: 'Wellness Starter',
     category: PackageCategory.WELLNESS,
-    tagline: 'Your first DNA test - nutrition, fitness, skin & sleep.',
+    tagline: 'Your first DNA test — nutrition, fitness, skin & sleep.',
     description:
-      'A friendly entry point into genetic testing. 80+ traits across diet, movement, and lifestyle - in plain English.',
+      'A friendly entry point into genetic testing. 80+ traits across diet, movement, and lifestyle — in plain English.',
     price: 899900,
     compareAtPrice: 1199900,
     tatMinDays: 7,
@@ -23,16 +202,18 @@ const packages = [
     biomarkerCount: 80,
     popular: true,
     fulfillmentType: 'KIT_BY_POST' as const,
-    kitShippingFee: 19900, // ₹199 covers forward + reverse Delhivery
+    kitShippingFee: 19900,
+    stockQuantity: 60,
+    lowStockThreshold: 10,
     highlights: [
       'Nutrient sensitivity (lactose, gluten, caffeine)',
-      'Fitness type - endurance vs. power',
+      'Fitness type — endurance vs. power',
       'Sleep chronotype & recovery',
       'Skin ageing & UV sensitivity',
     ],
     biomarkerList: ['MTHFR', 'FTO', 'ACTN3', 'PPARGC1A', 'CLOCK', 'MC1R', 'APOE', 'TCF7L2'],
     faq: [
-      { q: 'Is this test painful?', a: 'No. Saliva sample - no needle.' },
+      { q: 'Is this test painful?', a: 'No. Saliva sample — no needle.' },
       { q: 'Who is this for?', a: 'Anyone curious about their body. 18+ recommended.' },
     ],
   },
@@ -46,9 +227,13 @@ const packages = [
     compareAtPrice: 1899900,
     tatMinDays: 10,
     tatMaxDays: 12,
-    sampleType: SampleType.BLOOD,
+    sampleType: SampleType.SALIVA,
     biomarkerCount: 200,
     recommended: true,
+    fulfillmentType: 'KIT_BY_POST' as const,
+    kitShippingFee: 19900,
+    stockQuantity: 40,
+    lowStockThreshold: 10,
     highlights: [
       'Macro- and micronutrient metabolism',
       'VO₂ max potential & injury risk',
@@ -56,154 +241,99 @@ const packages = [
       'Longevity markers',
     ],
     biomarkerList: ['MTHFR', 'VDR', 'COMT', 'BDNF', 'APOE', 'FOXO3', 'SIRT1', 'IL6'],
-    faq: [{ q: 'Is a consultation included?', a: 'No - counselling is a separate paid service.' }],
+    faq: [{ q: 'Is a consultation included?', a: 'No — counselling is a separate paid service.' }],
   },
   {
-    slug: 'cancer-risk-hereditary',
-    name: 'Hereditary Cancer Risk Panel',
-    category: PackageCategory.CANCER_RISK,
-    tagline: 'Screen for 30+ hereditary cancer syndromes with clinical-grade accuracy.',
+    slug: 'nutrition-deep-dive',
+    name: 'Nutrition Deep Dive',
+    category: PackageCategory.WELLNESS,
+    tagline: 'Exactly which foods your body thrives on — and which fight back.',
     description:
-      'BRCA1, BRCA2, Lynch syndrome and more. Counsellor review mandatory. Critical findings trigger a proactive call before digital delivery.',
-    price: 2499900,
-    tatMinDays: 12,
-    tatMaxDays: 14,
-    sampleType: SampleType.BLOOD,
-    biomarkerCount: 45,
-    highlights: [
-      'BRCA1 / BRCA2 (breast, ovarian)',
-      'MLH1, MSH2, MSH6, PMS2 (Lynch / colorectal)',
-      'TP53 (Li-Fraumeni)',
-      'Counsellor review pre-delivery',
-    ],
-    biomarkerList: ['BRCA1', 'BRCA2', 'MLH1', 'MSH2', 'MSH6', 'PMS2', 'TP53', 'APC', 'CDH1', 'PALB2'],
-    faq: [
-      {
-        q: 'What if something is found?',
-        a: 'Our counsellor calls you before the report is released digitally.',
-      },
-    ],
-  },
-  {
-    slug: 'cardiac-health',
-    name: 'Cardiac Health Panel',
-    category: PackageCategory.CARDIAC,
-    tagline: 'Familial cardiovascular risk - lipids, arrhythmia, cardiomyopathy.',
-    description: 'For families with a history of heart disease, sudden cardiac events, or unexplained fainting.',
-    price: 1999900,
-    tatMinDays: 10,
-    tatMaxDays: 14,
-    sampleType: SampleType.BLOOD,
-    biomarkerCount: 60,
-    highlights: [
-      'Familial hypercholesterolemia (LDLR, PCSK9)',
-      'Long QT syndrome',
-      'Dilated & hypertrophic cardiomyopathy',
-      'Coronary artery disease risk score',
-    ],
-    biomarkerList: ['LDLR', 'APOB', 'PCSK9', 'KCNQ1', 'KCNH2', 'SCN5A', 'MYH7', 'MYBPC3'],
-    faq: [{ q: 'Is a cardiologist included?', a: 'For critical findings, yes - at no extra cost.' }],
-  },
-  {
-    slug: 'reproductive-carrier',
-    name: 'Reproductive Carrier Screening',
-    category: PackageCategory.REPRODUCTIVE,
-    tagline: 'Planning a family? Screen 200+ autosomal & X-linked conditions.',
-    description:
-      'Designed for couples before or during pregnancy. Results are most useful when both partners are tested.',
-    price: 2199900,
-    tatMinDays: 14,
-    tatMaxDays: 14,
-    sampleType: SampleType.SALIVA,
-    biomarkerCount: 220,
-    fulfillmentType: 'EITHER' as const,
-    kitShippingFee: 19900,
-    highlights: [
-      'Cystic fibrosis, SMA, Thalassemia',
-      'Fragile X, Duchenne muscular dystrophy',
-      'Partner-match risk assessment',
-      'Counsellor review included',
-    ],
-    biomarkerList: ['CFTR', 'SMN1', 'HBB', 'FMR1', 'DMD', 'GBA', 'GJB2', 'HEXA'],
-    faq: [
-      {
-        q: 'Should both partners test?',
-        a: 'Yes - a single result only tells you half the picture.',
-      },
-    ],
-  },
-  {
-    slug: 'drug-sensitivity',
-    name: 'Drug Sensitivity (Pharmacogenomics)',
-    category: PackageCategory.DRUG_SENSITIVITY,
-    tagline: 'How your body responds to 80+ common medications.',
-    description: "From painkillers to antidepressants - know which drugs work, which don't, and which to avoid.",
-    price: 1199900,
-    compareAtPrice: 1499900,
+      'A focused panel on diet response. How you metabolise carbs, fats, caffeine, alcohol and key micronutrients. The diet plan you build from this actually fits your DNA.',
+    price: 699900,
+    compareAtPrice: 899900,
     tatMinDays: 7,
     tatMaxDays: 10,
     sampleType: SampleType.SALIVA,
-    biomarkerCount: 30,
+    biomarkerCount: 65,
+    popular: false,
+    fulfillmentType: 'KIT_BY_POST' as const,
+    kitShippingFee: 19900,
+    stockQuantity: 80,
+    lowStockThreshold: 15,
     highlights: [
-      'Painkillers (codeine, tramadol)',
-      'Antidepressants (SSRIs, TCAs)',
-      'Blood thinners (warfarin, clopidogrel)',
-      'Statins & cardiovascular drugs',
+      'Lactose, gluten, caffeine, alcohol metabolism',
+      'Vitamin D, B12, folate, iron absorption',
+      'Carb vs. fat oxidation',
+      'Sweet- and bitter-taste perception',
     ],
-    biomarkerList: ['CYP2D6', 'CYP2C19', 'CYP2C9', 'VKORC1', 'SLCO1B1', 'DPYD', 'TPMT', 'HLA-B'],
+    biomarkerList: ['MTHFR', 'FTO', 'TCF7L2', 'LCT', 'ADH1B', 'ALDH2', 'CYP1A2', 'VDR'],
     faq: [
       {
-        q: 'Do I need a prescription?',
-        a: 'No - but share the report with your doctor before changing any medication.',
+        q: 'Do I need a nutritionist to read this?',
+        a: 'No — but a counselling session can help personalise your plan.',
       },
     ],
   },
-];
-
-const delhiNcrPincodes = [
   {
-    pincode: '110001',
-    area: 'Connaught Place',
-    district: 'New Delhi',
-    state: 'Delhi',
-    city: 'New Delhi',
-    active: true,
+    slug: 'fitness-performance',
+    name: 'Fitness & Performance',
+    category: PackageCategory.WELLNESS,
+    tagline: 'Train smarter — endurance, strength, recovery, injury risk.',
+    description:
+      'Built for anyone who trains. Know your natural muscle composition, your recovery speed, your injury risk, and the workout pattern your body is built for.',
+    price: 749900,
+    compareAtPrice: 999900,
+    tatMinDays: 7,
+    tatMaxDays: 10,
+    sampleType: SampleType.SALIVA,
+    biomarkerCount: 55,
+    popular: false,
+    fulfillmentType: 'KIT_BY_POST' as const,
+    kitShippingFee: 19900,
+    stockQuantity: 70,
+    lowStockThreshold: 15,
+    highlights: [
+      'Muscle composition — power vs. endurance',
+      'Recovery speed & inflammation response',
+      'Soft-tissue injury risk',
+      'Optimal training intensity',
+    ],
+    biomarkerList: ['ACTN3', 'ACE', 'PPARGC1A', 'IL6', 'COL1A1', 'COL5A1', 'AMPD1'],
+    faq: [
+      {
+        q: 'Will this tell me what sport to play?',
+        a: 'It tells you what your body responds to. The sport is your call.',
+      },
+    ],
   },
   {
-    pincode: '110002',
-    area: 'Darya Ganj',
-    district: 'Central Delhi',
-    state: 'Delhi',
-    city: 'Central Delhi',
-    active: true,
+    slug: 'skin-and-hair',
+    name: 'Skin & Hair Wellness',
+    category: PackageCategory.WELLNESS,
+    tagline: 'Stop guessing at skincare. Match products to your DNA.',
+    description:
+      'How your skin ages, how your collagen behaves, your UV sensitivity, and why your hair does what it does. Built for anyone tired of buying products on hope alone.',
+    price: 649900,
+    compareAtPrice: 849900,
+    tatMinDays: 7,
+    tatMaxDays: 10,
+    sampleType: SampleType.SALIVA,
+    biomarkerCount: 48,
+    popular: false,
+    fulfillmentType: 'KIT_BY_POST' as const,
+    kitShippingFee: 19900,
+    stockQuantity: 55,
+    lowStockThreshold: 10,
+    highlights: [
+      'Collagen breakdown & skin firmness',
+      'UV sensitivity & pigmentation',
+      'Antioxidant response',
+      'Hair growth, density and greying timeline',
+    ],
+    biomarkerList: ['MC1R', 'MMP1', 'GPX1', 'STXBP5L', 'IRF4', 'SLC45A2'],
+    faq: [{ q: 'Does this replace a dermatologist?', a: 'No. It gives you a personalised baseline to take into one.' }],
   },
-  {
-    pincode: '110070',
-    area: 'Vasant Kunj',
-    district: 'South West Delhi',
-    state: 'Delhi',
-    city: 'South West Delhi',
-    active: true,
-  },
-  { pincode: '122001', area: 'DLF Phase 1-3', district: 'Gurugram', state: 'Haryana', city: 'Gurugram', active: true },
-  { pincode: '122002', area: 'Sushant Lok', district: 'Gurugram', state: 'Haryana', city: 'Gurugram', active: true },
-  {
-    pincode: '201301',
-    area: 'Sector 62',
-    district: 'Gautam Buddh Nagar',
-    state: 'Uttar Pradesh',
-    city: 'Gautam Buddh Nagar',
-    active: true,
-  },
-  {
-    pincode: '201304',
-    area: 'Greater Noida West',
-    district: 'Gautam Buddh Nagar',
-    state: 'Uttar Pradesh',
-    city: 'Gautam Buddh Nagar',
-    active: true,
-  },
-  { pincode: '121001', area: 'Sector 1-9', district: 'Faridabad', state: 'Haryana', city: 'Faridabad', active: true },
 ];
 
 async function main() {
@@ -212,27 +342,27 @@ async function main() {
   // ADMIN USER
   const adminPassword = await bcrypt.hash('Admin@12345', 12);
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@kyg.in' },
+    where: { email: 'admin@knowyourgenes.in' },
     update: {},
     create: {
       name: 'KYG Admin',
-      email: 'admin@kyg.in',
+      email: 'admin@knowyourgenes.in',
       phone: '9999900001',
       passwordHash: adminPassword,
       role: Role.ADMIN,
       emailVerified: new Date(),
     },
   });
-  console.log(`Admin user: ${admin.email}`);
+  console.log(`  ✓ Admin user: ${admin.email}`);
 
   // COUNSELLORS
   const counsellorPassword = await bcrypt.hash('Counsellor@123', 12);
   const priya = await prisma.user.upsert({
-    where: { email: 'priya@kyg.in' },
+    where: { email: 'priya@knowyourgenes.in' },
     update: {},
     create: {
       name: 'Dr. Priya Menon',
-      email: 'priya@kyg.in',
+      email: 'priya@knowyourgenes.in',
       phone: '9999900002',
       passwordHash: counsellorPassword,
       role: Role.COUNSELLOR,
@@ -240,7 +370,7 @@ async function main() {
       counsellorProfile: {
         create: {
           credentials: 'M.Sc. Genetic Counselling, BGCI certified',
-          specialty: 'Hereditary cancer & reproductive',
+          specialty: 'Wellness & nutrition genomics',
           languages: ['English', 'Hindi', 'Malayalam'],
           experience: '11 years',
         },
@@ -248,11 +378,11 @@ async function main() {
     },
   });
   const arvind = await prisma.user.upsert({
-    where: { email: 'arvind@kyg.in' },
+    where: { email: 'arvind@knowyourgenes.in' },
     update: {},
     create: {
       name: 'Dr. Arvind Rao',
-      email: 'arvind@kyg.in',
+      email: 'arvind@knowyourgenes.in',
       phone: '9999900003',
       passwordHash: counsellorPassword,
       role: Role.COUNSELLOR,
@@ -260,7 +390,7 @@ async function main() {
       counsellorProfile: {
         create: {
           credentials: 'MD, PhD (Medical Genetics)',
-          specialty: 'Cardiac & metabolic disorders',
+          specialty: 'Fitness & metabolic genomics',
           languages: ['English', 'Hindi', 'Telugu'],
           experience: '14 years',
         },
@@ -269,12 +399,12 @@ async function main() {
   });
   console.log(`  ✓ Counsellors: ${priya.name}, ${arvind.name}`);
 
-  // AGENTS
+  // AGENTS (kept for the AT_HOME roadmap track)
   const agentPassword = await bcrypt.hash('Agent@12345', 12);
   const agents = [
-    { email: 'meera@kyg.in', name: 'Meera Shah', phone: '9811077200', zone: 'South Delhi' },
-    { email: 'ravi@kyg.in', name: 'Ravi Kumar', phone: '9910122110', zone: 'Gurgaon' },
-    { email: 'sneha@kyg.in', name: 'Sneha Kapoor', phone: '9876543210', zone: 'Noida' },
+    { email: 'meera@knowyourgenes.in', name: 'Meera Shah', phone: '9811077200', zone: 'South Delhi' },
+    { email: 'ravi@knowyourgenes.in', name: 'Ravi Kumar', phone: '9910122110', zone: 'Gurgaon' },
+    { email: 'sneha@knowyourgenes.in', name: 'Sneha Kapoor', phone: '9876543210', zone: 'Noida' },
   ];
   for (const a of agents) {
     await prisma.user.upsert({
@@ -299,50 +429,106 @@ async function main() {
   }
   console.log(`  ✓ Agents: ${agents.length}`);
 
-  // LAB PARTNERS
-  const partnerPassword = await bcrypt.hash('Partner@12345', 12);
-  const partners = [
-    {
-      email: 'ops@genomics-lab.in',
-      name: 'GenomicsLab Diagnostics',
-      phone: '9999900101',
-      labName: 'GenomicsLab Diagnostics Pvt. Ltd.',
+  // LAB PARTNERS + LAB LOCATIONS
+  // Neotech is a parent organisation with multiple physical labs in Delhi.
+  // Each lab gets its own login (one ID/password per lab).
+  const neotech = await prisma.labPartner.upsert({
+    where: { slug: 'neotech' },
+    update: {},
+    create: {
+      slug: 'neotech',
+      name: 'Neotech Diagnostics',
       accreditation: 'NABL, CAP, ISO 15189',
-      contactEmail: 'ops@genomics-lab.in',
-      contactPhone: '+91 11 4567 8901',
-      addressLine: 'Plot 14, Okhla Industrial Area Phase II',
+      contactEmail: 'partnerships@neotech.in',
+      contactPhone: '+911140123456',
+      active: true,
+    },
+  });
+  console.log(`  ✓ Lab partner: ${neotech.name}`);
+
+  const labPassword = await bcrypt.hash('Lab@12345', 12);
+  const labs = [
+    {
+      slug: 'neotech-saket',
+      name: 'Neotech Saket',
+      addressLine: 'B-12, Press Enclave Road, Saket',
       city: 'New Delhi',
-      pincode: '110020',
+      state: 'Delhi',
+      pincode: '110017',
+      phone: '+911140000201',
+      contactEmail: 'saket@neotech.in',
+      pickupLocationName: 'NEOTECH-SAKET',
+      isDefault: true,
+      loginEmail: 'saket@neotech.in',
+      loginName: 'Neotech Saket Lab',
+      loginPhone: '9990000201',
+    },
+    {
+      slug: 'neotech-lajpat-nagar',
+      name: 'Neotech Lajpat Nagar',
+      addressLine: 'C-44, Central Market, Lajpat Nagar II',
+      city: 'New Delhi',
+      state: 'Delhi',
+      pincode: '110024',
+      phone: '+911140000202',
+      contactEmail: 'lajpat@neotech.in',
+      pickupLocationName: 'NEOTECH-LAJPAT',
+      isDefault: false,
+      loginEmail: 'lajpat@neotech.in',
+      loginName: 'Neotech Lajpat Nagar Lab',
+      loginPhone: '9990000202',
     },
   ];
-  for (const p of partners) {
-    await prisma.user.upsert({
-      where: { email: p.email },
+
+  for (const l of labs) {
+    const labUser = await prisma.user.upsert({
+      where: { email: l.loginEmail },
       update: {},
       create: {
-        name: p.name,
-        email: p.email,
-        phone: p.phone,
-        passwordHash: partnerPassword,
+        name: l.loginName,
+        email: l.loginEmail,
+        phone: l.loginPhone,
+        passwordHash: labPassword,
         role: Role.PARTNER,
         emailVerified: new Date(),
-        labPartnerProfile: {
-          create: {
-            labName: p.labName,
-            accreditation: p.accreditation,
-            contactEmail: p.contactEmail,
-            contactPhone: p.contactPhone,
-            addressLine: p.addressLine,
-            city: p.city,
-            pincode: p.pincode,
-          },
-        },
+      },
+    });
+    await prisma.lab.upsert({
+      where: { slug: l.slug },
+      update: {
+        partnerId: neotech.id,
+        userId: labUser.id,
+      },
+      create: {
+        partnerId: neotech.id,
+        userId: labUser.id,
+        slug: l.slug,
+        name: l.name,
+        addressLine: l.addressLine,
+        city: l.city,
+        state: l.state,
+        pincode: l.pincode,
+        phone: l.phone,
+        contactEmail: l.contactEmail,
+        pickupLocationName: l.pickupLocationName,
+        isDefault: l.isDefault,
+        active: true,
       },
     });
   }
-  console.log(`  ✓ Lab partners: ${partners.length}`);
+  console.log(`  ✓ Lab locations under Neotech: ${labs.length}`);
 
-  // PACKAGES
+  // CATEGORIES
+  for (const c of categories) {
+    await prisma.category.upsert({
+      where: { slug: c.slug },
+      update: c,
+      create: c,
+    });
+  }
+  console.log(`  ✓ Categories: ${categories.length}`);
+
+  // PACKAGES (all under Wellness)
   for (const p of packages) {
     await prisma.package.upsert({
       where: { slug: p.slug },
@@ -352,16 +538,18 @@ async function main() {
   }
   console.log(`  ✓ Packages: ${packages.length}`);
 
-  // SERVICE AREA PINCODES — keyed on (pincode, area) since one pincode can
-  // cover multiple post offices / localities.
-  for (const s of delhiNcrPincodes) {
-    await prisma.serviceArea.upsert({
-      where: { pincode_area: { pincode: s.pincode, area: s.area } },
-      update: s,
-      create: s,
-    });
+  // SERVICE AREA PINCODES — full India import from CSV, all inactive by
+  // default. Then activate Delhi NCR core delivery zone for soft launch.
+  console.log(`  ⏳ Importing all-India pincodes from ${PINCODE_CSV}…`);
+  const { inserted, existed, totalRows } = await seedAllIndiaPincodes();
+  if (totalRows > 0) {
+    console.log(
+      `  ✓ Pincodes: ${inserted.toLocaleString('en-IN')} inserted, ` +
+        `${existed.toLocaleString('en-IN')} already existed (out of ${totalRows.toLocaleString('en-IN')} parsed)`
+    );
   }
-  console.log(`  ✓ Service area pincodes: ${delhiNcrPincodes.length}`);
+  const activated = await activateDelhiNcr();
+  console.log(`  ✓ Activated Delhi NCR: ${activated.toLocaleString('en-IN')} pincode-area rows`);
 
   // COUPONS
   await prisma.coupon.upsert({
@@ -373,7 +561,7 @@ async function main() {
       value: 100000, // ₹1,000 in paise
       minOrder: 500000, // ₹5,000 min order
       usageLimit: 2000,
-      expiresAt: new Date('2026-06-30'),
+      expiresAt: new Date('2026-12-31'),
     },
   });
   await prisma.coupon.upsert({
@@ -384,17 +572,18 @@ async function main() {
       type: 'FLAT',
       value: 50000,
       usageLimit: 5000,
-      expiresAt: new Date('2026-05-31'),
+      expiresAt: new Date('2026-08-31'),
     },
   });
   console.log(`  ✓ Coupons: 2`);
 
-  console.log('  ℹ Blog content lives in Sanity - seed it from the Studio at /studio');
+  console.log('  ℹ Blog content lives in Sanity — seed it from the Studio at /studio');
   console.log('✅ Seed complete.\n');
-  console.log('  Admin login:       admin@kyg.in             /  Admin@12345');
-  console.log('  Counsellor login:  priya@kyg.in             /  Counsellor@123');
-  console.log('  Agent login:       ravi@kyg.in              /  Agent@12345');
-  console.log('  Partner login:     ops@genomics-lab.in      /  Partner@12345');
+  console.log('  Admin login:       admin@knowyourgenes.in       /  Admin@12345');
+  console.log('  Counsellor login:  priya@knowyourgenes.in       /  Counsellor@123');
+  console.log('  Agent login:       ravi@knowyourgenes.in        /  Agent@12345');
+  console.log('  Lab login (Saket): saket@neotech.in             /  Lab@12345');
+  console.log('  Lab login (Lajpat):lajpat@neotech.in            /  Lab@12345');
 }
 
 main()

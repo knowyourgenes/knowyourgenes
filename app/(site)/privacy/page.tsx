@@ -18,10 +18,10 @@ export default function PrivacyPolicyPage() {
         BFG Market Consult Private Limited operating under the KnowYourGenes brand.
       </p>
       <p>
-        We operate the website <strong>knowyourgenes.in </strong> and the related mobile/web application (together,
-        the &ldquo;Platform&rdquo;), through which we offer genetic testing via doorstep self-collection kits
-        couriered to your address across India. We do not currently offer at-home phlebotomist or any in-person
-        sample-collection service.
+        We operate the website <strong>knowyourgenes.in </strong> and the related mobile/web application (together, the
+        &ldquo;Platform&rdquo;), through which we offer genetic testing via doorstep self-collection kits couriered to
+        your address across India. We do not currently offer at-home phlebotomist or any in-person sample-collection
+        service.
       </p>
       <p>
         This Privacy Policy explains what personal information, sensitive personal information and genetic data we
@@ -132,8 +132,8 @@ export default function PrivacyPolicyPage() {
       </ul>
       <p>
         Wherever consent is the basis, you may withdraw it through your account or by writing to{' '}
-        <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>. Withdrawal does not affect processing already lawfully
-        carried out.
+        <a href="mailto:grievance@knowyourgenes.in">grievance@knowyourgenes.in</a>. Withdrawal does not affect
+        processing already lawfully carried out.
       </p>
 
       <h2>5. How we handle samples and genetic data</h2>
@@ -248,8 +248,8 @@ export default function PrivacyPolicyPage() {
         <li>Escalate to the Data Protection Board of India if your grievance is not resolved.</li>
       </ul>
       <p>
-        To exercise any of these rights, write to <a href="mailto:privacy@knowyourgenes.in">privacy@knowyourgenes.in</a>. We will respond
-        within 30 days.
+        To exercise any of these rights, write to <a href="mailto:privacy@knowyourgenes.in">privacy@knowyourgenes.in</a>
+        . We will respond within 30 days.
       </p>
 
       <h2>10. Cookies</h2>
@@ -295,7 +295,8 @@ export default function PrivacyPolicyPage() {
         Phone: <a href="tel:+911140000000">+91 11 4000 0000</a> (Mon&ndash;Sat, 09:00&ndash;19:00 IST)
       </p>
       <p>
-        For privacy-specific questions, you may also write to <a href="mailto:privacy@knowyourgenes.in">privacy@knowyourgenes.in</a>.
+        For privacy-specific questions, you may also write to{' '}
+        <a href="mailto:privacy@knowyourgenes.in">privacy@knowyourgenes.in</a>.
       </p>
 
       <p className="mt-10 text-sm text-muted-foreground">

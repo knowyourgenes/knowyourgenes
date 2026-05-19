@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { LabPartner } from '@prisma/client';
+import type { Category } from '@prisma/client';
 import { toast } from 'sonner';
 import { Plus, Loader2, Pencil, Trash2, RotateCcw, RefreshCw } from 'lucide-react';
 
@@ -11,6 +11,7 @@ import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -25,30 +26,26 @@ import {
 import * as cache from '@/lib/client-cache';
 
 const CK = {
-  list: 'partners:list',
-  prefixAll: 'partners:',
+  list: 'categories:list',
+  prefixAll: 'categories:',
 } as const;
-
-type PartnerRow = LabPartner & {
-  locations?: Array<{ id: string; slug: string; name: string; city: string; active: boolean }>;
-};
 
 type FormState = {
   id?: string;
   slug: string;
   name: string;
-  accreditation: string;
-  contactEmail: string;
-  contactPhone: string;
+  description: string;
+  icon: string;
+  position: number;
   active: boolean;
 };
 
 const EMPTY: FormState = {
   slug: '',
   name: '',
-  accreditation: '',
-  contactEmail: '',
-  contactPhone: '',
+  description: '',
+  icon: '',
+  position: 0,
   active: true,
 };
 
@@ -59,21 +56,21 @@ function toSlug(value: string) {
     .replace(/^-+|-+$/g, '');
 }
 
-export default function AdminPartnersPage() {
-  const [items, setItems] = useState<PartnerRow[]>([]);
+export default function AdminCategoriesPage() {
+  const [items, setItems] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<FormState>(EMPTY);
   const [slugTouched, setSlugTouched] = useState(false);
-  const [deleteTarget, setDeleteTarget] = useState<PartnerRow | null>(null);
-  const [restoreTarget, setRestoreTarget] = useState<PartnerRow | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Category | null>(null);
+  const [restoreTarget, setRestoreTarget] = useState<Category | null>(null);
 
   const inflight = useRef<Map<string, Promise<unknown>>>(new Map());
 
   const load = useCallback(async (opts: { force?: boolean } = {}) => {
-    const cached = !opts.force ? cache.read<PartnerRow[]>(CK.list) : null;
+    const cached = !opts.force ? cache.read<Category[]>(CK.list) : null;
     if (cached) {
       setItems(cached);
       setLoading(false);
@@ -87,13 +84,13 @@ export default function AdminPartnersPage() {
     }
     const p = (async () => {
       if (!cached) setLoading(true);
-      const res = await fetch('/api/admin/partners', { cache: 'no-store' });
+      const res = await fetch('/api/admin/categories', { cache: 'no-store' });
       const json = await res.json();
       if (json.ok) {
         cache.write(CK.list, json.data);
         setItems(json.data);
       } else {
-        toast.error(json.error ?? 'Failed to load partners');
+        toast.error(json.error ?? 'Failed to load categories');
       }
       setLoading(false);
     })();
@@ -125,15 +122,15 @@ export default function AdminPartnersPage() {
     setOpen(true);
   }
 
-  function openEdit(p: PartnerRow) {
+  function openEdit(c: Category) {
     setForm({
-      id: p.id,
-      slug: p.slug,
-      name: p.name,
-      accreditation: p.accreditation,
-      contactEmail: p.contactEmail,
-      contactPhone: p.contactPhone,
-      active: p.active,
+      id: c.id,
+      slug: c.slug,
+      name: c.name,
+      description: c.description ?? '',
+      icon: c.icon ?? '',
+      position: c.position,
+      active: c.active,
     });
     setSlugTouched(true);
     setOpen(true);
@@ -145,12 +142,12 @@ export default function AdminPartnersPage() {
     const body = {
       slug: form.slug,
       name: form.name,
-      accreditation: form.accreditation,
-      contactEmail: form.contactEmail,
-      contactPhone: form.contactPhone,
+      description: form.description || null,
+      icon: form.icon || null,
+      position: form.position,
       active: form.active,
     };
-    const url = form.id ? `/api/admin/partners/${form.id}` : '/api/admin/partners';
+    const url = form.id ? `/api/admin/categories/${form.id}` : '/api/admin/categories';
     const res = await fetch(url, {
       method: form.id ? 'PATCH' : 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -162,7 +159,7 @@ export default function AdminPartnersPage() {
       toast.error(json.error ?? 'Save failed');
       return;
     }
-    toast.success(form.id ? 'Partner updated' : 'Partner created');
+    toast.success(form.id ? 'Category updated' : 'Category created');
     setOpen(false);
     cache.clearPrefix(CK.prefixAll);
     load({ force: true });
@@ -170,13 +167,13 @@ export default function AdminPartnersPage() {
 
   async function handleDeactivate() {
     if (!deleteTarget) return;
-    const res = await fetch(`/api/admin/partners/${deleteTarget.id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/categories/${deleteTarget.id}`, { method: 'DELETE' });
     const json = await res.json();
     if (!json.ok) {
       toast.error(json.error ?? 'Deactivate failed');
       return;
     }
-    toast.success('Partner deactivated');
+    toast.success('Category deactivated');
     setDeleteTarget(null);
     cache.clearPrefix(CK.prefixAll);
     load({ force: true });
@@ -184,7 +181,7 @@ export default function AdminPartnersPage() {
 
   async function handleRestore() {
     if (!restoreTarget) return;
-    const res = await fetch(`/api/admin/partners/${restoreTarget.id}`, {
+    const res = await fetch(`/api/admin/categories/${restoreTarget.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ active: true }),
@@ -194,7 +191,7 @@ export default function AdminPartnersPage() {
       toast.error(json.error ?? 'Restore failed');
       return;
     }
-    toast.success('Partner restored');
+    toast.success('Category restored');
     setRestoreTarget(null);
     cache.clearPrefix(CK.prefixAll);
     load({ force: true });
@@ -203,8 +200,8 @@ export default function AdminPartnersPage() {
   return (
     <>
       <PageHeader
-        title="Lab Partners"
-        subtitle="Parent partner organisations (e.g. Neotech). Each partner can run multiple physical Lab locations — manage those under Labs."
+        title="Categories"
+        subtitle="Top-level groupings for the kits you sell — Wellness, Cardiac, Cancer Risk, etc. Each kit belongs to one category."
         actions={
           <>
             <Button
@@ -217,7 +214,7 @@ export default function AdminPartnersPage() {
               {refreshing ? 'Refreshing…' : 'Refresh'}
             </Button>
             <Button onClick={openCreate}>
-              <Plus className="h-4 w-4" /> New partner
+              <Plus className="h-4 w-4" /> New category
             </Button>
           </>
         }
@@ -233,82 +230,72 @@ export default function AdminPartnersPage() {
           columns={[
             {
               key: 'name',
-              header: 'Partner',
-              render: (p) => (
-                <div>
-                  <div className="font-medium">{p.name}</div>
-                  <div className="text-xs text-muted-foreground">{p.slug}</div>
+              header: 'Name',
+              render: (c) => (
+                <div className="flex items-center gap-2">
+                  {c.icon && <span className="text-lg leading-none">{c.icon}</span>}
+                  <div>
+                    <div className="font-medium">{c.name}</div>
+                    <div className="text-xs text-muted-foreground">{c.slug}</div>
+                  </div>
                 </div>
               ),
             },
             {
-              key: 'accreditation',
-              header: 'Accreditation',
-              render: (p) => <span className="text-xs">{p.accreditation}</span>,
+              key: 'description',
+              header: 'Description',
+              render: (c) => <span className="line-clamp-2 text-xs text-muted-foreground">{c.description || '—'}</span>,
             },
             {
-              key: 'contact',
-              header: 'Contact',
-              render: (p) => (
-                <div className="text-xs">
-                  <div>{p.contactEmail}</div>
-                  <div className="text-muted-foreground">{p.contactPhone}</div>
-                </div>
-              ),
-            },
-            {
-              key: 'locations',
-              header: 'Labs',
-              render: (p) => {
-                const n = p.locations?.length ?? 0;
-                return <Badge variant="outline">{n}</Badge>;
-              },
+              key: 'position',
+              header: 'Position',
+              render: (c) => <span className="text-sm">{c.position}</span>,
             },
             {
               key: 'active',
               header: 'Status',
-              render: (p) => (
-                <Badge variant={p.active ? 'default' : 'secondary'}>{p.active ? 'Active' : 'Inactive'}</Badge>
+              render: (c) => (
+                <Badge variant={c.active ? 'default' : 'secondary'}>{c.active ? 'Active' : 'Inactive'}</Badge>
               ),
             },
           ]}
-          rowAction={(p) => (
+          rowAction={(c) => (
             <div className="flex justify-end gap-2">
-              <Button size="icon-sm" variant="ghost" onClick={() => openEdit(p)} title="Edit">
+              <Button size="icon-sm" variant="ghost" onClick={() => openEdit(c)} title="Edit">
                 <Pencil className="h-3.5 w-3.5" />
               </Button>
-              {p.active ? (
+              {c.active ? (
                 <Button
                   size="icon-sm"
                   variant="ghost"
                   className="text-destructive hover:text-destructive"
-                  onClick={() => setDeleteTarget(p)}
+                  onClick={() => setDeleteTarget(c)}
                   title="Deactivate"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </Button>
               ) : (
-                <Button size="icon-sm" variant="ghost" onClick={() => setRestoreTarget(p)} title="Restore">
+                <Button size="icon-sm" variant="ghost" onClick={() => setRestoreTarget(c)} title="Restore">
                   <RotateCcw className="h-3.5 w-3.5" />
                 </Button>
               )}
             </div>
           )}
-          empty="No partners yet. Add one before creating lab locations."
+          empty="No categories yet. Add one before creating kits."
         />
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
           <DialogHeader className="shrink-0 border-b p-4 pr-10">
-            <DialogTitle>{form.id ? 'Edit partner' : 'New lab partner'}</DialogTitle>
+            <DialogTitle>{form.id ? 'Edit category' : 'New category'}</DialogTitle>
             <DialogDescription>
-              Parent organisation only. Physical addresses and per-lab logins are managed on each Lab location.
+              Categories group kits on the public site. Pick a short emoji icon for the homepage card.
             </DialogDescription>
           </DialogHeader>
 
           <DialogBody>
-            <form id="partner-form" onSubmit={save} className="grid gap-3">
+            <form id="category-form" onSubmit={save} className="grid gap-3">
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
                   <Label htmlFor="name">
@@ -319,9 +306,12 @@ export default function AdminPartnersPage() {
                     value={form.name}
                     onChange={(e) => {
                       const name = e.target.value;
-                      setForm((f) => ({ ...f, name, slug: slugTouched ? f.slug : toSlug(name) }));
+                      setForm((f) => ({
+                        ...f,
+                        name,
+                        slug: slugTouched ? f.slug : toSlug(name),
+                      }));
                     }}
-                    placeholder="Neotech Diagnostics"
                     required
                   />
                 </div>
@@ -336,49 +326,44 @@ export default function AdminPartnersPage() {
                       setSlugTouched(true);
                       setForm({ ...form, slug: e.target.value });
                     }}
-                    placeholder="neotech"
+                    placeholder="wellness"
                     required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="icon">Icon (emoji)</Label>
+                  <Input
+                    id="icon"
+                    value={form.icon}
+                    onChange={(e) => setForm({ ...form, icon: e.target.value })}
+                    placeholder="🥗"
+                    maxLength={8}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="position">Position</Label>
+                  <Input
+                    id="position"
+                    type="number"
+                    value={form.position}
+                    onChange={(e) => setForm({ ...form, position: parseInt(e.target.value || '0', 10) })}
+                    min={0}
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="accred">
-                  Accreditation <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="accred"
-                  value={form.accreditation}
-                  onChange={(e) => setForm({ ...form, accreditation: e.target.value })}
-                  placeholder="NABL, CAP, ISO 15189"
-                  required
+                <Label htmlFor="desc">Description</Label>
+                <Textarea
+                  id="desc"
+                  rows={3}
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  placeholder="Short blurb shown under the category title on the homepage."
                 />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor="email">
-                    Contact email <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={form.contactEmail}
-                    onChange={(e) => setForm({ ...form, contactEmail: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="phone">
-                    Contact phone <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="phone"
-                    value={form.contactPhone}
-                    onChange={(e) => setForm({ ...form, contactPhone: e.target.value })}
-                    required
-                  />
-                </div>
               </div>
 
               <div className="flex gap-6 pt-2">
@@ -394,7 +379,7 @@ export default function AdminPartnersPage() {
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" form="partner-form" disabled={saving}>
+            <Button type="submit" form="category-form" disabled={saving}>
               {saving && <Loader2 className="h-4 w-4 animate-spin" />}
               {saving ? 'Saving…' : 'Save'}
             </Button>
@@ -406,7 +391,7 @@ export default function AdminPartnersPage() {
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
         title={deleteTarget ? `Deactivate "${deleteTarget.name}"?` : 'Deactivate'}
-        itemLabel="This partner"
+        itemLabel="This category"
         onConfirm={handleDeactivate}
       />
 
