@@ -10,7 +10,6 @@ import { Menu, LayoutDashboard } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import UserNav from '@/components/admin/UserNav';
-import LocationGate from '@/components/site/LocationGate';
 import { cn } from '@/lib/utils';
 
 // Edit these to match your final sitemap - any route that doesn't exist yet
@@ -65,12 +64,6 @@ export default function SiteHeader() {
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          {/* Location chip - always visible. Works even when Mappls is down
-              via the manual pincode path. */}
-          <div className="hidden md:block">
-            <LocationGate />
-          </div>
-
           {status === 'authenticated' && session?.user ? (
             <>
               {session.user.role === 'ADMIN' && (
@@ -90,17 +83,12 @@ export default function SiteHeader() {
               />
             </>
           ) : (
-            <>
-              <Link
-                href={`/login?from=${encodeURIComponent(pathname || '/')}`}
-                className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'hidden sm:inline-flex')}
-              >
-                Sign in
-              </Link>
-              <Link href="/tests" className={cn(buttonVariants({ size: 'sm' }), 'hidden sm:inline-flex')}>
-                Book a test
-              </Link>
-            </>
+            <Link
+              href={`/login?from=${encodeURIComponent(pathname || '/')}`}
+              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'hidden sm:inline-flex')}
+            >
+              Sign in
+            </Link>
           )}
 
           {/* Mobile menu trigger */}
@@ -114,9 +102,6 @@ export default function SiteHeader() {
               <SheetHeader className="border-b">
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
-              <div className="border-b p-3">
-                <LocationGate />
-              </div>
               <nav className="flex-1 overflow-y-auto p-2">
                 <ul className="flex flex-col gap-1">
                   {NAV.map((n) => (
@@ -161,22 +146,13 @@ export default function SiteHeader() {
                     </Link>
                   )
                 ) : (
-                  <div className="flex flex-col gap-2">
-                    <Link
-                      href="/tests"
-                      className={cn(buttonVariants({ size: 'sm' }), 'w-full')}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      Book a test
-                    </Link>
-                    <Link
-                      href={`/login?from=${encodeURIComponent(pathname || '/')}`}
-                      className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'w-full')}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      Sign in
-                    </Link>
-                  </div>
+                  <Link
+                    href={`/login?from=${encodeURIComponent(pathname || '/')}`}
+                    className={cn(buttonVariants({ size: 'sm' }), 'w-full')}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Sign in
+                  </Link>
                 )}
               </div>
             </SheetContent>
