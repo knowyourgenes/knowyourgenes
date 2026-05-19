@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 729.85 318.67">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        letter-spacing: 0em;
+      }
+
+      .cls-1, .cls-3, .cls-4, .cls-5 {
+        font-family: Figtree-Bold, Figtree;
+        font-weight: 700;
+      }
+
+      .cls-6 {
+        stroke-linejoin: round;
+      }
+
+      .cls-6, .cls-7, .cls-8, .cls-9 {
+        fill: none;
+      }
+
+      .cls-6, .cls-7, .cls-8, .cls-9, .cls-10 {
+        stroke-linecap: round;
+      }
+
+      .cls-6, .cls-7, .cls-10 {
+        stroke: #0e4d4b;
+        stroke-width: 19.02px;
+      }
+
+      .cls-7, .cls-8, .cls-9, .cls-10 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-11 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-11, .cls-2 {
+        font-family: Figtree-Regular, Figtree;
+      }
+
+      .cls-12 {
+        fill: #0e4d4b;
+        font-size: 96.98px;
+      }
+
+      .cls-3 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-5 {
+        letter-spacing: 0em;
+      }
+
+      .cls-8 {
+        stroke-width: 7.55px;
+      }
+
+      .cls-8, .cls-9 {
+        stroke: #25b5ab;
+      }
+
+      .cls-9 {
+        stroke-width: 9.44px;
+      }
+
+      .cls-10 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="KYG_-_Teal" data-name="KYG - Teal">
+    <g>
+      <g>
+        <line class="cls-10" x1="50.72" y1="9.51" x2="50.72" y2="189.61"/>
+        <line class="cls-10" x1="52" y1="149.3" x2="189.75" y2="11.55"/>
+        <path class="cls-6" d="M498.81,134.54c5.95,5.16,8.39,7.43,12.15,11.07,34.34,33.36,54.01,44.25,88.7,44.25s79.48-22.74,79.48-79.38h-67.62"/>
+        <path class="cls-7" d="M108.12,93.18s71.37,96.68,125.89,96.42c73.12,6.82,108.45-122.98,167.32-118.02,0,0,18.34-.86,39.63,14.94"/>
+        <line class="cls-7" x1="311.72" y1="87.39" x2="240.72" y2="17.42"/>
+        <path class="cls-7" d="M667.76,55.12c-20.55-36.18-55.34-43.57-75.17-43.57s-57.14.73-100.21,66.89c-43.07,66.16-62.99,79.76-90.19,79.76-22.09,0-37.94-19.14-37.94-19.14"/>
+        <line class="cls-9" x1="402.82" y1="139.05" x2="402.82" y2="93.36"/>
+        <line class="cls-8" x1="423.01" y1="129.68" x2="423.01" y2="102.73"/>
+        <line class="cls-8" x1="382.29" y1="129.68" x2="382.29" y2="102.73"/>
+      </g>
+      <text class="cls-12" transform="translate(0 297.34)"><tspan class="cls-5" x="0" y="0">K</tspan><tspan class="cls-4" x="63.91" y="0">n</tspan><tspan class="cls-3" x="118.99" y="0">o</tspan><tspan class="cls-1" x="173.2" y="0">w</tspan><tspan class="cls-11" x="254.18" y="0">Y</tspan><tspan class="cls-2" x="306.94" y="0">our</tspan><tspan class="cls-4" x="450.07" y="0">Genes</tspan></text>
+    </g>
+  </g>
+</svg>
