@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     // Bulk upsert: { pincodes: [{pincode, area, district?, state?, city?}, ...] }
-    // Composite-keyed on (pincode, area) — same pincode with different areas
+    // Composite-keyed on (pincode, area) - same pincode with different areas
     // becomes separate rows.
     if (Array.isArray(body?.pincodes)) {
       const { pincodes } = serviceAreaBulk.parse(body);

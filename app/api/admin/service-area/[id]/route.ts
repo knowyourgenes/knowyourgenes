@@ -25,7 +25,7 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
 
 /**
  * DELETE /api/admin/service-area/[id]
- * Deactivates the row. KYG policy never hard-deletes pincodes — soft delete
+ * Deactivates the row. KYG policy never hard-deletes pincodes - soft delete
  * preserves audit history for past orders that referenced this area row.
  */
 export async function DELETE(_req: Request, { params }: { params: Params }) {

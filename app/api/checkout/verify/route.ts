@@ -12,7 +12,7 @@ import { verifyPaymentSignature } from '@/lib/razorpay';
  * so abandoned carts don't burn redemptions).
  *
  * NOTE: This endpoint trusts the client to call it. The /api/webhooks/razorpay
- * route is the authoritative payment confirmation — it runs server-to-server
+ * route is the authoritative payment confirmation - it runs server-to-server
  * and reconciles missed verify calls (e.g., user closes the tab before the
  * client-side call lands).
  */
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
     });
     if (!valid) return fail('Invalid signature', 400);
 
-    // Already paid — idempotent success.
+    // Already paid - idempotent success.
     if (order.paidAt) {
       return ok({ orderId: order.id, status: order.status, alreadyPaid: true });
     }

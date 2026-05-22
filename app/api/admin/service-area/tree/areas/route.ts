@@ -12,7 +12,7 @@ const querySchema = z.object({
  *
  * Returns the area rows under one (state, district) bucket. Used by the
  * service-area tree to lazy-load level 3 (area rows) when admin expands a
- * district — eager-loading would have shipped 155K rows on every page open.
+ * district - eager-loading would have shipped 155K rows on every page open.
  *
  * Rows are ordered (active desc, pincode asc, area asc) so already-active
  * localities float to the top.

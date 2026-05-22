@@ -56,7 +56,7 @@ const EMPTY: Form = {
   active: true,
 };
 
-// Common presets — covers most marketing surfaces. Free-form input still
+// Common presets - covers most marketing surfaces. Free-form input still
 // allowed; the regex on the validator just enforces lowercase + dash/underscore.
 const SOURCE_PRESETS = [
   'instagram',
@@ -217,7 +217,7 @@ export default function AdminCampaignsPage() {
       await navigator.clipboard.writeText(text);
       toast.success(`${label} copied`);
     } catch {
-      toast.error('Copy failed — select and copy manually');
+      toast.error('Copy failed - select and copy manually');
     }
   }
 
@@ -322,7 +322,7 @@ export default function AdminCampaignsPage() {
                   id="name"
                   value={form.name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Q2 Instagram Reels — Wellness"
+                  placeholder="e.g. Q2 Instagram Reels - Wellness"
                   required
                 />
                 <p className="text-xs text-muted-foreground">Human label only. Not visible to customers.</p>
@@ -417,7 +417,7 @@ export default function AdminCampaignsPage() {
                   rows={2}
                   value={form.notes}
                   onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  placeholder="Internal context — when this was launched, which creative, who owns it…"
+                  placeholder="Internal context - when this was launched, which creative, who owns it…"
                 />
               </div>
 
@@ -474,7 +474,7 @@ export default function AdminCampaignsPage() {
                     </Button>
                   </div>
                   <p className="mt-2 text-xs text-muted-foreground">
-                    Paste this anywhere — Instagram bio, Meta ad, WhatsApp broadcast, email. Every visitor who clicks it
+                    Paste this anywhere - Instagram bio, Meta ad, WhatsApp broadcast, email. Every visitor who clicks it
                     gets first-touch attribution to this campaign.
                   </p>
                 </div>

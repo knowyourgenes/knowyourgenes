@@ -24,7 +24,7 @@ The technical reference companion to [README.md](../README.md). Read this when y
 
 ## 1. Request lifecycle
 
-There are two request paths through the stack — page routes and API routes — and they have different auth + middleware behaviour.
+There are two request paths through the stack - page routes and API routes - and they have different auth + middleware behaviour.
 
 ### Page route
 
@@ -33,7 +33,7 @@ Browser
    │
    ▼
 proxy.ts (Edge middleware, runs on every page route)
-   │  uses authConfig from auth.config.ts (no Prisma, no bcrypt — Edge-safe)
+   │  uses authConfig from auth.config.ts (no Prisma, no bcrypt - Edge-safe)
    │  reads the JWT session cookie, runs the `authorized` callback
    │  redirects unauthenticated users / wrong-role users to / or /login
    ▼
@@ -71,13 +71,13 @@ NextAuth v5 (beta) with two providers and JWT sessions.
 
 ### Providers
 
-- **Credentials** — accepts email *or* phone as `identifier`, plus password. Defined in [auth.ts:38-70](../auth.ts#L38-L70). Email/phone discrimination via the `isEmail` helper.
-- **Google OAuth** — standard `openid email profile` scopes. Defined in [auth.config.ts:8-21](../auth.config.ts#L8-L21).
+- **Credentials** - accepts email *or* phone as `identifier`, plus password. Defined in [auth.ts:38-70](../auth.ts#L38-L70). Email/phone discrimination via the `isEmail` helper.
+- **Google OAuth** - standard `openid email profile` scopes. Defined in [auth.config.ts:8-21](../auth.config.ts#L8-L21).
 
 ### Password handling
 
-- bcrypt with 12 salt rounds — [lib/auth-helpers.ts:11-19](../lib/auth-helpers.ts#L11-L19).
-- Passwords are validated at registration time: min 8 chars, ≥1 uppercase, ≥1 digit — [lib/auth-helpers.ts:33-37](../lib/auth-helpers.ts#L33-L37).
+- bcrypt with 12 salt rounds - [lib/auth-helpers.ts:11-19](../lib/auth-helpers.ts#L11-L19).
+- Passwords are validated at registration time: min 8 chars, ≥1 uppercase, ≥1 digit - [lib/auth-helpers.ts:33-37](../lib/auth-helpers.ts#L33-L37).
 - OAuth-only users have `passwordHash = null`. Credentials login is silently rejected for them.
 
 ### Session shape
@@ -88,7 +88,7 @@ JWT strategy. The token carries `id`, `role`, `phone`. Server components read it
 
 Two layers:
 
-**Layer 1 — Edge middleware** at [auth.config.ts:27-58](../auth.config.ts#L27-L58):
+**Layer 1 - Edge middleware** at [auth.config.ts:27-58](../auth.config.ts#L27-L58):
 
 ```ts
 const gates = [
@@ -100,11 +100,11 @@ const gates = [
 
 If the URL hits one of these prefixes and the user is not logged in → redirect to `/login`. If logged in but with the wrong role → redirect to `/`. ADMIN is allowed into every shell for impersonation/debug.
 
-**Layer 2 — Per-handler** in API routes via `requireRole([...])` from [lib/auth-helpers.ts:95-99](../lib/auth-helpers.ts#L95-L99). Throws `'UNAUTHORIZED'` or `'FORBIDDEN'`; the route handler turns those into 401/403.
+**Layer 2 - Per-handler** in API routes via `requireRole([...])` from [lib/auth-helpers.ts:95-99](../lib/auth-helpers.ts#L95-L99). Throws `'UNAUTHORIZED'` or `'FORBIDDEN'`; the route handler turns those into 401/403.
 
 ### Soft-delete
 
-`User.deletedAt` is checked at sign-in time in [auth.ts:26-34](../auth.ts#L26-L34). Deactivated users cannot sign in via *any* provider — including Google, because the `signIn` callback runs even for OAuth.
+`User.deletedAt` is checked at sign-in time in [auth.ts:26-34](../auth.ts#L26-L34). Deactivated users cannot sign in via *any* provider - including Google, because the `signIn` callback runs even for OAuth.
 
 ---
 
@@ -138,7 +138,7 @@ Payment                         Address                ServiceArea              
 
 - **One Order = exactly zero or one Report.** Enforced by `Report.orderId @unique`.
 - **One Order can have multiple Shipments.** Typically one `FORWARD` + one `REVERSE` for KIT_BY_POST. AT_HOME orders have zero shipments.
-- **One User has at most one `AgentProfile` / `CounsellorProfile` / `LabPartner`** — each is keyed by `userId @id`.
+- **One User has at most one `AgentProfile` / `CounsellorProfile` / `LabPartner`** - each is keyed by `userId @id`.
 - **Shipment addresses are denormalised.** [Shipment.pickup{Name,Phone,Line,…}](../prisma/schema.prisma#L475-L485) snapshot the addresses at creation time, so later edits to `Address` don't rewrite history.
 - **Money is paise (integer).** Every `price`, `total`, `discount`, `value`, `kitShippingFee`, `amount` is `Int` in paise.
 - **`orderNumber`, `reportNumber` are human-facing.** Format: `KYG-2026-000412`, `RPT-000412`.
@@ -153,8 +153,8 @@ Payment                         Address                ServiceArea              
 | `ShipmentLeg`    | `FORWARD` (lab → user), `REVERSE` (user → lab)                                                       |
 | `ShipmentStatus` | `CREATED → MANIFESTED → PICKUP_SCHEDULED → IN_TRANSIT → OUT_FOR_DELIVERY → DELIVERED`, plus `RTO`, `CANCELLED`, `FAILED` |
 | `PaymentStatus`  | `PENDING → CAPTURED`, plus `FAILED`, `REFUNDED`, `PARTIALLY_REFUNDED`                                 |
-| `SlotWindow`     | `MORNING` (8–12), `AFTERNOON` (12–16), `EVENING` (16–19) — relevant only to AT_HOME orders            |
-| `MarkerResult`   | `LOW`, `MODERATE`, `HIGH`, `TYPICAL` — per-gene severity                                              |
+| `SlotWindow`     | `MORNING` (8–12), `AFTERNOON` (12–16), `EVENING` (16–19) - relevant only to AT_HOME orders            |
+| `MarkerResult`   | `LOW`, `MODERATE`, `HIGH`, `TYPICAL` - per-gene severity                                              |
 
 ---
 
@@ -219,15 +219,15 @@ Payment                         Address                ServiceArea              
 
 ### Out-of-band terminals
 
-- `CANCELLED` — user-initiated cancellation, or admin-initiated (e.g. unservicable pincode).
-- `REFUNDED` — payment refund processed.
+- `CANCELLED` - user-initiated cancellation, or admin-initiated (e.g. unservicable pincode).
+- `REFUNDED` - payment refund processed.
 
 ### Where transitions live
 
-- **Admin actions** — `app/api/admin/orders/[id]/status/route.ts`, `assign-agent/route.ts`, `shipments/route.ts`.
-- **Agent actions** (phleb-only) — `app/api/agent/orders/[id]/transition/route.ts`.
-- **Courier webhooks** — `app/api/webhooks/delhivery/route.ts` (and any future Shiprocket equivalent).
-- **Side effects per transition** (events, notifications) — `lib/shipments.ts` and inline in each route handler.
+- **Admin actions** - `app/api/admin/orders/[id]/status/route.ts`, `assign-agent/route.ts`, `shipments/route.ts`.
+- **Agent actions** (phleb-only) - `app/api/agent/orders/[id]/transition/route.ts`.
+- **Courier webhooks** - `app/api/webhooks/delhivery/route.ts` (and any future Shiprocket equivalent).
+- **Side effects per transition** (events, notifications) - `lib/shipments.ts` and inline in each route handler.
 
 Every transition writes an `OrderEvent` row with `label`, optional `meta` JSON, and `actorId` (the userId who triggered it). This is the audit log.
 
@@ -242,24 +242,24 @@ Order (KIT_BY_POST)
   │
   ├── Shipment leg=FORWARD   pickup = Lab address      drop = customer address
   │     status: CREATED → MANIFESTED → IN_TRANSIT → OUT_FOR_DELIVERY → DELIVERED
-  │     ShipmentEvent[] — one row per courier scan
+  │     ShipmentEvent[] - one row per courier scan
   │
   └── Shipment leg=REVERSE   pickup = customer address  drop = Lab address
         status: CREATED → PICKUP_SCHEDULED → IN_TRANSIT → DELIVERED
-        ShipmentEvent[] — one row per courier scan
+        ShipmentEvent[] - one row per courier scan
 ```
 
 ### Why a separate `Lab` model
 
-`Lab` is a KYG-owned facility — where kits ship *from* on the forward leg, and where samples come *back* to on the reverse leg. Distinct from `LabPartner`, which is an external lab with its own dashboard login that uploads reports.
+`Lab` is a KYG-owned facility - where kits ship *from* on the forward leg, and where samples come *back* to on the reverse leg. Distinct from `LabPartner`, which is an external lab with its own dashboard login that uploads reports.
 
-`Lab.pickupLocationName` must match the warehouse name registered in the Delhivery portal verbatim — there's no fuzzy match server-side.
+`Lab.pickupLocationName` must match the warehouse name registered in the Delhivery portal verbatim - there's no fuzzy match server-side.
 
 ### Delhivery client
 
 [lib/delhivery.ts](../lib/delhivery.ts) wraps the B2C surface API. Two modes:
-- **Real** — when `DELHIVERY_TOKEN` is set and `DELHIVERY_MOCK !== "true"`.
-- **Mock** — returns deterministic fake AWBs. Auto-enabled when the token is empty, or when you set `DELHIVERY_MOCK=true`. Lets the admin UI and seed data work without real credentials.
+- **Real** - when `DELHIVERY_TOKEN` is set and `DELHIVERY_MOCK !== "true"`.
+- **Mock** - returns deterministic fake AWBs. Auto-enabled when the token is empty, or when you set `DELHIVERY_MOCK=true`. Lets the admin UI and seed data work without real credentials.
 
 Higher-level domain code in [lib/shipments.ts](../lib/shipments.ts) handles "create both legs", "refresh tracking", "cancel shipment + revert order status".
 
@@ -297,7 +297,7 @@ Higher-level domain code in [lib/shipments.ts](../lib/shipments.ts) handles "cre
 
 4. Razorpay also fires a server webhook
    - POST /api/webhooks/razorpay   (TBD route)
-   - Idempotent — re-verifies signature and reconciles state
+   - Idempotent - re-verifies signature and reconciles state
    - Catches the case where the browser was closed mid-redirect
 ```
 
@@ -305,7 +305,7 @@ The `Order` and `Payment` rows both carry `razorpayOrderId` / `razorpayPaymentId
 
 ### Consultations
 
-`Consultation` has its own Razorpay refs (`razorpayOrderId`, `razorpayPaymentId`). Same checkout flow, different success path — books a calendar slot with a counsellor instead of dispatching a kit.
+`Consultation` has its own Razorpay refs (`razorpayOrderId`, `razorpayPaymentId`). Same checkout flow, different success path - books a calendar slot with a counsellor instead of dispatching a kit.
 
 ### Refunds
 
@@ -323,8 +323,8 @@ Reports are private PDFs stored in Cloudflare R2 and served via short-lived pres
 2. Server stores the PDF in R2 with key `reports/<orderNumber>/<reportNumber>.pdf`.
 3. Server creates the `Report` row with `pdfKey` pointing at that R2 object.
 4. Server can optionally accept structured marker data and create `ReportMarker[]` rows.
-5. Counsellor (if any) reviews and signs off — sets `Report.reviewedById` and optionally `counsellorNotes`.
-6. Admin clicks "Deliver" — sets `Report.deliveredAt`, transitions `Order.status → REPORT_READY`, fires email + WhatsApp notifications.
+5. Counsellor (if any) reviews and signs off - sets `Report.reviewedById` and optionally `counsellorNotes`.
+6. Admin clicks "Deliver" - sets `Report.deliveredAt`, transitions `Order.status → REPORT_READY`, fires email + WhatsApp notifications.
 
 ### Download flow
 
@@ -342,9 +342,9 @@ Cheaper than S3, no egress fees, same S3 SDK. The R2 client is set up in [lib/r2
 
 ### Channels
 
-- **Email** — SendGrid or AWS SES, configured via `SENDGRID_API_KEY` and `EMAIL_FROM`.
-- **WhatsApp** — Business API via Gupshup or Wati (`WHATSAPP_API_URL` + `WHATSAPP_API_KEY`).
-- **SMS** — same WhatsApp provider, typically.
+- **Email** - SendGrid or AWS SES, configured via `SENDGRID_API_KEY` and `EMAIL_FROM`.
+- **WhatsApp** - Business API via Gupshup or Wati (`WHATSAPP_API_URL` + `WHATSAPP_API_KEY`).
+- **SMS** - same WhatsApp provider, typically.
 
 ### Templates
 
@@ -360,10 +360,10 @@ Cheaper than S3, no egress fees, same S3 SDK. The R2 client is set up in [lib/r2
 
 Sanity hosts blog content **only**. All structured business data (packages, orders, users, reports) lives in Postgres.
 
-- **Schemas** — [sanity/schemas/](../sanity/schemas/): `blogPost`, `author`.
-- **Studio** — embedded at `/studio`. Sign in with your Sanity account (separate from KYG auth).
-- **Client** — [lib/sanity.ts](../lib/sanity.ts) — `next-sanity` client + image URL builder.
-- **Public blog routes** — `/blog`, `/blog/[slug]` fetch from Sanity at request time.
+- **Schemas** - [sanity/schemas/](../sanity/schemas/): `blogPost`, `author`.
+- **Studio** - embedded at `/studio`. Sign in with your Sanity account (separate from KYG auth).
+- **Client** - [lib/sanity.ts](../lib/sanity.ts) - `next-sanity` client + image URL builder.
+- **Public blog routes** - `/blog`, `/blog/[slug]` fetch from Sanity at request time.
 
 Required env: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`, optionally `SANITY_API_READ_TOKEN` for drafts.
 
@@ -392,7 +392,7 @@ GET    /api/location/serviceability     check if pincode accepts orders
 ### User dashboard (role: USER)
 
 ```
-(TBD — userside routes for orders, reports, etc. live as server-component
+(TBD - userside routes for orders, reports, etc. live as server-component
 calls inside app/(site)/dashboard/* rather than as API routes)
 ```
 
@@ -465,7 +465,7 @@ Four route groups, each with its own layout:
 
 | Route group     | Layout                                                       | Audience              |
 | --------------- | ------------------------------------------------------------ | --------------------- |
-| `app/(site)/`   | [SiteLayout](../app/(site)/layout.tsx) — SiteHeader + SiteFooter | Public + logged-in USER |
+| `app/(site)/`   | [SiteLayout](../app/(site)/layout.tsx) - SiteHeader + SiteFooter | Public + logged-in USER |
 | `app/admin/`    | Admin shell with role-filtered sidebar                       | ADMIN, COUNSELLOR, PARTNER |
 | `app/agent/`    | Mobile-first agent shell                                     | AGENT (Phase 2)       |
 | `app/studio/`   | Sanity Studio                                                | Content editors       |
@@ -506,7 +506,7 @@ Every required + optional env var is documented inline in [.env.example](../.env
 | `MAPPLS_API_KEY`           | Address autosuggest + reverse geocode         | from apisetu.mappls.com                                            |
 | `DELHIVERY_BASE_URL`       | Courier                                       | staging: `https://staging-express.delhivery.com`                   |
 | `DELHIVERY_TOKEN`          | Courier                                       | from Delhivery dashboard                                           |
-| `DELHIVERY_PICKUP_LOCATION`| Courier (fallback)                            | per-lab names override this — set on `Lab.pickupLocationName`      |
+| `DELHIVERY_PICKUP_LOCATION`| Courier (fallback)                            | per-lab names override this - set on `Lab.pickupLocationName`      |
 | `DELHIVERY_WEBHOOK_SECRET` | Courier webhook                               | shared secret with Delhivery support                               |
 | `DELHIVERY_MOCK`           | Dev mode                                      | `true` to short-circuit all courier calls with fake responses      |
 
@@ -516,7 +516,7 @@ Every required + optional env var is documented inline in [.env.example](../.env
 
 - **Money is paise.** Schema integers, helper-only conversion at the rendering edge.
 - **Phone normalisation** before any DB lookup. Helper at [auth.ts:16](../auth.ts#L16).
-- **API auth is per-handler.** Don't rely on the proxy — it's bypassed for `/api/*`.
+- **API auth is per-handler.** Don't rely on the proxy - it's bypassed for `/api/*`.
 - **`/admin` is shared.** Filter the sidebar by role; don't create new shells.
 - **Soft-delete users** via `deletedAt`. The signIn callback in [auth.ts](../auth.ts) blocks them everywhere.
 - **Shipments snapshot addresses.** Editing `Address` after a shipment is created does not retro-rewrite the shipment.
@@ -526,7 +526,7 @@ Every required + optional env var is documented inline in [.env.example](../.env
 - **Don't import from `app/`** into `lib/` or `components/`. Imports flow `app → components → lib`, never up.
 - **Cloudflare CDN is in front.** Setting `Cache-Control` on a page route hits Cloudflare too. Default to no-cache on dynamic pages.
 - **Next.js 16 / React 19 has breaking changes** from earlier versions. When in doubt, consult `node_modules/next/dist/docs/` rather than memory. Per [AGENTS.md](../AGENTS.md).
-- **After `prisma migrate dev` you MUST clear `.next/`.** Turbopack caches compiled server chunks that hold the *previous* Prisma client shape. A bare `pnpm dev` restart isn't enough — the cached chunks survive. Recipe:
+- **After `prisma migrate dev` you MUST clear `.next/`.** Turbopack caches compiled server chunks that hold the *previous* Prisma client shape. A bare `pnpm dev` restart isn't enough - the cached chunks survive. Recipe:
   ```powershell
   # After any schema change:
   pnpm db:generate

@@ -3,11 +3,11 @@ import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/auth';
 
-// Public endpoint — no auth required. Called by the AttributionBeacon client
+// Public endpoint - no auth required. Called by the AttributionBeacon client
 // component when a visitor lands on any page carrying UTM params (or via
 // /?attr_refresh=1 for testing). Writes a single AttributionVisit row.
 //
-// Rate-limiting: trivial — we accept one POST per request. If you start
+// Rate-limiting: trivial - we accept one POST per request. If you start
 // getting spam, slot in a tiny in-memory or Redis bucket here.
 
 const visitSchema = z.object({
@@ -25,13 +25,13 @@ function maskIp(raw: string | null): string | null {
   if (!raw) return null;
   const ip = raw.split(',')[0].trim();
   if (!ip) return null;
-  // IPv4 — keep first three octets.
+  // IPv4 - keep first three octets.
   if (ip.includes('.')) {
     const parts = ip.split('.');
     if (parts.length === 4) return `${parts[0]}.${parts[1]}.${parts[2]}.0`;
     return null;
   }
-  // IPv6 — keep first /64.
+  // IPv6 - keep first /64.
   const parts = ip.split(':');
   if (parts.length >= 4) return parts.slice(0, 4).join(':') + '::/64';
   return null;
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: 'Invalid body' }, { status: 400 });
     }
 
-    // Skip writing a visit if there's no marketing signal at all — would be
+    // Skip writing a visit if there's no marketing signal at all - would be
     // noise. We only persist visits with at least a source or campaign.
     const hasSignal = !!(parsed.data.source || parsed.data.campaign);
     if (!hasSignal) return NextResponse.json({ ok: true, skipped: true });
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    // Never let a bad write break the page render — fail soft.
+    // Never let a bad write break the page render - fail soft.
     // eslint-disable-next-line no-console
     console.error('[track/visit] error', err);
     return NextResponse.json({ ok: false }, { status: 500 });

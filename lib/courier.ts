@@ -3,8 +3,8 @@
  *
  * Dispatches to Shiprocket OR Delhivery depending on COURIER_PROVIDER env var.
  * Both clients implement the same shape (see lib/delhivery.ts for the contract
- * types). The rest of the codebase imports from this file — never directly
- * from a provider — so flipping providers is a one-line env change.
+ * types). The rest of the codebase imports from this file - never directly
+ * from a provider - so flipping providers is a one-line env change.
  *
  *   COURIER_PROVIDER=shiprocket   → recommended for launch (multi-courier)
  *   COURIER_PROVIDER=delhivery    → switch when volume justifies direct rates

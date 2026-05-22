@@ -23,7 +23,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 function safeFrom(raw: string | null): string {
   if (!raw) return '/';
   // Must start with a single forward slash, no double slashes (which would
-  // be protocol-relative — `//evil.com` → `https://evil.com`).
+  // be protocol-relative - `//evil.com` → `https://evil.com`).
   if (!raw.startsWith('/') || raw.startsWith('//')) return '/';
   // No backslash trickery; some browsers normalise `\` → `/` in the URL.
   if (raw.includes('\\')) return '/';

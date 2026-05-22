@@ -5,7 +5,7 @@ import { LegalPage } from '@/components/site/LegalPage';
 export const metadata: Metadata = {
   title: 'Genetic Testing Consent',
   description:
-    'The informed consent you give KnowYourGenes before we collect and analyse your DNA — captured online at checkout and re-confirmed when you register your kit on the dashboard.',
+    'The informed consent you give KnowYourGenes before we collect and analyse your DNA - captured online at checkout and re-confirmed when you register your kit on the dashboard.',
 };
 
 export default function ConsentPage() {
@@ -17,11 +17,11 @@ export default function ConsentPage() {
       </p>
       <ul>
         <li>
-          <strong>At checkout</strong> — by ticking &ldquo;I have read and accept the Genetic Testing Consent&rdquo;
+          <strong>At checkout</strong> - by ticking &ldquo;I have read and accept the Genetic Testing Consent&rdquo;
           before payment.
         </li>
         <li>
-          <strong>At kit registration</strong> — when you scan or enter your kit code in your KYG account before
+          <strong>At kit registration</strong> - when you scan or enter your kit code in your KYG account before
           scheduling the reverse pickup, you re-confirm this consent specifically for the sample you have just
           collected.
         </li>
@@ -124,7 +124,7 @@ export default function ConsentPage() {
         </li>
       </ul>
 
-      <h2>5. Optional — research participation (separate opt-in)</h2>
+      <h2>5. Optional - research participation (separate opt-in)</h2>
       <p>
         You may, separately and entirely at your option, consent to your de-identified genetic data and self-reported
         phenotype information being included in research datasets that KYG or its academic partners may use to improve

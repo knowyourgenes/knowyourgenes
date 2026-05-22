@@ -433,7 +433,7 @@ export default function AdminLabsPage() {
                   <SelectContent>
                     {partners.length === 0 ? (
                       <div className="p-2 text-xs text-muted-foreground">
-                        No partners yet — create one under Lab Partners first.
+                        No partners yet - create one under Lab Partners first.
                       </div>
                     ) : (
                       partners.map((p) => (

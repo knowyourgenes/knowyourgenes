@@ -37,7 +37,7 @@ p{line-height:1.72}
 .eb{font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--tl);display:inline-flex;align-items:center;gap:10px}
 .eb::before{content:'';width:22px;height:2px;background:var(--tl);border-radius:2px}
 
-/* "BANK ACCOUNT" — circled checklist treatment with sticky note */
+/* "BANK ACCOUNT" - circled checklist treatment with sticky note */
 .circled{position:relative;display:inline-block;color:var(--teal);padding:0 .12em;white-space:nowrap;margin-right:.25em}
 .circled::after{
   content:'';position:absolute;left:-5%;right:-5%;top:-10%;bottom:-10%;
@@ -163,7 +163,7 @@ p{line-height:1.72}
 .mt .sp{width:10px;height:10px;border-radius:50%;background:currentColor;opacity:.4}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* SECTIONS — varied warm gradients */
+/* SECTIONS - varied warm gradients */
 .sec{padding:clamp(80px,10vh,130px) 0;position:relative;overflow:hidden}
 .bcg{background:linear-gradient(135deg,var(--cream) 0%,var(--paper) 50%,var(--mw) 100%)}
 .bmg{background:linear-gradient(155deg,var(--mw) 0%,var(--mint) 50%,#daf1ef 100%)}
@@ -270,7 +270,7 @@ p{line-height:1.72}
 .cft .tbs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .cft .tb{background:rgba(255,255,255,.15);color:var(--wh);padding:4px 10px;border-radius:999px;font-size:.7rem;font-weight:700}
 
-/* HOW IT WORKS — KIT BASED */
+/* HOW IT WORKS - KIT BASED */
 .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative}
 .sc3{position:absolute;top:42px;left:calc(12.5% + 14px);right:calc(12.5% + 14px);height:2px;background:linear-gradient(90deg,var(--tl),var(--teal));opacity:.25;pointer-events:none}
 .sk{background:var(--wh);border-radius:36px;padding:28px 22px 30px;text-align:center;box-shadow:var(--sc);position:relative;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
@@ -622,7 +622,7 @@ footer h5{color:var(--wh);font-size:.8rem;font-weight:700;letter-spacing:.12em;t
 </section>
 
 
-<!-- HOW IT WORKS — KIT BASED -->
+<!-- HOW IT WORKS - KIT BASED -->
 <section class="sec bmg" id="how">
   <div class="scr" style="top:55px;left:35px;width:78px;height:58px;opacity:.45" aria-hidden="true"><svg viewBox="0 0 78 58"><path d="M8,44 Q24,8 42,28 Q58,48 72,20" stroke="#25B5AB" stroke-width="2.2"/></svg></div>
   <div class="scr" style="bottom:65px;right:45px;width:72px;height:72px;opacity:.4" aria-hidden="true"><svg viewBox="0 0 72 72"><path d="M10,36 Q36,6 62,36 Q36,66 10,36" stroke="#0E4D4B" stroke-width="2"/><circle cx="36" cy="36" r="5" fill="#25B5AB" opacity=".5"/></svg></div>
@@ -842,7 +842,7 @@ document.querySelectorAll('.fq').forEach(q => {
   q.addEventListener('click', () => q.closest('.fi').classList.toggle('op'));
 });
 
-/* === THREE.JS GENE NETWORK ORB — high contrast palette ===
+/* === THREE.JS GENE NETWORK ORB - high contrast palette ===
    Sphere of nodes connected by edges. Sits on dark teal backdrop disc.
    Tuned with 3-tier color hierarchy: yellow hero accents, cyan mids,
    white fillers. Drag to rotate, drifts when idle. */
@@ -914,7 +914,7 @@ document.querySelectorAll('.fq').forEach(q => {
     nodeMeshes.push(mesh);
   }
 
-  // Edges — bright cyan, high opacity for visible network structure
+  // Edges - bright cyan, high opacity for visible network structure
   const edgeMat = new THREE.LineBasicMaterial({
     color: 0x5FF0E2,
     transparent: true,
@@ -935,7 +935,7 @@ document.querySelectorAll('.fq').forEach(q => {
     }
   }
 
-  // Lighting — bright, top-down with cyan and yellow rims
+  // Lighting - bright, top-down with cyan and yellow rims
   scene.add(new THREE.AmbientLight(0xffffff, 0.5));
   const key = new THREE.PointLight(0x5FF0E2, 2.4, 30);
   key.position.set(4, 5, 6);

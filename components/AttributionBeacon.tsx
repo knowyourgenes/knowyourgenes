@@ -1,14 +1,14 @@
 'use client';
 
 /**
- * AttributionBeacon — fires once per page load when UTM params are in the URL.
+ * AttributionBeacon - fires once per page load when UTM params are in the URL.
  *
  * Pairs with /api/track/visit to persist a row per click. Independent of the
  * kyg_attr cookie (the middleware handles that for conversion attribution).
  *
  * Why client-side and not in the middleware: Next.js middleware runs on Edge
  * and cannot use Prisma to write to Postgres. A tiny client beacon is the
- * standard pattern (every analytics tool — GA, Plausible, Mixpanel — does this).
+ * standard pattern (every analytics tool - GA, Plausible, Mixpanel - does this).
  *
  * Dedupe rule: we mark sessionStorage with the URL we beaconed for; the same
  * URL won't fire again until it changes. A page refresh on the same UTM URL
@@ -72,14 +72,14 @@ export default function AttributionBeacon() {
     // Only fire when there's a marketing signal in the URL.
     if (!source && !utmCampaign) return;
 
-    // Dedupe — same URL in same session shouldn't double-count refreshes.
+    // Dedupe - same URL in same session shouldn't double-count refreshes.
     const url = window.location.href;
     try {
       if (sessionStorage.getItem(LAST_BEACON_KEY) === url) return;
       sessionStorage.setItem(LAST_BEACON_KEY, url);
     } catch {
       // sessionStorage may be unavailable (private mode in some browsers).
-      // Continue anyway — at worst we get a few extra rows.
+      // Continue anyway - at worst we get a few extra rows.
     }
 
     const body = {
@@ -93,7 +93,7 @@ export default function AttributionBeacon() {
       landingPath: window.location.pathname,
     };
 
-    // Use sendBeacon when available — it survives page unload and doesn't
+    // Use sendBeacon when available - it survives page unload and doesn't
     // block navigation. Fall back to fetch for browsers without it.
     try {
       const blob = new Blob([JSON.stringify(body)], { type: 'application/json' });
@@ -108,7 +108,7 @@ export default function AttributionBeacon() {
       body: JSON.stringify(body),
       keepalive: true,
     }).catch(() => {
-      // Swallow errors — analytics failures must never affect page UX.
+      // Swallow errors - analytics failures must never affect page UX.
     });
   }, []);
 

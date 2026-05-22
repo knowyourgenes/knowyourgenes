@@ -204,7 +204,7 @@ export default function AdminPartnersPage() {
     <>
       <PageHeader
         title="Lab Partners"
-        subtitle="Parent partner organisations (e.g. Neotech). Each partner can run multiple physical Lab locations — manage those under Labs."
+        subtitle="Parent partner organisations (e.g. Neotech). Each partner can run multiple physical Lab locations - manage those under Labs."
         actions={
           <>
             <Button

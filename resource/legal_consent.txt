@@ -9,9 +9,9 @@ This document is the informed consent you give KnowYourGenes
 ("KYG", operated by BFG Market Consult Private Limited) before
 we analyse your DNA. Consent is captured at two points:
 
-  - AT CHECKOUT — by ticking "I have read and accept the Genetic
+  - AT CHECKOUT - by ticking "I have read and accept the Genetic
     Testing Consent" before payment.
-  - AT KIT REGISTRATION — when you scan or enter your kit code
+  - AT KIT REGISTRATION - when you scan or enter your kit code
     in your KYG account before scheduling the reverse pickup,
     you re-confirm this consent specifically for the sample you
     have just collected.

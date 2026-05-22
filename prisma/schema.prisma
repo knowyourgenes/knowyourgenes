@@ -170,7 +170,7 @@ model User {
   passwordHash  String? // null for OAuth-only users
   role          Role      @default(USER)
 
-  // Demographics — captured via post-checkout questionnaire / profile edit.
+  // Demographics - captured via post-checkout questionnaire / profile edit.
   // Drives age-group + gender reports. Optional so existing users aren't
   // forced to backfill before we add the form.
   dateOfBirth DateTime? @db.Date
@@ -439,7 +439,7 @@ model Order {
   shiprocketAwb     String?
   consentFormUrl    String? // S3 URL
 
-  // Attribution — first-touch captured at landing, attached at order creation.
+  // Attribution - first-touch captured at landing, attached at order creation.
   // attrSource/attrMedium/attrCampaign etc. are denormalised so historical
   // attribution survives Campaign edits or deletion. campaignId is the FK
   // when the captured utm_campaign matched a known Campaign.slug.
@@ -757,8 +757,8 @@ model Campaign {
   slug        String   @unique // becomes utm_campaign value; lowercase kebab-case
   source      String // utm_source: instagram, google, meta, whatsapp, email, etc.
   medium      String // utm_medium: cpc, social, email, referral, organic, paid_video
-  term        String? // utm_term — typically paid-search keywords
-  content     String? // utm_content — ad creative variant
+  term        String? // utm_term - typically paid-search keywords
+  content     String? // utm_content - ad creative variant
   destination String   @default("/") // path the link lands on, e.g. "/packages/wellness-starter"
   notes       String?  @db.Text
   active      Boolean  @default(true)
@@ -782,7 +782,7 @@ model Campaign {
 
 model ServiceArea {
   id        String   @id @default(cuid())
-  // Pincode is NOT unique on its own — one Indian pincode covers many post
+  // Pincode is NOT unique on its own - one Indian pincode covers many post
   // offices / localities (e.g. 400001 has Bazargate, Elephanta Caves Po, M.P.T,
   // Mumbai). We keep one row per (pincode, area) so admin can manage service
   // area at locality granularity. Composite unique below prevents the same
@@ -855,7 +855,7 @@ model AttributionVisit {
   referrer    String?
   landingPath String?
   userAgent   String? // truncated to 200 chars
-  ipPrefix    String? // first 3 octets of IPv4 or /64 of IPv6 — privacy-preserving
+  ipPrefix    String? // first 3 octets of IPv4 or /64 of IPv6 - privacy-preserving
   createdAt   DateTime @default(now())
 
   @@index([source, medium])

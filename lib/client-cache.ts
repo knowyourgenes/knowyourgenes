@@ -3,7 +3,7 @@
  *
  * Backed by sessionStorage so it survives page navigation inside the admin
  * shell but resets when the tab is closed. Used by /admin/service-area to
- * make the tree + area lists feel instant — first render reads cached data
+ * make the tree + area lists feel instant - first render reads cached data
  * synchronously, then a background refetch updates if the cache is stale.
  *
  * Not a general-purpose cache. Errors are swallowed so a quota-exceeded or
@@ -16,7 +16,7 @@ const DEFAULT_TTL_MS = 5 * 60 * 1000; // 5 minutes
 type Entry<T> = {
   data: T;
   at: number; // ms epoch when written
-  ttl: number; // ms — how long until stale
+  ttl: number; // ms - how long until stale
 };
 
 function full(key: string): string {
@@ -53,7 +53,7 @@ export function write<T>(key: string, data: T, ttlMs: number = DEFAULT_TTL_MS): 
     const entry: Entry<T> = { data, at: Date.now(), ttl: ttlMs };
     sessionStorage.setItem(full(key), JSON.stringify(entry));
   } catch {
-    // Quota exceeded or storage disabled — silently ignore. Caller falls
+    // Quota exceeded or storage disabled - silently ignore. Caller falls
     // back to a fresh fetch and the UI still works, just slower.
   }
 }

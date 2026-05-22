@@ -12,7 +12,7 @@ All admin endpoints require `requireApiRole(['ADMIN', ...])` and respond with th
 | -------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | GET/POST | `/api/auth/[...nextauth]`           | NextAuth handlers (Google OAuth + Credentials).                                                                            |
 | POST     | `/api/auth/register`                | Email/phone signup. Hashes password with bcrypt.                                                                           |
-| GET      | `/api/location/serviceability`     | `?pincode=...&type=forward\|reverse\|any` — Combines our master ServiceArea + active courier (Shiprocket/Delhivery) reach. |
+| GET      | `/api/location/serviceability`     | `?pincode=...&type=forward\|reverse\|any` - Combines our master ServiceArea + active courier (Shiprocket/Delhivery) reach. |
 | GET      | `/api/location/resolve`             | `?pincode=...` or POST `{lat,lng}` for reverse-geocode. Mappls-backed.                                                     |
 | GET      | `/api/location/autosuggest`         | Address autocomplete via Mappls.                                                                                           |
 | GET      | `/api/location/geocode`             | Forward geocode address → coords.                                                                                          |
@@ -34,7 +34,7 @@ All admin endpoints require `requireApiRole(['ADMIN', ...])` and respond with th
 | POST   | `/api/webhooks/shiprocket`      | `X-Api-Key` shared secret.                      |
 | POST   | `/api/webhooks/delhivery`       | `X-Delhivery-Token` shared secret.              |
 
-All webhook handlers return 200 even on unknown events — non-2xx triggers vendor retries.
+All webhook handlers return 200 even on unknown events - non-2xx triggers vendor retries.
 
 ## Admin
 
@@ -45,10 +45,10 @@ All webhook handlers return 200 even on unknown events — non-2xx triggers vend
 | GET    | `/api/admin/orders`                                 | ADMIN, COUNSELLOR      |
 | PATCH  | `/api/admin/orders/[id]/status`                     | ADMIN                  |
 | POST   | `/api/admin/orders/[id]/assign-agent`               | ADMIN                  |
-| POST   | `/api/admin/orders/[id]/shipments`                  | ADMIN — creates forward or reverse shipment via the active courier (`COURIER_PROVIDER`). |
+| POST   | `/api/admin/orders/[id]/shipments`                  | ADMIN - creates forward or reverse shipment via the active courier (`COURIER_PROVIDER`). |
 | GET    | `/api/admin/shipments`                              | ADMIN                  |
 | GET    | `/api/admin/shipments/[id]`                         | ADMIN                  |
-| POST   | `/api/admin/shipments/[id]/refresh`                 | ADMIN — pulls latest tracking from the courier the shipment was created with. |
+| POST   | `/api/admin/shipments/[id]/refresh`                 | ADMIN - pulls latest tracking from the courier the shipment was created with. |
 | POST   | `/api/admin/shipments/[id]/cancel`                  | ADMIN                  |
 
 ### Catalog & ops
@@ -59,9 +59,9 @@ All webhook handlers return 200 even on unknown events — non-2xx triggers vend
 | GET/PATCH/DELETE  | `/api/admin/packages/[id]`            | ADMIN |
 | GET/POST          | `/api/admin/coupons`                  | ADMIN |
 | GET/PATCH/DELETE  | `/api/admin/coupons/[id]`             | ADMIN |
-| GET/POST          | `/api/admin/labs`                     | ADMIN — KYG-owned facilities. `Lab.pickupLocationName` must match the courier's saved warehouse nickname. |
+| GET/POST          | `/api/admin/labs`                     | ADMIN - KYG-owned facilities. `Lab.pickupLocationName` must match the courier's saved warehouse nickname. |
 | GET/PATCH/DELETE  | `/api/admin/labs/[id]`                | ADMIN |
-| GET/POST          | `/api/admin/agents`                   | ADMIN — phlebotomists (Phase 2). |
+| GET/POST          | `/api/admin/agents`                   | ADMIN - phlebotomists (Phase 2). |
 | GET/PATCH/DELETE  | `/api/admin/agents/[id]`              | ADMIN |
 | GET/POST          | `/api/admin/counsellors`              | ADMIN |
 | GET/PATCH/DELETE  | `/api/admin/counsellors/[id]`         | ADMIN |
@@ -77,8 +77,8 @@ All webhook handlers return 200 even on unknown events — non-2xx triggers vend
 | ------ | ------------------------------------------ | ----------------- |
 | GET    | `/api/admin/reports`                       | ADMIN, COUNSELLOR |
 | GET    | `/api/admin/reports/[id]`                  | ADMIN, COUNSELLOR |
-| POST   | `/api/admin/reports/upload`                | ADMIN — uploads PDF to R2, creates Report row. |
-| GET    | `/api/admin/reports/[id]/download`         | ADMIN, COUNSELLOR — short-lived presigned R2 URL. |
+| POST   | `/api/admin/reports/upload`                | ADMIN - uploads PDF to R2, creates Report row. |
+| GET    | `/api/admin/reports/[id]/download`         | ADMIN, COUNSELLOR - short-lived presigned R2 URL. |
 
 ### Marketing (UTM / attribution)
 
@@ -93,10 +93,10 @@ All webhook handlers return 200 even on unknown events — non-2xx triggers vend
 | ----------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | GET/POST          | `/api/admin/service-area`                              | List with q/state/district/active filters. POST = single row or bulk array.    |
 | PATCH/DELETE      | `/api/admin/service-area/[id]`                         | Single-row toggle / soft-delete by cuid.                                       |
-| POST              | `/api/admin/service-area/bulk-toggle`                  | `{ state?, district?, pincodes?, ids?, active }` — at least one scope key.     |
+| POST              | `/api/admin/service-area/bulk-toggle`                  | `{ state?, district?, pincodes?, ids?, active }` - at least one scope key.     |
 | GET               | `/api/admin/service-area/stats`                        | Top-card numbers. **Single aggregate query.**                                  |
 | GET               | `/api/admin/service-area/tree`                         | State→district hierarchy with counts. **Single aggregate query.**              |
-| GET               | `/api/admin/service-area/tree/areas`                   | `?state=...&district=...` — lazy-loaded area rows for one district.            |
+| GET               | `/api/admin/service-area/tree/areas`                   | `?state=...&district=...` - lazy-loaded area rows for one district.            |
 
 ## Agent (Phase 2)
 

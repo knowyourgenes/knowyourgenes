@@ -1,6 +1,6 @@
 /**
  * Walks every .ts/.tsx file in the repo, parses its import statements, and
- * builds an import graph. Then reports files that no one imports — candidates
+ * builds an import graph. Then reports files that no one imports - candidates
  * for deletion.
  *
  * Excludes:
@@ -29,7 +29,7 @@ const SKIP_DIRS = new Set([
   'resource',
 ]);
 
-// Files that are entrypoints — Next.js / build tooling references them by
+// Files that are entrypoints - Next.js / build tooling references them by
 // convention, not via TypeScript imports. We can't see those references from
 // the import graph, so we treat these as "always used".
 const ENTRYPOINT_PATTERNS = [
@@ -85,7 +85,7 @@ function isTest(rel: string): boolean {
 //   import 'foo'
 //   const X = require('foo')
 //   import('foo')
-// The `s` (dotAll) flag is critical — multi-line `import { … } from '…'` is
+// The `s` (dotAll) flag is critical - multi-line `import { … } from '…'` is
 // common and a non-dotAll regex would miss them all.
 const IMPORT_RES = [
   /\bimport\s+(?:[\s\S]+?\s+from\s+)?['"]([^'"]+)['"]/g,

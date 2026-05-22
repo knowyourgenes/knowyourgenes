@@ -12,7 +12,7 @@ Measured against Aiven Postgres with 154,463 `ServiceArea` rows. These are wall-
 | ----------------------------------------- | ----------------- | -------------------------------------------------------------------- |
 | `/api/admin/service-area/stats`           | **~140 ms**       | Was ~1.1 s (6 queries). Now 1 `$queryRaw` with FILTER aggregates.    |
 | `/api/admin/service-area/tree`            | **~110 ms**       | Was ~155 ms (2 groupBy). Now 1 `$queryRaw`.                          |
-| `/api/admin/service-area` (list, default) | **~100 ms**       | findMany + count, both fast — indexed.                               |
+| `/api/admin/service-area` (list, default) | **~100 ms**       | findMany + count, both fast - indexed.                               |
 | `/api/admin/service-area` (search alpha)  | **~140 ms** total | Was ~700 ms. pg_trgm GIN index + drop pointless pincode OR branch.   |
 | `/api/admin/service-area` (search digits) | **~80 ms**        | pincode btree `startsWith`.                                          |
 | `/api/admin/service-area/tree/areas` (one district) | ~50 ms  | lazy-loaded, indexed on (state, district).                           |
@@ -38,11 +38,11 @@ Indexes on `ServiceArea` (the hottest table):
 | `ServiceArea_district_trgm_idx`     | `district` (GIN, gin_trgm_ops) | Case-insensitive substring search on district. |
 
 Other key indexes added along the way:
-- `Order.attrSource, attrMedium` — attribution dashboard groupBy.
-- `Order.campaignId` — campaign → order count.
-- `Order.razorpayOrderId` — webhook lookup.
-- `Shipment.awb` UNIQUE — webhook lookup.
-- `AttributionVisit.source, medium` + `campaign` + `createdAt` — visit analytics.
+- `Order.attrSource, attrMedium` - attribution dashboard groupBy.
+- `Order.campaignId` - campaign → order count.
+- `Order.razorpayOrderId` - webhook lookup.
+- `Shipment.awb` UNIQUE - webhook lookup.
+- `AttributionVisit.source, medium` + `campaign` + `createdAt` - visit analytics.
 
 ---
 
@@ -66,11 +66,11 @@ const [r] = await prisma.$queryRaw<Row[]>`
 
 ### 2. `findMany({ distinct: [...] }).length` is a trap
 
-It pulls the entire distinct set across the wire just so you can call `.length` on the array. Use `COUNT(DISTINCT col)` in raw SQL instead — 10× faster for any non-trivial table.
+It pulls the entire distinct set across the wire just so you can call `.length` on the array. Use `COUNT(DISTINCT col)` in raw SQL instead - 10× faster for any non-trivial table.
 
 ### 3. Smart query shape based on input content
 
-The search box accepts pincode digits, area names, and district names — three different indexes serve them. Don't OR all three branches always; **detect input shape and dispatch**:
+The search box accepts pincode digits, area names, and district names - three different indexes serve them. Don't OR all three branches always; **detect input shape and dispatch**:
 
 ```ts
 const hasDigits = /\d/.test(q);

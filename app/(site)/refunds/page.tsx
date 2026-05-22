@@ -5,7 +5,7 @@ import { LegalPage } from '@/components/site/LegalPage';
 export const metadata: Metadata = {
   title: 'Refund & Cancellation Policy',
   description:
-    'KnowYourGenes refund and cancellation policy — when refunds are issued, when they are not, refund timelines, and how to request one. Cancellation windows are pegged to kit-dispatch milestones.',
+    'KnowYourGenes refund and cancellation policy - when refunds are issued, when they are not, refund timelines, and how to request one. Cancellation windows are pegged to kit-dispatch milestones.',
 };
 
 export default function RefundPolicyPage() {
@@ -17,7 +17,7 @@ export default function RefundPolicyPage() {
         payment on the Platform, you agree to this policy.
       </p>
       <p>
-        We have written this plainly. Cancellation windows are pegged to the kit lifecycle — what stage your order is in
+        We have written this plainly. Cancellation windows are pegged to the kit lifecycle - what stage your order is in
         determines what refund you are eligible for.
       </p>
 

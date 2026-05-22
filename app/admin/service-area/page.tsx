@@ -139,7 +139,7 @@ export default function AdminServiceAreaPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [tab, setTab] = useState<'region' | 'list'>('region');
   // Single "refreshing" indicator surfaced in the header so the user sees that
-  // a background revalidation is happening — without losing the cached data
+  // a background revalidation is happening - without losing the cached data
   // already on screen.
   const [refreshing, setRefreshing] = useState(false);
 
@@ -187,7 +187,7 @@ export default function AdminServiceAreaPage() {
     active: boolean;
   } | null>(null);
 
-  // In-flight request dedupe — keyed by a logical request name. Prevents the
+  // In-flight request dedupe - keyed by a logical request name. Prevents the
   // same fetch firing twice when the user mashes a button or filters change
   // back and forth quickly.
   const inflight = useRef<Map<string, Promise<unknown>>>(new Map());
@@ -290,7 +290,7 @@ export default function AdminServiceAreaPage() {
   }, []);
 
   // -------------------------------------------------------------------------
-  // Hard refresh — wipes the cache namespace and re-fetches from scratch
+  // Hard refresh - wipes the cache namespace and re-fetches from scratch
   // -------------------------------------------------------------------------
 
   const hardRefresh = useCallback(async () => {
@@ -375,7 +375,7 @@ export default function AdminServiceAreaPage() {
         const res = await fetch(url.toString());
         const json = await res.json();
         if (json.ok) {
-          // Client-side sort only — server already sorts by state/district/pincode.
+          // Client-side sort only - server already sorts by state/district/pincode.
           // We apply a stable sort to honour the user's choice.
           const sortedItems = sortListItems(json.data.items as ServiceArea[], listSort);
           const payload = { items: sortedItems, total: json.data.total };
@@ -414,7 +414,7 @@ export default function AdminServiceAreaPage() {
   // Invalidation helpers (run after every mutation)
   // -------------------------------------------------------------------------
 
-  /** Drop everything — used after broad changes (state/full-import). */
+  /** Drop everything - used after broad changes (state/full-import). */
   function invalidateAll() {
     cache.clearPrefix(CK.prefixAll);
   }
@@ -715,7 +715,7 @@ export default function AdminServiceAreaPage() {
       .sort((a, b) => sortStateNodes(a!, b!, regionSort)) as StateNode[];
   }, [tree, debouncedTreeQ, regionStatus, regionSort]);
 
-  // Districts available in the current state filter — drives the list-tab
+  // Districts available in the current state filter - drives the list-tab
   // district dropdown.
   const districtOptionsForState = useMemo(() => {
     if (stateFilter === 'ALL') return [] as string[];
@@ -984,7 +984,7 @@ export default function AdminServiceAreaPage() {
           <TabsTrigger value="list">All pincodes</TabsTrigger>
         </TabsList>
 
-        {/* TAB 1 — region tree */}
+        {/* TAB 1 - region tree */}
         <TabsContent value="region" className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
             <div className="relative min-w-60 flex-1">
@@ -1086,7 +1086,7 @@ export default function AdminServiceAreaPage() {
           </p>
         </TabsContent>
 
-        {/* TAB 2 — flat pincode list */}
+        {/* TAB 2 - flat pincode list */}
         <TabsContent value="list" className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
             <div className="relative min-w-60 flex-1">
@@ -1389,7 +1389,7 @@ export default function AdminServiceAreaPage() {
       <DeleteConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title={deleteTarget ? `Deactivate ${deleteTarget.pincode} — ${deleteTarget.area}?` : 'Deactivate'}
+        title={deleteTarget ? `Deactivate ${deleteTarget.pincode} - ${deleteTarget.area}?` : 'Deactivate'}
         itemLabel="This area row"
         onConfirm={handleDeactivate}
       />

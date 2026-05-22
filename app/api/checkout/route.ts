@@ -11,11 +11,11 @@ import { createRazorpayOrder, RAZORPAY_KEY_ID_PUBLIC, RAZORPAY_MOCK } from '@/li
  *
  * Creates a BOOKED order + a Razorpay order, ready for the client-side
  * Razorpay Checkout modal to take payment. The attribution cookie (kyg_attr)
- * is verified and denormalised onto the Order row at this moment — so even if
+ * is verified and denormalised onto the Order row at this moment - so even if
  * the user clears cookies later, we keep a record of where they came from.
  *
  * Flow:
- *   1. Auth — require any logged-in user (USER, AGENT, ADMIN, etc.).
+ *   1. Auth - require any logged-in user (USER, AGENT, ADMIN, etc.).
  *   2. Validate body (package, address, slot, coupon).
  *   3. Compute pricing (subtotal + kit shipping if KIT_BY_POST − coupon discount).
  *   4. Read + verify attribution cookie; resolve to a Campaign FK if slug matches.
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       return fail(`This package only supports ${pkg.fulfillmentType}`, 400);
     }
 
-    // Pricing — subtotal is the package price; add kit shipping for KIT_BY_POST.
+    // Pricing - subtotal is the package price; add kit shipping for KIT_BY_POST.
     const subtotal = pkg.price;
     const kitFee = fulfillmentMode === 'KIT_BY_POST' ? pkg.kitShippingFee : 0;
     const coupon = await applyCoupon({ code: input.couponCode ?? null, subtotalPaise: subtotal });
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
     const total = subtotal + kitFee - coupon.discount;
     if (total < 0) return fail('Total cannot be negative', 400);
 
-    // Attribution — read the signed cookie, resolve campaign FK by slug.
+    // Attribution - read the signed cookie, resolve campaign FK by slug.
     const cookieStore = await cookies();
     const attrPayload = readAttributionCookie(cookieStore);
     const attr = attributionToOrderFields(attrPayload);
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
 
     // Create order + initial payment row in one transaction. Razorpay order
     // is minted *after* DB insert so a failed Razorpay call doesn't leave us
-    // with an orphan row — we update with the razorpay id on success.
+    // with an orphan row - we update with the razorpay id on success.
     const order = await prisma.$transaction(async (tx) => {
       const created = await tx.order.create({
         data: {

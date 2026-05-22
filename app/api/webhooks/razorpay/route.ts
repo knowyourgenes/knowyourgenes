@@ -5,11 +5,11 @@ import { verifyWebhookSignature } from '@/lib/razorpay';
  * POST /api/webhooks/razorpay
  *
  * Razorpay server-to-server payment notifications. Authoritative source for
- * payment state — runs even if the user closes the browser before the
+ * payment state - runs even if the user closes the browser before the
  * client-side /api/checkout/verify call lands.
  *
  * Events we care about:
- *   - payment.captured   → mark order paid (idempotent — verify route may
+ *   - payment.captured   → mark order paid (idempotent - verify route may
  *                          have already done it; we no-op if so).
  *   - payment.failed     → mark Payment FAILED with the error code.
  *   - refund.processed   → mark Payment REFUNDED, Order REFUNDED if full.
@@ -18,7 +18,7 @@ import { verifyWebhookSignature } from '@/lib/razorpay';
  * X-Razorpay-Signature. Configure the same secret in dashboard → Webhooks.
  */
 export async function POST(req: Request) {
-  // We need the raw body bytes for signature verification — once we parse it
+  // We need the raw body bytes for signature verification - once we parse it
   // through .json(), whitespace and key order get lost.
   const rawBody = await req.text();
   const headerSig = req.headers.get('x-razorpay-signature') ?? '';
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     await handleRefund(refund);
   }
 
-  // Always 200 — Razorpay retries on non-2xx and we don't want to thrash on
+  // Always 200 - Razorpay retries on non-2xx and we don't want to thrash on
   // unrecognised events.
   return Response.json({ ok: true });
 }
@@ -73,7 +73,7 @@ async function handlePaymentCaptured(p: { id?: string; order_id?: string; amount
   const order = await prisma.order.findFirst({ where: { razorpayOrderId: p.order_id } });
   if (!order) return;
 
-  // Already captured (verify route or earlier webhook ran) — idempotent.
+  // Already captured (verify route or earlier webhook ran) - idempotent.
   if (order.paidAt) return;
 
   await prisma.$transaction(async (tx) => {

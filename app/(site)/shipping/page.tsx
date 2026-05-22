@@ -5,7 +5,7 @@ import { LegalPage } from '@/components/site/LegalPage';
 export const metadata: Metadata = {
   title: 'Shipping & Delivery',
   description:
-    'How KnowYourGenes delivers your test — we courier a sample-collection kit to your address, you collect at home, we arrange a reverse pickup, and the report lands in your account.',
+    'How KnowYourGenes delivers your test - we courier a sample-collection kit to your address, you collect at home, we arrange a reverse pickup, and the report lands in your account.',
 };
 
 export default function ShippingPolicyPage() {
@@ -25,7 +25,7 @@ export default function ShippingPolicyPage() {
       <h2>1. Service area</h2>
       <p>
         We ship kits across India to pincodes serviced by our courier partner. The serviceability of your pincode is
-        checked at checkout — if your pincode is not currently serviceable, the order will not be permitted and your
+        checked at checkout - if your pincode is not currently serviceable, the order will not be permitted and your
         card will not be charged. You may join the waitlist for your pincode from the same screen and we will notify you
         when we expand.
       </p>
@@ -35,47 +35,47 @@ export default function ShippingPolicyPage() {
       </p>
 
       <h2>2. What happens after you book</h2>
-      <h3>Step 1 — Order confirmation</h3>
+      <h3>Step 1 - Order confirmation</h3>
       <p>
         Within 5 minutes of successful payment you receive an email and WhatsApp confirmation containing your order ID,
         the contents of your order, and the expected kit-delivery window.
       </p>
-      <h3>Step 2 — Kit dispatch</h3>
+      <h3>Step 2 - Kit dispatch</h3>
       <p>
         We hand the kit to our courier partner within 1 to 2 business days of order confirmation. You receive a tracking
         link by email and WhatsApp as soon as the AWB is generated.
       </p>
-      <h3>Step 3 — Kit delivery</h3>
+      <h3>Step 3 - Kit delivery</h3>
       <p>
         The courier delivers the kit to the address you entered at checkout, typically within 3 to 7 business days of
         dispatch depending on your pincode. Your kit contains a sealed collection tube or swab, an identification
         sticker, written instructions, and a pre-paid return label for the reverse shipment.
       </p>
-      <h3>Step 4 — Self-collection at home</h3>
+      <h3>Step 4 - Self-collection at home</h3>
       <p>
         You collect your sample at home by following the instructions in the kit. Most users complete this step in under
         5 minutes. The instructions are also available in your KYG account under &ldquo;My orders&rdquo; if you misplace
         the printed copy.
       </p>
-      <h3>Step 5 — Kit registration</h3>
+      <h3>Step 5 - Kit registration</h3>
       <p>
         Before scheduling the reverse pickup, you register your kit in your KYG account by entering the unique kit code
         printed on the identification sticker. This links your sample to your account and re-confirms your{' '}
         <Link href="/consent">Genetic Testing Consent</Link>.
       </p>
-      <h3>Step 6 — Reverse pickup</h3>
+      <h3>Step 6 - Reverse pickup</h3>
       <p>
         After registration, you schedule the reverse pickup from your dashboard. Our courier partner collects the sealed
         kit from your address, typically within 1 to 2 business days of the request. Sample tubes are stable at room
         temperature for the duration of transit.
       </p>
-      <h3>Step 7 — Lab processing</h3>
+      <h3>Step 7 - Lab processing</h3>
       <p>
         The sample reaches the partner NABL-accredited lab, typically within 3 to 7 business days of pickup, depending
         on your pincode. The lab processes the sample, generates the variant call file, and produces your interpretive
         report under the supervision of a reporting pathologist or clinical geneticist.
       </p>
-      <h3>Step 8 — Report delivery</h3>
+      <h3>Step 8 - Report delivery</h3>
       <p>
         Your report is delivered via a secure link over email and WhatsApp, and is also available under &ldquo;My
         Reports&rdquo; in your KYG account.
@@ -98,7 +98,7 @@ export default function ShippingPolicyPage() {
       </ul>
       <p>
         TAT is indicative, not a guarantee. The largest source of variability is your own collection and
-        pickup-scheduling step — please complete it promptly to keep your order on schedule. Clinically necessary lab
+        pickup-scheduling step - please complete it promptly to keep your order on schedule. Clinically necessary lab
         steps (re-extraction, repeat sequencing, expert review) may also extend it. We proactively notify you of any
         expected delay over WhatsApp and email.
       </p>
@@ -123,7 +123,7 @@ export default function ShippingPolicyPage() {
 
       <h2>6. Can I buy for someone else?</h2>
       <p>
-        Yes — you may buy a kit for a parent, child, partner, or friend. At the point of booking, you add the
+        Yes - you may buy a kit for a parent, child, partner, or friend. At the point of booking, you add the
         patient&rsquo;s details. The kit is shipped to the address you entered. The kit registration step on the
         dashboard captures the patient&rsquo;s consent. Reports are sent to the email and mobile number provided for the
         patient, unless you explicitly elect to receive them at the payer&rsquo;s contact for a minor or dependent
@@ -133,7 +133,7 @@ export default function ShippingPolicyPage() {
       <h2>7. What you do not receive</h2>
       <p>
         We do NOT post a printed report by default. If you specifically request a printed, notarised copy of your report
-        for clinical use, we can courier it to your address for an additional fee on actuals — write to{' '}
+        for clinical use, we can courier it to your address for an additional fee on actuals - write to{' '}
         <a href="mailto:care@knowyourgenes.in">care@knowyourgenes.in</a>.
       </p>
       <p>We do NOT sell or ship physical merchandise, supplements, food, or drug products through the Platform.</p>
