@@ -41,7 +41,7 @@ const CHANNEL_ID = process.env.SHIPROCKET_CHANNEL_ID ?? '';
 export const MOCK = process.env.SHIPROCKET_MOCK === 'true' || !EMAIL || !PASSWORD;
 
 // ---------------------------------------------------------------------------
-// Token cache (module-scoped — fine because Node single-threads per worker)
+// Token cache (module-scoped - fine because Node single-threads per worker)
 // ---------------------------------------------------------------------------
 
 let cachedToken: string | null = null;
@@ -115,7 +115,7 @@ export const shiprocket = {
     });
     const res = await authedFetch(`/v1/external/courier/serviceability/?${qs}`);
     if (!res.ok) {
-      // 422 means no courier services this lane — treat as unserviceable, not an error.
+      // 422 means no courier services this lane - treat as unserviceable, not an error.
       if (res.status === 422) {
         return { pincode, serviceable: false, prepaidForward: false, reversePickup: false, cod: false };
       }
@@ -155,11 +155,11 @@ export const shiprocket = {
    * Create a shipment.
    *
    * Shiprocket's flow is two-step:
-   *   1) POST /v1/external/orders/create/adhoc        — creates the order
-   *   2) POST /v1/external/courier/assign/awb         — assigns an AWB (auto-rate-shop)
+   *   1) POST /v1/external/orders/create/adhoc        - creates the order
+   *   2) POST /v1/external/courier/assign/awb         - assigns an AWB (auto-rate-shop)
    *
    * For REVERSE legs the endpoint differs:
-   *   POST /v1/external/orders/create/return          — creates a return order
+   *   POST /v1/external/orders/create/return          - creates a return order
    *   AWB assignment same as forward.
    */
   async createShipment(input: CreateShipmentInput): Promise<CreateShipmentResult> {
@@ -265,7 +265,7 @@ export const shiprocket = {
 
   /**
    * Schedule a reverse pickup. Shiprocket needs the shipment_id from the
-   * return order — we already have the AWB so we look the shipment_id up via
+   * return order - we already have the AWB so we look the shipment_id up via
    * GET /v1/external/courier/track/awb/<awb>.
    *
    * In practice, Shiprocket auto-schedules pickups for return orders at AWB
@@ -285,7 +285,7 @@ export const shiprocket = {
     const lookupJson = (await lookup.json()) as { tracking_data?: { shipment_id?: number } };
     const shipmentId = lookupJson.tracking_data?.shipment_id;
     if (!shipmentId) {
-      // Reverse pickups are auto-scheduled — soft success.
+      // Reverse pickups are auto-scheduled - soft success.
       return {
         pickupRequestId: `SR-AUTO-${opts.awb}`,
         expectedAt: opts.pickupDate,
@@ -382,7 +382,7 @@ function mapShiprocketStatus(s: string): PrismaShipmentStatus {
 }
 
 // ---------------------------------------------------------------------------
-// Mocks — same shape as Delhivery's so the abstraction layer doesn't care.
+// Mocks - same shape as Delhivery's so the abstraction layer doesn't care.
 // ---------------------------------------------------------------------------
 
 function mockServiceability(pincode: string): ServiceabilityResult {

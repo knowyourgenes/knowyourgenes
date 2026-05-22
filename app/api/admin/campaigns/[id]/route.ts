@@ -18,7 +18,7 @@ export async function GET(_req: Request, { params }: { params: Params }) {
     });
     if (!campaign) throw new Error('Campaign not found');
 
-    // Aggregate quick-look attribution stats for this campaign — orders and
+    // Aggregate quick-look attribution stats for this campaign - orders and
     // revenue from non-cancelled non-refunded orders.
     const stats = await prisma.order.aggregate({
       where: {
@@ -61,7 +61,7 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
   });
 }
 
-// DELETE: soft-delete (active=false). KYG policy — never hard-delete data
+// DELETE: soft-delete (active=false). KYG policy - never hard-delete data
 // that has Orders attributed to it, otherwise historical attribution breaks.
 export async function DELETE(_req: Request, { params }: { params: Params }) {
   return handle(async () => {

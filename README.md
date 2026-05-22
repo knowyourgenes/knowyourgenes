@@ -8,13 +8,13 @@ Optional pre-test and post-test counselling with a qualified genetic counsellor 
 Brand            Know Your Genes (KYG)
 Operating entity BFG Market Consult Private Limited (CIN U74999DL2010PTC207582)
 Domain           kyg.in
-Launch model     KIT_BY_POST — kit shipped to customer, reverse-picked to lab
-Future model     AT_HOME_PHLEBOTOMIST — supported in code, Phase 2
+Launch model     KIT_BY_POST - kit shipped to customer, reverse-picked to lab
+Future model     AT_HOME_PHLEBOTOMIST - supported in code, Phase 2
 Service area     India-wide for kit shipping (limited by Delhivery serviceability)
                  Delhi NCR for phlebotomist visits (when that rolls out)
 ```
 
-> **This is not a vanilla Next.js project.** See [AGENTS.md](./AGENTS.md). Runs on Next.js 16 / React 19 / Tailwind v4 with Turbopack. Routing and rendering conventions may differ from earlier majors — check `node_modules/next/dist/docs/` before assuming.
+> **This is not a vanilla Next.js project.** See [AGENTS.md](./AGENTS.md). Runs on Next.js 16 / React 19 / Tailwind v4 with Turbopack. Routing and rendering conventions may differ from earlier majors - check `node_modules/next/dist/docs/` before assuming.
 
 ## Documentation
 
@@ -35,15 +35,15 @@ For business / spec context: [resource/](resource/) holds the Phase 1 spec, feat
 | ---------------- | ----------------------------------------------------------------------------------- |
 | Framework        | Next.js 16 (App Router, React 19, Turbopack dev)                                    |
 | Styling          | Tailwind v4 + shadcn-style primitives in [components/ui/](components/ui)            |
-| Auth             | NextAuth v5 (beta) — Credentials (email/phone + password) + Google OAuth, JWT       |
+| Auth             | NextAuth v5 (beta) - Credentials (email/phone + password) + Google OAuth, JWT       |
 | DB               | PostgreSQL via Prisma 7 (`@prisma/adapter-pg`)                                      |
-| CMS              | Sanity v5 — blog content only, embedded at `/studio`                                |
+| CMS              | Sanity v5 - blog content only, embedded at `/studio`                                |
 | Payments         | Razorpay (order create + signature verify + webhook)                                |
 | File storage     | Cloudflare R2 (S3-compatible) for private report PDFs, served via presigned URLs    |
-| Courier          | Shiprocket (default, multi-courier aggregator) or Delhivery direct — switch via `COURIER_PROVIDER` |
+| Courier          | Shiprocket (default, multi-courier aggregator) or Delhivery direct - switch via `COURIER_PROVIDER` |
 | Geo              | Mappls (MapMyIndia) for reverse geocoding, autosuggest, pincode serviceability      |
 | Comms            | SendGrid / SES email, WhatsApp Business API (Gupshup or Wati)                       |
-| Hosting          | VPS + Cloudflare as free CDN/proxy (Workers explicitly rejected — see memory note)  |
+| Hosting          | VPS + Cloudflare as free CDN/proxy (Workers explicitly rejected - see memory note)  |
 
 ## Order lifecycle (kit-by-post, current launch model)
 
@@ -76,14 +76,14 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full state machine and 
 | Role         | Active at launch? | What they do                                                                                   |
 | ------------ | ----------------- | ---------------------------------------------------------------------------------------------- |
 | `USER`       | Yes               | Buy kits, track shipments, view reports, book counselling.                                     |
-| `ADMIN`      | Yes               | Operations — orders, shipments, reports upload, users, packages, coupons, service area, labs.  |
+| `ADMIN`      | Yes               | Operations - orders, shipments, reports upload, users, packages, coupons, service area, labs.  |
 | `COUNSELLOR` | Yes               | Reviews reports, holds counselling sessions. Uses the `/admin` shell with filtered sidebar.    |
 | `PARTNER`    | Phase 2           | External lab login. Schema and shell are ready; not seeded at launch.                          |
 | `AGENT`      | Phase 2           | Phlebotomist. Mobile-first `/agent` shell exists; not staffed at launch.                       |
 
 Role gating is enforced in two places:
 - Edge middleware in [proxy.ts](proxy.ts) + [auth.config.ts](auth.config.ts) for page routes.
-- Per-handler `requireRole([...])` in API routes — see [lib/auth-helpers.ts](lib/auth-helpers.ts).
+- Per-handler `requireRole([...])` in API routes - see [lib/auth-helpers.ts](lib/auth-helpers.ts).
 
 ## Quick start
 
@@ -109,14 +109,14 @@ app/
                        Includes the five Razorpay-required legal pages.
   admin/               Admin / counsellor / partner shell. Sidebar filters by role.
   agent/               Agent (phlebotomist) shell. Mobile-first. Phase 2.
-  api/                 Route handlers — see docs/ARCHITECTURE.md for the full map.
+  api/                 Route handlers - see docs/ARCHITECTURE.md for the full map.
   login/, signup/, forgot-password/
   studio/[[...tool]]/  Embedded Sanity Studio.
   layout.tsx           Root HTML, fonts, providers.
 
 auth.ts                NextAuth full config (DB-backed).
 auth.config.ts         Edge-safe config used by proxy.ts.
-proxy.ts               Edge middleware — page-route auth gates.
+proxy.ts               Edge middleware - page-route auth gates.
 
 prisma/
   schema.prisma        ~25 models. See docs/ARCHITECTURE.md for the model map.
@@ -128,7 +128,7 @@ lib/                   Shared server-side code: prisma client, auth helpers,
                        Delhivery client, R2 client, Mappls client, etc.
 components/            Site, admin, agent, and shared UI primitives.
 sanity/                Blog schemas + Sanity client setup.
-resource/              Internal docs — Phase 1 spec, dev calendar, legal drafts.
+resource/              Internal docs - Phase 1 spec, dev calendar, legal drafts.
 docs/                  Architecture and launch documentation.
 public/                Static assets.
 ```
@@ -136,21 +136,21 @@ public/                Static assets.
 ## Quick conventions
 
 - **Money is in paise.** Every monetary integer (price, total, discount, kitShippingFee, etc.) is paise. `₹1 = 100`. Convert only at the rendering edge.
-- **Phone numbers are normalised** to 10-digit Indian format (strips non-digits, strips leading `91`). Always normalise before any DB lookup — helper in [auth.ts:16](auth.ts#L16).
+- **Phone numbers are normalised** to 10-digit Indian format (strips non-digits, strips leading `91`). Always normalise before any DB lookup - helper in [auth.ts:16](auth.ts#L16).
 - **API handlers do their own auth.** The proxy is bypassed for `/api/*` for performance. Every API route must call `requireRole([...])` or `requireAuth()`.
-- **`/admin` is shared.** Counsellor and partner views are the same shell with a filtered sidebar — don't create separate `/counsellor` or `/partner` shells.
+- **`/admin` is shared.** Counsellor and partner views are the same shell with a filtered sidebar - don't create separate `/counsellor` or `/partner` shells.
 - **Soft-delete users.** `User.deletedAt` blocks sign-in via all providers (Credentials and Google).
 - **Shipments snapshot addresses.** Editing `Address` after a shipment is created does not retro-rewrite pickup/drop on the shipment.
 - **One pincode → many area rows.** `ServiceArea` is composite-keyed on `(pincode, area)`. A pincode is serviceable if *any* area row under it is `active=true`. See `/api/location/serviceability`.
 - **Courier choice is per-shipment.** `Shipment.courier` is stamped at create time, so historical shipments stay routed to the right vendor for tracking even after flipping `COURIER_PROVIDER`.
-- **Attribution is captured at first landing, attached at checkout.** The signed `kyg_attr` cookie (HMAC, 30-day TTL) is read in `/api/checkout` and denormalised onto the Order row — survives cookie clearing.
+- **Attribution is captured at first landing, attached at checkout.** The signed `kyg_attr` cookie (HMAC, 30-day TTL) is read in `/api/checkout` and denormalised onto the Order row - survives cookie clearing.
 - **Admin caches in sessionStorage.** `/admin/service-area` uses stale-while-revalidate via [lib/client-cache.ts](lib/client-cache.ts). The Refresh button clears the namespace.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#conventions-and-gotchas) for the full list.
 
 ## Hosting
 
-VPS + Cloudflare CDN/proxy. Cloudflare Workers was evaluated and rejected — Prisma needs raw TCP, Sanity Studio doesn't run on Workers, NextAuth v5 is beta with edge caveats, and the bundle blows past Workers' free-tier limits. Full rationale in [resource/vps-rationale.txt](resource/vps-rationale.txt).
+VPS + Cloudflare CDN/proxy. Cloudflare Workers was evaluated and rejected - Prisma needs raw TCP, Sanity Studio doesn't run on Workers, NextAuth v5 is beta with edge caveats, and the bundle blows past Workers' free-tier limits. Full rationale in [resource/vps-rationale.txt](resource/vps-rationale.txt).
 
 ## Status
 

@@ -10,7 +10,7 @@
  * -----------
  * Default location: resource/India_pincodes.csv (committed to the repo).
  *
- * The seeder auto-detects the column layout — any CSV with a header row
+ * The seeder auto-detects the column layout - any CSV with a header row
  * containing at least a pincode column and an area/name column works.
  * Recognised header aliases:
  *   Pincode  : Pincode | PIN | PincodeNumber
@@ -31,7 +31,7 @@
  * `createMany` with `skipDuplicates: true` against the (pincode, area)
  * composite-unique means re-running only inserts NEW (pincode, area) pairs.
  * Existing rows keep their admin-set `active` flag intact. Pincodes /
- * localities change rarely (a few dozen per year) — re-seed annually.
+ * localities change rarely (a few dozen per year) - re-seed annually.
  */
 
 import 'dotenv/config';
@@ -129,7 +129,7 @@ async function main() {
   });
 
   let colMap: ColMap | null = null;
-  // One row per (pincode, area) — many Indian pincodes cover multiple post
+  // One row per (pincode, area) - many Indian pincodes cover multiple post
   // offices / localities. Dedupe key is (pincode + area) so the same locality
   // isn't inserted twice if the source CSV has stray duplicates.
   const byPincodeArea = new Map<string, { pincode: string; area: string; district: string; state: string }>();
@@ -169,7 +169,7 @@ async function main() {
     `📊 Parsed ${byPincodeArea.size.toLocaleString('en-IN')} (pincode, area) rows ` +
       `covering ${uniquePincodes.toLocaleString('en-IN')} unique pincodes ` +
       `from ${lineNum.toLocaleString('en-IN')} input rows` +
-      (skippedNoArea > 0 ? ` (${skippedNoArea} skipped — missing area name)` : '')
+      (skippedNoArea > 0 ? ` (${skippedNoArea} skipped - missing area name)` : '')
   );
 
   const rows = [...byPincodeArea.values()].map((r) => ({

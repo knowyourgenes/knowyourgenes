@@ -256,11 +256,11 @@ export const serviceAreaQuery = z.object({
 });
 
 export const serviceAreaBulkToggle = z.object({
-  // Scope — at least one must be set. Multiple are AND'd together.
+  // Scope - at least one must be set. Multiple are AND'd together.
   //   state     : all rows in this state
   //   district  : all rows in this district
   //   pincodes  : all rows whose pincode is in this list (any area)
-  //   ids       : specific (pincode, area) rows by cuid — used by row-level
+  //   ids       : specific (pincode, area) rows by cuid - used by row-level
   //               multi-select in the flat list where admin picked specific
   //               area rows, not whole pincodes.
   state: z.string().optional(),
@@ -378,7 +378,7 @@ export const checkoutVerify = z.object({
 });
 
 // ---------------------------------------------------------------------------
-// Campaigns (marketing attribution — UTM link generator)
+// Campaigns (marketing attribution - UTM link generator)
 // ---------------------------------------------------------------------------
 
 export const campaignCreate = z.object({

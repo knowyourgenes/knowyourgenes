@@ -140,7 +140,7 @@ export default function PrivacyPolicyPage() {
       <h3>A. Sample handling</h3>
       <p>
         Each kit is labelled with a unique de-identified accession number (the &ldquo;kit code&rdquo;). When you
-        register the kit in your KYG account, that code is linked to your identity in our database — but the physical
+        register the kit in your KYG account, that code is linked to your identity in our database - but the physical
         sample that travels to the lab carries only the code, not your name or address. Only the KYG operations team and
         the lab&rsquo;s reporting pathologist can re-link the accession number to your identity.
       </p>

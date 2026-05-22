@@ -9,7 +9,7 @@ import { handle, isResponse, ok, requireApiRole } from '@/lib/api';
  *   { states: [ { state, total, active, districts: [{ district, total, active }] } ] }
  *
  * Hot path. Previously did two separate Prisma groupBy calls (~150ms). Now
- * uses a single $queryRaw with FILTER aggregates (~70ms on 154K rows) — one
+ * uses a single $queryRaw with FILTER aggregates (~70ms on 154K rows) - one
  * pass over the table, half the round-trips.
  */
 type Row = { state: string; district: string; total: bigint; active: bigint };
@@ -30,7 +30,7 @@ export async function GET() {
       ORDER BY state, district
     `;
 
-    // Group by state in JS — cheap; we only iterate the ~625 (state, district)
+    // Group by state in JS - cheap; we only iterate the ~625 (state, district)
     // buckets, not the underlying 154K rows.
     const byState = new Map<
       string,

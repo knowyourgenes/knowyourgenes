@@ -10,7 +10,7 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
 // ---------------------------------------------------------------------------
-// Pincode CSV loader — same parser as prisma/seed-pincodes.ts so re-running
+// Pincode CSV loader - same parser as prisma/seed-pincodes.ts so re-running
 // the main seed picks up new locations idempotently via skipDuplicates.
 // ---------------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ async function seedAllIndiaPincodes(): Promise<{ inserted: number; existed: numb
     if (!colMap) {
       colMap = resolveColumns(row);
       if (!colMap) {
-        console.error('  ❌ Could not find Pincode/Name columns in CSV header — skipping pincode import.');
+        console.error('  ❌ Could not find Pincode/Name columns in CSV header - skipping pincode import.');
         return { inserted: 0, existed: 0, totalRows: 0 };
       }
       continue;
@@ -130,7 +130,7 @@ async function seedAllIndiaPincodes(): Promise<{ inserted: number; existed: numb
   return { inserted, existed: rows.length - inserted, totalRows: rows.length };
 }
 
-// Delhi NCR core — matches the district names as they appear in
+// Delhi NCR core - matches the district names as they appear in
 // resource/India_pincodes.csv. Adjust here if launch coverage changes.
 async function activateDelhiNcr(): Promise<number> {
   const filters = [
@@ -166,7 +166,7 @@ async function activateDelhiNcr(): Promise<number> {
 }
 
 // ---------------------------------------------------------------------------
-// Categories — top-level groupings shown on the homepage.
+// Categories - top-level groupings shown on the homepage.
 // Today we only sell Wellness kits. Other categories are reserved for the
 // roadmap but not seeded so admin doesn't see empty groups in the dashboard.
 // ---------------------------------------------------------------------------
@@ -183,7 +183,7 @@ const categories = [
 ];
 
 // ---------------------------------------------------------------------------
-// Packages — all under the Wellness category for launch.
+// Packages - all under the Wellness category for launch.
 // Prices in paise (₹1 = 100). Stock counted in kits sitting at the lab.
 // ---------------------------------------------------------------------------
 const packages = [
@@ -191,9 +191,9 @@ const packages = [
     slug: 'wellness-starter',
     name: 'Wellness Starter',
     category: PackageCategory.WELLNESS,
-    tagline: 'Your first DNA test — nutrition, fitness, skin & sleep.',
+    tagline: 'Your first DNA test - nutrition, fitness, skin & sleep.',
     description:
-      'A friendly entry point into genetic testing. 80+ traits across diet, movement, and lifestyle — in plain English.',
+      'A friendly entry point into genetic testing. 80+ traits across diet, movement, and lifestyle - in plain English.',
     price: 899900,
     compareAtPrice: 1199900,
     tatMinDays: 7,
@@ -207,13 +207,13 @@ const packages = [
     lowStockThreshold: 10,
     highlights: [
       'Nutrient sensitivity (lactose, gluten, caffeine)',
-      'Fitness type — endurance vs. power',
+      'Fitness type - endurance vs. power',
       'Sleep chronotype & recovery',
       'Skin ageing & UV sensitivity',
     ],
     biomarkerList: ['MTHFR', 'FTO', 'ACTN3', 'PPARGC1A', 'CLOCK', 'MC1R', 'APOE', 'TCF7L2'],
     faq: [
-      { q: 'Is this test painful?', a: 'No. Saliva sample — no needle.' },
+      { q: 'Is this test painful?', a: 'No. Saliva sample - no needle.' },
       { q: 'Who is this for?', a: 'Anyone curious about their body. 18+ recommended.' },
     ],
   },
@@ -241,13 +241,13 @@ const packages = [
       'Longevity markers',
     ],
     biomarkerList: ['MTHFR', 'VDR', 'COMT', 'BDNF', 'APOE', 'FOXO3', 'SIRT1', 'IL6'],
-    faq: [{ q: 'Is a consultation included?', a: 'No — counselling is a separate paid service.' }],
+    faq: [{ q: 'Is a consultation included?', a: 'No - counselling is a separate paid service.' }],
   },
   {
     slug: 'nutrition-deep-dive',
     name: 'Nutrition Deep Dive',
     category: PackageCategory.WELLNESS,
-    tagline: 'Exactly which foods your body thrives on — and which fight back.',
+    tagline: 'Exactly which foods your body thrives on - and which fight back.',
     description:
       'A focused panel on diet response. How you metabolise carbs, fats, caffeine, alcohol and key micronutrients. The diet plan you build from this actually fits your DNA.',
     price: 699900,
@@ -271,7 +271,7 @@ const packages = [
     faq: [
       {
         q: 'Do I need a nutritionist to read this?',
-        a: 'No — but a counselling session can help personalise your plan.',
+        a: 'No - but a counselling session can help personalise your plan.',
       },
     ],
   },
@@ -279,7 +279,7 @@ const packages = [
     slug: 'fitness-performance',
     name: 'Fitness & Performance',
     category: PackageCategory.WELLNESS,
-    tagline: 'Train smarter — endurance, strength, recovery, injury risk.',
+    tagline: 'Train smarter - endurance, strength, recovery, injury risk.',
     description:
       'Built for anyone who trains. Know your natural muscle composition, your recovery speed, your injury risk, and the workout pattern your body is built for.',
     price: 749900,
@@ -294,7 +294,7 @@ const packages = [
     stockQuantity: 70,
     lowStockThreshold: 15,
     highlights: [
-      'Muscle composition — power vs. endurance',
+      'Muscle composition - power vs. endurance',
       'Recovery speed & inflammation response',
       'Soft-tissue injury risk',
       'Optimal training intensity',
@@ -538,7 +538,7 @@ async function main() {
   }
   console.log(`  ✓ Packages: ${packages.length}`);
 
-  // SERVICE AREA PINCODES — full India import from CSV, all inactive by
+  // SERVICE AREA PINCODES - full India import from CSV, all inactive by
   // default. Then activate Delhi NCR core delivery zone for soft launch.
   console.log(`  ⏳ Importing all-India pincodes from ${PINCODE_CSV}…`);
   const { inserted, existed, totalRows } = await seedAllIndiaPincodes();
@@ -577,7 +577,7 @@ async function main() {
   });
   console.log(`  ✓ Coupons: 2`);
 
-  console.log('  ℹ Blog content lives in Sanity — seed it from the Studio at /studio');
+  console.log('  ℹ Blog content lives in Sanity - seed it from the Studio at /studio');
   console.log('✅ Seed complete.\n');
   console.log('  Admin login:       admin@knowyourgenes.in       /  Admin@12345');
   console.log('  Counsellor login:  priya@knowyourgenes.in       /  Counsellor@123');

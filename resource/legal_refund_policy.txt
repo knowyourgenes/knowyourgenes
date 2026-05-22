@@ -1,5 +1,5 @@
 ================================================================
-REFUND & CANCELLATION POLICY — KnowYourGenes
+REFUND & CANCELLATION POLICY - KnowYourGenes
 Route: /refunds
 Last updated: 2026-05-14
 ================================================================
@@ -11,7 +11,7 @@ with Rule 5(3) of the Consumer Protection (E-Commerce) Rules,
 policy.
 
 We have written this plainly. Cancellation windows are pegged to
-the kit lifecycle — what stage your order is in determines what
+the kit lifecycle - what stage your order is in determines what
 refund you are eligible for.
 
 

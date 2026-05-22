@@ -2,10 +2,10 @@
  * Attribution capture and signing.
  *
  * Flow:
- *   1. Landing — proxy.ts calls captureFromRequest() with URL query + referer.
+ *   1. Landing - proxy.ts calls captureFromRequest() with URL query + referer.
  *      If a kyg_attr cookie already exists (FIRST-TOUCH wins), we don't
  *      overwrite. Otherwise we derive a payload, sign it, and set the cookie.
- *   2. Checkout — readAttributionCookie() verifies signature and returns the
+ *   2. Checkout - readAttributionCookie() verifies signature and returns the
  *      payload to be denormalised onto the Order row.
  *
  * Cookie format:
@@ -24,7 +24,7 @@ const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 30; // 30 days
 export const ATTRIBUTION_MODEL: 'first-touch' | 'last-touch' = 'first-touch';
 
 // ---------------------------------------------------------------------------
-// Payload shape — kept short to keep cookie under 4 KB
+// Payload shape - kept short to keep cookie under 4 KB
 // ---------------------------------------------------------------------------
 
 export type AttributionPayload = {
@@ -56,7 +56,7 @@ export type Attribution = {
 
 function getKey(): string {
   const k = process.env.AUTH_SECRET;
-  if (!k) throw new Error('AUTH_SECRET missing — required for attribution cookie signing');
+  if (!k) throw new Error('AUTH_SECRET missing - required for attribution cookie signing');
   return k;
 }
 
@@ -97,7 +97,7 @@ export function verifyAttribution(signed: string): AttributionPayload | null {
 }
 
 // ---------------------------------------------------------------------------
-// Derivation — UTM has priority over referrer; referrer over nothing.
+// Derivation - UTM has priority over referrer; referrer over nothing.
 // ---------------------------------------------------------------------------
 
 export function captureFromRequest(opts: {
@@ -113,15 +113,15 @@ export function captureFromRequest(opts: {
   const utmTerm = clean(searchParams.get('utm_term'));
   const utmContent = clean(searchParams.get('utm_content'));
 
-  // Platform click identifiers — Google Ads (gclid), Meta Ads (fbclid),
+  // Platform click identifiers - Google Ads (gclid), Meta Ads (fbclid),
   // Microsoft Ads (msclkid), TikTok (ttclid). When these are present without
   // a utm_source, we know it's a paid click even if the marketer forgot to
-  // tag the URL — derive the source from the click-id family.
+  // tag the URL - derive the source from the click-id family.
   const clickIdSource = deriveFromClickIds(searchParams);
 
   const fs = Math.floor(Date.now() / 1000);
 
-  // 1. UTM present — paid / tracked source
+  // 1. UTM present - paid / tracked source
   if (utmSource || utmCampaign) {
     const fallback = deriveFromReferrer(referer);
     return strip({
@@ -136,7 +136,7 @@ export function captureFromRequest(opts: {
     });
   }
 
-  // 2. No UTM but a paid-click-id is present — treat as paid traffic.
+  // 2. No UTM but a paid-click-id is present - treat as paid traffic.
   if (clickIdSource) {
     return strip({
       s: clickIdSource.source,
@@ -147,7 +147,7 @@ export function captureFromRequest(opts: {
     });
   }
 
-  // 3. No UTM — derive from referrer
+  // 3. No UTM - derive from referrer
   if (referer) {
     const d = deriveFromReferrer(referer);
     if (d.source) {
@@ -161,7 +161,7 @@ export function captureFromRequest(opts: {
     }
   }
 
-  // 4. Nothing — direct/none
+  // 4. Nothing - direct/none
   return strip({
     s: 'direct',
     m: 'none',
@@ -191,7 +191,7 @@ function deriveFromClickIds(p: URLSearchParams): { source: string; medium: strin
 // in.linkedin.com, lite.duckduckgo.com) are captured. Click-tracker subdomains
 // like l.facebook.com / lm.instagram.com fall under the same rule.
 const REFERRER_RULES: Array<{ test: RegExp; source: string; medium: string }> = [
-  // Search engines — match TLD variants (.com, .co.in, .co.uk, etc.) via `google\..+`.
+  // Search engines - match TLD variants (.com, .co.in, .co.uk, etc.) via `google\..+`.
   { test: /(?:^|\.)google\.[a-z.]+$/, source: 'google', medium: 'organic' },
   { test: /(?:^|\.)bing\.com$/, source: 'bing', medium: 'organic' },
   { test: /(?:^|\.)duckduckgo\.com$/, source: 'duckduckgo', medium: 'organic' },
@@ -201,7 +201,7 @@ const REFERRER_RULES: Array<{ test: RegExp; source: string; medium: string }> = 
   { test: /(?:^|\.)ecosia\.org$/, source: 'ecosia', medium: 'organic' },
   { test: /(?:^|\.)brave\.com$|^search\.brave\.com$/, source: 'brave', medium: 'organic' },
 
-  // Social — subdomains (m.*, lm.*, l.*) get caught by the (?:^|\.) prefix.
+  // Social - subdomains (m.*, lm.*, l.*) get caught by the (?:^|\.) prefix.
   { test: /(?:^|\.)instagram\.com$/, source: 'instagram', medium: 'social_organic' },
   { test: /(?:^|\.)facebook\.com$|^fb\.com$|(?:^|\.)fb\.me$/, source: 'facebook', medium: 'social_organic' },
   { test: /(?:^|\.)twitter\.com$|^t\.co$|(?:^|\.)x\.com$/, source: 'twitter', medium: 'social_organic' },
@@ -214,12 +214,12 @@ const REFERRER_RULES: Array<{ test: RegExp; source: string; medium: string }> = 
   { test: /(?:^|\.)snapchat\.com$/, source: 'snapchat', medium: 'social_organic' },
   { test: /(?:^|\.)threads\.net$/, source: 'threads', medium: 'social_organic' },
 
-  // Messaging / referral — these usually mean someone shared a link in chat.
+  // Messaging / referral - these usually mean someone shared a link in chat.
   { test: /^wa\.me$|(?:^|\.)whatsapp\.com$/, source: 'whatsapp', medium: 'referral_organic' },
   { test: /^t\.me$|(?:^|\.)telegram\.org$/, source: 'telegram', medium: 'referral_organic' },
   { test: /(?:^|\.)messenger\.com$/, source: 'messenger', medium: 'referral_organic' },
 
-  // Email clients / link wrappers — these signal email traffic.
+  // Email clients / link wrappers - these signal email traffic.
   { test: /(?:^|\.)mail\.google\.com$/, source: 'gmail', medium: 'email' },
   { test: /(?:^|\.)mail\.yahoo\.com$/, source: 'yahoo_mail', medium: 'email' },
   { test: /(?:^|\.)outlook\.live\.com$|(?:^|\.)outlook\.office\.com$/, source: 'outlook', medium: 'email' },
@@ -240,7 +240,7 @@ export function deriveFromReferrer(referer: string | null): { source: string | n
   for (const rule of REFERRER_RULES) {
     if (rule.test.test(host)) return { source: rule.source, medium: rule.medium };
   }
-  // Unknown external domain — bucket as generic referral. Strip a leading
+  // Unknown external domain - bucket as generic referral. Strip a leading
   // "www." for cleaner reporting (so www.example.com and example.com bucket
   // together).
   const cleanHost = host.replace(/^www\./, '');
@@ -274,7 +274,7 @@ function strip(p: AttributionPayload): AttributionPayload {
 }
 
 // ---------------------------------------------------------------------------
-// Conversion helpers — payload <-> Order column shape
+// Conversion helpers - payload <-> Order column shape
 // ---------------------------------------------------------------------------
 
 export function payloadToAttribution(p: AttributionPayload): Attribution {
@@ -343,7 +343,7 @@ export const ATTRIBUTION_COOKIE_OPTS = {
 };
 
 // ---------------------------------------------------------------------------
-// Server-side cookie reader — used by the checkout endpoint to attach
+// Server-side cookie reader - used by the checkout endpoint to attach
 // attribution to the Order row at create time.
 // ---------------------------------------------------------------------------
 
@@ -353,7 +353,7 @@ export const ATTRIBUTION_COOKIE_OPTS = {
  *   - no cookie set,
  *   - signature invalid (tampered or signed under a rotated AUTH_SECRET).
  *
- * Caller should treat null as "direct/unknown" — never throw.
+ * Caller should treat null as "direct/unknown" - never throw.
  */
 export function readAttributionCookie(
   cookies: { get: (name: string) => { value: string } | undefined } | undefined | null
@@ -365,7 +365,7 @@ export function readAttributionCookie(
 }
 
 // ---------------------------------------------------------------------------
-// UTM link builder — used by the admin campaign builder
+// UTM link builder - used by the admin campaign builder
 // ---------------------------------------------------------------------------
 
 export function buildUtmUrl(opts: {

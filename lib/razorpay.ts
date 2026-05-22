@@ -1,5 +1,5 @@
 /**
- * Razorpay client — thin wrapper around their REST API.
+ * Razorpay client - thin wrapper around their REST API.
  *
  * We talk to Razorpay over plain fetch rather than the official SDK so we
  * avoid pulling in a sizeable dep for two endpoint calls. The official Node
@@ -101,7 +101,7 @@ export function verifyPaymentSignature(opts: {
  * Verifies a Razorpay webhook signature.
  *   Header: X-Razorpay-Signature: hex(hmac_sha256(rawBody, WEBHOOK_SECRET))
  *
- * Pass the *raw* request body string — JSON.stringify'd parsed JSON won't
+ * Pass the *raw* request body string - JSON.stringify'd parsed JSON won't
  * match because of whitespace / key ordering.
  */
 export function verifyWebhookSignature(rawBody: string, headerSignature: string): boolean {

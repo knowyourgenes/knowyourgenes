@@ -17,7 +17,7 @@ export default async function AttributionPage() {
   if (!session?.user || session.user.role !== 'ADMIN') redirect('/');
 
   // -------------------------------------------------------------------------
-  // 1. The admin's own current attribution cookie — proves capture is working.
+  // 1. The admin's own current attribution cookie - proves capture is working.
   // -------------------------------------------------------------------------
   const cookieStore = await cookies();
   const raw = cookieStore.get(ATTRIBUTION_COOKIE)?.value;
@@ -25,11 +25,11 @@ export default async function AttributionPage() {
   const decoded = payload ? payloadToAttribution(payload) : null;
 
   // -------------------------------------------------------------------------
-  // The four data queries below have no dependencies on each other — run them
+  // The four data queries below have no dependencies on each other - run them
   // in parallel so the page's TTFB is `max(times)` rather than `sum(times)`.
   // -------------------------------------------------------------------------
   const [grouped, recent, visitsGrouped, recentVisits] = await Promise.all([
-    // 1. Order-attribution aggregate — the actual attribution report.
+    // 1. Order-attribution aggregate - the actual attribution report.
     prisma.order.groupBy({
       by: ['attrSource', 'attrMedium'],
       where: { status: { notIn: ['CANCELLED', 'REFUNDED'] } },
@@ -37,7 +37,7 @@ export default async function AttributionPage() {
       _sum: { total: true },
       orderBy: { _sum: { total: 'desc' } },
     }),
-    // 2. Recent orders with attribution — useful for spot-checking.
+    // 2. Recent orders with attribution - useful for spot-checking.
     prisma.order.findMany({
       where: { attrSource: { not: null } },
       take: 10,
@@ -60,7 +60,7 @@ export default async function AttributionPage() {
       _count: { _all: true },
       orderBy: { _count: { source: 'desc' } },
     }),
-    // 4. Recent visits — every UTM-bearing landing.
+    // 4. Recent visits - every UTM-bearing landing.
     prisma.attributionVisit.findMany({
       take: 20,
       orderBy: { createdAt: 'desc' },
@@ -145,7 +145,7 @@ export default async function AttributionPage() {
             </dl>
           )}
           <p className="mt-4 text-xs text-muted-foreground">
-            Tip — to test a fresh capture, open an <strong>incognito window</strong> (your existing cookie persists 30
+            Tip - to test a fresh capture, open an <strong>incognito window</strong> (your existing cookie persists 30
             days) or append <code className="rounded bg-muted px-1">?attr_refresh=1</code> to force a rewrite.
           </p>
         </div>
@@ -158,7 +158,7 @@ export default async function AttributionPage() {
         </h2>
         <p className="mb-3 text-xs text-muted-foreground">
           Every time someone lands on the site with UTM params, a row is written here. Independent of whether they
-          bought — use this to answer &ldquo;how many clicks did my Instagram bio get this week?&rdquo;.
+          bought - use this to answer &ldquo;how many clicks did my Instagram bio get this week?&rdquo;.
         </p>
         {visitsGrouped.length === 0 ? (
           <Empty

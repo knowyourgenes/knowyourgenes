@@ -78,8 +78,8 @@ async function main() {
   console.log('CSV');
   console.log(`  total lines (incl. header)           : ${totalLines.toLocaleString('en-IN')}`);
   console.log(`  data lines (excl. header)            : ${dataLines.toLocaleString('en-IN')}`);
-  console.log(`  rows skipped — invalid pincode       : ${badPin.toLocaleString('en-IN')}`);
-  console.log(`  rows skipped — empty area / name     : ${emptyArea.toLocaleString('en-IN')}`);
+  console.log(`  rows skipped - invalid pincode       : ${badPin.toLocaleString('en-IN')}`);
+  console.log(`  rows skipped - empty area / name     : ${emptyArea.toLocaleString('en-IN')}`);
   console.log(`  unique (pincode + EXACT area)        : ${csCsv.size.toLocaleString('en-IN')}`);
   console.log(`  unique (pincode + LOWERCASE area)    : ${ciCsv.size.toLocaleString('en-IN')}`);
   console.log('');

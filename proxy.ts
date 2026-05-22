@@ -16,7 +16,7 @@ import {
 export const { auth: proxy } = NextAuth(authConfig);
 
 // Set to true in dev to log attribution-capture decisions to the server terminal.
-// Leave false in prod — these logs are noisy.
+// Leave false in prod - these logs are noisy.
 const DEBUG_ATTRIBUTION = process.env.NODE_ENV !== 'production';
 
 export default proxy((req) => {
@@ -26,7 +26,7 @@ export default proxy((req) => {
   // ------------------------------------------------------------------------
   // On any non-API page request, check if the visitor already has a kyg_attr
   // cookie. If yes (and we're in first-touch mode), leave it alone. If no —
-  // or we're in last-touch mode AND new UTM params are present — derive a
+  // or we're in last-touch mode AND new UTM params are present - derive a
   // fresh attribution payload from URL utm_* + referer header, sign it, and
   // attach Set-Cookie to the response.
   //
@@ -36,7 +36,7 @@ export default proxy((req) => {
   const hasUtmInUrl =
     url.searchParams.has('utm_source') || url.searchParams.has('utm_campaign') || url.searchParams.has('utm_medium');
 
-  // Paid-click identifiers count as fresh marketing signal too — treat the
+  // Paid-click identifiers count as fresh marketing signal too - treat the
   // same as a UTM-tagged link so last-touch refreshes on gclid/fbclid/etc.
   const hasClickIdInUrl =
     url.searchParams.has('gclid') ||

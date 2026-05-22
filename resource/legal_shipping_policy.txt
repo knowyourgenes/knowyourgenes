@@ -1,5 +1,5 @@
 ================================================================
-SHIPPING & SERVICE DELIVERY POLICY — KnowYourGenes
+SHIPPING & SERVICE DELIVERY POLICY - KnowYourGenes
 Route: /shipping
 Last updated: 2026-05-14
 ================================================================
@@ -33,17 +33,17 @@ saliva or buccal swab sample.
 
 2. WHAT HAPPENS AFTER YOU BOOK
 ------------------------------
-Step 1 — Order confirmation
+Step 1 - Order confirmation
    Within 5 minutes of successful payment you receive an email
    and WhatsApp confirmation containing your order ID, contents
    of your order, and the expected kit-delivery window.
 
-Step 2 — Kit dispatch
+Step 2 - Kit dispatch
    We hand the kit to our courier partner within 1 to 2 business
    days of order confirmation. You receive a tracking link by
    email and WhatsApp once the AWB is generated.
 
-Step 3 — Kit delivery
+Step 3 - Kit delivery
    The courier delivers the kit to the address you entered at
    checkout, typically within 3 to 7 business days of dispatch
    depending on your pincode. The kit contains a sealed
@@ -51,33 +51,33 @@ Step 3 — Kit delivery
    instructions, and a pre-paid return label for the reverse
    shipment.
 
-Step 4 — Self-collection at home
+Step 4 - Self-collection at home
    You collect your sample at home by following the instructions
    in the kit. Most users complete this step in under 5 minutes.
    Instructions are also available in your KYG account under
    "My orders".
 
-Step 5 — Kit registration
+Step 5 - Kit registration
    Before scheduling the reverse pickup, you register the kit in
    your KYG account by entering the unique kit code printed on
    the identification sticker. This links your sample to your
    account and re-confirms your Genetic Testing Consent.
 
-Step 6 — Reverse pickup
+Step 6 - Reverse pickup
    You schedule the reverse pickup from your dashboard. Our
    courier partner collects the sealed kit from your address,
    typically within 1 to 2 business days of the request. Sample
    tubes are stable at room temperature for the duration of
    transit.
 
-Step 7 — Lab processing
+Step 7 - Lab processing
    The sample reaches the partner NABL-accredited lab, typically
    within 3 to 7 business days of pickup. The lab processes the
    sample, generates the variant call file, and produces your
    interpretive report under the supervision of a reporting
    pathologist or clinical geneticist.
 
-Step 8 — Report delivery
+Step 8 - Report delivery
    Your report is delivered via a secure link over email and
    WhatsApp, and is also available under "My Reports" in your
    KYG account.
@@ -129,7 +129,7 @@ courier is dispatched, at no charge, from your dashboard.
 
 6. CAN I BUY FOR SOMEONE ELSE?
 ------------------------------
-Yes — you may buy a kit for a parent, child, partner, or friend.
+Yes - you may buy a kit for a parent, child, partner, or friend.
 At the point of booking, you add the patient's details. The kit
 is shipped to the address you entered. The kit registration step
 on the dashboard captures the patient's consent. Reports are sent
@@ -143,7 +143,7 @@ a minor or dependent adult.
 We do NOT post a printed report by default. If you specifically
 request a printed, notarised copy of your report for clinical use,
 we can courier it to your address for an additional fee on
-actuals — write to care@kyg.in.
+actuals - write to care@kyg.in.
 
 We do NOT sell or ship physical merchandise, supplements, food,
 or drug products through the Platform.

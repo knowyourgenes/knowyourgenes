@@ -4,7 +4,7 @@ How to do specific ops tasks. Each runbook is self-contained.
 
 ---
 
-## R1 — First-time DB setup
+## R1 - First-time DB setup
 
 ```powershell
 pnpm install
@@ -26,7 +26,7 @@ To open service area for orders:
 
 ---
 
-## R2 — Switching courier provider
+## R2 - Switching courier provider
 
 The codebase supports two couriers behind one interface ([lib/courier.ts](../lib/courier.ts)). Switch with one env var:
 
@@ -56,18 +56,18 @@ Existing shipments keep their original courier on the `Shipment.courier` column,
 ### Delhivery onboarding checklist
 
 1. Get API token from Delhivery dashboard (Settings → API).
-2. Register your warehouse — the "client warehouse name" must match `Lab.pickupLocationName`.
+2. Register your warehouse - the "client warehouse name" must match `Lab.pickupLocationName`.
 3. Set webhook URL with Delhivery support; use `DELHIVERY_WEBHOOK_SECRET` for header `X-Delhivery-Token`.
 
 Both providers have `*_MOCK=true` defaults that return deterministic fake responses so the order flow is testable end-to-end without live credentials.
 
 ---
 
-## R3 — Activating service area in bulk
+## R3 - Activating service area in bulk
 
 ### Single-click presets
 
-- `pnpm tsx scripts/activate-delhi-ncr.ts` — turns on the official 4-state NCR boundary (Delhi + 14 Haryana + 8 UP + 2 Rajasthan districts).
+- `pnpm tsx scripts/activate-delhi-ncr.ts` - turns on the official 4-state NCR boundary (Delhi + 14 Haryana + 8 UP + 2 Rajasthan districts).
 - Build your own by copying the script and editing `TARGETS`.
 
 ### From the admin UI
@@ -88,7 +88,7 @@ The next time admin loads `/admin/service-area`, hit **Refresh** in the page hea
 
 ---
 
-## R4 — Re-seeding pincodes
+## R4 - Re-seeding pincodes
 
 Run after dropping in an updated India_pincodes.csv from data.gov.in:
 
@@ -96,7 +96,7 @@ Run after dropping in an updated India_pincodes.csv from data.gov.in:
 pnpm db:seed-pincodes resource/<new-file>.csv
 ```
 
-The seeder is idempotent — composite `(pincode, area)` uniqueness means existing rows keep their `active` flag, only NEW (pincode, area) pairs are inserted.
+The seeder is idempotent - composite `(pincode, area)` uniqueness means existing rows keep their `active` flag, only NEW (pincode, area) pairs are inserted.
 
 ### Diagnostics
 
@@ -107,18 +107,18 @@ pnpm tsx scripts/show-skipped-rows.ts         # show rows the seeder dropped (ba
 
 ---
 
-## R5 — Adding a new package
+## R5 - Adding a new package
 
 Two paths:
 
 1. **One-off**: `/admin/packages` → **Add package**. Fill the form. `slug` becomes the URL.
 2. **Bulk import / programmatic**: write a one-shot script using `prisma.package.upsert({ where: { slug }, ... })`.
 
-Required fields: slug, name, category, tagline, description, price (paise), sampleType, biomarkerCount. `kitShippingFee` is paise — added to total for `KIT_BY_POST` orders. `fulfillmentType` controls which path the customer can take.
+Required fields: slug, name, category, tagline, description, price (paise), sampleType, biomarkerCount. `kitShippingFee` is paise - added to total for `KIT_BY_POST` orders. `fulfillmentType` controls which path the customer can take.
 
 ---
 
-## R6 — Issuing a refund
+## R6 - Issuing a refund
 
 Razorpay refunds are initiated from the Razorpay dashboard. The `refund.processed` webhook will fire `/api/webhooks/razorpay`, which flips the Payment row to `REFUNDED` or `PARTIALLY_REFUNDED`, and the Order to `REFUNDED` if the refund is full.
 
@@ -130,21 +130,21 @@ await prisma.order.update({ where: { id }, data: { status: 'REFUNDED', events: {
 
 ---
 
-## R7 — Uploading a customer report
+## R7 - Uploading a customer report
 
 `/admin/reports` → **Upload report** → pick the order, drag the PDF.
 
-The PDF goes to Cloudflare R2 under `reports/<orderId>/<reportNumber>.pdf`. Customers see it via the `/dashboard/reports` page, which calls `/api/admin/reports/[id]/download` to mint a short-lived presigned URL — the bucket is never publicly readable.
+The PDF goes to Cloudflare R2 under `reports/<orderId>/<reportNumber>.pdf`. Customers see it via the `/dashboard/reports` page, which calls `/api/admin/reports/[id]/download` to mint a short-lived presigned URL - the bucket is never publicly readable.
 
 ---
 
-## R8 — Rotating secrets
+## R8 - Rotating secrets
 
 When a secret is leaked (committed to git, posted in chat, etc.), rotate in this order:
 
 | Secret                       | Where to rotate                                                                   |
 | ---------------------------- | --------------------------------------------------------------------------------- |
-| `AUTH_SECRET`                | `openssl rand -base64 32` — note this invalidates all sessions + signed cookies.  |
+| `AUTH_SECRET`                | `openssl rand -base64 32` - note this invalidates all sessions + signed cookies.  |
 | `DATABASE_URL` password      | Aiven console → Users → reset password.                                           |
 | `AUTH_GOOGLE_SECRET`         | Google Cloud console → Credentials → regenerate.                                  |
 | `RAZORPAY_KEY_SECRET`        | Razorpay dashboard → Settings → API Keys.                                         |
@@ -155,12 +155,12 @@ When a secret is leaked (committed to git, posted in chat, etc.), rotate in this
 | `R2_*` credentials            | Cloudflare R2 → API Tokens → revoke + recreate.                                   |
 
 After rotating `AUTH_SECRET`:
-- All `kyg_attr` signed cookies become invalid (users will be re-bucketed as direct/none on next landing — same as new visitors).
+- All `kyg_attr` signed cookies become invalid (users will be re-bucketed as direct/none on next landing - same as new visitors).
 - All NextAuth JWT sessions invalidate; users must sign in again.
 
 ---
 
-## R9 — Performance regressions
+## R9 - Performance regressions
 
 If the admin UI gets sluggish or a route times out:
 
@@ -168,11 +168,11 @@ If the admin UI gets sluggish or a route times out:
 pnpm tsx scripts/perf-baseline.ts
 ```
 
-This times every heavy query against the live DB. Compare numbers to [docs/PERFORMANCE.md](./PERFORMANCE.md). If a number ballooned, run `EXPLAIN ANALYZE` on the underlying SQL — most regressions are missing indexes after a schema change.
+This times every heavy query against the live DB. Compare numbers to [docs/PERFORMANCE.md](./PERFORMANCE.md). If a number ballooned, run `EXPLAIN ANALYZE` on the underlying SQL - most regressions are missing indexes after a schema change.
 
 ---
 
-## R10 — Hard-resetting the client cache
+## R10 - Hard-resetting the client cache
 
 The admin page caches stats + tree + area rows + flat list pages in `sessionStorage` for 5 minutes (stale-while-revalidate). If you change data via DB direct or script and want the admin UI to immediately reflect it, click the **Refresh** button (top right of `/admin/service-area`). That wipes the `kyg:cache:sa:*` namespace and re-fetches everything.
 

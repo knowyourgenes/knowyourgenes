@@ -201,7 +201,7 @@ export default function AdminCategoriesPage() {
     <>
       <PageHeader
         title="Categories"
-        subtitle="Top-level groupings for the kits you sell — Wellness, Cardiac, Cancer Risk, etc. Each kit belongs to one category."
+        subtitle="Top-level groupings for the kits you sell - Wellness, Cardiac, Cancer Risk, etc. Each kit belongs to one category."
         actions={
           <>
             <Button

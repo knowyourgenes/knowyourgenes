@@ -9,7 +9,7 @@
  *
  * Some districts (Nuh / Mewat, Palwal, Charkhi Dadri, Hapur, Shamli) were
  * carved out of parent districts after our pincode dump was generated. Rows
- * for those will currently show 0 updated; that's expected — when a fresher
+ * for those will currently show 0 updated; that's expected - when a fresher
  * pincode CSV is reseeded they'll light up automatically.
  *
  *   pnpm tsx scripts/activate-delhi-ncr.ts
@@ -68,7 +68,7 @@ async function main() {
     if (res.count > 0) {
       console.log(`  ✓ ${label.padEnd(40)} ${res.count.toLocaleString('en-IN').padStart(7)} rows activated`);
     } else {
-      console.log(`    ${label.padEnd(40)} (no matching rows — likely a newer district not in CSV)`);
+      console.log(`    ${label.padEnd(40)} (no matching rows - likely a newer district not in CSV)`);
     }
     grandTotal += res.count;
   }

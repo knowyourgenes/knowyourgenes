@@ -1,5 +1,5 @@
 /**
- * Order helpers — number generation, pricing calc, attribution → campaign FK
+ * Order helpers - number generation, pricing calc, attribution → campaign FK
  * resolution.
  */
 import { prisma } from '@/lib/prisma';
@@ -24,7 +24,7 @@ export async function nextOrderNumber(): Promise<string> {
 
 /**
  * Resolves the captured utm_campaign string to a Campaign FK, if a matching
- * Campaign row exists. Returns null when no match — historical Order rows
+ * Campaign row exists. Returns null when no match - historical Order rows
  * still carry the raw attrCampaign string in that case.
  */
 export async function resolveCampaignId(payload: AttributionPayload | null): Promise<string | null> {
