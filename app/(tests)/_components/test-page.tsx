@@ -62,7 +62,7 @@ export default function TestPage({ category, test }: { category: Category; test:
           />
 
           <main className="flex-1 min-w-0 p-[clamp(28px,3vw,52px)_clamp(24px,3.4vw,60px)_90px] max-[980px]:p-[clamp(24px,5vw,40px)_var(--gutter)_110px]">
-            <div className="max-w-[940px]">
+            <div className="max-w-[940px] mx-auto">
               <Hero hero={test.hero} />
               <Divider />
               <Myth myth={test.myth} />
