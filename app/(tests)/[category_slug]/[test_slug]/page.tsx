@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { allTestParams, getCategory, getTest } from '../../data';
-import TestPage from '../../_components/test-page';
+import { allTestParams, getTest } from '../../data';
+import TestContent from '../../_components/test-content';
 
 type Params = Promise<{ category_slug: string; test_slug: string }>;
 
@@ -20,10 +20,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
+// The shared chrome (header + sidebar + footer) lives in the category layout;
+// this page renders only the report's content, so navigating between reports
+// swaps just this.
 export default async function TestRoute({ params }: { params: Params }) {
   const { category_slug, test_slug } = await params;
-  const category = getCategory(category_slug);
   const test = getTest(category_slug, test_slug);
-  if (!category || !test) notFound();
-  return <TestPage category={category} test={test} />;
+  if (!test) notFound();
+  return <TestContent test={test} />;
 }
