@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { cn } from '@/lib/utils';
-import type { ActionItem, Bundle, Expert, Panel, Step, Test } from '../data';
+import type { ActionItem, Bundle, Expert, Panel, RiskStatus, Step, Test } from '../data';
 import { Badge, Button, SectionHead } from './primitives';
 import { BUNDLE_THEME } from './themes';
 import { AlertCircle, ArrowRight, BadgeTest, Check, Icon, Plus } from './icons';
@@ -56,9 +56,11 @@ export function Hero({ hero }: { hero: Test['hero'] }) {
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1300ms] ease-[var(--e-out)] group-hover:scale-[1.06]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0)_45%,rgba(31,26,20,.5)_100%)]" />
-          <div className="absolute left-[18px] bottom-[18px] z-[2] text-white text-[13px] font-semibold tracking-[0.01em] py-2 px-[14px] rounded-full bg-white/[0.16] backdrop-blur-[10px] border border-white/[0.24]">
-            {hero.imageTag}
-          </div>
+          {hero.imageTag && (
+            <div className="absolute left-[18px] bottom-[18px] z-[2] text-white text-[13px] font-semibold tracking-[0.01em] py-2 px-[14px] rounded-full bg-white/[0.16] backdrop-blur-[10px] border border-white/[0.24]">
+              {hero.imageTag}
+            </div>
+          )}
         </div>
       </div>
 
@@ -105,28 +107,101 @@ export function Myth({ myth }: { myth: Test['myth'] }) {
 }
 
 // ----------------------------------------------------------------------------- Discover panels
-function ResultCard({ result }: { result: Panel['result'] }) {
+type Viz = Panel['viz'];
+
+/** Gene-result card (men's-health style). */
+function ResultViz({ v }: { v: Extract<Viz, { kind: 'result' }> }) {
   return (
     <div className="flex flex-col gap-[12px]">
       <div className="flex items-start justify-between gap-[12px]">
-        <span className="text-[14.5px] font-semibold tracking-[-0.01em] text-[var(--ink-1)] leading-[1.3]">{result.name}</span>
-        <Badge status={result.status}>{result.statusLabel}</Badge>
+        <span className="text-[14.5px] font-semibold tracking-[-0.01em] text-[var(--ink-1)] leading-[1.3]">{v.name}</span>
+        <Badge status={v.status}>{v.statusLabel}</Badge>
       </div>
-      <div className="text-[12.5px] font-semibold text-[var(--acc-700)] bg-[var(--acc-50)] py-[7px] px-[12px] rounded-[9px] self-start">{result.genes}</div>
+      <div className="text-[12.5px] font-semibold text-[var(--acc-700)] bg-[var(--acc-50)] py-[7px] px-[12px] rounded-[9px] self-start">{v.genes}</div>
       <div className="flex flex-col gap-[3px] bg-white border border-[var(--ink-line)] rounded-[12px] py-[12px] px-[14px]">
         <span className="text-[11px] font-bold tracking-[0.08em] uppercase text-[var(--ink-3)]">Interpretation</span>
-        <span className="text-[13.5px] leading-[1.5] text-[var(--ink-2)]">{result.interpretation}</span>
+        <span className="text-[13.5px] leading-[1.5] text-[var(--ink-2)]">{v.interpretation}</span>
       </div>
       <div className="flex flex-col gap-[3px] bg-white border border-[var(--ink-line)] rounded-[12px] py-[12px] px-[14px]">
         <span className="text-[11px] font-bold tracking-[0.08em] uppercase text-[var(--ink-3)]">Recommendation</span>
-        <span className="text-[13.5px] leading-[1.5] text-[var(--ink-2)]">{result.recommendation}</span>
+        <span className="text-[13.5px] leading-[1.5] text-[var(--ink-2)]">{v.recommendation}</span>
       </div>
     </div>
   );
 }
 
+/** Label + status-badge rows (wellness trait status). */
+function RowsViz({ v }: { v: Extract<Viz, { kind: 'rows' }> }) {
+  return (
+    <div className="flex flex-col gap-[12px]">
+      {v.rows.map((r) => (
+        <div key={r.label} className="flex items-center justify-between gap-[12px] bg-white border border-[var(--ink-line)] rounded-[12px] py-[11px] px-[14px]">
+          <span className="text-[13.5px] font-medium text-[var(--ink-1)]">{r.label}</span>
+          <Badge status={r.status}>{r.statusLabel}</Badge>
+        </div>
+      ))}
+      {v.note && <div className="text-[13px] leading-[1.5] text-[var(--ink-2)] bg-white border border-[var(--ink-line)] rounded-[12px] py-[13px] px-[15px]">{v.note}</div>}
+    </div>
+  );
+}
+
+const BAR_FILL: Record<RiskStatus, string> = { good: 'bg-[var(--acc-500)]', avg: 'bg-[#E0A33C]', risk: 'bg-[#D9694B]' };
+
+/** Horizontal meters with a level · % label. */
+function BarsViz({ v }: { v: Extract<Viz, { kind: 'bars' }> }) {
+  return (
+    <div className="flex flex-col gap-[12px]">
+      {v.bars.map((b) => (
+        <div key={b.label} className="bg-white border border-[var(--ink-line)] rounded-[12px] py-[12px] px-[14px]">
+          <div className="flex justify-between text-[13px] mb-[8px]">
+            <b className="font-semibold text-[var(--ink-1)]">{b.label}</b>
+            <span className="text-[var(--ink-3)]">
+              {b.level} · {b.percent}%
+            </span>
+          </div>
+          <div className="h-[8px] rounded-full bg-[rgba(31,26,20,.07)] overflow-hidden">
+            <div className={cn('h-full rounded-full', BAR_FILL[b.status])} style={{ width: `${b.percent}%` }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const PILL: Record<'good' | 'avg', string> = {
+  good: 'bg-[var(--st-good-bg)] text-[var(--st-good-fg)]',
+  avg: 'bg-[var(--st-avg-bg)] text-[var(--st-avg-fg)]',
+};
+
+/** Recommendation pills + note. */
+function PillsViz({ v }: { v: Extract<Viz, { kind: 'pills' }> }) {
+  return (
+    <div className="flex flex-col gap-[12px]">
+      <div className="flex flex-wrap gap-[8px]">
+        {v.pills.map((p) => (
+          <span key={p.label} className={cn('text-[12px] font-semibold py-[6px] px-[13px] rounded-full', PILL[p.status])}>{p.label}</span>
+        ))}
+      </div>
+      <div className="text-[13px] leading-[1.5] text-[var(--ink-2)] bg-white border border-[var(--ink-line)] rounded-[12px] py-[13px] px-[15px]">{v.note}</div>
+    </div>
+  );
+}
+
+function PanelVizView({ viz }: { viz: Viz }) {
+  switch (viz.kind) {
+    case 'result':
+      return <ResultViz v={viz} />;
+    case 'rows':
+      return <RowsViz v={viz} />;
+    case 'bars':
+      return <BarsViz v={viz} />;
+    case 'pills':
+      return <PillsViz v={viz} />;
+  }
+}
+
 function PanelCard({ panel }: { panel: Panel }) {
-  const hasExplainer = !!(panel.explainer?.head || panel.explainer?.text || panel.symptoms.length);
+  const hasExplainer = !!(panel.explainer?.head || panel.explainer?.text || panel.symptoms?.length);
   return (
     <article
       id={panel.id}
@@ -148,7 +223,7 @@ function PanelCard({ panel }: { panel: Panel }) {
           <div className="mt-[20px] pt-[18px] border-t border-[var(--ink-line)]">
             {panel.explainer?.head && <div className="font-semibold text-[16px] tracking-[-0.01em] text-[var(--ink-1)] mb-[8px]">{panel.explainer.head}</div>}
             {panel.explainer?.text && <p className="text-[13.5px] leading-[1.6] text-[var(--ink-2)] mb-[16px]">{panel.explainer.text}</p>}
-            {panel.symptoms.length > 0 && (
+            {panel.symptoms && panel.symptoms.length > 0 && (
               <>
                 <div className="text-[11.5px] font-bold tracking-[0.12em] uppercase text-[var(--ink-3)] mb-[11px]">{panel.symptomsTitle ?? 'Symptoms to watch for'}</div>
                 <ul className="list-none flex flex-col gap-[9px]">
@@ -176,7 +251,7 @@ function PanelCard({ panel }: { panel: Panel }) {
             : 'border-l border-[var(--ink-line)] max-[980px]:border-l-0 max-[980px]:border-t max-[980px]:border-[var(--ink-line)]',
         )}
       >
-        <ResultCard result={panel.result} />
+        <PanelVizView viz={panel.viz} />
       </div>
     </article>
   );
@@ -236,16 +311,20 @@ export function Report({ report }: { report: Test['report'] }) {
         ))}
       </div>
 
-      <div className="mt-[18px] border border-[var(--ink-line)] rounded-[var(--r-md)] bg-white overflow-hidden shadow-[var(--sh-1)]">
-        <div className="font-semibold text-[15px] text-[var(--ink-1)] py-[16px] px-[20px] border-b border-[var(--ink-line)] bg-[var(--cream)]">{report.gradingTitle}</div>
-        {report.grading.map((row) => (
-          <div key={row.label} className="flex items-center gap-[14px] py-[14px] px-[20px] border-b border-[var(--ink-line)] flex-wrap last:border-b-0">
-            <Badge status={row.status} className="shrink-0 min-w-[88px] text-center">{STATUS_WORD[row.status]}</Badge>
-            <span className="text-[13.5px] font-semibold text-[var(--ink-1)] basis-[110px] grow-0 shrink-0 max-[980px]:basis-auto">{row.label}</span>
-            <span className="text-[13.5px] leading-[1.45] text-[var(--ink-2)] flex-1 min-w-[200px]">{row.text}</span>
-          </div>
-        ))}
-      </div>
+      {report.grading && report.grading.length > 0 && (
+        <div className="mt-[18px] border border-[var(--ink-line)] rounded-[var(--r-md)] bg-white overflow-hidden shadow-[var(--sh-1)]">
+          {report.gradingTitle && (
+            <div className="font-semibold text-[15px] text-[var(--ink-1)] py-[16px] px-[20px] border-b border-[var(--ink-line)] bg-[var(--cream)]">{report.gradingTitle}</div>
+          )}
+          {report.grading.map((row) => (
+            <div key={row.label} className="flex items-center gap-[14px] py-[14px] px-[20px] border-b border-[var(--ink-line)] flex-wrap last:border-b-0">
+              <Badge status={row.status} className="shrink-0 min-w-[88px] text-center">{STATUS_WORD[row.status]}</Badge>
+              <span className="text-[13.5px] font-semibold text-[var(--ink-1)] basis-[110px] grow-0 shrink-0 max-[980px]:basis-auto">{row.label}</span>
+              <span className="text-[13.5px] leading-[1.45] text-[var(--ink-2)] flex-1 min-w-[200px]">{row.text}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -466,7 +545,7 @@ export function BottomCta({ cta }: { cta: Test['bottomCta'] }) {
           {cta.ctaLabel}
           <ArrowRight />
         </Button>
-        <p className="relative text-[14px] text-[var(--teal-bright)] font-semibold mt-[22px]">{cta.nudge}</p>
+        {cta.nudge && <p className="relative text-[14px] text-[var(--teal-bright)] font-semibold mt-[22px]">{cta.nudge}</p>}
         <p className="relative text-[13px] text-white/55 mt-[20px]" dangerouslySetInnerHTML={{ __html: cta.trust }} />
       </div>
     </section>
