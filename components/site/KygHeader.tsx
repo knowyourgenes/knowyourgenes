@@ -7,8 +7,8 @@ import { useSession } from 'next-auth/react';
 import { LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import UserNav from '@/components/admin/UserNav';
-import { CHROME_VARS } from './tokens';
-import { NAV_LINKS, NAV_MENUS } from './nav-data';
+import { CHROME_VARS } from '@/lib/tokens';
+import { NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
 import { KygLogo } from './logo';
 
 // The home page keeps the nav order/checkout CTAs hidden for now ("CTA-HIDDEN"
