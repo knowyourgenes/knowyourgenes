@@ -16,7 +16,6 @@ import {
   MapPin,
   BadgeCheck,
   Building2,
-  ExternalLink,
   Megaphone,
   FolderTree,
 } from 'lucide-react';
@@ -24,7 +23,6 @@ import {
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,

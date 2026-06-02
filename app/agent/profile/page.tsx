@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2, BadgeCheck, X, LogOut } from 'lucide-react';
 import { signOut } from 'next-auth/react';
@@ -28,16 +28,19 @@ export default function AgentProfilePage() {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
 
-  async function load() {
+  const load = useCallback(async () => {
     const res = await fetch('/api/agent/me');
     const json = await res.json();
     if (json.ok) setMe(json.data);
     setLoading(false);
-  }
+  }, []);
 
   useEffect(() => {
+    // Initial data fetch on mount. setState happens after `await`, not synchronously
+    // within the effect body, so the cascading-render concern does not apply here.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
-  }, []);
+  }, [load]);
 
   async function setStatus(active: boolean) {
     setBusy(true);
@@ -63,7 +66,7 @@ export default function AgentProfilePage() {
   return (
     <div className="space-y-4">
       <div className="rounded-lg border bg-background p-4">
-        <div className="text-lg font-semibold">{p.user.name ?? '—'}</div>
+        <div className="text-lg font-semibold">{p.user.name ?? '-'}</div>
         <div className="text-xs text-muted-foreground">{p.user.email}</div>
         <div className="text-xs text-muted-foreground">{p.user.phone}</div>
         <div className="text-xs text-muted-foreground mt-1">Zone: {p.zone}</div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2, Upload, Download, Trash2, FileText, Search, AlertTriangle } from 'lucide-react';
 
@@ -50,7 +50,7 @@ export default function AdminReportsPage() {
   const [deleteTarget, setDeleteTarget] = useState<Report | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     const p = new URLSearchParams();
     if (q) p.set('q', q);
@@ -60,10 +60,26 @@ export default function AdminReportsPage() {
     if (json.ok) setItems(json.data.items);
     else toast.error(json.error ?? 'Failed to load reports');
     setLoading(false);
-  }
+  }, [q]);
 
   useEffect(() => {
-    load();
+    // Initial fetch on mount. We intentionally do not depend on `load` here to
+    // avoid re-fetching every time `q` changes (search is triggered by the
+    // form submit handler instead).
+    let cancelled = false;
+    (async () => {
+      const p = new URLSearchParams();
+      p.set('take', '50');
+      const res = await fetch(`/api/admin/reports?${p}`);
+      const json = await res.json();
+      if (cancelled) return;
+      if (json.ok) setItems(json.data.items);
+      else toast.error(json.error ?? 'Failed to load reports');
+      setLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function handleUpload(e: React.FormEvent) {
@@ -195,7 +211,7 @@ export default function AdminReportsPage() {
               header: 'User',
               render: (r) => (
                 <div className="text-sm">
-                  <div>{r.user.name ?? '—'}</div>
+                  <div>{r.user.name ?? '-'}</div>
                   <div className="text-xs text-muted-foreground">{r.user.email ?? r.user.phone ?? ''}</div>
                 </div>
               ),

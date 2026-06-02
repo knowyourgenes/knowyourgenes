@@ -24,6 +24,7 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
     const parsed = labUpdate.parse(body);
     // `login` is a create-time provisioning helper, not a Lab column. Editing
     // an existing lab's login is out of scope here - manage that on the user.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { login: _login, ...data } = parsed;
 
     const lab =

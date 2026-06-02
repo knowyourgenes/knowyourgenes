@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2, RefreshCw, X, Search, Truck, ArrowLeftRight } from 'lucide-react';
 
@@ -71,7 +71,7 @@ export default function AdminShipmentsPage() {
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     const p = new URLSearchParams();
     if (q) p.set('q', q);
@@ -83,10 +83,20 @@ export default function AdminShipmentsPage() {
     if (json.ok) setItems(json.data.items);
     else toast.error(json.error ?? 'Failed to load shipments');
     setLoading(false);
-  }
+  }, [q, leg, status]);
 
   useEffect(() => {
-    load();
+    // Fire load asynchronously so the synchronous setLoading(true) inside
+    // load() does not run in the effect body (avoids cascading renders that
+    // react-hooks/set-state-in-effect flags). We intentionally exclude `q`
+    // from deps: search is triggered by the form submit, not by typing.
+    let cancelled = false;
+    Promise.resolve().then(() => {
+      if (!cancelled) void load();
+    });
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leg, status]);
 
@@ -183,7 +193,7 @@ export default function AdminShipmentsPage() {
               render: (s) => (
                 <div>
                   <div className="font-mono text-xs">{s.order.orderNumber}</div>
-                  <div className="text-xs text-muted-foreground">{s.order.user.name ?? s.order.user.email ?? '—'}</div>
+                  <div className="text-xs text-muted-foreground">{s.order.user.name ?? s.order.user.email ?? '-'}</div>
                 </div>
               ),
             },
@@ -200,7 +210,7 @@ export default function AdminShipmentsPage() {
             {
               key: 'awb',
               header: 'AWB',
-              render: (s) => <span className="font-mono text-xs">{s.awb ?? '—'}</span>,
+              render: (s) => <span className="font-mono text-xs">{s.awb ?? '-'}</span>,
             },
             {
               key: 'route',

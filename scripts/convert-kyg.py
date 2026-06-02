@@ -2,13 +2,13 @@
 Converts kyg.html in the project root into a Next.js page + CSS + asset files.
 
 Outputs:
-  app/(landing)/page.tsx        — React (client) component with the body as JSX,
+  app/(landing)/page.tsx        - React (client) component with the body as JSX,
                                    wrapped in <div className="kyg-page"> and an
                                    auth-aware NavAuthCta block.
-  app/(landing)/landing.css     — Styles, scoped under .kyg-page so nothing
+  app/(landing)/landing.css     - Styles, scoped under .kyg-page so nothing
                                    leaks out of the landing route. Includes
                                    font wiring + responsive overrides.
-  public/kyg/<hash>.<ext>       — Each embedded base64 image, deduped.
+  public/kyg/<hash>.<ext>       - Each embedded base64 image, deduped.
 
 Run from the project root:
   python scripts/convert-kyg.py
@@ -211,7 +211,7 @@ def scope_selector(sel: str, scope: str) -> str:
     sel = sel.strip()
     if not sel:
         return sel
-    # Keyframe percentages (0%, 50%, from, to) — leave alone (called inside @keyframes)
+    # Keyframe percentages (0%, 50%, from, to) - leave alone (called inside @keyframes)
     if re.fullmatch(r"\d+%|\d+\.\d+%|from|to", sel):
         return sel
     # :root → the scope wrapper itself
@@ -225,7 +225,7 @@ def scope_selector(sel: str, scope: str) -> str:
         return scope + sel[4:]
     if sel.startswith("html::") or sel.startswith("html:") or sel.startswith("body "):
         return scope + sel[4:]
-    # Universal selector `*` (with or without pseudo) — bind to scope's descendants
+    # Universal selector `*` (with or without pseudo) - bind to scope's descendants
     if sel == "*":
         return scope + " *"
     if sel.startswith("*::") or sel.startswith("*:"):

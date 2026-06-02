@@ -171,6 +171,12 @@ export default function AdminLabsPage() {
   }, []);
 
   useEffect(() => {
+    // Initial data fetch on mount. `load()` may synchronously hydrate from
+    // the in-memory client cache before kicking off a background revalidation;
+    // that synchronous setState is intentional so the table renders without
+    // a loading flicker. There is no external system to subscribe to here, so
+    // useSyncExternalStore does not apply.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
     loadPartners();
   }, [load, loadPartners]);
@@ -335,7 +341,7 @@ export default function AdminLabsPage() {
             {
               key: 'partner',
               header: 'Partner',
-              render: (l) => <span className="text-sm">{l.partner?.name ?? '—'}</span>,
+              render: (l) => <span className="text-sm">{l.partner?.name ?? '-'}</span>,
             },
             {
               key: 'address',
@@ -361,7 +367,7 @@ export default function AdminLabsPage() {
                 l.user?.email ? (
                   <span className="text-xs font-mono">{l.user.email}</span>
                 ) : (
-                  <span className="text-xs text-muted-foreground">—</span>
+                  <span className="text-xs text-muted-foreground">-</span>
                 ),
             },
             {
@@ -404,7 +410,7 @@ export default function AdminLabsPage() {
           <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>{form.id ? 'Edit lab' : 'New lab'}</DialogTitle>
             <DialogDescription>
-              The courier pickup name must match exactly what's registered with Delhivery.
+              The courier pickup name must match exactly what&apos;s registered with Delhivery.
             </DialogDescription>
           </DialogHeader>
 
@@ -584,7 +590,7 @@ export default function AdminLabsPage() {
                   required
                 />
                 <p className="text-xs text-muted-foreground">
-                  Must exactly match the warehouse name registered in Delhivery's portal.
+                  Must exactly match the warehouse name registered in Delhivery&apos;s portal.
                 </p>
               </div>
 
@@ -631,7 +637,7 @@ export default function AdminLabsPage() {
                     Create a login for this lab
                   </label>
                   <p className="text-xs text-muted-foreground">
-                    One PARTNER-role account scoped to this lab. The lab's operator uses it to upload reports.
+                    One PARTNER-role account scoped to this lab. The lab&apos;s operator uses it to upload reports.
                   </p>
                   {form.createLogin && (
                     <div className="grid grid-cols-2 gap-3">

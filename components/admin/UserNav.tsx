@@ -127,7 +127,7 @@ export default function UserNav({
           <AlertDialogHeader>
             <AlertDialogTitle>Sign out of KYG?</AlertDialogTitle>
             <AlertDialogDescription>
-              You'll be returned to the login page. Any unsaved changes will be lost.
+              You&apos;ll be returned to the login page. Any unsaved changes will be lost.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

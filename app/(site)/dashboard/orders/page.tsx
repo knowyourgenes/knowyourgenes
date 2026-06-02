@@ -41,7 +41,7 @@ export default async function UserOrdersPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Your orders</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Every test you've booked - past and upcoming.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Every test you&apos;ve booked - past and upcoming.</p>
       </div>
 
       {orders.length === 0 ? (
@@ -52,7 +52,7 @@ export default async function UserOrdersPage() {
             </div>
             <p className="mt-4 font-medium">No orders yet</p>
             <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-              Once you book a test, it'll appear here with live status updates.
+              Once you book a test, it&apos;ll appear here with live status updates.
             </p>
           </CardContent>
         </Card>

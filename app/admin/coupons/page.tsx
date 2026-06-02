@@ -59,7 +59,15 @@ export default function AdminCouponsPage() {
   }
 
   useEffect(() => {
-    load();
+    // Initial fetch on mount. State updates happen after await, so they
+    // do not cascade synchronously inside the effect body.
+    (async () => {
+      const res = await fetch('/api/admin/coupons');
+      const json = await res.json();
+      if (json.ok) setItems(json.data);
+      else toast.error(json.error ?? 'Failed to load coupons');
+      setLoading(false);
+    })();
   }, []);
 
   function openCreate() {

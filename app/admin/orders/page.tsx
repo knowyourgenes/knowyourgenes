@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2, Search } from 'lucide-react';
 
@@ -66,7 +66,7 @@ export default function AdminOrdersPage() {
   const [status, setStatus] = useState('ALL');
   const [loading, setLoading] = useState(true);
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     const p = new URLSearchParams();
     if (q) p.set('q', q);
@@ -82,10 +82,21 @@ export default function AdminOrdersPage() {
     if (agentsJson.ok) setAgents(agentsJson.data);
     else toast.error(agentsJson.error ?? 'Failed to load agents');
     setLoading(false);
-  }
+  }, [q, status]);
 
   useEffect(() => {
-    load();
+    // Initial load on mount. Subsequent refreshes happen via the explicit "Apply"
+    // button so typing in the search box does not refetch on every keystroke.
+    // Defer to a microtask so the setState inside `load` does not run synchronously
+    // during the effect body (which would trip react-hooks/set-state-in-effect).
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (!cancelled) void load();
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function updateStatus(id: string, newStatus: string) {

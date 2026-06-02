@@ -127,14 +127,14 @@ export default async function AttributionPage() {
               <Field label="Medium">
                 <Badge variant="secondary">{decoded!.medium}</Badge>
               </Field>
-              <Field label="Campaign">{decoded!.campaign ? <code>{decoded!.campaign}</code> : <Muted>—</Muted>}</Field>
-              <Field label="Term">{decoded!.term ? <code>{decoded!.term}</code> : <Muted>—</Muted>}</Field>
-              <Field label="Content">{decoded!.content ? <code>{decoded!.content}</code> : <Muted>—</Muted>}</Field>
+              <Field label="Campaign">{decoded!.campaign ? <code>{decoded!.campaign}</code> : <Muted>-</Muted>}</Field>
+              <Field label="Term">{decoded!.term ? <code>{decoded!.term}</code> : <Muted>-</Muted>}</Field>
+              <Field label="Content">{decoded!.content ? <code>{decoded!.content}</code> : <Muted>-</Muted>}</Field>
               <Field label="Landing path">
-                {decoded!.landingPath ? <code>{decoded!.landingPath}</code> : <Muted>—</Muted>}
+                {decoded!.landingPath ? <code>{decoded!.landingPath}</code> : <Muted>-</Muted>}
               </Field>
               <Field label="Referrer">
-                {decoded!.referrer ? <code className="break-all text-xs">{decoded!.referrer}</code> : <Muted>—</Muted>}
+                {decoded!.referrer ? <code className="break-all text-xs">{decoded!.referrer}</code> : <Muted>-</Muted>}
               </Field>
               <Field label="First seen">
                 {decoded!.firstSeenAt.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
@@ -189,10 +189,10 @@ export default async function AttributionPage() {
                   return (
                     <tr key={`v-${r.source}-${r.medium}`} className="border-t">
                       <td className="px-4 py-2">
-                        <Badge variant="outline">{r.source ?? '—'}</Badge>
+                        <Badge variant="outline">{r.source ?? '-'}</Badge>
                       </td>
                       <td className="px-4 py-2">
-                        <Badge variant="secondary">{r.medium ?? '—'}</Badge>
+                        <Badge variant="secondary">{r.medium ?? '-'}</Badge>
                       </td>
                       <td className="px-4 py-2 text-right tabular-nums">{r._count._all}</td>
                       <td className="px-4 py-2 text-right tabular-nums">{pct.toFixed(1)}%</td>
@@ -235,20 +235,20 @@ export default async function AttributionPage() {
                   <tr key={v.id} className="border-t">
                     <td className="px-4 py-2">
                       <div className="flex flex-wrap gap-1">
-                        <Badge variant="outline">{v.source ?? '—'}</Badge>
-                        <Badge variant="secondary">{v.medium ?? '—'}</Badge>
+                        <Badge variant="outline">{v.source ?? '-'}</Badge>
+                        <Badge variant="secondary">{v.medium ?? '-'}</Badge>
                       </div>
                     </td>
-                    <td className="px-4 py-2 text-xs">{v.campaign ? <code>{v.campaign}</code> : <Muted>—</Muted>}</td>
+                    <td className="px-4 py-2 text-xs">{v.campaign ? <code>{v.campaign}</code> : <Muted>-</Muted>}</td>
                     <td className="px-4 py-2 text-xs text-muted-foreground">
                       {v.term && <span>t: {v.term}</span>}
                       {v.term && v.content && <span> · </span>}
                       {v.content && <span>c: {v.content}</span>}
-                      {!v.term && !v.content && <Muted>—</Muted>}
+                      {!v.term && !v.content && <Muted>-</Muted>}
                     </td>
-                    <td className="px-4 py-2 font-mono text-xs">{v.landingPath ?? '—'}</td>
+                    <td className="px-4 py-2 font-mono text-xs">{v.landingPath ?? '-'}</td>
                     <td className="px-4 py-2 text-xs">
-                      {v.referrer ? <code className="text-muted-foreground">{v.referrer}</code> : <Muted>—</Muted>}
+                      {v.referrer ? <code className="text-muted-foreground">{v.referrer}</code> : <Muted>-</Muted>}
                     </td>
                     <td className="px-4 py-2 text-xs text-muted-foreground">
                       {v.createdAt.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
@@ -302,10 +302,10 @@ export default async function AttributionPage() {
                   return (
                     <tr key={`${r.attrSource}-${r.attrMedium}`} className="border-t">
                       <td className="px-4 py-2">
-                        <Badge variant="outline">{r.attrSource ?? '—'}</Badge>
+                        <Badge variant="outline">{r.attrSource ?? '-'}</Badge>
                       </td>
                       <td className="px-4 py-2">
-                        <Badge variant="secondary">{r.attrMedium ?? '—'}</Badge>
+                        <Badge variant="secondary">{r.attrMedium ?? '-'}</Badge>
                       </td>
                       <td className="px-4 py-2 text-right tabular-nums">{r._count._all}</td>
                       <td className="px-4 py-2 text-right tabular-nums">{rupees(revenue)}</td>
@@ -321,7 +321,7 @@ export default async function AttributionPage() {
                   <td className="px-4 py-2 text-right tabular-nums">{totalOrders}</td>
                   <td className="px-4 py-2 text-right tabular-nums">{rupees(totalRevenue)}</td>
                   <td className="px-4 py-2 text-right tabular-nums">
-                    {totalOrders ? rupees(totalRevenue / totalOrders) : '—'}
+                    {totalOrders ? rupees(totalRevenue / totalOrders) : '-'}
                   </td>
                   <td className="px-4 py-2 text-right tabular-nums">100%</td>
                 </tr>
@@ -372,10 +372,10 @@ export default async function AttributionPage() {
                       ) : o.attrCampaign ? (
                         <code className="text-muted-foreground">{o.attrCampaign}</code>
                       ) : (
-                        <Muted>—</Muted>
+                        <Muted>-</Muted>
                       )}
                     </td>
-                    <td className="px-4 py-2 font-mono text-xs">{o.attrLandingPath ?? '—'}</td>
+                    <td className="px-4 py-2 font-mono text-xs">{o.attrLandingPath ?? '-'}</td>
                     <td className="px-4 py-2 text-right tabular-nums">{rupees(o.total)}</td>
                     <td className="px-4 py-2 text-xs text-muted-foreground">
                       {o.createdAt.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}

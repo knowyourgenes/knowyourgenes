@@ -113,7 +113,16 @@ export default function AdminCategoriesPage() {
   }, [load]);
 
   useEffect(() => {
-    load();
+    // Data fetching effect: load() reads from cache then fetches from /api/admin/categories.
+    // Defer to a microtask so the synchronous cache-hit setState path doesn't run inside
+    // the effect body itself (which would trigger react-hooks/set-state-in-effect).
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (!cancelled) void load();
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [load]);
 
   function openCreate() {
@@ -244,7 +253,7 @@ export default function AdminCategoriesPage() {
             {
               key: 'description',
               header: 'Description',
-              render: (c) => <span className="line-clamp-2 text-xs text-muted-foreground">{c.description || '—'}</span>,
+              render: (c) => <span className="line-clamp-2 text-xs text-muted-foreground">{c.description || '-'}</span>,
             },
             {
               key: 'position',

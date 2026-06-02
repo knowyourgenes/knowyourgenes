@@ -60,8 +60,14 @@ function toSlug(value: string) {
 }
 
 export default function AdminPartnersPage() {
-  const [items, setItems] = useState<PartnerRow[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Hydrate items synchronously from cache so the effect doesn't need to setState
+  // before the async fetch completes (avoids react-hooks/set-state-in-effect).
+  const initialCached = (): PartnerRow[] | null => {
+    if (typeof window === 'undefined') return null;
+    return cache.read<PartnerRow[]>(CK.list);
+  };
+  const [items, setItems] = useState<PartnerRow[]>(() => initialCached() ?? []);
+  const [loading, setLoading] = useState(() => initialCached() == null);
   const [refreshing, setRefreshing] = useState(false);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -116,7 +122,15 @@ export default function AdminPartnersPage() {
   }, [load]);
 
   useEffect(() => {
-    load();
+    // Defer the load to a microtask so any synchronous setState inside
+    // `load()` (e.g. for cache-hit hydration) does not run within the
+    // effect body itself. State initializers above already hydrate from
+    // cache, so the user sees data immediately; this effect only triggers
+    // background refresh / stale revalidation.
+    const id = setTimeout(() => {
+      void load();
+    }, 0);
+    return () => clearTimeout(id);
   }, [load]);
 
   function openCreate() {

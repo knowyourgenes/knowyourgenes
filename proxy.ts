@@ -25,7 +25,7 @@ export default proxy((req) => {
   // ATTRIBUTION CAPTURE (FIRST-TOUCH by default)
   // ------------------------------------------------------------------------
   // On any non-API page request, check if the visitor already has a kyg_attr
-  // cookie. If yes (and we're in first-touch mode), leave it alone. If no —
+  // cookie. If yes (and we're in first-touch mode), leave it alone. If no -
   // or we're in last-touch mode AND new UTM params are present - derive a
   // fresh attribution payload from URL utm_* + referer header, sign it, and
   // attach Set-Cookie to the response.
@@ -54,7 +54,6 @@ export default proxy((req) => {
     !existing || (ATTRIBUTION_MODEL === 'last-touch' && hasMarketingSignal) || url.searchParams.has('attr_refresh');
 
   if (DEBUG_ATTRIBUTION) {
-    // eslint-disable-next-line no-console
     console.log(
       `[attr] ${url.pathname}${url.search}`,
       JSON.stringify({
@@ -83,7 +82,6 @@ export default proxy((req) => {
         maxAge: ATTRIBUTION_COOKIE_OPTS.maxAge,
       });
       if (DEBUG_ATTRIBUTION) {
-        // eslint-disable-next-line no-console
         console.log(`[attr]   → set cookie:`, JSON.stringify(payload));
       }
       return res;

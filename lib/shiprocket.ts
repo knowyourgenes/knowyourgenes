@@ -18,7 +18,7 @@
  * The shape of the return values matches lib/delhivery.ts exactly so the
  * courier abstraction in lib/courier.ts can hot-swap providers via env.
  */
-import type { ShipmentLeg, ShipmentStatus as PrismaShipmentStatus } from '@prisma/client';
+import type { ShipmentStatus as PrismaShipmentStatus } from '@prisma/client';
 import type {
   CreateShipmentInput,
   CreateShipmentResult,
@@ -137,7 +137,7 @@ export const shiprocket = {
       return { pincode, serviceable: false, prepaidForward: false, reversePickup: false, cod: false };
     }
     const cod = couriers.some((c) => c.cod === 1);
-    // Any courier that can deliver means prepaid-forward works. Reverse is harder —
+    // Any courier that can deliver means prepaid-forward works. Reverse is harder -
     // not every courier supports reverse pickup. Best signal is calling the
     // reverse-pickup specific serviceability endpoint. Keeping conservative here:
     // if there's at least one courier, we mark reverse as available and let
