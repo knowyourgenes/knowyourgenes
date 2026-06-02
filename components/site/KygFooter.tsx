@@ -1,6 +1,6 @@
 'use client';
 
-import { CHROME_VARS } from './tokens';
+import { CHROME_VARS } from '@/lib/tokens';
 import { KygLogo } from './logo';
 
 const FOOTER_COLS = [

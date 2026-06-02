@@ -2,8 +2,8 @@
 
 import { useRef, useState, type CSSProperties } from 'react';
 import { cn } from '@/lib/utils';
-import KygHeader from '@/components/site/kyg/KygHeader';
-import KygFooter from '@/components/site/kyg/KygFooter';
+import KygHeader from '@/components/site/KygHeader';
+import KygFooter from '@/components/site/KygFooter';
 import { type Category, type Test } from '../data';
 import { useRevealOnScroll, useScrollSpy } from '../_hooks';
 import PageStyles from './styles';

@@ -199,7 +199,7 @@ export interface Test {
 }
 
 // Image CDN base used by the seed data below. (Site nav/footer chrome lives in
-// components/site/kyg — see KygHeader / KygFooter.)
+// components/site — see KygHeader / KygFooter.)
 const U = 'https://images.unsplash.com';
 
 // -----------------------------------------------------------------------------
