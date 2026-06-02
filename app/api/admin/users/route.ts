@@ -1,3 +1,4 @@
+import type { Role } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { handle, isResponse, ok, requireApiRole } from '@/lib/api';
 
@@ -13,7 +14,7 @@ export async function GET(req: Request) {
     const take = Math.min(Number(url.searchParams.get('take') ?? 25), 100);
 
     const where = {
-      ...(role ? { role: role as any } : {}),
+      ...(role ? { role: role as Role } : {}),
       ...(q
         ? {
             OR: [

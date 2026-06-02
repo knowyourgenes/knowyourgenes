@@ -82,8 +82,11 @@ const fulfillmentLabel = (t: string) =>
   t === 'AT_HOME_PHLEBOTOMIST' ? 'At-home' : t === 'KIT_BY_POST' ? 'Kit by post' : 'Either';
 
 export default function AdminPackagesPage() {
-  const [items, setItems] = useState<Package[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Lazy initializers hydrate from the session cache during render rather than
+  // inside an effect. This keeps the first render synchronous (no flash of
+  // empty state when cache is warm) and avoids set-state-in-effect on mount.
+  const [items, setItems] = useState<Package[]>(() => cache.read<Package[]>(CK.list) ?? []);
+  const [loading, setLoading] = useState(() => cache.read<Package[]>(CK.list) == null);
   const [refreshing, setRefreshing] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<Package | null>(null);
   const [restoreTarget, setRestoreTarget] = useState<Package | null>(null);
@@ -97,10 +100,6 @@ export default function AdminPackagesPage() {
 
   const load = useCallback(async (opts: { force?: boolean } = {}) => {
     const cached = !opts.force ? cache.read<Package[]>(CK.list) : null;
-    if (cached) {
-      setItems(cached);
-      setLoading(false);
-    }
     if (!opts.force && cached && !cache.isStale(CK.list)) return;
 
     const key = `list|${opts.force ? 'force' : 'normal'}`;

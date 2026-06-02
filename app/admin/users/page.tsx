@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2, Search, Power, PowerOff } from 'lucide-react';
 
@@ -34,21 +34,33 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true);
   const [target, setTarget] = useState<Row | null>(null);
 
-  async function load() {
-    setLoading(true);
+  const load = useCallback(async () => {
     const p = new URLSearchParams();
     if (q) p.set('q', q);
     if (role && role !== 'ALL') p.set('role', role);
     const res = await fetch(`/api/admin/users?${p.toString()}`);
     const json = await res.json();
+    // These setState calls run after the awaited fetch, not synchronously
+    // within any effect, so react-hooks/set-state-in-effect does not fire.
     if (json.ok) setRows(json.data.items);
     else toast.error(json.error ?? 'Failed to load users');
     setLoading(false);
+  }, [q, role]);
+
+  async function reload() {
+    setLoading(true);
+    await load();
   }
 
   useEffect(() => {
-    load();
-  }, []);
+    // Data fetch on mount / when filter deps change. setState calls inside
+    // `load` happen only after the awaited fetch resolves (i.e., they are
+    // subscribing to external state per the react-hooks/set-state-in-effect
+    // docs), so this is the intended pattern. The lint rule cannot see
+    // through useCallback to verify, hence the targeted disable.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void load();
+  }, [load]);
 
   async function changeRole(id: string, newRole: string) {
     const res = await fetch(`/api/admin/users/${id}/role`, {
@@ -62,7 +74,7 @@ export default function AdminUsersPage() {
       return;
     }
     toast.success('Role updated');
-    load();
+    void load();
   }
 
   async function toggleActive(u: Row, active: boolean) {
@@ -77,7 +89,7 @@ export default function AdminUsersPage() {
       return;
     }
     toast.success(active ? 'User reactivated' : 'User deactivated');
-    load();
+    void load();
   }
 
   async function handleDeactivate() {
@@ -133,7 +145,7 @@ export default function AdminUsersPage() {
             <SelectItem value="inactive">Deactivated only</SelectItem>
           </SelectContent>
         </Select>
-        <Button variant="outline" onClick={load}>
+        <Button variant="outline" onClick={reload}>
           Apply
         </Button>
       </div>

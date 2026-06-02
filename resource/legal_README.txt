@@ -17,7 +17,7 @@ KnowYourGenes is a brand operated by:
   GSTIN          : [GSTIN - fill in before publishing]
 
 IMPORTANT - ACTIVITY / OBJECTS CLAUSE
-The CIN class code "U74999" is "Other business activities NEC" —
+The CIN class code "U74999" is "Other business activities NEC" -
 a generic consulting/services classification, NOT a healthcare /
 diagnostic class. Before submitting to Razorpay and before launch:
 
@@ -66,11 +66,11 @@ WHAT'S IN THIS BUNDLE
                                  though we send a phlebotomist, not a
                                  courier - Razorpay does NOT accept a
                                  footer link that 404s here)
-  legal_contact_us.txt        -> /contact   (content for the page —
+  legal_contact_us.txt        -> /contact   (content for the page -
                                  the contact FORM is a separate spec
                                  item from features.txt)
   legal_about_us.txt          -> /about
-  legal_consent.txt           -> /consent   (genetic testing consent —
+  legal_consent.txt           -> /consent   (genetic testing consent -
                                  the existing footer link expects this)
 
 These are now mostly populated with the confirmed entity details
@@ -118,7 +118,7 @@ DIFFERENCES FROM XCODE / MAPMYGENOME (DELIBERATE)
     report) and can verify deficient service ourselves.
   - Privacy section on genetic data is stricter than competitors:
     DPDP Act, 2023 is in force at launch, and we explicitly call
-    out "no sale / no insurance-marketing use" of genetic data —
+    out "no sale / no insurance-marketing use" of genetic data -
     this is also a Razorpay credibility signal.
   - Cancer / reproductive panels mean stronger medical disclaimers
     than a pure wellness-focused competitor needs. Your existing

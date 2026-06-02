@@ -17,7 +17,7 @@ const hind = Hind({
 });
 
 // The landing page ships its own nav + footer (see page.tsx), so this layout
-// adds no chrome — it just scopes the font variables.
+// adds no chrome - it just scopes the font variables.
 export default function LandingLayout({ children }: { children: React.ReactNode }) {
   return <div className={`${figtree.variable} ${hind.variable}`}>{children}</div>;
 }

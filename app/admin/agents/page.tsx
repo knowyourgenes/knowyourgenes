@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Plus, Loader2, CheckCircle2, XCircle, Pencil, Trash2 } from 'lucide-react';
 
@@ -61,18 +61,26 @@ export default function AdminAgentsPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
-  async function load() {
-    setLoading(true);
+  const fetchAgents = useCallback(async () => {
     const res = await fetch('/api/admin/agents');
     const json = await res.json();
     if (json.ok) setItems(json.data);
     else toast.error(json.error ?? 'Failed to load agents');
     setLoading(false);
-  }
+  }, []);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    await fetchAgents();
+  }, [fetchAgents]);
 
   useEffect(() => {
-    load();
-  }, []);
+    // Initial mount: kick off the async fetch. State updates happen only
+    // after the first network await (no synchronous cascading renders), but
+    // the lint rule cannot see across the async boundary.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchAgents();
+  }, [fetchAgents]);
 
   function openCreate() {
     setForm(EMPTY);

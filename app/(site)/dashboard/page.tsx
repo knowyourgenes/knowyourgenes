@@ -77,7 +77,7 @@ export default async function DashboardOverviewPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">Hi {name} 👋</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Here's what's happening with your tests.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Here&apos;s what&apos;s happening with your tests.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -203,7 +203,7 @@ export default async function DashboardOverviewPage() {
         <CardContent>
           {reports.length === 0 ? (
             <p className="py-6 text-center text-sm text-muted-foreground">
-              No reports yet. They'll appear here 7–14 days after sample collection.
+              No reports yet. They&apos;ll appear here 7–14 days after sample collection.
             </p>
           ) : (
             <ul className="divide-y">

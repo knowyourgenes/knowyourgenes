@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { MapPin, Loader2, AlertCircle, CheckCircle2, Navigation, ChevronDown, Search } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -18,6 +18,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const STORAGE_KEY = 'kyg:location:v1';
+const STORAGE_EVENT = 'kyg:location:changed';
 
 type LocationState = {
   pincode: string;
@@ -26,6 +27,49 @@ type LocationState = {
   state: string;
   serviceable: boolean;
 } | null;
+
+// Cache the parsed snapshot so useSyncExternalStore gets a stable reference
+// between reads (it bails out via Object.is equality).
+let cachedRaw: string | null = null;
+let cachedSnapshot: LocationState = null;
+
+function readLocationSnapshot(): LocationState {
+  if (typeof window === 'undefined') return null;
+  let raw: string | null = null;
+  try {
+    raw = window.localStorage.getItem(STORAGE_KEY);
+  } catch {
+    /* storage disabled */
+    return null;
+  }
+  if (raw === cachedRaw) return cachedSnapshot;
+  cachedRaw = raw;
+  if (!raw) {
+    cachedSnapshot = null;
+    return null;
+  }
+  try {
+    cachedSnapshot = JSON.parse(raw) as LocationState;
+  } catch {
+    cachedSnapshot = null;
+  }
+  return cachedSnapshot;
+}
+
+function subscribeLocation(listener: () => void): () => void {
+  if (typeof window === 'undefined') return () => {};
+  const handler = () => listener();
+  window.addEventListener('storage', handler);
+  window.addEventListener(STORAGE_EVENT, handler);
+  return () => {
+    window.removeEventListener('storage', handler);
+    window.removeEventListener(STORAGE_EVENT, handler);
+  };
+}
+
+function getServerSnapshot(): LocationState {
+  return null;
+}
 
 type Suggestion = {
   placeName: string;
@@ -47,41 +91,38 @@ type Suggestion = {
  * Any single path can fail independently without breaking the others.
  */
 export default function LocationGate() {
-  const [location, setLocation] = useState<LocationState>(null);
+  // useSyncExternalStore subscribes to localStorage as an external source.
+  // It returns null on the server and during the first client render, then
+  // re-renders with the real value after hydration - no setState-in-effect needed.
+  const location = useSyncExternalStore(subscribeLocation, readLocationSnapshot, getServerSnapshot);
   const [open, setOpen] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
+  // Track each open event so the dialog remounts (and re-runs its initializers)
+  // every time - avoids a reset effect inside LocationDialog.
+  const [openCount, setOpenCount] = useState(0);
 
-  useEffect(() => {
-    setHydrated(true);
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setLocation(JSON.parse(raw) as LocationState);
-    } catch {
-      /* corrupted storage - ignore */
-    }
-  }, []);
-
-  function saveLocation(loc: LocationState) {
-    setLocation(loc);
+  const saveLocation = useCallback((loc: LocationState) => {
     try {
       if (loc) localStorage.setItem(STORAGE_KEY, JSON.stringify(loc));
       else localStorage.removeItem(STORAGE_KEY);
     } catch {
       /* storage disabled - session-only */
     }
-  }
+    // Notify same-tab listeners (the native `storage` event only fires across tabs).
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event(STORAGE_EVENT));
+    }
+  }, []);
 
-  const label =
-    hydrated && location ? (
-      <span className="flex items-center gap-1">
-        <span className="font-mono text-xs">{location.pincode}</span>
-        <span className="hidden max-w-[120px] truncate text-xs text-muted-foreground lg:inline">
-          · {location.area || location.district}
-        </span>
+  const label = location ? (
+    <span className="flex items-center gap-1">
+      <span className="font-mono text-xs">{location.pincode}</span>
+      <span className="hidden max-w-[120px] truncate text-xs text-muted-foreground lg:inline">
+        · {location.area || location.district}
       </span>
-    ) : (
-      <span className="text-xs">Select location</span>
-    );
+    </span>
+  ) : (
+    <span className="text-xs">Select location</span>
+  );
 
   return (
     <>
@@ -89,7 +130,10 @@ export default function LocationGate() {
         variant="outline"
         size="sm"
         className="gap-1.5"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpenCount((n) => n + 1);
+          setOpen(true);
+        }}
         aria-label="Change delivery location"
       >
         <MapPin className="h-3.5 w-3.5 text-primary" />
@@ -98,6 +142,7 @@ export default function LocationGate() {
       </Button>
 
       <LocationDialog
+        key={openCount}
         open={open}
         onOpenChange={setOpen}
         currentPincode={location?.pincode ?? null}
@@ -127,8 +172,10 @@ function LocationDialog({
   currentPincode: string | null;
   onLocationSet: (loc: LocationState) => void;
 }) {
+  // Initial values come from props/initializers - LocationGate remounts this
+  // component (via key) every time it reopens, so resets are automatic.
   const [query, setQuery] = useState('');
-  const [pincode, setPincode] = useState('');
+  const [pincode, setPincode] = useState(() => currentPincode ?? '');
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [suggestLoading, setSuggestLoading] = useState(false);
   const [suggestDown, setSuggestDown] = useState(false);
@@ -137,48 +184,42 @@ function LocationDialog({
   const [result, setResult] = useState<LocationState>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Reset every time the dialog opens.
-  useEffect(() => {
-    if (open) {
-      setQuery('');
-      setPincode(currentPincode ?? '');
-      setSuggestions([]);
-      setSuggestDown(false);
-      setResult(null);
-    }
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
-  }, [open, currentPincode]);
-
   // Debounced autosuggest. 6-digit numeric queries skip the Mappls call and
-  // route straight to the DB pincode check below.
+  // route straight to the DB pincode check below. The setState calls live
+  // inside a setTimeout callback (not the effect body), which is safe.
   useEffect(() => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
     const q = query.trim();
-    if (q.length < 2 || /^\d{6}$/.test(q)) {
-      setSuggestions([]);
-      return;
-    }
-    debounceRef.current = setTimeout(async () => {
-      setSuggestLoading(true);
-      try {
-        const res = await fetch(`/api/location/autosuggest?q=${encodeURIComponent(q)}`);
-        const json = await res.json();
-        if (!json.ok) {
+    const tooShortOrPincode = q.length < 2 || /^\d{6}$/.test(q);
+    const timer = setTimeout(
+      async () => {
+        if (tooShortOrPincode) {
+          setSuggestions([]);
+          return;
+        }
+        setSuggestLoading(true);
+        try {
+          const res = await fetch(`/api/location/autosuggest?q=${encodeURIComponent(q)}`);
+          const json = await res.json();
+          if (!json.ok) {
+            setSuggestDown(true);
+            setSuggestions([]);
+          } else {
+            setSuggestDown(false);
+            setSuggestions(json.data.items as Suggestion[]);
+          }
+        } catch {
           setSuggestDown(true);
           setSuggestions([]);
-        } else {
-          setSuggestDown(false);
-          setSuggestions(json.data.items as Suggestion[]);
+        } finally {
+          setSuggestLoading(false);
         }
-      } catch {
-        setSuggestDown(true);
-        setSuggestions([]);
-      } finally {
-        setSuggestLoading(false);
-      }
-    }, 300);
+      },
+      tooShortOrPincode ? 0 : 300
+    );
+    debounceRef.current = timer;
+    return () => {
+      clearTimeout(timer);
+    };
   }, [query]);
 
   function autoDetect() {

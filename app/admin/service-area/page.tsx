@@ -320,7 +320,9 @@ export default function AdminServiceAreaPage() {
   // List-tab loader (same SWR shape, keyed by filter hash)
   // -------------------------------------------------------------------------
 
-  // Debounce text searches
+  // Debounce text searches. The trailing setPage(1) inside the timeout fires
+  // asynchronously (not during the effect body), so the set-state-in-effect
+  // rule does not apply.
   useEffect(() => {
     const t = setTimeout(() => {
       setDebouncedQ(q.trim());
@@ -334,15 +336,9 @@ export default function AdminServiceAreaPage() {
     return () => clearTimeout(t);
   }, [treeQ]);
 
-  // Resetting page when filters change
-  useEffect(() => {
-    setPage(1);
-  }, [stateFilter, districtFilter, activeFilter, listSort]);
-
-  // If state filter changes, drop the district filter (districts depend on state).
-  useEffect(() => {
-    setDistrictFilter('ALL');
-  }, [stateFilter]);
+  // Page reset and district reset on filter changes are handled directly in
+  // the Select onValueChange handlers below to avoid synchronous setState
+  // chains inside effects.
 
   const listFilterHash = useMemo(() => {
     return [debouncedQ, stateFilter, districtFilter, activeFilter, listSort, page, pageSize].join('|');
@@ -401,7 +397,12 @@ export default function AdminServiceAreaPage() {
   // Initial + reactive loaders
   // -------------------------------------------------------------------------
 
+  // Initial data fetch on mount. The loaders internally call setState after
+  // an async fetch + cache check, so this is a "subscribe to external system"
+  // effect rather than a synchronous render-time state update. The linter
+  // cannot distinguish the async path, so we silence the rule here.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadStats();
     loadTree();
   }, [loadStats, loadTree]);
@@ -942,10 +943,10 @@ export default function AdminServiceAreaPage() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-semibold text-emerald-600">
-              {stats?.activePincodes.toLocaleString('en-IN') ?? '—'}
+              {stats?.activePincodes.toLocaleString('en-IN') ?? '-'}
             </div>
             <p className="mt-1 text-xs text-muted-foreground">
-              of {stats?.uniquePincodes.toLocaleString('en-IN') ?? '—'} unique pincodes in DB
+              of {stats?.uniquePincodes.toLocaleString('en-IN') ?? '-'} unique pincodes in DB
             </p>
           </CardContent>
         </Card>
@@ -954,9 +955,9 @@ export default function AdminServiceAreaPage() {
             <CardDescription>Area rows active</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-semibold">{stats?.active.toLocaleString('en-IN') ?? '—'}</div>
+            <div className="text-3xl font-semibold">{stats?.active.toLocaleString('en-IN') ?? '-'}</div>
             <p className="mt-1 text-xs text-muted-foreground">
-              of {stats?.total.toLocaleString('en-IN') ?? '—'} total (one per locality)
+              of {stats?.total.toLocaleString('en-IN') ?? '-'} total (one per locality)
             </p>
           </CardContent>
         </Card>
@@ -965,7 +966,7 @@ export default function AdminServiceAreaPage() {
             <CardDescription>States covered</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-semibold">{stats?.states ?? '—'}</div>
+            <div className="text-3xl font-semibold">{stats?.states ?? '-'}</div>
           </CardContent>
         </Card>
         <Card>
@@ -973,7 +974,7 @@ export default function AdminServiceAreaPage() {
             <CardDescription>Districts covered</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-semibold">{stats?.districts ?? '—'}</div>
+            <div className="text-3xl font-semibold">{stats?.districts ?? '-'}</div>
           </CardContent>
         </Card>
       </div>
@@ -1098,7 +1099,15 @@ export default function AdminServiceAreaPage() {
                 className="pl-9"
               />
             </div>
-            <Select value={stateFilter} onValueChange={(v) => setStateFilter(v ?? 'ALL')}>
+            <Select
+              value={stateFilter}
+              onValueChange={(v) => {
+                setStateFilter(v ?? 'ALL');
+                // Changing state invalidates the chosen district and resets pagination.
+                setDistrictFilter('ALL');
+                setPage(1);
+              }}
+            >
               <SelectTrigger className="w-44">
                 <SelectValue placeholder="State" />
               </SelectTrigger>
@@ -1113,7 +1122,10 @@ export default function AdminServiceAreaPage() {
             </Select>
             <Select
               value={districtFilter}
-              onValueChange={(v) => setDistrictFilter(v ?? 'ALL')}
+              onValueChange={(v) => {
+                setDistrictFilter(v ?? 'ALL');
+                setPage(1);
+              }}
               disabled={stateFilter === 'ALL' || districtOptionsForState.length === 0}
             >
               <SelectTrigger className="w-44">
@@ -1128,7 +1140,13 @@ export default function AdminServiceAreaPage() {
                 ))}
               </SelectContent>
             </Select>
-            <Select value={activeFilter} onValueChange={(v) => setActiveFilter((v as ActiveFilter) ?? 'active')}>
+            <Select
+              value={activeFilter}
+              onValueChange={(v) => {
+                setActiveFilter((v as ActiveFilter) ?? 'active');
+                setPage(1);
+              }}
+            >
               <SelectTrigger className="w-36">
                 <SelectValue />
               </SelectTrigger>
@@ -1138,7 +1156,13 @@ export default function AdminServiceAreaPage() {
                 <SelectItem value="all">All</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={listSort} onValueChange={(v) => setListSort((v as ListSort) ?? 'state')}>
+            <Select
+              value={listSort}
+              onValueChange={(v) => {
+                setListSort((v as ListSort) ?? 'state');
+                setPage(1);
+              }}
+            >
               <SelectTrigger className="w-44">
                 <ArrowUpDown className="mr-1 h-3.5 w-3.5" />
                 <SelectValue placeholder="Sort" />
@@ -1159,6 +1183,7 @@ export default function AdminServiceAreaPage() {
                   setDistrictFilter('ALL');
                   setActiveFilter('active');
                   setListSort('state');
+                  setPage(1);
                 }}
               >
                 <X className="h-3.5 w-3.5" />
@@ -1205,8 +1230,8 @@ export default function AdminServiceAreaPage() {
                   render: (r) => <span className="font-mono">{r.pincode}</span>,
                 },
                 { key: 'area', header: 'Area' },
-                { key: 'district', header: 'District', render: (r) => r.district || '—' },
-                { key: 'state', header: 'State', render: (r) => <Badge variant="outline">{r.state || '—'}</Badge> },
+                { key: 'district', header: 'District', render: (r) => r.district || '-' },
+                { key: 'state', header: 'State', render: (r) => <Badge variant="outline">{r.state || '-'}</Badge> },
                 {
                   key: 'active',
                   header: 'Status',

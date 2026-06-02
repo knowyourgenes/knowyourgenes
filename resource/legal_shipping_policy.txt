@@ -99,7 +99,7 @@ Realistic end-to-end ranges by category:
   - Comprehensive bundles : up to 35 business days end-to-end
 
 TAT is indicative, not a guarantee. The largest source of
-variability is your own collection and pickup-scheduling step —
+variability is your own collection and pickup-scheduling step -
 please complete it promptly to keep your order on schedule.
 Clinically necessary lab steps (re-extraction, repeat sequencing,
 expert review) may also extend it. We proactively notify you of

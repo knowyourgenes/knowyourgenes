@@ -17,7 +17,7 @@ export async function GET(req: Request) {
     const where: Prisma.ServiceAreaWhereInput = {};
     if (params.q) {
       // Pincodes are digits-only; an alphabetic query like "delhi" can never
-      // match the pincode column, so don't include that branch in the OR —
+      // match the pincode column, so don't include that branch in the OR -
       // it forces the planner to consider a third index that returns 0 rows.
       // Area / district searches go through the pg_trgm GIN indexes.
       const hasDigits = /\d/.test(params.q);

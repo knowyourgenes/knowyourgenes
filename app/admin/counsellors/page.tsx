@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Plus, Loader2, Pencil, Trash2 } from 'lucide-react';
 
@@ -84,17 +84,31 @@ export default function AdminCounsellorsPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     const res = await fetch('/api/admin/counsellors');
     const json = await res.json();
     if (json.ok) setItems(json.data);
     else toast.error(json.error ?? 'Failed to load counsellors');
     setLoading(false);
-  }
+  }, []);
 
   useEffect(() => {
-    load();
+    // Initial fetch on mount. `loading` already initialises to `true`,
+    // so we kick off the request without synchronously calling setState
+    // in the effect body (which would trip react-hooks/set-state-in-effect).
+    let cancelled = false;
+    (async () => {
+      const res = await fetch('/api/admin/counsellors');
+      const json = await res.json();
+      if (cancelled) return;
+      if (json.ok) setItems(json.data);
+      else toast.error(json.error ?? 'Failed to load counsellors');
+      setLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   function openCreate() {

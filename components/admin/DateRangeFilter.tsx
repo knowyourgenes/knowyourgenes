@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { format } from 'date-fns';
 import type { DateRange } from 'react-day-picker';
@@ -34,12 +34,14 @@ export default function DateRangeFilter() {
 
   // Sync staged → applied every time the popover opens, so users start from the
   // currently-applied state, never from a half-selection from a previous session.
-  useEffect(() => {
-    if (open) {
+  // Done via the open-change handler instead of a setState-in-effect so we don't
+  // schedule a render purely to mirror props/state.
+  function handleOpenChange(next: boolean) {
+    if (next) {
       setStaged(applied);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+    setOpen(next);
+  }
 
   function commit(next: DateRange | undefined) {
     const params = new URLSearchParams(searchParams.toString());
@@ -117,7 +119,7 @@ export default function DateRangeFilter() {
 
   return (
     <div className="flex items-center gap-2">
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger
           render={
             <Button variant="outline" size="sm" className="justify-start font-normal">

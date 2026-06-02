@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { toast } from 'sonner';
 import { Plus, Loader2, Pencil, Trash2, Copy, Link2, ExternalLink } from 'lucide-react';
 
@@ -93,6 +93,20 @@ function slugify(s: string): string {
     .slice(0, 64);
 }
 
+// useSyncExternalStore-based reader for window.location.origin. The origin never
+// changes during a session, so subscribe is a no-op. This avoids a setState in
+// an effect for hydration.
+const ORIGIN_FALLBACK = 'https://kyg.in';
+function subscribeOrigin() {
+  return () => {};
+}
+function getOriginSnapshot() {
+  return window.location.origin;
+}
+function getOriginServerSnapshot() {
+  return ORIGIN_FALLBACK;
+}
+
 export default function AdminCampaignsPage() {
   const [items, setItems] = useState<CampaignRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -102,24 +116,24 @@ export default function AdminCampaignsPage() {
   const [slugTouched, setSlugTouched] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<CampaignRow | null>(null);
   const [linkTarget, setLinkTarget] = useState<CampaignRow | null>(null);
-  const [origin, setOrigin] = useState<string>('https://kyg.in');
+  const origin = useSyncExternalStore(subscribeOrigin, getOriginSnapshot, getOriginServerSnapshot);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') setOrigin(window.location.origin);
-  }, []);
-
-  async function load() {
-    setLoading(true);
+  const load = useCallback(async (showSpinner = true) => {
+    if (showSpinner) setLoading(true);
     const res = await fetch('/api/admin/campaigns');
     const json = await res.json();
     if (json.ok) setItems(json.data.items);
     else toast.error(json.error ?? 'Failed to load campaigns');
     setLoading(false);
-  }
+  }, []);
 
   useEffect(() => {
-    load();
-  }, []);
+    // Initial fetch on mount. `loading` already defaults to true, so the
+    // sync setLoading(true) is skipped. The remaining setState calls inside
+    // `load` happen after `await`, so they are not synchronous to this effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void load(false);
+  }, [load]);
 
   function openCreate() {
     setForm(EMPTY);
@@ -482,8 +496,8 @@ export default function AdminCampaignsPage() {
                 <div className="grid grid-cols-2 gap-3 rounded border p-3 text-sm">
                   <Detail label="Source" value={linkTarget.source} />
                   <Detail label="Medium" value={linkTarget.medium} />
-                  <Detail label="Content" value={linkTarget.content ?? '—'} />
-                  <Detail label="Term" value={linkTarget.term ?? '—'} />
+                  <Detail label="Content" value={linkTarget.content ?? '-'} />
+                  <Detail label="Term" value={linkTarget.term ?? '-'} />
                   <Detail label="Destination" value={linkTarget.destination} mono />
                   <Detail label="Orders attributed" value={String(linkTarget._count.orders)} />
                 </div>

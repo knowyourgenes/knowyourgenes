@@ -78,7 +78,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full state machine and 
 | `USER`       | Yes               | Buy kits, track shipments, view reports, book counselling.                                     |
 | `ADMIN`      | Yes               | Operations - orders, shipments, reports upload, users, packages, coupons, service area, labs.  |
 | `COUNSELLOR` | Yes               | Reviews reports, holds counselling sessions. Uses the `/admin` shell with filtered sidebar.    |
-| `PARTNER`    | Phase 2           | External lab login. Schema and shell are ready; not seeded at launch.                          |
+| `PARTNER`    | Phase 1           | External lab login. Schema and shell are ready; not seeded at launch.                          |
 | `AGENT`      | Phase 2           | Phlebotomist. Mobile-first `/agent` shell exists; not staffed at launch.                       |
 
 Role gating is enforced in two places:

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Loader2, Phone, MessageCircle, MapPin, ArrowLeft, CheckCircle2, Navigation } from 'lucide-react';
@@ -34,17 +34,30 @@ export default function AgentCollectionDetailPage() {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
 
-  async function load() {
-    const res = await fetch(`/api/agent/orders/${id}`);
-    const json = await res.json();
-    if (json.ok) setOrder(json.data);
-    else toast.error(json.error ?? 'Could not load order');
-    setLoading(false);
-  }
+  const load = useCallback(() => {
+    return fetch(`/api/agent/orders/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.ok) setOrder(json.data);
+        else toast.error(json.error ?? 'Could not load order');
+        setLoading(false);
+      });
+  }, [id]);
 
   useEffect(() => {
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // setState only happens inside .then() callbacks (subscriber pattern), never synchronously in the effect body.
+    let cancelled = false;
+    fetch(`/api/agent/orders/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        if (cancelled) return;
+        if (json.ok) setOrder(json.data);
+        else toast.error(json.error ?? 'Could not load order');
+        setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [id]);
 
   async function transition(to: 'AGENT_EN_ROUTE' | 'SAMPLE_COLLECTED') {
@@ -90,7 +103,7 @@ export default function AgentCollectionDetailPage() {
 
       <div className="rounded-lg border bg-background p-3">
         <div className="text-xs text-muted-foreground mb-1">Customer</div>
-        <div className="font-medium">{order.user.name ?? '—'}</div>
+        <div className="font-medium">{order.user.name ?? '-'}</div>
         <div className="flex gap-2 mt-2">
           {order.user.phone && (
             <Button variant="outline" size="sm" render={<a href={`tel:${order.user.phone}`} />}>

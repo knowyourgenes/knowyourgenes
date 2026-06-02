@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
@@ -24,17 +24,28 @@ export default function AgentSchedulePage() {
   const [availability, setAvailability] = useState<Availability[]>([]);
   const [loading, setLoading] = useState(true);
 
-  async function load() {
+  const reload = useCallback(async () => {
     setLoading(true);
     const [oRes, aRes] = await Promise.all([fetch('/api/agent/orders?status=ALL'), fetch('/api/agent/availability')]);
     const [oJson, aJson] = await Promise.all([oRes.json(), aRes.json()]);
     if (oJson.ok) setOrders(oJson.data);
     if (aJson.ok) setAvailability(aJson.data);
     setLoading(false);
-  }
+  }, []);
 
   useEffect(() => {
-    load();
+    let cancelled = false;
+    (async () => {
+      const [oRes, aRes] = await Promise.all([fetch('/api/agent/orders?status=ALL'), fetch('/api/agent/availability')]);
+      const [oJson, aJson] = await Promise.all([oRes.json(), aRes.json()]);
+      if (cancelled) return;
+      if (oJson.ok) setOrders(oJson.data);
+      if (aJson.ok) setAvailability(aJson.data);
+      setLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function toggle(window: 'MORNING' | 'AFTERNOON' | 'EVENING', active: boolean) {
@@ -48,7 +59,7 @@ export default function AgentSchedulePage() {
       toast.error(json.error ?? 'Update failed');
       return;
     }
-    load();
+    reload();
   }
 
   if (loading) return <Loader2 className="h-5 w-5 animate-spin" />;

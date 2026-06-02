@@ -72,7 +72,7 @@ export default function AgentCollectionsPage() {
                       {o.package.sampleType}
                     </Badge>
                   </div>
-                  <div className="text-sm truncate">{o.user.name ?? '—'}</div>
+                  <div className="text-sm truncate">{o.user.name ?? '-'}</div>
                   <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
                     <MapPin className="h-3 w-3" />
                     {o.address.area} {o.address.pincode}

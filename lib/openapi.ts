@@ -1,5 +1,5 @@
 import { OpenApiGeneratorV31, OpenAPIRegistry, extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
-import { z } from 'zod';
+import { z, type ZodObject } from 'zod';
 import {
   packageCreate,
   packageUpdate,
@@ -110,7 +110,7 @@ function registerCrud<TCreate extends z.ZodTypeAny, TUpdate extends z.ZodTypeAny
     summary: `Update ${cfg.tag.toLowerCase()}`,
     tags: [cfg.tag],
     request: {
-      params: z.object({ [param]: z.string() }) as any,
+      params: z.object({ [param]: z.string() }) as ZodObject,
       body: { content: { 'application/json': { schema: cfg.update } } },
     },
     responses: {
@@ -123,7 +123,7 @@ function registerCrud<TCreate extends z.ZodTypeAny, TUpdate extends z.ZodTypeAny
     path: `${cfg.basePath}/{${param}}`,
     summary: `Archive / deactivate ${cfg.tag.toLowerCase()}`,
     tags: [cfg.tag],
-    request: { params: z.object({ [param]: z.string() }) as any },
+    request: { params: z.object({ [param]: z.string() }) as ZodObject },
     responses: {
       200: { description: 'Archived', content: { 'application/json': { schema: SuccessEnvelope(z.any()) } } },
     },

@@ -78,7 +78,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   } catch (err) {
     // Never let a bad write break the page render - fail soft.
-    // eslint-disable-next-line no-console
     console.error('[track/visit] error', err);
     return NextResponse.json({ ok: false }, { status: 500 });
   }
