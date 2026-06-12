@@ -261,9 +261,9 @@ export function Discover({ discover }: { discover: Test['discover'] }) {
   return (
     <section className={SECTION}>
       <SectionHead eyebrow={discover.eyebrow} title={discover.title} sub={discover.sub} />
-      <div className="grid gap-[20px]">
+      <div className="grid gap-5">
         {discover.panels.map((p) => (
-          <PanelCard key={p.id} panel={p} />
+          <PanelCard key={p.id ?? p.number} panel={p} />
         ))}
       </div>
     </section>

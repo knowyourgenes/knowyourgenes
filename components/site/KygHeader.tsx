@@ -84,6 +84,7 @@ export default function KygHeader() {
   };
 
   return (
+    <>
     <header
       style={CHROME_VARS}
       className={cn(
@@ -200,10 +201,13 @@ export default function KygHeader() {
           </button>
         </div>
       </div>
+    </header>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — rendered OUTSIDE <header> so the header's backdrop-filter
+          doesn't become the fixed drawer's containing block (which clipped it).
+          The wrapper carries the chrome tokens to the (now viewport-fixed) drawer. */}
       {mobileOpen && (
-        <>
+        <div style={CHROME_VARS}>
           <div
             onClick={() => setMobileOpen(false)}
             className="fixed inset-x-0 top-16 bottom-0 z-[1150] bg-[rgba(20,15,10,.4)]"
@@ -234,8 +238,8 @@ export default function KygHeader() {
           ))}
             </div>
           </nav>
-        </>
+        </div>
       )}
-    </header>
+    </>
   );
 }
