@@ -76,7 +76,7 @@ export function Badge({
       className={cn(
         'text-[11.5px] font-bold py-[4px] px-[10px] rounded-full tracking-[0.01em] whitespace-nowrap',
         BADGE_STATUS[status],
-        className,
+        className
       )}
     >
       {children}
@@ -89,9 +89,9 @@ export function Eyebrow({ children, className }: { children: ReactNode; classNam
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-3 text-[13px] font-bold tracking-[0.16em] uppercase text-[var(--acc-700)]",
+        'inline-flex items-center gap-3 text-[13px] font-bold tracking-[0.16em] uppercase text-[var(--acc-700)]',
         "before:content-[''] before:w-[30px] before:h-[2px] before:rounded-[2px] before:bg-[linear-gradient(90deg,var(--acc-500),var(--acc-700))]",
-        className,
+        className
       )}
     >
       {children}

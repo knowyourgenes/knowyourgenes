@@ -35,7 +35,9 @@ export function Hero({ hero }: { hero: Test['hero'] }) {
             </span>
             {hero.titleTail}
           </h1>
-          <p className="text-[clamp(16px,1.35vw,18.5px)] leading-[1.55] text-[var(--ink-2)] mt-[22px] max-w-[520px]">{hero.sub}</p>
+          <p className="text-[clamp(16px,1.35vw,18.5px)] leading-[1.55] text-[var(--ink-2)] mt-[22px] max-w-[520px]">
+            {hero.sub}
+          </p>
           <div className="flex items-center flex-wrap gap-4 mt-[30px] max-[520px]:[&_a]:w-full">
             <Button href="#" variant="accent" size="lg">
               {hero.ctaLabel}
@@ -67,7 +69,9 @@ export function Hero({ hero }: { hero: Test['hero'] }) {
       <div className="grid grid-cols-4 gap-[14px] mt-[36px] max-w-[640px] max-[520px]:grid-cols-2 max-[520px]:gap-x-[14px] max-[520px]:gap-y-[18px]">
         {hero.stats.map((s) => (
           <div key={s.label}>
-            <div className="text-[clamp(20px,2vw,26px)] font-bold tracking-[-0.02em] text-[var(--acc-700)] leading-none">{s.num}</div>
+            <div className="text-[clamp(20px,2vw,26px)] font-bold tracking-[-0.02em] text-[var(--acc-700)] leading-none">
+              {s.num}
+            </div>
             <div className="text-[12.5px] text-[var(--ink-3)] mt-[6px] leading-[1.3]">{s.label}</div>
           </div>
         ))}
@@ -99,7 +103,12 @@ export function Myth({ myth }: { myth: Test['myth'] }) {
           <p className="text-[15.5px] leading-[1.62] text-white/[0.74] max-w-[440px]">{myth.body}</p>
         </div>
         <div className="relative min-h-[300px] overflow-hidden max-[980px]:order-[-1] max-[980px]:min-h-[200px] max-[980px]:aspect-[16/9] after:content-[''] after:absolute after:inset-0 after:bg-[linear-gradient(90deg,var(--dark-1)_0%,rgba(26,34,32,.5)_30%,rgba(26,34,32,.15)_100%)] max-[980px]:after:bg-[linear-gradient(180deg,rgba(26,34,32,.1)_0%,rgba(26,34,32,.55)_100%)]">
-          <Img src={myth.image} alt={myth.imageAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+          <Img
+            src={myth.image}
+            alt={myth.imageAlt}
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         </div>
       </div>
     </section>
@@ -114,10 +123,14 @@ function ResultViz({ v }: { v: Extract<Viz, { kind: 'result' }> }) {
   return (
     <div className="flex flex-col gap-[12px]">
       <div className="flex items-start justify-between gap-[12px]">
-        <span className="text-[14.5px] font-semibold tracking-[-0.01em] text-[var(--ink-1)] leading-[1.3]">{v.name}</span>
+        <span className="text-[14.5px] font-semibold tracking-[-0.01em] text-[var(--ink-1)] leading-[1.3]">
+          {v.name}
+        </span>
         <Badge status={v.status}>{v.statusLabel}</Badge>
       </div>
-      <div className="text-[12.5px] font-semibold text-[var(--acc-700)] bg-[var(--acc-50)] py-[7px] px-[12px] rounded-[9px] self-start">{v.genes}</div>
+      <div className="text-[12.5px] font-semibold text-[var(--acc-700)] bg-[var(--acc-50)] py-[7px] px-[12px] rounded-[9px] self-start">
+        {v.genes}
+      </div>
       <div className="flex flex-col gap-[3px] bg-white border border-[var(--ink-line)] rounded-[12px] py-[12px] px-[14px]">
         <span className="text-[11px] font-bold tracking-[0.08em] uppercase text-[var(--ink-3)]">Interpretation</span>
         <span className="text-[13.5px] leading-[1.5] text-[var(--ink-2)]">{v.interpretation}</span>
@@ -135,12 +148,19 @@ function RowsViz({ v }: { v: Extract<Viz, { kind: 'rows' }> }) {
   return (
     <div className="flex flex-col gap-[12px]">
       {v.rows.map((r) => (
-        <div key={r.label} className="flex items-center justify-between gap-[12px] bg-white border border-[var(--ink-line)] rounded-[12px] py-[11px] px-[14px]">
+        <div
+          key={r.label}
+          className="flex items-center justify-between gap-[12px] bg-white border border-[var(--ink-line)] rounded-[12px] py-[11px] px-[14px]"
+        >
           <span className="text-[13.5px] font-medium text-[var(--ink-1)]">{r.label}</span>
           <Badge status={r.status}>{r.statusLabel}</Badge>
         </div>
       ))}
-      {v.note && <div className="text-[13px] leading-[1.5] text-[var(--ink-2)] bg-white border border-[var(--ink-line)] rounded-[12px] py-[13px] px-[15px]">{v.note}</div>}
+      {v.note && (
+        <div className="text-[13px] leading-[1.5] text-[var(--ink-2)] bg-white border border-[var(--ink-line)] rounded-[12px] py-[13px] px-[15px]">
+          {v.note}
+        </div>
+      )}
     </div>
   );
 }
@@ -179,10 +199,17 @@ function PillsViz({ v }: { v: Extract<Viz, { kind: 'pills' }> }) {
     <div className="flex flex-col gap-[12px]">
       <div className="flex flex-wrap gap-[8px]">
         {v.pills.map((p) => (
-          <span key={p.label} className={cn('text-[12px] font-semibold py-[6px] px-[13px] rounded-full', PILL[p.status])}>{p.label}</span>
+          <span
+            key={p.label}
+            className={cn('text-[12px] font-semibold py-[6px] px-[13px] rounded-full', PILL[p.status])}
+          >
+            {p.label}
+          </span>
         ))}
       </div>
-      <div className="text-[13px] leading-[1.5] text-[var(--ink-2)] bg-white border border-[var(--ink-line)] rounded-[12px] py-[13px] px-[15px]">{v.note}</div>
+      <div className="text-[13px] leading-[1.5] text-[var(--ink-2)] bg-white border border-[var(--ink-line)] rounded-[12px] py-[13px] px-[15px]">
+        {v.note}
+      </div>
     </div>
   );
 }
@@ -208,24 +235,38 @@ function PanelCard({ panel }: { panel: Panel }) {
       className="group grid grid-cols-2 rounded-[var(--r-lg)] overflow-hidden border border-[var(--ink-line)] bg-white shadow-[var(--sh-1)] transition-[box-shadow,transform] duration-500 ease-[var(--e-out)] hover:-translate-y-[3px] hover:shadow-[var(--sh-2)] scroll-mt-[98px] max-[980px]:grid-cols-1"
     >
       <div className="p-[clamp(24px,2.4vw,32px)]">
-        <span className="inline-flex items-center justify-center w-[38px] h-[38px] rounded-[11px] bg-[var(--acc-50)] text-[var(--acc-700)] font-bold text-[15px] tracking-[-0.01em]">{panel.number}</span>
-        <h3 className="font-semibold text-[clamp(19px,1.7vw,23px)] tracking-[-0.015em] leading-[1.18] text-[var(--ink-1)] mt-[16px] mb-[12px]">{panel.title}</h3>
+        <span className="inline-flex items-center justify-center w-[38px] h-[38px] rounded-[11px] bg-[var(--acc-50)] text-[var(--acc-700)] font-bold text-[15px] tracking-[-0.01em]">
+          {panel.number}
+        </span>
+        <h3 className="font-semibold text-[clamp(19px,1.7vw,23px)] tracking-[-0.015em] leading-[1.18] text-[var(--ink-1)] mt-[16px] mb-[12px]">
+          {panel.title}
+        </h3>
         <p className="text-[14.5px] leading-[1.6] text-[var(--ink-2)]">{panel.text}</p>
 
         {panel.indiaNote && (
           <div className="mt-[16px] bg-[var(--acc-50)] rounded-[14px] py-[16px] px-[18px]">
-            <span className="block text-[11px] font-bold tracking-[0.12em] uppercase text-[var(--acc-700)] mb-[7px]">{panel.indiaNote.label}</span>
+            <span className="block text-[11px] font-bold tracking-[0.12em] uppercase text-[var(--acc-700)] mb-[7px]">
+              {panel.indiaNote.label}
+            </span>
             <p className="text-[13.5px] leading-[1.55] text-[var(--ink-2)]">{panel.indiaNote.text}</p>
           </div>
         )}
 
         {hasExplainer && (
           <div className="mt-[20px] pt-[18px] border-t border-[var(--ink-line)]">
-            {panel.explainer?.head && <div className="font-semibold text-[16px] tracking-[-0.01em] text-[var(--ink-1)] mb-[8px]">{panel.explainer.head}</div>}
-            {panel.explainer?.text && <p className="text-[13.5px] leading-[1.6] text-[var(--ink-2)] mb-[16px]">{panel.explainer.text}</p>}
+            {panel.explainer?.head && (
+              <div className="font-semibold text-[16px] tracking-[-0.01em] text-[var(--ink-1)] mb-[8px]">
+                {panel.explainer.head}
+              </div>
+            )}
+            {panel.explainer?.text && (
+              <p className="text-[13.5px] leading-[1.6] text-[var(--ink-2)] mb-[16px]">{panel.explainer.text}</p>
+            )}
             {panel.symptoms && panel.symptoms.length > 0 && (
               <>
-                <div className="text-[11.5px] font-bold tracking-[0.12em] uppercase text-[var(--ink-3)] mb-[11px]">{panel.symptomsTitle ?? 'Symptoms to watch for'}</div>
+                <div className="text-[11.5px] font-bold tracking-[0.12em] uppercase text-[var(--ink-3)] mb-[11px]">
+                  {panel.symptomsTitle ?? 'Symptoms to watch for'}
+                </div>
                 <ul className="list-none flex flex-col gap-[9px]">
                   {panel.symptoms.map((s) => (
                     <li key={s} className="flex gap-[10px] items-start text-[14px] leading-[1.45] text-[var(--ink-2)]">
@@ -248,7 +289,7 @@ function PanelCard({ panel }: { panel: Panel }) {
           'p-[clamp(22px,2.2vw,30px)] bg-[linear-gradient(160deg,var(--acc-50),#fff_120%)] flex flex-col justify-start gap-[11px]',
           panel.flip
             ? 'border-r border-[var(--ink-line)] order-[-1] max-[980px]:order-0 max-[980px]:border-r-0 max-[980px]:border-t max-[980px]:border-[var(--ink-line)]'
-            : 'border-l border-[var(--ink-line)] max-[980px]:border-l-0 max-[980px]:border-t max-[980px]:border-[var(--ink-line)]',
+            : 'border-l border-[var(--ink-line)] max-[980px]:border-l-0 max-[980px]:border-t max-[980px]:border-[var(--ink-line)]'
         )}
       >
         <PanelVizView viz={panel.viz} />
@@ -293,18 +334,35 @@ export function Report({ report }: { report: Test['report'] }) {
 
       <div className="flex flex-col gap-[16px]">
         {report.groups.map((g) => (
-          <div key={g.name} className="grid grid-cols-[220px_1fr] gap-[24px] p-[clamp(20px,2.2vw,28px)] rounded-[var(--r-md)] bg-white border border-[var(--ink-line)] shadow-[var(--sh-1)] max-[980px]:grid-cols-1 max-[980px]:gap-[14px]">
+          <div
+            key={g.name}
+            className="grid grid-cols-[220px_1fr] gap-[24px] p-[clamp(20px,2.2vw,28px)] rounded-[var(--r-md)] bg-white border border-[var(--ink-line)] shadow-[var(--sh-1)] max-[980px]:grid-cols-1 max-[980px]:gap-[14px]"
+          >
             <div>
-              <div className="font-semibold text-[18px] tracking-[-0.01em] text-[var(--ink-1)] leading-[1.2]">{g.name}</div>
-              <span className="inline-block mt-[8px] text-[12px] font-bold tracking-[0.04em] py-[4px] px-[11px] rounded-full bg-[var(--acc-50)] text-[var(--acc-700)]">{g.countLabel}</span>
+              <div className="font-semibold text-[18px] tracking-[-0.01em] text-[var(--ink-1)] leading-[1.2]">
+                {g.name}
+              </div>
+              <span className="inline-block mt-[8px] text-[12px] font-bold tracking-[0.04em] py-[4px] px-[11px] rounded-full bg-[var(--acc-50)] text-[var(--acc-700)]">
+                {g.countLabel}
+              </span>
             </div>
             <div className="flex flex-wrap gap-[8px] content-start">
               {g.items.map((it) =>
                 it.isGene ? (
-                  <span key={it.label} className="text-[13.5px] font-semibold text-[var(--acc-700)] py-[8px] px-[14px] rounded-full bg-[var(--acc-50)] border border-transparent">{it.label}</span>
+                  <span
+                    key={it.label}
+                    className="text-[13.5px] font-semibold text-[var(--acc-700)] py-[8px] px-[14px] rounded-full bg-[var(--acc-50)] border border-transparent"
+                  >
+                    {it.label}
+                  </span>
                 ) : (
-                  <span key={it.label} className="text-[13.5px] font-medium text-[var(--ink-1)] py-[8px] px-[14px] rounded-full bg-[var(--cream)] border border-[var(--ink-line)] transition-[background,border-color] duration-[250ms] ease-[var(--e-out)] hover:bg-[var(--acc-50)] hover:border-[var(--acc-100)]">{it.label}</span>
-                ),
+                  <span
+                    key={it.label}
+                    className="text-[13.5px] font-medium text-[var(--ink-1)] py-[8px] px-[14px] rounded-full bg-[var(--cream)] border border-[var(--ink-line)] transition-[background,border-color] duration-[250ms] ease-[var(--e-out)] hover:bg-[var(--acc-50)] hover:border-[var(--acc-100)]"
+                  >
+                    {it.label}
+                  </span>
+                )
               )}
             </div>
           </div>
@@ -314,12 +372,21 @@ export function Report({ report }: { report: Test['report'] }) {
       {report.grading && report.grading.length > 0 && (
         <div className="mt-[18px] border border-[var(--ink-line)] rounded-[var(--r-md)] bg-white overflow-hidden shadow-[var(--sh-1)]">
           {report.gradingTitle && (
-            <div className="font-semibold text-[15px] text-[var(--ink-1)] py-[16px] px-[20px] border-b border-[var(--ink-line)] bg-[var(--cream)]">{report.gradingTitle}</div>
+            <div className="font-semibold text-[15px] text-[var(--ink-1)] py-[16px] px-[20px] border-b border-[var(--ink-line)] bg-[var(--cream)]">
+              {report.gradingTitle}
+            </div>
           )}
           {report.grading.map((row) => (
-            <div key={row.label} className="flex items-center gap-[14px] py-[14px] px-[20px] border-b border-[var(--ink-line)] flex-wrap last:border-b-0">
-              <Badge status={row.status} className="shrink-0 min-w-[88px] text-center">{STATUS_WORD[row.status]}</Badge>
-              <span className="text-[13.5px] font-semibold text-[var(--ink-1)] basis-[110px] grow-0 shrink-0 max-[980px]:basis-auto">{row.label}</span>
+            <div
+              key={row.label}
+              className="flex items-center gap-[14px] py-[14px] px-[20px] border-b border-[var(--ink-line)] flex-wrap last:border-b-0"
+            >
+              <Badge status={row.status} className="shrink-0 min-w-[88px] text-center">
+                {STATUS_WORD[row.status]}
+              </Badge>
+              <span className="text-[13.5px] font-semibold text-[var(--ink-1)] basis-[110px] grow-0 shrink-0 max-[980px]:basis-auto">
+                {row.label}
+              </span>
               <span className="text-[13.5px] leading-[1.45] text-[var(--ink-2)] flex-1 min-w-[200px]">{row.text}</span>
             </div>
           ))}
@@ -355,12 +422,16 @@ function ExpertCard({ expert }: { expert: Expert }) {
           {expert.avatar.type === 'initials' ? expert.avatar.value : <Icon name={expert.avatar.value} />}
         </div>
         <div>
-          <div className="font-semibold text-[15.5px] tracking-[-0.01em] text-[var(--ink-1)] leading-[1.15]">{expert.name}</div>
+          <div className="font-semibold text-[15.5px] tracking-[-0.01em] text-[var(--ink-1)] leading-[1.15]">
+            {expert.name}
+          </div>
           <div className="text-[12.5px] text-[var(--ink-3)] mt-[2px]">{expert.role}</div>
         </div>
       </div>
       <p className="text-[13.5px] leading-[1.55] text-[var(--ink-2)] mt-auto">{expert.text}</p>
-      <div className="text-[12.5px] text-[var(--ink-3)] mt-[10px] pt-[12px] border-t border-[var(--ink-line)]">{expert.lab}</div>
+      <div className="text-[12.5px] text-[var(--ink-3)] mt-[10px] pt-[12px] border-t border-[var(--ink-line)]">
+        {expert.lab}
+      </div>
     </div>
   );
 }
@@ -420,11 +491,20 @@ export function ActionPlan({ actionPlan }: { actionPlan: Test['actionPlan'] }) {
       <SectionHead eyebrow={actionPlan.eyebrow} title={actionPlan.title} sub={actionPlan.sub} />
 
       <div className="reveal group relative rounded-[var(--r-lg)] overflow-hidden aspect-[21/8] mb-[20px] shadow-[var(--sh-2)] bg-[var(--cream-2)] isolate max-[980px]:aspect-[3/2.4]">
-        <Img src={b.image} alt={b.imageAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-[var(--e-out)] group-hover:scale-105" />
+        <Img
+          src={b.image}
+          alt={b.imageAlt}
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-[var(--e-out)] group-hover:scale-105"
+        />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(31,26,20,.82)_0%,rgba(31,26,20,.5)_42%,rgba(31,26,20,.05)_78%)] max-[980px]:bg-[linear-gradient(180deg,rgba(31,26,20,.35)_0%,rgba(31,26,20,.8)_100%)]" />
         <div className="absolute inset-0 z-[2] flex flex-col justify-center p-[clamp(24px,3vw,46px)] max-w-[560px] max-[980px]:justify-end">
-          <div className="text-[12px] font-bold tracking-[0.18em] uppercase text-[var(--teal-bright)] mb-[12px]">{b.eyebrow}</div>
-          <p className="font-semibold text-[clamp(17px,2vw,24px)] leading-[1.3] tracking-[-0.015em] text-white">{b.text}</p>
+          <div className="text-[12px] font-bold tracking-[0.18em] uppercase text-[var(--teal-bright)] mb-[12px]">
+            {b.eyebrow}
+          </div>
+          <p className="font-semibold text-[clamp(17px,2vw,24px)] leading-[1.3] tracking-[-0.015em] text-white">
+            {b.text}
+          </p>
         </div>
       </div>
 
@@ -442,10 +522,19 @@ function StepCard({ step }: { step: Step }) {
   return (
     <div className="group relative rounded-[var(--r-md)] overflow-hidden bg-white border border-[var(--ink-line)] shadow-[var(--sh-1)] transition-[transform,box-shadow] duration-500 ease-[var(--e-out)] hover:-translate-y-[3px] hover:shadow-[var(--sh-2)]">
       <div className="relative aspect-[16/9] overflow-hidden bg-[var(--cream-2)]">
-        <Img src={step.image} alt={step.imageAlt} loading="lazy" className="w-full h-full object-cover transition-transform duration-[1200ms] ease-[var(--e-out)] group-hover:scale-[1.06]" />
+        <Img
+          src={step.image}
+          alt={step.imageAlt}
+          loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-[1200ms] ease-[var(--e-out)] group-hover:scale-[1.06]"
+        />
       </div>
-      <div className="font-bold text-[15px] w-[42px] h-[42px] rounded-full inline-flex items-center justify-center bg-[var(--acc-500)] text-white border-[3px] border-white relative z-[2] -mt-[21px] ml-[22px]">{step.num}</div>
-      <div className="font-semibold text-[18px] tracking-[-0.012em] text-[var(--ink-1)] mt-[10px] mx-[24px] mb-[9px]">{step.title}</div>
+      <div className="font-bold text-[15px] w-[42px] h-[42px] rounded-full inline-flex items-center justify-center bg-[var(--acc-500)] text-white border-[3px] border-white relative z-[2] -mt-[21px] ml-[22px]">
+        {step.num}
+      </div>
+      <div className="font-semibold text-[18px] tracking-[-0.012em] text-[var(--ink-1)] mt-[10px] mx-[24px] mb-[9px]">
+        {step.title}
+      </div>
       <p className="text-[14px] leading-[1.55] text-[var(--ink-2)] mt-0 mx-[24px] mb-[26px]">{step.text}</p>
     </div>
   );
@@ -494,7 +583,9 @@ export function Faq({ faq }: { faq: Test['faq'] }) {
                 <Plus />
               </span>
             </summary>
-            <div className="pt-0 px-[22px] pb-[20px] text-[14.5px] leading-[1.6] text-[var(--ink-2)] max-w-[660px]">{item.a}</div>
+            <div className="pt-0 px-[22px] pb-[20px] text-[14.5px] leading-[1.6] text-[var(--ink-2)] max-w-[660px]">
+              {item.a}
+            </div>
           </details>
         ))}
       </div>
@@ -518,12 +609,20 @@ export function Bundles({ items }: { items: Bundle[] }) {
             <a
               key={b.name}
               href="#"
-              className={cn('group block py-[22px] px-[24px] rounded-[var(--r-md)] transition-[transform,box-shadow] duration-500 ease-[var(--e-out)] hover:-translate-y-[4px] hover:shadow-[var(--sh-2)]', t.bg)}
+              className={cn(
+                'group block py-[22px] px-[24px] rounded-[var(--r-md)] transition-[transform,box-shadow] duration-500 ease-[var(--e-out)] hover:-translate-y-[4px] hover:shadow-[var(--sh-2)]',
+                t.bg
+              )}
             >
               <div className={cn('text-[11px] font-bold tracking-[0.13em] uppercase mb-[7px]', t.accent)}>{b.tag}</div>
               <div className={cn('font-semibold text-[19px] tracking-[-0.012em] mb-[5px]', t.name)}>{b.name}</div>
               <p className={cn('text-[13.5px] leading-[1.45] mb-[16px]', t.desc)}>{b.desc}</p>
-              <span className={cn('inline-flex items-center gap-[7px] text-[14px] font-semibold transition-[gap] duration-[350ms] ease-[var(--e-out)] group-hover:gap-[11px] [&_svg]:w-[14px] [&_svg]:h-[14px]', t.accent)}>
+              <span
+                className={cn(
+                  'inline-flex items-center gap-[7px] text-[14px] font-semibold transition-[gap] duration-[350ms] ease-[var(--e-out)] group-hover:gap-[11px] [&_svg]:w-[14px] [&_svg]:h-[14px]',
+                  t.accent
+                )}
+              >
                 View <ArrowRight />
               </span>
             </a>
@@ -539,13 +638,24 @@ export function BottomCta({ cta }: { cta: Test['bottomCta'] }) {
   return (
     <section className={SECTION}>
       <div className="relative overflow-hidden py-[clamp(40px,4.6vw,64px)] px-[clamp(28px,3vw,48px)] rounded-[var(--r-lg)] bg-[linear-gradient(150deg,var(--dark-1),var(--dark-3))] text-center before:content-[''] before:absolute before:inset-0 before:bg-[radial-gradient(40vw_40vh_at_80%_-10%,rgba(42,195,162,.18),transparent_60%)]">
-        <h2 className="relative font-semibold text-[clamp(28px,3.2vw,42px)] tracking-[-0.025em] text-white leading-[1.06]">{cta.title}</h2>
-        <p className="relative text-[clamp(15px,1.3vw,17.5px)] text-white/70 mt-[18px] mb-[30px] mx-auto max-w-[520px]">{cta.sub}</p>
-        <Button href="#" variant="accent" size="lg" className="relative bg-[var(--teal-bright)] text-[var(--dark-1)] hover:bg-white">
+        <h2 className="relative font-semibold text-[clamp(28px,3.2vw,42px)] tracking-[-0.025em] text-white leading-[1.06]">
+          {cta.title}
+        </h2>
+        <p className="relative text-[clamp(15px,1.3vw,17.5px)] text-white/70 mt-[18px] mb-[30px] mx-auto max-w-[520px]">
+          {cta.sub}
+        </p>
+        <Button
+          href="#"
+          variant="accent"
+          size="lg"
+          className="relative bg-[var(--teal-bright)] text-[var(--dark-1)] hover:bg-white"
+        >
           {cta.ctaLabel}
           <ArrowRight />
         </Button>
-        {cta.nudge && <p className="relative text-[14px] text-[var(--teal-bright)] font-semibold mt-[22px]">{cta.nudge}</p>}
+        {cta.nudge && (
+          <p className="relative text-[14px] text-[var(--teal-bright)] font-semibold mt-[22px]">{cta.nudge}</p>
+        )}
         <p className="relative text-[13px] text-white/55 mt-[20px]" dangerouslySetInnerHTML={{ __html: cta.trust }} />
       </div>
     </section>

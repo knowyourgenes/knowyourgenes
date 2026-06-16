@@ -60,14 +60,20 @@ export default function KygFooter() {
             <p className="text-[14.5px] leading-[1.6] text-[rgba(250,246,239,.7)] mb-[22px]">
               A genomics brand built for Indian biology. Your health deserves specificity.
             </p>
-            <form className="flex border border-white/[0.12] rounded-full p-[4px] bg-white/[0.04] max-w-[360px]" onSubmit={(e) => e.preventDefault()}>
+            <form
+              className="flex border border-white/[0.12] rounded-full p-[4px] bg-white/[0.04] max-w-[360px]"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <input
                 type="email"
                 placeholder="Your email address"
                 aria-label="Email"
                 className="flex-1 min-w-0 bg-transparent border-0 outline-none text-white py-[10px] px-[16px] text-[13.5px] placeholder:text-[rgba(250,246,239,.5)]"
               />
-              <button type="submit" className="shrink-0 py-[9px] px-[18px] bg-[var(--peach-2)]! text-[var(--ink-1)] rounded-full font-semibold text-[13px] cursor-pointer transition-[background,color] duration-[400ms] ease-[var(--e-out)] hover:bg-[var(--teal-light)]! hover:text-white">
+              <button
+                type="submit"
+                className="shrink-0 py-[9px] px-[18px] bg-[var(--peach-2)]! text-[var(--ink-1)] rounded-full font-semibold text-[13px] cursor-pointer transition-[background,color] duration-[400ms] ease-[var(--e-out)] hover:bg-[var(--teal-light)]! hover:text-white"
+              >
                 Subscribe
               </button>
             </form>
@@ -76,11 +82,16 @@ export default function KygFooter() {
           {/* Link columns */}
           {FOOTER_COLS.map((col) => (
             <div key={col.title}>
-              <div className="text-[11px] tracking-[0.22em] uppercase font-semibold text-[var(--peach-2)] mb-[18px]">{col.title}</div>
+              <div className="text-[11px] tracking-[0.22em] uppercase font-semibold text-[var(--peach-2)] mb-[18px]">
+                {col.title}
+              </div>
               <ul className="flex flex-col gap-[12px]">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} className="text-[14px] text-[rgba(250,246,239,.72)] transition-colors duration-300 ease-[var(--e-out)] hover:text-[var(--teal-light)]">
+                    <a
+                      href={link.href}
+                      className="text-[14px] text-[rgba(250,246,239,.72)] transition-colors duration-300 ease-[var(--e-out)] hover:text-[var(--teal-light)]"
+                    >
                       {link.label}
                     </a>
                   </li>
@@ -96,9 +107,15 @@ export default function KygFooter() {
             KYG <span className="text-[var(--peach-2)] mx-[4px]">·</span> Health Without Guesswork.
           </div>
           <div className="flex gap-[18px]">
-            <a href="#" aria-label="Instagram" className="transition-colors duration-300 hover:text-[var(--cream)]">Instagram</a>
-            <a href="#" aria-label="LinkedIn" className="transition-colors duration-300 hover:text-[var(--cream)]">LinkedIn</a>
-            <a href="#" aria-label="YouTube" className="transition-colors duration-300 hover:text-[var(--cream)]">YouTube</a>
+            <a href="#" aria-label="Instagram" className="transition-colors duration-300 hover:text-[var(--cream)]">
+              Instagram
+            </a>
+            <a href="#" aria-label="LinkedIn" className="transition-colors duration-300 hover:text-[var(--cream)]">
+              LinkedIn
+            </a>
+            <a href="#" aria-label="YouTube" className="transition-colors duration-300 hover:text-[var(--cream)]">
+              YouTube
+            </a>
           </div>
         </div>
       </div>
