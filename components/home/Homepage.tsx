@@ -1,6 +1,3 @@
-// @ts-nocheck
-// Generated from kyg.html by scripts/convert-kyg.py. Re-run the script to
-// regenerate; the auth-aware NavAuthCta is part of the template so it survives.
 'use client';
 
 import { useEffect } from 'react';
@@ -4920,10 +4917,10 @@ function NavAuthCta() {
               </svg>
             </Link>
             <UserNav
-              name={user.name ?? user.email ?? 'User'}
-              email={user.email ?? ''}
-              role={user.role}
-              image={user.image ?? null}
+              name={user!.name ?? user!.email ?? 'User'}
+              email={user!.email ?? ''}
+              role={user!.role}
+              image={user!.image ?? null}
             />
           </>
         ) : (
@@ -4952,6 +4949,7 @@ export default function HomePage() {
       // ===== Sticky nav state =====
       const nav = document.getElementById('nav');
       const onScroll = () => {
+        if (!nav) return;
         if (window.scrollY > 12) nav.classList.add('is-scrolled');
         else nav.classList.remove('is-scrolled');
       };
@@ -4959,8 +4957,8 @@ export default function HomePage() {
       onScroll();
 
       // ===== Mega menu (hover + click + keyboard) =====
-      const items = document.querySelectorAll('.nav__item[data-mm]');
-      let openTimer;
+      const items = document.querySelectorAll<HTMLElement>('.nav__item[data-mm]');
+      let openTimer: ReturnType<typeof setTimeout> | undefined;
       items.forEach((item) => {
         const open = () => {
           clearTimeout(openTimer);
@@ -4972,8 +4970,9 @@ export default function HomePage() {
         };
         item.addEventListener('mouseenter', open);
         item.addEventListener('mouseleave', close);
-        item.querySelector('.nav__link').addEventListener('focus', open);
-        item.querySelector('.nav__link').addEventListener('click', (e) => {
+        const link = item.querySelector('.nav__link');
+        link?.addEventListener('focus', open);
+        link?.addEventListener('click', (e) => {
           e.preventDefault();
           if (item.classList.contains('is-open')) {
             item.classList.remove('is-open');
@@ -4984,7 +4983,8 @@ export default function HomePage() {
         });
       });
       document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav__item')) items.forEach((i) => i.classList.remove('is-open'));
+        const target = e.target as Element | null;
+        if (!target?.closest('.nav__item')) items.forEach((i) => i.classList.remove('is-open'));
       });
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') items.forEach((i) => i.classList.remove('is-open'));
@@ -5010,8 +5010,8 @@ export default function HomePage() {
       }
 
       // ===== Parallax (rAF, transform translate3d, clamped to keep images inside rounded frames) =====
-      const parallaxEls = Array.from(document.querySelectorAll('.parallax'));
-      const ctaParallaxEls = Array.from(document.querySelectorAll('.parallax-cta'));
+      const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>('.parallax'));
+      const ctaParallaxEls = Array.from(document.querySelectorAll<HTMLElement>('.parallax-cta'));
       const heroImg = document.getElementById('heroImg');
       let ticking = false;
 
@@ -5020,6 +5020,7 @@ export default function HomePage() {
         const winH = window.innerHeight;
         parallaxEls.forEach((el) => {
           const parent = el.parentElement;
+          if (!parent) return;
           const rect = parent.getBoundingClientRect();
           if (rect.bottom > -200 && rect.top < winH + 200) {
             // Progress: -1 (entering bottom) → 0 (centered) → +1 (leaving top)
@@ -5027,7 +5028,7 @@ export default function HomePage() {
             const progress = (center - winH / 2) / ((winH + rect.height) / 2);
             const clamped = Math.max(-1, Math.min(1, progress));
             // ±48px range - clearly visible movement, sits inside the 12% buffer
-            const speed = parseFloat(el.dataset.speed) || 0.14;
+            const speed = parseFloat(el.dataset.speed ?? '') || 0.14;
             const offset = -clamped * (48 + speed * 100);
             el.style.transform = `translate3d(0, ${Math.round(offset)}px, 0)`;
           }
@@ -5041,7 +5042,7 @@ export default function HomePage() {
             const center = rect.top + rect.height / 2;
             const progress = (center - winH / 2) / ((winH + rect.height) / 2);
             const clamped = Math.max(-1, Math.min(1, progress));
-            const speed = parseFloat(el.dataset.ctaSpeed) || 0.12;
+            const speed = parseFloat(el.dataset.ctaSpeed ?? '') || 0.12;
             const offset = -clamped * (80 + speed * 200);
             const tilt = getComputedStyle(el).getPropertyValue('--tilt').trim() || '';
             el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0) ${tilt}`;
@@ -5068,9 +5069,9 @@ export default function HomePage() {
       applyParallax();
 
       // ===== Cursor-follow 3D tilt on the Trust shield =====
-      const shield = document.querySelector('.privacy__shield');
+      const shield = document.querySelector<HTMLElement>('.privacy__shield');
       if (shield) {
-        let raf = null;
+        let raf: number | null = null;
         let rxTarget = 0,
           ryTarget = 0;
         let rxCurrent = 0,
@@ -5121,10 +5122,10 @@ export default function HomePage() {
       }
 
       // ===== Smooth scroll for in-page anchors =====
-      document.querySelectorAll('a[href^="#"]').forEach((link) => {
-        link.addEventListener('click', function (e) {
-          const id = this.getAttribute('href');
-          if (id.length > 1) {
+      document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const id = link.getAttribute('href');
+          if (id && id.length > 1) {
             const target = document.querySelector(id);
             if (target) {
               e.preventDefault();
@@ -5140,15 +5141,15 @@ export default function HomePage() {
       // ===== Package carousel (right column) =====
       const testsTrack = document.getElementById('testsTrack');
       if (testsTrack) {
-        const cards = Array.from(testsTrack.querySelectorAll('.test-card'));
-        const dots = Array.from(document.querySelectorAll('.tests__dot'));
-        const prevBtn = document.getElementById('testsPrev');
-        const nextBtn = document.getElementById('testsNext');
+        const cards = Array.from(testsTrack.querySelectorAll<HTMLElement>('.test-card'));
+        const dots = Array.from(document.querySelectorAll<HTMLElement>('.tests__dot'));
+        const prevBtn = document.getElementById('testsPrev') as HTMLButtonElement | null;
+        const nextBtn = document.getElementById('testsNext') as HTMLButtonElement | null;
         let currentIndex = 0;
         let isProgrammatic = false;
-        let scrollTimer = null;
+        let scrollTimer: number | undefined;
 
-        const scrollToCard = (index) => {
+        const scrollToCard = (index: number) => {
           const card = cards[index];
           if (!card) return;
           isProgrammatic = true;
@@ -5158,7 +5159,7 @@ export default function HomePage() {
           }, 600);
         };
 
-        const setActive = (index) => {
+        const setActive = (index: number) => {
           currentIndex = Math.max(0, Math.min(cards.length - 1, index));
           cards.forEach((c, i) => c.classList.toggle('is-current', i === currentIndex));
           dots.forEach((d, i) => {
@@ -5170,7 +5171,7 @@ export default function HomePage() {
           if (nextBtn) nextBtn.disabled = currentIndex === cards.length - 1;
         };
 
-        const goTo = (index) => {
+        const goTo = (index: number) => {
           setActive(index);
           scrollToCard(currentIndex);
         };
@@ -5207,7 +5208,7 @@ export default function HomePage() {
         );
 
         dots.forEach((dot) => {
-          dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10)));
+          dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index ?? '', 10)));
         });
         if (prevBtn) prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
         if (nextBtn) nextBtn.addEventListener('click', () => goTo(currentIndex + 1));
@@ -5250,7 +5251,7 @@ export default function HomePage() {
         }
 
         // Re-align current card on resize
-        let resizeTimer = null;
+        let resizeTimer: number | undefined;
         window.addEventListener('resize', () => {
           window.clearTimeout(resizeTimer);
           resizeTimer = window.setTimeout(() => {
@@ -5267,7 +5268,7 @@ export default function HomePage() {
         const burgerBtn = document.getElementById('burger');
         const navEl = document.getElementById('nav');
         if (burgerBtn && navEl) {
-          const setOpen = (open) => {
+          const setOpen = (open: boolean) => {
             navEl.classList.toggle('is-menu-open', open);
             burgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
             // Lock body scroll while the overlay menu is open.

@@ -22,7 +22,7 @@ export function useRevealOnScroll(rootRef: RefObject<HTMLElement | null>) {
           }
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.1, rootMargin: '0px 0px -8% 0px' }
     );
     root.querySelectorAll('.reveal, .reveal-r').forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -53,7 +53,7 @@ export function useScrollSpy(ids: string[], fallback?: string) {
       (entries) => {
         for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
       },
-      { rootMargin: '-30% 0px -55% 0px', threshold: 0 },
+      { rootMargin: '-30% 0px -55% 0px', threshold: 0 }
     );
     els.forEach((el) => spy.observe(el));
     return () => spy.disconnect();
