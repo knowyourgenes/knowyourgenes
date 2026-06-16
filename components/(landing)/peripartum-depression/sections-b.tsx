@@ -1,8 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Container, Eyebrow, GradientText, SheenButton, gTeal } from '../_shared/ui';
-import { Activity, ArrowRight, Calendar, Check, Dna, Heart, Scale, ShieldCheck, Sparkles, UserRound, X } from '../_shared/icons';
+import { Container, Eyebrow, FigIcon, GradientText, SheenButton, gTeal } from '../_shared/ui';
 
 /* ==================== 6 · WHAT YOU GET ==================== */
 
@@ -26,7 +25,7 @@ function MockReport() {
         <div className="pointer-events-none absolute -right-6 -top-8 size-[224px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[40px]" />
         <div className="relative flex items-center justify-between">
           <span className="inline-flex items-center gap-[6px] text-[#FAF6EF]">
-            <Dna className="size-[16px] text-[#F3D5B2]" />
+            <FigIcon src="/landing/_icons/kyg-logo-mark.svg" className="size-[16px] text-[#F3D5B2]" />
             <span className="text-[11px] font-bold tracking-[-0.02em]">KnowYourGenes</span>
           </span>
           <span className="rounded-full bg-white/15 px-[12px] py-[6px] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-[8px]">
@@ -37,7 +36,7 @@ function MockReport() {
           Peripartum Depression Risk
         </div>
         <div className="relative mt-[8px] flex items-center gap-[8px]">
-          <Activity className="size-[20px] text-[#FAF6EF]" />
+          <FigIcon src="/landing/_icons/report-activity.svg" className="size-[20px] text-[#FAF6EF]" />
           <span className="text-[20px] font-semibold leading-[1.2] tracking-[-0.025em] text-[#FAF6EF]">
             COMT · Catechol-O-methyltransferase
           </span>
@@ -70,7 +69,7 @@ function MockReport() {
 
         <div className="flex flex-col gap-[5px] rounded-[16px] bg-[rgba(14,77,75,0.06)] p-[16px]">
           <div className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">
-            <Sparkles className="size-[16px] text-[#0E4D4B]" />
+            <FigIcon src="/landing/_icons/sparkles.svg" className="size-[16px] text-[#0E4D4B]" />
             Recommendation
           </div>
           <p className="text-[13.5px] leading-[21.94px] text-[#2D2A24]">
@@ -118,7 +117,7 @@ export function WhatYouGetSection() {
       <Container>
         <div className="grid items-start gap-[56px] lg:grid-cols-2 lg:gap-[48px]">
           <div className="reveal">
-            <Eyebrow icon={<Sparkles className="size-[19px]" />}>What you get</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-whatyouget.svg" className="size-[19px]" />}>What you get</Eyebrow>
             <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.05] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
               Your COMT result.{' '}
               <span className="font-medium text-[#6B6358]">And a plan that exists before the vulnerability does.</span>
@@ -131,7 +130,7 @@ export function WhatYouGetSection() {
               {GET_BULLETS.map((b, i) => (
                 <li key={i} className="flex items-start gap-[14px]">
                   <span className="mt-[1px] grid size-[22px] shrink-0 place-items-center rounded-full bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
-                    <Check className="size-[14px]" />
+                    <FigIcon src="/landing/_icons/check.svg" className="size-[14px]" />
                   </span>
                   <span className="text-[15.5px] leading-[23.25px] text-[#2D2A24]">{b}</span>
                 </li>
@@ -140,7 +139,7 @@ export function WhatYouGetSection() {
 
             <div className="mt-[32px] flex flex-col gap-[8px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[24px] pb-[32px] pt-[36px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
-                <Sparkles className="size-[17px]" />
+                <FigIcon src="/landing/_icons/sparkles.svg" className="size-[17px]" />
                 And this is just Panel 03 of 5
               </span>
               <p className="text-[15px] leading-[24.38px] text-[#2D2A24]">
@@ -167,22 +166,22 @@ export function WhatYouGetSection() {
 
 const CHANGES = [
   {
-    icon: UserRound,
+    icon: '/landing/_icons/user-round.svg',
     title: 'Your partner knows.',
     body: 'Instead of reading your emotional state as personal rejection or moodiness, your partner understands that your nervous system processes stress differently. A profoundly different conversation to have before a baby arrives, versus in the middle of a crisis you can’t name.',
   },
   {
-    icon: ShieldCheck,
+    icon: '/landing/_icons/shield-check.svg',
     title: 'Your doctor knows.',
     body: 'Your OB-GYN or psychiatrist can flag your COMT result in your antenatal record. Mental health check-ins get scheduled during pregnancy, not just after delivery. “How are you feeling emotionally?” becomes part of every appointment, not an afterthought.',
   },
   {
-    icon: Heart,
+    icon: '/landing/_icons/heart.svg',
     title: 'You know.',
     body: 'If at 18 weeks you feel flat, anxious, or unlike yourself, you have a name for it. You know it can start before the birth, because that’s what the research says for 50% of cases. You know it is not a reflection of how much you love your baby. It has a biological basis. That knowledge is everything.',
   },
   {
-    icon: Activity,
+    icon: '/landing/_icons/activity.svg',
     title: 'Your lifestyle adjusts.',
     body: 'The recommendation is specific: reduce caffeine, processed foods, alcohol. Meditate daily. Prioritise rest. Manageable changes, far more powerful when they are targeted to a known genetic vulnerability rather than applied generically as “wellness advice.”',
   },
@@ -193,7 +192,7 @@ export function WhatKnowingChangesSection() {
     <section id="changes" className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<Sparkles className="size-[19px]" />}>What knowing changes</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-knowing.svg" className="size-[19px]" />}>What knowing changes</Eyebrow>
           <h2 className="mt-[18px] text-[34px] font-semibold leading-[1.08] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             What changes when you know your COMT variant.
           </h2>
@@ -203,13 +202,13 @@ export function WhatKnowingChangesSection() {
         </div>
 
         <div className="mt-[40px] grid gap-[24px] lg:grid-cols-2">
-          {CHANGES.map(({ icon: Icon, title, body }) => (
+          {CHANGES.map(({ icon, title, body }) => (
             <div
               key={title}
               className="reveal flex flex-col gap-[7px] rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
             >
               <span className="grid size-[56px] place-items-center rounded-[16px] bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
-                <Icon className="size-[28px]" />
+                <FigIcon src={icon} className="size-[28px]" />
               </span>
               <h3 className="mt-[11px] text-[19px] font-semibold leading-[28.5px] tracking-[-0.025em] text-[#1F1A14]">
                 {title}
@@ -226,7 +225,7 @@ export function WhatKnowingChangesSection() {
           <div className="pointer-events-none absolute -right-10 -top-12 size-[224px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[64px]" />
           <div className="relative flex flex-col items-start gap-[20px] sm:flex-row sm:items-center">
             <span className="grid size-[48px] shrink-0 place-items-center rounded-[16px] bg-white/10 text-[#F3D5B2]">
-              <Sparkles className="size-[26px]" />
+              <FigIcon src="/landing/_icons/sparkles.svg" className="size-[26px]" />
             </span>
             <p className="text-[22px] font-semibold leading-[1.28] tracking-[-0.015em] sm:text-[25px] lg:text-[27px] lg:leading-[34.56px]">
               <span className="text-[#FAF6EF]">
@@ -259,7 +258,7 @@ export function DataStatsSection() {
     <section className="bg-[#15201E] py-[80px] lg:py-[100px]">
       <Container>
         <div className="reveal max-w-[720px]">
-          <Eyebrow tone="dark" icon={<Activity className="size-[19px]" />}>By the numbers</Eyebrow>
+          <Eyebrow tone="dark" icon={<FigIcon src="/landing/_icons/eb-data.svg" className="size-[19px]" />}>By the numbers</Eyebrow>
           <h2 className="mt-[22px] text-[34px] font-semibold leading-[1.06] tracking-[-0.022em] text-[#FAF6EF] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             The numbers most people have never been told.
           </h2>
@@ -342,7 +341,7 @@ export function BeforeAfterSection() {
     <section className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<Scale className="size-[19px]" />}>Before &amp; after</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-beforeafter.svg" className="size-[19px]" />}>Before &amp; after</Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.07] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             The same woman. <span className="font-medium text-[#6B6358]">Before she knew what was happening.</span>
             <br />
@@ -359,7 +358,7 @@ export function BeforeAfterSection() {
               <div className="flex flex-col gap-[12px] bg-[rgba(245,237,223,0.6)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
                   <span className="grid size-[28px] place-items-center rounded-[8px] bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
-                    <X className="size-[16px]" />
+                    <FigIcon src="/landing/_icons/x.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Before</span>
                 </span>
@@ -368,7 +367,7 @@ export function BeforeAfterSection() {
               <div className="flex flex-col gap-[12px] bg-[rgba(14,77,75,0.06)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
                   <span className="grid size-[28px] place-items-center rounded-[8px] text-[#0E4D4B]">
-                    <Check className="size-[16px]" />
+                    <FigIcon src="/landing/_icons/check.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">After</span>
                 </span>
@@ -422,7 +421,7 @@ function ForYouChecklist() {
             >
               <span className="mt-[1px] grid size-[24px] shrink-0 place-items-center">
                 <span className="sx-box grid size-[24px] place-items-center rounded-[8px] border-2 border-[rgba(14,77,75,0.3)]">
-                  <Check className="sx-tick size-[14px] text-[#FAF6EF]" />
+                  <FigIcon src="/landing/_icons/check.svg" className="sx-tick size-[14px] text-[#FAF6EF]" />
                 </span>
               </span>
               <span className="text-[15.5px] leading-[21.31px] text-[#2D2A24]">{label}</span>
@@ -435,7 +434,7 @@ function ForYouChecklist() {
         <div className="pointer-events-none absolute -top-9 right-0 size-[144px] rounded-full bg-[rgba(37,181,171,0.15)] blur-[40px]" />
         <div className="relative flex items-center gap-[20px]">
           <span className="relative grid size-[64px] shrink-0 place-items-center rounded-full bg-white/10 text-[#F3D5B2]">
-            <Heart className="size-[28px]" />
+            <FigIcon src="/landing/_icons/heart.svg" className="size-[28px]" />
             {count > 0 && (
               <span className="absolute -right-1 -top-1 grid size-[24px] place-items-center rounded-full bg-[#F3D5B2] font-hind text-[13px] font-semibold text-[#1F1A14]">
                 {count}
@@ -455,7 +454,7 @@ function ForYouChecklist() {
         >
           <span className="relative z-[1] inline-flex items-center gap-[8px]">
             Know my genetic vulnerability
-            <ArrowRight className="size-[19px]" />
+            <FigIcon src="/landing/_icons/arrow.svg" className="size-[19px]" />
           </span>
         </a>
       </div>
@@ -476,7 +475,7 @@ export function WhoThisIsForSection() {
       <Container>
         <div className="grid items-start gap-[48px] lg:grid-cols-2">
           <div className="reveal">
-            <Eyebrow icon={<Heart className="size-[19px]" />}>Who this is for</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-heart.svg" className="size-[19px]" />}>Who this is for</Eyebrow>
             <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.05] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
               This test is for you if…
             </h2>
@@ -484,7 +483,7 @@ export function WhoThisIsForSection() {
               Every line is a gentle tap on the shoulder. Tap the ones that feel like you.
             </p>
             <div className="mt-[24px] flex items-center gap-[12px] rounded-[20px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[20px] pb-[20px] pt-[28px]">
-              <ShieldCheck className="size-[26px] shrink-0 text-[#0E4D4B]" />
+              <FigIcon src="/landing/_icons/shield-check.svg" className="size-[26px] shrink-0 text-[#0E4D4B]" />
               <p className="text-[14px] leading-[20px] text-[#2D2A24]">
                 Whatever you select stays on your device. Nothing is submitted. This is just for you.
               </p>
@@ -556,7 +555,7 @@ export function AtEveryAgeSection() {
     <section className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[780px]">
-          <Eyebrow icon={<Calendar className="size-[19px]" />}>At every age</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-ateveryage.svg" className="size-[19px]" />}>At every age</Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.07] tracking-[-0.022em] sm:text-[40px] lg:text-[44px] lg:leading-[48.4px]">
             <span className="text-[#1F1A14]">Your COMT variant doesn’t only matter</span>{' '}
             <span className="font-medium text-[#6B6358]">during pregnancy.</span>
@@ -564,14 +563,7 @@ export function AtEveryAgeSection() {
         </div>
 
         <div className="relative mt-[56px]">
-          <div
-            className="pointer-events-none absolute left-0 right-0 top-[11px] hidden h-[2px] rounded-full lg:block"
-            style={{
-              background:
-                'linear-gradient(90deg, rgba(31,26,20,0.05) 0%, rgba(31,26,20,0) 10%, #25B5AB 34%, #0E4D4B 50%, #25B5AB 66%, rgba(37,181,171,0) 90%, rgba(31,26,20,0.05) 100%)',
-              boxShadow: '0 0 10px rgba(37,181,171,0.3)',
-            }}
-          />
+          
           <div className="grid gap-[40px] sm:grid-cols-2 lg:grid-cols-4 lg:gap-[24px]">
             {AGES.map((a) => (
               <div key={a.age} className="reveal flex flex-col gap-[7px]">

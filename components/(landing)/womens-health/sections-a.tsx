@@ -3,26 +3,23 @@
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Container, Eyebrow, FigIcon, GhostButton, GradientText, SheenButton, gTeal } from '../_shared/ui';
-import { ArrowRight, Award, BadgeCheck, Check, Dna, Microscope, ShieldCheck, Sparkles } from '../_shared/icons';
 
 /* ============================ 1 · HERO ============================ */
 
 export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden pt-[44px] pb-[80px] sm:pt-[56px] lg:pb-[96px]">
-      {/* soft peach blobs (all sizes) */}
+      {/* exact Figma decorative background — node 195:142 (peach blobs · dashed DNA-helix motif · accent dots) */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10"
+        className="pointer-events-none absolute inset-0 -z-10 hidden bg-[length:100%_100%] bg-no-repeat lg:block"
+        style={{ backgroundImage: 'url(/landing/womens-health/hero-bg.svg)' }}
+      />
+      {/* mobile: soft peach wash */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 lg:hidden"
         style={{
           background:
             'radial-gradient(42% 54% at 0% -6%, rgba(248,228,204,0.9) 0%, rgba(248,228,204,0) 56%), radial-gradient(34% 44% at 36% 104%, rgba(248,228,204,0.72) 0%, rgba(248,228,204,0) 58%)',
-        }}
-      />
-      {/* dark-teal organic shape behind the photo — only on the desktop two-column layout */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 hidden lg:block"
-        style={{
-          background: 'radial-gradient(48% 58% at 83% 34%, #0E4D4B 0%, #0E4D4B 20%, rgba(14,77,75,0) 72%)',
         }}
       />
       <Container>
@@ -35,7 +32,7 @@ export function HeroSection() {
               </span>
               <span className="text-[13.5px] font-semibold leading-[20.25px] text-[#FAF6EF]">
                 PCOS Genetic Risk Test · At-home saliva kit
-              </span>
+              </span> 
             </span>
 
             <h1 className="mt-[22px]">
@@ -72,7 +69,7 @@ export function HeroSection() {
             <div className="mt-[26px] flex flex-wrap items-center gap-x-[22px] gap-y-[10px]">
               {['No needles', 'Results in 7 days', '30-min free counselling'].map((t) => (
                 <span key={t} className="inline-flex items-center gap-[6px] text-[13.5px] font-medium text-[#6B6358]">
-                  <Check className="size-[16px] text-[#0E4D4B]" />
+                  <FigIcon src="/landing/_icons/check.svg" className="size-[16px] text-[#0E4D4B]" />
                   {t}
                 </span>
               ))}
@@ -88,10 +85,10 @@ export function HeroSection() {
                 background: 'radial-gradient(60% 60% at 50% 45%, rgba(250,246,239,0.55) 0%, rgba(250,246,239,0) 72%)',
               }}
             />
-            {/* dashed decorative shape — exact Figma asset, sits behind the photo and extends to the right */}
+            {/* DNA double-helix motif — exact Figma asset (node 195:142), sits behind the photo and to its right */}
             <div
-              className="pointer-events-none absolute right-[-104px] top-1/2 aspect-[484/599] w-[116%] -translate-y-1/2 bg-contain bg-center bg-no-repeat"
-              style={{ backgroundImage: 'url(/landing/womens-health/deco-ring.svg)' }}
+              className="pointer-events-none absolute left-[82%] top-1/2 aspect-[173/556] h-[88%] -translate-y-1/2 bg-contain bg-center bg-no-repeat"
+              style={{ backgroundImage: 'url(/landing/womens-health/hero-helix.svg)' }}
             />
 
             {/* photo card */}
@@ -150,7 +147,7 @@ export function HeroSection() {
         {/* social-proof line */}
         <div className="reveal mt-[64px] flex flex-col items-start gap-[16px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
           <span className="inline-flex shrink-0 items-center gap-[8px]">
-            <ShieldCheck className="size-[19px] text-[#0E4D4B]" />
+            <FigIcon src="/landing/_icons/shield-check.svg" className="size-[19px] text-[#0E4D4B]" />
             <span className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-[#0E4D4B]">Women’s Health DNA</span>
           </span>
           <p className="text-[15px] leading-[24px] text-[#2D2A24]">
@@ -167,11 +164,11 @@ export function HeroSection() {
 /* ========================= TRUST BAND ========================= */
 
 const TRUST_BADGES = [
-  { icon: Award, title: 'NABL Accredited', sub: 'Cert. MC-6400' },
-  { icon: BadgeCheck, title: 'ISO Certified', sub: '9001 & 27001' },
-  { icon: Dna, title: 'Illumina SNP', sub: 'Genotyping array' },
-  { icon: ShieldCheck, title: '99%+ Accuracy', sub: 'Reproducibility' },
-  { icon: Microscope, title: 'Expert-reviewed', sub: 'Human geneticist' },
+  { icon: '/landing/_icons/cert-nabl.svg', title: 'NABL Accredited', sub: 'Cert. MC-6400' },
+  { icon: '/landing/_icons/cert-iso.svg', title: 'ISO Certified', sub: '9001 & 27001' },
+  { icon: '/landing/_icons/cert-illumina.svg', title: 'Illumina SNP', sub: 'Genotyping array' },
+  { icon: '/landing/_icons/cert-accuracy.svg', title: '99%+ Accuracy', sub: 'Reproducibility' },
+  { icon: '/landing/_icons/cert-expert.svg', title: 'Expert-reviewed', sub: 'Human geneticist' },
 ];
 
 export function TrustBand() {
@@ -209,13 +206,13 @@ export function TrustBand() {
         </div>
 
         <div className="mt-[36px] grid grid-cols-2 gap-[16px] sm:grid-cols-3 lg:grid-cols-5">
-          {TRUST_BADGES.map(({ icon: Icon, title, sub }) => (
+          {TRUST_BADGES.map(({ icon, title, sub }) => (
             <div
               key={title}
               className="flex flex-col items-center gap-[12px] rounded-[24px] border border-white/10 bg-white/5 p-[20px] text-center"
             >
               <span className="grid size-[48px] place-items-center rounded-[16px] bg-[rgba(37,181,171,0.15)] text-[#25B5AB]">
-                <Icon className="size-[26px]" />
+                <FigIcon src={icon} className="size-[26px]" />
               </span>
               <div>
                 <div className="text-[14.5px] font-semibold leading-[18px] text-[#FAF6EF]">{title}</div>
@@ -325,7 +322,7 @@ export function NotAloneSection() {
               'linear-gradient(90deg, rgba(240,213,192,0.6) 0%, rgba(248,228,204,0.5) 50%, rgba(243,213,178,0.4) 100%)',
           }}
         >
-          <Sparkles className="size-[40px] shrink-0 text-[#C76842]" />
+          <FigIcon src="/landing/_icons/sparkles.svg" className="size-[40px] shrink-0 text-[#C76842]" />
           <p className="text-[20px] font-semibold leading-[1.25] tracking-[-0.015em] text-[#1F1A14] sm:text-[24px] lg:text-[27px] lg:leading-[33.75px]">
             PCOS is not a lifestyle failure. It’s a genetic predisposition. Your{' '}
             <GradientText image="linear-gradient(165deg,#C76842 0%,#D4895E 0%,#0E4D4B 91%,#25B5AB 100%)" className="font-semibold">
@@ -408,7 +405,7 @@ function SymptomChecklist() {
             >
               <span className="mt-[1px] grid size-[24px] shrink-0 place-items-center">
                 <span className="sx-box grid size-[24px] place-items-center rounded-[8px] border-2 border-[rgba(14,77,75,0.3)]">
-                  <Check className="sx-tick size-[14px] text-[#FAF6EF]" />
+                  <FigIcon src="/landing/_icons/check.svg" className="sx-tick size-[14px] text-[#FAF6EF]" />
                 </span>
               </span>
               <span className="text-[15.5px] leading-[21.31px] text-[#2D2A24]">{label}</span>
@@ -458,7 +455,7 @@ function SymptomChecklist() {
         >
           <span className="relative z-[1] inline-flex items-center gap-[8px]">
             Check my PCOS genetic risk
-            <ArrowRight className="size-[19px]" />
+            <FigIcon src="/landing/_icons/arrow.svg" className="size-[19px]" />
           </span>
         </a>
       </div>

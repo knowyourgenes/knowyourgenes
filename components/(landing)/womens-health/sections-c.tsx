@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { Container, Eyebrow, FigIcon, GradientText, SheenButton, gCopper } from '../_shared/ui';
-import { FileText, Microscope, Package, Quote } from '../_shared/icons';
 
 /* ==================== 8 · TESTIMONIALS ==================== */
 
@@ -45,7 +44,9 @@ export function TestimonialsSection() {
       />
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-testimonials.svg" className="size-[19px]" />}>In their words</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-testimonials.svg" className="size-[19px]" />}>
+            In their words
+          </Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.06] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             What women with PCOS discovered.
           </h2>
@@ -57,7 +58,7 @@ export function TestimonialsSection() {
               key={t.name}
               className="reveal flex flex-col rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/80 p-[32px] shadow-[0_4px_14px_rgba(45,32,18,0.04),0_1px_2px_rgba(45,32,18,0.04)]"
             >
-              <Quote className="size-[40px] text-[#0E4D4B]/30" />
+              <FigIcon src="/landing/_icons/quote.svg" className="size-[40px] text-[#0E4D4B]/30" />
               <blockquote className="mt-[16px] grow text-[15px] leading-[24.38px] text-[#2D2A24]">{t.quote}</blockquote>
               <figcaption className="mt-[24px] flex items-center gap-[14px] border-t border-[rgba(31,26,20,0.08)] pt-[20px]">
                 <span className="relative size-[48px] shrink-0 overflow-hidden rounded-full">
@@ -134,7 +135,9 @@ export function AtEveryAgeSection() {
     <section className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-ateveryage.svg" className="size-[19px]" />}>At every age</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-ateveryage.svg" className="size-[19px]" />}>
+            At every age
+          </Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.07] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             PCOS doesn’t start at one age.{' '}
             <span className="font-medium text-[#6B6358]">And knowing your risk doesn’t either.</span>
@@ -143,14 +146,7 @@ export function AtEveryAgeSection() {
 
         <div className="relative mt-[56px]">
           {/* timeline glow line */}
-          <div
-            className="pointer-events-none absolute left-0 right-0 top-[11px] hidden h-[2px] rounded-full lg:block"
-            style={{
-              background:
-                'linear-gradient(90deg, rgba(31,26,20,0.05) 0%, rgba(31,26,20,0) 10%, #25B5AB 34%, #0E4D4B 50%, #25B5AB 66%, rgba(37,181,171,0) 90%, rgba(31,26,20,0.05) 100%)',
-              boxShadow: '0 0 10px rgba(37,181,171,0.3)',
-            }}
-          />
+          
           <div className="grid gap-[40px] sm:grid-cols-2 lg:grid-cols-4 lg:gap-[24px]">
             {AGES.map((a) => (
               <div key={a.age} className="reveal flex flex-col gap-[7px]">
@@ -207,8 +203,7 @@ export function FomoSection() {
               The cost of not knowing
             </Eyebrow>
             <h2 className="mt-[16px] text-[32px] font-semibold leading-[1.1] tracking-[-0.022em] text-[#FAF6EF] sm:text-[38px] lg:text-[42px] lg:leading-[46.2px]">
-              Every year of guessing is a year of{' '}
-              <GradientText image={gCopper(169)}>managing blindly.</GradientText>
+              Every year of guessing is a year of <GradientText image={gCopper(169)}>managing blindly.</GradientText>
             </h2>
             <p className="mt-[24px] text-[16px] leading-[26px] text-[rgba(250,246,239,0.8)]">
               PCOS doesn’t pause while you figure it out. The hormonal patterns are already at work. The insulin
@@ -239,7 +234,7 @@ export function FomoSection() {
 const STEPS = [
   {
     n: '01',
-    icon: Package,
+    icon: '/landing/_icons/step-kit.svg',
     dark: false,
     title: 'We deliver the kit to your door',
     body: (
@@ -251,7 +246,7 @@ const STEPS = [
   },
   {
     n: '02',
-    icon: Microscope,
+    icon: '/landing/_icons/step-lab.svg',
     dark: false,
     title: 'The lab does the work',
     body: (
@@ -263,7 +258,7 @@ const STEPS = [
   },
   {
     n: '03',
-    icon: FileText,
+    icon: '/landing/_icons/step-report.svg',
     dark: true,
     title: 'Your report. Your counsellor. Your clarity.',
     body: (
@@ -281,7 +276,9 @@ export function HowItWorksSection() {
     <section id="how" className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[640px]">
-          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-howitworks.svg" className="size-[19px]" />}>How it works</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-howitworks.svg" className="size-[19px]" />}>
+            How it works
+          </Eyebrow>
           <h2 className="mt-[24px] text-[34px] font-semibold leading-[1.06] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             Order. Swab. Know. <span className="font-medium text-[#6B6358]">Three steps.</span>
           </h2>
@@ -289,16 +286,8 @@ export function HowItWorksSection() {
 
         <div className="relative mt-[56px]">
           {/* connector */}
-          <div
-            className="pointer-events-none absolute left-[16%] right-[16%] top-[68px] hidden h-[2px] rounded-full lg:block"
-            style={{
-              background:
-                'linear-gradient(90deg, rgba(31,26,20,0.05) 0%, rgba(31,26,20,0) 10%, #25B5AB 34%, #0E4D4B 50%, #25B5AB 66%, rgba(37,181,171,0) 90%, rgba(31,26,20,0.05) 100%)',
-              boxShadow: '0 0 10px rgba(37,181,171,0.3)',
-            }}
-          />
           <div className="grid gap-[24px] lg:grid-cols-3">
-            {STEPS.map(({ n, icon: Icon, dark, title, body }) => (
+            {STEPS.map(({ n, icon, dark, title, body }) => (
               <div
                 key={n}
                 className={`reveal relative overflow-hidden rounded-[28px] p-[32px] ${
@@ -319,7 +308,7 @@ export function HowItWorksSection() {
                       dark ? 'bg-white/15 text-[#FAF6EF]' : 'bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]'
                     }`}
                   >
-                    <Icon className="size-[26px]" />
+                    <FigIcon src={icon} className="size-[26px]" />
                   </span>
                 </div>
                 <h3

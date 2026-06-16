@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import { Container, Eyebrow, SheenButton } from '../_shared/ui';
-import { FileText, Microscope, Package, Quote, TrendingUp } from '../_shared/icons';
+import { Container, Eyebrow, FigIcon, SheenButton } from '../_shared/ui';
 
 /* ==================== 12 · TESTIMONIALS ==================== */
 
@@ -40,7 +39,7 @@ export function TestimonialsSection() {
       />
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<Quote className="size-[19px]" />}>In their words</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-testimonials.svg" className="size-[19px]" />}>In their words</Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.06] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             What women discovered.
           </h2>
@@ -52,7 +51,7 @@ export function TestimonialsSection() {
               key={t.name}
               className="reveal flex flex-col rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/80 p-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
             >
-              <Quote className="size-[40px] text-[#0E4D4B]/30" />
+              <FigIcon src="/landing/_icons/quote.svg" className="size-[40px] text-[#0E4D4B]/30" />
               <blockquote className="mt-[16px] grow text-[14.5px] leading-[23.56px] text-[#2D2A24]">{t.quote}</blockquote>
               <figcaption className="mt-[24px] flex items-center gap-[14px] border-t border-[rgba(31,26,20,0.08)] pt-[20px]">
                 <span className="relative size-[48px] shrink-0 overflow-hidden rounded-full">
@@ -96,7 +95,7 @@ export function FomoSection() {
           </div>
 
           <div className="relative max-w-[640px] p-8 sm:p-12 lg:p-[64px]">
-            <Eyebrow tone="dark" icon={<TrendingUp className="size-[19px]" />}>
+            <Eyebrow tone="dark" icon={<FigIcon src="/landing/_icons/eb-fomo.svg" className="size-[19px]" />}>
               The cost of not knowing
             </Eyebrow>
             <h2 className="mt-[16px] text-[32px] font-semibold leading-[1.1] tracking-[-0.022em] sm:text-[38px] lg:text-[42px] lg:leading-[47px]">
@@ -134,7 +133,7 @@ export function FomoSection() {
 const STEPS = [
   {
     n: '01',
-    icon: Package,
+    icon: 'step-kit',
     dark: false,
     title: 'We deliver the kit to your door',
     body: (
@@ -146,7 +145,7 @@ const STEPS = [
   },
   {
     n: '02',
-    icon: Microscope,
+    icon: 'step-lab',
     dark: false,
     title: 'The lab does the work',
     body: (
@@ -158,7 +157,7 @@ const STEPS = [
   },
   {
     n: '03',
-    icon: FileText,
+    icon: 'step-report',
     dark: true,
     title: 'Your report. And someone to explain every part of it.',
     body: (
@@ -176,23 +175,16 @@ export function HowItWorksSection() {
     <section id="how" className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[640px]">
-          <Eyebrow icon={<Package className="size-[19px]" />}>How it works</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-howitworks.svg" className="size-[19px]" />}>How it works</Eyebrow>
           <h2 className="mt-[24px] text-[34px] font-semibold leading-[1.06] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             Order. Swab. Know. <span className="font-medium text-[#6B6358]">Three steps.</span>
           </h2>
         </div>
 
         <div className="relative mt-[56px]">
-          <div
-            className="pointer-events-none absolute left-[16%] right-[16%] top-[68px] hidden h-[2px] rounded-full lg:block"
-            style={{
-              background:
-                'linear-gradient(90deg, rgba(31,26,20,0.05) 0%, rgba(31,26,20,0) 10%, #25B5AB 34%, #0E4D4B 50%, #25B5AB 66%, rgba(37,181,171,0) 90%, rgba(31,26,20,0.05) 100%)',
-              boxShadow: '0 0 10px rgba(37,181,171,0.3)',
-            }}
-          />
+          
           <div className="grid gap-[24px] lg:grid-cols-3">
-            {STEPS.map(({ n, icon: Icon, dark, title, body }) => (
+            {STEPS.map(({ n, icon, dark, title, body }) => (
               <div
                 key={n}
                 className={`reveal relative overflow-hidden rounded-[28px] p-[32px] ${
@@ -213,7 +205,7 @@ export function HowItWorksSection() {
                       dark ? 'bg-white/15 text-[#FAF6EF]' : 'bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]'
                     }`}
                   >
-                    <Icon className="size-[26px]" />
+                    <FigIcon src={`/landing/_icons/${icon}.svg`} className="size-[26px]" />
                   </span>
                 </div>
                 <h3

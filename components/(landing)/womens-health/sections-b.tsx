@@ -1,5 +1,4 @@
 import { Container, Eyebrow, FigIcon, GradientText, SheenButton, gTeal } from '../_shared/ui';
-import { AlertTriangle, Check, Dna, Droplet, ShieldCheck, Sparkles, TrendingUp, X } from '../_shared/icons';
 
 /* ================= 4 · WHY TEST GENETICALLY ================= */
 
@@ -12,19 +11,19 @@ const DISMISSED = [
 
 const OUTCOMES = [
   {
-    icon: TrendingUp,
+    icon: '/landing/_icons/trending-up.svg',
     box: 'bg-[rgba(199,104,66,0.15)] text-[#C76842]',
     lead: 'If your risk is elevated:',
     body: " monitor hormones early, adjust diet to reduce androgen expression, manage weight proactively, and walk into your gynaecologist’s office with data, not just symptoms.",
   },
   {
-    icon: ShieldCheck,
+    icon: '/landing/_icons/shield-check.svg',
     box: 'bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]',
     lead: 'If your risk is normal:',
     body: " you have a clear answer. The PCOS you’ve worried about isn’t in your blueprint. Your irregular cycle has a different explanation worth finding.",
   },
   {
-    icon: Sparkles,
+    icon: '/landing/_icons/sparkles.svg',
     box: 'bg-[rgba(243,213,178,0.4)] text-[#9a6a1e]',
     lead: 'Either way, you stop guessing.',
     body: ' That alone changes everything about how you navigate your health.',
@@ -48,7 +47,7 @@ export function WhyTestSection() {
           {/* dark card */}
           <div className="reveal rounded-[28px] bg-[#1A2220] p-[40px]">
             <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.16em] text-[rgba(243,213,178,0.8)]">
-              <AlertTriangle className="size-[18px]" />
+              <FigIcon src="/landing/_icons/alert-triangle.svg" className="size-[18px]" />
               The current PCOS journey in India
             </span>
             <p className="mt-[20px] text-[20px] leading-[32.5px] text-[rgba(250,246,239,0.95)]">
@@ -58,7 +57,7 @@ export function WhyTestSection() {
             <ul className="mt-[24px] flex flex-col gap-[12px]">
               {DISMISSED.map((d) => (
                 <li key={d} className="flex items-center gap-[12px]">
-                  <X className="size-[18px] shrink-0 text-[rgba(250,246,239,0.4)]" />
+                  <FigIcon src="/landing/_icons/x.svg" className="size-[18px] shrink-0 text-[rgba(250,246,239,0.4)]" />
                   <span className="text-[15px] leading-[22.5px] text-[rgba(250,246,239,0.75)]">{d}</span>
                 </li>
               ))}
@@ -73,14 +72,14 @@ export function WhyTestSection() {
           {/* light card */}
           <div className="reveal-r rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[40px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)]">
             <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0E4D4B]">
-              <Check className="size-[18px]" />
+              <FigIcon src="/landing/_icons/check.svg" className="size-[18px]" />
               What knowing your THADA variant changes
             </span>
             <div className="mt-[20px] flex flex-col gap-[12px]">
               {OUTCOMES.map(({ icon: Icon, box, lead, body }) => (
                 <div key={lead} className="flex items-start gap-[16px] rounded-[16px] p-[12px]">
                   <span className={`grid size-[40px] shrink-0 place-items-center rounded-[12px] ${box}`}>
-                    <Icon className="size-[20px]" />
+                    <FigIcon src={Icon} className="size-[20px]" />
                   </span>
                   <p className="text-[15.5px] leading-[25.19px]">
                     <span className="font-semibold text-[#1F1A14]">{lead}</span>
@@ -96,7 +95,7 @@ export function WhyTestSection() {
         <div className="reveal mt-[24px] grid overflow-hidden rounded-[28px] border border-[rgba(31,26,20,0.08)] sm:grid-cols-2">
           <div className="flex flex-col gap-[11px] bg-[rgba(245,237,223,0.7)] p-[36px]">
             <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.16em] text-[#6B6358]">
-              <Droplet className="size-[18px]" />A blood test
+              <FigIcon src="/landing/_icons/droplet.svg" className="size-[18px]" />A blood test
             </span>
             <p className="text-[19px] font-medium leading-[26.13px] text-[#2D2A24]">
               Tells you what’s happening <span className="font-semibold text-[#1F1A14]">right now.</span>
@@ -106,7 +105,7 @@ export function WhyTestSection() {
           <div className="relative flex flex-col gap-[11px] overflow-hidden bg-[#0E4D4B] p-[36px]">
             <div className="pointer-events-none absolute -top-8 right-0 size-[160px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[40px]" />
             <span className="relative inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.16em] text-[rgba(243,213,178,0.85)]">
-              <ShieldCheck className="size-[18px]" />A genetic test
+              <FigIcon src="/landing/_icons/shield-check.svg" className="size-[18px]" />A genetic test
             </span>
             <p className="relative text-[19px] font-medium leading-[26.13px] text-[#FAF6EF]">
               Tells you what your body is <span className="font-semibold text-[#F3D5B2]">predisposed to.</span>
@@ -147,7 +146,7 @@ function MockReport() {
         <div className="pointer-events-none absolute -right-6 -top-8 size-[176px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[40px]" />
         <div className="relative flex items-center justify-between">
           <span className="inline-flex items-center gap-[6px] text-[#FAF6EF]">
-            <Dna className="size-[16px] text-[#F3D5B2]" />
+            <FigIcon src="/landing/_icons/kyg-logo-mark.svg" className="size-[16px] text-[#F3D5B2]" />
             <span className="text-[11px] font-bold tracking-[-0.02em]">KnowYourGenes</span>
           </span>
           <span className="rounded-full bg-white/15 px-[12px] py-[6px] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-[8px]">
@@ -158,7 +157,7 @@ function MockReport() {
           Polycystic Ovary Syndrome (PCOS) Risk
         </div>
         <div className="relative mt-[8px] flex items-center gap-[8px]">
-          <Dna className="size-[22px] text-[#FAF6EF]" />
+          <FigIcon src="/landing/_icons/dna.svg" className="size-[22px] text-[#FAF6EF]" />
           <span className="text-[22px] font-semibold leading-[33px] tracking-[-0.025em] text-[#FAF6EF]">
             Gene · THADA
           </span>
@@ -244,7 +243,7 @@ export function WhatYouGetSection() {
               {GET_BULLETS.map((b, i) => (
                 <li key={i} className="flex items-start gap-[14px]">
                   <span className="mt-[1px] grid size-[22px] shrink-0 place-items-center rounded-full bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
-                    <Check className="size-[14px]" />
+                    <FigIcon src="/landing/_icons/check.svg" className="size-[14px]" />
                   </span>
                   <span className="text-[15.5px] leading-[23.25px] text-[#2D2A24]">{b}</span>
                 </li>
@@ -253,7 +252,7 @@ export function WhatYouGetSection() {
 
             <div className="mt-[32px] flex flex-col gap-[8px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[24px] pb-[32px] pt-[36px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
-                <Sparkles className="size-[17px]" />
+                <FigIcon src="/landing/_icons/sparkles.svg" className="size-[17px]" />
                 And this is just Panel 01 of 5
               </span>
               <p className="text-[15px] leading-[24.38px] text-[#2D2A24]">
@@ -389,7 +388,7 @@ export function BeforeAfterSection() {
               <div className="flex flex-col gap-[12px] bg-[rgba(245,237,223,0.6)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
                   <span className="grid size-[28px] place-items-center rounded-[8px] bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
-                    <X className="size-[16px]" />
+                    <FigIcon src="/landing/_icons/x.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Before</span>
                 </span>
@@ -398,7 +397,7 @@ export function BeforeAfterSection() {
               <div className="flex flex-col gap-[12px] bg-[rgba(14,77,75,0.06)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
                   <span className="grid size-[28px] place-items-center rounded-[8px] text-[#0E4D4B]">
-                    <Check className="size-[16px]" />
+                    <FigIcon src="/landing/_icons/check.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">After</span>
                 </span>

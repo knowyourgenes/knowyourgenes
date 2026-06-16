@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { ArrowRight } from './icons';
 
 /* Shared primitives + scoped stylesheet for the PCOS landing page.
  * Everything lives under the `.kyg-lx` root class so nothing leaks globally. */
@@ -97,7 +96,7 @@ export function SheenButton({
     >
       <span className="relative z-[1] inline-flex items-center gap-[10px]">
         {children}
-        <ArrowRight className="size-[19px]" />
+        <FigIcon src="/landing/_icons/arrow.svg" className="size-[19px]" />
       </span>
     </a>
   );
@@ -111,7 +110,7 @@ export function GhostButton({ children, href = '#what' }: { children: ReactNode;
       className="group inline-flex items-center gap-[8px] rounded-full px-[8px] py-[8px] text-[15px] font-semibold text-[#1F1A14] transition-colors hover:text-[#0E4D4B]"
     >
       {children}
-      <ArrowRight className="size-[19px] transition-transform group-hover:translate-x-[3px]" />
+      <FigIcon src="/landing/_icons/arrow.svg" className="size-[19px] transition-transform group-hover:translate-x-[3px]" />
     </a>
   );
 }

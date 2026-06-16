@@ -22,6 +22,7 @@ import {
 import { TestimonialsSection, FomoSection, HowItWorksSection } from './sections-c';
 import { TrustSection, FaqsSection, AlsoPartSection, FinalCtaSection } from './sections-d';
 import KygHeader from '@/components/site/KygHeader';
+import KygFooter from '@/components/site/KygFooter';
 
 const NAV_LINKS: NavLink[] = [
   { label: 'The COMT gene', href: '#gene' },
@@ -88,7 +89,8 @@ export default function PeripartumDepression() {
         <AlsoPartSection />
         <FinalCtaSection />
       </main>
-      <LandingFooter bg="#15201E" learn={FOOTER_LEARN} />
+      {/* <LandingFooter bg="#15201E" learn={FOOTER_LEARN} /> */}
+      <KygFooter />
     </div>
   );
 }

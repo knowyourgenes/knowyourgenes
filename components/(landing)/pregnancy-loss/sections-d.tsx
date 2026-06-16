@@ -1,29 +1,14 @@
 import Image from 'next/image';
-import { Container, Eyebrow, SheenButton } from '../_shared/ui';
-import {
-  Activity,
-  ArrowRight,
-  ArrowUpRight,
-  Award,
-  BadgeCheck,
-  Dna,
-  Heart,
-  HelixAccent,
-  Plus,
-  Shield,
-  ShieldCheck,
-  Sparkles,
-  UserRound,
-} from '../_shared/icons';
+import { Container, Eyebrow, FigIcon, SheenButton } from '../_shared/ui';
 
 /* ==================== 13 · TRUST ==================== */
 
 const CERTS = [
-  { icon: Award, label: 'NABL · MC-6400' },
-  { icon: BadgeCheck, label: 'ISO 9001:2015' },
-  { icon: Shield, label: 'ISO 27001:2013' },
-  { icon: Dna, label: 'ACMG · CPIC' },
-  { icon: ShieldCheck, label: 'HIPAA · FDA' },
+  { icon: 'cert-nabl', label: 'NABL · MC-6400' },
+  { icon: 'cert-iso9001', label: 'ISO 9001:2015' },
+  { icon: 'cert-iso27001', label: 'ISO 27001:2013' },
+  { icon: 'cert-acmg', label: 'ACMG · CPIC' },
+  { icon: 'cert-hipaa', label: 'HIPAA · FDA' },
 ];
 
 export function TrustSection() {
@@ -54,7 +39,7 @@ export function TrustSection() {
             </div>
             <div className="absolute inset-x-5 bottom-5 flex items-center gap-[14px] rounded-[16px] bg-white px-[20px] py-[16px] shadow-[0_14px_34px_rgba(20,45,40,0.22)]">
               <span className="grid size-[40px] shrink-0 place-items-center rounded-[12px] bg-[#0E4D4B] text-[#FAF6EF]">
-                <UserRound className="size-[22px]" />
+                <FigIcon src="/landing/_icons/user-round.svg" className="size-[22px]" />
               </span>
               <div>
                 <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">Expert review</div>
@@ -68,7 +53,7 @@ export function TrustSection() {
           </div>
 
           <div className="reveal-r flex flex-col gap-[16px]">
-            <Eyebrow icon={<ShieldCheck className="size-[19px]" />}>Trust</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-shield-check.svg" className="size-[19px]" />}>Trust</Eyebrow>
             <h2 className="text-[32px] font-semibold leading-[1.1] tracking-[-0.022em] text-[#1F1A14] sm:text-[36px] lg:text-[40px] lg:leading-[44px]">
               The science is real. <span className="font-medium text-[#6B6358]">The lab is certified.</span>
             </h2>
@@ -78,12 +63,12 @@ export function TrustSection() {
             </p>
 
             <div className="mt-[12px] flex flex-wrap gap-[10px]">
-              {CERTS.map(({ icon: Icon, label }) => (
+              {CERTS.map(({ icon, label }) => (
                 <span
                   key={label}
                   className="inline-flex items-center gap-[8px] rounded-full border border-[rgba(31,26,20,0.08)] bg-white/70 px-[16px] py-[8px] text-[13px] font-medium text-[#2D2A24]"
                 >
-                  <Icon className="size-[16px] text-[#0E4D4B]" />
+                  <FigIcon src={`/landing/_icons/${icon}.svg`} className="size-[16px] text-[#0E4D4B]" />
                   {label}
                 </span>
               ))}
@@ -91,7 +76,7 @@ export function TrustSection() {
 
             <div className="mt-[12px] flex flex-col">
               <div className="flex items-start gap-[16px] border-t border-[rgba(31,26,20,0.08)] py-[16px]">
-                <Activity className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/activity.svg" className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
                 <p className="text-[14.5px] font-semibold leading-[21.75px]">
                   <span className="text-[#1F1A14]">Technology:</span>
                   <span className="font-normal text-[#2D2A24]">
@@ -101,7 +86,7 @@ export function TrustSection() {
                 </p>
               </div>
               <div className="flex items-start gap-[16px] border-t border-[rgba(31,26,20,0.08)] py-[16px]">
-                <Shield className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/shield.svg" className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
                 <p className="text-[14.5px] font-semibold leading-[21.75px]">
                   <span className="text-[#1F1A14]">Your data is yours.</span>
                   <span className="font-normal text-[#2D2A24]"> Never sold, never shared. Sample destroyed after processing.</span>
@@ -142,7 +127,7 @@ export function FaqsSection() {
       <Container>
         <div className="mx-auto max-w-[860px]">
           <div className="reveal">
-            <Eyebrow icon={<Sparkles className="size-[19px]" />}>FAQs</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-sparkles.svg" className="size-[19px]" />}>FAQs</Eyebrow>
             <h2 className="mt-[24px] text-[34px] font-semibold leading-[1.08] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
               Questions about pregnancy loss and genetic testing.
             </h2>
@@ -156,7 +141,7 @@ export function FaqsSection() {
                     {item.q}
                   </span>
                   <span className="faq-plus grid size-[36px] shrink-0 place-items-center rounded-full bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
-                    <Plus className="size-[18px]" />
+                    <FigIcon src="/landing/_icons/plus.svg" className="size-[18px]" />
                   </span>
                 </summary>
                 <div className="faq-answer">
@@ -176,21 +161,21 @@ export function FaqsSection() {
 /* ============== 15 · ALSO PART OF THIS REPORT ============== */
 
 const PANELS = [
-  { icon: Sparkles, gene: 'THADA gene', title: 'PCOS Risk', desc: '1 in 5 Indian women has PCOS. Know if yours is genetic.' },
+  { icon: 'panel-pcos', gene: 'THADA gene', title: 'PCOS Risk', desc: '1 in 5 Indian women has PCOS. Know if yours is genetic.' },
   {
-    icon: Activity,
+    icon: 'panel-depression',
     gene: 'COMT gene',
     title: 'Post-Pregnancy Depression',
     desc: '50% of episodes start before delivery. Know your vulnerability.',
   },
   {
-    icon: Award,
+    icon: 'panel-bone',
     gene: 'AKAP11 · LRP5 · ZBTB40',
     title: 'Osteoporosis & Bone Health',
     desc: 'Bone loss starts in your 30s. Silently.',
   },
   {
-    icon: Shield,
+    icon: 'panel-arthritis',
     gene: 'HLA-DRB1 gene',
     title: 'Rheumatoid Arthritis Risk',
     desc: 'RA affects 3 times more women than men in India.',
@@ -202,7 +187,7 @@ export function AlsoPartSection() {
     <section className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<Sparkles className="size-[19px]" />}>One sample, five answers</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-sparkles.svg" className="size-[19px]" />}>One sample, five answers</Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.07] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             The pregnancy panel is Panel 02 of 5.{' '}
             <span className="font-medium text-[#6B6358]">Your report also covers:</span>
@@ -210,14 +195,14 @@ export function AlsoPartSection() {
         </div>
 
         <div className="mt-[20px] grid gap-[16px] sm:grid-cols-2 lg:grid-cols-4">
-          {PANELS.map(({ icon: Icon, gene, title, desc }) => (
+          {PANELS.map(({ icon, gene, title, desc }) => (
             <a
               key={title}
               href="#"
               className="reveal group flex flex-col rounded-[24px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[28px] transition-colors hover:border-[rgba(14,77,75,0.25)] hover:bg-white"
             >
               <span className="grid size-[48px] place-items-center rounded-[14px] bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
-                <Icon className="size-[24px]" />
+                <FigIcon src={`/landing/_icons/${icon}.svg`} className="size-[24px]" />
               </span>
               <div className="mt-[18px] text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6B6358]">
                 {gene}
@@ -228,7 +213,7 @@ export function AlsoPartSection() {
               <p className="mt-[8px] grow text-[13.5px] leading-[21.94px] text-[#6B6358]">{desc}</p>
               <span className="mt-[16px] inline-flex items-center gap-[6px] text-[13px] font-semibold text-[#0E4D4B]">
                 Explore panel
-                <ArrowUpRight className="size-[16px] transition-transform group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" />
+                <FigIcon src="/landing/_icons/arrow-ur.svg" className="size-[16px] transition-transform group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" />
               </span>
             </a>
           ))}
@@ -250,7 +235,7 @@ export function AlsoPartSection() {
             </p>
           </div>
           <span className="grid size-[48px] shrink-0 place-items-center rounded-full bg-white/15 text-[#FAF6EF] transition-colors group-hover:bg-white/25">
-            <ArrowUpRight className="size-[24px]" />
+            <FigIcon src="/landing/_icons/arrow-ur.svg" className="size-[24px]" />
           </span>
         </a>
       </Container>
@@ -270,11 +255,11 @@ export function FinalCtaSection() {
           className="reveal relative overflow-hidden rounded-[40px] px-6 py-[64px] text-center sm:px-12 lg:px-[120px] lg:py-[80px]"
           style={{ background: 'linear-gradient(141deg, #0E4D4B 0%, #082F2D 100%)' }}
         >
-          <HelixAccent className="pointer-events-none absolute -left-6 top-1/2 hidden h-[360px] w-[120px] -translate-y-1/2 text-white/[0.06] lg:block" />
-          <HelixAccent className="pointer-events-none absolute -right-6 top-1/2 hidden h-[360px] w-[120px] -translate-y-1/2 scale-x-[-1] text-white/[0.06] lg:block" />
+          <FigIcon src="/landing/_icons/helix-accent.svg" className="pointer-events-none absolute -left-6 top-1/2 hidden h-[360px] w-[120px] -translate-y-1/2 text-white/[0.06] lg:block" />
+          <FigIcon src="/landing/_icons/helix-accent.svg" className="pointer-events-none absolute -right-6 top-1/2 hidden h-[360px] w-[120px] -translate-y-1/2 scale-x-[-1] text-white/[0.06] lg:block" />
 
           <div className="relative mx-auto flex max-w-[760px] flex-col items-center">
-            <Eyebrow tone="dark" icon={<Sparkles className="size-[19px]" />}>
+            <Eyebrow tone="dark" icon={<FigIcon src="/landing/_icons/eb-sparkles.svg" className="size-[19px]" />}>
               One sample, five answers
             </Eyebrow>
             <h2 className="mt-[8px] text-[36px] font-semibold leading-[1.06] tracking-[-0.025em] text-[#FAF6EF] sm:text-[46px] lg:text-[58px] lg:leading-[61.48px]">
@@ -304,7 +289,7 @@ export function FinalCtaSection() {
             {/* couples bundle nudge */}
             <div className="mt-[36px] flex w-full flex-col items-start gap-[20px] rounded-[24px] border border-[#E5E7EB]/15 bg-white/[0.07] px-[24px] py-[24px] text-left sm:flex-row sm:items-center sm:px-[32px]">
               <span className="grid size-[56px] shrink-0 place-items-center rounded-[16px] bg-[rgba(243,213,178,0.2)] text-[#F3D5B2]">
-                <Heart className="size-[28px]" />
+                <FigIcon src="/landing/_icons/heart.svg" className="size-[28px]" />
               </span>
               <div className="flex-1">
                 <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(243,213,178,0.8)]">
@@ -321,7 +306,7 @@ export function FinalCtaSection() {
                 className="inline-flex shrink-0 items-center gap-[8px] rounded-full border border-[rgba(243,213,178,0.4)] py-[9.5px] pl-[20px] pr-[16px] text-[13.5px] font-semibold text-[#F3D5B2] transition-colors hover:bg-[rgba(243,213,178,0.1)]"
               >
                 Explore bundle
-                <ArrowRight className="size-[18px]" />
+                <FigIcon src="/landing/_icons/arrow.svg" className="size-[18px]" />
               </a>
             </div>
 

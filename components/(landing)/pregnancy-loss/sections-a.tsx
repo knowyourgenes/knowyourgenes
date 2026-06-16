@@ -1,14 +1,19 @@
 import Image from 'next/image';
-import { Container, Eyebrow, GhostButton, GradientText, SheenButton, gTeal } from '../_shared/ui';
-import { Calendar, Check, Clock, Dna, Droplet, Heart, Quote, ShieldCheck } from '../_shared/icons';
+import { Container, Eyebrow, FigIcon, GhostButton, GradientText, SheenButton, gTeal } from '../_shared/ui';
 
 /* ============================ 1 · HERO ============================ */
 
 export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden pt-[40px] pb-[80px] sm:pt-[48px] lg:pb-[96px]">
+      {/* exact Figma decorative background — node 258:307 (peach + mint blobs · dashed path) */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10"
+        className="pointer-events-none absolute inset-0 -z-10 hidden bg-[length:100%_100%] bg-no-repeat lg:block"
+        style={{ backgroundImage: 'url(/landing/pregnancy-loss/hero-bg.svg)' }}
+      />
+      {/* mobile: soft mint wash */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 lg:hidden"
         style={{
           background:
             'radial-gradient(56% 46% at 86% 6%, rgba(228,241,236,0.7) 0%, rgba(228,241,236,0) 60%), radial-gradient(46% 40% at 2% 18%, rgba(14,77,75,0.06) 0%, rgba(14,77,75,0) 60%)',
@@ -20,7 +25,7 @@ export function HeroSection() {
           <div className="relative z-10 rounded-[34px] border border-white/70 bg-[rgba(250,246,239,0.85)] p-7 shadow-[0_24px_70px_-30px_rgba(20,45,40,0.4)] backdrop-blur-[24px] sm:p-10 lg:py-[44px] lg:pl-[40px] lg:pr-[64px] lg:mr-[-72px]">
             <span className="inline-flex items-center gap-[10px] rounded-full bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
               <span className="grid size-[28px] place-items-center rounded-full bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
-                <Droplet className="size-[18px]" />
+                <FigIcon src="/landing/_icons/hero-badge.svg" className="size-[18px]" />
               </span>
               <span className="text-[13.5px] font-semibold leading-[20.25px] text-[#FAF6EF]">
                 Pregnancy Loss Genetic Risk Test · Saliva kit
@@ -35,11 +40,11 @@ export function HeroSection() {
 
             <div className="mt-[20px] flex flex-wrap gap-[8px]">
               <span className="inline-flex items-center gap-[6px] rounded-full border border-[rgba(14,77,75,0.15)] bg-white/80 px-[14px] py-[8px] text-[13px] font-medium text-[#2D2A24]">
-                <Calendar className="size-[15px] text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/calendar.svg" className="size-[15px] text-[#0E4D4B]" />
                 Planning a pregnancy
               </span>
               <span className="inline-flex items-center gap-[6px] rounded-full border border-[rgba(14,77,75,0.15)] bg-white/80 px-[14px] py-[8px] text-[13px] font-medium text-[#2D2A24]">
-                <Heart className="size-[15px] text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/heart.svg" className="size-[15px] text-[#0E4D4B]" />
                 After a loss
               </span>
             </div>
@@ -61,7 +66,7 @@ export function HeroSection() {
             <div className="mt-[24px] flex flex-wrap items-center gap-x-[22px] gap-y-[10px]">
               {['No needles', 'Results in 7 days', '30-min free counselling'].map((t) => (
                 <span key={t} className="inline-flex items-center gap-[6px] text-[13.5px] font-medium text-[#6B6358]">
-                  <Check className="size-[16px] text-[#0E4D4B]" />
+                  <FigIcon src="/landing/_icons/check.svg" className="size-[16px] text-[#0E4D4B]" />
                   {t}
                 </span>
               ))}
@@ -85,7 +90,7 @@ export function HeroSection() {
               />
               {/* stat chip */}
               <div className="absolute right-4 top-4 flex items-center gap-[12px] rounded-[16px] bg-[rgba(14,77,75,0.95)] px-[16px] py-[12px] backdrop-blur-[8px]">
-                <Heart className="size-[22px] text-[#F3D5B2]" />
+                <FigIcon src="/landing/_icons/heart.svg" className="size-[22px] text-[#F3D5B2]" />
                 <div className="leading-tight">
                   <div className="font-hind text-[18px] font-semibold leading-[22.5px] text-[#FAF6EF]">10 to 20%</div>
                   <div className="text-[10.5px] font-normal uppercase tracking-[0.06em] text-[rgba(243,213,178,0.85)]">
@@ -96,7 +101,7 @@ export function HeroSection() {
               {/* caption card */}
               <div className="absolute inset-x-4 bottom-4 flex items-center gap-[14px] rounded-[16px] bg-white px-[16px] py-[14px] shadow-[0_12px_30px_rgba(20,45,40,0.18)]">
                 <span className="grid size-[40px] shrink-0 place-items-center rounded-[12px] bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
-                  <Heart className="size-[21px]" />
+                  <FigIcon src="/landing/_icons/heart.svg" className="size-[21px]" />
                 </span>
                 <p className="text-[13.5px] leading-[18.56px]">
                   <span className="font-semibold text-[#1F1A14]">You are not alone.</span>
@@ -110,7 +115,7 @@ export function HeroSection() {
         {/* trust bar */}
         <div className="reveal mt-[40px] flex flex-col items-start gap-[16px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
           <span className="inline-flex shrink-0 items-center gap-[8px]">
-            <ShieldCheck className="size-[19px] text-[#0E4D4B]" />
+            <FigIcon src="/landing/_icons/shield-check.svg" className="size-[19px] text-[#0E4D4B]" />
             <span className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-[#0E4D4B]">Women’s Health DNA</span>
           </span>
           <p className="text-[15px] leading-[24.38px] text-[#2D2A24]">
@@ -172,7 +177,7 @@ export function NotAloneSection() {
       />
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<Heart className="size-[19px]" />}>You are not alone</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-heart.svg" className="size-[19px]" />}>You are not alone</Eyebrow>
           <h2 className="mt-[18px] text-[34px] font-semibold leading-[1.08] tracking-[-0.022em] text-[#1F1A14] sm:text-[42px] lg:text-[46px] lg:leading-[49.68px]">
             More women have been here than you know.
           </h2>
@@ -218,7 +223,7 @@ export function NotAloneSection() {
           <div className="pointer-events-none absolute -bottom-16 left-1/3 size-[192px] rounded-full bg-[rgba(243,213,178,0.1)] blur-[64px]" />
           <div className="relative flex flex-col items-start gap-[20px]">
             <span className="grid size-[56px] place-items-center rounded-[18px] bg-white/10 text-[#F3D5B2] backdrop-blur-[8px]">
-              <Quote className="size-[28px]" />
+              <FigIcon src="/landing/_icons/quote.svg" className="size-[28px]" />
             </span>
             <p className="max-w-[900px] text-[24px] font-semibold leading-[1.28] tracking-[-0.018em] sm:text-[28px] lg:text-[30px] lg:leading-[38.4px]">
               <span className="text-[#FAF6EF]">
@@ -263,7 +268,7 @@ export function WhatTheTestCoversSection() {
     <section id="covers" className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[820px]">
-          <Eyebrow icon={<Dna className="size-[19px]" />}>What the test covers</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-dna.svg" className="size-[19px]" />}>What the test covers</Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.06] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             Two genes. Two critical pregnancy functions.
           </h2>
@@ -280,7 +285,7 @@ export function WhatTheTestCoversSection() {
             >
               <div className="flex items-center gap-[16px]">
                 <span className="grid size-[56px] shrink-0 place-items-center rounded-[16px] bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
-                  <Dna className="size-[28px]" />
+                  <FigIcon src="/landing/_icons/dna.svg" className="size-[28px]" />
                 </span>
                 <div>
                   <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0E4D4B]">{g.n}</div>
@@ -307,7 +312,7 @@ export function WhatTheTestCoversSection() {
               'linear-gradient(90deg, rgba(228,241,236,1) 0%, rgba(210,232,223,0.7) 50%, rgba(228,241,236,0.6) 100%)',
           }}
         >
-          <Dna className="size-[36px] shrink-0 text-[#0E4D4B]" />
+          <FigIcon src="/landing/_icons/dna.svg" className="size-[36px] shrink-0 text-[#0E4D4B]" />
           <p className="text-[19px] font-semibold leading-[1.32] tracking-[-0.012em] text-[#0E4D4B] sm:text-[21px] lg:text-[23px] lg:leading-[30.36px]">
             Most women with recurrent pregnancy loss are told it is bad luck. For many, it is actually a folate
             metabolism issue or an immune regulation variant, both identifiable, and both manageable with the right
@@ -335,7 +340,7 @@ export function PreventiveCaseSection() {
         <div className="grid items-start gap-[48px] lg:grid-cols-2 lg:gap-[60px]">
           {/* argument column */}
           <div className="reveal">
-            <Eyebrow icon={<Clock className="size-[19px]" />}>The preventive case</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-clock.svg" className="size-[19px]" />}>The preventive case</Eyebrow>
             <h2 className="mt-[20px] text-[32px] font-semibold leading-[1.08] tracking-[-0.022em] sm:text-[38px] lg:text-[42px] lg:leading-[46.2px]">
               <span className="text-[#1F1A14]">This is not a test you take after loss.</span>
               <br />
@@ -360,7 +365,7 @@ export function PreventiveCaseSection() {
             </div>
             <div className="mt-[24px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/70 px-[24px] pb-[24px] pt-[28px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">
-                <Heart className="size-[18px]" />
+                <FigIcon src="/landing/_icons/heart.svg" className="size-[18px]" />
                 For women who have already experienced loss
               </span>
               <p className="mt-[10px] text-[14.5px] leading-[23.56px] text-[#2D2A24]">

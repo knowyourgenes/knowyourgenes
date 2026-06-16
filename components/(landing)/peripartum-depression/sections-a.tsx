@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
-import { Container, Eyebrow, GhostButton, GradientText, SheenButton, gTeal } from '../_shared/ui';
-import { Activity, ArrowRight, Check, Dna, Droplet, Heart, Info, ShieldCheck, Sparkles } from '../_shared/icons';
+import { Container, Eyebrow, FigIcon, GhostButton, GradientText, SheenButton, gTeal } from '../_shared/ui';
 
 /** Mint-gradient takeaway bar reused across the top sections. */
 export function MintCallout({ icon, children }: { icon: ReactNode; children: ReactNode }) {
@@ -26,8 +25,14 @@ export function MintCallout({ icon, children }: { icon: ReactNode; children: Rea
 export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden pt-[48px] pb-[80px] lg:pt-[64px]">
+      {/* exact Figma decorative background — node 265:213 (peach blob · dashed molecule motif) */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10"
+        className="pointer-events-none absolute inset-0 -z-10 hidden bg-[length:100%_100%] bg-no-repeat lg:block"
+        style={{ backgroundImage: 'url(/landing/peripartum-depression/hero-bg.svg)' }}
+      />
+      {/* mobile: soft mint wash */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 lg:hidden"
         style={{
           background:
             'radial-gradient(54% 44% at 84% 4%, rgba(228,241,236,0.6) 0%, rgba(228,241,236,0) 60%), radial-gradient(48% 40% at 4% 18%, rgba(14,77,75,0.05) 0%, rgba(14,77,75,0) 60%)',
@@ -37,7 +42,7 @@ export function HeroSection() {
         <div className="max-w-[860px]">
           <span className="inline-flex items-center gap-[10px] rounded-full bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
             <span className="grid size-[28px] place-items-center rounded-full bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
-              <Droplet className="size-[18px]" />
+              <FigIcon src="/landing/_icons/hero-badge.svg" className="size-[18px]" />
             </span>
             <span className="text-[13.5px] font-semibold leading-[20.25px] text-[#FAF6EF]">
               Peripartum Depression Genetic Risk Test · Saliva kit
@@ -72,7 +77,7 @@ export function HeroSection() {
           <div className="mt-[26px] flex flex-wrap items-center gap-x-[22px] gap-y-[10px]">
             {['No needles', 'Results in 7 days', '30-min free counselling', '100% confidential'].map((t) => (
               <span key={t} className="inline-flex items-center gap-[6px] text-[13.5px] font-medium text-[#6B6358]">
-                <Check className="size-[16px] text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/check.svg" className="size-[16px] text-[#0E4D4B]" />
                 {t}
               </span>
             ))}
@@ -104,7 +109,7 @@ export function HeroSection() {
           {/* stat chip */}
           <div className="absolute right-6 top-6 hidden items-center gap-[12px] rounded-[16px] bg-white px-[16px] py-[12px] shadow-[0_14px_34px_rgba(20,45,40,0.2)] sm:flex">
             <span className="grid size-[40px] place-items-center rounded-[12px] bg-[#0E4D4B] text-[#FAF6EF]">
-              <Activity className="size-[21px]" />
+              <FigIcon src="/landing/_icons/hero-stat-activity.svg" className="size-[21px]" />
             </span>
             <div className="leading-tight">
               <div className="font-hind text-[19px] font-semibold leading-[23.75px] text-[#1F1A14]">50%</div>
@@ -116,7 +121,7 @@ export function HeroSection() {
         {/* social-proof line */}
         <div className="reveal mt-[24px] flex flex-col items-start gap-[16px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
           <span className="inline-flex shrink-0 items-center gap-[8px]">
-            <ShieldCheck className="size-[19px] text-[#0E4D4B]" />
+            <FigIcon src="/landing/_icons/shield-check.svg" className="size-[19px] text-[#0E4D4B]" />
             <span className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-[#0E4D4B]">Women’s Health DNA</span>
           </span>
           <p className="text-[15px] leading-[24.38px] text-[#2D2A24]">
@@ -144,7 +149,7 @@ export function WhatNobodySection() {
       <Container>
         <div className="mx-auto flex max-w-[860px] flex-col gap-[30px]">
           <div className="reveal max-w-[760px]">
-            <Eyebrow icon={<Info className="size-[19px]" />}>What nobody tells you</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-whatnobody.svg" className="size-[19px]" />}>What nobody tells you</Eyebrow>
             <h2 className="mt-[18px] text-[34px] font-semibold leading-[1.08] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[48.4px]">
               The thing nobody tells Indian women about depression in pregnancy.
             </h2>
@@ -195,9 +200,9 @@ export function WhatNobodySection() {
 /* ====================== 3 · THE COMT GENE ====================== */
 
 const CHAIN = [
-  { icon: Activity, title: 'Low COMT activity', sub: 'the enzyme works more slowly' },
-  { icon: Sparkles, title: 'Dopamine builds up', sub: 'it is cleared more gradually' },
-  { icon: Heart, title: 'Lower pain threshold', sub: 'you feel more, more intensely' },
+  { icon: 'chain-activity', title: 'Low COMT activity', sub: 'the enzyme works more slowly' },
+  { icon: 'chain-sparkles', title: 'Dopamine builds up', sub: 'it is cleared more gradually' },
+  { icon: 'chain-heart', title: 'Lower pain threshold', sub: 'you feel more, more intensely' },
 ];
 
 export function ComtGeneSection() {
@@ -205,7 +210,7 @@ export function ComtGeneSection() {
     <section id="gene" className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[820px]">
-          <Eyebrow icon={<Dna className="size-[19px]" />}>The COMT gene</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-comt.svg" className="size-[19px]" />}>The COMT gene</Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.06] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             What the COMT gene actually does.
           </h2>
@@ -245,11 +250,11 @@ export function ComtGeneSection() {
               What a COMT variant means, in plain language
             </div>
             <div className="flex flex-col gap-[6px]">
-              {CHAIN.map(({ icon: Icon, title, sub }, i) => (
+              {CHAIN.map(({ icon, title, sub }, i) => (
                 <div key={title}>
                   <div className="flex items-center gap-[16px] rounded-[16px] bg-[#E4F1EC] p-[16px]">
                     <span className="grid size-[44px] shrink-0 place-items-center rounded-[12px] bg-[#0E4D4B] text-[#FAF6EF]">
-                      <Icon className="size-[22px]" />
+                      <FigIcon src={`/landing/_icons/${icon}.svg`} className="size-[22px]" />
                     </span>
                     <div>
                       <div className="text-[15.5px] font-semibold leading-[1.2] text-[#1F1A14]">{title}</div>
@@ -258,7 +263,7 @@ export function ComtGeneSection() {
                   </div>
                   {i < CHAIN.length && (
                     <div className="flex justify-center py-[2px]">
-                      <ArrowRight className="size-[18px] rotate-90 text-[#0E4D4B]/40" />
+                      <FigIcon src="/landing/_icons/arrow.svg" className="size-[18px] rotate-90 text-[#0E4D4B]/40" />
                     </div>
                   )}
                 </div>
@@ -266,7 +271,7 @@ export function ComtGeneSection() {
               {/* inverted final row */}
               <div className="flex items-center gap-[16px] rounded-[16px] bg-[#0E4D4B] p-[16px]">
                 <span className="grid size-[44px] shrink-0 place-items-center rounded-[12px] bg-white/15 text-[#FAF6EF]">
-                  <ShieldCheck className="size-[22px]" />
+                  <FigIcon src="/landing/_icons/shield-check.svg" className="size-[22px]" />
                 </span>
                 <div>
                   <div className="text-[15.5px] font-semibold leading-[1.2] text-[#FAF6EF]">
@@ -280,7 +285,7 @@ export function ComtGeneSection() {
         </div>
 
         <div className="reveal mt-[16px]">
-          <MintCallout icon={<Heart className="size-[38px]" />}>
+          <MintCallout icon={<FigIcon src="/landing/_icons/heart.svg" className="size-[38px]" />}>
             A woman with a COMT risk variant is not more fragile. She is more sensitive, and with the right support, that
             sensitivity becomes something she can work with, not something that works against her.
           </MintCallout>
@@ -298,7 +303,7 @@ export function IndiaProblemSection() {
       <Container>
         <div className="mx-auto max-w-[920px]">
           <div className="reveal max-w-[760px]">
-            <Eyebrow icon={<Heart className="size-[19px]" />}>The India problem</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-india.svg" className="size-[19px]" />}>The India problem</Eyebrow>
             <h2 className="mt-[18px] text-[34px] font-semibold leading-[1.1] tracking-[-0.022em] sm:text-[40px] lg:text-[44px] lg:leading-[48.4px]">
               <span className="text-[#1F1A14]">In India, new mothers are expected to be joyful.</span>{' '}
               <span className="font-medium text-[#6B6358]">Always.</span>
@@ -329,7 +334,7 @@ export function IndiaProblemSection() {
           </div>
 
           <div className="reveal mt-[24px]">
-            <MintCallout icon={<Heart className="size-[38px]" />}>
+            <MintCallout icon={<FigIcon src="/landing/_icons/heart.svg" className="size-[38px]" />}>
               Knowing your COMT variant before pregnancy doesn’t prevent depression. But it tells you, your partner, and
               your doctor to watch for it, so that when the window opens, someone is already looking.
             </MintCallout>
@@ -388,7 +393,7 @@ export function NotAloneSection() {
       />
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<Heart className="size-[19px]" />}>You are not alone</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-heart.svg" className="size-[19px]" />}>You are not alone</Eyebrow>
           <h2 className="mt-[18px] text-[34px] font-semibold leading-[1.07] tracking-[-0.022em] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             <span className="text-[#1F1A14]">The women who spoke.</span>{' '}
             <span className="font-medium text-[#6B6358]">So you wouldn’t have to suffer in silence.</span>
@@ -423,7 +428,7 @@ export function NotAloneSection() {
         </div>
 
         <div className="reveal mt-[24px]">
-          <MintCallout icon={<Sparkles className="size-[40px]" />}>
+          <MintCallout icon={<FigIcon src="/landing/_icons/sparkles.svg" className="size-[40px]" />}>
             These women spoke so that the next woman doesn’t have to figure it out alone. You don’t have to be ambushed
             by something your genes already knew was coming.
           </MintCallout>
