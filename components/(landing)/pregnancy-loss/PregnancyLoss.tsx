@@ -9,6 +9,7 @@ import { WhatYouGetSection, DataStatsSection, BeforeAfterSection, WhoThisIsForSe
 import { AtEveryAgeSection, TestimonialsSection, FomoSection, HowItWorksSection } from './sections-c';
 import { TrustSection, FaqsSection, AlsoPartSection, FinalCtaSection } from './sections-d';
 import KygHeader from '@/components/site/KygHeader';
+import KygFooter from '@/components/site/KygFooter';
 
 const NAV_LINKS: NavLink[] = [
   { label: 'The two genes', href: '#covers' },
@@ -73,7 +74,8 @@ export default function PregnancyLoss() {
         <AlsoPartSection />
         <FinalCtaSection />
       </main>
-      <LandingFooter bg="#15201E" learn={FOOTER_LEARN} />
+      {/* <LandingFooter bg="#15201E" learn={FOOTER_LEARN} /> */}
+      <KygFooter />
     </div>
   );
 }

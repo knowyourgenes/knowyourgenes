@@ -1,8 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Container, Eyebrow, GradientText, SheenButton, gTeal } from '../_shared/ui';
-import { Activity, ArrowRight, Check, Dna, Heart, Scale, ShieldCheck, Sparkles, X } from '../_shared/icons';
+import { Container, Eyebrow, FigIcon, GradientText, SheenButton, gTeal } from '../_shared/ui';
 
 /* ==================== 5 · WHAT YOU GET ==================== */
 
@@ -26,7 +25,7 @@ function GeneCard({ gene, value }: { gene: string; value: string }) {
   return (
     <div className="flex flex-col gap-[6px] rounded-[16px] bg-[#E4F1EC] p-[20px]">
       <div className="inline-flex items-center gap-[6px]">
-        <Dna className="size-[15px] text-[#0E4D4B]" />
+        <FigIcon src="/landing/_icons/dna.svg" className="size-[15px] text-[#0E4D4B]" />
         <span className="text-[11px] font-semibold uppercase tracking-[0.13em] text-[rgba(14,77,75,0.8)]">{gene}</span>
       </div>
       <div className="font-hind text-[30px] font-semibold leading-none tracking-[-0.025em] text-[#1F1A14]">{value}</div>
@@ -41,7 +40,7 @@ function MockReport() {
         <div className="pointer-events-none absolute -right-6 -top-8 size-[176px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[40px]" />
         <div className="relative flex items-center justify-between">
           <span className="inline-flex items-center gap-[6px] text-[#FAF6EF]">
-            <Dna className="size-[16px] text-[#F3D5B2]" />
+            <FigIcon src="/landing/_icons/kyg-logo-mark.svg" className="size-[16px] text-[#F3D5B2]" />
             <span className="text-[11px] font-bold tracking-[-0.02em]">KnowYourGenes</span>
           </span>
           <span className="rounded-full bg-white/15 px-[12px] py-[6px] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-[8px]">
@@ -113,7 +112,7 @@ export function WhatYouGetSection() {
       <Container>
         <div className="grid items-start gap-[56px] lg:grid-cols-2 lg:gap-[48px]">
           <div className="reveal">
-            <Eyebrow icon={<Sparkles className="size-[19px]" />}>What you get</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-sparkles.svg" className="size-[19px]" />}>What you get</Eyebrow>
             <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.05] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
               Your pregnancy risk profile.{' '}
               <span className="font-medium text-[#6B6358]">Clear, specific, actionable.</span>
@@ -126,7 +125,7 @@ export function WhatYouGetSection() {
               {GET_BULLETS.map((b, i) => (
                 <li key={i} className="flex items-start gap-[14px]">
                   <span className="mt-[1px] grid size-[22px] shrink-0 place-items-center rounded-full bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
-                    <Check className="size-[14px]" />
+                    <FigIcon src="/landing/_icons/check.svg" className="size-[14px]" />
                   </span>
                   <span className="text-[15.5px] leading-[23.25px] text-[#2D2A24]">{b}</span>
                 </li>
@@ -135,7 +134,7 @@ export function WhatYouGetSection() {
 
             <div className="mt-[32px] flex flex-col gap-[8px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[24px] pb-[32px] pt-[36px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
-                <Sparkles className="size-[17px]" />
+                <FigIcon src="/landing/_icons/sparkles.svg" className="size-[17px]" />
                 And this is just Panel 02 of 5
               </span>
               <p className="text-[15px] leading-[24.38px] text-[#2D2A24]">
@@ -176,7 +175,7 @@ export function DataStatsSection() {
     <section className="bg-[#15201E] py-[80px] lg:py-[100px]">
       <Container>
         <div className="reveal max-w-[720px]">
-          <Eyebrow tone="dark" icon={<Activity className="size-[19px]" />}>By the numbers</Eyebrow>
+          <Eyebrow tone="dark" icon={<FigIcon src="/landing/_icons/eb-activity.svg" className="size-[19px]" />}>By the numbers</Eyebrow>
           <h2 className="mt-[22px] text-[34px] font-semibold leading-[1.06] tracking-[-0.022em] text-[#FAF6EF] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             The numbers behind the silence.
           </h2>
@@ -258,7 +257,7 @@ export function BeforeAfterSection() {
     <section className="py-[72px] lg:py-[88px]">
       <Container>
         <div className="reveal max-w-[760px]">
-          <Eyebrow icon={<Scale className="size-[19px]" />}>Before &amp; after</Eyebrow>
+          <Eyebrow icon={<FigIcon src="/landing/_icons/eb-scale.svg" className="size-[19px]" />}>Before &amp; after</Eyebrow>
           <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.07] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
             The same woman. <span className="font-medium text-[#6B6358]">Before she had the information.</span>
             <br />
@@ -275,7 +274,7 @@ export function BeforeAfterSection() {
               <div className="flex flex-col gap-[12px] bg-[rgba(245,237,223,0.6)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
                   <span className="grid size-[28px] place-items-center rounded-[8px] bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
-                    <X className="size-[16px]" />
+                    <FigIcon src="/landing/_icons/x.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Before</span>
                 </span>
@@ -284,7 +283,7 @@ export function BeforeAfterSection() {
               <div className="flex flex-col gap-[12px] bg-[rgba(14,77,75,0.06)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
                   <span className="grid size-[28px] place-items-center rounded-[8px] text-[#0E4D4B]">
-                    <Check className="size-[16px]" />
+                    <FigIcon src="/landing/_icons/check.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">After</span>
                 </span>
@@ -338,7 +337,7 @@ function ForYouChecklist() {
             >
               <span className="mt-[1px] grid size-[24px] shrink-0 place-items-center">
                 <span className="sx-box grid size-[24px] place-items-center rounded-[8px] border-2 border-[rgba(14,77,75,0.3)]">
-                  <Check className="sx-tick size-[14px] text-[#FAF6EF]" />
+                  <FigIcon src="/landing/_icons/check.svg" className="sx-tick size-[14px] text-[#FAF6EF]" />
                 </span>
               </span>
               <span className="text-[15.5px] leading-[21.31px] text-[#2D2A24]">{label}</span>
@@ -351,7 +350,7 @@ function ForYouChecklist() {
         <div className="pointer-events-none absolute -top-9 right-0 size-[144px] rounded-full bg-[rgba(37,181,171,0.15)] blur-[40px]" />
         <div className="relative flex items-center gap-[20px]">
           <span className="relative grid size-[64px] shrink-0 place-items-center rounded-full bg-white/10 text-[#F3D5B2]">
-            <Heart className="size-[28px]" />
+            <FigIcon src="/landing/_icons/heart.svg" className="size-[28px]" />
             {count > 0 && (
               <span className="absolute -right-1 -top-1 grid size-[24px] place-items-center rounded-full bg-[#F3D5B2] font-hind text-[13px] font-semibold text-[#1F1A14]">
                 {count}
@@ -371,7 +370,7 @@ function ForYouChecklist() {
         >
           <span className="relative z-[1] inline-flex items-center gap-[8px]">
             Know my pregnancy risk
-            <ArrowRight className="size-[19px]" />
+            <FigIcon src="/landing/_icons/arrow.svg" className="size-[19px]" />
           </span>
         </a>
       </div>
@@ -392,7 +391,7 @@ export function WhoThisIsForSection() {
       <Container>
         <div className="grid items-start gap-[48px] lg:grid-cols-2">
           <div className="reveal">
-            <Eyebrow icon={<Heart className="size-[19px]" />}>Who this is for</Eyebrow>
+            <Eyebrow icon={<FigIcon src="/landing/_icons/eb-heart.svg" className="size-[19px]" />}>Who this is for</Eyebrow>
             <h2 className="mt-[20px] text-[34px] font-semibold leading-[1.05] tracking-[-0.022em] text-[#1F1A14] sm:text-[40px] lg:text-[44px] lg:leading-[47.52px]">
               This test is for you if…
             </h2>
@@ -400,7 +399,7 @@ export function WhoThisIsForSection() {
               Each line speaks to a different woman. Tap the ones that sound like you, and see where it leads.
             </p>
             <div className="mt-[24px] flex items-center gap-[12px] rounded-[20px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[20px] pb-[20px] pt-[28px]">
-              <ShieldCheck className="size-[26px] shrink-0 text-[#0E4D4B]" />
+              <FigIcon src="/landing/_icons/shield-check.svg" className="size-[26px] shrink-0 text-[#0E4D4B]" />
               <p className="text-[14px] leading-[20px] text-[#2D2A24]">
                 Whatever you select stays on your device. Nothing is submitted, this is just for you.
               </p>

@@ -1,27 +1,14 @@
 import Image from 'next/image';
 import { Container, Eyebrow, FigIcon, SheenButton } from '../_shared/ui';
-import {
-  Activity,
-  ArrowUpRight,
-  Award,
-  BadgeCheck,
-  Dna,
-  Heart,
-  HelixAccent,
-  Plus,
-  Shield,
-  ShieldCheck,
-  UserRound,
-} from '../_shared/icons';
 
 /* ==================== 12 · TRUST ==================== */
 
 const CERTS = [
-  { icon: Award, label: 'NABL · MC-6400' },
-  { icon: BadgeCheck, label: 'ISO 9001:2015' },
-  { icon: Shield, label: 'ISO 27001:2013' },
-  { icon: Dna, label: 'ACMG · CPIC' },
-  { icon: ShieldCheck, label: 'HIPAA · FDA' },
+  { icon: '/landing/_icons/cert-nabl.svg', label: 'NABL · MC-6400' },
+  { icon: '/landing/_icons/cert-iso9001.svg', label: 'ISO 9001:2015' },
+  { icon: '/landing/_icons/cert-iso27001.svg', label: 'ISO 27001:2013' },
+  { icon: '/landing/_icons/cert-acmg.svg', label: 'ACMG · CPIC' },
+  { icon: '/landing/_icons/cert-hipaa.svg', label: 'HIPAA · FDA' },
 ];
 
 export function TrustSection() {
@@ -53,7 +40,7 @@ export function TrustSection() {
             </div>
             <div className="absolute inset-x-5 bottom-5 flex items-center gap-[14px] rounded-[16px] border border-white/60 bg-white/85 px-[20px] py-[16px] backdrop-blur-[12px]">
               <span className="grid size-[40px] shrink-0 place-items-center rounded-[12px] bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
-                <UserRound className="size-[22px]" />
+                <FigIcon src="/landing/_icons/user-round.svg" className="size-[22px]" />
               </span>
               <div>
                 <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Expert review</div>
@@ -78,12 +65,12 @@ export function TrustSection() {
             </p>
 
             <div className="mt-[12px] flex flex-wrap gap-[10px]">
-              {CERTS.map(({ icon: Icon, label }) => (
+              {CERTS.map(({ icon, label }) => (
                 <span
                   key={label}
                   className="inline-flex items-center gap-[8px] rounded-full border border-[rgba(31,26,20,0.08)] bg-white/70 px-[16px] py-[8px] text-[13px] font-medium text-[#2D2A24]"
                 >
-                  <Icon className="size-[16px] text-[#0E4D4B]" />
+                  <FigIcon src={icon} className="size-[16px] text-[#0E4D4B]" />
                   {label}
                 </span>
               ))}
@@ -91,7 +78,7 @@ export function TrustSection() {
 
             <div className="mt-[12px] flex flex-col">
               <div className="flex items-start gap-[16px] border-t border-[rgba(31,26,20,0.08)] py-[16px]">
-                <Activity className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/activity.svg" className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
                 <p className="text-[14.5px] font-semibold leading-[21.75px]">
                   <span className="text-[#1F1A14]">Technology:</span>
                   <span className="font-normal text-[#2D2A24]">
@@ -101,7 +88,7 @@ export function TrustSection() {
                 </p>
               </div>
               <div className="flex items-start gap-[16px] border-t border-[rgba(31,26,20,0.08)] py-[16px]">
-                <Shield className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/shield.svg" className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
                 <p className="text-[14.5px] font-semibold leading-[21.75px]">
                   <span className="text-[#1F1A14]">Your data is yours.</span>
                   <span className="font-normal text-[#2D2A24]">
@@ -159,7 +146,7 @@ export function FaqsSection() {
                     {item.q}
                   </span>
                   <span className="faq-plus grid size-[36px] shrink-0 place-items-center rounded-full bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
-                    <Plus className="size-[18px]" />
+                    <FigIcon src="/landing/_icons/plus.svg" className="size-[18px]" />
                   </span>
                 </summary>
                 <div className="faq-answer">
@@ -179,21 +166,26 @@ export function FaqsSection() {
 /* ============== 14 · ALSO PART OF THIS REPORT ============== */
 
 const PANELS = [
-  { icon: Heart, gene: 'MTHFR + FOXP3', title: 'Pregnancy Loss Risk', desc: 'Know your risk before you begin trying.' },
   {
-    icon: Activity,
+    icon: '/landing/_icons/panel-pregnancy.svg',
+    gene: 'MTHFR + FOXP3',
+    title: 'Pregnancy Loss Risk',
+    desc: 'Know your risk before you begin trying.',
+  },
+  {
+    icon: '/landing/_icons/panel-depression.svg',
     gene: 'COMT gene',
     title: 'Post-Pregnancy Depression',
     desc: '50% of episodes start before delivery. Know your vulnerability.',
   },
   {
-    icon: Award,
+    icon: '/landing/_icons/panel-bone.svg',
     gene: 'AKAP11 · LRP5 · ZBTB40',
     title: 'Osteoporosis & Bone Health',
     desc: 'Bone loss starts in your 30s. Silently.',
   },
   {
-    icon: Shield,
+    icon: '/landing/_icons/panel-arthritis.svg',
     gene: 'HLA-DRB1 gene',
     title: 'Rheumatoid Arthritis Risk',
     desc: 'RA affects 3 times more women than men in India.',
@@ -213,14 +205,14 @@ export function AlsoPartSection() {
         </div>
 
         <div className="mt-[20px] grid gap-[16px] sm:grid-cols-2">
-          {PANELS.map(({ icon: Icon, gene, title, desc }) => (
+          {PANELS.map(({ icon, gene, title, desc }) => (
             <a
               key={title}
               href="#"
               className="reveal group flex flex-col rounded-[24px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[28px] transition-colors hover:border-[rgba(14,77,75,0.25)] hover:bg-white"
             >
               <span className="grid size-[48px] place-items-center rounded-[14px] bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
-                <Icon className="size-[24px]" />
+                <FigIcon src={icon} className="size-[24px]" />
               </span>
               <div className="mt-[18px] text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6B6358]">
                 {gene}
@@ -231,7 +223,7 @@ export function AlsoPartSection() {
               <p className="mt-[8px] grow text-[13.5px] leading-[21.94px] text-[#6B6358]">{desc}</p>
               <span className="mt-[16px] inline-flex items-center gap-[6px] text-[13px] font-semibold text-[#0E4D4B]">
                 Explore panel
-                <ArrowUpRight className="size-[16px] transition-transform group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" />
+                <FigIcon src="/landing/_icons/arrow-ur.svg" className="size-[16px] transition-transform group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" />
               </span>
             </a>
           ))}
@@ -254,7 +246,7 @@ export function AlsoPartSection() {
             </p>
           </div>
           <span className="grid size-[48px] shrink-0 place-items-center rounded-full bg-white/15 text-[#FAF6EF] transition-colors group-hover:bg-white/25">
-            <ArrowUpRight className="size-[24px]" />
+            <FigIcon src="/landing/_icons/arrow-ur.svg" className="size-[24px]" />
           </span>
         </a>
       </Container>
@@ -275,8 +267,8 @@ export function FinalCtaSection() {
           style={{ background: 'linear-gradient(149deg, #0E4D4B 0%, #082F2D 100%)' }}
         >
           {/* helix accents */}
-          <HelixAccent className="pointer-events-none absolute -left-6 top-1/2 hidden h-[360px] w-[120px] -translate-y-1/2 text-white/[0.06] lg:block" />
-          <HelixAccent className="pointer-events-none absolute -right-6 top-1/2 hidden h-[360px] w-[120px] -translate-y-1/2 scale-x-[-1] text-white/[0.06] lg:block" />
+          <FigIcon src="/landing/_icons/helix-accent.svg" className="pointer-events-none absolute -left-6 top-1/2 hidden h-[360px] w-[120px] -translate-y-1/2 text-white/[0.06] lg:block" />
+          <FigIcon src="/landing/_icons/helix-accent.svg" className="pointer-events-none absolute -right-6 top-1/2 hidden h-[360px] w-[120px] -translate-y-1/2 scale-x-[-1] text-white/[0.06] lg:block" />
 
           <div className="relative mx-auto flex max-w-[760px] flex-col items-center">
             <Eyebrow tone="dark" icon={<FigIcon src="/landing/_icons/eb-finalcta.svg" className="size-[19px]" />}>

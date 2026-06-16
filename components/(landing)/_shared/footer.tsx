@@ -1,3 +1,5 @@
+import { KygLogo } from '@/components/site/logo';
+
 export default function LandingFooter({
   bg = '#1A2220',
   learn = ['What is PCOS', 'How it works', 'Sample report', 'FAQs'],
@@ -22,12 +24,7 @@ export default function LandingFooter({
           <div className="grid grid-cols-1 gap-[48px] md:grid-cols-2 lg:grid-cols-[1.55fr_1fr_1fr_1fr] lg:gap-[40px]">
             {/* brand + newsletter */}
             <div className="flex flex-col gap-[19px] pb-[16px]">
-              <div
-                role="img"
-                aria-label="KnowYourGenes"
-                className="h-9 w-[82px] bg-contain bg-left bg-no-repeat"
-                style={{ backgroundImage: 'url(/landing/kyg-logo-light.svg)' }}
-              />
+              <KygLogo tone="light" className="h-9 w-auto" />
               <p className="max-w-[300px] text-[14.5px] leading-[23.5px] text-[rgba(250,246,239,0.7)]">
                 A genomics brand built for Indian biology. Your health deserves specificity.
               </p>

@@ -9,6 +9,7 @@ import { WhyTestSection, WhatYouGetSection, DataStatsSection, BeforeAfterSection
 import { TestimonialsSection, AtEveryAgeSection, FomoSection, HowItWorksSection } from './sections-c';
 import { TrustSection, FaqsSection, AlsoPartSection, FinalCtaSection } from './sections-d';
 import KygHeader from '@/components/site/KygHeader';
+import KygFooter from '@/components/site/KygFooter';
 
 const NAV_LINKS: NavLink[] = [
   { label: 'What PCOS is', href: '#what' },
@@ -71,7 +72,8 @@ export default function WomensHealth() {
         <AlsoPartSection />
         <FinalCtaSection />
       </main>
-      <LandingFooter />
+      {/* <LandingFooter /> */}
+      <KygFooter />
     </div>
   );
 }
