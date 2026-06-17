@@ -39,7 +39,7 @@ export function TrustSection() {
             </div>
             <div className="absolute inset-x-5 bottom-5 flex items-center gap-[14px] rounded-[16px] bg-white px-[20px] py-[16px] shadow-[0_14px_34px_rgba(20,45,40,0.22)]">
               <span className="grid size-[40px] shrink-0 place-items-center rounded-[12px] bg-[#0E4D4B] text-[#FAF6EF]">
-                <FigIcon src="/landing/_icons/user-round.svg" className="size-[22px]" />
+                <FigIcon src="/landing/_icons/pl-expert-review.svg" className="size-[22px]" />
               </span>
               <div>
                 <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">Expert review</div>
@@ -76,7 +76,7 @@ export function TrustSection() {
 
             <div className="mt-[12px] flex flex-col">
               <div className="flex items-start gap-[16px] border-t border-[rgba(31,26,20,0.08)] py-[16px]">
-                <FigIcon src="/landing/_icons/activity.svg" className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/pl-microscope.svg" className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
                 <p className="text-[14.5px] font-semibold leading-[21.75px]">
                   <span className="text-[#1F1A14]">Technology:</span>
                   <span className="font-normal text-[#2D2A24]">
@@ -86,7 +86,7 @@ export function TrustSection() {
                 </p>
               </div>
               <div className="flex items-start gap-[16px] border-t border-[rgba(31,26,20,0.08)] py-[16px]">
-                <FigIcon src="/landing/_icons/shield.svg" className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/pl-lock.svg" className="mt-[1px] size-[22px] shrink-0 text-[#0E4D4B]" />
                 <p className="text-[14.5px] font-semibold leading-[21.75px]">
                   <span className="text-[#1F1A14]">Your data is yours.</span>
                   <span className="font-normal text-[#2D2A24]"> Never sold, never shared. Sample destroyed after processing.</span>
@@ -289,7 +289,7 @@ export function FinalCtaSection() {
             {/* couples bundle nudge */}
             <div className="mt-[36px] flex w-full flex-col items-start gap-[20px] rounded-[24px] border border-[#E5E7EB]/15 bg-white/[0.07] px-[24px] py-[24px] text-left sm:flex-row sm:items-center sm:px-[32px]">
               <span className="grid size-[56px] shrink-0 place-items-center rounded-[16px] bg-[rgba(243,213,178,0.2)] text-[#F3D5B2]">
-                <FigIcon src="/landing/_icons/heart.svg" className="size-[28px]" />
+                <FigIcon src="/landing/_icons/users.svg" className="size-[28px]" />
               </span>
               <div className="flex-1">
                 <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(243,213,178,0.8)]">

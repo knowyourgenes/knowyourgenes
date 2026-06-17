@@ -44,7 +44,7 @@ export function HeroSection() {
                 Planning a pregnancy
               </span>
               <span className="inline-flex items-center gap-[6px] rounded-full border border-[rgba(14,77,75,0.15)] bg-white/80 px-[14px] py-[8px] text-[13px] font-medium text-[#2D2A24]">
-                <FigIcon src="/landing/_icons/heart.svg" className="size-[15px] text-[#0E4D4B]" />
+                <FigIcon src="/landing/_icons/pl-hand-heart.svg" className="size-[15px] text-[#0E4D4B]" />
                 After a loss
               </span>
             </div>
@@ -90,7 +90,7 @@ export function HeroSection() {
               />
               {/* stat chip */}
               <div className="absolute right-4 top-4 flex items-center gap-[12px] rounded-[16px] bg-[rgba(14,77,75,0.95)] px-[16px] py-[12px] backdrop-blur-[8px]">
-                <FigIcon src="/landing/_icons/heart.svg" className="size-[22px] text-[#F3D5B2]" />
+                <FigIcon src="/landing/_icons/pl-activity-monitor.svg" className="size-[22px] text-[#F3D5B2]" />
                 <div className="leading-tight">
                   <div className="font-hind text-[18px] font-semibold leading-[22.5px] text-[#FAF6EF]">10 to 20%</div>
                   <div className="text-[10.5px] font-normal uppercase tracking-[0.06em] text-[rgba(243,213,178,0.85)]">
@@ -101,7 +101,7 @@ export function HeroSection() {
               {/* caption card */}
               <div className="absolute inset-x-4 bottom-4 flex items-center gap-[14px] rounded-[16px] bg-white px-[16px] py-[14px] shadow-[0_12px_30px_rgba(20,45,40,0.18)]">
                 <span className="grid size-[40px] shrink-0 place-items-center rounded-[12px] bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
-                  <FigIcon src="/landing/_icons/heart.svg" className="size-[21px]" />
+                  <FigIcon src="/landing/_icons/users.svg" className="size-[21px]" />
                 </span>
                 <p className="text-[13.5px] leading-[18.56px]">
                   <span className="font-semibold text-[#1F1A14]">You are not alone.</span>
@@ -115,7 +115,7 @@ export function HeroSection() {
         {/* trust bar */}
         <div className="reveal mt-[40px] flex flex-col items-start gap-[16px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
           <span className="inline-flex shrink-0 items-center gap-[8px]">
-            <FigIcon src="/landing/_icons/shield-check.svg" className="size-[19px] text-[#0E4D4B]" />
+            <FigIcon src="/landing/_icons/pl-flower.svg" className="size-[19px] text-[#0E4D4B]" />
             <span className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-[#0E4D4B]">Women’s Health DNA</span>
           </span>
           <p className="text-[15px] leading-[24.38px] text-[#2D2A24]">
@@ -246,6 +246,7 @@ const GENES = [
   {
     n: 'Gene 1',
     gene: 'MTHFR',
+    icon: 'pl-apple',
     sub: 'Your folate metabolism gene',
     paras: [
       'The MTHFR gene controls an enzyme that converts folate into the active form your body can use. Folate is essential for foetal neural tube development, the early formation of the brain and spine that happens in the first weeks of pregnancy, often before a woman even knows she is pregnant.',
@@ -255,6 +256,7 @@ const GENES = [
   {
     n: 'Gene 2',
     gene: 'FOXP3',
+    icon: 'pl-shield-heart',
     sub: 'Your immune regulation gene',
     paras: [
       'The FOXP3 gene is involved in immune regulation, specifically the T-regulatory cells that prevent the immune system from attacking the body’s own tissues. During pregnancy, the mother’s immune system must tolerate the foetus, which carries paternal DNA it would otherwise recognise as foreign.',
@@ -285,7 +287,7 @@ export function WhatTheTestCoversSection() {
             >
               <div className="flex items-center gap-[16px]">
                 <span className="grid size-[56px] shrink-0 place-items-center rounded-[16px] bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
-                  <FigIcon src="/landing/_icons/dna.svg" className="size-[28px]" />
+                  <FigIcon src={`/landing/_icons/${g.icon}.svg`} className="size-[28px]" />
                 </span>
                 <div>
                   <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0E4D4B]">{g.n}</div>
@@ -312,7 +314,7 @@ export function WhatTheTestCoversSection() {
               'linear-gradient(90deg, rgba(228,241,236,1) 0%, rgba(210,232,223,0.7) 50%, rgba(228,241,236,0.6) 100%)',
           }}
         >
-          <FigIcon src="/landing/_icons/dna.svg" className="size-[36px] shrink-0 text-[#0E4D4B]" />
+          <FigIcon src="/landing/_icons/pl-lightbulb.svg" className="size-[36px] shrink-0 text-[#0E4D4B]" />
           <p className="text-[19px] font-semibold leading-[1.32] tracking-[-0.012em] text-[#0E4D4B] sm:text-[21px] lg:text-[23px] lg:leading-[30.36px]">
             Most women with recurrent pregnancy loss are told it is bad luck. For many, it is actually a folate
             metabolism issue or an immune regulation variant, both identifiable, and both manageable with the right
@@ -365,7 +367,7 @@ export function PreventiveCaseSection() {
             </div>
             <div className="mt-[24px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/70 px-[24px] pb-[24px] pt-[28px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">
-                <FigIcon src="/landing/_icons/heart.svg" className="size-[18px]" />
+                <FigIcon src="/landing/_icons/pl-hand-heart.svg" className="size-[18px]" />
                 For women who have already experienced loss
               </span>
               <p className="mt-[10px] text-[14.5px] leading-[23.56px] text-[#2D2A24]">

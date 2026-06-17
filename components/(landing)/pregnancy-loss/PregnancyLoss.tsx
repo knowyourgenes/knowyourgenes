@@ -2,24 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import { LandingStyles } from '../_shared/ui';
-import LandingNav, { type NavLink } from '../_shared/nav';
-import LandingFooter from '../_shared/footer';
 import { HeroSection, NotAloneSection, WhatTheTestCoversSection, PreventiveCaseSection } from './sections-a';
 import { WhatYouGetSection, DataStatsSection, BeforeAfterSection, WhoThisIsForSection } from './sections-b';
 import { AtEveryAgeSection, TestimonialsSection, FomoSection, HowItWorksSection } from './sections-c';
 import { TrustSection, FaqsSection, AlsoPartSection, FinalCtaSection } from './sections-d';
 import KygHeader from '@/components/site/KygHeader';
 import KygFooter from '@/components/site/KygFooter';
-
-const NAV_LINKS: NavLink[] = [
-  { label: 'The two genes', href: '#covers' },
-  { label: 'Why test early', href: '#why' },
-  { label: 'The report', href: '#report' },
-  { label: 'Is it for me', href: '#who' },
-  { label: 'FAQs', href: '#faqs' },
-];
-
-const FOOTER_LEARN = ['The two genes', 'Why test early', 'Sample report', 'FAQs'];
 
 /** Adds `is-in` to `.reveal` / `.reveal-r` elements as they enter the viewport. */
 function useRevealOnScroll(rootRef: React.RefObject<HTMLElement | null>) {
@@ -54,7 +42,6 @@ export default function PregnancyLoss() {
   return (
     <div ref={rootRef} className="kyg-lx relative overflow-x-clip">
       <LandingStyles />
-      {/* <LandingNav links={NAV_LINKS} cta={{ label: 'Know my risk', tone: 'eden' }} /> */}
       <KygHeader />
       <main>
         <HeroSection />
@@ -74,7 +61,6 @@ export default function PregnancyLoss() {
         <AlsoPartSection />
         <FinalCtaSection />
       </main>
-      {/* <LandingFooter bg="#15201E" learn={FOOTER_LEARN} /> */}
       <KygFooter />
     </div>
   );

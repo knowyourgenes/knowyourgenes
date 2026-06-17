@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { LandingStyles } from '../_shared/ui';
-import LandingNav, { type NavLink } from '../_shared/nav';
-import LandingFooter from '../_shared/footer';
 import {
   HeroSection,
   WhatNobodySection,
@@ -23,16 +21,6 @@ import { TestimonialsSection, FomoSection, HowItWorksSection } from './sections-
 import { TrustSection, FaqsSection, AlsoPartSection, FinalCtaSection } from './sections-d';
 import KygHeader from '@/components/site/KygHeader';
 import KygFooter from '@/components/site/KygFooter';
-
-const NAV_LINKS: NavLink[] = [
-  { label: 'The COMT gene', href: '#gene' },
-  { label: 'What changes', href: '#changes' },
-  { label: 'The report', href: '#report' },
-  { label: 'Is it for me', href: '#who' },
-  { label: 'FAQs', href: '#faqs' },
-];
-
-const FOOTER_LEARN = ['The COMT gene', 'What knowing changes', 'Sample report', 'FAQs'];
 
 /** Adds `is-in` to `.reveal` / `.reveal-r` elements as they enter the viewport. */
 function useRevealOnScroll(rootRef: React.RefObject<HTMLElement | null>) {
@@ -67,7 +55,6 @@ export default function PeripartumDepression() {
   return (
     <div ref={rootRef} className="kyg-lx relative overflow-x-clip">
       <LandingStyles />
-      {/* <LandingNav links={NAV_LINKS} cta={{ label: 'Know my vulnerability', tone: 'eden' }} /> */}
       <KygHeader />
       <main>
         <HeroSection />
@@ -89,7 +76,6 @@ export default function PeripartumDepression() {
         <AlsoPartSection />
         <FinalCtaSection />
       </main>
-      {/* <LandingFooter bg="#15201E" learn={FOOTER_LEARN} /> */}
       <KygFooter />
     </div>
   );
