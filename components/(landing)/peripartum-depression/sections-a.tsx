@@ -200,9 +200,9 @@ export function WhatNobodySection() {
 /* ====================== 3 · THE COMT GENE ====================== */
 
 const CHAIN = [
-  { icon: 'chain-activity', title: 'Low COMT activity', sub: 'the enzyme works more slowly' },
-  { icon: 'chain-sparkles', title: 'Dopamine builds up', sub: 'it is cleared more gradually' },
-  { icon: 'chain-heart', title: 'Lower pain threshold', sub: 'you feel more, more intensely' },
+  { icon: 'dna', title: 'Low COMT activity', sub: 'the enzyme works more slowly' },
+  { icon: 'pp-droplet', title: 'Dopamine builds up', sub: 'it is cleared more gradually' },
+  { icon: 'pp-bandage', title: 'Lower pain threshold', sub: 'you feel more, more intensely' },
 ];
 
 export function ComtGeneSection() {
@@ -271,7 +271,7 @@ export function ComtGeneSection() {
               {/* inverted final row */}
               <div className="flex items-center gap-[16px] rounded-[16px] bg-[#0E4D4B] p-[16px]">
                 <span className="grid size-[44px] shrink-0 place-items-center rounded-[12px] bg-white/15 text-[#FAF6EF]">
-                  <FigIcon src="/landing/_icons/shield-check.svg" className="size-[22px]" />
+                  <FigIcon src="/landing/_icons/meditation.svg" className="size-[22px]" />
                 </span>
                 <div>
                   <div className="text-[15.5px] font-semibold leading-[1.2] text-[#FAF6EF]">
@@ -285,7 +285,7 @@ export function ComtGeneSection() {
         </div>
 
         <div className="reveal mt-[16px]">
-          <MintCallout icon={<FigIcon src="/landing/_icons/heart.svg" className="size-[38px]" />}>
+          <MintCallout icon={<FigIcon src="/landing/_icons/leaf.svg" className="size-[38px]" />}>
             A woman with a COMT risk variant is not more fragile. She is more sensitive, and with the right support, that
             sensitivity becomes something she can work with, not something that works against her.
           </MintCallout>
@@ -325,7 +325,9 @@ export function IndiaProblemSection() {
 
           {/* stat highlight */}
           <div className="reveal mt-[24px] flex flex-col items-start gap-[16px] rounded-[26px] border border-[rgba(31,26,20,0.08)] bg-white/70 px-[32px] py-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)] sm:flex-row sm:items-center sm:gap-[28px]">
-            <div className="font-hind text-[56px] font-semibold leading-none text-[#0E4D4B] sm:text-[64px]">3 to 6%</div>
+            <div className="shrink-0 whitespace-nowrap font-hind text-[56px] font-semibold leading-none text-[#0E4D4B] sm:text-[64px]">
+              3 to 6%
+            </div>
             <p className="text-[16px] leading-[26px] text-[#2D2A24]">
               of women experience peripartum depression during or after pregnancy. It is{' '}
               <strong className="font-semibold text-[#1F1A14]">vastly under-diagnosed in India</strong>, not because it
@@ -334,7 +336,7 @@ export function IndiaProblemSection() {
           </div>
 
           <div className="reveal mt-[24px]">
-            <MintCallout icon={<FigIcon src="/landing/_icons/heart.svg" className="size-[38px]" />}>
+            <MintCallout icon={<FigIcon src="/landing/_icons/eye.svg" className="size-[34px]" />}>
               Knowing your COMT variant before pregnancy doesn’t prevent depression. But it tells you, your partner, and
               your doctor to watch for it, so that when the window opens, someone is already looking.
             </MintCallout>
@@ -428,7 +430,7 @@ export function NotAloneSection() {
         </div>
 
         <div className="reveal mt-[24px]">
-          <MintCallout icon={<FigIcon src="/landing/_icons/sparkles.svg" className="size-[40px]" />}>
+          <MintCallout icon={<FigIcon src="/landing/_icons/pp-hand-heart.svg" className="size-[40px]" />}>
             These women spoke so that the next woman doesn’t have to figure it out alone. You don’t have to be ambushed
             by something your genes already knew was coming.
           </MintCallout>
