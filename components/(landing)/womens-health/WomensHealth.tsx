@@ -2,22 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import { LandingStyles } from '../_shared/ui';
-import LandingNav, { type NavLink } from '../_shared/nav';
-import LandingFooter from '../_shared/footer';
 import { HeroSection, TrustBand, NotAloneSection, WhatIsPCOSSection } from './sections-a';
 import { WhyTestSection, WhatYouGetSection, DataStatsSection, BeforeAfterSection } from './sections-b';
 import { TestimonialsSection, AtEveryAgeSection, FomoSection, HowItWorksSection } from './sections-c';
 import { TrustSection, FaqsSection, AlsoPartSection, FinalCtaSection } from './sections-d';
 import KygHeader from '@/components/site/KygHeader';
 import KygFooter from '@/components/site/KygFooter';
-
-const NAV_LINKS: NavLink[] = [
-  { label: 'What PCOS is', href: '#what' },
-  { label: 'Why test', href: '#why' },
-  { label: 'The report', href: '#report' },
-  { label: 'How it works', href: '#how' },
-  { label: 'FAQs', href: '#faqs' },
-];
 
 /** Adds `is-in` to `.reveal` / `.reveal-r` elements as they enter the viewport. */
 function useRevealOnScroll(rootRef: React.RefObject<HTMLElement | null>) {
@@ -52,7 +42,6 @@ export default function WomensHealth() {
   return (
     <div ref={rootRef} className="kyg-lx relative overflow-x-clip">
       <LandingStyles />
-      {/* <LandingNav links={NAV_LINKS} /> */}
       <KygHeader />
       <main>
         <HeroSection />
@@ -72,7 +61,6 @@ export default function WomensHealth() {
         <AlsoPartSection />
         <FinalCtaSection />
       </main>
-      {/* <LandingFooter /> */}
       <KygFooter />
     </div>
   );

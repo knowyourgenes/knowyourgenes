@@ -2,20 +2,37 @@
 
 import { useMemo, useState } from 'react';
 import { Container, Eyebrow, FigIcon, GradientText, SheenButton, gTeal } from '../_shared/ui';
+import { KygLogo } from '@/components/site/logo';
 
 /* ==================== 6 · WHAT YOU GET ==================== */
 
-const GET_BULLETS: React.ReactNode[] = [
-  <>
-    Your <strong className="font-semibold text-[#1F1A14]">COMT genotype</strong>, the specific variant you carry
-  </>,
-  <>
-    Risk grading: <strong className="font-semibold text-[#0E4D4B]">Good</strong> (normal activity),{' '}
-    <strong className="font-semibold text-[#C76842]">Average</strong>, or{' '}
-    <strong className="font-semibold text-[#1F1A14]">Poor</strong> (low activity, high vulnerability)
-  </>,
-  <>A plain-language explanation of what your variant means for your dopamine regulation</>,
-  <>Specific recommendations for diet, lifestyle, and support planning during pregnancy</>,
+const GET_BULLETS: { icon: string; node: React.ReactNode }[] = [
+  {
+    icon: '/landing/_icons/dna-helix.svg',
+    node: (
+      <>
+        Your <strong className="font-semibold text-[#1F1A14]">COMT genotype</strong>, the specific variant you carry
+      </>
+    ),
+  },
+  {
+    icon: '/landing/_icons/gauge.svg',
+    node: (
+      <>
+        Risk grading: <strong className="font-semibold text-[#0E4D4B]">Good</strong> (normal activity),{' '}
+        <strong className="font-semibold text-[#C76842]">Average</strong>, or{' '}
+        <strong className="font-semibold text-[#1F1A14]">Poor</strong> (low activity, high vulnerability)
+      </>
+    ),
+  },
+  {
+    icon: '/landing/_icons/book-open.svg',
+    node: <>A plain-language explanation of what your variant means for your dopamine regulation</>,
+  },
+  {
+    icon: '/landing/_icons/meditation.svg',
+    node: <>Specific recommendations for diet, lifestyle, and support planning during pregnancy</>,
+  },
 ];
 
 function MockReport() {
@@ -24,10 +41,7 @@ function MockReport() {
       <div className="relative overflow-hidden px-[32px] pb-[32px] pt-[28px]" style={{ background: 'linear-gradient(175deg, #0E4D4B 0%, #0A3B39 100%)' }}>
         <div className="pointer-events-none absolute -right-6 -top-8 size-[224px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[40px]" />
         <div className="relative flex items-center justify-between">
-          <span className="inline-flex items-center gap-[6px] text-[#FAF6EF]">
-            <FigIcon src="/landing/_icons/kyg-logo-mark.svg" className="size-[16px] text-[#F3D5B2]" />
-            <span className="text-[11px] font-bold tracking-[-0.02em]">KnowYourGenes</span>
-          </span>
+          <KygLogo tone="light" className="h-[26px] w-auto" />
           <span className="rounded-full bg-white/15 px-[12px] py-[6px] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-[8px]">
             Panel 03 / 05
           </span>
@@ -36,7 +50,7 @@ function MockReport() {
           Peripartum Depression Risk
         </div>
         <div className="relative mt-[8px] flex items-center gap-[8px]">
-          <FigIcon src="/landing/_icons/report-activity.svg" className="size-[20px] text-[#FAF6EF]" />
+          <FigIcon src="/landing/_icons/brain.svg" className="size-[20px] text-[#FAF6EF]" />
           <span className="text-[20px] font-semibold leading-[1.2] tracking-[-0.025em] text-[#FAF6EF]">
             COMT · Catechol-O-methyltransferase
           </span>
@@ -69,7 +83,7 @@ function MockReport() {
 
         <div className="flex flex-col gap-[5px] rounded-[16px] bg-[rgba(14,77,75,0.06)] p-[16px]">
           <div className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">
-            <FigIcon src="/landing/_icons/sparkles.svg" className="size-[16px] text-[#0E4D4B]" />
+            <FigIcon src="/landing/_icons/meditation.svg" className="size-[16px] text-[#0E4D4B]" />
             Recommendation
           </div>
           <p className="text-[13.5px] leading-[21.94px] text-[#2D2A24]">
@@ -126,20 +140,18 @@ export function WhatYouGetSection() {
               The peripartum depression panel is <strong className="font-semibold text-[#1F1A14]">Panel 03</strong> of
               your Women’s Health DNA report. You’ll receive:
             </p>
-            <ul className="mt-[24px] flex flex-col gap-[14px]">
+            <ul className="mt-[24px] flex flex-col gap-[16px]">
               {GET_BULLETS.map((b, i) => (
                 <li key={i} className="flex items-start gap-[14px]">
-                  <span className="mt-[1px] grid size-[22px] shrink-0 place-items-center rounded-full bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
-                    <FigIcon src="/landing/_icons/check.svg" className="size-[14px]" />
-                  </span>
-                  <span className="text-[15.5px] leading-[23.25px] text-[#2D2A24]">{b}</span>
+                  <FigIcon src={b.icon} className="mt-[1px] size-[24px] shrink-0 text-[#0E4D4B]" />
+                  <span className="text-[15.5px] leading-[23.25px] text-[#2D2A24]">{b.node}</span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-[32px] flex flex-col gap-[8px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[24px] pb-[32px] pt-[36px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
-                <FigIcon src="/landing/_icons/sparkles.svg" className="size-[17px]" />
+                <FigIcon src="/landing/_icons/layers.svg" className="size-[17px] text-[#0E4D4B]" />
                 And this is just Panel 03 of 5
               </span>
               <p className="text-[15px] leading-[24.38px] text-[#2D2A24]">
@@ -166,22 +178,22 @@ export function WhatYouGetSection() {
 
 const CHANGES = [
   {
-    icon: '/landing/_icons/user-round.svg',
+    icon: '/landing/_icons/users.svg',
     title: 'Your partner knows.',
     body: 'Instead of reading your emotional state as personal rejection or moodiness, your partner understands that your nervous system processes stress differently. A profoundly different conversation to have before a baby arrives, versus in the middle of a crisis you can’t name.',
   },
   {
-    icon: '/landing/_icons/shield-check.svg',
+    icon: '/landing/_icons/stethoscope.svg',
     title: 'Your doctor knows.',
     body: 'Your OB-GYN or psychiatrist can flag your COMT result in your antenatal record. Mental health check-ins get scheduled during pregnancy, not just after delivery. “How are you feeling emotionally?” becomes part of every appointment, not an afterthought.',
   },
   {
-    icon: '/landing/_icons/heart.svg',
+    icon: '/landing/_icons/eye.svg',
     title: 'You know.',
     body: 'If at 18 weeks you feel flat, anxious, or unlike yourself, you have a name for it. You know it can start before the birth, because that’s what the research says for 50% of cases. You know it is not a reflection of how much you love your baby. It has a biological basis. That knowledge is everything.',
   },
   {
-    icon: '/landing/_icons/activity.svg',
+    icon: '/landing/_icons/leaf.svg',
     title: 'Your lifestyle adjusts.',
     body: 'The recommendation is specific: reduce caffeine, processed foods, alcohol. Meditate daily. Prioritise rest. Manageable changes, far more powerful when they are targeted to a known genetic vulnerability rather than applied generically as “wellness advice.”',
   },
@@ -358,7 +370,7 @@ export function BeforeAfterSection() {
               <div className="flex flex-col gap-[12px] bg-[rgba(245,237,223,0.6)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
                   <span className="grid size-[28px] place-items-center rounded-[8px] bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
-                    <FigIcon src="/landing/_icons/x.svg" className="size-[16px]" />
+                    <FigIcon src="/landing/_icons/pp-history-clock.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Before</span>
                 </span>
@@ -434,7 +446,7 @@ function ForYouChecklist() {
         <div className="pointer-events-none absolute -top-9 right-0 size-[144px] rounded-full bg-[rgba(37,181,171,0.15)] blur-[40px]" />
         <div className="relative flex items-center gap-[20px]">
           <span className="relative grid size-[64px] shrink-0 place-items-center rounded-full bg-white/10 text-[#F3D5B2]">
-            <FigIcon src="/landing/_icons/heart.svg" className="size-[28px]" />
+            <FigIcon src="/landing/_icons/meditation.svg" className="size-[28px]" />
             {count > 0 && (
               <span className="absolute -right-1 -top-1 grid size-[24px] place-items-center rounded-full bg-[#F3D5B2] font-hind text-[13px] font-semibold text-[#1F1A14]">
                 {count}
@@ -483,7 +495,7 @@ export function WhoThisIsForSection() {
               Every line is a gentle tap on the shoulder. Tap the ones that feel like you.
             </p>
             <div className="mt-[24px] flex items-center gap-[12px] rounded-[20px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[20px] pb-[20px] pt-[28px]">
-              <FigIcon src="/landing/_icons/shield-check.svg" className="size-[26px] shrink-0 text-[#0E4D4B]" />
+              <FigIcon src="/landing/_icons/pp-lock.svg" className="size-[26px] shrink-0 text-[#0E4D4B]" />
               <p className="text-[14px] leading-[20px] text-[#2D2A24]">
                 Whatever you select stays on your device. Nothing is submitted. This is just for you.
               </p>

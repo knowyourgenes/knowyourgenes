@@ -125,7 +125,7 @@ export function WhatYouGetSection() {
               {GET_BULLETS.map((b, i) => (
                 <li key={i} className="flex items-start gap-[14px]">
                   <span className="mt-[1px] grid size-[22px] shrink-0 place-items-center rounded-full bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
-                    <FigIcon src="/landing/_icons/check.svg" className="size-[14px]" />
+                    <FigIcon src="/landing/_icons/pl-apple.svg" className="size-[14px]" />
                   </span>
                   <span className="text-[15.5px] leading-[23.25px] text-[#2D2A24]">{b}</span>
                 </li>
@@ -134,7 +134,7 @@ export function WhatYouGetSection() {
 
             <div className="mt-[32px] flex flex-col gap-[8px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[24px] pb-[32px] pt-[36px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
-                <FigIcon src="/landing/_icons/sparkles.svg" className="size-[17px]" />
+                <FigIcon src="/landing/_icons/layers.svg" className="size-[17px]" />
                 And this is just Panel 02 of 5
               </span>
               <p className="text-[15px] leading-[24.38px] text-[#2D2A24]">
@@ -274,7 +274,7 @@ export function BeforeAfterSection() {
               <div className="flex flex-col gap-[12px] bg-[rgba(245,237,223,0.6)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
                   <span className="grid size-[28px] place-items-center rounded-[8px] bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
-                    <FigIcon src="/landing/_icons/x.svg" className="size-[16px]" />
+                    <FigIcon src="/landing/_icons/pl-clock-history.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Before</span>
                 </span>
@@ -399,7 +399,7 @@ export function WhoThisIsForSection() {
               Each line speaks to a different woman. Tap the ones that sound like you, and see where it leads.
             </p>
             <div className="mt-[24px] flex items-center gap-[12px] rounded-[20px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[20px] pb-[20px] pt-[28px]">
-              <FigIcon src="/landing/_icons/shield-check.svg" className="size-[26px] shrink-0 text-[#0E4D4B]" />
+              <FigIcon src="/landing/_icons/pl-flower.svg" className="size-[26px] shrink-0 text-[#0E4D4B]" />
               <p className="text-[14px] leading-[20px] text-[#2D2A24]">
                 Whatever you select stays on your device. Nothing is submitted, this is just for you.
               </p>

@@ -13,17 +13,17 @@ const CERTS = [
 
 const CRED_ROWS = [
   {
-    icon: '/landing/_icons/activity.svg',
+    icon: '/landing/_icons/pp-microscope.svg',
     label: 'Technology:',
     body: ' Illumina Infinium SNP array · 99%+ reproducibility · >98% call rate.',
   },
   {
-    icon: '/landing/_icons/user-round.svg',
+    icon: '/landing/_icons/pp-file-user.svg',
     label: 'Expert review:',
     body: ' every report reviewed by Dr. Varun Sharma, Ph.D, Scientist, Human Genetics.',
   },
   {
-    icon: '/landing/_icons/shield.svg',
+    icon: '/landing/_icons/pp-lock.svg',
     label: 'Your data:',
     body: ' never sold, never shared. Sample destroyed after processing. Request deletion anytime.',
   },
@@ -57,7 +57,7 @@ export function TrustSection() {
             </div>
             <div className="absolute inset-x-5 bottom-5 flex items-start gap-[14px] rounded-[16px] bg-white px-[20px] py-[16px] shadow-[0_14px_34px_rgba(20,45,40,0.22)]">
               <span className="grid size-[40px] shrink-0 place-items-center rounded-[12px] bg-[#0E4D4B] text-[#FAF6EF]">
-                <FigIcon src="/landing/_icons/shield-check.svg" className="size-[22px]" />
+                <FigIcon src="/landing/_icons/pp-lock.svg" className="size-[22px]" />
               </span>
               <div>
                 <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">
@@ -299,7 +299,7 @@ export function FinalCtaSection() {
             {/* couples bundle nudge */}
             <div className="mt-[36px] flex w-full flex-col items-start gap-[20px] rounded-[24px] border border-[#E5E7EB]/15 bg-white/[0.07] px-[24px] py-[24px] text-left sm:flex-row sm:items-center sm:px-[32px]">
               <span className="grid size-[56px] shrink-0 place-items-center rounded-[16px] bg-[rgba(243,213,178,0.2)] text-[#F3D5B2]">
-                <FigIcon src="/landing/_icons/bundle-heart.svg" className="size-[28px]" />
+                <FigIcon src="/landing/_icons/users.svg" className="size-[28px]" />
               </span>
               <div className="flex-1">
                 <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(243,213,178,0.8)]">
