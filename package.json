@@ -73,6 +73,10 @@
       "@prisma/engines",
       "prisma",
       "esbuild"
+    ],
+    "ignoredBuiltDependencies": [
+      "sharp",
+      "unrs-resolver"
     ]
   },
   "prisma": {
