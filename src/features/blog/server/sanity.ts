@@ -1,6 +1,6 @@
 import { createClient, type QueryParams } from 'next-sanity';
 import imageUrlBuilder from '@sanity/image-url';
-import { apiVersion, dataset, projectId } from '@/sanity/env';
+import { apiVersion, dataset, projectId } from '@/features/blog/sanity/env';
 
 type SanityImageSource = Parameters<ReturnType<typeof imageUrlBuilder>['image']>[0];
 

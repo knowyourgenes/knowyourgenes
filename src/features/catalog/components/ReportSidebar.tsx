@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import type { Bundle, Category, SidebarLink } from '@/data/tests';
+import type { Bundle, Category, SidebarLink } from '@/features/catalog/data/tests';
 import { scrollToHashWithOffset, useScrollSpy } from '@/hooks/use-scroll';
 import { ChevronLeft } from './icons';
 import { BUNDLE_THEME } from './themes';

@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
-import { auth } from '@/auth';
-import AppSidebar from '@/components/admin/AppSidebar';
-import UserNav from '@/components/admin/UserNav';
+import { auth } from '@/features/auth';
+import AppSidebar from '@/features/admin/components/AppSidebar';
+import UserNav from '@/features/admin/components/UserNav';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 

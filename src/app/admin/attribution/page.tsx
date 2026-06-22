@@ -1,9 +1,9 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { auth } from '@/auth';
-import { prisma } from '@/lib/prisma';
-import { ATTRIBUTION_COOKIE, verifyAttribution, payloadToAttribution } from '@/lib/attribution';
-import PageHeader from '@/components/admin/PageHeader';
+import { auth } from '@/features/auth';
+import { prisma } from '@/server/prisma';
+import { ATTRIBUTION_COOKIE, verifyAttribution, payloadToAttribution } from '@/features/attribution/server/attribution';
+import PageHeader from '@/features/admin/components/PageHeader';
 import { Badge } from '@/components/ui/badge';
 
 export const dynamic = 'force-dynamic';

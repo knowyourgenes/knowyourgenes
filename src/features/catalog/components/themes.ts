@@ -1,7 +1,7 @@
 // Colour themes for bundle cards, shared by the sidebar mini-cards and the
 // Bundles section tiles. Values are Tailwind utilities backed by the scoped
 // CSS-variable tokens (see styles.tsx).
-import type { Bundle } from '@/data/tests';
+import type { Bundle } from '@/features/catalog/data/tests';
 
 export interface BundleTheme {
   bg: string;

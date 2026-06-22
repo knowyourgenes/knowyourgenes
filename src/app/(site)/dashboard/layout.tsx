@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
-import { auth } from '@/auth';
-import DashboardNav from '@/components/dashboard/DashboardNav';
+import { auth } from '@/features/auth';
+import DashboardNav from '@/features/dashboard/components/DashboardNav';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,7 +1,7 @@
-import { prisma } from '@/lib/prisma';
-import { handle, isResponse, ok, requireApiRole } from '@/lib/api';
-import { courier } from '@/lib/courier';
-import { applyTrackingToShipment } from '@/lib/shipments';
+import { prisma } from '@/server/prisma';
+import { handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { courier } from '@/features/shipments/server/courier';
+import { applyTrackingToShipment } from '@/features/shipments';
 
 type Params = Promise<{ id: string }>;
 

@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma';
-import { created, fail, handle, isResponse, requireApiRole } from '@/lib/api';
-import { putObject, reportKey, R2_CONFIGURED } from '@/lib/r2';
+import { prisma } from '@/server/prisma';
+import { created, fail, handle, isResponse, requireApiRole } from '@/server/api';
+import { putObject, reportKey, R2_CONFIGURED } from '@/features/reports';
 
 /**
  * POST /api/admin/reports/upload

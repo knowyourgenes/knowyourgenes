@@ -27,7 +27,7 @@ import type {
   ServiceabilityResult,
   TrackingResult,
   TrackingScan,
-} from '@/lib/delhivery';
+} from '@/features/shipments/server/delhivery';
 
 // ---------------------------------------------------------------------------
 // Config

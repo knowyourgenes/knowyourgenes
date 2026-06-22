@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/auth';
+import { prisma } from '@/server/prisma';
+import { auth } from '@/features/auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -11,7 +11,7 @@ import {
   TruckIcon,
   CalendarClock,
 } from 'lucide-react';
-import DateRangeFilter from '@/components/admin/DateRangeFilter';
+import DateRangeFilter from '@/features/admin/components/DateRangeFilter';
 
 export const dynamic = 'force-dynamic';
 

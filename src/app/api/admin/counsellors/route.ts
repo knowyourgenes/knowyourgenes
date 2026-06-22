@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
-import { prisma } from '@/lib/prisma';
-import { created, handle, isResponse, ok, requireApiRole } from '@/lib/api';
+import { prisma } from '@/server/prisma';
+import { created, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { counsellorCreate } from '@/lib/validators';
 
 export async function GET() {

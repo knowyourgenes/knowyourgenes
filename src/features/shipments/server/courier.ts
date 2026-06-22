@@ -14,15 +14,15 @@
  * the active provider is later flipped.
  */
 import type { ShipmentCourier } from '@prisma/client';
-import { delhivery } from '@/lib/delhivery';
-import { shiprocket } from '@/lib/shiprocket';
+import { delhivery } from '@/features/shipments/server/delhivery';
+import { shiprocket } from '@/features/shipments/server/shiprocket';
 import type {
   CreateShipmentInput,
   CreateShipmentResult,
   PickupRequestResult,
   ServiceabilityResult,
   TrackingResult,
-} from '@/lib/delhivery';
+} from '@/features/shipments/server/delhivery';
 
 type CourierKey = 'shiprocket' | 'delhivery';
 

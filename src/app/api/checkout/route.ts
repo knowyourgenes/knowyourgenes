@@ -1,10 +1,10 @@
 import { cookies } from 'next/headers';
-import { prisma } from '@/lib/prisma';
-import { fail, handle, isResponse, ok, requireApiRole } from '@/lib/api';
+import { prisma } from '@/server/prisma';
+import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { checkoutCreate } from '@/lib/validators';
-import { readAttributionCookie, attributionToOrderFields } from '@/lib/attribution';
-import { applyCoupon, nextOrderNumber, resolveCampaignId } from '@/lib/orders';
-import { createRazorpayOrder, RAZORPAY_KEY_ID_PUBLIC, RAZORPAY_MOCK } from '@/lib/razorpay';
+import { readAttributionCookie, attributionToOrderFields } from '@/features/attribution/server/attribution';
+import { applyCoupon, nextOrderNumber, resolveCampaignId } from '@/features/orders';
+import { createRazorpayOrder, RAZORPAY_KEY_ID_PUBLIC, RAZORPAY_MOCK } from '@/features/payments';
 
 /**
  * POST /api/checkout

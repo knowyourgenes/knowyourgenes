@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import type { Test } from '@/data/tests';
+import type { Test } from '@/features/catalog/data/tests';
 import { useRevealOnScroll } from '@/hooks/use-scroll';
 import {
   ActionPlan,

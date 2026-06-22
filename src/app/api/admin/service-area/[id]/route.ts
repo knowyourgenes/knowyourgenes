@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma';
-import { handle, isResponse, ok, requireApiRole } from '@/lib/api';
+import { prisma } from '@/server/prisma';
+import { handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { serviceAreaUpdate } from '@/lib/validators';
 
 type Params = Promise<{ id: string }>;

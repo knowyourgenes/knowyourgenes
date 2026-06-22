@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { CHROME_VARS } from '@/lib/tokens';
+import { CHROME_VARS } from '@/features/auth/server/tokens';
 import { KygLogo } from './Logo';
 
 // Links point at homepage sections (/#anchor) so they resolve from any page,

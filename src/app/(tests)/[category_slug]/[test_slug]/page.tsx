@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { allTestParams, getTest } from '@/data/tests';
-import TestContent from '@/components/tests/TestContent';
+import { allTestParams, getTest } from '@/features/catalog/data/tests';
+import TestContent from '@/features/catalog/components/TestContent';
 
 type Params = Promise<{ category_slug: string; test_slug: string }>;
 

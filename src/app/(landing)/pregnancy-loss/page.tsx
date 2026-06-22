@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PregnancyLoss from '@/components/landing/pregnancy-loss/PregnancyLoss';
+import PregnancyLoss from '@/features/landing/components/pregnancy-loss/PregnancyLoss';
 
 export const metadata: Metadata = {
   title: 'Recurrent Pregnancy Loss — genetic risk | Women’s Health DNA',

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { registerUser } from '@/lib/auth-helpers';
+import { registerUser } from '@/features/auth/server/auth-helpers';
 import { ZodError } from 'zod';
 
 export async function POST(req: Request) {

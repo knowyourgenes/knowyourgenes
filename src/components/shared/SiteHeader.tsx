@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import UserNav from '@/components/admin/UserNav';
-import { CHROME_VARS } from '@/lib/tokens';
+import UserNav from '@/features/admin/components/UserNav';
+import { CHROME_VARS } from '@/features/auth/server/tokens';
 import { NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
 import { KygLogo } from './Logo';
 

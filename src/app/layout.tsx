@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Figtree, Hind } from 'next/font/google';
-import { auth } from '@/auth';
+import { auth } from '@/features/auth';
 import Providers from '@/components/Providers';
-import AttributionBeacon from '@/components/AttributionBeacon';
+import AttributionBeacon from '@/features/attribution/components/AttributionBeacon';
 import './globals.css';
 
 const geistSans = Geist({

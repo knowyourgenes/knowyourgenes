@@ -1,8 +1,8 @@
-import { prisma } from '@/lib/prisma';
-import { created, fail, handle, isResponse, requireApiRole } from '@/lib/api';
-import { courier } from '@/lib/courier';
+import { prisma } from '@/server/prisma';
+import { created, fail, handle, isResponse, requireApiRole } from '@/server/api';
+import { courier } from '@/features/shipments/server/courier';
 import { shipmentCreate } from '@/lib/validators';
-import { resolveLab } from '@/lib/shipments';
+import { resolveLab } from '@/features/shipments';
 
 type Params = Promise<{ id: string }>;
 

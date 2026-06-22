@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma';
-import { verifyWebhookSignature } from '@/lib/razorpay';
+import { prisma } from '@/server/prisma';
+import { verifyWebhookSignature } from '@/features/payments';
 
 /**
  * POST /api/webhooks/razorpay

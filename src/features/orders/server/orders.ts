@@ -2,8 +2,8 @@
  * Order helpers - number generation, pricing calc, attribution → campaign FK
  * resolution.
  */
-import { prisma } from '@/lib/prisma';
-import type { AttributionPayload } from '@/lib/attribution';
+import { prisma } from '@/server/prisma';
+import type { AttributionPayload } from '@/features/attribution/server/attribution';
 
 /**
  * Generates the human-facing order number: KYG-<YYYY>-<6-digit sequence>.

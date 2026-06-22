@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { fail, handle, ok } from '@/lib/api';
-import { mapplsGeocode } from '@/lib/mappls';
+import { fail, handle, ok } from '@/server/api';
+import { mapplsGeocode } from '@/features/location';
 
 const schema = z.object({
   address: z.string().min(3).max(400),

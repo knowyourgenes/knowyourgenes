@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
 import SiteHeader from '@/components/shared/SiteHeader';
 import SiteFooter from '@/components/shared/SiteFooter';
-import { getCategory, getCategoryTests } from '@/data/tests';
-import CategoryShell from '@/components/tests/CategoryShell';
+import { getCategory, getCategoryTests } from '@/features/catalog/data/tests';
+import CategoryShell from '@/features/catalog/components/CategoryShell';
 
 /**
  * Category layout — the shared chrome for every report in a category.

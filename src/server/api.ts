@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 import type { Session } from 'next-auth';
-import { auth } from '@/auth';
+import { auth } from '@/features/auth';
 import type { Role } from '@prisma/client';
 
 // ---------------------------------------------------------------------------

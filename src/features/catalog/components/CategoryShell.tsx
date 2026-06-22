@@ -2,7 +2,7 @@
 
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import { useSelectedLayoutSegment } from 'next/navigation';
-import type { Category, Test } from '@/data/tests';
+import type { Category, Test } from '@/features/catalog/data/tests';
 import PageStyles from './styles';
 import ReportSidebar from './ReportSidebar';
 

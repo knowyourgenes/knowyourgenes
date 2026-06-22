@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma';
-import { handle, isResponse, ok, requireApiRole } from '@/lib/api';
-import { presignDownload } from '@/lib/r2';
+import { prisma } from '@/server/prisma';
+import { handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { presignDownload } from '@/features/reports';
 
 type Params = Promise<{ id: string }>;
 

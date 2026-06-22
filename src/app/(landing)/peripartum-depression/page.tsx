@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PeripartumDepression from '@/components/landing/peripartum-depression/PeripartumDepression';
+import PeripartumDepression from '@/features/landing/components/peripartum-depression/PeripartumDepression';
 
 export const metadata: Metadata = {
   title: 'Peripartum Depression - genetic risk | Women’s Health DNA',

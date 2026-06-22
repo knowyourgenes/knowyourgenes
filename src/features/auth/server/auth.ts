@@ -3,8 +3,8 @@ import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
-import { prisma } from '@/lib/prisma';
-import authConfig from '@/auth.config';
+import { prisma } from '@/server/prisma';
+import authConfig from '@/features/auth/server/auth.config';
 
 // Login accepts EITHER email OR phone in the "identifier" field + password.
 const credentialsSchema = z.object({

@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/auth';
+import { prisma } from '@/server/prisma';
+import { auth } from '@/features/auth';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ClipboardList } from 'lucide-react';

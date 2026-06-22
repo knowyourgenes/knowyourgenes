@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { fail, handle, ok } from '@/lib/api';
-import { prisma } from '@/lib/prisma';
-import { mapplsReverseGeocode } from '@/lib/mappls';
+import { fail, handle, ok } from '@/server/api';
+import { prisma } from '@/server/prisma';
+import { mapplsReverseGeocode } from '@/features/location';
 
 const schema = z.object({
   lat: z.number().min(-90).max(90),

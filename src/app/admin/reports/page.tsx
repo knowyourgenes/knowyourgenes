@@ -4,9 +4,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2, Upload, Download, Trash2, FileText, Search, AlertTriangle } from 'lucide-react';
 
-import PageHeader from '@/components/admin/PageHeader';
-import DataTable from '@/components/admin/DataTable';
-import DeleteConfirmDialog from '@/components/admin/DeleteConfirmDialog';
+import PageHeader from '@/features/admin/components/PageHeader';
+import DataTable from '@/features/admin/components/DataTable';
+import DeleteConfirmDialog from '@/features/admin/components/DeleteConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

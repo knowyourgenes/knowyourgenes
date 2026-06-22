@@ -1,7 +1,7 @@
-import { prisma } from '@/lib/prisma';
-import { fail, handle, isResponse, ok, requireApiRole } from '@/lib/api';
+import { prisma } from '@/server/prisma';
+import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { checkoutVerify } from '@/lib/validators';
-import { verifyPaymentSignature } from '@/lib/razorpay';
+import { verifyPaymentSignature } from '@/features/payments';
 
 /**
  * POST /api/checkout/verify

@@ -1,4 +1,4 @@
-import HomePage from '@/components/home/Homepage';
+import HomePage from '@/features/home/components/Homepage';
 import SiteHeader from '@/components/shared/SiteHeader';
 import SiteFooter from '@/components/shared/SiteFooter';
 

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/auth';
+import { prisma } from '@/server/prisma';
+import { auth } from '@/features/auth';
 import type { Role } from '@prisma/client';
 
 // ---------------------------------------------------------------------------

@@ -5,12 +5,12 @@
 //                        (Portable Text → markdown) and test FAQ Q&A inlined.
 //
 // Data sources (this project):
-//   • Static pages + genetic tests  → @/data/tests (local, always available)
-//   • Blog articles                  → Sanity CMS via @/lib/sanity (best-effort)
+//   • Static pages + genetic tests  → @/features/catalog/data/tests (local, always available)
+//   • Blog articles                  → Sanity CMS via @/features/blog (best-effort)
 
 import { siteConfig, absoluteUrl, cleanTitle } from '@/lib/site-config';
-import { TESTS } from '@/data/tests';
-import { sanityFetch, blogListQuery, blogPostQuery } from '@/lib/sanity';
+import { TESTS } from '@/features/catalog/data/tests';
+import { sanityFetch, blogListQuery, blogPostQuery } from '@/features/blog';
 
 // ---------------------------------------------------------------------------
 // Static route registry (discovered routes; route groups/admin/agent excluded)

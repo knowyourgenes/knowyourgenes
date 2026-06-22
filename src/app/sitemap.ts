@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { absoluteUrl } from '@/lib/site-config';
-import { TESTS } from '@/data/tests';
-import { sanityFetch, blogListQuery } from '@/lib/sanity';
+import { TESTS } from '@/features/catalog/data/tests';
+import { sanityFetch, blogListQuery } from '@/features/blog';
 
 export const revalidate = 3600;
 

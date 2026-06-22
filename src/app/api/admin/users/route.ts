@@ -1,6 +1,6 @@
 import type { Role } from '@prisma/client';
-import { prisma } from '@/lib/prisma';
-import { handle, isResponse, ok, requireApiRole } from '@/lib/api';
+import { prisma } from '@/server/prisma';
+import { handle, isResponse, ok, requireApiRole } from '@/server/api';
 
 export async function GET(req: Request) {
   return handle(async () => {

@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma';
-import { fail, handle, isResponse, ok, requireApiRole } from '@/lib/api';
+import { prisma } from '@/server/prisma';
+import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { z } from 'zod';
 
 type Params = Promise<{ id: string }>;

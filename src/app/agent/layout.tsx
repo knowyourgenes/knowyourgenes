@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { auth } from '@/auth';
-import AgentBottomNav from '@/components/agent/AgentBottomNav';
+import { auth } from '@/features/auth';
+import AgentBottomNav from '@/features/agent/components/AgentBottomNav';
 
 export const dynamic = 'force-dynamic';
 

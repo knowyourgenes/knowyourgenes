@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { cn } from '@/lib/utils';
-import type { ActionItem, Bundle, Expert, Panel, RiskStatus, Step, Test } from '@/data/tests';
+import type { ActionItem, Bundle, Expert, Panel, RiskStatus, Step, Test } from '@/features/catalog/data/tests';
 import { Badge, Button, SectionHead } from './primitives';
 import { BUNDLE_THEME } from './themes';
 import { AlertCircle, ArrowRight, BadgeTest, Check, Icon, Plus } from './icons';

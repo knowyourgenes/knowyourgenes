@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma';
-import { handle, ok } from '@/lib/api';
-import { mapplsAutosuggest } from '@/lib/mappls';
+import { prisma } from '@/server/prisma';
+import { handle, ok } from '@/server/api';
+import { mapplsAutosuggest } from '@/features/location';
 
 // GET /api/location/autosuggest?q=DLF+Phase
 // Returns: { items: [{ placeName, placeAddress, pincode, area, district, state, serviceable }, ...] }

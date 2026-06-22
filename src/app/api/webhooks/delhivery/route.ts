@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma';
-import { applyTrackingToShipment } from '@/lib/shipments';
+import { prisma } from '@/server/prisma';
+import { applyTrackingToShipment } from '@/features/shipments';
 import type { ShipmentStatus } from '@prisma/client';
 
 /**

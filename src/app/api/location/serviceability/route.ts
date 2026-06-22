@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma';
-import { fail, handle, ok } from '@/lib/api';
-import { courier as courierClient } from '@/lib/courier';
+import { prisma } from '@/server/prisma';
+import { fail, handle, ok } from '@/server/api';
+import { courier as courierClient } from '@/features/shipments/server/courier';
 import { z } from 'zod';
 
 /**

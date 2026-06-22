@@ -1,13 +1,13 @@
 import NextAuth from 'next-auth';
 import { NextResponse } from 'next/server';
-import authConfig from '@/auth.config';
+import authConfig from '@/features/auth/server/auth.config';
 import {
   ATTRIBUTION_COOKIE,
   ATTRIBUTION_COOKIE_OPTS,
   ATTRIBUTION_MODEL,
   captureFromRequest,
   signAttribution,
-} from '@/lib/attribution';
+} from '@/features/attribution/server/attribution';
 
 // Proxy runs on the edge for page routes only.
 // API routes skip the proxy entirely and do their own auth via requireApiRole()

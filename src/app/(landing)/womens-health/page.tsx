@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import WomensHealth from '@/components/landing/womens-health/WomensHealth';
+import WomensHealth from '@/features/landing/components/womens-health/WomensHealth';
 
 export const metadata: Metadata = {
   title: "Is your PCOS genetic? — Women's Health DNA",

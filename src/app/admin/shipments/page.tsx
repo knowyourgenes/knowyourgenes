@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2, RefreshCw, X, Search, Truck, ArrowLeftRight } from 'lucide-react';
 
-import PageHeader from '@/components/admin/PageHeader';
-import DataTable from '@/components/admin/DataTable';
+import PageHeader from '@/features/admin/components/PageHeader';
+import DataTable from '@/features/admin/components/DataTable';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';

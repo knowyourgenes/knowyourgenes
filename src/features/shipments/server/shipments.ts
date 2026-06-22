@@ -2,8 +2,8 @@
  * Shared helpers for shipments. Pulled out so both admin routes and the
  * webhook handler agree on tracking/state transitions.
  */
-import { prisma } from '@/lib/prisma';
-import type { TrackingResult } from '@/lib/delhivery';
+import { prisma } from '@/server/prisma';
+import type { TrackingResult } from '@/features/shipments/server/delhivery';
 import type { OrderStatus, ShipmentLeg, ShipmentStatus } from '@prisma/client';
 
 export interface PartyAddress {
