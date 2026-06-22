@@ -1,15 +1,3 @@
-import { defineConfig } from 'sanity';
-import { structureTool } from 'sanity/structure';
-import { visionTool } from '@sanity/vision';
-import { schemaTypes } from './sanity/schemas';
-import { apiVersion, dataset, projectId } from './sanity/env';
-
-export default defineConfig({
-  name: 'kyg-studio',
-  title: 'KYG Blog',
-  basePath: '/studio',
-  projectId,
-  dataset,
-  schema: { types: schemaTypes },
-  plugins: [structureTool(), visionTool({ defaultApiVersion: apiVersion })],
-});
+// The Sanity CLI looks for `sanity.config.ts` at the project root.
+// The real configuration lives under `src/sanity/` with the rest of the app.
+export { default } from './src/sanity/config';
