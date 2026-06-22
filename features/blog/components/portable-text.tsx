@@ -17,10 +17,10 @@ export const portableComponents = {
             src={url}
             alt={value.alt ?? ''}
             loading="lazy"
-            className="w-full rounded-[var(--r-md)] border border-[var(--ink-line)]"
+            className="w-full rounded-(--r-md) border border-(--ink-line)"
           />
           {value.alt ? (
-            <figcaption className="mt-3 text-center text-[13.5px] text-[var(--ink-3)]">{value.alt}</figcaption>
+            <figcaption className="mt-3 text-center text-[13.5px] text-(--ink-3)">{value.alt}</figcaption>
           ) : null}
         </figure>
       );
@@ -28,23 +28,23 @@ export const portableComponents = {
   },
   block: {
     normal: ({ children }: { children?: ReactNode }) => (
-      <p className="my-5 text-[17px] leading-[1.85] text-[var(--ink-2)]">{children}</p>
+      <p className="my-5 text-[17px] leading-[1.85] text-(--ink-2)">{children}</p>
     ),
     h2: ({ children }: { children?: ReactNode }) => (
-      <h2 className="mt-12 mb-4 text-[26px] font-semibold tracking-[-0.02em] text-[var(--ink-1)]">{children}</h2>
+      <h2 className="mt-12 mb-4 text-[26px] font-semibold tracking-[-0.02em] text-(--ink-1)">{children}</h2>
     ),
     h3: ({ children }: { children?: ReactNode }) => (
-      <h3 className="mt-9 mb-3 text-[20px] font-semibold tracking-[-0.015em] text-[var(--ink-1)]">{children}</h3>
+      <h3 className="mt-9 mb-3 text-[20px] font-semibold tracking-[-0.015em] text-(--ink-1)">{children}</h3>
     ),
     blockquote: ({ children }: { children?: ReactNode }) => (
-      <blockquote className="my-7 border-l-[3px] border-[var(--teal)] bg-[var(--cream-2)] py-3 pl-6 pr-4 text-[18px] italic leading-[1.7] text-[var(--ink-1)] rounded-r-[var(--r-sm)]">
+      <blockquote className="my-7 border-l-[3px] border-(--teal) bg-(--cream-2) py-3 pl-6 pr-4 text-[18px] italic leading-[1.7] text-(--ink-1) rounded-r-(--r-sm)">
         {children}
       </blockquote>
     ),
   },
   marks: {
     strong: ({ children }: { children?: ReactNode }) => (
-      <strong className="font-semibold text-[var(--ink-1)]">{children}</strong>
+      <strong className="font-semibold text-(--ink-1)">{children}</strong>
     ),
     em: ({ children }: { children?: ReactNode }) => <em>{children}</em>,
     link: ({ value, children }: { value?: { href?: string }; children?: ReactNode }) => {
@@ -53,7 +53,7 @@ export const portableComponents = {
       return (
         <a
           href={href}
-          className="text-[var(--teal)] underline decoration-[var(--teal)]/40 underline-offset-[3px] transition-colors hover:text-[var(--teal-light)]"
+          className="text-(--teal) underline decoration-(--teal)/40 underline-offset-[3px] transition-colors hover:text-(--teal-light)"
           {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
           {children}
@@ -63,12 +63,12 @@ export const portableComponents = {
   },
   list: {
     bullet: ({ children }: { children?: ReactNode }) => (
-      <ul className="my-5 ml-5 list-disc space-y-2 text-[17px] leading-[1.8] text-[var(--ink-2)] marker:text-[var(--teal)]">
+      <ul className="my-5 ml-5 list-disc space-y-2 text-[17px] leading-[1.8] text-(--ink-2) marker:text-(--teal)">
         {children}
       </ul>
     ),
     number: ({ children }: { children?: ReactNode }) => (
-      <ol className="my-5 ml-5 list-decimal space-y-2 text-[17px] leading-[1.8] text-[var(--ink-2)] marker:text-[var(--teal)]">
+      <ol className="my-5 ml-5 list-decimal space-y-2 text-[17px] leading-[1.8] text-(--ink-2) marker:text-(--teal)">
         {children}
       </ol>
     ),
