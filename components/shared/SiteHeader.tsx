@@ -41,12 +41,12 @@ const ArrowUpRight = () => (
 );
 
 const NAV_LINK =
-  'inline-flex items-center gap-[6px] py-[11px] px-[18px] font-medium text-[14.5px] text-[var(--ink-1)] rounded-full ' +
-  'tracking-[-0.005em] transition-[color,background] duration-200 ease-[var(--e-out)] hover:text-[var(--teal)] hover:bg-[rgba(14,77,75,.07)] cursor-pointer';
+  'inline-flex items-center gap-[6px] py-[11px] px-[18px] font-medium text-[14.5px] text-(--ink-1) rounded-full ' +
+  'tracking-[-0.005em] transition-[color,background] duration-200 ease-(--e-out) hover:text-(--teal) hover:bg-[rgba(14,77,75,.07)] cursor-pointer';
 
 const BTN_BASE =
   'inline-flex items-center justify-center gap-[10px] rounded-full font-semibold leading-none border-[1.5px] border-transparent cursor-pointer ' +
-  'transition-[transform,background,box-shadow,color] duration-300 ease-[var(--e-out)] py-[11px] px-[20px] text-[13.5px] [&_svg]:w-4 [&_svg]:h-4';
+  'transition-[transform,background,box-shadow,color] duration-300 ease-(--e-out) py-[11px] px-[20px] text-[13.5px] [&_svg]:w-4 [&_svg]:h-4';
 
 /**
  * Shared KYG warm-modern site header (mega-menu nav). Self-contained: design
@@ -102,13 +102,13 @@ export default function SiteHeader() {
       <header
         style={CHROME_VARS}
         className={cn(
-          'sticky top-0 z-[1000] backdrop-blur-[22px] backdrop-saturate-[1.4] border-b transition-[background,border-color] duration-[400ms] ease-[var(--e-out)]',
+          'sticky top-0 z-[1000] backdrop-blur-[22px] backdrop-saturate-[1.4] border-b transition-[background,border-color] duration-[400ms] ease-(--e-out)',
           scrolled
-            ? 'bg-[rgba(250,246,239,.88)] border-[var(--ink-line)]'
+            ? 'bg-[rgba(250,246,239,.88)] border-(--ink-line)'
             : 'bg-[rgba(250,246,239,.65)] border-transparent'
         )}
       >
-        <div className="w-full max-w-[1280px] mx-auto px-[var(--gutter)] flex items-center justify-between h-16 gap-[32px]">
+        <div className="w-full max-w-[1280px] mx-auto px-(--gutter) flex items-center justify-between h-16 gap-[32px]">
           <Link href="/" className="flex items-center shrink-0" aria-label="KYG, Know Your Genes">
             <KygLogo tone="dark" className="h-9! w-auto" />
           </Link>
@@ -133,7 +133,7 @@ export default function SiteHeader() {
                     {menu.label}
                     <span
                       className={cn(
-                        'w-[7px] h-[7px] border-r-[1.5px] border-b-[1.5px] border-current transition-transform duration-300 ease-[var(--e-out)]',
+                        'w-[7px] h-[7px] border-r-[1.5px] border-b-[1.5px] border-current transition-transform duration-300 ease-(--e-out)',
                         isOpen ? 'rotate-[-135deg] mt-[3px] ml-[2px]' : 'rotate-45 -mt-[3px] ml-[2px]'
                       )}
                     />
@@ -141,19 +141,19 @@ export default function SiteHeader() {
 
                   <div
                     className={cn(
-                      'absolute left-0 right-0 top-full bg-[rgba(250,246,239,.98)] backdrop-blur-[22px] border-t border-[var(--ink-line)]',
-                      'shadow-[0_36px_80px_rgba(45,32,18,.10)] transition-[opacity,transform,visibility] duration-[450ms] ease-[var(--e-out)]',
+                      'absolute left-0 right-0 top-full bg-[rgba(250,246,239,.98)] backdrop-blur-[22px] border-t border-(--ink-line)',
+                      'shadow-[0_36px_80px_rgba(45,32,18,.10)] transition-[opacity,transform,visibility] duration-[450ms] ease-(--e-out)',
                       isOpen
                         ? 'opacity-100 visible translate-y-0 pointer-events-auto'
                         : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                     )}
                   >
-                    <div className="max-w-[1280px] mx-auto pt-[44px] px-[var(--gutter)] pb-[56px] grid grid-cols-4 gap-[22px] max-[1180px]:grid-cols-2">
-                      <div className="col-span-full flex items-end justify-between pb-[18px] mb-[8px] border-b border-[var(--ink-line)]">
-                        <div className="text-[13px] tracking-[0.22em] uppercase font-semibold text-[var(--ink-3)]">
+                    <div className="max-w-[1280px] mx-auto pt-[44px] px-(--gutter) pb-[56px] grid grid-cols-4 gap-[22px] max-[1180px]:grid-cols-2">
+                      <div className="col-span-full flex items-end justify-between pb-[18px] mb-[8px] border-b border-(--ink-line)">
+                        <div className="text-[13px] tracking-[0.22em] uppercase font-semibold text-(--ink-3)">
                           {menu.title}
                         </div>
-                        <div className="text-[14px] text-[var(--ink-3)] max-w-[380px] max-[680px]:hidden">
+                        <div className="text-[14px] text-(--ink-3) max-w-[380px] max-[680px]:hidden">
                           {menu.subtitle}
                         </div>
                       </div>
@@ -161,17 +161,17 @@ export default function SiteHeader() {
                         <Link
                           key={card.title}
                           href={card.href}
-                          className="group relative block rounded-[var(--r-md)] overflow-hidden bg-[var(--cream-2)] aspect-[4/5] isolate transition-[transform,box-shadow] duration-700 ease-[var(--e-out)] hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(45,32,18,.18)]"
+                          className="group relative block rounded-(--r-md) overflow-hidden bg-(--cream-2) aspect-[4/5] isolate transition-[transform,box-shadow] duration-700 ease-(--e-out) hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(45,32,18,.18)]"
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={card.image}
                             alt={card.imageAlt}
                             loading="lazy"
-                            className="absolute inset-0 w-full h-full object-cover transition-[transform,filter] duration-[1200ms] ease-[var(--e-out)] group-hover:scale-[1.08] group-hover:brightness-[.92]"
+                            className="absolute inset-0 w-full h-full object-cover transition-[transform,filter] duration-[1200ms] ease-(--e-out) group-hover:scale-[1.08] group-hover:brightness-[.92]"
                           />
                           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0)_35%,rgba(31,26,20,.78)_100%)]" />
-                          <div className="absolute right-[18px] top-[18px] w-[34px] h-[34px] rounded-full bg-white/90 flex items-center justify-center text-[var(--ink-1)] transition-[transform,background] duration-[600ms] ease-[var(--e-out)] group-hover:bg-[var(--teal-light)] group-hover:text-white group-hover:-rotate-45 [&_svg]:w-[14px] [&_svg]:h-[14px]">
+                          <div className="absolute right-[18px] top-[18px] w-[34px] h-[34px] rounded-full bg-white/90 flex items-center justify-center text-(--ink-1) transition-[transform,background] duration-[600ms] ease-(--e-out) group-hover:bg-(--teal-light) group-hover:text-white group-hover:-rotate-45 [&_svg]:w-[14px] [&_svg]:h-[14px]">
                             <ArrowUpRight />
                           </div>
                           <div className="absolute left-[18px] right-[18px] bottom-[18px] text-white">
@@ -181,7 +181,7 @@ export default function SiteHeader() {
                             <div className="text-[21px] font-semibold leading-[1.12] mt-[12px] tracking-[-0.015em]">
                               {card.title}
                             </div>
-                            <div className="text-[13px] leading-[1.45] mt-[6px] max-h-0 overflow-hidden opacity-0 transition-[opacity,max-height,margin-top] duration-500 ease-[var(--e-out)] group-hover:opacity-[.92] group-hover:max-h-[80px] group-hover:mt-[8px]">
+                            <div className="text-[13px] leading-[1.45] mt-[6px] max-h-0 overflow-hidden opacity-0 transition-[opacity,max-height,margin-top] duration-500 ease-(--e-out) group-hover:opacity-[.92] group-hover:max-h-[80px] group-hover:mt-[8px]">
                               {card.desc}
                             </div>
                           </div>
@@ -210,7 +210,7 @@ export default function SiteHeader() {
                       href="/admin/dashboard"
                       className={cn(
                         BTN_BASE,
-                        'bg-white text-[var(--ink-1)] border-[var(--ink-line)] max-[980px]:hidden'
+                        'bg-white text-(--ink-1) border-(--ink-line) max-[980px]:hidden'
                       )}
                     >
                       <LayoutDashboard className="w-4 h-4" />
@@ -221,7 +221,7 @@ export default function SiteHeader() {
                     href="/#wellness"
                     className={cn(
                       BTN_BASE,
-                      'bg-[var(--ink-1)] text-[var(--cream)] hover:bg-[var(--teal)] hover:-translate-y-[3px]'
+                      'bg-(--ink-1) text-(--cream) hover:bg-(--teal) hover:-translate-y-[3px]'
                     )}
                   >
                     Order Kit <ArrowRight />
@@ -239,14 +239,14 @@ export default function SiteHeader() {
                     href="/#wellness"
                     className={cn(
                       BTN_BASE,
-                      'bg-[var(--ink-1)] text-[var(--cream)] hover:bg-[var(--teal)] hover:-translate-y-[3px]'
+                      'bg-(--ink-1) text-(--cream) hover:bg-(--teal) hover:-translate-y-[3px]'
                     )}
                   >
                     Order Kit <ArrowRight />
                   </Link>
                   <Link
                     href={`/login?from=${encodeURIComponent(pathname || '/')}`}
-                    className={cn(BTN_BASE, 'bg-white text-[var(--ink-1)] border-[var(--ink-line)] max-[980px]:hidden')}
+                    className={cn(BTN_BASE, 'bg-white text-(--ink-1) border-(--ink-line) max-[980px]:hidden')}
                   >
                     Sign in
                   </Link>
@@ -260,7 +260,7 @@ export default function SiteHeader() {
               onClick={() => setMobileOpen((o) => !o)}
               className="hidden max-[980px]:flex w-[42px] h-[42px] rounded-[14px] items-center justify-center bg-[rgba(31,26,20,.06)]! cursor-pointer"
             >
-              <span className="relative block w-[18px] h-[1.6px] bg-[var(--ink-1)] before:content-[''] before:absolute before:left-0 before:right-0 before:h-[1.6px] before:bg-[var(--ink-1)] before:-top-[6px] after:content-[''] after:absolute after:left-0 after:right-0 after:h-[1.6px] after:bg-[var(--ink-1)] after:top-[6px]" />
+              <span className="relative block w-[18px] h-[1.6px] bg-(--ink-1) before:content-[''] before:absolute before:left-0 before:right-0 before:h-[1.6px] before:bg-(--ink-1) before:-top-[6px] after:content-[''] after:absolute after:left-0 after:right-0 after:h-[1.6px] after:bg-(--ink-1) after:top-[6px]" />
             </button>
           </div>
         </div>
@@ -277,11 +277,11 @@ export default function SiteHeader() {
           />
           <nav
             aria-label="Mobile"
-            className="flex flex-col fixed top-16 right-0 bottom-0 z-[1200] w-[86vw] max-w-[360px] overflow-y-auto bg-[var(--cream)] border-l border-[var(--ink-line)] shadow-[0_0_60px_rgba(0,0,0,.18)] px-[22px] py-[24px] gap-[22px]"
+            className="flex flex-col fixed top-16 right-0 bottom-0 z-[1200] w-[86vw] max-w-[360px] overflow-y-auto bg-(--cream) border-l border-(--ink-line) shadow-[0_0_60px_rgba(0,0,0,.18)] px-[22px] py-[24px] gap-[22px]"
           >
             {NAV_MENUS.map((menu) => (
               <div key={menu.key}>
-                <div className="text-[11px] tracking-[0.2em] uppercase font-bold text-[var(--ink-3)] mb-[10px]">
+                <div className="text-[11px] tracking-[0.2em] uppercase font-bold text-(--ink-3) mb-[10px]">
                   {menu.label}
                 </div>
                 <ul className="flex flex-col gap-[2px]">
@@ -290,7 +290,7 @@ export default function SiteHeader() {
                       <Link
                         href={card.href}
                         onClick={() => setMobileOpen(false)}
-                        className="block py-[9px] text-[15px] font-medium text-[var(--ink-1)] hover:text-[var(--teal)]"
+                        className="block py-[9px] text-[15px] font-medium text-(--ink-1) hover:text-(--teal)"
                       >
                         {card.title}
                       </Link>
@@ -299,13 +299,13 @@ export default function SiteHeader() {
                 </ul>
               </div>
             ))}
-            <div className="border-t border-[var(--ink-line)] pt-[16px] flex flex-col gap-[2px]">
+            <div className="border-t border-(--ink-line) pt-[16px] flex flex-col gap-[2px]">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block py-[9px] text-[15px] font-semibold text-[var(--ink-1)] hover:text-[var(--teal)]"
+                  className="block py-[9px] text-[15px] font-semibold text-(--ink-1) hover:text-(--teal)"
                 >
                   {link.label}
                 </Link>

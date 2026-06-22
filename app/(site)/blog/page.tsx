@@ -11,11 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/blog' },
 };
 
-export default async function BlogPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ category?: string }>;
-}) {
+export default async function BlogPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const { category } = await searchParams;
 
   // Best-effort: render the page even if Sanity is unreachable / unconfigured.

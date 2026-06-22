@@ -25,24 +25,16 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
           <h1 className="mt-4 text-[clamp(30px,4.5vw,46px)] font-semibold leading-[1.1] tracking-[-0.03em]">
             {post.title}
           </h1>
-          {post.excerpt ? (
-            <p className="mt-4 text-[18.5px] leading-[1.6] text-[var(--ink-3)]">{post.excerpt}</p>
-          ) : null}
+          {post.excerpt ? <p className="mt-4 text-[18.5px] leading-[1.6] text-[var(--ink-3)]">{post.excerpt}</p> : null}
 
           <div className="mt-6 flex flex-wrap items-center gap-3 border-y border-[var(--ink-line)] py-4">
             {authorPhoto ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={authorPhoto}
-                alt={post.author?.name ?? ''}
-                className="h-11 w-11 rounded-full object-cover"
-              />
+              <img src={authorPhoto} alt={post.author?.name ?? ''} className="h-11 w-11 rounded-full object-cover" />
             ) : null}
             <div className="flex flex-col">
               {post.author?.name ? (
-                <span className="text-[14.5px] font-semibold text-[var(--ink-1)]">
-                  {post.author.name}
-                </span>
+                <span className="text-[14.5px] font-semibold text-[var(--ink-1)]">{post.author.name}</span>
               ) : null}
               <span className="text-[13px] text-[var(--ink-3)]">
                 {[post.author?.role, formatPostDate(post.publishedAt)].filter(Boolean).join(' · ')}
@@ -55,11 +47,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
         {hero ? (
           <figure className="mt-8 overflow-hidden rounded-[var(--r-lg)] border border-[var(--ink-line)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={hero}
-              alt={post.heroImage?.alt ?? post.title}
-              className="aspect-[16/9] w-full object-cover"
-            />
+            <img src={hero} alt={post.heroImage?.alt ?? post.title} className="aspect-[16/9] w-full object-cover" />
           </figure>
         ) : null}
 
@@ -82,18 +70,14 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
               />
             ) : null}
             <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-3)]">
-                Written by
-              </p>
+              <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-3)]">Written by</p>
               <p className="mt-1 text-[16px] font-semibold text-[var(--ink-1)]">
                 {post.author.name}
                 {post.author.role ? (
                   <span className="font-normal text-[var(--ink-3)]"> · {post.author.role}</span>
                 ) : null}
               </p>
-              <p className="mt-2 text-[14.5px] leading-[1.6] text-[var(--ink-3)]">
-                {post.author.bio}
-              </p>
+              <p className="mt-2 text-[14.5px] leading-[1.6] text-[var(--ink-3)]">{post.author.bio}</p>
             </div>
           </aside>
         ) : null}

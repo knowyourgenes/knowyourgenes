@@ -8,7 +8,7 @@ import type { CSSProperties } from 'react';
  * they sit inside the landing page's `.kyg-page` scope, the test page's
  * `.kyg-test` scope, or anywhere else — no external stylesheet required.
  * Components consume them via Tailwind arbitrary utilities, e.g.
- * `bg-[var(--cream)]`, `text-[var(--ink-1)]`, `shadow-[var(--sh-1)]`.
+ * `bg-(--cream)`, `text-(--ink-1)`, `shadow-(--sh-1)`.
  */
 export const CHROME_VARS = {
   '--cream': '#FAF6EF',

@@ -101,7 +101,7 @@ export function getBlogSlugs(): Promise<string[]> {
  */
 export function imageUrl(
   source: SanityImage | undefined | null,
-  opts: { width?: number; height?: number } = {},
+  opts: { width?: number; height?: number } = {}
 ): string | null {
   if (!source?.asset?._ref) return null;
   let b = urlFor(source as SanityImageSource).auto('format');

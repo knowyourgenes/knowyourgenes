@@ -1,12 +1,6 @@
 import Link from 'next/link';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
-import {
-  BLOG_CATEGORIES,
-  categoryLabel,
-  formatPostDate,
-  imageUrl,
-  type BlogListItem,
-} from '@/features/blog';
+import { BLOG_CATEGORIES, categoryLabel, formatPostDate, imageUrl, type BlogListItem } from '@/features/blog';
 
 function MetaLine({ post }: { post: BlogListItem }) {
   const bits = [post.author?.name, formatPostDate(post.publishedAt)].filter(Boolean);
@@ -60,9 +54,7 @@ function PostCard({ post }: { post: BlogListItem }) {
           {post.title}
         </h3>
         {post.excerpt ? (
-          <p className="line-clamp-3 text-[14.5px] leading-[1.6] text-[var(--ink-3)]">
-            {post.excerpt}
-          </p>
+          <p className="line-clamp-3 text-[14.5px] leading-[1.6] text-[var(--ink-3)]">{post.excerpt}</p>
         ) : null}
         <div className="mt-auto pt-2">
           <MetaLine post={post} />
@@ -91,9 +83,7 @@ function FeaturedCard({ post }: { post: BlogListItem }) {
       </div>
       <div className="flex flex-col justify-center gap-4 p-8 md:p-10">
         <div className="flex items-center gap-3">
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--ink-3)]">
-            Featured
-          </span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--ink-3)]">Featured</span>
           <CategoryBadge category={post.category} />
         </div>
         <h2 className="text-[28px] font-semibold leading-[1.18] tracking-[-0.02em] text-[var(--ink-1)] transition-colors group-hover:text-[var(--teal)] md:text-[32px]">
@@ -108,13 +98,7 @@ function FeaturedCard({ post }: { post: BlogListItem }) {
   );
 }
 
-export default function BlogIndex({
-  posts,
-  activeCategory,
-}: {
-  posts: BlogListItem[];
-  activeCategory?: string;
-}) {
+export default function BlogIndex({ posts, activeCategory }: { posts: BlogListItem[]; activeCategory?: string }) {
   const filtered = activeCategory ? posts.filter((p) => p.category === activeCategory) : posts;
   const featured = !activeCategory ? (filtered.find((p) => p.featured) ?? null) : null;
   const rest = featured ? filtered.filter((p) => p._id !== featured._id) : filtered;
@@ -138,23 +122,18 @@ export default function BlogIndex({
     <div style={CHROME_VARS} className="min-h-screen bg-[var(--cream)] text-[var(--ink-1)]">
       <div className="mx-auto max-w-[1180px] px-[var(--gutter)] py-[clamp(40px,6vw,80px)]">
         <header className="max-w-[640px]">
-          <p className="text-[12px] font-bold uppercase tracking-[0.24em] text-[var(--teal)]">
-            The KYG Journal
-          </p>
+          <p className="text-[12px] font-bold uppercase tracking-[0.24em] text-[var(--teal)]">The KYG Journal</p>
           <h1 className="mt-3 text-[clamp(34px,5vw,52px)] font-semibold leading-[1.08] tracking-[-0.03em]">
             Genetics, decoded for real life.
           </h1>
           <p className="mt-4 text-[17px] leading-[1.6] text-[var(--ink-3)]">
-            Short, science-grounded reads on wellness, genetic literacy, research and the people
-            behind your reports.
+            Short, science-grounded reads on wellness, genetic literacy, research and the people behind your reports.
           </p>
         </header>
 
         <nav className="mt-9 flex flex-wrap gap-2" aria-label="Filter by category">
           {pill('All', '/blog', !activeCategory)}
-          {BLOG_CATEGORIES.map((c) =>
-            pill(c.label, `/blog?category=${c.value}`, activeCategory === c.value),
-          )}
+          {BLOG_CATEGORIES.map((c) => pill(c.label, `/blog?category=${c.value}`, activeCategory === c.value))}
         </nav>
 
         {filtered.length === 0 ? (

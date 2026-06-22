@@ -5,7 +5,7 @@
 //   * Tailwind v4 @theme tokens can only be registered in the compiled
 //     stylesheet, so the KYG palette is exposed as CSS variables here instead
 //     and consumed from components via arbitrary utilities, e.g.
-//     `bg-[var(--acc-50)]`, `rounded-[var(--r-md)]`, `shadow-[var(--sh-1)]`.
+//     `bg-(--acc-50)`, `rounded-(--r-md)`, `shadow-(--sh-1)`.
 //   * Every selector is scoped under `.kyg-test`, so nothing leaks across routes.
 //   * Animations (reveal-on-scroll, the mesh background) live here per the
 //     design's request that animations stay in a <style> block.

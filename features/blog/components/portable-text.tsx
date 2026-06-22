@@ -20,9 +20,7 @@ export const portableComponents = {
             className="w-full rounded-[var(--r-md)] border border-[var(--ink-line)]"
           />
           {value.alt ? (
-            <figcaption className="mt-3 text-center text-[13.5px] text-[var(--ink-3)]">
-              {value.alt}
-            </figcaption>
+            <figcaption className="mt-3 text-center text-[13.5px] text-[var(--ink-3)]">{value.alt}</figcaption>
           ) : null}
         </figure>
       );
@@ -33,14 +31,10 @@ export const portableComponents = {
       <p className="my-5 text-[17px] leading-[1.85] text-[var(--ink-2)]">{children}</p>
     ),
     h2: ({ children }: { children?: ReactNode }) => (
-      <h2 className="mt-12 mb-4 text-[26px] font-semibold tracking-[-0.02em] text-[var(--ink-1)]">
-        {children}
-      </h2>
+      <h2 className="mt-12 mb-4 text-[26px] font-semibold tracking-[-0.02em] text-[var(--ink-1)]">{children}</h2>
     ),
     h3: ({ children }: { children?: ReactNode }) => (
-      <h3 className="mt-9 mb-3 text-[20px] font-semibold tracking-[-0.015em] text-[var(--ink-1)]">
-        {children}
-      </h3>
+      <h3 className="mt-9 mb-3 text-[20px] font-semibold tracking-[-0.015em] text-[var(--ink-1)]">{children}</h3>
     ),
     blockquote: ({ children }: { children?: ReactNode }) => (
       <blockquote className="my-7 border-l-[3px] border-[var(--teal)] bg-[var(--cream-2)] py-3 pl-6 pr-4 text-[18px] italic leading-[1.7] text-[var(--ink-1)] rounded-r-[var(--r-sm)]">
