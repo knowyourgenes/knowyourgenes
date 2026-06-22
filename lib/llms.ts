@@ -250,15 +250,17 @@ export async function buildLlmsFullTxt(): Promise<string> {
       })
     );
 
-    const articles = posts.filter((p): p is BlogFullPost => !!p).map((post) => {
-      const parts = [`### ${cleanTitle(post.title)}`, blogUrl(post.slug)];
-      const meta = authorLine(post);
-      if (meta) parts.push(`_${meta}_`);
-      if (post.excerpt) parts.push(`> ${post.excerpt}`);
-      const body = portableTextToMarkdown(post.body, 2);
-      if (body) parts.push(body);
-      return parts.join('\n\n');
-    });
+    const articles = posts
+      .filter((p): p is BlogFullPost => !!p)
+      .map((post) => {
+        const parts = [`### ${cleanTitle(post.title)}`, blogUrl(post.slug)];
+        const meta = authorLine(post);
+        if (meta) parts.push(`_${meta}_`);
+        if (post.excerpt) parts.push(`> ${post.excerpt}`);
+        const body = portableTextToMarkdown(post.body, 2);
+        if (body) parts.push(body);
+        return parts.join('\n\n');
+      });
 
     if (articles.length) sections.push(`## Insights (Blog)\n\n${articles.join('\n\n---\n\n')}`);
   }

@@ -14,7 +14,7 @@ const prisma = new PrismaClient({ adapter });
 // the main seed picks up new locations idempotently via skipDuplicates.
 // ---------------------------------------------------------------------------
 
-const PINCODE_CSV = path.join(process.cwd(), 'resource', 'India_pincodes.csv');
+const PINCODE_CSV = path.join(process.cwd(), 'prisma', 'India_pincodes.csv');
 
 const LOWERS = new Set(['and', 'of', 'the']);
 function normaliseCase(s: string): string {
@@ -131,7 +131,7 @@ async function seedAllIndiaPincodes(): Promise<{ inserted: number; existed: numb
 }
 
 // Delhi NCR core - matches the district names as they appear in
-// resource/India_pincodes.csv. Adjust here if launch coverage changes.
+// prisma/India_pincodes.csv. Adjust here if launch coverage changes.
 async function activateDelhiNcr(): Promise<number> {
   const filters = [
     // All districts of Delhi (Central, East, New, North, North East, North West,

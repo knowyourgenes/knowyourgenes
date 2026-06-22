@@ -8,7 +8,7 @@
  *
  * Data source
  * -----------
- * Default location: resource/India_pincodes.csv (committed to the repo).
+ * Default location: prisma/India_pincodes.csv (committed to the repo).
  *
  * The seeder auto-detects the column layout - any CSV with a header row
  * containing at least a pincode column and an area/name column works.
@@ -41,7 +41,7 @@ import { createReadStream, existsSync } from 'node:fs';
 import { createInterface } from 'node:readline';
 import path from 'node:path';
 
-const FILE_PATH = process.argv[2] ?? path.join(process.cwd(), 'resource', 'India_pincodes.csv');
+const FILE_PATH = process.argv[2] ?? path.join(process.cwd(), 'prisma', 'India_pincodes.csv');
 
 // data.gov.in ships ALL-CAPS state/district names. Normalise to Title Case
 // so admin filters don't have to care about source casing. Keep "and" / "of"
@@ -113,7 +113,7 @@ function resolveColumns(headers: string[]): ColMap | null {
 async function main() {
   if (!existsSync(FILE_PATH)) {
     console.error(`❌ Pincode CSV not found at: ${FILE_PATH}\n`);
-    console.error('  Default location is resource/India_pincodes.csv (committed to the repo).');
+    console.error('  Default location is prisma/India_pincodes.csv (committed to the repo).');
     console.error('  If you have an updated dump, pass its path explicitly:');
     console.error('    pnpm db:seed-pincodes path/to/other.csv');
     console.error('  Required columns (any order): Pincode, Name (or OfficeName / Area)');
