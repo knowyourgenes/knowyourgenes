@@ -143,6 +143,6 @@ export const NAV_MENUS: MegaMenu[] = [
 ];
 
 export const NAV_LINKS = [
-  { label: 'Journal', href: '/blog' },
+  { label: 'Blog', href: '/blog' },
   { label: 'GENEous Care', href: '/#care' },
 ];

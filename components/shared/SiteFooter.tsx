@@ -20,6 +20,7 @@ const FOOTER_COLS = [
   {
     title: 'Learn',
     links: [
+      { label: 'Blog', href: '/blog' },
       { label: 'Health Decoded', href: '/#decoded' },
       { label: 'The Science', href: '/#what' },
       { label: "Women's Health", href: '/womens-health' },
