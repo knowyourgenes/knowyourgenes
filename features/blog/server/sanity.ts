@@ -9,7 +9,11 @@ export const sanityClient = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  // The `production` dataset is private, so document reads need a token.
+  // SANITY_API_TOKEN is a server-only env var (no NEXT_PUBLIC_ prefix), so Next
+  // never inlines it into the client bundle. Image asset URLs stay public.
+  token: process.env.SANITY_API_TOKEN,
+  useCdn: false,
   perspective: 'published',
 });
 
