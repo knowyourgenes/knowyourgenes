@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
-import KygHeader from '@/components/site/KygHeader';
-import KygFooter from '@/components/site/KygFooter';
-import { getCategory, getCategoryTests } from '../data';
-import CategoryShell from '../_components/category-shell';
+import SiteHeader from '@/components/shared/SiteHeader';
+import SiteFooter from '@/components/shared/SiteFooter';
+import { getCategory, getCategoryTests } from '@/data/tests';
+import CategoryShell from '@/components/tests/CategoryShell';
 
 /**
  * Category layout — the shared chrome for every report in a category.
@@ -26,11 +26,11 @@ export default async function CategoryLayout({
 
   return (
     <>
-      <KygHeader />
+      <SiteHeader />
       <CategoryShell category={category} tests={tests}>
         {children}
       </CategoryShell>
-      <KygFooter />
+      <SiteFooter />
     </>
   );
 }

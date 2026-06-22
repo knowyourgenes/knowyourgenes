@@ -4,7 +4,7 @@
  * "use client" boundary so it's not evaluated at build time.
  */
 
-import Studio from './Studio';
+import Studio from '@/components/studio/Studio';
 
 export const dynamic = 'force-dynamic';
 export { metadata, viewport } from 'next-sanity/studio';

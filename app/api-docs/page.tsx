@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import SwaggerViewer from './SwaggerViewer';
+import SwaggerViewer from '@/components/api-docs/SwaggerViewer';
 
 export const metadata: Metadata = {
   title: 'KYG API docs',

@@ -1,9 +1,9 @@
 import SiteHeader from '@/components/shared/SiteHeader';
 import SiteFooter from '@/components/shared/SiteFooter';
 
-// Wraps public marketing pages with the shared site chrome.
-// Dashboard, admin, login, and studio have their own layouts and bypass this.
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+// Shared site chrome for the standalone landing pages. Fonts come from the
+// root layout; the page content brings its own scoped `.kyg-lx` styles.
+export default function LandingLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />

@@ -1,26 +1,15 @@
 import HomePage from '@/components/home/Homepage';
-import { Figtree, Hind } from 'next/font/google';
+import SiteHeader from '@/components/shared/SiteHeader';
+import SiteFooter from '@/components/shared/SiteFooter';
 
-const figtree = Figtree({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-figtree',
-  display: 'swap',
-});
-
-const hind = Hind({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-hind',
-  display: 'swap',
-});
-
-const page = () => {
+export default function Page() {
   return (
-    <div className={`${figtree.variable} ${hind.variable}`}>
-      <HomePage />
+    <div className="flex min-h-screen flex-col">
+      <SiteHeader />
+      <main className="flex-1">
+        <HomePage />
+      </main>
+      <SiteFooter />
     </div>
   );
-};
-
-export default page;
+}

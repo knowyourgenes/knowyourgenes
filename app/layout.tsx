@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Figtree, Hind } from 'next/font/google';
 import { auth } from '@/auth';
 import Providers from '@/components/Providers';
 import AttributionBeacon from '@/components/AttributionBeacon';
@@ -13,6 +13,23 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+});
+
+// KYG warm-modern type system, loaded once here so the shared site chrome
+// (and any public page) renders with the right faces in every route group.
+const figtree = Figtree({
+  variable: '--font-figtree',
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+
+const hind = Hind({
+  variable: '--font-hind',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -40,7 +57,10 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${figtree.variable} ${hind.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col bg-white text-slate-900">
         <Providers session={session}>{children}</Providers>
         <AttributionBeacon />
