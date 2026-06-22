@@ -29,10 +29,11 @@ This version has breaking changes - APIs, conventions, and file structure may al
 
 ## 1. Folder structure
 
-Everything lives under `src/`. `app/` is for routing ONLY. All real logic lives in `features/`.
+Everything lives at the **repo root** (there is **no `src/` wrapper**). `app/` is for routing
+ONLY. All real logic lives in `features/`.
 
 ```
-src/
+./                                # repo root (no src/ wrapper)
 ├── app/                          # ROUTING ONLY — keep thin
 │   ├── (marketing)/              # route group: public pages
 │   ├── (dashboard)/              # route group: authed app
@@ -82,6 +83,7 @@ src/
 ├── hooks/                        # shared client hooks
 ├── config/                       # site.ts, nav.ts, constants
 ├── types/                        # global TS types
+├── proxy.ts                      # Next middleware (lives at the root, beside app/)
 └── styles/
 
 prisma/        # schema.prisma, migrations/, seed.ts
@@ -89,6 +91,9 @@ public/
 emails/        # react-email templates
 docs/          # PRD, architecture notes
 ```
+
+The `@/*` path alias points at the **repo root** (`"@/*": ["./*"]`), so `@/features/...`,
+`@/components/...`, `@/lib/...`, `@/server/...` resolve to the top-level folders above.
 
 ---
 
@@ -102,7 +107,7 @@ docs/          # PRD, architecture notes
 3. **`server/` code never runs on the client.** Put `import "server-only";` at the top of every
    service/query file so a wrong import fails the build instead of leaking secrets.
 4. **Shared vs feature:** used by ONE feature → keep it inside that feature. Used by 2+ → promote to
-   `src/components`, `src/lib`, or `src/hooks`. Never pre-share.
+   `components`, `lib`, or `hooks` (root-level). Never pre-share.
 
 ### Naming conventions
 - Files: `kebab-case.ts` (e.g. `auth.service.ts`, `use-projects.ts`).
@@ -115,7 +120,7 @@ docs/          # PRD, architecture notes
 
 ## 3. Standard error handling
 
-### `src/lib/errors.ts`
+### `lib/errors.ts`
 ```ts
 export class AppError extends Error {
   constructor(
@@ -144,7 +149,7 @@ export class ValidationError extends AppError {
 }
 ```
 
-### `src/lib/api-response.ts`
+### `lib/api-response.ts`
 ```ts
 import { NextResponse } from "next/server";
 
@@ -159,7 +164,7 @@ export function fail(code: string, message: string, status = 400, details?: unkn
 }
 ```
 
-### `src/server/api-handler.ts`
+### `server/api-handler.ts`
 ```ts
 import { ZodError } from "zod";
 import { AppError } from "@/lib/errors";
@@ -190,7 +195,7 @@ import { listProjects } from "@/features/projects";
 export const GET = withErrorHandler(async () => ok(await listProjects()));
 ```
 
-### Frontend error files (App Router) — create these in `src/app/`
+### Frontend error files (App Router) — create these in `app/`
 - `error.tsx` — route-segment boundary (`"use client"`, has `reset()`).
 - `global-error.tsx` — root boundary, renders its own `<html><body>`.
 - `not-found.tsx` — 404.
@@ -200,7 +205,7 @@ Also add `error.tsx` + `loading.tsx` inside major route folders (e.g. `app/(dash
 so one section failing doesn't blank the whole app.
 
 ```tsx
-// src/app/error.tsx
+// app/error.tsx
 "use client";
 import { useEffect } from "react";
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
@@ -219,7 +224,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
 
 ## 4. Shared infra files
 
-### `src/lib/env.ts` — validate env at boot (fail fast)
+### `lib/env.ts` — validate env at boot (fail fast)
 ```ts
 import { z } from "zod";
 const schema = z.object({
@@ -231,7 +236,7 @@ const schema = z.object({
 export const env = schema.parse(process.env);
 ```
 
-### `src/server/db.ts` — Prisma singleton
+### `server/db.ts` — Prisma singleton
 ```ts
 import { PrismaClient } from "@prisma/client";
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
@@ -264,7 +269,7 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
     "isolatedModules": true,
     "skipLibCheck": true,
     "plugins": [{ "name": "next" }],
-    "paths": { "@/*": ["./src/*"] }
+    "paths": { "@/*": ["./*"] }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
@@ -485,7 +490,7 @@ Commit format: `feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`.
 ### `.github/CODEOWNERS`
 ```
 *                       @your-team
-/src/features/auth/     @backend-lead
+/features/auth/         @backend-lead
 /prisma/                @backend-lead
 ```
 
@@ -493,14 +498,14 @@ Commit format: `feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`.
 
 ## 8. How to add a new feature (AI: follow this checklist)
 
-1. Create `src/features/<name>/` with `components/`, `server/`, `hooks/`, `schemas/`,
+1. Create `features/<name>/` with `components/`, `server/`, `hooks/`, `schemas/`,
    `types.ts`, `index.ts`.
 2. Define zod schemas in `schemas/`.
 3. Put DB/business logic in `server/<name>.service.ts` and `server/<name>.queries.ts`
    (each starts with `import "server-only";`).
 4. Export only the public surface from `index.ts`.
-5. Add route(s) under `src/app/` that import from `@/features/<name>` and render.
-6. Add API route(s) under `src/app/api/<name>/route.ts` wrapped in `withErrorHandler`.
+5. Add route(s) under `app/` that import from `@/features/<name>` and render.
+6. Add API route(s) under `app/api/<name>/route.ts` wrapped in `withErrorHandler`.
 7. Add `loading.tsx` + `error.tsx` to the route folder.
 8. Never import another feature's internals — only its `index.ts`.
 
@@ -514,4 +519,31 @@ Commit format: `feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`.
 - ❌ Server-only code without `import "server-only";`.
 - ❌ Inconsistent API responses — always `ok()` / `fail()`.
 - ❌ Catch-and-swallow errors — let `withErrorHandler` handle them.
-- ❌ Putting one-off helpers in `src/lib` — keep them in the feature until reused.
+- ❌ Putting one-off helpers in `lib` — keep them in the feature until reused.
+- ❌ Reintroducing a `src/` wrapper — this repo keeps everything at the root.
+
+---
+
+## 10. Project notes (knowyourgenes — actual state)
+
+This repo follows the structure above **without a `src/` wrapper**: `app/`, `features/`,
+`components/`, `lib/`, `server/`, `hooks/`, `types/` and `proxy.ts` (Next 16 middleware) all sit at
+the repo root. Import alias `@/*` → `./*`.
+
+- **Features** (`features/<name>/`, each with an `index.ts` barrel): `auth`, `orders`, `shipments`,
+  `payments`, `location`, `attribution`, `catalog`, `landing`, `blog`, `reports`, `admin`, `agent`,
+  `dashboard`, `home`. Server logic in `features/<name>/server/`, UI in `features/<name>/components/`.
+- **Shared**: `components/` (`ui`, `shared`, `site`, `api-docs`, `Providers`), `lib/` (`utils`,
+  `validators`, `llms`, `nav-data`, `site-config`, `client-cache`, `openapi`), `server/`
+  (`prisma.ts`, `api.ts`), `hooks/`, `types/`. Sanity config lives at
+  `features/blog/sanity/config.ts` with a thin root `sanity.config.ts` re-export for the Sanity CLI.
+- **Imports**: server/domain logic via the feature barrel `@/features/<name>`; feature **client**
+  components via the sub-path `@/features/<name>/components/...`.
+- **Two intentional deviations** from sections 3–4 above (existing, working code that was kept, not
+  rewritten during the restructure):
+  - the Prisma singleton in `server/prisma.ts` exports **`prisma`** (not `db`);
+  - API routes use the existing `server/api.ts` helpers (`handle` / `ok` / `fail` /
+    `requireApiRole`), which return **`{ ok, data }`** — not `withErrorHandler` / `{ success, data }`.
+
+  Keep a route's style consistent with its neighbours; prefer these existing helpers over inventing
+  a parallel one.
