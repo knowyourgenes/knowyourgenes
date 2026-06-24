@@ -123,9 +123,7 @@ function ResultViz({ v }: { v: Extract<Viz, { kind: 'result' }> }) {
   return (
     <div className="flex flex-col gap-[12px]">
       <div className="flex items-start justify-between gap-[12px]">
-        <span className="text-[14.5px] font-semibold tracking-[-0.01em] text-(--ink-1) leading-[1.3]">
-          {v.name}
-        </span>
+        <span className="text-[14.5px] font-semibold tracking-[-0.01em] text-(--ink-1) leading-[1.3]">{v.name}</span>
         <Badge status={v.status}>{v.statusLabel}</Badge>
       </div>
       <div className="text-[12.5px] font-semibold text-(--acc-700) bg-(--acc-50) py-[7px] px-[12px] rounded-[9px] self-start">
@@ -339,9 +337,7 @@ export function Report({ report }: { report: Test['report'] }) {
             className="grid grid-cols-[220px_1fr] gap-[24px] p-[clamp(20px,2.2vw,28px)] rounded-(--r-md) bg-white border border-(--ink-line) shadow-(--sh-1) max-[980px]:grid-cols-1 max-[980px]:gap-[14px]"
           >
             <div>
-              <div className="font-semibold text-[18px] tracking-[-0.01em] text-(--ink-1) leading-[1.2]">
-                {g.name}
-              </div>
+              <div className="font-semibold text-[18px] tracking-[-0.01em] text-(--ink-1) leading-[1.2]">{g.name}</div>
               <span className="inline-block mt-[8px] text-[12px] font-bold tracking-[0.04em] py-[4px] px-[11px] rounded-full bg-(--acc-50) text-(--acc-700)">
                 {g.countLabel}
               </span>
@@ -429,9 +425,7 @@ function ExpertCard({ expert }: { expert: Expert }) {
         </div>
       </div>
       <p className="text-[13.5px] leading-[1.55] text-(--ink-2) mt-auto">{expert.text}</p>
-      <div className="text-[12.5px] text-(--ink-3) mt-[10px] pt-[12px] border-t border-(--ink-line)">
-        {expert.lab}
-      </div>
+      <div className="text-[12.5px] text-(--ink-3) mt-[10px] pt-[12px] border-t border-(--ink-line)">{expert.lab}</div>
     </div>
   );
 }
@@ -653,9 +647,7 @@ export function BottomCta({ cta }: { cta: Test['bottomCta'] }) {
           {cta.ctaLabel}
           <ArrowRight />
         </Button>
-        {cta.nudge && (
-          <p className="relative text-[14px] text-(--teal-bright) font-semibold mt-[22px]">{cta.nudge}</p>
-        )}
+        {cta.nudge && <p className="relative text-[14px] text-(--teal-bright) font-semibold mt-[22px]">{cta.nudge}</p>}
         <p className="relative text-[13px] text-white/55 mt-[20px]" dangerouslySetInnerHTML={{ __html: cta.trust }} />
       </div>
     </section>

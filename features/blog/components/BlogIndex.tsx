@@ -89,9 +89,7 @@ function FeaturedCard({ post }: { post: BlogListItem }) {
         <h2 className="text-[28px] font-semibold leading-[1.18] tracking-[-0.02em] text-(--ink-1) transition-colors group-hover:text-(--teal) md:text-[32px]">
           {post.title}
         </h2>
-        {post.excerpt ? (
-          <p className="max-w-[46ch] text-[16px] leading-[1.7] text-(--ink-3)">{post.excerpt}</p>
-        ) : null}
+        {post.excerpt ? <p className="max-w-[46ch] text-[16px] leading-[1.7] text-(--ink-3)">{post.excerpt}</p> : null}
         <MetaLine post={post} />
       </div>
     </Link>

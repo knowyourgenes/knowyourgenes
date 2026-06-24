@@ -73,9 +73,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
               <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-(--ink-3)">Written by</p>
               <p className="mt-1 text-[16px] font-semibold text-(--ink-1)">
                 {post.author.name}
-                {post.author.role ? (
-                  <span className="font-normal text-(--ink-3)"> · {post.author.role}</span>
-                ) : null}
+                {post.author.role ? <span className="font-normal text-(--ink-3)"> · {post.author.role}</span> : null}
               </p>
               <p className="mt-2 text-[14.5px] leading-[1.6] text-(--ink-3)">{post.author.bio}</p>
             </div>

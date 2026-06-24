@@ -107,9 +107,7 @@ export function SectionHead({ eyebrow, title, sub }: { eyebrow: string; title: s
       <h2 className="font-semibold text-[clamp(28px,3.2vw,40px)] leading-[1.08] tracking-[-0.025em] text-(--ink-1) mt-[18px]">
         {title}
       </h2>
-      {sub ? (
-        <p className="text-[clamp(15.5px,1.2vw,17.5px)] leading-[1.55] text-(--ink-2) mt-[14px]">{sub}</p>
-      ) : null}
+      {sub ? <p className="text-[clamp(15.5px,1.2vw,17.5px)] leading-[1.55] text-(--ink-2) mt-[14px]">{sub}</p> : null}
     </div>
   );
 }

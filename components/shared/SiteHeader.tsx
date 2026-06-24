@@ -103,9 +103,7 @@ export default function SiteHeader() {
         style={CHROME_VARS}
         className={cn(
           'sticky top-0 z-[1000] backdrop-blur-[22px] backdrop-saturate-[1.4] border-b transition-[background,border-color] duration-[400ms] ease-(--e-out)',
-          scrolled
-            ? 'bg-[rgba(250,246,239,.88)] border-(--ink-line)'
-            : 'bg-[rgba(250,246,239,.65)] border-transparent'
+          scrolled ? 'bg-[rgba(250,246,239,.88)] border-(--ink-line)' : 'bg-[rgba(250,246,239,.65)] border-transparent'
         )}
       >
         <div className="w-full max-w-[1280px] mx-auto px-(--gutter) flex items-center justify-between h-16 gap-[32px]">
@@ -208,10 +206,7 @@ export default function SiteHeader() {
                   {user.role === 'ADMIN' ? (
                     <Link
                       href="/admin/dashboard"
-                      className={cn(
-                        BTN_BASE,
-                        'bg-white text-(--ink-1) border-(--ink-line) max-[980px]:hidden'
-                      )}
+                      className={cn(BTN_BASE, 'bg-white text-(--ink-1) border-(--ink-line) max-[980px]:hidden')}
                     >
                       <LayoutDashboard className="w-4 h-4" />
                       Dashboard
@@ -219,10 +214,7 @@ export default function SiteHeader() {
                   ) : null}
                   <Link
                     href="/#wellness"
-                    className={cn(
-                      BTN_BASE,
-                      'bg-(--ink-1) text-(--cream) hover:bg-(--teal) hover:-translate-y-[3px]'
-                    )}
+                    className={cn(BTN_BASE, 'bg-(--ink-1) text-(--cream) hover:bg-(--teal) hover:-translate-y-[3px]')}
                   >
                     Order Kit <ArrowRight />
                   </Link>
@@ -237,10 +229,7 @@ export default function SiteHeader() {
                 <>
                   <Link
                     href="/#wellness"
-                    className={cn(
-                      BTN_BASE,
-                      'bg-(--ink-1) text-(--cream) hover:bg-(--teal) hover:-translate-y-[3px]'
-                    )}
+                    className={cn(BTN_BASE, 'bg-(--ink-1) text-(--cream) hover:bg-(--teal) hover:-translate-y-[3px]')}
                   >
                     Order Kit <ArrowRight />
                   </Link>
