@@ -41,3 +41,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# private business documents — keep OUT of this public repo
+/bd/
+/docs/business/
+
+# blog source material (content lives in Sanity, not the repo)
+/content.docx
+/blog.webp
