@@ -19,7 +19,7 @@ export function absoluteUrl(path = '/'): string {
 /** Strip the brand suffix off a meta title for cleaner labels. */
 export function cleanTitle(title: string): string {
   return title
-    .replace(/\s*[·|–--]\s*KYG\s*[·|–--]\s*Know Your Genes\s*$/i, '')
+    .replace(/\s*[·|–\-]\s*KYG\s*[·|–\-]\s*Know Your Genes\s*$/i, '')
     .replace(/\s*[·|]\s*Know Your Genes\s*$/i, '')
     .replace(/\s*[·|]\s*KYG\s*$/i, '')
     .trim();
