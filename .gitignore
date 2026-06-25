@@ -42,7 +42,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# private business documents — keep OUT of this public repo
+# private business documents - keep OUT of this public repo
 /bd/
 /docs/business/
 

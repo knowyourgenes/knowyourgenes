@@ -6,7 +6,7 @@ import { Container, Eyebrow, FigIcon, GhostButton, GradientText, SheenButton, gT
 export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden pt-[40px] pb-[80px] sm:pt-[48px] lg:pb-[96px]">
-      {/* exact Figma decorative background — node 258:307 (peach + mint blobs · dashed path) */}
+      {/* exact Figma decorative background - node 258:307 (peach + mint blobs · dashed path) */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 hidden bg-[length:100%_100%] bg-no-repeat lg:block"
         style={{ backgroundImage: 'url(/landing/pregnancy-loss/hero-bg.svg)' }}

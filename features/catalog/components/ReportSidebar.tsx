@@ -10,7 +10,7 @@ import { BUNDLE_THEME } from './themes';
 
 /**
  * Category-level report rail. Driven entirely by `category.sidebar` so it stays
- * identical across the category's reports — only the active highlight changes.
+ * identical across the category's reports - only the active highlight changes.
  *  • route links (`/wellness/...`) navigate between sibling reports (active via pathname)
  *  • anchor links (`#panel-...`) scroll within the current page (active via scroll-spy)
  * Sticky below the shared SiteHeader, collapsible; hidden under 980px.

@@ -34,7 +34,7 @@ ONLY. All real logic lives in `features/`.
 
 ```
 ./                                # repo root (no src/ wrapper)
-├── app/                          # ROUTING ONLY — keep thin
+├── app/                          # ROUTING ONLY - keep thin
 │   ├── (marketing)/              # route group: public pages
 │   ├── (dashboard)/              # route group: authed app
 │   │   └── projects/
@@ -61,7 +61,7 @@ ONLY. All real logic lives in `features/`.
 │       ├── schemas/              # zod schemas
 │       ├── types.ts
 │       ├── constants.ts
-│       └── index.ts              # PUBLIC API — only this is imported elsewhere
+│       └── index.ts              # PUBLIC API - only this is imported elsewhere
 │
 ├── components/                   # SHARED UI (used by 2+ features)
 │   ├── ui/                       # shadcn/ui primitives
@@ -195,11 +195,11 @@ import { listProjects } from "@/features/projects";
 export const GET = withErrorHandler(async () => ok(await listProjects()));
 ```
 
-### Frontend error files (App Router) — create these in `app/`
-- `error.tsx` — route-segment boundary (`"use client"`, has `reset()`).
-- `global-error.tsx` — root boundary, renders its own `<html><body>`.
-- `not-found.tsx` — 404.
-- `loading.tsx` — Suspense fallback.
+### Frontend error files (App Router) - create these in `app/`
+- `error.tsx` - route-segment boundary (`"use client"`, has `reset()`).
+- `global-error.tsx` - root boundary, renders its own `<html><body>`.
+- `not-found.tsx` - 404.
+- `loading.tsx` - Suspense fallback.
 
 Also add `error.tsx` + `loading.tsx` inside major route folders (e.g. `app/(dashboard)/projects/`)
 so one section failing doesn't blank the whole app.
@@ -224,7 +224,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
 
 ## 4. Shared infra files
 
-### `lib/env.ts` — validate env at boot (fail fast)
+### `lib/env.ts` - validate env at boot (fail fast)
 ```ts
 import { z } from "zod";
 const schema = z.object({
@@ -236,7 +236,7 @@ const schema = z.object({
 export const env = schema.parse(process.env);
 ```
 
-### `server/db.ts` — Prisma singleton
+### `server/db.ts` - Prisma singleton
 ```ts
 import { PrismaClient } from "@prisma/client";
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
@@ -325,7 +325,7 @@ next-env.d.ts
 # testing
 /coverage
 
-# env files — NEVER commit
+# env files - NEVER commit
 .env
 .env*.local
 .env.development
@@ -459,7 +459,7 @@ pnpm exec lint-staged
 }
 ```
 
-### Conventional commits — commitlint
+### Conventional commits - commitlint
 Install: `pnpm add -D @commitlint/cli @commitlint/config-conventional`
 
 `commitlint.config.mjs`:
@@ -507,7 +507,7 @@ Commit format: `feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`.
 5. Add route(s) under `app/` that import from `@/features/<name>` and render.
 6. Add API route(s) under `app/api/<name>/route.ts` wrapped in `withErrorHandler`.
 7. Add `loading.tsx` + `error.tsx` to the route folder.
-8. Never import another feature's internals — only its `index.ts`.
+8. Never import another feature's internals - only its `index.ts`.
 
 ---
 
@@ -517,14 +517,14 @@ Commit format: `feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`.
 - ❌ Importing `@/features/x/server/...` from outside feature `x`.
 - ❌ Committing `.env` (only `.env.example`).
 - ❌ Server-only code without `import "server-only";`.
-- ❌ Inconsistent API responses — always `ok()` / `fail()`.
-- ❌ Catch-and-swallow errors — let `withErrorHandler` handle them.
-- ❌ Putting one-off helpers in `lib` — keep them in the feature until reused.
-- ❌ Reintroducing a `src/` wrapper — this repo keeps everything at the root.
+- ❌ Inconsistent API responses - always `ok()` / `fail()`.
+- ❌ Catch-and-swallow errors - let `withErrorHandler` handle them.
+- ❌ Putting one-off helpers in `lib` - keep them in the feature until reused.
+- ❌ Reintroducing a `src/` wrapper - this repo keeps everything at the root.
 
 ---
 
-## 10. Project notes (knowyourgenes — actual state)
+## 10. Project notes (knowyourgenes - actual state)
 
 This repo follows the structure above **without a `src/` wrapper**: `app/`, `features/`,
 `components/`, `lib/`, `server/`, `hooks/`, `types/` and `proxy.ts` (Next 16 middleware) all sit at
@@ -543,7 +543,7 @@ the repo root. Import alias `@/*` → `./*`.
   rewritten during the restructure):
   - the Prisma singleton in `server/prisma.ts` exports **`prisma`** (not `db`);
   - API routes use the existing `server/api.ts` helpers (`handle` / `ok` / `fail` /
-    `requireApiRole`), which return **`{ ok, data }`** — not `withErrorHandler` / `{ success, data }`.
+    `requireApiRole`), which return **`{ ok, data }`** - not `withErrorHandler` / `{ success, data }`.
 
   Keep a route's style consistent with its neighbours; prefer these existing helpers over inventing
   a parallel one.

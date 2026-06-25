@@ -54,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
   } catch {
-    // CMS unreachable — static + test routes above are still emitted.
+    // CMS unreachable - static + test routes above are still emitted.
   }
 
   return entries;

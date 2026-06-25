@@ -1,5 +1,5 @@
 // Shapes returned by the blog GROQ projections in ./server/sanity.ts.
-// Kept loose on the Portable Text body — the PortableText renderer handles it.
+// Kept loose on the Portable Text body - the PortableText renderer handles it.
 
 export interface SanityImage {
   asset?: { _ref: string; _type?: string };
@@ -28,7 +28,7 @@ export interface BlogListItem {
   author?: BlogAuthor | null;
 }
 
-/** A single Portable Text node — kept open; the renderer maps the known types. */
+/** A single Portable Text node - kept open; the renderer maps the known types. */
 export interface PortableBlock {
   _type: string;
   _key?: string;

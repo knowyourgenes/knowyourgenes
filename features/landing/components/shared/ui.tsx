@@ -13,7 +13,7 @@ export const gCopper = (deg: number) => `linear-gradient(${deg}deg,#C76842 0%,#D
 /** 1200px content column, centred with a 120px desktop gutter (matches Figma). */
 export function Container({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`mx-auto w-full max-w-[1440px] px-6 sm:px-10 md:px-16 lg:px-[120px] ${className}`}>{children}</div>
+    <div className={`mx-auto w-full max-w-[1530px] px-6 sm:px-10 md:px-16 lg:px-[120px] ${className}`}>{children}</div>
   );
 }
 
@@ -147,7 +147,7 @@ export function ReportLogo() {
   );
 }
 
-/** The page’s scoped stylesheet — tokens, fonts, reveal + sheen + accordion. */
+/** The page’s scoped stylesheet - tokens, fonts, reveal + sheen + accordion. */
 export function LandingStyles() {
   return (
     <style>{`

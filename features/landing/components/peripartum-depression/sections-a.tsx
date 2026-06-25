@@ -25,7 +25,7 @@ export function MintCallout({ icon, children }: { icon: ReactNode; children: Rea
 export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden pt-[48px] pb-[80px] lg:pt-[64px]">
-      {/* exact Figma decorative background — node 265:213 (peach blob · dashed molecule motif) */}
+      {/* exact Figma decorative background - node 265:213 (peach blob · dashed molecule motif) */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 hidden bg-[length:100%_100%] bg-no-repeat lg:block"
         style={{ backgroundImage: 'url(/landing/peripartum-depression/hero-bg.svg)' }}

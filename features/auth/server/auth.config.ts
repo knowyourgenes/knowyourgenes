@@ -5,7 +5,7 @@ import type { NextAuthConfig } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
 export default {
-  // Self-hosted (VPS behind Cloudflare), not Vercel — Auth.js can't auto-detect
+  // Self-hosted (VPS behind Cloudflare), not Vercel - Auth.js can't auto-detect
   // a trusted host, so it rejects requests in production builds with
   // `UntrustedHost`. We terminate TLS at a trusted proxy that sets the Host
   // header, so trusting it is safe. (Dev auto-trusts localhost regardless.)

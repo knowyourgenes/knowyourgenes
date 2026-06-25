@@ -20,7 +20,7 @@ import {
 } from './sections';
 
 /**
- * The report's content sections — everything inside <main>. Rendered by the
+ * The report's content sections - everything inside <main>. Rendered by the
  * page (not the layout), so navigating between sibling reports swaps only this
  * while the shared header/sidebar/footer stay mounted. Re-mounts per report, so
  * reveal-on-scroll re-runs for the new content.

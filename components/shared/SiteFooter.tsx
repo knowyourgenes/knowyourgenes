@@ -10,35 +10,25 @@ const FOOTER_COLS = [
   {
     title: 'Wellness Package',
     links: [
-      { label: 'My Diet', href: '/#wellness' },
-      { label: 'My Weight', href: '/#wellness' },
-      { label: 'My Fitness', href: '/#wellness' },
-      { label: 'My Detox', href: '/#wellness' },
+      { label: 'My Diet', href: '/wellness/my-diet' },
+      { label: 'My Weight', href: '/wellness/my-weight' },
+      { label: 'My Fitness', href: '/wellness/my-fitness' },
+      { label: 'My Detox', href: '/wellness/my-detox' },
       { label: 'Senior Care', href: '/#senior' },
     ],
   },
   {
-    title: 'Learn',
+    title: "Women's Health",
     links: [
-      { label: 'Blog', href: '/blog' },
-      { label: 'Health Decoded', href: '/#decoded' },
-      { label: 'The Science', href: '/#what' },
       { label: "Women's Health", href: '/womens-health' },
       { label: 'Pregnancy Loss', href: '/pregnancy-loss' },
-    ],
-  },
-  {
-    title: 'Care',
-    links: [
-      { label: 'How It Works', href: '/#how' },
-      { label: 'GENEous Care', href: '/#care' },
-      { label: 'Sample Report', href: '/#report' },
-      { label: 'Privacy & Trust', href: '/privacy' },
+      { label: 'Peripartum Depression', href: '/peripartum-depression' },
     ],
   },
   {
     title: 'Company',
     links: [
+      { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },
       { label: 'Refund Policy', href: '/refunds' },
       { label: 'Shipping & Delivery', href: '/shipping' },
@@ -54,8 +44,8 @@ export default function SiteFooter() {
       style={CHROME_VARS}
       className="relative overflow-hidden bg-(--dark-1) text-[rgba(250,246,239,.7)] pt-[88px] pb-[36px] before:content-[''] before:absolute before:inset-0 before:bg-[radial-gradient(40%_60%_at_90%_0%,rgba(37,181,171,.12),transparent_60%)]"
     >
-      <div className="relative z-[1] w-full max-w-[1280px] mx-auto px-(--gutter)">
-        <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr_1fr] gap-[48px] mb-[64px] max-[1180px]:grid-cols-2 max-[640px]:grid-cols-1">
+      <div className="relative z-[1] w-full max-w-[1530px] mx-auto px-(--gutter)">
+        <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-[48px] mb-[64px] max-[1180px]:grid-cols-2 max-[640px]:grid-cols-1">
           {/* Brand */}
           <div className="max-w-[360px] max-[1180px]:col-span-2 max-[640px]:col-span-1 max-[1180px]:max-w-none">
             <div className="mb-[22px]">

@@ -433,7 +433,7 @@ function ForYouChecklist() {
         ? 'Even one is reason enough to know your COMT baseline.'
         : count <= 4
           ? 'This test was built for exactly where you are.'
-          : `${count} of 7 — knowing your vulnerability is how you take power over it.`;
+          : `${count} of 7 - knowing your vulnerability is how you take power over it.`;
 
   return (
     <div className="reveal-r flex flex-col gap-5">

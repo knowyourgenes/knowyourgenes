@@ -20,21 +20,21 @@ const KEY_PAGES: { path: string; label: string; desc: string }[] = [
   { path: '/', label: 'Home', desc: siteConfig.description },
   {
     path: '/womens-health',
-    label: "Women's Health DNA — Is your PCOS genetic?",
+    label: "Women's Health DNA - Is your PCOS genetic?",
     desc:
       '1 in 5 Indian women has PCOS. An at-home saliva test reads your THADA gene variant so you can ' +
       'stop guessing and start managing. Part of the 5-panel Women’s Health DNA report.',
   },
   {
     path: '/pregnancy-loss',
-    label: 'Recurrent Pregnancy Loss — genetic risk',
+    label: 'Recurrent Pregnancy Loss - genetic risk',
     desc:
       'Recurrent miscarriage is often genetic, not bad luck. An at-home saliva test reads your MTHFR and ' +
       'FOXP3 variants so you and your doctor can act before you begin trying.',
   },
   {
     path: '/peripartum-depression',
-    label: 'Peripartum Depression — genetic risk',
+    label: 'Peripartum Depression - genetic risk',
     desc:
       'Postpartum depression is often biology, not weakness. An at-home saliva test reads your COMT gene ' +
       'variant so you and your doctor can prepare before birth, not react after.',
@@ -50,7 +50,7 @@ const LEGAL_PAGES: { path: string; label: string }[] = [
 ];
 
 /** Blog posts live at /blog/<slug>. NOTE: a public /blog route is not wired yet
- *  — these URLs resolve only once that route exists. */
+ *  - these URLs resolve only once that route exists. */
 const blogUrl = (slug: string) => absoluteUrl(`/blog/${slug}`);
 const testUrl = (categorySlug: string, slug: string) => absoluteUrl(`/${categorySlug}/${slug}`);
 

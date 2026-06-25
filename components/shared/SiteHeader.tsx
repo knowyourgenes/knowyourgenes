@@ -106,7 +106,7 @@ export default function SiteHeader() {
           scrolled ? 'bg-[rgba(250,246,239,.88)] border-(--ink-line)' : 'bg-[rgba(250,246,239,.65)] border-transparent'
         )}
       >
-        <div className="w-full max-w-[1280px] mx-auto px-(--gutter) flex items-center justify-between h-16 gap-[32px]">
+        <div className="w-full max-w-[1530px] mx-auto px-(--gutter) flex items-center justify-between h-16 gap-[32px]">
           <Link href="/" className="flex items-center shrink-0" aria-label="KYG, Know Your Genes">
             <KygLogo tone="dark" className="h-9! w-auto" />
           </Link>
@@ -146,7 +146,7 @@ export default function SiteHeader() {
                         : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                     )}
                   >
-                    <div className="max-w-[1280px] mx-auto pt-[44px] px-(--gutter) pb-[56px] grid grid-cols-4 gap-[22px] max-[1180px]:grid-cols-2">
+                    <div className="max-w-[1530px] mx-auto pt-[44px] px-(--gutter) pb-[56px] grid grid-cols-4 gap-[22px] max-[1180px]:grid-cols-2">
                       <div className="col-span-full flex items-end justify-between pb-[18px] mb-[8px] border-b border-(--ink-line)">
                         <div className="text-[13px] tracking-[0.22em] uppercase font-semibold text-(--ink-3)">
                           {menu.title}
@@ -255,7 +255,7 @@ export default function SiteHeader() {
         </div>
       </header>
 
-      {/* Mobile menu — rendered OUTSIDE <header> so the header's backdrop-filter
+      {/* Mobile menu - rendered OUTSIDE <header> so the header's backdrop-filter
           doesn't become the fixed drawer's containing block (which clipped it).
           The wrapper carries the chrome tokens to the (now viewport-fixed) drawer. */}
       {mobileOpen && (

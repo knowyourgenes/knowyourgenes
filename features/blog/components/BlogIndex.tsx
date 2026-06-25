@@ -139,7 +139,7 @@ export default function BlogIndex({ posts, activeCategory }: { posts: BlogListIt
             <p className="text-[18px] font-medium text-(--ink-1)">No articles here yet</p>
             <p className="mt-2 text-[14.5px] text-(--ink-3)">
               {activeCategory
-                ? 'Nothing in this category yet — check back soon.'
+                ? 'Nothing in this category yet - check back soon.'
                 : 'New reads are on the way. Check back soon.'}
             </p>
           </div>

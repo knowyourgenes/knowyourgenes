@@ -3,7 +3,7 @@
 // -----------------------------------------------------------------------------
 // Every test-detail page at /[category_slug]/[test_slug] is rendered purely from
 // the data declared here. To publish a new page you add a `Test` (and, for a new
-// group, a `Category`) — no JSX changes required.
+// group, a `Category`) - no JSX changes required.
 //
 // The shared chrome (header + sidebar + footer) lives in the category-level
 // layout, so navigating between sibling reports only swaps the page content.
@@ -31,7 +31,7 @@ export interface Bundle {
   theme: 'wellness' | 'couple' | 'matri' | 'ultimate';
 }
 
-/** A sidebar nav link — `href` starting with '#' is an in-page anchor
+/** A sidebar nav link - `href` starting with '#' is an in-page anchor
  *  (scroll-spy highlight); anything else is a route (active when it matches the
  *  current path). */
 export interface SidebarLink {
@@ -1363,7 +1363,7 @@ const myFitness: Test = {
       {
         number: '04',
         title: 'Your personalised training plan',
-        text: 'Every result comes with a specific recommendation — which exercises suit your genetic type, how often to train, how to structure recovery, and what to watch out for. Designed by genetic and fitness experts. Not a generic plan. A training strategy built for your DNA.',
+        text: 'Every result comes with a specific recommendation - which exercises suit your genetic type, how often to train, how to structure recovery, and what to watch out for. Designed by genetic and fitness experts. Not a generic plan. A training strategy built for your DNA.',
         flip: true,
         viz: {
           kind: 'pills',

@@ -37,7 +37,7 @@ export default function CategoryShell({
   return (
     <div className="kyg-test" style={accentStyle}>
       <PageStyles />
-      <div className="flex min-h-screen max-w-[1280px] mx-auto relative max-[980px]:block">
+      <div className="flex min-h-screen max-w-[1530px] mx-auto relative max-[980px]:block">
         <ReportSidebar category={category} collapsed={collapsed} onToggleCollapse={() => setCollapsed((c) => !c)} />
         <main className="flex-1 min-w-0 p-[clamp(28px,3vw,52px)_clamp(24px,3.4vw,60px)_90px] max-[980px]:p-[clamp(24px,5vw,40px)_var(--gutter)_110px]">
           {children}

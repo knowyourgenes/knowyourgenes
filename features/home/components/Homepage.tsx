@@ -57,8 +57,8 @@ const KYG_PAGE_CSS = `/* =======================================================
   --fs-6xl: 84px;
 
   /* Layout */
-  --max-w: 1320px;
-  --max-w-wide: 1440px;
+  --max-w: 1530px;
+  --max-w-wide: 1530px;
   --gutter: clamp(20px, 4vw, 56px);
 
   /* Squircle radii (subtle squircle feel via generous radius) */
@@ -3681,10 +3681,10 @@ const KYG_TESTS_CSS = `/* ======================================================
   .wr-grid{ grid-template-columns: 1fr; }
 }`;
 
-// Polish layer — see scripts/polish-landing.py. Loaded last so it wins
+// Polish layer - see scripts/polish-landing.py. Loaded last so it wins
 // the cascade on ties (hero jitter fix, mobile menu, responsive gaps).
 const KYG_POLISH_CSS = `/* =============================================================
-   Polish pass — jitter fix, mobile menu overlay, responsive
+   Polish pass - jitter fix, mobile menu overlay, responsive
    tightening for small screens. Loads AFTER KYG_PAGE_CSS and
    KYG_TESTS_CSS so these rules win the cascade on ties.
    ============================================================= */
@@ -3828,7 +3828,7 @@ const KYG_POLISH_CSS = `/* =====================================================
   }
 }
 
-/* Respect reduced-motion preferences — disable parallax animations. */
+/* Respect reduced-motion preferences - disable parallax animations. */
 @media (prefers-reduced-motion: reduce) {
   .kyg-page,
   .kyg-page *,
@@ -3845,7 +3845,7 @@ const KYG_POLISH_CSS = `/* =====================================================
 }
 
 /* =================================================================
-   Hard responsive overrides — addresses the bugs visible in the
+   Hard responsive overrides - addresses the bugs visible in the
    mobile screenshots:
      - what-section floating cards overflow the right viewport edge
        because .what__float-name had white-space: nowrap forcing the
@@ -3868,7 +3868,7 @@ body {
 }
 
 @media (max-width: 880px) {
-  /* What section — let card labels wrap; shrink iconography. */
+  /* What section - let card labels wrap; shrink iconography. */
   .kyg-page .what__stage {
     width: 100%;
     max-width: 100%;
@@ -3906,7 +3906,7 @@ body {
     margin: 0 auto;
   }
 
-  /* Report — float card was overflowing right edge. Tuck it inside. */
+  /* Report - float card was overflowing right edge. Tuck it inside. */
   .kyg-page .report__mock {
     padding: 28px !important;
     margin-right: 0 !important;
@@ -3917,12 +3917,12 @@ body {
     max-width: calc(100% - 16px) !important;
   }
 
-  /* Final CTA — photo frames overflowed on phones. Anchor inside. */
+  /* Final CTA - photo frames overflowed on phones. Anchor inside. */
   .kyg-page .finalcta__floats {
     display: none !important;
   }
 
-  /* Trust marquee — items were too dense on small screens. */
+  /* Trust marquee - items were too dense on small screens. */
   .kyg-page .trust {
     padding: 36px 0 32px;
   }
@@ -3937,7 +3937,7 @@ body {
     height: 22px;
   }
 
-  /* Why section — quote box padding on tight viewports. */
+  /* Why section - quote box padding on tight viewports. */
   .kyg-page .why__qs {
     padding: 24px 22px !important;
   }
@@ -3948,7 +3948,7 @@ body {
     padding: 24px !important;
   }
 
-  /* Care + Movement break sections — no horizontal margin on mobile
+  /* Care + Movement break sections - no horizontal margin on mobile
      so the rounded panels sit flush, full-bleed. */
   .kyg-page .care,
   .kyg-page .movement {
@@ -3972,7 +3972,7 @@ body {
     grid-template-columns: 1fr 1fr !important;
   }
 
-  /* Decoded cards — stack 1 column. */
+  /* Decoded cards - stack 1 column. */
   .kyg-page .decoded__grid {
     grid-template-columns: 1fr !important;
   }
@@ -3984,7 +3984,7 @@ body {
 }
 
 @media (max-width: 560px) {
-  /* What section — collapse to single column when 2 cols still feel cramped. */
+  /* What section - collapse to single column when 2 cols still feel cramped. */
   .kyg-page .what__floats {
     grid-template-columns: 1fr !important;
   }
@@ -3997,7 +3997,7 @@ body {
     grid-template-columns: 1fr !important;
   }
 
-  /* Report mock + float — float becomes inline below the mock. */
+  /* Report mock + float - float becomes inline below the mock. */
   .kyg-page .report__float {
     position: static !important;
     margin-top: 14px !important;
@@ -4012,7 +4012,7 @@ body {
     padding: 22px !important;
   }
 
-  /* Care item rows — tighten. */
+  /* Care item rows - tighten. */
   .kyg-page .care__item {
     padding: 12px 14px;
     font-size: 13.5px;
@@ -4059,7 +4059,7 @@ body {
   .kyg-page .movement__hl {
     font-size: 28px !important;
   }
-  /* Footer columns stack — already 1fr at 720px but ensure padding. */
+  /* Footer columns stack - already 1fr at 720px but ensure padding. */
   .kyg-page .footer__inner,
   .kyg-page .footer__grid {
     padding: 0 !important;
@@ -4069,7 +4069,7 @@ body {
 /* =================================================================
    Modifier classes that replace the inline gridColumn:span 2
    styles. JSX used to set style={{gridColumn:'span 2'}} which is an
-   inline style — that beats stylesheet rules without !important,
+   inline style - that beats stylesheet rules without !important,
    so when the parent grid collapsed to 1fr on mobile the spanning
    item kept asking for "span 2" and the layout broke (right column
    stayed visible at 425px, viewer saw a 2-col grid instead of 1).
@@ -4118,7 +4118,7 @@ body {
    desktop those wrappers use display:contents so their children
    participate directly in the 5-column grid (brand + 4 lists). On
    mobile the wrappers become flex columns so each side flows as a
-   continuous vertical stack — no grid-row alignment gap when the
+   continuous vertical stack - no grid-row alignment gap when the
    two halves have different item counts. That was the bug from
    the 320px screenshot: Wellness Package had 5 items, Care had 4,
    so the right column showed empty space before COMPANY appeared.

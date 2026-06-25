@@ -4,7 +4,7 @@ import type { SanityImage } from '@/features/blog';
 
 // Render map for the Portable Text `body`. Styled with the chrome design tokens
 // (the host page provides them via CHROME_VARS) since there's no typography
-// plugin. Server-rendered — PortableText needs no client runtime here.
+// plugin. Server-rendered - PortableText needs no client runtime here.
 export const portableComponents = {
   types: {
     image: ({ value }: { value: SanityImage }) => {

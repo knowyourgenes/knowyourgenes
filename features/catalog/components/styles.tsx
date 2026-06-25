@@ -10,7 +10,7 @@
 //   * Animations (reveal-on-scroll, the mesh background) live here per the
 //     design's request that animations stay in a <style> block.
 // Layout / colour / spacing for actual elements is done with Tailwind utilities
-// in the components — this file only declares the tokens + the few effects that
+// in the components - this file only declares the tokens + the few effects that
 // utilities can't express (mesh gradient, ::selection, JS-toggled reveal).
 
 const CSS = `
@@ -35,7 +35,7 @@ const CSS = `
   --teal-light: #25B5AB;
   --teal-bright: #2AC3A2;
 
-  /* Active accent — overridden per category via inline style on the root */
+  /* Active accent - overridden per category via inline style on the root */
   --acc-50: #E6F4F1;
   --acc-100: #CDE9E4;
   --acc-500: #15605D;
@@ -68,7 +68,7 @@ const CSS = `
   --navbar-h: 64px; /* matches the shared SiteHeader (h-16) */
   --sidebar-w: 320px;
 
-  /* Type — fonts come from the (tests) layout's next/font variables */
+  /* Type - fonts come from the (tests) layout's next/font variables */
   --ff: var(--font-figtree), system-ui, -apple-system, 'Segoe UI', sans-serif;
   --ff-i: var(--font-hind), var(--ff);
 
@@ -104,7 +104,7 @@ const CSS = `
 .kyg-test .kyg-scroll::-webkit-scrollbar { width: 7px; }
 .kyg-test .kyg-scroll::-webkit-scrollbar-thumb { background: rgba(31,26,20,.14); border-radius: 99px; }
 
-/* Reveal-on-scroll — 'is-in' is toggled by the IntersectionObserver hook */
+/* Reveal-on-scroll - 'is-in' is toggled by the IntersectionObserver hook */
 .kyg-test .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--e-out), transform .7s var(--e-out); }
 .kyg-test .reveal.is-in { opacity: 1; transform: none; }
 .kyg-test .reveal-r { opacity: 0; transform: translateX(26px); transition: opacity .8s var(--e-out), transform .8s var(--e-out); }

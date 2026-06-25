@@ -9,7 +9,7 @@ import { Container, Eyebrow, FigIcon, GhostButton, GradientText, SheenButton, gT
 export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden pt-[44px] pb-[80px] sm:pt-[56px] lg:pb-[96px]">
-      {/* exact Figma decorative background — node 195:142 (peach blobs · dashed DNA-helix motif · accent dots) */}
+      {/* exact Figma decorative background - node 195:142 (peach blobs · dashed DNA-helix motif · accent dots) */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 hidden bg-[length:100%_100%] bg-no-repeat lg:block"
         style={{ backgroundImage: 'url(/landing/womens-health/hero-bg.svg)' }}
@@ -24,7 +24,7 @@ export function HeroSection() {
       />
       <Container>
         <div className="grid items-center gap-[56px] lg:grid-cols-[minmax(0,1fr)_480px] lg:gap-[40px]">
-          {/* —— copy —— */}
+          {/* -- copy -- */}
           <div className="max-w-[600px]">
             <span className="inline-flex items-center gap-[10px] rounded-full bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
               <span className="grid size-[28px] place-items-center rounded-full bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
@@ -76,7 +76,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* —— asset —— */}
+          {/* -- asset -- */}
           <div className="relative mx-auto w-full max-w-[460px]">
             {/* soft cream halo to lift the card off the teal */}
             <div
@@ -85,7 +85,7 @@ export function HeroSection() {
                 background: 'radial-gradient(60% 60% at 50% 45%, rgba(250,246,239,0.55) 0%, rgba(250,246,239,0) 72%)',
               }}
             />
-            {/* DNA double-helix motif — exact Figma asset (node 195:142), sits behind the photo and to its right */}
+            {/* DNA double-helix motif - exact Figma asset (node 195:142), sits behind the photo and to its right */}
             <div
               className="pointer-events-none absolute left-[82%] top-1/2 aspect-[173/556] h-[88%] -translate-y-1/2 bg-contain bg-center bg-no-repeat"
               style={{ backgroundImage: 'url(/landing/womens-health/hero-helix.svg)' }}
@@ -390,7 +390,7 @@ function SymptomChecklist() {
       ? 'Tap the signs you recognise to personalise your result.'
       : count <= 3
         ? `${count} sign${count > 1 ? 's' : ''} noted. Worth understanding the genetic "why".`
-        : `${count} of ${total} — your genes can tell you if PCOS is the cause.`;
+        : `${count} of ${total} - your genes can tell you if PCOS is the cause.`;
 
   return (
     <div className="flex flex-col gap-[20px] rounded-[30px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[28px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)] sm:p-[32px]">

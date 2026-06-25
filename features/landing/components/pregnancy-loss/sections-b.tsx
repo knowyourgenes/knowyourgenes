@@ -340,7 +340,7 @@ function ForYouChecklist() {
         ? 'Even one is reason enough to know your genetic baseline before you begin.'
         : count <= 4
           ? 'This test was built for exactly your situation.'
-          : `${count} of 7 — few people would gain more from knowing their baseline than you.`;
+          : `${count} of 7 - few people would gain more from knowing their baseline than you.`;
 
   return (
     <div className="reveal-r flex flex-col gap-[20px]">
