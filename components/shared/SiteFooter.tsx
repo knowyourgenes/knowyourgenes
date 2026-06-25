@@ -101,13 +101,13 @@ export default function SiteFooter() {
             KYG <span className="text-(--peach-2) mx-[4px]">·</span> Health Without Guesswork.
           </div>
           <div className="flex gap-[18px]">
-            <a href="#" aria-label="Instagram" className="transition-colors duration-300 hover:text-(--cream)">
+            <a href="https://www.instagram.com/knowyourgenes_?igsh=MWhpb3RzMzlwNzg2MQ==" aria-label="Instagram" className="transition-colors duration-300 hover:text-(--cream)">
               Instagram
             </a>
-            <a href="#" aria-label="LinkedIn" className="transition-colors duration-300 hover:text-(--cream)">
+            <a href="https://www.linkedin.com/company/knowyourgenes" aria-label="LinkedIn" className="transition-colors duration-300 hover:text-(--cream)">
               LinkedIn
             </a>
-            <a href="#" aria-label="YouTube" className="transition-colors duration-300 hover:text-(--cream)">
+            <a href="https://youtube.com/@knowyourgenes_official?si=za8meaFEH7PvYP9T" aria-label="YouTube" className="transition-colors duration-300 hover:text-(--cream)">
               YouTube
             </a>
           </div>
