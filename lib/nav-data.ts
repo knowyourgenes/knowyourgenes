@@ -63,6 +63,7 @@ export const NAV_MENUS: MegaMenu[] = [
 ];
 
 export const NAV_LINKS = [
-  { label: "Men's Health", href: '/mens-health/mens-health-dna' },
+  { label: 'Categories', href: '/categories' },
+  { label: "Men's Health", href: '/mens-health' },
   { label: 'Blog', href: '/blog' },
 ];
