@@ -117,7 +117,7 @@ export const mensHealth: TestPage = {
         badgeTone: 'good',
         checksLabel: 'What this test checks',
         checksBodyHtml:
-          'Whether your genes are linked to a condition where little or no sperm is present in semen, a common hidden cause of male infertility.',
+          'Whether your genes are linked to a condition where <b>little or no sperm is present in semen</b>, a common hidden cause of male infertility.',
         sampleHtml: 'Sample result: "Your genes suggest a normal risk for this condition."',
         signsTitle: 'Signs to watch for',
         signs: [
@@ -136,12 +136,12 @@ export const mensHealth: TestPage = {
         answerHtml:
           '<b>Yes.</b> Your body has a system that controls how much testosterone it makes and how well it works. Some men carry a gene variant that puts this system under strain, which can affect energy levels, muscle, sex drive, and the ability to have children, even in their 20s and 30s.',
         calloutHtml:
-          'Most men think low energy or reduced drive is just stress or age. Sometimes it starts with a gene.',
+          'Most men think low energy or reduced drive is just stress or age. <b>Sometimes it starts with a gene.</b>',
         badge: 'Good · Low risk',
         badgeTone: 'good',
         checksLabel: 'What this test checks',
         checksBodyHtml:
-          'How well your testosterone-production system is likely to function based on your genes, and whether you carry a tendency for the testicles to reduce in size and function over time.',
+          'How well your <b>testosterone-production system</b> is likely to function based on your genes, and whether you carry a tendency for the testicles to reduce in size and function over time.',
         sampleHtml: 'Sample result: "Your genes suggest a normal risk for this condition."',
         signsTitle: 'Signs to watch for',
         signs: [
@@ -160,13 +160,13 @@ export const mensHealth: TestPage = {
         answerHtml:
           "<b>Yes.</b> There is a type of hair loss called alopecia areata where the body's own immune system attacks the hair roots. It starts in patches, and the Androgen Receptor gene (AR) is one of the clearest markers of risk for this. Knowing your risk early means you can act before the loss becomes hard to reverse.",
         calloutHtml:
-          '<b>1 in 2</b> Indian men with hair loss are under 25. Most find out at a stage where options are already limited. <i>Source: Traya Health, 2025 study of 5 lakh Indian men.</i>',
+          '<b>1 in 2 Indian men</b>  with hair loss are under 25. Most find out at a stage where options are already limited. <i>Source: Traya Health, 2025 study of 5 lakh Indian men.</i>',
         badge: 'Poor · High risk',
         badgeTone: 'poor',
         resultTinted: true,
         checksLabel: 'What this test checks',
         checksBodyHtml:
-          'Your genetic tendency for immune-linked hair loss (alopecia areata), which causes patchy hair loss on the scalp, eyebrows, and body.',
+          'Your genetic tendency for <b>immune-linked hair loss (alopecia areata)</b>, which causes patchy hair loss on the scalp, eyebrows, and body.',
         sampleHtml:
           'Sample result (high-risk example): "Your genes suggest an increased risk of hair loss. See a skin doctor if you notice symptoms. Increase protein in your diet and consider Biotin and Omega-3 sources such as walnuts and flax seeds."',
         signsTitle: 'Signs to watch for',
@@ -265,7 +265,7 @@ export const mensHealth: TestPage = {
     steps: [
       {
         num: '01',
-        icon: `${IC}/icon-step-1.svg`,
+        icon: 'local_shipping',
         title: 'Order online',
         subHtml: 'Your kit arrives in 2 to 3 days.',
         bodyHtml:
@@ -273,7 +273,7 @@ export const mensHealth: TestPage = {
       },
       {
         num: '02',
-        icon: `${IC}/icon-step-2.svg`,
+        icon: 'science',
         title: 'Collect your sample at home in 5 minutes',
         subHtml: 'No needles. No appointments. No fasting.',
         bodyHtml:
@@ -281,7 +281,7 @@ export const mensHealth: TestPage = {
       },
       {
         num: '03',
-        icon: `${IC}/icon-step-3.svg`,
+        icon: 'outbox',
         title: 'Drop it with the courier',
         subHtml: 'Pre-paid envelope. Pre-labelled. You just hand it over.',
         bodyHtml:
@@ -289,7 +289,7 @@ export const mensHealth: TestPage = {
       },
       {
         num: '04',
-        icon: `${IC}/icon-step-4.svg`,
+        icon: 'biotech',
         title: 'Our lab processes your sample',
         subHtml: "India's top certified lab. Real scientists check your results.",
         bodyHtml:
@@ -297,7 +297,7 @@ export const mensHealth: TestPage = {
       },
       {
         num: '05',
-        icon: `${IC}/icon-step-5.svg`,
+        icon: 'forum',
         title: 'Your report is ready in 7 days',
         subHtml: 'Delivered to your account. Explained by a real person.',
         bodyHtml:
@@ -577,7 +577,7 @@ export const womensHealth: TestPage = {
       {
         key: 'pcos',
         accent: 'pcos',
-        icon: `${WIC}/icon-pain-pcos.svg`,
+        icon: `${SIC}/icon-pain-hormones.svg`,
         label: 'PCOS · Gene THADA',
         question: 'Can genes cause irregular periods and PCOS?',
         answerHtml:
@@ -605,7 +605,7 @@ export const womensHealth: TestPage = {
       {
         key: 'pregnancy-loss',
         accent: 'pregnancy',
-        icon: `${WIC}/icon-pain-pregnancy.svg`,
+        icon: `${SIC}/icon-pain-fertility.svg`,
         label: 'Pregnancy loss · MTHFR, FOXP3',
         question: 'Can genes increase the risk of miscarriage?',
         answerHtml:
@@ -631,7 +631,7 @@ export const womensHealth: TestPage = {
       {
         key: 'post-pregnancy-depression',
         accent: 'depression',
-        icon: `${WIC}/icon-pain-depression.svg`,
+        icon: `${SIC}/icon-pain-hairloss.svg`,
         label: 'Post-pregnancy depression · COMT',
         question: 'Can genes raise the risk of depression during or after pregnancy?',
         answerHtml:
@@ -660,7 +660,7 @@ export const womensHealth: TestPage = {
       {
         key: 'bone-weakness',
         accent: 'bones',
-        icon: `${WIC}/icon-pain-bones.svg`,
+        icon: `${SIC}/icon-pain-hormones.svg`,
         label: 'Bone weakness · AKAP11, LRP5, ZBTB40',
         question: 'Can genes tell me if my bones are at risk as I age?',
         answerHtml:
@@ -688,7 +688,7 @@ export const womensHealth: TestPage = {
       {
         key: 'joint-pain',
         accent: 'joints',
-        icon: `${WIC}/icon-pain-joints.svg`,
+        icon: `${SIC}/icon-pain-fertility.svg`,
         label: 'Joint pain · HLA-DRB1',
         question: 'Can genes cause joint pain and swelling in women?',
         answerHtml:
@@ -735,7 +735,7 @@ export const womensHealth: TestPage = {
     cards: [
       {
         title: 'PCOS',
-        icon: `${WIC}/icon-pain-pcos.svg`,
+        icon: `${SIC}/icon-pain-hormones.svg`,
         whatLabel: 'What it checks',
         desc: 'Hormonal balance and your risk of irregular cycles and fertility issues.',
         result: 'GOOD',
@@ -745,7 +745,7 @@ export const womensHealth: TestPage = {
       },
       {
         title: 'Pregnancy',
-        icon: `${WIC}/icon-pain-pregnancy.svg`,
+        icon: `${SIC}/icon-pain-fertility.svg`,
         whatLabel: 'What it checks',
         desc: "How your genes affect the body's ability to carry a healthy pregnancy.",
         result: 'GOOD',
@@ -755,18 +755,17 @@ export const womensHealth: TestPage = {
       },
       {
         title: 'Depression',
-        icon: `${WIC}/icon-pain-depression.svg`,
+        icon: `${SIC}/icon-pain-hairloss.svg`,
         whatLabel: 'What it checks',
         desc: 'How sensitive your brain chemistry makes you to stress during and after pregnancy.',
         result: 'POOR',
         resultLabel: 'High risk',
         tone: 'poor',
-        noteHtml:
-          '"Your genes suggest higher stress sensitivity. Eat well, rest, and talk to your doctor early."',
+        noteHtml: '"Your genes suggest higher stress sensitivity. Eat well, rest, and talk to your doctor early."',
       },
       {
         title: 'Bones',
-        icon: `${WIC}/icon-pain-bones.svg`,
+        icon: `${SIC}/icon-pain-hormones.svg`,
         whatLabel: 'What it checks',
         desc: 'How likely your bones are to lose density and become fragile over time.',
         result: 'POOR',
@@ -777,7 +776,7 @@ export const womensHealth: TestPage = {
       },
       {
         title: 'Joints',
-        icon: `${WIC}/icon-pain-joints.svg`,
+        icon: `${SIC}/icon-pain-fertility.svg`,
         whatLabel: 'What it checks',
         desc: 'Whether your immune system is genetically prone to attacking your own joints.',
         result: 'GOOD',
@@ -882,8 +881,7 @@ export const womensHealth: TestPage = {
       },
       {
         title: 'What you get',
-        bodyHtml:
-          'A plain-language explanation of all five results, what each means and when to see a doctor.',
+        bodyHtml: 'A plain-language explanation of all five results, what each means and when to see a doctor.',
       },
     ],
     pullQuoteHtml: '"Genetic care, done the GENEous way."',
@@ -974,7 +972,7 @@ export const womensHealth: TestPage = {
       {
         q: 'I already have PCOS. Is this test still useful for me?',
         aHtml:
-          "Yes. Knowing your genetic profile helps you and your doctor understand the drivers behind your PCOS and the connected risks it carries, such as type 2 diabetes. It also covers four other areas, pregnancy, post-pregnancy depression, bone strength, and joint health, so you get a fuller picture of your genetic health, not just PCOS.",
+          'Yes. Knowing your genetic profile helps you and your doctor understand the drivers behind your PCOS and the connected risks it carries, such as type 2 diabetes. It also covers four other areas, pregnancy, post-pregnancy depression, bone strength, and joint health, so you get a fuller picture of your genetic health, not just PCOS.',
       },
       {
         q: 'What does a Poor or High Risk result actually mean?',
@@ -1022,13 +1020,11 @@ export const womensHealth: TestPage = {
 
   finalCta: {
     titleHtml: 'Every 1 out of 5 Indian women has PCOS.<br />Most never learn why. But you can.',
-    subHtml:
-      'Five health checks. One saliva kit. The genetic picture every Indian woman deserves to have.',
+    subHtml: 'Five health checks. One saliva kit. The genetic picture every Indian woman deserves to have.',
     ctaLabel: "Get my Women's Health report",
     ctaHref: '#order',
     fineprint1: 'At-home saliva kit · NABL Certified Lab · Results in 7 days · Free counselling included',
-    fineprint2:
-      'Certified lab · 99%+ accuracy · Your data stays private · Free GENEous Care session with every report',
+    fineprint2: 'Certified lab · 99%+ accuracy · Your data stays private · Free GENEous Care session with every report',
   },
 };
 
@@ -1099,11 +1095,7 @@ export const ancestry: TestPage = {
   },
 
   hero: {
-    badges: [
-      { label: 'Ancestors In Me' },
-      { label: '42,000+ markers analysed' },
-      { label: '10 global regions' },
-    ],
+    badges: [{ label: 'Ancestors In Me' }, { label: '42,000+ markers analysed' }, { label: '10 global regions' }],
     titleHtml: 'KYC toh kar liya.<br /><span class="hl">Ab apni asli identity jaano.</span>',
     anchorWord: 'The story no family tree can tell.',
     bodyHtml:
@@ -1213,7 +1205,8 @@ export const ancestry: TestPage = {
   stat: {
     quoteHtml: 'Most Indians can trace their family back two or three generations.',
     subQuoteHtml: 'Your DNA can trace it back <b>50,000 years.</b>',
-    emphasisHtml: 'Across continents. Through civilisations. All the way back to the first humans who walked out of Africa.',
+    emphasisHtml:
+      'Across continents. Through civilisations. All the way back to the first humans who walked out of Africa.',
     bodyHtml:
       'Your family name, your gotra, your village — these tell one chapter of your story. Your DNA tells all of them. India is one of the most genetically diverse countries on earth, shaped by migrations, trade routes, and cross-cultural contact over thousands of years. Your ancestry is almost certainly more layered and more surprising than you have been told.',
     bigNum: '50,000',
@@ -1379,8 +1372,7 @@ export const ancestry: TestPage = {
     chat: [
       {
         from: 'them',
-        textHtml:
-          'Just read your Gene Journey — you have a 1.47% Amerindian trace, which is genuinely fascinating! 🌍',
+        textHtml: 'Just read your Gene Journey — you have a 1.47% Amerindian trace, which is genuinely fascinating! 🌍',
       },
       { from: 'me', textHtml: 'Wait, how do Indians end up with that?' },
       {
@@ -1622,17 +1614,11 @@ export const myWellness: TestPage = {
     eyebrow: 'Bundles',
     introHtml: 'Want to go even further? These bundles take My Wellness further.',
     bundles: WELLNESS_BUNDLES.slice(0, 3),
-    noteHtml:
-      'Every kit includes a <b>free 30-minute GENEous Care</b> session across all four reports.',
+    noteHtml: 'Every kit includes a <b>free 30-minute GENEous Care</b> session across all four reports.',
   },
 
   hero: {
-    badges: [
-      { label: 'My Wellness' },
-      { label: '4 reports' },
-      { label: '52 traits' },
-      { label: '1 saliva kit' },
-    ],
+    badges: [{ label: 'My Wellness' }, { label: '4 reports' }, { label: '52 traits' }, { label: '1 saliva kit' }],
     titleHtml: 'Same diet. Same effort. Different results.<br /><span class="hl">Your genes explain why.</span>',
     anchorWord: 'How well your body handles what it is exposed to.',
     bodyHtml:
@@ -2071,8 +2057,7 @@ export const myWellness: TestPage = {
 
   finalCta: {
     titleHtml: 'Your body has been running on guesswork.<br />It is time to give it the right instructions.',
-    subHtml:
-      '4 reports. 52 traits. One saliva kit. Everything your body has been trying to tell you, finally decoded.',
+    subHtml: '4 reports. 52 traits. One saliva kit. Everything your body has been trying to tell you, finally decoded.',
     ctaLabel: 'Get my Wellness report',
     ctaHref: '#order',
     fineprint1: '1 kit · 4 reports · 52 traits · NABL Certified Lab · Free counselling included',

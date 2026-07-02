@@ -27,6 +27,21 @@ export function Check({ className }: { className?: string }) {
   );
 }
 
+export function CheckCircle({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="none" aria-hidden>
+      <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.6" />
+      <path
+        d="M6.5 10.2 9 12.6 13.6 7.4"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function Alert({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -37,6 +52,16 @@ export function Alert({ className }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+/** Ring bullet for the "signs to watch for" list - currentColor so it can be
+ *  tinted per pain accent (teal / clay-red). */
+export function SignDot({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" fill="none" aria-hidden>
+      <circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6" />
     </svg>
   );
 }
