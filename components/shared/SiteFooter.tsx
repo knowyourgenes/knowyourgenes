@@ -8,12 +8,11 @@ import { KygLogo } from './Logo';
 // and at the real legal routes where those pages exist.
 const FOOTER_COLS = [
   {
-    title: 'Wellness Package',
+    title: 'Tests',
     links: [
-      { label: 'My Diet', href: '/wellness/my-diet' },
-      { label: 'My Weight', href: '/wellness/my-weight' },
-      { label: 'My Fitness', href: '/wellness/my-fitness' },
-      { label: 'My Detox', href: '/wellness/my-detox' },
+      { label: 'All categories', href: '/categories' },
+      { label: 'Wellness', href: '/categories/wellness' },
+      { label: "Men's Health", href: '/categories/wellness/mens-health' },
       { label: 'Senior Care', href: '/#senior' },
     ],
   },

@@ -1,14 +1,96 @@
 'use client';
 
-import { useRef, useState, type ElementType } from 'react';
-import { useRevealOnScroll } from '@/hooks/use-scroll';
+import { useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
 import type { Bundle, TestPage } from '@/features/tests/types';
-import TestPageStyles from './styles';
-import { Arrow, Alert, Check, Dot, TrustIcon } from './icons';
+import { Arrow, Alert, Check, Package } from './icons';
+
+const IC = '/tests/mens-health/icons';
+
+// ---- shared class recipes (composition of utilities, not @apply) ----
+const BTN =
+  'sheen relative inline-flex items-center gap-[9px] whitespace-nowrap rounded-full font-bold transition duration-200 hover:-translate-y-px [&_svg]:size-[17px] [&_img]:size-[17px]';
+const BTN_EDEN = `${BTN} bg-eden px-[18px] py-[11px] text-[13px] text-spring shadow-[0_10px_26px_-8px_rgba(14,77,75,0.5)]`;
+const BTN_JAVA = `${BTN} bg-java px-7 py-[15px] text-[15.5px] text-bottle shadow-[0_14px_34px_-10px_rgba(37,181,171,0.5)]`;
+const BTN_JAVA_SM = `${BTN} bg-java px-5 py-3 text-[13.5px] text-bottle`;
+const BTN_JAVA_LG = `${BTN} bg-java px-8 py-[18px] text-[16px] text-bottle shadow-[0_14px_34px_-10px_rgba(37,181,171,0.5)]`;
+const BTN_EDEN_LG = `${BTN} bg-eden px-7 py-[15.5px] text-[15.5px] text-spring shadow-[0_14px_34px_-10px_rgba(14,77,75,0.45)]`;
+const EYEBROW = 'text-[12.5px] font-bold uppercase tracking-[0.14em] text-eden2';
+const SEC_H2 = 'text-[clamp(28px,3.4vw,40px)] font-semibold leading-[1.1] tracking-[-0.022em] text-mine';
+const SEC_HEAD = 'flex flex-col gap-3.5 reveal';
+const LEAD = 'max-w-[760px] text-base leading-[1.62] text-cape';
+const SEC_PAD =
+  'px-[clamp(24px,3.6vw,48px)] py-[clamp(56px,6vw,84px)] max-[620px]:px-[clamp(16px,5vw,24px)] max-[620px]:py-[46px]';
+const SEC_ALT = 'border-y border-zeus/[0.09] bg-pearl/40';
+const RING_JAVA = 'shadow-[0_0_0_1px_rgba(37,181,171,0.5),0_24px_60px_-30px_rgba(14,77,75,0.5)]';
+
+const PAIN: Record<string, { bar: string; ico: string; label: string; callout: string; testcard: string }> = {
+  fertility: {
+    bar: 'bg-surfie',
+    ico: 'bg-swans',
+    label: 'text-surfie',
+    callout: 'bg-surfie/[0.06] border border-surfie/[0.15]',
+    testcard: 'bg-white',
+  },
+  hormones: {
+    bar: 'bg-eden',
+    ico: 'bg-eden/[0.08]',
+    label: 'text-eden',
+    callout: 'bg-eden/5 border border-athens',
+    testcard: 'bg-white',
+  },
+  hairloss: {
+    bar: 'bg-mojo',
+    ico: 'bg-linen',
+    label: 'text-mojo',
+    callout: 'bg-mojo/[0.06] border border-mojo/[0.15]',
+    testcard: 'bg-oldlace/40',
+  },
+};
+const BADGE_TONE: Record<string, string> = {
+  good: 'bg-harp text-sea',
+  avg: 'bg-lusta text-mandalay',
+  poor: 'bg-poppy text-white shadow-[0_4px_12px_-2px_rgba(192,62,44,0.5)]',
+};
+const LEGEND_BG: Record<string, string> = { good: 'bg-harp', avg: 'bg-lusta', poor: 'bg-oldlace' };
+const LEGEND_ICO: Record<string, string> = { good: 'bg-sea', avg: 'bg-mandalay', poor: 'bg-poppy' };
+const LEGEND_FG: Record<string, string> = { good: 'text-sea', avg: 'text-mandalay', poor: 'text-poppy' };
+const CARE_ICONS = ['care-what', 'care-how', 'care-get'];
+
+/** Self-contained reveal-on-scroll (no shared-hook dependency). */
+function useReveal(rootRef: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const targets = root.querySelectorAll('.reveal, .reveal-r');
+    if (typeof IntersectionObserver === 'undefined') {
+      targets.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -8% 0px' }
+    );
+    targets.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [rootRef]);
+}
 
 /** Render trusted inline HTML authored in lib/testsdata.ts. */
 function H({ html, as: Tag = 'span', className }: { html: string; as?: ElementType; className?: string }) {
   return <Tag className={className} dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+/** Exact Figma icon exported to /public. */
+function Ico({ name, className, alt = '' }: { name: string; className?: string; alt?: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={`${IC}/${name}.svg`} alt={alt} className={className} />;
 }
 
 function Chevron({ dir }: { dir: 'left' | 'right' }) {
@@ -26,28 +108,85 @@ function Chevron({ dir }: { dir: 'left' | 'right' }) {
 }
 
 function BundleCard({ b, full }: { b: Bundle; full?: boolean }) {
+  const rec = b.theme === 'recommended';
   if (!full) {
     return (
-      <a href={b.href} className="kyg-mh__side-bundle" data-theme={b.theme}>
-        {b.badge && <span className="b-badge">{b.badge}</span>}
-        <h4>{b.title}</h4>
-        <span className="st">{b.subtitle}</span>
-        <H html={b.desc} className="ds" />
-        <span className="view">
+      <a
+        href={b.href}
+        className={`flex flex-col gap-2 rounded-[20px] p-[18px] ${
+          rec
+            ? `bg-[linear-gradient(154deg,#0E4D4B,#0A3B39)] text-spring ${RING_JAVA}`
+            : 'border border-zeus/[0.09] bg-white'
+        }`}
+      >
+        {b.badge && (
+          <span className="self-start rounded-full bg-java px-2.5 py-[3px] text-[10.5px] font-bold text-bottle">
+            {b.badge}
+          </span>
+        )}
+        <div className="flex items-center gap-2.5">
+          <span className="grid shrink-0 place-items-center [&_img]:h-[22px] [&_img]:w-auto">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={b.icon} alt="" />
+          </span>
+          <div>
+            <h4 className="text-base font-semibold tracking-[-0.01em]">{b.title}</h4>
+            <span className="text-xs font-semibold opacity-70">{b.subtitle}</span>
+          </div>
+        </div>
+        <H html={b.desc} className={`text-[12.5px] leading-[1.45] ${rec ? 'text-spring/80' : 'opacity-90'}`} />
+        <span
+          className={`mt-0.5 inline-flex items-center gap-[5px] text-[12.5px] font-bold [&_svg]:size-[13px] ${
+            rec ? 'text-bermuda' : 'text-eden'
+          }`}
+        >
           {b.ctaLabel} <Arrow />
         </span>
       </a>
     );
   }
   return (
-    <div className="kyg-mh__bundle" data-theme={b.theme}>
-      {b.theme !== 'recommended' && <span className="kyg-mh__bundle-top" />}
-      {b.badge && <span className="kyg-mh__bundle-badge">{b.theme === 'recommended' ? 'Recommended' : b.badge}</span>}
-      <h4>{b.title}</h4>
-      <span className="subtitle">{b.subtitle}</span>
-      <H html={b.desc} className="desc" />
-      {b.bestFor && <H html={b.bestFor} className="bestfor" />}
-      <a href={b.href} className={`btn ${b.theme === 'recommended' ? 'btn--java-sm' : 'btn--eden'}`}>
+    <div
+      className={`relative flex flex-col gap-3 overflow-hidden rounded-[26px] p-[26px] ${
+        rec
+          ? `bg-[linear-gradient(130deg,#0E4D4B_0%,#0A3B39_100%)] text-spring ${RING_JAVA}`
+          : 'border border-zeus/[0.09] bg-white shadow-kyg-card'
+      }`}
+    >
+      {!rec && (
+        <span
+          className={`absolute inset-x-0 top-0 h-[5px] ${
+            b.theme === 'complete'
+              ? 'bg-[linear-gradient(90deg,#25B5AB,#2AC3A2)]'
+              : 'bg-[linear-gradient(90deg,#0E7C77,#C0432F)]'
+          }`}
+        />
+      )}
+      {b.badge && (
+        <span className="self-start rounded-full bg-java px-3 py-[5px] text-[11.5px] font-bold text-bottle">
+          {rec ? 'Recommended' : b.badge}
+        </span>
+      )}
+      <div className="flex items-center gap-3">
+        <span className="grid shrink-0 place-items-center [&_img]:h-[26px] [&_img]:w-auto">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={b.icon} alt="" />
+        </span>
+        <div>
+          <h4 className="text-[20px] font-semibold tracking-[-0.02em]">{b.title}</h4>
+          <span className="text-[13px] font-semibold opacity-70">{b.subtitle}</span>
+        </div>
+      </div>
+      <H html={b.desc} className={`text-sm leading-[1.55] ${rec ? 'text-spring/85' : 'opacity-[0.92]'}`} />
+      {b.bestFor && (
+        <H
+          html={b.bestFor}
+          className={`mt-auto rounded-[12px] px-3 py-2.5 text-[12.5px] leading-[1.45] ${
+            rec ? 'border border-white/15 bg-white/[0.04] text-spring/85' : 'bg-pearl/70'
+          }`}
+        />
+      )}
+      <a href={b.href} className={`mt-1 self-start ${rec ? BTN_JAVA_SM : BTN_EDEN}`}>
         {b.ctaLabel} <Arrow />
       </a>
     </div>
@@ -56,54 +195,60 @@ function BundleCard({ b, full }: { b: Bundle; full?: boolean }) {
 
 export default function TestPageView({ test }: { test: TestPage }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  useRevealOnScroll(rootRef);
+  useReveal(rootRef);
   const [collapsed, setCollapsed] = useState(false);
 
-  const badgeIcon = (tone: string) => (tone === 'poor' ? <Alert /> : <Check />);
+  const painBadge = (tone: string) => <Ico name={tone === 'poor' ? 'badge-poor' : 'icon-badge-check'} />;
+  const resultIcon = (tone: string) => (tone === 'poor' ? <Alert /> : <Check />);
 
   return (
-    <div className="kyg-mh" ref={rootRef}>
-      <TestPageStyles />
-
-      {/* NAV */}
-      <nav className="kyg-mh__nav">
-        <a href="#top" className="kyg-mh__brand">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/tests/mens-health/icons/logo-mark.svg" alt="" />
-          {test.nav.brand}
-        </a>
-        <div className="kyg-mh__navlinks">
-          {test.nav.links.map((l) => (
-            <a key={l.href} href={l.href}>
-              {l.label}
-            </a>
-          ))}
-        </div>
-        <a href={test.nav.ctaHref} className="btn btn--eden">
-          {test.nav.ctaLabel} <Arrow />
-        </a>
-      </nav>
-
-      <div className="kyg-mh__page" id="top">
-        <div className={`kyg-mh__shell${collapsed ? ' is-collapsed' : ''}`}>
+    <div ref={rootRef} className="kyg-tests bg-spring font-kyg text-mine antialiased [overflow-x:clip]">
+      <div className="flex flex-col items-center" id="top">
+        <div className="mx-auto flex w-full max-w-[1530px] gap-[clamp(20px,2vw,32px)] px-[clamp(18px,3vw,40px)] max-[1024px]:gap-0">
           {collapsed && (
-            <button
-              type="button"
-              className="kyg-mh__reopen"
-              onClick={() => setCollapsed(false)}
-              aria-label="Show bundles"
-              title="Show bundles"
-            >
-              <Chevron dir="right" />
-            </button>
-          )}
-          {/* SIDEBAR (bundles only) */}
-          <aside className="kyg-mh__sidebar kyg-scroll">
-            <div className="kyg-mh__side-top">
-              <span className="eyebrow">{test.sidebar.eyebrow}</span>
+            <div className="sticky top-16 z-30 flex max-h-[calc(100vh-64px)] w-[68px] flex-none flex-col items-center gap-3.5 self-start rounded-2xl bg-pearl/50 py-5 max-[1024px]:hidden">
               <button
                 type="button"
-                className="kyg-mh__collapse"
+                className="tip grid size-[38px] place-items-center rounded-[11px] border border-zeus/[0.09] bg-white text-eden shadow-kyg-card hover:bg-eden/[0.06] [&_svg]:size-4"
+                data-tip="Show bundles"
+                onClick={() => setCollapsed(false)}
+                aria-label="Show bundles"
+              >
+                <Chevron dir="right" />
+              </button>
+              <span className="my-1 rotate-180 text-[11px] font-bold uppercase tracking-[0.18em] text-eden2 [text-orientation:mixed] [writing-mode:vertical-rl]">
+                {test.sidebar.eyebrow}
+              </span>
+              {test.sidebar.bundles.map((b) => (
+                <button
+                  key={b.key}
+                  type="button"
+                  className={`tip relative grid size-11 place-items-center rounded-[13px] border transition-transform duration-150 hover:-translate-y-0.5 [&_svg]:size-[20px] ${
+                    b.theme === 'recommended'
+                      ? 'border-transparent bg-[linear-gradient(154deg,#0E4D4B,#0A3B39)] text-spring shadow-[0_0_0_1px_rgba(37,181,171,0.5)]'
+                      : 'border-zeus/[0.09] bg-white text-eden'
+                  }`}
+                  data-tip={b.title}
+                  onClick={() => setCollapsed(false)}
+                  aria-label={b.title}
+                >
+                  <Package />
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* SIDEBAR (bundles only) */}
+          <aside
+            className={`kyg-scroll sticky top-16 max-h-[calc(100vh-64px)] w-80 flex-none flex-col gap-5 self-start overflow-y-auto rounded-2xl bg-pearl/50 px-5 py-6 max-[1024px]:hidden ${
+              collapsed ? 'hidden' : 'flex'
+            }`}
+          >
+            <div className="flex items-center justify-between gap-2.5">
+              <span className={EYEBROW}>{test.sidebar.eyebrow}</span>
+              <button
+                type="button"
+                className="grid size-[30px] shrink-0 place-items-center rounded-[9px] border border-zeus/[0.09] bg-white text-eden transition hover:bg-eden/[0.06] [&_svg]:size-4"
                 onClick={() => setCollapsed(true)}
                 aria-label="Collapse bundles"
                 title="Collapse"
@@ -111,23 +256,29 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 <Chevron dir="left" />
               </button>
             </div>
-            <H html={test.sidebar.introHtml} className="intro" />
+            <H html={test.sidebar.introHtml} className="text-[13px] leading-[1.5] text-cord" />
             {test.sidebar.bundles.map((b) => (
               <BundleCard key={b.key} b={b} />
             ))}
-            <H html={test.sidebar.noteHtml} className="kyg-mh__side-note" />
+            <H
+              html={test.sidebar.noteHtml}
+              className="rounded-[18px] bg-eden/5 px-4 py-3.5 text-[12.5px] leading-[1.5] text-cape [&_b]:text-eden"
+            />
           </aside>
 
-          <main className="kyg-mh__main">
+          <main className="min-w-0 flex-1">
             {/* 1 · HERO */}
-            <section className="kyg-mh__hero" id="order">
-              <span className="kyg-mh__hero-blob a" />
-              <span className="kyg-mh__hero-blob b" />
-              <div className="kyg-mh__hero-grid">
-                <div className="kyg-mh__hero-copy reveal">
-                  <div className="kyg-mh__badges">
+            <section className={`relative overflow-hidden bg-bottlehero text-spring ${SEC_PAD}`} id="order">
+              <span className="pointer-events-none absolute -left-[120px] -top-[140px] size-[520px] rounded-full bg-eden/50 blur-[32px]" />
+              <span className="pointer-events-none absolute -bottom-[160px] -right-[100px] size-[460px] rounded-full bg-java/10 blur-[32px]" />
+              <div className="relative grid grid-cols-[1.05fr_0.95fr] items-center gap-[clamp(32px,3.5vw,56px)] max-[1180px]:grid-cols-1 max-[1180px]:gap-[clamp(28px,4vw,44px)]">
+                <div className="reveal flex flex-col gap-6">
+                  <div className="flex flex-wrap gap-2">
                     {test.hero.badges.map((b, i) => (
-                      <span key={i}>
+                      <span
+                        key={i}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11.5px] font-bold uppercase tracking-[0.1em] [&_img]:size-4 [&_img]:object-contain"
+                      >
                         {b.img && (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={b.img} alt={b.imgAlt ?? ''} />
@@ -136,154 +287,268 @@ export default function TestPageView({ test }: { test: TestPage }) {
                       </span>
                     ))}
                   </div>
-                  <H html={test.hero.titleHtml} as="h1" />
+                  <H
+                    html={test.hero.titleHtml}
+                    as="h1"
+                    className="text-[clamp(34px,4.6vw,52px)] font-semibold leading-[1.05] tracking-[-0.03em] [&_.hl]:text-[#5FC9BC]"
+                  />
                   <div>
-                    <div className="kyg-mh__anchor">{test.hero.anchorWord}</div>
-                    <span className="kyg-mh__anchor-bar" />
+                    <div className="w-fit bg-[linear-gradient(135deg,#F6F3ED_0%,#DBF1EE_30%,#86DAD0_55%,#25B5AB_100%)] bg-clip-text text-[clamp(30px,3.4vw,40px)] font-semibold leading-none tracking-[-0.025em] text-transparent">
+                      {test.hero.anchorWord}
+                    </div>
+                    <span className="mt-2 block h-[3px] w-12 rounded bg-java" />
                   </div>
-                  <H html={test.hero.bodyHtml} className="kyg-mh__hero-body" />
-                  <a href={test.hero.ctaHref} className="btn btn--java">
+                  <H
+                    html={test.hero.bodyHtml}
+                    className="text-[16.5px] leading-[1.6] text-spring/80 [&_b]:font-bold [&_b]:text-spring"
+                  />
+                  <a href={test.hero.ctaHref} className={`${BTN_JAVA} self-start`}>
                     {test.hero.ctaLabel} <Arrow />
                   </a>
-                  <div className="kyg-mh__trust">
+                  <div className="grid grid-cols-2 gap-2.5 max-[620px]:grid-cols-1">
                     {test.hero.trust.map((t, i) => (
-                      <div className="kyg-mh__trust-tile" key={i}>
-                        <span className="kyg-mh__trust-ico">
-                          <TrustIcon name={t.icon} />
+                      <div
+                        key={i}
+                        className="flex items-center gap-[11px] rounded-2xl border border-white/[0.14] bg-white/[0.07] px-3.5 py-[11px]"
+                      >
+                        <span className="grid size-[34px] shrink-0 place-items-center rounded-[12px] bg-java/20 [&_img]:h-5 [&_img]:w-auto">
+                          <Ico name={`trust-${t.icon}`} />
                         </span>
                         <div>
-                          <H html={t.line1} className="l1" as="div" />
-                          <H html={t.line2} className="l2" as="div" />
+                          <H html={t.line1} className="text-[13px] font-semibold text-spring" as="div" />
+                          <H html={t.line2} className="text-[11.5px] text-spring/60" as="div" />
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="kyg-mh__hero-visual reveal-r">
-                  <div className="kyg-mh__hero-imgcard">
+                <div className="reveal-r flex flex-col gap-3 max-[1180px]:mx-auto max-[1180px]:w-full max-[1180px]:max-w-[560px]">
+                  <div className="relative aspect-[46/41] overflow-hidden rounded-[28px] shadow-kyg-deep">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={test.hero.image} alt={test.hero.imageAlt} />
-                    <span className="grad" />
-                    <span className="cap">
-                      <TrustIcon name="pin" /> {test.hero.imageCaption}
+                    <img src={test.hero.image} alt={test.hero.imageAlt} className="size-full object-cover" />
+                    <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(5,36,34,0.7)_100%)]" />
+                    <span className="absolute bottom-3.5 left-4 flex items-center gap-2 text-[13px] font-medium text-spring/90 [&_img]:h-[15px] [&_img]:w-auto">
+                      <Ico name="caption-eye" /> {test.hero.imageCaption}
                     </span>
                   </div>
-                  <div className="kyg-mh__hero-stats">
-                    {test.hero.stats.map((s, i) => (
-                      <div key={i}>
-                        <H html={s.num} className="num" as="div" />
-                        <div className="lab">{s.label}</div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-4 gap-2.5 max-[620px]:grid-cols-2 max-[380px]:grid-cols-1">
+                    {test.hero.stats.map((s, i) => {
+                      const pureNum = /^\d+$/.test(s.num.replace(/<[^>]*>/g, '').trim());
+                      return (
+                        <div
+                          key={i}
+                          className="rounded-2xl border border-white/[0.14] bg-white/[0.06] px-2.5 py-3.5 text-center"
+                        >
+                          <H
+                            html={s.num}
+                            className={`font-kyg-num font-semibold text-bermuda ${pureNum ? 'text-[20px]' : 'text-[18px]'}`}
+                            as="div"
+                          />
+                          <div className="mt-0.5 text-[10.5px] text-spring/60">{s.label}</div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
             </section>
 
             {/* 2 · THREE PAINS */}
-            <section id="pains">
-              <div className="sec-head reveal">
-                <span className="eyebrow">{test.pains.eyebrow}</span>
-                <H html={test.pains.titleHtml} as="h2" className="sec-h2" />
+            <section id="pains" className={SEC_PAD}>
+              <div className={SEC_HEAD}>
+                <span className={EYEBROW}>{test.pains.eyebrow}</span>
+                <H html={test.pains.titleHtml} as="h2" className={SEC_H2} />
               </div>
-              <div className="kyg-mh__pains" style={{ marginTop: 48 }}>
-                {test.pains.items.map((p) => (
-                  <article className="kyg-mh__pain reveal" data-acc={p.accent} key={p.key}>
-                    <span className="kyg-mh__pain-bar" />
-                    <div className="kyg-mh__pain-grid">
-                      <div>
-                        <div className="kyg-mh__pain-head">
-                          <span className="kyg-mh__pain-ico">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={p.icon} alt="" />
-                          </span>
-                          <H html={p.label} className="kyg-mh__pain-label" />
+              <div className="mt-12 flex flex-col gap-12">
+                {test.pains.items.map((p) => {
+                  const a = PAIN[p.accent];
+                  return (
+                    <article
+                      key={p.key}
+                      className="reveal relative overflow-hidden rounded-[26px] border border-zeus/[0.09] bg-white shadow-kyg-card"
+                    >
+                      <span className={`absolute inset-y-0 left-0 w-1.5 max-[620px]:w-1 ${a.bar}`} />
+                      <div className="grid grid-cols-[1.1fr_0.9fr] gap-0 p-[34px_36px_34px_40px] max-[1180px]:grid-cols-1 max-[620px]:p-[24px_20px]">
+                        <div className="pr-[clamp(28px,3vw,40px)] max-[1180px]:pr-0">
+                          <div className="mb-3.5 flex items-center gap-3">
+                            <span
+                              className={`grid size-[46px] shrink-0 place-items-center rounded-[13px] [&_img]:h-[26px] [&_img]:w-auto ${a.ico}`}
+                            >
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img src={p.icon} alt="" />
+                            </span>
+                            <H
+                              html={p.label}
+                              className={`text-[12px] font-bold uppercase tracking-[0.09em] ${a.label}`}
+                            />
+                          </div>
+                          <H
+                            html={p.question}
+                            as="h3"
+                            className="mb-3.5 text-[clamp(20px,2.2vw,26px)] font-semibold leading-[1.25] tracking-[-0.025em] text-mine"
+                          />
+                          <H
+                            html={p.answerHtml}
+                            className="text-[15px] leading-[1.5] text-cape [&_b]:text-mine"
+                            as="p"
+                          />
+                          <div
+                            className={`mt-4 flex items-start gap-2.5 rounded-2xl px-4 py-3.5 text-[13.5px] leading-[1.5] text-cape [&_img]:h-5 [&_img]:w-auto ${a.callout}`}
+                          >
+                            <Ico name="icon-info" />
+                            <H html={p.calloutHtml} />
+                          </div>
                         </div>
-                        <H html={p.question} as="h3" />
-                        <H html={p.answerHtml} className="kyg-mh__pain-answer" as="p" />
-                        <H html={p.calloutHtml} className="kyg-mh__pain-callout" as="div" />
+                        <div className="border-l border-zeus/[0.09] pl-[clamp(28px,3vw,40px)] max-[1180px]:border-l-0 max-[1180px]:pl-0 max-[1180px]:pt-8">
+                          <div
+                            className={`flex flex-col gap-3 rounded-2xl border border-zeus/[0.09] p-[18px] shadow-kyg-card ${a.testcard}`}
+                          >
+                            <div className="flex items-center justify-between gap-2.5">
+                              <span className="text-[11px] font-bold uppercase tracking-[0.13em] text-cord">
+                                {p.checksLabel}
+                              </span>
+                              <span
+                                className={`inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-[5px] text-[12.5px] font-bold [&_img]:size-[14px] [&_svg]:size-[14px] ${BADGE_TONE[p.badgeTone]}`}
+                              >
+                                {painBadge(p.badgeTone)} {p.badge}
+                              </span>
+                            </div>
+                            <H html={p.checksBodyHtml} className="text-sm leading-[1.55] text-cape" as="p" />
+                            <span className="h-px bg-zeus/[0.09]" />
+                            <H html={p.sampleHtml} className="text-[13.5px] italic leading-[1.5] text-cord" as="p" />
+                          </div>
+                          <div className="mt-[18px]">
+                            <div className="mb-2.5 text-[11.5px] font-bold uppercase tracking-[0.1em] text-cord">
+                              {p.signsTitle}
+                            </div>
+                            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 max-[620px]:grid-cols-1">
+                              {p.signs.map((s, i) => (
+                                <li
+                                  key={i}
+                                  className="flex list-none gap-2 text-[13.5px] leading-[1.4] text-cape [&_img]:mt-0.5 [&_img]:h-[15px] [&_img]:w-auto"
+                                >
+                                  <Ico name="icon-sign" /> <H html={s} />
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="kyg-mh__pain-testcard">
-                          <span className={`badge badge--${p.badgeTone}`}>
-                            {badgeIcon(p.badgeTone)} {p.badge}
-                          </span>
-                          <span className="checks-label">{p.checksLabel}</span>
-                          <H html={p.checksBodyHtml} className="checks-body" as="p" />
-                          <H html={p.sampleHtml} className="sample" as="p" />
-                        </div>
-                        <div className="kyg-mh__signs">
-                          <div className="kyg-mh__signs-title">{p.signsTitle}</div>
-                          <ul className="kyg-mh__signs-grid">
-                            {p.signs.map((s, i) => (
-                              <li key={i}>
-                                <Dot /> <H html={s} />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                ))}
+                    </article>
+                  );
+                })}
               </div>
             </section>
 
             {/* 3 · THE STAT */}
-            <section className="kyg-mh__stat">
-              <div className="kyg-mh__stat-inner reveal">
-                <div className="kyg-mh__stat-grid">
+            <section className="p-[clamp(28px,4vw,48px)] max-[620px]:px-3.5 max-[620px]:py-5">
+              <div className="reveal relative overflow-hidden rounded-[32px] bg-[linear-gradient(163deg,#0E4D4B_0%,#0A3B39_55%,#052422_100%)] p-[clamp(36px,4.5vw,56px)] text-spring shadow-kyg-deep max-[620px]:p-[30px_22px]">
+                <div className="relative grid grid-cols-[1.15fr_0.85fr] items-center gap-10 max-[1180px]:grid-cols-1 max-[1180px]:gap-[clamp(28px,4vw,44px)]">
                   <div>
-                    <H html={test.stat.quoteHtml} className="kyg-mh__stat-quote" as="div" />
-                    <H html={test.stat.subQuoteHtml} className="kyg-mh__stat-sub" as="div" />
-                    <H html={test.stat.emphasisHtml} className="kyg-mh__stat-emph" as="div" />
-                    <H html={test.stat.bodyHtml} className="kyg-mh__stat-body" as="p" />
+                    <Ico name="icon-quote" className="size-10" />
+                    <H
+                      html={test.stat.quoteHtml}
+                      className="text-[clamp(30px,3.6vw,42px)] font-semibold leading-[1.12] tracking-[-0.02em]"
+                      as="div"
+                    />
+                    <H
+                      html={test.stat.subQuoteHtml}
+                      className="mt-3.5 text-[clamp(18px,2vw,24px)] font-medium leading-[1.35] [&_b]:text-bermuda"
+                      as="div"
+                    />
+                    <H html={test.stat.emphasisHtml} className="mt-2.5 text-[22px] italic text-bermuda" as="div" />
+                    <H html={test.stat.bodyHtml} className="mt-5 text-[15.5px] leading-[1.6] text-spring/80" as="p" />
                   </div>
-                  <div className="kyg-mh__stat-card">
-                    <H html={test.stat.bigNum} className="kyg-mh__stat-big" as="div" />
-                    <H html={test.stat.bigNumLabel} className="cap" as="div" />
-                    <a href={test.stat.ctaHref} className="btn btn--java">
+                  <div className="flex flex-col items-stretch gap-3.5 rounded-3xl border border-white/[0.16] bg-white/[0.07] p-7 backdrop-blur-[6px]">
+                    <div className="flex items-end gap-3 max-[620px]:flex-wrap max-[620px]:gap-x-3 max-[620px]:gap-y-2">
+                      <H
+                        html={test.stat.bigNum}
+                        className="font-kyg-num text-[clamp(48px,6vw,64px)] font-semibold leading-none text-java"
+                        as="div"
+                      />
+                      <H html={test.stat.bigNumLabel} className="text-[13px] leading-[1.25] text-spring/70" as="div" />
+                    </div>
+                    <div
+                      className="h-2.5 rounded-full bg-white/10"
+                      role="progressbar"
+                      aria-valuenow={50}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                    >
+                      <span className="block h-full w-1/2 rounded-full bg-[linear-gradient(90deg,#0E4D4B_0%,#25B5AB_25%,#2AC3A2_50%,#25B5AB_75%,#0E4D4B_100%)] shadow-[0_0_20px_5px_rgba(42,195,162,0.75),0_0_8px_2px_rgba(37,181,171,0.9)]" />
+                    </div>
+                    <a href={test.stat.ctaHref} className={`${BTN_JAVA} w-full justify-center`}>
                       {test.stat.ctaLabel} <Arrow />
                     </a>
-                    <H html={test.stat.fineprint} className="kyg-mh__stat-fine" as="div" />
+                    <H
+                      html={test.stat.fineprint}
+                      className="text-center text-[13.5px] font-semibold text-bermuda"
+                      as="div"
+                    />
                   </div>
                 </div>
               </div>
             </section>
 
             {/* 4 · SAMPLE REPORT */}
-            <section className="sec--alt" id="sample">
-              <div className="sec-head reveal">
-                <span className="eyebrow">{test.sampleReport.eyebrow}</span>
-                <H html={test.sampleReport.titleHtml} as="h2" className="sec-h2" />
-                <H html={test.sampleReport.introHtml} className="lead" as="p" />
+            <section id="sample" className={`${SEC_ALT} ${SEC_PAD}`}>
+              <div className={SEC_HEAD}>
+                <span className={EYEBROW}>{test.sampleReport.eyebrow}</span>
+                <H html={test.sampleReport.titleHtml} as="h2" className={SEC_H2} />
+                <H html={test.sampleReport.introHtml} className={LEAD} as="p" />
               </div>
-              <div className="kyg-mh__report-cards">
-                {test.sampleReport.cards.map((c, i) => (
-                  <div className="kyg-mh__report-card reveal" data-tone={c.tone} key={i}>
-                    <span className="what">{c.whatLabel}</span>
-                    <h4>{c.title}</h4>
-                    <H html={c.desc} className="desc" as="p" />
-                    <div className="kyg-mh__report-result" data-tone={c.tone}>
-                      <span className="rl">
-                        {badgeIcon(c.tone)} <span className="big">{c.result}</span>
-                        <span className="sub">· {c.resultLabel}</span>
-                      </span>
-                      <H html={c.noteHtml} className="note" as="span" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="kyg-mh__legend">
-                <h3>{test.sampleReport.legendTitle}</h3>
-                <div className="kyg-mh__legend-grid">
-                  {test.sampleReport.legend.map((l, i) => (
-                    <div className="kyg-mh__legend-card" data-tone={l.tone} key={i}>
-                      <div className="lh">
-                        <span className="lab">{l.label}</span>
-                        <span className="sub">{l.sub}</span>
+              <div className="mt-[34px] grid grid-cols-3 gap-5 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
+                {test.sampleReport.cards.map((c, i) => {
+                  const good = c.tone !== 'poor';
+                  return (
+                    <div
+                      key={i}
+                      className="reveal relative flex flex-col gap-3 overflow-hidden rounded-3xl border border-zeus/[0.09] bg-white p-6 pt-7 shadow-kyg-card"
+                    >
+                      <span
+                        className={`absolute inset-x-0 top-0 h-[5px] ${good ? 'bg-sea' : 'bg-poppy shadow-[0_0_0_1px_rgba(192,62,44,0.15)]'}`}
+                      />
+                      <div className="flex items-center gap-3">
+                        <span
+                          className={`grid size-10 shrink-0 place-items-center rounded-[12px] [&_img]:h-[22px] [&_img]:w-auto ${good ? 'bg-sea/[0.12]' : 'bg-poppy/10'}`}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={c.icon} alt="" />
+                        </span>
+                        <h4 className="text-[19px] font-semibold tracking-[-0.02em] text-mine">{c.title}</h4>
                       </div>
-                      <H html={l.descHtml} as="p" />
+                      <span className="text-[11px] font-bold uppercase tracking-[0.13em] text-cord">{c.whatLabel}</span>
+                      <H html={c.desc} className="text-sm leading-[1.55] text-cape" as="p" />
+                      <div
+                        className={`mt-auto flex flex-col gap-2 rounded-[12px] px-3.5 py-3 ${good ? 'border border-sea/20 bg-harp' : 'border border-poppy/25 bg-oldlace'}`}
+                      >
+                        <span
+                          className={`flex items-center gap-2 font-bold [&_svg]:size-4 ${good ? 'text-sea' : 'text-poppy'}`}
+                        >
+                          {resultIcon(c.tone)} <span className="text-[15px] tracking-[0.02em]">{c.result}</span>
+                          <span className="text-[12.5px] font-semibold opacity-85">· {c.resultLabel}</span>
+                        </span>
+                        <H html={c.noteHtml} className="text-[13px] italic leading-[1.5] text-cape" as="span" />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="mt-[34px]">
+                <h3 className="mb-4 text-[20px] font-semibold tracking-[-0.02em]">{test.sampleReport.legendTitle}</h3>
+                <div className="grid grid-cols-3 gap-4 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
+                  {test.sampleReport.legend.map((l, i) => (
+                    <div key={i} className={`rounded-2xl p-[18px] ${LEGEND_BG[l.tone]}`}>
+                      <div className="mb-2 flex items-center gap-2">
+                        <span
+                          className={`grid size-[26px] shrink-0 place-items-center rounded-[8px] [&_img]:h-[15px] [&_img]:w-auto ${LEGEND_ICO[l.tone]}`}
+                        >
+                          <Ico name={`legend-${l.tone}`} />
+                        </span>
+                        <span className={`text-base font-bold ${LEGEND_FG[l.tone]}`}>{l.label}</span>
+                        <span className={`text-[12.5px] font-semibold opacity-80 ${LEGEND_FG[l.tone]}`}>{l.sub}</span>
+                      </div>
+                      <H html={l.descHtml} className="text-[13.5px] leading-[1.5] text-cape" as="p" />
                     </div>
                   ))}
                 </div>
@@ -291,78 +556,148 @@ export default function TestPageView({ test }: { test: TestPage }) {
             </section>
 
             {/* 5 · HOW IT WORKS */}
-            <section id="how">
-              <div className="sec-head reveal">
-                <span className="eyebrow">{test.howItWorks.eyebrow}</span>
-                <H html={test.howItWorks.titleHtml} as="h2" className="sec-h2" />
-                <H html={test.howItWorks.introHtml} className="lead" as="p" />
+            <section id="how" className={SEC_PAD}>
+              <div className={SEC_HEAD}>
+                <span className={EYEBROW}>{test.howItWorks.eyebrow}</span>
+                <H html={test.howItWorks.titleHtml} as="h2" className={SEC_H2} />
+                <H html={test.howItWorks.introHtml} className={LEAD} as="p" />
               </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="kyg-mh__how-img reveal" src={test.howItWorks.image} alt={test.howItWorks.imageAlt} />
-              <div className="kyg-mh__steps">
-                {test.howItWorks.steps.map((s) => (
-                  <div className="kyg-mh__step reveal" data-dark={s.dark ? 'true' : 'false'} key={s.num}>
-                    <div className="kyg-mh__step-num">
-                      <span className="n">{s.num}</span>
-                      <span className="chip">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={s.icon} alt="" />
-                      </span>
+              <img
+                src={test.howItWorks.image}
+                alt={test.howItWorks.imageAlt}
+                className="reveal my-7 h-[clamp(280px,33vw,479px)] w-full rounded-[31px] object-cover shadow-kyg-card"
+              />
+              <div className="flex flex-col gap-4">
+                {test.howItWorks.steps.map((s) => {
+                  const dark = !!s.dark;
+                  return (
+                    <div
+                      key={s.num}
+                      className={`reveal grid grid-cols-[auto_1fr] items-start gap-5 rounded-[22px] p-[24px_28px] max-[620px]:p-[18px] ${
+                        dark
+                          ? 'bg-[linear-gradient(178deg,#0E4D4B_0%,#0A3B39_100%)] text-spring shadow-kyg-dark'
+                          : 'border border-zeus/[0.09] bg-white shadow-kyg-card'
+                      }`}
+                    >
+                      <div className="flex flex-col items-center gap-2.5">
+                        <span
+                          className={`font-kyg-num text-[26px] font-semibold leading-none ${dark ? 'text-bermuda' : 'text-eden'}`}
+                        >
+                          {s.num}
+                        </span>
+                        <span
+                          className={`grid size-11 place-items-center [&_img]:h-7 [&_img]:w-[25px] ${dark ? 'rounded-[13px] bg-bermuda/15' : ''}`}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={s.icon} alt="" />
+                        </span>
+                      </div>
+                      <div>
+                        <H
+                          html={s.title}
+                          as="h3"
+                          className="mb-1 text-[18px] font-semibold leading-[1.35] tracking-[-0.025em]"
+                        />
+                        <H
+                          html={s.subHtml}
+                          className={`mb-2 text-[13.5px] font-semibold ${dark ? 'text-bermuda' : 'text-java'}`}
+                          as="div"
+                        />
+                        <H
+                          html={s.bodyHtml}
+                          className={`text-[14.5px] leading-[1.6] ${dark ? 'text-spring/80' : 'text-cape'}`}
+                          as="div"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <H html={s.title} as="h3" />
-                      <H html={s.subHtml} className="sub" as="div" />
-                      <H html={s.bodyHtml} className="body" as="div" />
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
-              <div className="kyg-mh__how-cta">
-                <a href={test.howItWorks.ctaHref} className="btn btn--eden">
+              <div className="mt-7 flex flex-col items-start gap-3">
+                <a href={test.howItWorks.ctaHref} className={BTN_EDEN_LG}>
                   {test.howItWorks.ctaLabel} <Arrow />
                 </a>
-                <H html={test.howItWorks.fineprint} className="kyg-mh__fine" as="div" />
+                <H html={test.howItWorks.fineprint} className="text-[13px] text-cord" as="div" />
               </div>
             </section>
 
             {/* 6 · GENEous CARE */}
-            <section className="sec--alt" id="care">
-              <div className="kyg-mh__care-grid">
+            <section id="care" className={`${SEC_ALT} ${SEC_PAD}`}>
+              <div className="grid grid-cols-[1.05fr_0.95fr] items-start gap-14 max-[1180px]:grid-cols-1 max-[1180px]:gap-[clamp(28px,4vw,44px)]">
                 <div className="reveal">
-                  <div className="sec-head">
-                    <span className="eyebrow">{test.care.eyebrow}</span>
-                    <H html={test.care.titleHtml} as="h2" className="sec-h2" />
+                  <div className="flex flex-col gap-3.5">
+                    <span className={EYEBROW}>{test.care.eyebrow}</span>
+                    <H html={test.care.titleHtml} as="h2" className={SEC_H2} />
                   </div>
-                  <H html={test.care.leadHtml} className="kyg-mh__care-lead" as="p" />
-                  <H html={test.care.bodyHtml} className="kyg-mh__care-body" as="p" />
-                  <div className="kyg-mh__care-minis">
+                  <H
+                    html={test.care.leadHtml}
+                    className="mt-1.5 text-[19px] font-medium leading-[1.5] text-eden"
+                    as="p"
+                  />
+                  <H html={test.care.bodyHtml} className="mt-3.5 text-base leading-[1.62] text-cape" as="p" />
+                  <div className="mt-6 grid grid-cols-3 gap-3.5 max-[480px]:grid-cols-1">
                     {test.care.minis.map((m, i) => (
-                      <div className="kyg-mh__care-mini" key={i}>
-                        <h4>{m.title}</h4>
-                        <H html={m.bodyHtml} as="p" />
+                      <div
+                        key={i}
+                        className="rounded-2xl border border-zeus/[0.09] bg-white px-4 pb-8 pt-4 shadow-kyg-card"
+                      >
+                        <span className="mb-2.5 grid size-10 place-items-center rounded-[12px] bg-eden/[0.07] [&_img]:h-[22px] [&_img]:w-auto">
+                          <Ico name={CARE_ICONS[i] ?? 'care-what'} />
+                        </span>
+                        <h4 className="mb-1.5 text-sm font-semibold text-mine">{m.title}</h4>
+                        <H html={m.bodyHtml} className="text-[13.5px] leading-[1.55] text-cord" as="p" />
                       </div>
                     ))}
                   </div>
-                  <H html={test.care.pullQuoteHtml} className="kyg-mh__care-quote" as="div" />
+                  <H
+                    html={test.care.pullQuoteHtml}
+                    className="mt-7 text-[clamp(22px,2.6vw,28px)] font-semibold italic leading-[1.5] tracking-[-0.025em] text-eden"
+                    as="div"
+                  />
                 </div>
-                <div className="kyg-mh__chat reveal-r">
-                  <div className="kyg-mh__chat-head">
-                    <span className="t">{test.care.chatTitle}</span>
-                    <span className="s">{test.care.chatStatus}</span>
+                <div className="reveal-r flex flex-col gap-4">
+                  {/* Chat mock card */}
+                  <div className="overflow-hidden rounded-[26px] bg-white shadow-kyg-dark">
+                    <div className="flex items-center gap-3 bg-eden px-5 py-4 text-spring">
+                      <span className="grid size-9 shrink-0 place-items-center rounded-full bg-sea/90 [&_img]:h-5 [&_img]:w-auto">
+                        <Ico name="chat-avatar" />
+                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-[15px] font-bold">{test.care.chatTitle}</span>
+                        <span className="text-[12px] text-bermuda">{test.care.chatStatus}</span>
+                      </div>
+                      <span className="ml-auto opacity-90 [&_img]:h-[18px] [&_img]:w-auto">
+                        <Ico name="chat-video" />
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-3 bg-pearl/50 p-5">
+                      {test.care.chat.map((c, i) => (
+                        <H
+                          key={i}
+                          html={c.textHtml}
+                          className={`max-w-[82%] px-3.5 py-3 text-[13.5px] leading-[1.5] shadow-kyg-card ${
+                            c.from === 'me'
+                              ? 'self-end rounded-[16px_6px_16px_16px] bg-eden text-spring'
+                              : 'self-start rounded-[6px_16px_16px_16px] bg-white text-cape'
+                          }`}
+                          as="div"
+                        />
+                      ))}
+                    </div>
                   </div>
-                  <div className="kyg-mh__chat-body">
-                    {test.care.chat.map((c, i) => (
-                      <H key={i} html={c.textHtml} className={`kyg-mh__bubble ${c.from}`} as="div" />
-                    ))}
-                  </div>
-                  <div className="kyg-mh__covers">
-                    <h4>{test.care.coversTitle}</h4>
+                  {/* Separate "what your counsellor covers" card */}
+                  <div className="rounded-[22px] border border-zeus/[0.09] bg-eden/5 px-5 py-[18px]">
+                    <h4 className="mb-3 text-[11.5px] font-bold uppercase tracking-[0.1em] text-eden2">
+                      {test.care.coversTitle}
+                    </h4>
                     <ul>
                       {test.care.covers.map((c, i) => (
-                        <li key={i}>
-                          <span style={{ color: 'var(--eden)' }}>
-                            <Check className="" />
-                          </span>
+                        <li
+                          key={i}
+                          className="mb-2.5 flex list-none gap-2.5 text-[13.5px] leading-[1.5] text-cape last:mb-0 [&_b]:text-mine [&_img]:mt-px [&_img]:h-[18px] [&_img]:w-auto"
+                        >
+                          <Ico name={`covers-${i + 1}`} />
                           <H html={c} />
                         </li>
                       ))}
@@ -373,80 +708,99 @@ export default function TestPageView({ test }: { test: TestPage }) {
             </section>
 
             {/* 7 · TRUST */}
-            <section id="trust">
-              <div className="sec-head kyg-mh__trust-head reveal">
-                <span className="eyebrow">{test.trust.eyebrow}</span>
-                <H html={test.trust.titleHtml} as="h2" className="sec-h2" />
+            <section id="trust" className={SEC_PAD}>
+              <div className={`${SEC_HEAD} max-w-[760px]`}>
+                <span className={EYEBROW}>{test.trust.eyebrow}</span>
+                <H html={test.trust.titleHtml} as="h2" className={SEC_H2} />
               </div>
-              <div className="kyg-mh__cert-strip reveal">
+              <div className="reveal mt-7 flex flex-wrap justify-center gap-3.5 rounded-[20px] border border-zeus/[0.09] bg-white p-[22px] max-[620px]:gap-2.5">
                 {test.trust.certs.map((c, i) => (
-                  <div className="kyg-mh__cert-tile" key={i}>
+                  <div
+                    key={i}
+                    className="flex min-w-[120px] flex-1 flex-col items-center gap-2 rounded-[12px] border border-eden/10 px-4 py-3.5 max-[620px]:min-w-[calc(50%-10px)] [&_img]:h-10 [&_img]:w-auto [&_img]:max-w-[90px] [&_img]:object-contain"
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={c.img ?? c.svg} alt={c.alt} />
-                    <span className="lbl">{c.label}</span>
+                    <span className="text-center text-[10.5px] font-semibold text-cord">{c.label}</span>
                   </div>
                 ))}
               </div>
-              <div className="kyg-mh__cert-table reveal">
+              <div className="reveal mt-5 rounded-3xl border border-zeus/[0.09] bg-white px-7 py-2 shadow-kyg-card">
                 {test.trust.rows.map((r, i) => (
-                  <div className="kyg-mh__cert-row" key={i}>
-                    <H html={r.label} className="rl" />
-                    <H html={r.descHtml} className="rd" />
+                  <div
+                    key={i}
+                    className="grid grid-cols-[0.9fr_1.1fr] gap-7 border-b border-zeus/[0.09] py-5 last:border-b-0 max-[760px]:grid-cols-1 max-[760px]:gap-1.5"
+                  >
+                    <H html={r.label} className="text-[15px] font-semibold text-mine" />
+                    <H html={r.descHtml} className="text-sm leading-[1.55] text-cape" />
                   </div>
                 ))}
               </div>
-              <div className="kyg-mh__expert reveal">
-                <span className="vs">{test.trust.expert.initials}</span>
+              <div className="reveal mt-5 grid grid-cols-[auto_1fr] items-start gap-5 rounded-3xl bg-[linear-gradient(160deg,#0E4D4B,#0A3B39)] p-7 text-spring shadow-kyg-dark max-[620px]:grid-cols-1 max-[620px]:gap-3.5">
+                <span className="grid size-14 place-items-center rounded-[14px] bg-bermuda text-[18px] font-bold text-bottle">
+                  {test.trust.expert.initials}
+                </span>
                 <div>
-                  <div className="name">
-                    <H html={test.trust.expert.name} /> <H html={test.trust.expert.role} className="role" />
+                  <div className="text-[18px] font-semibold">
+                    <H html={test.trust.expert.name} />{' '}
+                    <H html={test.trust.expert.role} className="font-medium text-bermuda" />
                   </div>
-                  <H html={test.trust.expert.lab} className="lab" as="div" />
-                  <H html={test.trust.expert.bodyHtml} className="body" as="div" />
-                  <H html={test.trust.expert.accuracyHtml} className="acc" as="div" />
+                  <H html={test.trust.expert.lab} className="mb-3 mt-0.5 text-[13px] text-spring/70" as="div" />
+                  <H html={test.trust.expert.bodyHtml} className="text-[15px] leading-[1.55] text-spring/90" as="div" />
+                  <H html={test.trust.expert.accuracyHtml} className="mt-2.5 text-[13px] text-bermuda" as="div" />
                 </div>
               </div>
             </section>
 
             {/* 8 · FAQ */}
-            <section className="sec--alt" id="faq">
-              <div className="sec-head reveal">
-                <span className="eyebrow">{test.faq.eyebrow}</span>
-                <H html={test.faq.titleHtml} as="h2" className="sec-h2" />
+            <section id="faq" className={`${SEC_ALT} ${SEC_PAD}`}>
+              <div className={SEC_HEAD}>
+                <span className={EYEBROW}>{test.faq.eyebrow}</span>
+                <H html={test.faq.titleHtml} as="h2" className={SEC_H2} />
               </div>
-              <div className="kyg-mh__faqs">
+              <div className="mt-8 flex flex-col gap-3">
                 {test.faq.items.map((f, i) => (
-                  <details className="kyg-mh__faq reveal" key={i}>
-                    <summary>
-                      <span className="kyg-mh__faq-ico">+</span>
+                  <details key={i} className="reveal overflow-hidden rounded-[18px] border border-zeus/[0.09] bg-white">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-3.5 px-6 py-5 text-[16.5px] font-semibold text-mine">
                       <H html={f.q} />
+                      <span className="faq-plus grid size-[30px] shrink-0 place-items-center rounded-full bg-eden/[0.07] text-eden transition-transform duration-[250ms] [&_img]:h-[18px] [&_img]:w-auto">
+                        <Ico name="faq-plus" />
+                      </span>
                     </summary>
-                    <H html={f.aHtml} as="p" />
+                    <H html={f.aHtml} as="p" className="px-6 pb-[22px] text-[14.5px] leading-[1.62] text-cape" />
                   </details>
                 ))}
               </div>
             </section>
 
             {/* 9 · BUNDLES + FINAL CTA */}
-            <section id="bundles">
-              <div className="sec-head reveal">
-                <span className="eyebrow">{test.bundlesSection.eyebrow}</span>
-                <H html={test.bundlesSection.titleHtml} as="h2" className="sec-h2" />
+            <section id="bundles" className={SEC_PAD}>
+              <div className={SEC_HEAD}>
+                <span className={EYEBROW}>{test.bundlesSection.eyebrow}</span>
+                <H html={test.bundlesSection.titleHtml} as="h2" className={SEC_H2} />
               </div>
-              <div className="kyg-mh__bundles">
+              <div className="mt-[34px] grid grid-cols-3 gap-5 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
                 {test.bundlesSection.items.map((b) => (
                   <BundleCard key={b.key} b={b} full />
                 ))}
               </div>
 
-              <div className="kyg-mh__finalcta reveal">
-                <H html={test.finalCta.titleHtml} as="h2" />
-                <H html={test.finalCta.subHtml} className="sub" as="p" />
-                <a href={test.finalCta.ctaHref} className="btn btn--java">
+              <div className="reveal mt-9 flex flex-col items-center gap-5 rounded-[34px] bg-[linear-gradient(167deg,#0E4D4B_0%,#0A3B39_55%,#052422_100%)] p-[clamp(48px,6vw,68px)_clamp(28px,9vw,132px)] text-center text-spring shadow-kyg-deep max-[620px]:rounded-[26px] max-[620px]:p-[40px_22px]">
+                <H
+                  html={test.finalCta.titleHtml}
+                  as="h2"
+                  className="text-[clamp(30px,4.4vw,50px)] font-semibold leading-[1.08] tracking-[-0.025em]"
+                />
+                <H
+                  html={test.finalCta.subHtml}
+                  className="max-w-[640px] text-[17px] leading-[1.55] text-spring/85"
+                  as="p"
+                />
+                <a href={test.finalCta.ctaHref} className={BTN_JAVA_LG}>
                   {test.finalCta.ctaLabel} <Arrow />
                 </a>
-                <H html={test.finalCta.fineprint1} className="fine bermuda" as="div" />
-                <H html={test.finalCta.fineprint2} className="fine" as="div" />
+                <H html={test.finalCta.fineprint1} className="text-[13px] text-bermuda" as="div" />
+                <H html={test.finalCta.fineprint2} className="text-[13px] text-spring/60" as="div" />
               </div>
             </section>
           </main>

@@ -25,11 +25,6 @@ export type PainAccent = 'fertility' | 'hormones' | 'hairloss';
 /** Bundle visual family. */
 export type BundleTheme = 'recommended' | 'complete' | 'couple';
 
-export interface NavLink {
-  label: string;
-  href: string;
-}
-
 export interface HeroBadge {
   label: string;
   /** optional leading image (e.g. small DNA / NABL mark) under /public */
@@ -53,6 +48,8 @@ export interface StatTile {
 export interface Bundle {
   key: string;
   theme: BundleTheme;
+  /** icon shown beside the bundle title (path under /public) */
+  icon: string;
   badge?: string;
   title: string;
   subtitle: string;
@@ -111,6 +108,8 @@ export interface Stat {
 
 export interface ReportCard {
   title: string;
+  /** icon shown in the tinted chip beside the title (path under /public) */
+  icon: string;
   whatLabel: string;
   desc: Html;
   result: string;
@@ -168,13 +167,6 @@ export interface TestPage {
   categorySlug: string;
 
   seo: { title: string; description: string };
-
-  nav: {
-    brand: string;
-    links: NavLink[];
-    ctaLabel: string;
-    ctaHref: string;
-  };
 
   sidebar: {
     eyebrow: string;

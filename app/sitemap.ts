@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { absoluteUrl } from '@/lib/site-config';
-import { TESTS } from '@/features/catalog/data/tests';
+import { TEST_PAGES } from '@/lib/testsdata';
+import { CATEGORIES } from '@/lib/categoriesdata';
 import { sanityFetch, blogListQuery } from '@/features/blog';
 
 export const revalidate = 3600;
@@ -36,9 +37,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     add(path, { changeFrequency: 'yearly', priority: 0.3 });
   }
 
-  // --- Genetic tests (local data, always available) ---
-  for (const t of TESTS) {
-    add(`/${t.categorySlug}/${t.slug}`, { changeFrequency: 'monthly', priority: 0.8 });
+  // --- Categories + genetic tests (local data, always available) ---
+  add('/categories', { changeFrequency: 'weekly', priority: 0.7 });
+  for (const c of CATEGORIES) {
+    add(`/categories/${c.slug}`, { changeFrequency: 'monthly', priority: 0.7 });
+  }
+  for (const t of TEST_PAGES) {
+    add(`/categories/${t.categorySlug}/${t.slug}`, { changeFrequency: 'monthly', priority: 0.8 });
   }
 
   // --- Blog posts from Sanity (best-effort; static routes survive CMS outages) ---
