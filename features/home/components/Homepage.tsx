@@ -5214,26 +5214,30 @@ export default function HomePage() {
       <section className="s s--peach" id="wellness">
         <div className="container container--wide">
           <div className="s-head reveal">
-            <div className="eyebrow">The Wellness Package</div>
+            <div className="eyebrow">Our DNA Tests</div>
             <h2 className="h1">
-              One test. <span className="grad-text">4 personalized</span> wellness reports.
+              Explore our <span className="grad-text">DNA tests</span>.
             </h2>
             <p className="lead" style={{ marginTop: '18px', maxWidth: '680px' } as React.CSSProperties}>
-              Your Wellness Package is designed to help you move beyond generic health advice and understand what
-              actually works for your body.
+              One at-home saliva kit. Choose the report that matters most to you — from fertility and hormones to
+              ancestry and whole-body wellness.
             </p>
           </div>
 
           <div className="pkg__cards">
-            <article className="pkg-card reveal" style={{ '--rd': '0s' } as React.CSSProperties}>
+            <a
+              className="pkg-card reveal"
+              href="/categories/wellness/mens-health"
+              style={{ '--rd': '0s', textDecoration: 'none', color: 'inherit' } as React.CSSProperties}
+            >
               <img
                 className="pkg-card__img"
-                src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80"
-                alt="A vibrant healthy bowl of fresh produce"
+                src="/tests/mens-health/hero-man.png"
+                alt="Men's Health DNA"
                 loading="lazy"
               />
               <div className="pkg-card__veil"></div>
-              <div className="pkg-card__num">Report 01</div>
+              <div className="pkg-card__num">Men&apos;s Health</div>
               <div className="pkg-card__corner">
                 <svg
                   width="14"
@@ -5249,30 +5253,34 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="pkg-card__body">
-                <h3 className="pkg-card__title">My Diet</h3>
-                <p className="pkg-card__sub">Nutrition insights personalized for your body.</p>
+                <h3 className="pkg-card__title">Men&apos;s Health DNA</h3>
+                <p className="pkg-card__sub">Fertility, hormones and hair-loss risk in one saliva test.</p>
                 <div className="pkg-card__reveal">
                   <ul className="pkg-card__list">
-                    <li>Vitamin &amp; micronutrient tendencies</li>
-                    <li>Food sensitivities</li>
-                    <li>Macro nutrient response</li>
-                    <li>Gluten &amp; lactose response</li>
-                    <li>Salt &amp; caffeine sensitivity</li>
+                    <li>Fertility &amp; reproductive risk</li>
+                    <li>Hormone &amp; endocrine markers</li>
+                    <li>Hair-loss (Alopecia) risk</li>
+                    <li>Good / Average / Poor grading</li>
+                    <li>Personalised recommendations</li>
                   </ul>
-                  <p className="pkg-card__quote">Same diet. Different bodies.</p>
+                  <p className="pkg-card__quote">Know your risks before they surface.</p>
                 </div>
               </div>
-            </article>
+            </a>
 
-            <article className="pkg-card reveal" style={{ '--rd': '.08s' } as React.CSSProperties}>
+            <a
+              className="pkg-card reveal"
+              href="/categories/wellness/womens-health"
+              style={{ '--rd': '.08s', textDecoration: 'none', color: 'inherit' } as React.CSSProperties}
+            >
               <img
                 className="pkg-card__img"
-                src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80"
-                alt="A person walking outdoors at golden hour"
+                src="/tests/womens-health/hero-woman.png"
+                alt="Women's Health DNA"
                 loading="lazy"
               />
               <div className="pkg-card__veil"></div>
-              <div className="pkg-card__num">Report 02</div>
+              <div className="pkg-card__num">Women&apos;s Health</div>
               <div className="pkg-card__corner">
                 <svg
                   width="14"
@@ -5288,30 +5296,29 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="pkg-card__body">
-                <h3 className="pkg-card__title">My Weight</h3>
-                <p className="pkg-card__sub">Understand your metabolism and weight-related tendencies.</p>
+                <h3 className="pkg-card__title">Women&apos;s Health DNA</h3>
+                <p className="pkg-card__sub">Clinical panels focused on women&apos;s genetic health.</p>
                 <div className="pkg-card__reveal">
                   <ul className="pkg-card__list">
-                    <li>Weight management response</li>
-                    <li>Fat storage tendencies</li>
-                    <li>Eating behavior patterns</li>
-                    <li>Sweet cravings &amp; satiety</li>
-                    <li>Lipid profile tendencies</li>
+                    <li>PCOS &amp; hormonal risk</li>
+                    <li>Pregnancy &amp; fertility markers</li>
+                    <li>Bone &amp; joint health</li>
+                    <li>Mood &amp; wellbeing</li>
+                    <li>Personalised recommendations</li>
                   </ul>
-                  <p className="pkg-card__quote">Move beyond generic weight-loss advice.</p>
+                  <p className="pkg-card__quote">The questions that matter most, answered.</p>
                 </div>
               </div>
-            </article>
+            </a>
 
-            <article className="pkg-card reveal" style={{ '--rd': '.16s' } as React.CSSProperties}>
-              <img
-                className="pkg-card__img"
-                src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80"
-                alt="A person doing yoga at sunrise"
-                loading="lazy"
-              />
+            <a
+              className="pkg-card reveal"
+              href="/categories/wellness/ancestry"
+              style={{ '--rd': '.16s', textDecoration: 'none', color: 'inherit' } as React.CSSProperties}
+            >
+              <img className="pkg-card__img" src="/tests/ancestry/hero-map.png" alt="Ancestry DNA" loading="lazy" />
               <div className="pkg-card__veil"></div>
-              <div className="pkg-card__num">Report 03</div>
+              <div className="pkg-card__num">Ancestry</div>
               <div className="pkg-card__corner">
                 <svg
                   width="14"
@@ -5327,30 +5334,33 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="pkg-card__body">
-                <h3 className="pkg-card__title">My Fitness</h3>
-                <p className="pkg-card__sub">Train smarter with insights into your body's fitness response.</p>
+                <h3 className="pkg-card__title">Ancestry DNA</h3>
+                <p className="pkg-card__sub">Trace your heritage and genetic origins.</p>
                 <div className="pkg-card__reveal">
                   <ul className="pkg-card__list">
-                    <li>Exercise response</li>
-                    <li>Strength &amp; endurance tendencies</li>
-                    <li>Recovery response</li>
-                    <li>Injury risk insights</li>
-                    <li>Aerobic &amp; anaerobic capacity</li>
+                    <li>Ethnic origin breakdown</li>
+                    <li>Regional heritage mapping</li>
+                    <li>42,000+ SNP genotyping</li>
+                    <li>Gene Journey narrative report</li>
                   </ul>
-                  <p className="pkg-card__quote">Not every body responds the same way.</p>
+                  <p className="pkg-card__quote">Where did you really come from?</p>
                 </div>
               </div>
-            </article>
+            </a>
 
-            <article className="pkg-card reveal" style={{ '--rd': '.24s' } as React.CSSProperties}>
+            <a
+              className="pkg-card reveal"
+              href="/categories/wellness/my-wellness"
+              style={{ '--rd': '.24s', textDecoration: 'none', color: 'inherit' } as React.CSSProperties}
+            >
               <img
                 className="pkg-card__img"
-                src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80"
-                alt="Soft water and natural calm"
+                src="/tests/my-wellness/hero-wellness.png"
+                alt="My Wellness"
                 loading="lazy"
               />
               <div className="pkg-card__veil"></div>
-              <div className="pkg-card__num">Report 04</div>
+              <div className="pkg-card__num">Wellness</div>
               <div className="pkg-card__corner">
                 <svg
                   width="14"
@@ -5366,20 +5376,19 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="pkg-card__body">
-                <h3 className="pkg-card__title">My Detox</h3>
-                <p className="pkg-card__sub">Understand how your body responds to stress and detoxification.</p>
+                <h3 className="pkg-card__title">My Wellness</h3>
+                <p className="pkg-card__sub">Diet, weight, fitness and detox insights in one report.</p>
                 <div className="pkg-card__reveal">
                   <ul className="pkg-card__list">
-                    <li>Oxidative stress response</li>
-                    <li>Detoxification pathways</li>
-                    <li>Water-soluble toxin response</li>
-                    <li>Fat-soluble toxin response</li>
-                    <li>Lifestyle detox support insights</li>
+                    <li>Diet &amp; nutrition response</li>
+                    <li>Weight &amp; metabolism</li>
+                    <li>Fitness &amp; recovery</li>
+                    <li>Detox &amp; stress pathways</li>
                   </ul>
-                  <p className="pkg-card__quote">Recovery and detox matter too.</p>
+                  <p className="pkg-card__quote">One kit. Four life-changing answers.</p>
                 </div>
               </div>
-            </article>
+            </a>
           </div>
         </div>
       </section>
@@ -5750,21 +5759,18 @@ export default function HomePage() {
                     <span className="wr-panel__pill">NABL labs</span>
                     <span className="wr-panel__pill">WhatsApp counselling</span>
                   </div>
-                  {/* CTA-HIDDEN: Wellness panel CTA */}
-                  {false && (
-                    <a href="#" className="wr-panel__cta">
-                      Get your kit
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 12h14M13 5l7 7-7 7" />
-                      </svg>
-                    </a>
-                  )}{' '}
+                  <a href="/categories/wellness/my-wellness" className="wr-panel__cta">
+                    Know more
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                  </a>
                 </div>
               </article>
             </div>
@@ -5902,21 +5908,18 @@ export default function HomePage() {
                         <span className="test-card__pill">Family heritage</span>
                         <span className="test-card__pill">Curiosity buy</span>
                       </div>
-                      {/* CTA-HIDDEN: test card CTA */}
-                      {false && (
-                        <a href="#" className="test-card__cta">
-                          Get your kit
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M5 12h14M13 5l7 7-7 7" />
-                          </svg>
-                        </a>
-                      )}{' '}
+                      <a href="/categories/wellness/ancestry" className="test-card__cta">
+                        Know more
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14M13 5l7 7-7 7" />
+                        </svg>
+                      </a>
                     </div>
                   </article>
 
@@ -6031,21 +6034,18 @@ export default function HomePage() {
                         <span className="test-card__pill">Young couples</span>
                         <span className="test-card__pill">Women 25–45</span>
                       </div>
-                      {/* CTA-HIDDEN: test card CTA */}
-                      {false && (
-                        <a href="#" className="test-card__cta">
-                          Get your kit
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M5 12h14M13 5l7 7-7 7" />
-                          </svg>
-                        </a>
-                      )}{' '}
+                      <a href="/categories/wellness/womens-health" className="test-card__cta">
+                        Know more
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14M13 5l7 7-7 7" />
+                        </svg>
+                      </a>
                     </div>
                   </article>
 
@@ -6146,21 +6146,18 @@ export default function HomePage() {
                         <span className="test-card__pill">Couples planning</span>
                         <span className="test-card__pill">Men 25–45</span>
                       </div>
-                      {/* CTA-HIDDEN: test card CTA */}
-                      {false && (
-                        <a href="#" className="test-card__cta">
-                          Get your kit
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M5 12h14M13 5l7 7-7 7" />
-                          </svg>
-                        </a>
-                      )}{' '}
+                      <a href="/categories/wellness/mens-health" className="test-card__cta">
+                        Know more
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14M13 5l7 7-7 7" />
+                        </svg>
+                      </a>
                     </div>
                   </article>
 
