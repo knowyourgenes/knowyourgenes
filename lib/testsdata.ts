@@ -212,7 +212,7 @@ export const mensHealth: TestPage = {
       },
       {
         title: 'Fertility',
-        icon: `${IC}/report-fertility.svg`,
+        icon: `${IC}/icon-pain-fertility.svg`,
         whatLabel: 'What it checks',
         desc: 'Whether your genes raise your risk of not being able to produce sperm.',
         result: 'GOOD',
@@ -223,7 +223,7 @@ export const mensHealth: TestPage = {
       },
       {
         title: 'Hair loss',
-        icon: `${IC}/report-hairloss.svg`,
+        icon: `${IC}/icon-pain-hairloss.svg`,
         whatLabel: 'What it checks',
         desc: 'Whether your genes raise your risk of patchy hair loss driven by your immune system.',
         result: 'POOR',

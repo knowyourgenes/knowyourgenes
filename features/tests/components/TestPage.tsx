@@ -12,6 +12,8 @@ const BTN =
 const BTN_EDEN = `${BTN} bg-eden px-[18px] py-[11px] text-[13px] text-spring shadow-[0_10px_26px_-8px_rgba(14,77,75,0.5)]`;
 const BTN_JAVA = `${BTN} bg-java px-7 py-[15px] text-[15.5px] text-bottle shadow-[0_14px_34px_-10px_rgba(37,181,171,0.5)]`;
 const BTN_JAVA_SM = `${BTN} bg-java px-5 py-3 text-[13.5px] text-bottle`;
+const BTN_JAVA_LG = `${BTN} bg-java px-8 py-[18px] text-[16px] text-bottle shadow-[0_14px_34px_-10px_rgba(37,181,171,0.5)]`;
+const BTN_EDEN_LG = `${BTN} bg-eden px-7 py-[15.5px] text-[15.5px] text-spring shadow-[0_14px_34px_-10px_rgba(14,77,75,0.45)]`;
 const EYEBROW = 'text-[12.5px] font-bold uppercase tracking-[0.14em] text-eden2';
 const SEC_H2 = 'text-[clamp(28px,3.4vw,40px)] font-semibold leading-[1.1] tracking-[-0.022em] text-mine';
 const SEC_HEAD = 'flex flex-col gap-3.5 reveal';
@@ -180,7 +182,7 @@ function BundleCard({ b, full }: { b: Bundle; full?: boolean }) {
         <H
           html={b.bestFor}
           className={`mt-auto rounded-[12px] px-3 py-2.5 text-[12.5px] leading-[1.45] ${
-            rec ? 'bg-white/[0.08] text-spring/85' : 'bg-black/5'
+            rec ? 'border border-white/15 bg-white/[0.04] text-spring/85' : 'bg-pearl/70'
           }`}
         />
       )}
@@ -330,15 +332,22 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     </span>
                   </div>
                   <div className="grid grid-cols-4 gap-2.5 max-[620px]:grid-cols-2 max-[380px]:grid-cols-1">
-                    {test.hero.stats.map((s, i) => (
-                      <div
-                        key={i}
-                        className="rounded-2xl border border-white/[0.14] bg-white/[0.06] px-2.5 py-3.5 text-center"
-                      >
-                        <H html={s.num} className="font-kyg-num text-[20px] font-semibold text-bermuda" as="div" />
-                        <div className="mt-0.5 text-[10.5px] text-spring/60">{s.label}</div>
-                      </div>
-                    ))}
+                    {test.hero.stats.map((s, i) => {
+                      const pureNum = /^\d+$/.test(s.num.replace(/<[^>]*>/g, '').trim());
+                      return (
+                        <div
+                          key={i}
+                          className="rounded-2xl border border-white/[0.14] bg-white/[0.06] px-2.5 py-3.5 text-center"
+                        >
+                          <H
+                            html={s.num}
+                            className={`font-kyg-num font-semibold text-bermuda ${pureNum ? 'text-[20px]' : 'text-[18px]'}`}
+                            as="div"
+                          />
+                          <div className="mt-0.5 text-[10.5px] text-spring/60">{s.label}</div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -466,7 +475,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                       aria-valuemin={0}
                       aria-valuemax={100}
                     >
-                      <span className="block h-full w-1/2 rounded-full bg-[linear-gradient(90deg,#0E4D4B_0%,#25B5AB_25%,#2AC3A2_50%,#25B5AB_75%,#0E4D4B_100%)] shadow-[0_0_14px_rgba(37,181,171,0.6)]" />
+                      <span className="block h-full w-1/2 rounded-full bg-[linear-gradient(90deg,#0E4D4B_0%,#25B5AB_25%,#2AC3A2_50%,#25B5AB_75%,#0E4D4B_100%)] shadow-[0_0_20px_5px_rgba(42,195,162,0.75),0_0_8px_2px_rgba(37,181,171,0.9)]" />
                     </div>
                     <a href={test.stat.ctaHref} className={`${BTN_JAVA} w-full justify-center`}>
                       {test.stat.ctaLabel} <Arrow />
@@ -606,7 +615,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 })}
               </div>
               <div className="mt-7 flex flex-col items-start gap-3">
-                <a href={test.howItWorks.ctaHref} className={BTN_EDEN}>
+                <a href={test.howItWorks.ctaHref} className={BTN_EDEN_LG}>
                   {test.howItWorks.ctaLabel} <Arrow />
                 </a>
                 <H html={test.howItWorks.fineprint} className="text-[13px] text-cord" as="div" />
@@ -627,19 +636,17 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     as="p"
                   />
                   <H html={test.care.bodyHtml} className="mt-3.5 text-base leading-[1.62] text-cape" as="p" />
-                  <div className="mt-6 flex flex-col gap-3">
+                  <div className="mt-6 grid grid-cols-3 gap-3.5 max-[480px]:grid-cols-1">
                     {test.care.minis.map((m, i) => (
                       <div
                         key={i}
-                        className="rounded-2xl border border-zeus/[0.09] bg-white p-[16px_18px] shadow-kyg-card"
+                        className="rounded-2xl border border-zeus/[0.09] bg-white px-4 pb-8 pt-4 shadow-kyg-card"
                       >
                         <span className="mb-2.5 grid size-10 place-items-center rounded-[12px] bg-eden/[0.07] [&_img]:h-[22px] [&_img]:w-auto">
                           <Ico name={CARE_ICONS[i] ?? 'care-what'} />
                         </span>
-                        <h4 className="mb-1.5 text-[11.5px] font-bold uppercase tracking-[0.1em] text-eden2">
-                          {m.title}
-                        </h4>
-                        <H html={m.bodyHtml} className="text-sm leading-[1.55] text-cape" as="p" />
+                        <h4 className="mb-1.5 text-sm font-semibold text-mine">{m.title}</h4>
+                        <H html={m.bodyHtml} className="text-[13.5px] leading-[1.55] text-cord" as="p" />
                       </div>
                     ))}
                   </div>
@@ -649,34 +656,38 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     as="div"
                   />
                 </div>
-                <div className="reveal-r overflow-hidden rounded-[26px] bg-white shadow-kyg-dark">
-                  <div className="flex items-center gap-3 bg-eden px-5 py-4 text-spring">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-sea/90 [&_img]:h-5 [&_img]:w-auto">
-                      <Ico name="chat-avatar" />
-                    </span>
-                    <div className="flex flex-col">
-                      <span className="text-[15px] font-bold">{test.care.chatTitle}</span>
-                      <span className="text-[12px] text-bermuda">{test.care.chatStatus}</span>
+                <div className="reveal-r flex flex-col gap-4">
+                  {/* Chat mock card */}
+                  <div className="overflow-hidden rounded-[26px] bg-white shadow-kyg-dark">
+                    <div className="flex items-center gap-3 bg-eden px-5 py-4 text-spring">
+                      <span className="grid size-9 shrink-0 place-items-center rounded-full bg-sea/90 [&_img]:h-5 [&_img]:w-auto">
+                        <Ico name="chat-avatar" />
+                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-[15px] font-bold">{test.care.chatTitle}</span>
+                        <span className="text-[12px] text-bermuda">{test.care.chatStatus}</span>
+                      </div>
+                      <span className="ml-auto opacity-90 [&_img]:h-[18px] [&_img]:w-auto">
+                        <Ico name="chat-video" />
+                      </span>
                     </div>
-                    <span className="ml-auto opacity-90 [&_img]:h-[18px] [&_img]:w-auto">
-                      <Ico name="chat-video" />
-                    </span>
+                    <div className="flex flex-col gap-3 bg-pearl/50 p-5">
+                      {test.care.chat.map((c, i) => (
+                        <H
+                          key={i}
+                          html={c.textHtml}
+                          className={`max-w-[82%] px-3.5 py-3 text-[13.5px] leading-[1.5] shadow-kyg-card ${
+                            c.from === 'me'
+                              ? 'self-end rounded-[16px_6px_16px_16px] bg-eden text-spring'
+                              : 'self-start rounded-[6px_16px_16px_16px] bg-white text-cape'
+                          }`}
+                          as="div"
+                        />
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-3 bg-pearl/50 p-5">
-                    {test.care.chat.map((c, i) => (
-                      <H
-                        key={i}
-                        html={c.textHtml}
-                        className={`max-w-[82%] px-3.5 py-3 text-[13.5px] leading-[1.5] shadow-kyg-card ${
-                          c.from === 'me'
-                            ? 'self-end rounded-[16px_6px_16px_16px] bg-eden text-spring'
-                            : 'self-start rounded-[6px_16px_16px_16px] bg-white text-cape'
-                        }`}
-                        as="div"
-                      />
-                    ))}
-                  </div>
-                  <div className="m-5 rounded-[22px] bg-eden/5 px-5 py-[18px]">
+                  {/* Separate "what your counsellor covers" card */}
+                  <div className="rounded-[22px] border border-zeus/[0.09] bg-eden/5 px-5 py-[18px]">
                     <h4 className="mb-3 text-[11.5px] font-bold uppercase tracking-[0.1em] text-eden2">
                       {test.care.coversTitle}
                     </h4>
@@ -785,7 +796,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   className="max-w-[640px] text-[17px] leading-[1.55] text-spring/85"
                   as="p"
                 />
-                <a href={test.finalCta.ctaHref} className={BTN_JAVA}>
+                <a href={test.finalCta.ctaHref} className={BTN_JAVA_LG}>
                   {test.finalCta.ctaLabel} <Arrow />
                 </a>
                 <H html={test.finalCta.fineprint1} className="text-[13px] text-bermuda" as="div" />
