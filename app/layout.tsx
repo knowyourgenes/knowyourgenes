@@ -61,6 +61,15 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${figtree.variable} ${hind.variable} h-full antialiased`}
     >
+      <head>
+        {/* Material Symbols - subsetted to the 5 "How it works" step glyphs. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=biotech,forum,local_shipping,outbox,science&display=block"
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-white text-slate-900">
         <Providers session={session}>{children}</Providers>
         <AttributionBeacon />

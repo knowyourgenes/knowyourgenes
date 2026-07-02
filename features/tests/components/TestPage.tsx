@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
 import Image from 'next/image';
-import type { Bundle, TestPage } from '@/features/tests/types';
-import { Arrow, Alert, Check, Package } from './icons';
+import type { Bundle, ReportCard, TestPage } from '@/features/tests/types';
+import { Arrow, Alert, CheckCircle, Package, SignDot } from './icons';
 
 const IC = '/tests/mens-health/icons';
 
@@ -24,65 +24,55 @@ const SEC_PAD =
 const SEC_ALT = 'border-y border-zeus/[0.09] bg-pearl/40';
 const RING_JAVA = 'shadow-[0_0_0_1px_rgba(37,181,171,0.5),0_24px_60px_-30px_rgba(14,77,75,0.5)]';
 
-const PAIN: Record<string, { bar: string; ico: string; label: string; callout: string; testcard: string }> = {
-  fertility: {
-    bar: 'bg-surfie',
-    ico: 'bg-swans',
-    label: 'text-surfie',
-    callout: 'bg-surfie/[0.06] border border-surfie/[0.15]',
-    testcard: 'bg-white',
-  },
-  hormones: {
-    bar: 'bg-eden',
-    ico: 'bg-eden/[0.08]',
-    label: 'text-eden',
-    callout: 'bg-eden/5 border border-athens',
-    testcard: 'bg-white',
-  },
-  hairloss: {
-    bar: 'bg-mojo',
-    ico: 'bg-linen',
-    label: 'text-mojo',
-    callout: 'bg-mojo/[0.06] border border-mojo/[0.15]',
-    testcard: 'bg-oldlace/40',
-  },
-  // Women's Health accents. teal (surfie) + mid-teal (eden) read as "Good";
-  // clay (mojo) reads as "Poor" and tints the result card.
-  pcos: {
-    bar: 'bg-surfie',
-    ico: 'bg-swans',
-    label: 'text-surfie',
-    callout: 'bg-surfie/[0.06] border border-surfie/[0.15]',
-    testcard: 'bg-white',
-  },
-  pregnancy: {
-    bar: 'bg-eden',
-    ico: 'bg-eden/[0.08]',
-    label: 'text-eden',
-    callout: 'bg-eden/5 border border-athens',
-    testcard: 'bg-white',
-  },
-  depression: {
-    bar: 'bg-mojo',
-    ico: 'bg-linen',
-    label: 'text-mojo',
-    callout: 'bg-mojo/[0.06] border border-mojo/[0.15]',
-    testcard: 'bg-oldlace/40',
-  },
-  bones: {
-    bar: 'bg-mojo',
-    ico: 'bg-linen',
-    label: 'text-mojo',
-    callout: 'bg-mojo/[0.06] border border-mojo/[0.15]',
-    testcard: 'bg-oldlace/40',
-  },
-  joints: {
-    bar: 'bg-surfie',
-    ico: 'bg-swans',
-    label: 'text-surfie',
-    callout: 'bg-surfie/[0.06] border border-surfie/[0.15]',
-    testcard: 'bg-white',
-  },
+// Per-accent styling for a pain card. `rightBg` tints the right column so the two
+// halves read as distinct panels; `sign` colours the "signs to watch for" bullets
+// (teal for Good accents, clay/red for Poor accents).
+type PainStyle = {
+  bar: string;
+  ico: string;
+  label: string;
+  callout: string;
+  testcard: string;
+  rightBg: string;
+  sign: string;
+};
+const TEAL_PAIN: PainStyle = {
+  bar: 'bg-surfie',
+  ico: 'bg-swans',
+  label: 'text-surfie',
+  callout: 'bg-surfie/[0.06] border border-surfie/[0.15]',
+  testcard: 'bg-white',
+  rightBg: 'bg-swans/40',
+  sign: 'text-surfie',
+};
+const EDEN_PAIN: PainStyle = {
+  bar: 'bg-eden',
+  ico: 'bg-eden/[0.08]',
+  label: 'text-eden',
+  callout: 'bg-eden/5 border border-athens',
+  testcard: 'bg-white',
+  rightBg: 'bg-harp/40',
+  sign: 'text-eden',
+};
+const RED_PAIN: PainStyle = {
+  bar: 'bg-mojo',
+  ico: 'bg-linen',
+  label: 'text-mojo',
+  callout: 'bg-mojo/[0.06] border border-mojo/[0.15]',
+  testcard: 'bg-white',
+  rightBg: 'bg-oldlace/40',
+  sign: 'text-mojo',
+};
+const PAIN: Record<string, PainStyle> = {
+  fertility: TEAL_PAIN,
+  hormones: EDEN_PAIN,
+  hairloss: RED_PAIN,
+  // Women's Health accents (teal/eden read as "Good", clay/red as "Poor").
+  pcos: TEAL_PAIN,
+  pregnancy: EDEN_PAIN,
+  depression: RED_PAIN,
+  bones: RED_PAIN,
+  joints: TEAL_PAIN,
 };
 const BADGE_TONE: Record<string, string> = {
   good: 'bg-harp text-sea',
@@ -93,6 +83,11 @@ const LEGEND_BG: Record<string, string> = { good: 'bg-harp', avg: 'bg-lusta', po
 const LEGEND_ICO: Record<string, string> = { good: 'bg-sea', avg: 'bg-mandalay', poor: 'bg-poppy' };
 const LEGEND_FG: Record<string, string> = { good: 'text-sea', avg: 'text-mandalay', poor: 'text-poppy' };
 const CARE_ICONS = ['care-what', 'care-how', 'care-get'];
+
+// Bundles aren't ready yet, so the bundles sidebar, the collapsed rail, and the
+// "Or bundle & save" section are hidden on every test page. Flip to `true` to
+// bring them back once the bundle products/pricing exist.
+const SHOW_BUNDLES = false;
 
 // Ancestry discovery-layer accents: teal / blue / amber / navy. Blue + navy have
 // no theme token, so use arbitrary hex; teal + amber reuse existing tokens.
@@ -207,6 +202,93 @@ function Chevron({ dir }: { dir: 'left' | 'right' }) {
   );
 }
 
+function ReportCardView({ c }: { c: ReportCard }) {
+  const good = c.tone !== 'poor';
+  return (
+    <div className="reveal relative flex h-full flex-col gap-3 overflow-hidden rounded-3xl border border-zeus/[0.09] bg-white p-6 pt-7 shadow-kyg-card">
+      <span
+        className={`absolute inset-x-0 top-0 h-[5px] ${good ? 'bg-sea' : 'bg-poppy shadow-[0_0_0_1px_rgba(192,62,44,0.15)]'}`}
+      />
+      <div className="flex items-center gap-3">
+        <span
+          className={`grid size-10 shrink-0 place-items-center rounded-[12px] [&_img]:h-[22px] [&_img]:w-auto ${good ? 'bg-sea/[0.12]' : 'bg-poppy/10'}`}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={c.icon} alt="" />
+        </span>
+        <h4 className="text-[19px] font-semibold tracking-[-0.02em] text-mine">{c.title}</h4>
+      </div>
+      <span className="text-[11px] font-bold uppercase tracking-[0.13em] text-cord">{c.whatLabel}</span>
+      <H html={c.desc} className="text-sm leading-[1.55] text-cape" as="p" />
+      <div
+        className={`mt-auto flex flex-col gap-2 rounded-[12px] px-3.5 py-3 ${good ? 'border border-sea/20 bg-harp' : 'border border-poppy/25 bg-oldlace'}`}
+      >
+        <span
+          className={`flex items-center justify-between gap-2 font-bold [&_svg]:size-[18px] ${good ? 'text-sea' : 'text-poppy'}`}
+        >
+          <span className="flex items-center gap-2">
+            {good ? <CheckCircle /> : <Alert />} <span className="text-[15px] tracking-[0.02em]">{c.result}</span>
+          </span>
+          <span className="text-[12.5px] font-semibold opacity-85">{c.resultLabel}</span>
+        </span>
+        <H html={c.noteHtml} className="text-[13px] italic leading-[1.5] text-cape" as="span" />
+      </div>
+    </div>
+  );
+}
+
+/** Sample-report cards: a static grid for <=3 cards; a snap-scroll carousel with
+ *  arrow controls when there are more than 3. */
+function ReportCards({ cards }: { cards: ReportCard[] }) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  if (cards.length <= 3) {
+    return (
+      <div className="mt-[34px] grid grid-cols-3 gap-5 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
+        {cards.map((c, i) => (
+          <ReportCardView key={i} c={c} />
+        ))}
+      </div>
+    );
+  }
+
+  const scroll = (dir: number) => {
+    const el = scrollerRef.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: 'smooth' });
+  };
+
+  return (
+    <div className="relative mt-[34px]">
+      <div
+        ref={scrollerRef}
+        className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {cards.map((c, i) => (
+          <div key={i} className="w-[calc((100%-40px)/3)] min-w-[300px] shrink-0 snap-start">
+            <ReportCardView c={c} />
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => scroll(-1)}
+        aria-label="Previous"
+        className="absolute -left-2 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-zeus/[0.09] bg-white text-eden shadow-kyg-card transition hover:bg-eden/[0.06] [&_svg]:size-[18px]"
+      >
+        <Chevron dir="left" />
+      </button>
+      <button
+        type="button"
+        onClick={() => scroll(1)}
+        aria-label="Next"
+        className="absolute -right-2 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-zeus/[0.09] bg-white text-eden shadow-kyg-card transition hover:bg-eden/[0.06] [&_svg]:size-[18px]"
+      >
+        <Chevron dir="right" />
+      </button>
+    </div>
+  );
+}
+
 function BundleCard({ b, full }: { b: Bundle; full?: boolean }) {
   const rec = b.theme === 'recommended';
   if (!full) {
@@ -299,13 +381,12 @@ export default function TestPageView({ test }: { test: TestPage }) {
   const [collapsed, setCollapsed] = useState(false);
 
   const painBadge = (tone: string) => <Ico name={tone === 'poor' ? 'badge-poor' : 'icon-badge-check'} />;
-  const resultIcon = (tone: string) => (tone === 'poor' ? <Alert /> : <Check />);
 
   return (
     <div ref={rootRef} className="kyg-tests bg-spring font-kyg text-mine antialiased [overflow-x:clip]">
       <div className="flex flex-col items-center" id="top">
         <div className="mx-auto flex w-full max-w-[1530px] gap-[clamp(20px,2vw,32px)] px-[clamp(18px,3vw,40px)] max-[1024px]:gap-0">
-          {collapsed && (
+          {SHOW_BUNDLES && collapsed && (
             <div className="sticky top-16 z-30 flex max-h-[calc(100vh-64px)] w-[68px] flex-none flex-col items-center gap-3.5 self-start rounded-2xl bg-pearl/50 py-5 max-[1024px]:hidden">
               <button
                 type="button"
@@ -338,33 +419,35 @@ export default function TestPageView({ test }: { test: TestPage }) {
             </div>
           )}
 
-          {/* SIDEBAR (bundles only) */}
-          <aside
-            className={`kyg-scroll sticky top-16 max-h-[calc(100vh-64px)] w-80 flex-none flex-col gap-5 self-start overflow-y-auto rounded-2xl bg-pearl/50 px-5 py-6 max-[1024px]:hidden ${
-              collapsed ? 'hidden' : 'flex'
-            }`}
-          >
-            <div className="flex items-center justify-between gap-2.5">
-              <span className={EYEBROW}>{test.sidebar.eyebrow}</span>
-              <button
-                type="button"
-                className="grid size-[30px] shrink-0 place-items-center rounded-[9px] border border-zeus/[0.09] bg-white text-eden transition hover:bg-eden/[0.06] [&_svg]:size-4"
-                onClick={() => setCollapsed(true)}
-                aria-label="Collapse bundles"
-                title="Collapse"
-              >
-                <Chevron dir="left" />
-              </button>
-            </div>
-            <H html={test.sidebar.introHtml} className="text-[13px] leading-[1.5] text-cord" />
-            {test.sidebar.bundles.map((b) => (
-              <BundleCard key={b.key} b={b} />
-            ))}
-            <H
-              html={test.sidebar.noteHtml}
-              className="rounded-[18px] bg-eden/5 px-4 py-3.5 text-[12.5px] leading-[1.5] text-cape [&_b]:text-eden"
-            />
-          </aside>
+          {/* SIDEBAR (bundles only) - hidden until bundles are ready (SHOW_BUNDLES) */}
+          {SHOW_BUNDLES && (
+            <aside
+              className={`kyg-scroll sticky top-16 max-h-[calc(100vh-64px)] w-80 flex-none flex-col gap-5 self-start overflow-y-auto rounded-2xl bg-pearl/50 px-5 py-6 max-[1024px]:hidden ${
+                collapsed ? 'hidden' : 'flex'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2.5">
+                <span className={EYEBROW}>{test.sidebar.eyebrow}</span>
+                <button
+                  type="button"
+                  className="grid size-[30px] shrink-0 place-items-center rounded-[9px] border border-zeus/[0.09] bg-white text-eden transition hover:bg-eden/[0.06] [&_svg]:size-4"
+                  onClick={() => setCollapsed(true)}
+                  aria-label="Collapse bundles"
+                  title="Collapse"
+                >
+                  <Chevron dir="left" />
+                </button>
+              </div>
+              <H html={test.sidebar.introHtml} className="text-[13px] leading-[1.5] text-cord" />
+              {test.sidebar.bundles.map((b) => (
+                <BundleCard key={b.key} b={b} />
+              ))}
+              <H
+                html={test.sidebar.noteHtml}
+                className="rounded-[18px] bg-eden/5 px-4 py-3.5 text-[12.5px] leading-[1.5] text-cape [&_b]:text-eden"
+              />
+            </aside>
+          )}
 
           <main className="min-w-0 flex-1">
             {/* 1 · HERO */}
@@ -464,91 +547,93 @@ export default function TestPageView({ test }: { test: TestPage }) {
 
             {/* 2 · PAINS (health pages) */}
             {test.pains && (
-            <section id="pains" className={SEC_PAD}>
-              <div className={SEC_HEAD}>
-                <span className={EYEBROW}>{test.pains.eyebrow}</span>
-                <H html={test.pains.titleHtml} as="h2" className={SEC_H2} />
-              </div>
-              <div className="mt-12 flex flex-col gap-12">
-                {test.pains.items.map((p) => {
-                  const a = PAIN[p.accent];
-                  return (
-                    <article
-                      key={p.key}
-                      className="reveal relative overflow-hidden rounded-[26px] border border-zeus/[0.09] bg-white shadow-kyg-card"
-                    >
-                      <span className={`absolute inset-y-0 left-0 w-1.5 max-[620px]:w-1 ${a.bar}`} />
-                      <div className="grid grid-cols-[1.1fr_0.9fr] gap-0 p-[34px_36px_34px_40px] max-[1180px]:grid-cols-1 max-[620px]:p-[24px_20px]">
-                        <div className="pr-[clamp(28px,3vw,40px)] max-[1180px]:pr-0">
-                          <div className="mb-3.5 flex items-center gap-3">
-                            <span
-                              className={`grid size-[46px] shrink-0 place-items-center rounded-[13px] [&_img]:h-[26px] [&_img]:w-auto ${a.ico}`}
-                            >
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img src={p.icon} alt="" />
-                            </span>
-                            <H
-                              html={p.label}
-                              className={`text-[12px] font-bold uppercase tracking-[0.09em] ${a.label}`}
-                            />
-                          </div>
-                          <H
-                            html={p.question}
-                            as="h3"
-                            className="mb-3.5 text-[clamp(20px,2.2vw,26px)] font-semibold leading-[1.25] tracking-[-0.025em] text-mine"
-                          />
-                          <H
-                            html={p.answerHtml}
-                            className="text-[15px] leading-[1.5] text-cape [&_b]:text-mine"
-                            as="p"
-                          />
-                          <div
-                            className={`mt-4 flex items-start gap-2.5 rounded-2xl px-4 py-3.5 text-[13.5px] leading-[1.5] text-cape [&_img]:h-5 [&_img]:w-auto ${a.callout}`}
-                          >
-                            <Ico name="icon-info" />
-                            <H html={p.calloutHtml} />
-                          </div>
-                        </div>
-                        <div className="border-l border-zeus/[0.09] pl-[clamp(28px,3vw,40px)] max-[1180px]:border-l-0 max-[1180px]:pl-0 max-[1180px]:pt-8">
-                          <div
-                            className={`flex flex-col gap-3 rounded-2xl border border-zeus/[0.09] p-[18px] shadow-kyg-card ${a.testcard}`}
-                          >
-                            <div className="flex items-center justify-between gap-2.5">
-                              <span className="text-[11px] font-bold uppercase tracking-[0.13em] text-cord">
-                                {p.checksLabel}
-                              </span>
+              <section id="pains" className={SEC_PAD}>
+                <div className={SEC_HEAD}>
+                  <span className={EYEBROW}>{test.pains.eyebrow}</span>
+                  <H html={test.pains.titleHtml} as="h2" className={SEC_H2} />
+                </div>
+                <div className="mt-12 flex flex-col gap-12">
+                  {test.pains.items.map((p) => {
+                    const a = PAIN[p.accent];
+                    return (
+                      <article
+                        key={p.key}
+                        className="reveal relative overflow-hidden rounded-[26px] border border-zeus/[0.09] bg-white shadow-kyg-card"
+                      >
+                        <span className={`absolute inset-y-0 left-0 w-1.5 max-[620px]:w-1 ${a.bar}`} />
+                        <div className="grid grid-cols-[1.1fr_0.9fr] max-[1180px]:grid-cols-1">
+                          <div className="p-[34px_clamp(28px,3vw,40px)_34px_40px] max-[620px]:p-[24px_20px]">
+                            <div className="mb-3.5 flex items-center gap-3">
                               <span
-                                className={`inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-[5px] text-[12.5px] font-bold [&_img]:size-[14px] [&_svg]:size-[14px] ${BADGE_TONE[p.badgeTone]}`}
+                                className={`grid size-[46px] shrink-0 place-items-center rounded-[13px] [&_img]:h-[26px] [&_img]:w-auto ${a.ico}`}
                               >
-                                {painBadge(p.badgeTone)} {p.badge}
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src={p.icon} alt="" />
                               </span>
+                              <H
+                                html={p.label}
+                                className={`text-[12px] font-bold uppercase tracking-[0.09em] ${a.label}`}
+                              />
                             </div>
-                            <H html={p.checksBodyHtml} className="text-sm leading-[1.55] text-cape" as="p" />
-                            <span className="h-px bg-zeus/[0.09]" />
-                            <H html={p.sampleHtml} className="text-[13.5px] italic leading-[1.5] text-cord" as="p" />
+                            <H
+                              html={p.question}
+                              as="h3"
+                              className="mb-3.5 text-[clamp(20px,2.2vw,26px)] font-semibold leading-[1.25] tracking-[-0.025em] text-mine"
+                            />
+                            <H
+                              html={p.answerHtml}
+                              className="text-[15px] leading-[1.5] text-cape [&_b]:text-mine"
+                              as="p"
+                            />
+                            <div
+                              className={`mt-4 flex items-start gap-2.5 rounded-2xl px-4 py-3.5 text-[13.5px] leading-[1.5] text-cape [&_img]:h-5 [&_img]:w-auto ${a.callout}`}
+                            >
+                              <Ico name="icon-info" />
+                              <H html={p.calloutHtml} />
+                            </div>
                           </div>
-                          <div className="mt-[18px]">
-                            <div className="mb-2.5 text-[11.5px] font-bold uppercase tracking-[0.1em] text-cord">
-                              {p.signsTitle}
-                            </div>
-                            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 max-[620px]:grid-cols-1">
-                              {p.signs.map((s, i) => (
-                                <li
-                                  key={i}
-                                  className="flex list-none gap-2 text-[13.5px] leading-[1.4] text-cape [&_img]:mt-0.5 [&_img]:h-[15px] [&_img]:w-auto"
+                          <div
+                            className={`border-l border-zeus/[0.09] p-[34px_36px_34px_clamp(28px,3vw,40px)] max-[1180px]:border-l-0 max-[1180px]:border-t max-[620px]:p-[24px_20px] ${a.rightBg}`}
+                          >
+                            <div
+                              className={`flex flex-col gap-3 rounded-2xl border border-zeus/[0.09] p-[18px] shadow-kyg-card ${a.testcard}`}
+                            >
+                              <div className="flex items-center justify-between gap-2.5">
+                                <span className="text-[11px] font-bold uppercase tracking-[0.13em] text-cord">
+                                  {p.checksLabel}
+                                </span>
+                                <span
+                                  className={`inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-[5px] text-[12.5px] font-bold [&_img]:size-[14px] [&_svg]:size-[14px] ${BADGE_TONE[p.badgeTone]}`}
                                 >
-                                  <Ico name="icon-sign" /> <H html={s} />
-                                </li>
-                              ))}
-                            </ul>
+                                  {painBadge(p.badgeTone)} {p.badge}
+                                </span>
+                              </div>
+                              <H html={p.checksBodyHtml} className="text-sm leading-[1.55] text-cape" as="p" />
+                              <span className="h-px bg-zeus/[0.09]" />
+                              <H html={p.sampleHtml} className="text-[13.5px] italic leading-[1.5] text-cord" as="p" />
+                            </div>
+                            <div className="mt-[18px]">
+                              <div className="mb-2.5 text-[11.5px] font-bold uppercase tracking-[0.1em] text-cord">
+                                {p.signsTitle}
+                              </div>
+                              <ul className="grid grid-cols-2 gap-x-4 gap-y-2 max-[620px]:grid-cols-1">
+                                {p.signs.map((s, i) => (
+                                  <li
+                                    key={i}
+                                    className="flex list-none items-start gap-2 text-[13.5px] leading-[1.4] text-cape"
+                                  >
+                                    <SignDot className={`mt-px size-[15px] shrink-0 ${a.sign}`} /> <H html={s} />
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
             )}
 
             {/* 2 · DISCOVERY LAYERS (ancestry) */}
@@ -637,11 +722,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                               {l.noteHtml && (
                                 <>
                                   {(l.shows || l.chips || l.quoteHtml) && <span className="h-px bg-zeus/[0.09]" />}
-                                  <H
-                                    html={l.noteHtml}
-                                    className="text-[13px] italic leading-[1.5] text-cord"
-                                    as="p"
-                                  />
+                                  <H html={l.noteHtml} className="text-[13px] italic leading-[1.5] text-cord" as="p" />
                                 </>
                               )}
                             </div>
@@ -808,69 +889,33 @@ export default function TestPageView({ test }: { test: TestPage }) {
 
             {/* 4 · SAMPLE REPORT (health pages) */}
             {test.sampleReport && (
-            <section id="sample" className={`${SEC_ALT} ${SEC_PAD}`}>
-              <div className={SEC_HEAD}>
-                <span className={EYEBROW}>{test.sampleReport.eyebrow}</span>
-                <H html={test.sampleReport.titleHtml} as="h2" className={SEC_H2} />
-                <H html={test.sampleReport.introHtml} className={LEAD} as="p" />
-              </div>
-              <div className="mt-[34px] grid grid-cols-3 gap-5 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
-                {test.sampleReport.cards.map((c, i) => {
-                  const good = c.tone !== 'poor';
-                  return (
-                    <div
-                      key={i}
-                      className="reveal relative flex flex-col gap-3 overflow-hidden rounded-3xl border border-zeus/[0.09] bg-white p-6 pt-7 shadow-kyg-card"
-                    >
-                      <span
-                        className={`absolute inset-x-0 top-0 h-[5px] ${good ? 'bg-sea' : 'bg-poppy shadow-[0_0_0_1px_rgba(192,62,44,0.15)]'}`}
-                      />
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`grid size-10 shrink-0 place-items-center rounded-[12px] [&_img]:h-[22px] [&_img]:w-auto ${good ? 'bg-sea/[0.12]' : 'bg-poppy/10'}`}
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={c.icon} alt="" />
-                        </span>
-                        <h4 className="text-[19px] font-semibold tracking-[-0.02em] text-mine">{c.title}</h4>
-                      </div>
-                      <span className="text-[11px] font-bold uppercase tracking-[0.13em] text-cord">{c.whatLabel}</span>
-                      <H html={c.desc} className="text-sm leading-[1.55] text-cape" as="p" />
-                      <div
-                        className={`mt-auto flex flex-col gap-2 rounded-[12px] px-3.5 py-3 ${good ? 'border border-sea/20 bg-harp' : 'border border-poppy/25 bg-oldlace'}`}
-                      >
-                        <span
-                          className={`flex items-center gap-2 font-bold [&_svg]:size-4 ${good ? 'text-sea' : 'text-poppy'}`}
-                        >
-                          {resultIcon(c.tone)} <span className="text-[15px] tracking-[0.02em]">{c.result}</span>
-                          <span className="text-[12.5px] font-semibold opacity-85">· {c.resultLabel}</span>
-                        </span>
-                        <H html={c.noteHtml} className="text-[13px] italic leading-[1.5] text-cape" as="span" />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="mt-[34px]">
-                <h3 className="mb-4 text-[20px] font-semibold tracking-[-0.02em]">{test.sampleReport.legendTitle}</h3>
-                <div className="grid grid-cols-3 gap-4 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
-                  {test.sampleReport.legend.map((l, i) => (
-                    <div key={i} className={`rounded-2xl p-[18px] ${LEGEND_BG[l.tone]}`}>
-                      <div className="mb-2 flex items-center gap-2">
-                        <span
-                          className={`grid size-[26px] shrink-0 place-items-center rounded-[8px] [&_img]:h-[15px] [&_img]:w-auto ${LEGEND_ICO[l.tone]}`}
-                        >
-                          <Ico name={`legend-${l.tone}`} />
-                        </span>
-                        <span className={`text-base font-bold ${LEGEND_FG[l.tone]}`}>{l.label}</span>
-                        <span className={`text-[12.5px] font-semibold opacity-80 ${LEGEND_FG[l.tone]}`}>{l.sub}</span>
-                      </div>
-                      <H html={l.descHtml} className="text-[13.5px] leading-[1.5] text-cape" as="p" />
-                    </div>
-                  ))}
+              <section id="sample" className={`${SEC_ALT} ${SEC_PAD}`}>
+                <div className={SEC_HEAD}>
+                  <span className={EYEBROW}>{test.sampleReport.eyebrow}</span>
+                  <H html={test.sampleReport.titleHtml} as="h2" className={SEC_H2} />
+                  <H html={test.sampleReport.introHtml} className={LEAD} as="p" />
                 </div>
-              </div>
-            </section>
+                <ReportCards cards={test.sampleReport.cards} />
+                <div className="mt-[34px]">
+                  <h3 className="mb-4 text-[20px] font-semibold tracking-[-0.02em]">{test.sampleReport.legendTitle}</h3>
+                  <div className="grid grid-cols-3 gap-4 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
+                    {test.sampleReport.legend.map((l, i) => (
+                      <div key={i} className={`rounded-2xl p-[18px] ${LEGEND_BG[l.tone]}`}>
+                        <div className="mb-2 flex items-center gap-2">
+                          <span
+                            className={`grid size-[26px] shrink-0 place-items-center rounded-[8px] [&_img]:h-[15px] [&_img]:w-auto ${LEGEND_ICO[l.tone]}`}
+                          >
+                            <Ico name={`legend-${l.tone}`} />
+                          </span>
+                          <span className={`text-base font-bold ${LEGEND_FG[l.tone]}`}>{l.label}</span>
+                          <span className={`text-[12.5px] font-semibold opacity-80 ${LEGEND_FG[l.tone]}`}>{l.sub}</span>
+                        </div>
+                        <H html={l.descHtml} className="text-[13.5px] leading-[1.5] text-cape" as="p" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
             )}
 
             {/* 4 · THE 10 GLOBAL REGIONS (ancestry) */}
@@ -1019,15 +1064,19 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     >
                       <div className="flex flex-col items-center gap-2.5">
                         <span
-                          className={`font-kyg-num text-[26px] font-semibold leading-none ${dark ? 'text-bermuda' : 'text-eden'}`}
+                          className={`grid size-11 place-items-center rounded-[13px] font-kyg-num text-[22px] font-semibold leading-none ${dark ? 'bg-bermuda text-bottle' : 'bg-zeus/[0.05] text-eden'}`}
                         >
                           {s.num}
                         </span>
                         <span
-                          className={`grid size-11 place-items-center [&_img]:h-7 [&_img]:w-[25px] ${dark ? 'rounded-[13px] bg-bermuda/15' : ''}`}
+                          className={`grid size-11 place-items-center [&_img]:h-7 [&_img]:w-[25px] ${dark ? 'text-bermuda' : 'text-java'}`}
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={s.icon} alt="" />
+                          {s.icon.includes('/') ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={s.icon} alt="" />
+                          ) : (
+                            <span className="material-symbols-outlined text-[28px] leading-none">{s.icon}</span>
+                          )}
                         </span>
                       </div>
                       <div>
@@ -1158,7 +1207,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={c.img ?? c.svg} alt={c.alt} />
-                    <span className="text-center text-[10.5px] font-semibold text-cord">{c.label}</span>
+                    {/* <span className="text-center text-[10.5px] font-semibold text-cord">{c.label}</span> */}
                   </div>
                 ))}
               </div>
@@ -1262,17 +1311,21 @@ export default function TestPageView({ test }: { test: TestPage }) {
               </section>
             )}
 
-            {/* 9 · BUNDLES + FINAL CTA */}
+            {/* 9 · BUNDLES + FINAL CTA (bundles hidden until ready - SHOW_BUNDLES) */}
             <section id="bundles" className={SEC_PAD}>
-              <div className={SEC_HEAD}>
-                <span className={EYEBROW}>{test.bundlesSection.eyebrow}</span>
-                <H html={test.bundlesSection.titleHtml} as="h2" className={SEC_H2} />
-              </div>
-              <div className="mt-[34px] grid grid-cols-3 gap-5 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
-                {test.bundlesSection.items.map((b) => (
-                  <BundleCard key={b.key} b={b} full />
-                ))}
-              </div>
+              {SHOW_BUNDLES && (
+                <>
+                  <div className={SEC_HEAD}>
+                    <span className={EYEBROW}>{test.bundlesSection.eyebrow}</span>
+                    <H html={test.bundlesSection.titleHtml} as="h2" className={SEC_H2} />
+                  </div>
+                  <div className="mt-[34px] grid grid-cols-3 gap-5 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
+                    {test.bundlesSection.items.map((b) => (
+                      <BundleCard key={b.key} b={b} full />
+                    ))}
+                  </div>
+                </>
+              )}
 
               <div className="reveal mt-9 flex flex-col items-center gap-5 rounded-[34px] bg-[linear-gradient(167deg,#0E4D4B_0%,#0A3B39_55%,#052422_100%)] p-[clamp(48px,6vw,68px)_clamp(28px,9vw,132px)] text-center text-spring shadow-kyg-deep max-[620px]:rounded-[26px] max-[620px]:p-[40px_22px]">
                 <H

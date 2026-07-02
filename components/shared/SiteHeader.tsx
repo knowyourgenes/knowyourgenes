@@ -112,11 +112,7 @@ export default function SiteHeader() {
           </Link>
 
           {/* Desktop mega-menu nav */}
-          <nav
-            ref={linksRef}
-            className="flex items-center gap-[2px] flex-1 justify-center max-[980px]:hidden"
-            aria-label="Main"
-          >
+          <nav ref={linksRef} className="flex items-center gap-[2px] ml-auto max-[980px]:hidden" aria-label="Main">
             {NAV_MENUS.map((menu) => {
               const isOpen = openKey === menu.key;
               return (
@@ -146,8 +142,8 @@ export default function SiteHeader() {
                         : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                     )}
                   >
-                    <div className="max-w-[1530px] mx-auto pt-[44px] px-(--gutter) pb-[56px] grid grid-cols-4 gap-[22px] max-[1180px]:grid-cols-2">
-                      <div className="col-span-full flex items-end justify-between pb-[18px] mb-[8px] border-b border-(--ink-line)">
+                    <div className="max-w-[1530px] mx-auto pt-[44px] px-(--gutter) pb-[56px]">
+                      <div className="flex items-end justify-between pb-[18px] mb-[8px] border-b border-(--ink-line)">
                         <div className="text-[13px] tracking-[0.22em] uppercase font-semibold text-(--ink-3)">
                           {menu.title}
                         </div>
@@ -155,36 +151,38 @@ export default function SiteHeader() {
                           {menu.subtitle}
                         </div>
                       </div>
-                      {menu.cards.map((card) => (
-                        <Link
-                          key={card.title}
-                          href={card.href}
-                          className="group relative block rounded-(--r-md) overflow-hidden bg-(--cream-2) aspect-[4/5] isolate transition-[transform,box-shadow] duration-700 ease-(--e-out) hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(45,32,18,.18)]"
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={card.image}
-                            alt={card.imageAlt}
-                            loading="lazy"
-                            className="absolute inset-0 w-full h-full object-cover transition-[transform,filter] duration-[1200ms] ease-(--e-out) group-hover:scale-[1.08] group-hover:brightness-[.92]"
-                          />
-                          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0)_35%,rgba(31,26,20,.78)_100%)]" />
-                          <div className="absolute right-[18px] top-[18px] w-[34px] h-[34px] rounded-full bg-white/90 flex items-center justify-center text-(--ink-1) transition-[transform,background] duration-[600ms] ease-(--e-out) group-hover:bg-(--teal-light) group-hover:text-white group-hover:-rotate-45 [&_svg]:w-[14px] [&_svg]:h-[14px]">
-                            <ArrowUpRight />
-                          </div>
-                          <div className="absolute left-[18px] right-[18px] bottom-[18px] text-white">
-                            <div className="text-[10.5px] tracking-[0.22em] uppercase opacity-85 font-semibold inline-flex items-center gap-2 py-[5px] px-[10px] bg-white/[0.16] backdrop-blur-[10px] rounded-full">
-                              {card.kicker}
+                      <div className="flex flex-wrap justify-center gap-[22px]">
+                        {menu.cards.map((card) => (
+                          <Link
+                            key={card.title}
+                            href={card.href}
+                            className="group relative block w-[calc((100%-66px)/4)] min-w-[220px] max-[1180px]:w-[calc((100%-22px)/2)] rounded-(--r-md) overflow-hidden bg-(--cream-2) aspect-[4/5] isolate transition-[transform,box-shadow] duration-700 ease-(--e-out) hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(45,32,18,.18)]"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={card.image}
+                              alt={card.imageAlt}
+                              loading="lazy"
+                              className="absolute inset-0 w-full h-full object-cover transition-[transform,filter] duration-[1200ms] ease-(--e-out) group-hover:scale-[1.08] group-hover:brightness-[.92]"
+                            />
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(31,26,20,0)_35%,rgba(31,26,20,.78)_100%)]" />
+                            <div className="absolute right-[18px] top-[18px] w-[34px] h-[34px] rounded-full bg-white/90 flex items-center justify-center text-(--ink-1) transition-[transform,background] duration-[600ms] ease-(--e-out) group-hover:bg-(--teal-light) group-hover:text-white group-hover:-rotate-45 [&_svg]:w-[14px] [&_svg]:h-[14px]">
+                              <ArrowUpRight />
                             </div>
-                            <div className="text-[21px] font-semibold leading-[1.12] mt-[12px] tracking-[-0.015em]">
-                              {card.title}
+                            <div className="absolute left-[18px] right-[18px] bottom-[18px] text-white">
+                              <div className="text-[10.5px] tracking-[0.22em] uppercase opacity-85 font-semibold inline-flex items-center gap-2 py-[5px] px-[10px] bg-white/[0.16] backdrop-blur-[10px] rounded-full">
+                                {card.kicker}
+                              </div>
+                              <div className="text-[21px] font-semibold leading-[1.12] mt-[12px] tracking-[-0.015em]">
+                                {card.title}
+                              </div>
+                              <div className="text-[13px] leading-[1.45] mt-[6px] max-h-0 overflow-hidden opacity-0 transition-[opacity,max-height,margin-top] duration-500 ease-(--e-out) group-hover:opacity-[.92] group-hover:max-h-[80px] group-hover:mt-[8px]">
+                                {card.desc}
+                              </div>
                             </div>
-                            <div className="text-[13px] leading-[1.45] mt-[6px] max-h-0 overflow-hidden opacity-0 transition-[opacity,max-height,margin-top] duration-500 ease-(--e-out) group-hover:opacity-[.92] group-hover:max-h-[80px] group-hover:mt-[8px]">
-                              {card.desc}
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>

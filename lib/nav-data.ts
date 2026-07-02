@@ -1,6 +1,5 @@
 // Mega-menu content for the shared KYG header. Site-wide chrome data - lives
 // with the component, not with any one route's data.
-const U = 'https://images.unsplash.com';
 
 export interface MegaCard {
   kicker: string;
@@ -22,48 +21,76 @@ export interface MegaMenu {
 export const NAV_MENUS: MegaMenu[] = [
   {
     key: 'wellness',
-    label: 'Wellness Package',
-    title: 'The Wellness Package',
-    subtitle: '4 personalized wellness reports from a single saliva sample, built for Indian biology.',
+    label: 'Wellness',
+    title: 'Explore our DNA tests',
+    subtitle: 'One at-home saliva kit. Choose the report that matters most to you.',
     cards: [
       {
-        kicker: 'Report 01',
-        title: 'My Diet',
-        desc: "Nutrition insights personalized for your body. What works, what doesn't.",
-        href: '/categories/wellness',
-        image: `${U}/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80`,
-        imageAlt: 'My Diet',
+        kicker: "Men's Health",
+        title: "Men's Health DNA",
+        desc: 'Fertility, hormones and hair-loss risk in one saliva test.',
+        href: '/categories/wellness/mens-health',
+        image: '/tests/mens-health/hero-man.png',
+        imageAlt: "Men's Health DNA",
       },
       {
-        kicker: 'Report 02',
-        title: 'My Weight',
-        desc: 'Understand your metabolism and weight tendencies.',
-        href: '/categories/wellness',
-        image: `${U}/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=900&q=80`,
-        imageAlt: 'My Weight',
+        kicker: "Women's Health",
+        title: "Women's Health DNA",
+        desc: "Clinical panels focused on women's genetic health.",
+        href: '/categories/wellness/womens-health',
+        image: '/tests/womens-health/hero-woman.png',
+        imageAlt: "Women's Health DNA",
       },
       {
-        kicker: 'Report 03',
-        title: 'My Fitness',
-        desc: 'Train smarter. Strength, endurance and recovery insights.',
-        href: '/categories/wellness',
-        image: `${U}/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80`,
-        imageAlt: 'My Fitness',
+        kicker: 'Ancestry',
+        title: 'Ancestry DNA',
+        desc: 'Trace your heritage and genetic origins.',
+        href: '/categories/wellness/ancestry',
+        image: '/tests/ancestry/hero-map.png',
+        imageAlt: 'Ancestry DNA',
       },
       {
-        kicker: 'Report 04',
-        title: 'My Detox',
-        desc: 'Stress response and detoxification pathways.',
-        href: '/categories/wellness',
-        image: `${U}/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80`,
-        imageAlt: 'My Detox',
+        kicker: 'Wellness',
+        title: 'My Wellness',
+        desc: 'Diet, weight, fitness and detox insights in one report.',
+        href: '/categories/wellness/my-wellness',
+        image: '/tests/my-wellness/hero-wellness.png',
+        imageAlt: 'My Wellness',
+      },
+    ],
+  },
+  {
+    key: 'womens-health',
+    label: "Women's Health",
+    title: "Women's health",
+    subtitle: 'Genetic insight for the questions that matter most, before they become a crisis.',
+    cards: [
+      {
+        kicker: "Women's Health",
+        title: "Women's Health DNA",
+        desc: 'Is your PCOS genetic? Read your THADA variant and manage it early.',
+        href: '/womens-health',
+        image: '/landing/womens-health/hero.png',
+        imageAlt: "Women's Health DNA",
+      },
+      {
+        kicker: 'Fertility',
+        title: 'Recurrent Pregnancy Loss',
+        desc: 'MTHFR and FOXP3 risk, so you and your doctor can act before you begin trying.',
+        href: '/pregnancy-loss',
+        image: '/landing/pregnancy-loss/hero.png',
+        imageAlt: 'Recurrent Pregnancy Loss',
+      },
+      {
+        kicker: 'Maternal',
+        title: 'Peripartum Depression',
+        desc: 'Read your COMT variant and prepare before birth, not react after.',
+        href: '/peripartum-depression',
+        image: '/landing/peripartum-depression/hero.png',
+        imageAlt: 'Peripartum Depression',
       },
     ],
   },
 ];
 
-export const NAV_LINKS = [
-  { label: 'Categories', href: '/categories' },
-  { label: "Men's Health", href: '/categories/wellness/mens-health' },
-  { label: 'Blog', href: '/blog' },
-];
+export const NAV_LINKS = [{ label: 'Blog', href: '/blog' }];
