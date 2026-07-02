@@ -785,13 +785,13 @@ export default function TestPageView({ test }: { test: TestPage }) {
                       <H html={test.stat.bigNumLabel} className="text-[13px] leading-[1.25] text-spring/70" as="div" />
                     </div>
                     <div
-                      className="h-2.5 rounded-full bg-white/10"
+                      className="h-2.5 overflow-hidden rounded-full bg-white/12"
                       role="progressbar"
                       aria-valuenow={50}
                       aria-valuemin={0}
                       aria-valuemax={100}
                     >
-                      <span className="block h-full w-1/2 rounded-full bg-[linear-gradient(90deg,#0E4D4B_0%,#25B5AB_25%,#2AC3A2_50%,#25B5AB_75%,#0E4D4B_100%)] shadow-[0_0_20px_5px_rgba(42,195,162,0.75),0_0_8px_2px_rgba(37,181,171,0.9)]" />
+                      <span className="flow-bar block h-full w-1/2 rounded-full" />
                     </div>
                     <a href={test.stat.ctaHref} className={`${BTN_JAVA} w-full justify-center`}>
                       {test.stat.ctaLabel} <Arrow />

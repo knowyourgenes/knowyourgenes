@@ -277,6 +277,21 @@ body {
   background: rgba(31, 26, 20, 0.14);
   border-radius: 99px;
 }
+/* The 50% stat bar: a continuously flowing teal gradient with a glow. */
+.kyg-tests .flow-bar {
+  background: linear-gradient(90deg, #0e4d4b, #25b5ab, #2ac3a2, #25b5ab, #0e4d4b);
+  background-size: 220% 100%;
+  animation: kyg-flowx 3.2s linear infinite;
+  box-shadow: 0 0 14px rgba(37, 181, 171, 0.6);
+}
+@keyframes kyg-flowx {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 220% 0;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .kyg-tests .reveal,
   .kyg-tests .reveal-r {
@@ -286,6 +301,9 @@ body {
   }
   .kyg-tests .sheen::after {
     display: none;
+  }
+  .kyg-tests .flow-bar {
+    animation: none;
   }
 }
 

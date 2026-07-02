@@ -761,8 +761,7 @@ export const womensHealth: TestPage = {
         result: 'POOR',
         resultLabel: 'High risk',
         tone: 'poor',
-        noteHtml:
-          '"Your genes suggest higher stress sensitivity. Eat well, rest, and talk to your doctor early."',
+        noteHtml: '"Your genes suggest higher stress sensitivity. Eat well, rest, and talk to your doctor early."',
       },
       {
         title: 'Bones',
@@ -882,8 +881,7 @@ export const womensHealth: TestPage = {
       },
       {
         title: 'What you get',
-        bodyHtml:
-          'A plain-language explanation of all five results, what each means and when to see a doctor.',
+        bodyHtml: 'A plain-language explanation of all five results, what each means and when to see a doctor.',
       },
     ],
     pullQuoteHtml: '"Genetic care, done the GENEous way."',
@@ -974,7 +972,7 @@ export const womensHealth: TestPage = {
       {
         q: 'I already have PCOS. Is this test still useful for me?',
         aHtml:
-          "Yes. Knowing your genetic profile helps you and your doctor understand the drivers behind your PCOS and the connected risks it carries, such as type 2 diabetes. It also covers four other areas, pregnancy, post-pregnancy depression, bone strength, and joint health, so you get a fuller picture of your genetic health, not just PCOS.",
+          'Yes. Knowing your genetic profile helps you and your doctor understand the drivers behind your PCOS and the connected risks it carries, such as type 2 diabetes. It also covers four other areas, pregnancy, post-pregnancy depression, bone strength, and joint health, so you get a fuller picture of your genetic health, not just PCOS.',
       },
       {
         q: 'What does a Poor or High Risk result actually mean?',
@@ -1022,13 +1020,11 @@ export const womensHealth: TestPage = {
 
   finalCta: {
     titleHtml: 'Every 1 out of 5 Indian women has PCOS.<br />Most never learn why. But you can.',
-    subHtml:
-      'Five health checks. One saliva kit. The genetic picture every Indian woman deserves to have.',
+    subHtml: 'Five health checks. One saliva kit. The genetic picture every Indian woman deserves to have.',
     ctaLabel: "Get my Women's Health report",
     ctaHref: '#order',
     fineprint1: 'At-home saliva kit · NABL Certified Lab · Results in 7 days · Free counselling included',
-    fineprint2:
-      'Certified lab · 99%+ accuracy · Your data stays private · Free GENEous Care session with every report',
+    fineprint2: 'Certified lab · 99%+ accuracy · Your data stays private · Free GENEous Care session with every report',
   },
 };
 
