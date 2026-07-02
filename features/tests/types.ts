@@ -48,6 +48,8 @@ export interface StatTile {
 export interface Bundle {
   key: string;
   theme: BundleTheme;
+  /** icon shown beside the bundle title (path under /public) */
+  icon: string;
   badge?: string;
   title: string;
   subtitle: string;
@@ -106,6 +108,8 @@ export interface Stat {
 
 export interface ReportCard {
   title: string;
+  /** icon shown in the tinted chip beside the title (path under /public) */
+  icon: string;
   whatLabel: string;
   desc: Html;
   result: string;

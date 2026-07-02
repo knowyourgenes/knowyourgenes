@@ -65,8 +65,16 @@ function BundleCard({ b, full }: { b: Bundle; full?: boolean }) {
     return (
       <a href={b.href} className="kyg-mh__side-bundle" data-theme={b.theme}>
         {b.badge && <span className="b-badge">{b.badge}</span>}
-        <h4>{b.title}</h4>
-        <span className="st">{b.subtitle}</span>
+        <div className="kyg-mh__side-bundle-head">
+          <span className="kyg-mh__bundle-ico">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={b.icon} alt="" />
+          </span>
+          <div>
+            <h4>{b.title}</h4>
+            <span className="st">{b.subtitle}</span>
+          </div>
+        </div>
         <H html={b.desc} className="ds" />
         <span className="view">
           {b.ctaLabel} <Arrow />
@@ -78,8 +86,16 @@ function BundleCard({ b, full }: { b: Bundle; full?: boolean }) {
     <div className="kyg-mh__bundle" data-theme={b.theme}>
       {b.theme !== 'recommended' && <span className="kyg-mh__bundle-top" />}
       {b.badge && <span className="kyg-mh__bundle-badge">{b.theme === 'recommended' ? 'Recommended' : b.badge}</span>}
-      <h4>{b.title}</h4>
-      <span className="subtitle">{b.subtitle}</span>
+      <div className="kyg-mh__bundle-head">
+        <span className="kyg-mh__bundle-ico">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={b.icon} alt="" />
+        </span>
+        <div>
+          <h4>{b.title}</h4>
+          <span className="subtitle">{b.subtitle}</span>
+        </div>
+      </div>
       <H html={b.desc} className="desc" />
       {b.bestFor && <H html={b.bestFor} className="bestfor" />}
       <a href={b.href} className={`btn ${b.theme === 'recommended' ? 'btn--java-sm' : 'btn--eden'}`}>
@@ -246,11 +262,14 @@ export default function TestPageView({ test }: { test: TestPage }) {
                       </div>
                       <div>
                         <div className="kyg-mh__pain-testcard">
-                          <span className={`badge badge--${p.badgeTone}`}>
-                            {painBadge(p.badgeTone)} {p.badge}
-                          </span>
-                          <span className="checks-label">{p.checksLabel}</span>
+                          <div className="kyg-mh__pain-testhead">
+                            <span className="checks-label">{p.checksLabel}</span>
+                            <span className={`badge badge--${p.badgeTone}`}>
+                              {painBadge(p.badgeTone)} {p.badge}
+                            </span>
+                          </div>
                           <H html={p.checksBodyHtml} className="checks-body" as="p" />
+                          <span className="kyg-mh__pain-divider" />
                           <H html={p.sampleHtml} className="sample" as="p" />
                         </div>
                         <div className="kyg-mh__signs">
@@ -314,8 +333,14 @@ export default function TestPageView({ test }: { test: TestPage }) {
               <div className="kyg-mh__report-cards">
                 {test.sampleReport.cards.map((c, i) => (
                   <div className="kyg-mh__report-card reveal" data-tone={c.tone} key={i}>
+                    <div className="kyg-mh__report-head">
+                      <span className="kyg-mh__report-ico">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={c.icon} alt="" />
+                      </span>
+                      <h4>{c.title}</h4>
+                    </div>
                     <span className="what">{c.whatLabel}</span>
-                    <h4>{c.title}</h4>
                     <H html={c.desc} className="desc" as="p" />
                     <div className="kyg-mh__report-result" data-tone={c.tone}>
                       <span className="rl">
@@ -333,7 +358,9 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   {test.sampleReport.legend.map((l, i) => (
                     <div className="kyg-mh__legend-card" data-tone={l.tone} key={i}>
                       <div className="lh">
-                        <Ico name={`legend-${l.tone}`} className="lico" />
+                        <span className="kyg-mh__legend-ico">
+                          <Ico name={`legend-${l.tone}`} />
+                        </span>
                         <span className="lab">{l.label}</span>
                         <span className="sub">{l.sub}</span>
                       </div>
@@ -411,6 +438,9 @@ export default function TestPageView({ test }: { test: TestPage }) {
                       <span className="t">{test.care.chatTitle}</span>
                       <span className="s">{test.care.chatStatus}</span>
                     </div>
+                    <span className="kyg-mh__chat-video">
+                      <Ico name="chat-video" />
+                    </span>
                   </div>
                   <div className="kyg-mh__chat-body">
                     {test.care.chat.map((c, i) => (
@@ -422,7 +452,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     <ul>
                       {test.care.covers.map((c, i) => (
                         <li key={i}>
-                          <Ico name="covers-check" />
+                          <Ico name={`covers-${i + 1}`} />
                           <H html={c} />
                         </li>
                       ))}

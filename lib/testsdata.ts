@@ -20,6 +20,7 @@ const BUNDLES: Bundle[] = [
   {
     key: 'kbyb',
     theme: 'recommended',
+    icon: `${IC}/bundle-kbyb.svg`,
     badge: 'Most popular',
     title: 'Know Before You Begin',
     subtitle: 'Pre-matrimonial bundle',
@@ -31,6 +32,7 @@ const BUNDLES: Bundle[] = [
   {
     key: 'complete',
     theme: 'complete',
+    icon: `${IC}/bundle-complete.svg`,
     title: 'The Complete You',
     subtitle: 'Full picture bundle',
     desc: 'All 5 reports + Ancestry. Your complete genetic health and heritage.',
@@ -41,6 +43,7 @@ const BUNDLES: Bundle[] = [
   {
     key: 'couple',
     theme: 'couple',
+    icon: `${IC}/bundle-couple.svg`,
     title: "Couple's Blueprint",
     subtitle: 'Couples wellness bundle',
     desc: "My Wellness + Women's Health + Men's Health.",
@@ -198,6 +201,7 @@ export const mensHealth: TestPage = {
     cards: [
       {
         title: 'Hormones',
+        icon: `${IC}/report-hormones.svg`,
         whatLabel: 'What it checks',
         desc: 'How well your body makes and manages testosterone and male hormones.',
         result: 'GOOD',
@@ -208,6 +212,7 @@ export const mensHealth: TestPage = {
       },
       {
         title: 'Fertility',
+        icon: `${IC}/report-fertility.svg`,
         whatLabel: 'What it checks',
         desc: 'Whether your genes raise your risk of not being able to produce sperm.',
         result: 'GOOD',
@@ -218,6 +223,7 @@ export const mensHealth: TestPage = {
       },
       {
         title: 'Hair loss',
+        icon: `${IC}/report-hairloss.svg`,
         whatLabel: 'What it checks',
         desc: 'Whether your genes raise your risk of patchy hair loss driven by your immune system.',
         result: 'POOR',
