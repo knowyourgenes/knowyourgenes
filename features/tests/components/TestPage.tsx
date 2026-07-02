@@ -94,6 +94,39 @@ const LEGEND_ICO: Record<string, string> = { good: 'bg-sea', avg: 'bg-mandalay',
 const LEGEND_FG: Record<string, string> = { good: 'text-sea', avg: 'text-mandalay', poor: 'text-poppy' };
 const CARE_ICONS = ['care-what', 'care-how', 'care-get'];
 
+// Ancestry discovery-layer accents: teal / blue / amber / navy. Blue + navy have
+// no theme token, so use arbitrary hex; teal + amber reuse existing tokens.
+const LAYER: Record<string, { bar: string; chip: string; label: string; card: string; pill: string }> = {
+  primary: {
+    bar: 'bg-surfie',
+    chip: 'bg-surfie/[0.10] text-surfie',
+    label: 'text-surfie',
+    card: 'bg-swans/40',
+    pill: 'border border-surfie/25 bg-surfie/[0.07] text-surfie',
+  },
+  secondary: {
+    bar: 'bg-[#1e5f9e]',
+    chip: 'bg-[#1e5f9e]/[0.10] text-[#1e5f9e]',
+    label: 'text-[#1e5f9e]',
+    card: 'bg-[#1e5f9e]/[0.05]',
+    pill: 'border border-[#1e5f9e]/25 bg-[#1e5f9e]/[0.07] text-[#1e5f9e]',
+  },
+  trace: {
+    bar: 'bg-mandalay',
+    chip: 'bg-lusta text-mandalay',
+    label: 'text-mandalay',
+    card: 'bg-lusta/50',
+    pill: 'border border-mandalay/25 bg-lusta text-mandalay',
+  },
+  journey: {
+    bar: 'bg-[#1a2f4b]',
+    chip: 'bg-[#1a2f4b]/[0.10] text-[#1a2f4b]',
+    label: 'text-[#1a2f4b]',
+    card: 'bg-[#1a2f4b]/[0.04]',
+    pill: 'border border-[#1a2f4b]/25 bg-[#1a2f4b]/[0.07] text-[#1a2f4b]',
+  },
+};
+
 /** Self-contained reveal-on-scroll (no shared-hook dependency). */
 function useReveal(rootRef: RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -343,6 +376,9 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   <a href={test.hero.ctaHref} className={`${BTN_JAVA} self-start`}>
                     {test.hero.ctaLabel} <Arrow />
                   </a>
+                  {test.hero.ctaNoteHtml && (
+                    <H html={test.hero.ctaNoteHtml} className="-mt-2 text-[13px] font-medium text-spring/70" as="p" />
+                  )}
                   <div className="grid grid-cols-2 gap-2.5 max-[620px]:grid-cols-1">
                     {test.hero.trust.map((t, i) => (
                       <div
@@ -397,7 +433,8 @@ export default function TestPageView({ test }: { test: TestPage }) {
               </div>
             </section>
 
-            {/* 2 · THREE PAINS */}
+            {/* 2 · PAINS (health pages) */}
+            {test.pains && (
             <section id="pains" className={SEC_PAD}>
               <div className={SEC_HEAD}>
                 <span className={EYEBROW}>{test.pains.eyebrow}</span>
@@ -483,6 +520,110 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 })}
               </div>
             </section>
+            )}
+
+            {/* 2 · DISCOVERY LAYERS (ancestry) */}
+            {test.discoveryLayers && (
+              <section id="pains" className={SEC_PAD}>
+                <div className={SEC_HEAD}>
+                  <span className={EYEBROW}>{test.discoveryLayers.eyebrow}</span>
+                  <H html={test.discoveryLayers.titleHtml} as="h2" className={SEC_H2} />
+                </div>
+                <div className="mt-12 flex flex-col gap-12">
+                  {test.discoveryLayers.items.map((l, li) => {
+                    const a = LAYER[l.accent];
+                    return (
+                      <article
+                        key={l.key}
+                        className="reveal relative overflow-hidden rounded-[26px] border border-zeus/[0.09] bg-white shadow-kyg-card"
+                      >
+                        <span className={`absolute inset-y-0 left-0 w-1.5 max-[620px]:w-1 ${a.bar}`} />
+                        <div className="grid grid-cols-[1.1fr_0.9fr] gap-0 p-[34px_36px_34px_40px] max-[1180px]:grid-cols-1 max-[620px]:p-[24px_20px]">
+                          <div className="pr-[clamp(28px,3vw,40px)] max-[1180px]:pr-0">
+                            <div className="mb-3.5 flex items-center gap-3">
+                              <span
+                                className={`grid size-[46px] shrink-0 place-items-center rounded-[13px] font-kyg-num text-[19px] font-semibold ${a.chip}`}
+                              >
+                                {li + 1}
+                              </span>
+                              <H
+                                html={l.label}
+                                className={`text-[12px] font-bold uppercase tracking-[0.09em] ${a.label}`}
+                              />
+                            </div>
+                            <H
+                              html={l.question}
+                              as="h3"
+                              className="mb-3.5 text-[clamp(20px,2.2vw,26px)] font-semibold leading-[1.25] tracking-[-0.025em] text-mine"
+                            />
+                            <div className="flex flex-col gap-3">
+                              {l.bodyHtml.map((p, pi) => (
+                                <H
+                                  key={pi}
+                                  html={p}
+                                  className="text-[15px] leading-[1.5] text-cape [&_b]:text-mine"
+                                  as="p"
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <div className="border-l border-zeus/[0.09] pl-[clamp(28px,3vw,40px)] max-[1180px]:border-l-0 max-[1180px]:pl-0 max-[1180px]:pt-8">
+                            <div
+                              className={`flex flex-col gap-3 rounded-2xl border border-zeus/[0.09] p-[18px] shadow-kyg-card ${a.card}`}
+                            >
+                              <span className="text-[11px] font-bold uppercase tracking-[0.13em] text-cord">
+                                {l.cardTitle}
+                              </span>
+                              {l.shows && (
+                                <ul className="flex flex-col gap-2">
+                                  {l.shows.map((s, si) => (
+                                    <li
+                                      key={si}
+                                      className="flex list-none gap-2 text-[13.5px] leading-[1.45] text-cape [&_img]:mt-0.5 [&_img]:h-[15px] [&_img]:w-auto"
+                                    >
+                                      <Ico name="icon-sign" /> <H html={s} />
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                              {l.chips && (
+                                <div className="flex flex-wrap gap-1.5">
+                                  {l.chips.map((c, ci) => (
+                                    <span
+                                      key={ci}
+                                      className={`inline-flex items-center rounded-full px-2.5 py-1 text-[12px] font-semibold ${a.pill}`}
+                                    >
+                                      {c}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                              {l.quoteHtml && (
+                                <H
+                                  html={l.quoteHtml}
+                                  as="blockquote"
+                                  className="border-l-2 border-zeus/15 pl-3.5 text-[14px] italic leading-[1.6] text-cape"
+                                />
+                              )}
+                              {l.noteHtml && (
+                                <>
+                                  {(l.shows || l.chips || l.quoteHtml) && <span className="h-px bg-zeus/[0.09]" />}
+                                  <H
+                                    html={l.noteHtml}
+                                    className="text-[13px] italic leading-[1.5] text-cord"
+                                    as="p"
+                                  />
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
 
             {/* 3 · THE STAT */}
             <section className="p-[clamp(28px,4vw,48px)] max-[620px]:px-3.5 max-[620px]:py-5">
@@ -534,7 +675,8 @@ export default function TestPageView({ test }: { test: TestPage }) {
               </div>
             </section>
 
-            {/* 4 · SAMPLE REPORT */}
+            {/* 4 · SAMPLE REPORT (health pages) */}
+            {test.sampleReport && (
             <section id="sample" className={`${SEC_ALT} ${SEC_PAD}`}>
               <div className={SEC_HEAD}>
                 <span className={EYEBROW}>{test.sampleReport.eyebrow}</span>
@@ -598,6 +740,53 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 </div>
               </div>
             </section>
+            )}
+
+            {/* 4 · THE 10 GLOBAL REGIONS (ancestry) */}
+            {test.regionsTable && (
+              <section id="sample" className={`${SEC_ALT} ${SEC_PAD}`}>
+                <div className={SEC_HEAD}>
+                  <span className={EYEBROW}>{test.regionsTable.eyebrow}</span>
+                  <H html={test.regionsTable.titleHtml} as="h2" className={SEC_H2} />
+                  <H html={test.regionsTable.introHtml} className={LEAD} as="p" />
+                </div>
+                <div className="reveal mt-[34px] overflow-x-auto rounded-3xl border border-zeus/[0.09] bg-white shadow-kyg-card">
+                  <table className="w-full min-w-[640px] border-collapse text-left">
+                    <thead>
+                      <tr className="bg-[linear-gradient(120deg,#0E4D4B,#0A3B39)] text-spring">
+                        <th className="px-5 py-4 text-[12px] font-bold uppercase tracking-[0.1em]">
+                          {test.regionsTable.headers[0]}
+                        </th>
+                        <th className="px-3 py-4 text-[12px] font-bold uppercase tracking-[0.1em]">
+                          {test.regionsTable.headers[1]}
+                        </th>
+                        <th className="px-5 py-4 text-[12px] font-bold uppercase tracking-[0.1em]">
+                          {test.regionsTable.headers[2]}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zeus/[0.09]">
+                      {test.regionsTable.rows.map((r, i) => (
+                        <tr key={i} className="align-top">
+                          <th className="px-5 py-4 text-[14.5px] font-semibold text-mine">{r.region}</th>
+                          <td className="whitespace-nowrap px-3 py-4 font-kyg-num text-[15px] font-semibold text-eden">
+                            {r.pct}
+                          </td>
+                          <td className="px-5 py-4 text-[13.5px] leading-[1.55] text-cape">
+                            <H html={r.connectsHtml} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <H
+                  html={test.regionsTable.footnote}
+                  className="reveal mt-4 text-[13px] leading-[1.55] text-cord"
+                  as="p"
+                />
+              </section>
+            )}
 
             {/* 5 · HOW IT WORKS */}
             <section id="how" className={SEC_PAD}>
@@ -744,7 +933,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                           key={i}
                           className="mb-2.5 flex list-none gap-2.5 text-[13.5px] leading-[1.5] text-cape last:mb-0 [&_b]:text-mine [&_img]:mt-px [&_img]:h-[18px] [&_img]:w-auto"
                         >
-                          <Ico name={`covers-${i + 1}`} />
+                          <Ico name={`covers-${(i % 4) + 1}`} />
                           <H html={c} />
                         </li>
                       ))}
@@ -783,6 +972,26 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   </div>
                 ))}
               </div>
+              {test.trust.traceNote && (
+                <div className="reveal mt-5 rounded-3xl border border-mandalay/20 bg-lusta/40 px-7 py-6">
+                  <div className="mb-3 flex items-center gap-2.5">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-[11px] bg-lusta text-mandalay [&_img]:h-5 [&_img]:w-auto">
+                      <Ico name="icon-info" />
+                    </span>
+                    <h4 className="text-[15px] font-bold text-mandalay">{test.trust.traceNote.title}</h4>
+                  </div>
+                  <ul className="flex flex-col gap-2">
+                    {test.trust.traceNote.items.map((it, i) => (
+                      <li
+                        key={i}
+                        className="flex list-none gap-2 text-[13.5px] leading-[1.55] text-cape [&_img]:mt-0.5 [&_img]:h-[15px] [&_img]:w-auto"
+                      >
+                        <Ico name="icon-sign" /> <H html={it} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <div className="reveal mt-5 grid grid-cols-[auto_1fr] items-start gap-5 rounded-3xl bg-[linear-gradient(160deg,#0E4D4B,#0A3B39)] p-7 text-spring shadow-kyg-dark max-[620px]:grid-cols-1 max-[620px]:gap-3.5">
                 <span className="grid size-14 place-items-center rounded-[14px] bg-bermuda text-[18px] font-bold text-bottle">
                   {test.trust.expert.initials}
@@ -819,6 +1028,38 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 ))}
               </div>
             </section>
+
+            {/* 9a · GIFT (ancestry) */}
+            {test.giftSection && (
+              <section className={SEC_PAD}>
+                <div className={SEC_HEAD}>
+                  <span className={EYEBROW}>{test.giftSection.eyebrow}</span>
+                  <H html={test.giftSection.titleHtml} as="h2" className={SEC_H2} />
+                  <H html={test.giftSection.introHtml} className={LEAD} as="p" />
+                </div>
+                <div className="mt-[34px] grid grid-cols-3 gap-5 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
+                  {test.giftSection.cards.map((c, i) => (
+                    <div
+                      key={i}
+                      className="reveal flex flex-col gap-3 rounded-3xl border border-zeus/[0.09] bg-white p-6 shadow-kyg-card"
+                    >
+                      <h4 className="text-[19px] font-semibold tracking-[-0.02em] text-mine">{c.title}</h4>
+                      <H html={c.bodyHtml} className="text-sm leading-[1.55] text-cape" as="p" />
+                      <H
+                        html={c.bestForHtml}
+                        className="mt-auto rounded-[12px] bg-pearl/70 px-3 py-2.5 text-[12.5px] leading-[1.45] text-cord"
+                        as="div"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="reveal mt-7 flex justify-center">
+                  <a href={test.giftSection.ctaHref} className={BTN_EDEN_LG}>
+                    {test.giftSection.ctaLabel} <Arrow />
+                  </a>
+                </div>
+              </section>
+            )}
 
             {/* 9 · BUNDLES + FINAL CTA */}
             <section id="bundles" className={SEC_PAD}>

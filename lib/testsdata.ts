@@ -1032,8 +1032,526 @@ export const womensHealth: TestPage = {
   },
 };
 
+// =============================================================================
+// ancestry - 1:1 rebuild of the Figma "Ancestory - Desktop" design.
+// Ancestry is structurally different from the health tests, so it uses the
+// OPTIONAL sections added to TestPage: `discoveryLayers` (in place of `pains`),
+// `regionsTable` (in place of `sampleReport`), `giftSection`, and the trust
+// `traceNote`. The shared sections (hero, stat, howItWorks, care, faq, bundles,
+// finalCta) map as usual. Only the hero map image is ancestry-specific (ABASE).
+// =============================================================================
+
+const ABASE = '/tests/ancestry';
+
+const ANCESTRY_BUNDLES: Bundle[] = [
+  {
+    key: 'complete',
+    theme: 'recommended',
+    icon: `${SIC}/bundle-complete.svg`,
+    badge: 'Most complete',
+    title: 'The Complete You',
+    subtitle: 'All 5 reports + Ancestry',
+    desc: 'The most complete genetic picture of yourself available in India. Where you came from, and how your genes shape your health.',
+    bestFor: '<b>Best for:</b> the person who wants everything.',
+    ctaLabel: 'View bundle',
+    href: '#',
+  },
+  {
+    key: 'roots-wellness',
+    theme: 'complete',
+    icon: `${SIC}/bundle-kbyb.svg`,
+    title: 'Know Your Roots + Wellness',
+    subtitle: 'Ancestry + My Wellness',
+    desc: 'Your heritage story paired with personalised diet, weight, fitness, and detox insights.',
+    bestFor: '<b>Best for:</b> wellness-curious users who also want to know their origins.',
+    ctaLabel: 'View bundle',
+    href: '#',
+  },
+  {
+    key: 'family-heritage',
+    theme: 'couple',
+    icon: `${SIC}/bundle-couple.svg`,
+    title: 'Family Heritage Pack',
+    subtitle: 'Ancestry kits for two or more',
+    desc: 'Compare ancestry breakdowns across generations. See which traits came from which side of the family.',
+    bestFor: '<b>Best for:</b> parents and adult children. Siblings. Multi-generational families.',
+    ctaLabel: 'View bundle',
+    href: '#',
+  },
+];
+
+export const ancestry: TestPage = {
+  slug: 'ancestry',
+  categorySlug: 'wellness',
+
+  seo: {
+    title: 'Ancestors In Me · Ancestry DNA · KYG · Know Your Genes',
+    description:
+      'Your DNA carries a story that goes back 50,000 years. 42,000+ genetic markers across up to 10 global regions, plus a written Gene Journey narrative. One at-home saliva sample reads all of it.',
+  },
+
+  sidebar: {
+    eyebrow: 'Bundles',
+    introHtml: 'Want the complete picture? Ancestry and health together.',
+    bundles: ANCESTRY_BUNDLES,
+    noteHtml:
+      'The most thoughtful thing you can give someone is their story. <b>Ancestors In Me</b> makes a genuinely meaningful gift.',
+  },
+
+  hero: {
+    badges: [
+      { label: 'Ancestors In Me' },
+      { label: '42,000+ markers analysed' },
+      { label: '10 global regions' },
+    ],
+    titleHtml: 'KYC toh kar liya.<br /><span class="hl">Ab apni asli identity jaano.</span>',
+    anchorWord: 'The story no family tree can tell.',
+    bodyHtml:
+      'You have proved who you are on paper. But your DNA carries a story that goes back 50,000 years, across continents and civilisations you have never heard of. <b>One saliva sample reads all of it.</b>',
+    ctaLabel: 'Discover my ancestors',
+    ctaHref: '#order',
+    ctaNoteHtml: 'At-home saliva kit · No needles · 42,000+ markers · Results in 7 days',
+    trust: [
+      { icon: 'saliva', line1: 'At-home saliva kit', line2: 'No clinic visit' },
+      { icon: 'needle', line1: 'No needles', line2: '5-min collection' },
+      { icon: 'clock', line1: '42,000+ markers', line2: 'High resolution' },
+      { icon: 'chat', line1: 'Results in 7 days', line2: 'Delivered digitally' },
+    ],
+    image: `${ABASE}/hero-map.png`,
+    imageAlt: 'A world map tracing ancient migrations across continents',
+    imageCaption: 'The migrations, trade routes, and civilisations in your DNA',
+    stats: [
+      { num: '42,000+', label: 'Markers' },
+      { num: '10', label: 'Global regions' },
+      { num: 'NABL', label: 'Certified lab' },
+      { num: '7 days', label: 'Results' },
+    ],
+  },
+
+  discoveryLayers: {
+    eyebrow: 'The discovery layers',
+    titleHtml: 'Your ancestry story has four chapters. Here is what each one reveals.',
+    items: [
+      {
+        key: 'primary',
+        accent: 'primary',
+        label: 'Layer 1 · Primary ancestry',
+        question: 'What is my largest ancestral origin?',
+        bodyHtml: [
+          'Your primary ancestry is the largest percentage in your result — the population group your genetic lineage is most strongly connected to. For most Indians this will be South Asian, but the specific breakdown within that can still be surprising, because South Asian itself is a layered history going back to the Indus Valley civilisation and beyond.',
+          'This is not just a number. It is the main chapter of a story your family has been carrying in its cells for thousands of years.',
+        ],
+        cardTitle: 'What your report shows',
+        shows: [
+          'Your largest ancestry percentage and the population group it connects to',
+          'A full-colour pie chart showing how your total ancestry breaks down across all regions',
+          'Plain-language context explaining what that primary origin means historically',
+        ],
+        noteHtml:
+          "Sample result: '72.91% South Asian — your roots are firmly established in the subcontinent, with lineages that trace to some of the oldest known human settlements in the region'",
+      },
+      {
+        key: 'secondary',
+        accent: 'secondary',
+        label: 'Layer 2 · Secondary origins',
+        question: 'What other parts of the world are in my DNA?',
+        bodyHtml: [
+          'Beyond your primary origin, your DNA carries chapters from other parts of the world. These are not errors. They are evidence of the ancient migrations, trade routes, and population movements that made India one of the most genetically diverse countries on earth.',
+          'A Malayan connection speaks to ancient sea trade routes between India and Southeast Asia that existed thousands of years before recorded history. A South Central Asian thread echoes the migrations of people from the Central Asian steppes that shaped the entire Indian subcontinent. A West Caucasian trace connects to populations that moved through what is now Iran, Afghanistan, and the Caucasus mountains.',
+        ],
+        cardTitle: 'What your report shows',
+        shows: [
+          'All secondary ancestry percentages above approximately 1%, each with a region label',
+          'Plain-language context for each connection — what migration or historical event it likely reflects',
+        ],
+        chips: ['Malayan 7.79%', 'South Central Asian 7.13%', 'West Caucasian 6.21%'],
+        noteHtml:
+          'Most Indian users are genuinely surprised by their secondary results. This is the section people talk about at family dinners.',
+      },
+      {
+        key: 'trace',
+        accent: 'trace',
+        label: 'Layer 3 · Trace origins',
+        question: 'What are the smallest, most unexpected ancestry traces in my result?',
+        bodyHtml: [
+          'Even in percentages below 2%, sometimes below 1%, your DNA carries genetic signals from populations you would never expect. These tiny traces are not noise in the data. They are the oldest stories in human history, encoded in your cells and passed down through hundreds of generations to land, quietly, in you.',
+          "An East African trace connects you to humanity's oldest known ancestral populations, the people who first walked out of Africa 50,000 to 70,000 years ago. An Amerindian fragment hints at connections that predate any modern understanding of cross-continental contact. A Pygmy trace carries some of the oldest genetic lineages that exist in humans anywhere on earth.",
+        ],
+        cardTitle: 'What your report shows',
+        shows: [
+          'All trace ancestry percentages, even those below 1%, clearly labelled by region',
+          'An explanation of what each trace connection represents in human migration history',
+        ],
+        chips: [
+          'East African 1.59%',
+          'Armenian 1.49%',
+          'Amerindian 1.47%',
+          'Near Eastern 0.82%',
+          'Oceanian 0.33%',
+          'Pygmy 0.26%',
+        ],
+        noteHtml: 'These are the results most people screenshot and send to their families immediately.',
+      },
+      {
+        key: 'journey',
+        accent: 'journey',
+        label: 'Layer 4 · Gene Journey narrative',
+        question: 'Do I get a written story of my ancestry, not just numbers?',
+        bodyHtml: [
+          '<b>Yes.</b> The Ancestors In Me report includes a written Gene Journey narrative — a personalised story written in flowing language that explains your ancestry results as a human journey across time and continents, not as a table of percentages.',
+          'This is the part of the report most people share with their families. It reads like a story, because it is one.',
+        ],
+        cardTitle: 'Sample Gene Journey narrative excerpt',
+        quoteHtml:
+          '"Your ancestry story unfolds like a fascinating journey through time and across continents. The largest part of your genetic heritage is deeply rooted in South Asia, painting the primary narrative of your lineage. However, your story does not end there. A significant chapter traces back to the Malayan region, connecting you to the vibrant cultures of Southeast Asia. Further threads reach into Central Asia, the Caucasus, and beyond, each one a chapter of a journey that began long before history was written down."',
+        noteHtml:
+          'This is an excerpt from an actual sample report. Your Gene Journey will be unique to your ancestry breakdown.',
+      },
+    ],
+  },
+
+  stat: {
+    quoteHtml: 'Most Indians can trace their family back two or three generations.',
+    subQuoteHtml: 'Your DNA can trace it back <b>50,000 years.</b>',
+    emphasisHtml: 'Across continents. Through civilisations. All the way back to the first humans who walked out of Africa.',
+    bodyHtml:
+      'Your family name, your gotra, your village — these tell one chapter of your story. Your DNA tells all of them. India is one of the most genetically diverse countries on earth, shaped by migrations, trade routes, and cross-cultural contact over thousands of years. Your ancestry is almost certainly more layered and more surprising than you have been told.',
+    bigNum: '50,000',
+    bigNumLabel: 'years of your story, in one saliva sample',
+    ctaLabel: 'Discover my ancestors',
+    ctaHref: '#order',
+    fineprint: 'Kit delivers in 2-3 days · Results in 7 days · Tap to order',
+  },
+
+  regionsTable: {
+    eyebrow: 'The 10 global regions',
+    titleHtml: 'Up to 10 global regions. Your DNA mapped across human history.',
+    introHtml:
+      'Your ancestry result is expressed as a percentage across these population groups, based on 42,000+ genetic markers. Most people appear in 6 to 8 of these regions. Every result is unique.',
+    headers: ['Region', 'Sample %', 'What it connects to'],
+    rows: [
+      {
+        region: 'South Asian',
+        pct: '~73%',
+        connectsHtml:
+          'The primary ancestry for most Indians. Encompasses the ancient Indus Valley civilisation, Dravidian populations, and Indo-Aryan lineages. The oldest continuous human settlements in the region.',
+      },
+      {
+        region: 'Malayan',
+        pct: '~8%',
+        connectsHtml:
+          'Connections to Southeast Asia. Reflects ancient sea trade routes between the Indian coast and the Malay Peninsula that existed thousands of years before recorded history.',
+      },
+      {
+        region: 'South Central Asian',
+        pct: '~7%',
+        connectsHtml:
+          'People from the ancient Central Asian steppes who migrated south through modern-day Afghanistan and Iran into the Indian subcontinent. A major chapter in South Asian genetic history.',
+      },
+      {
+        region: 'West Caucasian',
+        pct: '~6%',
+        connectsHtml:
+          'Populations from the Caucasus mountain region — the area between the Black Sea and Caspian Sea, covering modern-day Georgia, Armenia, and Azerbaijan. Connected to ancient Indo-European migration routes.',
+      },
+      {
+        region: 'East African',
+        pct: '~1.6%',
+        connectsHtml:
+          "Some of humanity's oldest known genetic lineages. The direct ancestral populations of the people who first walked out of Africa 50,000 to 70,000 years ago. All humans carry this connection — yours is just a little more visible.",
+      },
+      {
+        region: 'Armenian',
+        pct: '~1.5%',
+        connectsHtml:
+          "An ancient Near Eastern population with deep connections to early Indo-European migrations and some of the world's earliest settled civilisations. Historically connected to trade routes through Persia and the Levant.",
+      },
+      {
+        region: 'Amerindian',
+        pct: '~1.5%',
+        connectsHtml:
+          'Indigenous American genetic traces. Among the most surprising findings for Indian users. Likely reflects ancient migration patterns that connected populations across continents long before European contact.',
+      },
+      {
+        region: 'Near Eastern',
+        pct: '~0.8%',
+        connectsHtml:
+          'Populations from the Fertile Crescent region — modern-day Iraq, Syria, Lebanon, and Israel. The birthplace of agriculture and some of the earliest urban civilisations in human history.',
+      },
+      {
+        region: 'Oceanian',
+        pct: '~0.3%',
+        connectsHtml:
+          'Connections to Pacific island populations. Reflects ancient maritime movement patterns across the Indian Ocean and beyond, carried by some of the most adventurous navigators in early human history.',
+      },
+      {
+        region: 'Pygmy',
+        pct: '~0.3%',
+        connectsHtml:
+          "Carries some of the oldest genetic lineages that exist in any human population. Forest-dwelling peoples of Central Africa whose genetic lineage branched from the main human tree very early in our species' history.",
+      },
+    ],
+    footnote:
+      "Percentages shown are illustrative sample results. Your actual ancestry breakdown will be unique to your genetic profile. Not all regions appear in every individual's result.",
+  },
+
+  howItWorks: {
+    eyebrow: 'How it works',
+    titleHtml: 'From your door to your Gene Journey.',
+    introHtml: 'No clinic, no needle, no hassle.',
+    image: `${SHARED}/how-it-works-physician.png`,
+    imageAlt: 'A scientist reviewing genetic analysis',
+    steps: [
+      {
+        num: '01',
+        icon: `${SIC}/icon-step-1.svg`,
+        title: 'Order online',
+        subHtml: 'Your kit arrives in 2 to 3 days.',
+        bodyHtml:
+          'We send the kit straight to your address. Inside: a saliva collection tube, a simple step-by-step instruction card, and a pre-paid return envelope already addressed to the lab. Everything is included. Nothing to arrange. Any family member aged 18 or above can take this test.',
+      },
+      {
+        num: '02',
+        icon: `${SIC}/icon-step-2.svg`,
+        title: 'Collect your sample at home in 5 minutes',
+        subHtml: 'No needles. No appointments. No preparation.',
+        bodyHtml:
+          'Open the tube. Spit into it. Seal it. That is the entire collection. No fasting, no clinic visits, no changing your routine. The instruction card inside walks you through every step. Most people do it at their kitchen table on a Sunday morning.',
+      },
+      {
+        num: '03',
+        icon: `${SIC}/icon-step-3.svg`,
+        title: 'Drop it with the courier',
+        subHtml: 'Pre-paid envelope. Pre-labelled. You just hand it over.',
+        bodyHtml:
+          'Place the sealed tube in the pre-paid return envelope included in your kit. A courier picks it up from your address at a time you choose. You can track it in the KYG portal from the moment it leaves your door. No post office, no queue.',
+      },
+      {
+        num: '04',
+        icon: `${SIC}/icon-step-4.svg`,
+        title: 'Our lab analyses your DNA',
+        subHtml: "42,000+ markers. India's highest certified lab. Every result checked.",
+        bodyHtml:
+          "Your sample goes to Neotech World Lab, which holds India's highest official lab certification (NABL). They use the Illumina iScan genotyping platform — the same technology used in major global ancestry research — to read 42,000+ genetic markers in your sample. A qualified scientist reviews your results before your report is released.",
+      },
+      {
+        num: '05',
+        icon: `${SIC}/icon-step-5.svg`,
+        title: 'Your Gene Journey arrives in 7 days',
+        subHtml: 'Delivered to your account. A story, not just a spreadsheet.',
+        bodyHtml:
+          'Your Ancestors In Me report is delivered to your KYG account. It includes your full ancestry percentage breakdown across all regions, a full-colour ancestry chart, and your personalised Gene Journey narrative — the written story of where your lineage has been. Within 2 days of your report arriving, a GENEous Care counsellor reaches out to book your free 30-minute session.',
+        dark: true,
+      },
+    ],
+    ctaLabel: 'Order my kit',
+    ctaHref: '#order',
+    fineprint: 'Delivered in 2-3 days · Takes 5 minutes to collect · Gene Journey ready in 7 days',
+  },
+
+  care: {
+    eyebrow: 'Included free with every report',
+    titleHtml: 'Your Gene Journey is more interesting with someone who can explain it.',
+    leadHtml:
+      "GENEous Care is KYG's free counselling service. A real expert reaches out after your results and walks you through your ancestry breakdown — what each region means, what surprised other people with similar results, and how to explore further.",
+    bodyHtml:
+      'The Ancestors In Me report has a lot inside it. A counsellor who has seen hundreds of Indian ancestry results can put yours in context in a way the report alone cannot. They have watched people discover connections that changed how they thought about their family, their region, and their history.',
+    minis: [
+      {
+        title: 'What it is',
+        bodyHtml:
+          'A free 30-minute session with a trained genetic counsellor. Included with every Ancestors In Me report. No extra charge.',
+      },
+      {
+        title: 'How it works',
+        bodyHtml:
+          'Your report arrives. Within 2 days, your counsellor gets in touch to fix a time. The session happens over WhatsApp call or video, at a time that works for you.',
+      },
+      {
+        title: 'What you get',
+        bodyHtml:
+          'A plain-language walkthrough of your ancestry breakdown. Context for each region. Answers to questions your family will ask. Help with any trace results that surprised you.',
+      },
+    ],
+    pullQuoteHtml: '"Genetic care, done the GENEous way."',
+    chatTitle: 'GENEous Care',
+    chatStatus: 'Genetic counsellor · online',
+    chat: [
+      {
+        from: 'them',
+        textHtml:
+          'Just read your Gene Journey — you have a 1.47% Amerindian trace, which is genuinely fascinating! 🌍',
+      },
+      { from: 'me', textHtml: 'Wait, how do Indians end up with that?' },
+      {
+        from: 'them',
+        textHtml:
+          "It points to very ancient migration patterns across continents. I'll walk you and your family through the whole story on the call 👍",
+      },
+    ],
+    coversTitle: 'What your counsellor covers in your session',
+    covers: [
+      '<b>Your primary result:</b> what your dominant ancestry means historically and geographically.',
+      '<b>Your secondary results:</b> the migration events and historical moments that likely explain each connection.',
+      '<b>Your trace results:</b> what the smallest percentages reveal about ancient human movement.',
+      '<b>Your Gene Journey narrative:</b> helping you understand and share the written story of your ancestry.',
+      '<b>Next steps:</b> whether you want to pair your ancestry result with a health report for a more complete picture.',
+      '<b>Family context:</b> how to share and discuss your results with older family members who may hold pieces of the story.',
+    ],
+  },
+
+  trust: {
+    eyebrow: '42,000+ markers. The highest resolution ancestry panel available in India.',
+    titleHtml: 'The science behind your Gene Journey.',
+    certs: [
+      { img: `${SHARED}/cert-nabl.png`, alt: 'NABL', label: 'NABL MC-6400' },
+      { img: `${SHARED}/cert-iso-9001.png`, alt: 'ISO 9001:2015', label: 'ISO 9001:2015' },
+      { img: `${SHARED}/cert-iso-27001.png`, alt: 'ISO 27001:2013', label: 'ISO 27001:2013' },
+    ],
+    rows: [
+      {
+        label: 'Illumina iScan Infinium SNP Genotyping',
+        descHtml:
+          'The gold standard technology for ancestry analysis worldwide. The same platform used in major global population genetics research. 42,000+ markers means your result has significantly higher resolution than most ancestry tests available in India.',
+      },
+      {
+        label: 'NABL Accredited (ISO 15189) — MC-6400',
+        descHtml:
+          "India's highest official certification for testing labs. Your sample is processed under independently verified, audited conditions.",
+      },
+      {
+        label: '99%+ Reproducibility, 98%+ Call Rate',
+        descHtml:
+          'If the same sample was tested again, it would produce the same result more than 99% of the time. Fewer than 2% of markers in any sample ever need re-reading. This is a scientific accuracy benchmark, not a marketing claim.',
+      },
+      {
+        label: 'ADMIXTURE Algorithm',
+        descHtml:
+          'The ancestry percentages are calculated using ADMIXTURE, a well-established scientific method for estimating ancestral origins from genetic data. It compares your DNA to reference populations from around the world to estimate where your lineage came from.',
+      },
+      {
+        label: 'ISO 27001:2013 Data Security',
+        descHtml:
+          'Your genetic data is protected at every step. KYG never sells or shares your information with anyone. Your sample is destroyed after processing.',
+      },
+    ],
+    traceNote: {
+      title: 'A note on trace percentages',
+      items: [
+        'Trace results (those below 2%) are real genetic signals, not errors.',
+        'They reflect ancient human migrations that happened long before recorded history.',
+        'However, they should be interpreted as indicative rather than definitive, because at very small percentages, the signal is real but the precision of the regional assignment is broader.',
+        'Your GENEous Care counsellor will help you understand what your trace results mean and which ones to explore further.',
+      ],
+    },
+    expert: {
+      initials: 'VS',
+      name: 'Dr. Varun Sharma, Ph.D',
+      role: '· Genetic Scientist, Neotech World Lab',
+      lab: 'Based at: Neotech World Lab Pvt. Ltd., MG Road, Gurugram',
+      bodyHtml:
+        "Ancestry analysis performed using custom Illumina iScan Infinium array platform. Every Ancestors In Me report is reviewed by Dr. Sharma's team before it reaches you.",
+      accuracyHtml:
+        'Accuracy: 99%+ reproducibility. Reference population databases updated continuously as the science evolves.',
+    },
+  },
+
+  faq: {
+    eyebrow: 'Before you discover your ancestors',
+    titleHtml: 'Questions people ask before they discover their ancestors.',
+    items: [
+      {
+        q: 'How accurate is the ancestry result?',
+        aHtml:
+          'Very. Your sample is read on the Illumina iScan platform across 42,000+ genetic markers, with 99%+ reproducibility and a 98%+ call rate, and the percentages are calculated using the well-established ADMIXTURE algorithm. Primary and secondary origins are highly reliable; the smallest trace percentages are real signals but should be read as indicative rather than exact.',
+      },
+      {
+        q: 'Will my result only show Indian ancestry?',
+        aHtml:
+          'Almost never. For most Indians, South Asian is the largest share, but India is one of the most genetically diverse countries on earth. Thousands of years of migration and trade mean most people appear in 6 to 8 regions, often with surprising secondary and trace connections across Asia, the Caucasus, Africa, and beyond.',
+      },
+      {
+        q: 'Is this test the same as the health reports?',
+        aHtml:
+          'No. Ancestors In Me analyses your genetic heritage — where your lineage comes from — not your health risks. It does not report on any medical or wellness conditions. If you want both, the "The Complete You" bundle pairs your ancestry result with all five health reports.',
+      },
+      {
+        q: 'Can this test confirm my caste, gotra, or regional identity?',
+        aHtml:
+          'No. Ancestry testing estimates the broad population groups your DNA connects to across human history. It cannot confirm caste, gotra, sub-community, or a specific village or family. It tells you about deep genetic origins and ancient migrations, not social or administrative identity.',
+      },
+      {
+        q: 'Can I gift this to a family member?',
+        aHtml:
+          'Yes, and it is one of the most meaningful gifts you can give. Any family member aged 18 or above can take the test at home. The written Gene Journey narrative in particular is something people love to share with parents and grandparents. The Family Heritage Pack lets two or more people compare their breakdowns.',
+      },
+      {
+        q: 'Will my ancestry result change over time?',
+        aHtml:
+          'Your DNA never changes, so your core result stays the same. The regional percentages can be refined over time as the reference population databases grow and the science improves. If your report is meaningfully updated, the more accurate breakdown replaces the earlier one in your KYG account.',
+      },
+      {
+        q: 'Do I need to fast or prepare before collecting my sample?',
+        aHtml:
+          'No. There is no fasting and no preparation. Just avoid eating, drinking, or smoking for about 30 minutes before you collect your saliva. The instruction card inside the kit walks you through the simple steps.',
+      },
+      {
+        q: 'What if I have questions after reading my report?',
+        aHtml:
+          'Every report includes a free 30-minute GENEous Care session on WhatsApp. A trained genetic counsellor who has read your specific ancestry breakdown explains what each region means, puts your trace results in context, and helps you share the story with your family. You can ask anything.',
+      },
+    ],
+  },
+
+  giftSection: {
+    eyebrow: 'The most thoughtful thing you can give someone is their story',
+    titleHtml: 'Ancestors In Me makes a genuinely meaningful gift.',
+    introHtml:
+      "For parents who have always wondered about the family's real origins. For grandparents who carry stories of migrations they never fully understood. For NRI family members in the UK, US, Canada, or the Middle East who feel the question of 'where do we really come from' more keenly than anyone.",
+    cards: [
+      {
+        title: 'For parents',
+        bodyHtml:
+          'A discovery they would never think to give themselves. The Gene Journey narrative in particular is something most parents want to share with their own parents.',
+        bestForHtml: '<b>Best for:</b> Mother’s Day, Father’s Day, birthdays, anniversaries.',
+      },
+      {
+        title: 'For NRI family',
+        bodyHtml:
+          'For Indians living abroad, the question of heritage often feels more urgent, not less. The Ancestors In Me report gives it a real, scientific answer.',
+        bestForHtml: '<b>Best for:</b> gifting to family members in UK, US, Canada, Australia, UAE.',
+      },
+      {
+        title: 'For the curious',
+        bodyHtml:
+          'For anyone who has ever looked at the diversity of India and wondered what their own specific thread in that story is.',
+        bestForHtml: '<b>Best for:</b> anyone who has already done their KYC and is ready to do their KYG.',
+      },
+    ],
+    ctaLabel: 'Gift this test',
+    ctaHref: '#order',
+  },
+
+  bundlesSection: {
+    eyebrow: 'Or bundle & save',
+    titleHtml: 'Want the complete picture? Ancestry and health together.',
+    items: ANCESTRY_BUNDLES,
+  },
+
+  finalCta: {
+    titleHtml: 'Your story is older than your surname.<br />Find out how old.',
+    subHtml:
+      '42,000+ genetic markers. Up to 10 global regions. One saliva kit. The ancestry story you have been carrying your entire life, finally told.',
+    ctaLabel: 'Discover my ancestors',
+    ctaHref: '#order',
+    fineprint1: 'At-home saliva kit · NABL Certified Lab · Gene Journey in 7 days · Free counselling included',
+    fineprint2:
+      'Certified lab · 42,000+ markers · 99%+ accuracy · Your data stays private · Free GENEous Care session included',
+  },
+};
+
 /** All test pages served by the (tests) routes. */
-export const TEST_PAGES: TestPage[] = [mensHealth, womensHealth];
+export const TEST_PAGES: TestPage[] = [mensHealth, womensHealth, ancestry];
 
 export function getTestPage(slug: string): TestPage | undefined {
   return TEST_PAGES.find((t) => t.slug === slug);

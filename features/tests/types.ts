@@ -80,6 +80,8 @@ export interface Hero {
   bodyHtml: Html;
   ctaLabel: string;
   ctaHref: string;
+  /** optional one-line note rendered under the CTA (e.g. Ancestry's marker line) */
+  ctaNoteHtml?: Html;
   trust: TrustTile[];
   image: string;
   imageAlt: string;
@@ -173,6 +175,67 @@ export interface Faq {
   aHtml: Html;
 }
 
+// -----------------------------------------------------------------------------
+// Ancestry-only section models. These power the optional sections on the
+// Ancestors In Me page (discovery layers, the 10-region table, the gift block,
+// and the trust "trace note"). Health pages simply omit them.
+// -----------------------------------------------------------------------------
+
+/** Discovery-layer accent family (teal / blue / amber / navy). */
+export type LayerAccent = 'primary' | 'secondary' | 'trace' | 'journey';
+
+/** One ancestry "discovery layer" card (replaces a health `Pain`). */
+export interface DiscoveryLayer {
+  key: string;
+  accent: LayerAccent;
+  label: Html; // e.g. "Layer 1 · Primary ancestry"
+  question: Html; // h3
+  bodyHtml: Html[]; // left-column paragraphs
+  cardTitle: string; // right-card heading, e.g. "What your report shows"
+  shows?: Html[]; // optional bullet list
+  chips?: string[]; // optional region chips, e.g. "Malayan 7.79%"
+  quoteHtml?: Html; // optional pull-quote (Gene Journey excerpt)
+  noteHtml?: Html; // optional closing note / sample result
+}
+
+export interface RegionRow {
+  region: string;
+  pct: string;
+  connectsHtml: Html;
+}
+
+/** The "10 global regions" breakdown table (replaces a health `sampleReport`). */
+export interface RegionsTable {
+  eyebrow: string;
+  titleHtml: Html;
+  introHtml: Html;
+  headers: [string, string, string];
+  rows: RegionRow[];
+  footnote: Html;
+}
+
+export interface GiftCard {
+  title: string;
+  bodyHtml: Html;
+  bestForHtml: Html;
+}
+
+/** The "makes a meaningful gift" block, rendered above the bundles. */
+export interface GiftSection {
+  eyebrow: string;
+  titleHtml: Html;
+  introHtml: Html;
+  cards: GiftCard[];
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+/** Optional "a note on trace percentages" card inside the trust section. */
+export interface TraceNote {
+  title: string;
+  items: Html[];
+}
+
 /** The whole test-detail page, rendered by features/tests/components/TestPage. */
 export interface TestPage {
   slug: string;
@@ -189,15 +252,24 @@ export interface TestPage {
 
   hero: Hero;
 
-  pains: {
+  /** Health pages: the risk-graded "pains". Omitted by Ancestry. */
+  pains?: {
     eyebrow: string;
     titleHtml: Html;
     items: Pain[];
   };
 
+  /** Ancestry: the four "discovery layers" (renders in the pains slot). */
+  discoveryLayers?: {
+    eyebrow: string;
+    titleHtml: Html;
+    items: DiscoveryLayer[];
+  };
+
   stat: Stat;
 
-  sampleReport: {
+  /** Health pages: the sample result cards + risk legend. Omitted by Ancestry. */
+  sampleReport?: {
     eyebrow: string;
     titleHtml: Html;
     introHtml: Html;
@@ -205,6 +277,9 @@ export interface TestPage {
     legendTitle: string;
     legend: RiskLevel[];
   };
+
+  /** Ancestry: the 10-region breakdown table (renders in the sampleReport slot). */
+  regionsTable?: RegionsTable;
 
   howItWorks: {
     eyebrow: string;
@@ -245,6 +320,8 @@ export interface TestPage {
       bodyHtml: Html;
       accuracyHtml: Html;
     };
+    /** Ancestry only: the "a note on trace percentages" card. */
+    traceNote?: TraceNote;
   };
 
   faq: {
@@ -252,6 +329,9 @@ export interface TestPage {
     titleHtml: Html;
     items: Faq[];
   };
+
+  /** Ancestry only: the "makes a meaningful gift" block, above the bundles. */
+  giftSection?: GiftSection;
 
   bundlesSection: {
     eyebrow: string;
