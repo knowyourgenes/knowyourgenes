@@ -151,6 +151,144 @@ body {
     sans-serif;
 }
 
+/* =============================================================================
+   KYG test-page (features/tests) design tokens - exposed as Tailwind utilities
+   (bg-eden, text-java, shadow-kyg-card, font-kyg, ...). Kept separate from the
+   shadcn palette above so nothing collides.
+   ============================================================================= */
+@theme {
+  --color-spring: #f6f3ed;
+  --color-pearl: #ece6da;
+  --color-bottlehero: #0a3b39;
+  --color-bottle: #052422;
+  --color-eden: #0e4d4b;
+  --color-eden2: #15605d;
+  --color-java: #25b5ab;
+  --color-java2: #2ac3a2;
+  --color-bermuda: #86dad0;
+  --color-surfie: #0e7c77;
+  --color-sea: #2e7d5b;
+  --color-harp: #e3f1e9;
+  --color-swans: #dbf1ee;
+  --color-mojo: #c0432f;
+  --color-poppy: #c03e2c;
+  --color-oldlace: #fbe6e0;
+  --color-linen: #fbe7e2;
+  --color-mandalay: #a8741a;
+  --color-lusta: #fbf0d7;
+  --color-mine: #222222;
+  --color-cape: #3a4a48;
+  --color-cord: #5f6f6c;
+  --color-athens: #e5e7eb;
+  --color-zeus: #1f1a14;
+
+  --font-kyg: var(--font-figtree), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-kyg-num: var(--font-hind), var(--font-figtree), sans-serif;
+
+  --shadow-kyg-card: 0 4px 14px rgba(10, 27, 48, 0.06), 0 1px 2px rgba(10, 27, 48, 0.05);
+  --shadow-kyg-deep: 0 40px 100px -40px rgba(5, 36, 34, 0.45), 0 12px 36px -18px rgba(5, 36, 34, 0.3);
+  --shadow-kyg-dark: 0 18px 50px -24px rgba(5, 36, 34, 0.55), 0 4px 16px rgba(5, 36, 34, 0.25);
+}
+
+/* Effects that Tailwind utilities can't express, scoped to the test pages via
+   the `.kyg-tests` root class (reveal-on-scroll, button sheen, rail tooltip,
+   FAQ +/x toggle, custom scrollbar, selection colour). */
+.kyg-tests ::selection {
+  background: var(--color-eden);
+  color: var(--color-spring);
+}
+.kyg-tests .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.kyg-tests .reveal-r {
+  opacity: 0;
+  transform: translateX(26px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.kyg-tests .reveal.is-in,
+.kyg-tests .reveal-r.is-in {
+  opacity: 1;
+  transform: none;
+}
+.kyg-tests .sheen {
+  position: relative;
+  overflow: hidden;
+}
+.kyg-tests .sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.32) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.kyg-tests .sheen:hover::after {
+  transform: translateX(120%);
+}
+.kyg-tests .tip {
+  position: relative;
+}
+.kyg-tests .tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+  background: var(--color-bottle);
+  color: var(--color-spring);
+  padding: 7px 11px;
+  border-radius: 9px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.15s,
+    transform 0.15s;
+  box-shadow: var(--shadow-kyg-card);
+  z-index: 30;
+}
+.kyg-tests .tip:hover::after {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+.kyg-tests summary {
+  list-style: none;
+}
+.kyg-tests summary::-webkit-details-marker {
+  display: none;
+}
+.kyg-tests details[open] .faq-plus {
+  transform: rotate(45deg);
+}
+.kyg-tests .kyg-scroll {
+  scrollbar-width: thin;
+}
+.kyg-tests .kyg-scroll::-webkit-scrollbar {
+  width: 7px;
+}
+.kyg-tests .kyg-scroll::-webkit-scrollbar-thumb {
+  background: rgba(31, 26, 20, 0.14);
+  border-radius: 99px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .kyg-tests .reveal,
+  .kyg-tests .reveal-r {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .kyg-tests .sheen::after {
+    display: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
