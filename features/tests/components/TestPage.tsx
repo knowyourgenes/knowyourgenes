@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
+import Image from 'next/image';
 import type { Bundle, TestPage } from '@/features/tests/types';
 import { Arrow, Alert, Check, Package } from './icons';
 
@@ -324,8 +325,14 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 </div>
                 <div className="reveal-r flex flex-col gap-3 max-[1180px]:mx-auto max-[1180px]:w-full max-[1180px]:max-w-[560px]">
                   <div className="relative aspect-[46/41] overflow-hidden rounded-[28px] shadow-kyg-deep">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={test.hero.image} alt={test.hero.imageAlt} className="size-full object-cover" />
+                    <Image
+                      src={test.hero.image}
+                      alt={test.hero.imageAlt}
+                      fill
+                      priority
+                      sizes="(max-width: 1180px) 100vw, 480px"
+                      className="object-cover"
+                    />
                     <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(5,36,34,0.7)_100%)]" />
                     <span className="absolute bottom-3.5 left-4 flex items-center gap-2 text-[13px] font-medium text-spring/90 [&_img]:h-[15px] [&_img]:w-auto">
                       <Ico name="caption-eye" /> {test.hero.imageCaption}
@@ -562,12 +569,15 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 <H html={test.howItWorks.titleHtml} as="h2" className={SEC_H2} />
                 <H html={test.howItWorks.introHtml} className={LEAD} as="p" />
               </div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={test.howItWorks.image}
-                alt={test.howItWorks.imageAlt}
-                className="reveal my-7 h-[clamp(280px,33vw,479px)] w-full rounded-[31px] object-cover shadow-kyg-card"
-              />
+              <div className="reveal relative my-7 h-[clamp(280px,33vw,479px)] w-full overflow-hidden rounded-[31px] shadow-kyg-card">
+                <Image
+                  src={test.howItWorks.image}
+                  alt={test.howItWorks.imageAlt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 1000px"
+                  className="object-cover"
+                />
+              </div>
               <div className="flex flex-col gap-4">
                 {test.howItWorks.steps.map((s) => {
                   const dark = !!s.dark;
