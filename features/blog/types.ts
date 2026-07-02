@@ -39,6 +39,62 @@ export interface BlogFullPost extends BlogListItem {
   body?: PortableBlock[];
 }
 
+/** A heading pulled from the article body, used by the sticky quick-nav. */
+export interface BlogHeading {
+  /** the source block's _key (used to match the rendered heading's id) */
+  key: string;
+  /** anchor id (slug of the text, de-duplicated) */
+  id: string;
+  text: string;
+  level: 2 | 3;
+  /** the FAQ section heading and its question sub-headings; kept out of the
+   *  quick-nav (still rendered with an anchor id for deep links). */
+  faq: boolean;
+}
+
+function slugifyHeading(text: string): string {
+  return (
+    text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '') || 'section'
+  );
+}
+
+/** Pull the h2/h3 headings out of a Portable Text body for the table of
+ *  contents. Anchor ids are slugs of the heading text, de-duplicated by suffix
+ *  so they stay unique and match what `buildPortableComponents` renders. */
+export function extractHeadings(body?: PortableBlock[]): BlogHeading[] {
+  if (!body?.length) return [];
+  const out: BlogHeading[] = [];
+  const seen = new Map<string, number>();
+  // The FAQ section (an h2 like "FAQ" / "Frequently asked …") and every h3 under
+  // it, up to the next h2, are flagged so the quick-nav can drop them.
+  let inFaq = false;
+  for (const block of body) {
+    if (block._type !== 'block') continue;
+    const style = block.style as string | undefined;
+    if (style !== 'h2' && style !== 'h3') continue;
+    const children = (block.children as Array<{ text?: string }> | undefined) ?? [];
+    const text = children
+      .map((c) => c?.text ?? '')
+      .join('')
+      .trim();
+    if (!text) continue;
+    const level: 2 | 3 = style === 'h2' ? 2 : 3;
+    if (level === 2) inFaq = /^\s*(faqs?\b|frequently asked)/i.test(text);
+    const base = slugifyHeading(text);
+    const n = seen.get(base) ?? 0;
+    seen.set(base, n + 1);
+    const id = n === 0 ? base : `${base}-${n + 1}`;
+    out.push({ key: (block._key as string) || id, id, text, level, faq: inFaq });
+  }
+  return out;
+}
+
 // Mirrors the `category` option list in the Sanity blogPost schema.
 export const BLOG_CATEGORIES = [
   { value: 'genetic-literacy', label: 'Genetic Literacy' },
