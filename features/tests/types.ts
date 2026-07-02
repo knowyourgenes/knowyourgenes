@@ -19,8 +19,20 @@ export type Html = string;
 /** Risk grade used by result cards + the grading legend. */
 export type RiskTone = 'good' | 'avg' | 'poor';
 
-/** Pain-card accent family (drives the accent bar, label + icon chip colour). */
-export type PainAccent = 'fertility' | 'hormones' | 'hairloss';
+/** Pain-card accent family (drives the accent bar, label + icon chip colour).
+ *  `fertility | hormones | hairloss` are the Men's Health topics; `pcos |
+ *  pregnancy | depression | bones | joints` are the Women's Health topics. Each
+ *  value must have a matching entry in the `PAIN` style map in
+ *  `features/tests/components/TestPage.tsx`. */
+export type PainAccent =
+  | 'fertility'
+  | 'hormones'
+  | 'hairloss'
+  | 'pcos'
+  | 'pregnancy'
+  | 'depression'
+  | 'bones'
+  | 'joints';
 
 /** Bundle visual family. */
 export type BundleTheme = 'recommended' | 'complete' | 'couple';

@@ -46,6 +46,43 @@ const PAIN: Record<string, { bar: string; ico: string; label: string; callout: s
     callout: 'bg-mojo/[0.06] border border-mojo/[0.15]',
     testcard: 'bg-oldlace/40',
   },
+  // Women's Health accents. teal (surfie) + mid-teal (eden) read as "Good";
+  // clay (mojo) reads as "Poor" and tints the result card.
+  pcos: {
+    bar: 'bg-surfie',
+    ico: 'bg-swans',
+    label: 'text-surfie',
+    callout: 'bg-surfie/[0.06] border border-surfie/[0.15]',
+    testcard: 'bg-white',
+  },
+  pregnancy: {
+    bar: 'bg-eden',
+    ico: 'bg-eden/[0.08]',
+    label: 'text-eden',
+    callout: 'bg-eden/5 border border-athens',
+    testcard: 'bg-white',
+  },
+  depression: {
+    bar: 'bg-mojo',
+    ico: 'bg-linen',
+    label: 'text-mojo',
+    callout: 'bg-mojo/[0.06] border border-mojo/[0.15]',
+    testcard: 'bg-oldlace/40',
+  },
+  bones: {
+    bar: 'bg-mojo',
+    ico: 'bg-linen',
+    label: 'text-mojo',
+    callout: 'bg-mojo/[0.06] border border-mojo/[0.15]',
+    testcard: 'bg-oldlace/40',
+  },
+  joints: {
+    bar: 'bg-surfie',
+    ico: 'bg-swans',
+    label: 'text-surfie',
+    callout: 'bg-surfie/[0.06] border border-surfie/[0.15]',
+    testcard: 'bg-white',
+  },
 };
 const BADGE_TONE: Record<string, string> = {
   good: 'bg-harp text-sea',
