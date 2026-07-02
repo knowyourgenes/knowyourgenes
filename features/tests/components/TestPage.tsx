@@ -125,6 +125,35 @@ const LAYER: Record<string, { bar: string; chip: string; label: string; card: st
     card: 'bg-[#1a2f4b]/[0.04]',
     pill: 'border border-[#1a2f4b]/25 bg-[#1a2f4b]/[0.07] text-[#1a2f4b]',
   },
+  // My Wellness sub-report accents: diet=green, weight=blue, fitness=amber, detox=teal.
+  diet: {
+    bar: 'bg-sea',
+    chip: 'bg-sea/[0.10] text-sea',
+    label: 'text-sea',
+    card: 'bg-harp/50',
+    pill: 'border border-sea/25 bg-sea/[0.07] text-sea',
+  },
+  weight: {
+    bar: 'bg-[#1e5f9e]',
+    chip: 'bg-[#1e5f9e]/[0.10] text-[#1e5f9e]',
+    label: 'text-[#1e5f9e]',
+    card: 'bg-[#1e5f9e]/[0.05]',
+    pill: 'border border-[#1e5f9e]/25 bg-[#1e5f9e]/[0.07] text-[#1e5f9e]',
+  },
+  fitness: {
+    bar: 'bg-mandalay',
+    chip: 'bg-lusta text-mandalay',
+    label: 'text-mandalay',
+    card: 'bg-lusta/50',
+    pill: 'border border-mandalay/25 bg-lusta text-mandalay',
+  },
+  detox: {
+    bar: 'bg-surfie',
+    chip: 'bg-swans text-surfie',
+    label: 'text-surfie',
+    card: 'bg-swans/40',
+    pill: 'border border-surfie/25 bg-surfie/[0.07] text-surfie',
+  },
 };
 
 /** Self-contained reveal-on-scroll (no shared-hook dependency). */
@@ -625,6 +654,108 @@ export default function TestPageView({ test }: { test: TestPage }) {
               </section>
             )}
 
+            {/* 2 · FOUR TESTS (My Wellness) */}
+            {test.traitReports && (
+              <section id="pains" className={SEC_PAD}>
+                <div className={SEC_HEAD}>
+                  <span className={EYEBROW}>{test.traitReports.eyebrow}</span>
+                  <H html={test.traitReports.titleHtml} as="h2" className={SEC_H2} />
+                </div>
+                <div className="mt-12 flex flex-col gap-12">
+                  {test.traitReports.items.map((r, ri) => {
+                    const a = LAYER[r.accent];
+                    return (
+                      <article
+                        key={r.key}
+                        className="reveal relative overflow-hidden rounded-[26px] border border-zeus/[0.09] bg-white shadow-kyg-card"
+                      >
+                        <span className={`absolute inset-y-0 left-0 w-1.5 max-[620px]:w-1 ${a.bar}`} />
+                        <div className="grid grid-cols-[1.1fr_0.9fr] gap-0 p-[34px_36px_34px_40px] max-[1180px]:grid-cols-1 max-[620px]:p-[24px_20px]">
+                          <div className="pr-[clamp(28px,3vw,40px)] max-[1180px]:pr-0">
+                            <div className="mb-3.5 flex items-center gap-3">
+                              <span
+                                className={`grid size-[46px] shrink-0 place-items-center rounded-[13px] font-kyg-num text-[19px] font-semibold ${a.chip}`}
+                              >
+                                {ri + 1}
+                              </span>
+                              <H
+                                html={r.label}
+                                className={`text-[12px] font-bold uppercase tracking-[0.09em] ${a.label}`}
+                              />
+                            </div>
+                            <H
+                              html={r.question}
+                              as="h3"
+                              className="mb-3.5 text-[clamp(20px,2.2vw,26px)] font-semibold leading-[1.25] tracking-[-0.025em] text-mine"
+                            />
+                            <div className="flex flex-col gap-3">
+                              {r.bodyHtml.map((p, pi) => (
+                                <H
+                                  key={pi}
+                                  html={p}
+                                  className="text-[15px] leading-[1.5] text-cape [&_b]:text-mine"
+                                  as="p"
+                                />
+                              ))}
+                            </div>
+                            {r.calloutHtml && (
+                              <div
+                                className={`mt-4 flex items-start gap-2.5 rounded-2xl px-4 py-3.5 text-[13.5px] leading-[1.5] text-cape [&_b]:text-mine [&_img]:h-5 [&_img]:w-auto ${a.pill}`}
+                              >
+                                <Ico name="icon-info" />
+                                <H html={r.calloutHtml} />
+                              </div>
+                            )}
+                          </div>
+                          <div className="border-l border-zeus/[0.09] pl-[clamp(28px,3vw,40px)] max-[1180px]:border-l-0 max-[1180px]:pl-0 max-[1180px]:pt-8">
+                            <div
+                              className={`flex flex-col gap-3 rounded-2xl border border-zeus/[0.09] p-[18px] shadow-kyg-card ${a.card}`}
+                            >
+                              <div className="flex items-center justify-between gap-2.5">
+                                <span className="text-[11px] font-bold uppercase tracking-[0.13em] text-cord">
+                                  {r.testsLabel}
+                                </span>
+                                <span className="inline-flex w-fit items-center rounded-full bg-eden/[0.08] px-3 py-[5px] text-[12px] font-bold text-eden">
+                                  {r.count}
+                                </span>
+                              </div>
+                              <ul className="flex flex-col gap-2">
+                                {r.groups.map((g, gi) => (
+                                  <li
+                                    key={gi}
+                                    className="flex list-none gap-2 text-[13.5px] leading-[1.5] text-cape [&_b]:text-mine [&_img]:mt-0.5 [&_img]:h-[15px] [&_img]:w-auto"
+                                  >
+                                    <Ico name="icon-sign" /> <H html={g} />
+                                  </li>
+                                ))}
+                              </ul>
+                              <span className="h-px bg-zeus/[0.09]" />
+                              <H html={r.sampleHtml} className="text-[13.5px] italic leading-[1.5] text-cord" as="p" />
+                            </div>
+                            <div className="mt-[18px]">
+                              <div className="mb-2.5 text-[11.5px] font-bold uppercase tracking-[0.1em] text-cord">
+                                {r.signsTitle}
+                              </div>
+                              <ul className="grid grid-cols-2 gap-x-4 gap-y-2 max-[620px]:grid-cols-1">
+                                {r.signs.map((s, i) => (
+                                  <li
+                                    key={i}
+                                    className="flex list-none gap-2 text-[13.5px] leading-[1.4] text-cape [&_img]:mt-0.5 [&_img]:h-[15px] [&_img]:w-auto"
+                                  >
+                                    <Ico name="icon-sign" /> <H html={s} />
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+
             {/* 3 · THE STAT */}
             <section className="p-[clamp(28px,4vw,48px)] max-[620px]:px-3.5 max-[620px]:py-5">
               <div className="reveal relative overflow-hidden rounded-[32px] bg-[linear-gradient(163deg,#0E4D4B_0%,#0A3B39_55%,#052422_100%)] p-[clamp(36px,4.5vw,56px)] text-spring shadow-kyg-deep max-[620px]:p-[30px_22px]">
@@ -785,6 +916,76 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   className="reveal mt-4 text-[13px] leading-[1.55] text-cord"
                   as="p"
                 />
+              </section>
+            )}
+
+            {/* 4 · WHAT YOU GET — 52 TRAITS (My Wellness) */}
+            {test.traitsCatalog && (
+              <section id="sample" className={`${SEC_ALT} ${SEC_PAD}`}>
+                <div className={SEC_HEAD}>
+                  <span className={EYEBROW}>{test.traitsCatalog.eyebrow}</span>
+                  <H html={test.traitsCatalog.titleHtml} as="h2" className={SEC_H2} />
+                  <H html={test.traitsCatalog.introHtml} className={LEAD} as="p" />
+                </div>
+                <div className="reveal mt-[34px] overflow-hidden rounded-3xl border border-zeus/[0.09] bg-white shadow-kyg-card">
+                  {test.traitsCatalog.categories.map((c, i) => {
+                    const a = LAYER[c.accent];
+                    return (
+                      <div
+                        key={i}
+                        className="grid grid-cols-[220px_1fr] gap-6 border-b border-zeus/[0.09] p-[22px_26px] max-[760px]:grid-cols-1 max-[760px]:gap-2.5"
+                      >
+                        <div className="flex items-start gap-2.5">
+                          <span className={`mt-1 size-3 shrink-0 rounded-full ${a.bar}`} />
+                          <div>
+                            <div className="text-[16px] font-semibold text-mine">{c.name}</div>
+                            <div className={`font-kyg-num text-[13px] font-semibold ${a.label}`}>{c.count}</div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          {c.groups.map((g, gi) => (
+                            <H
+                              key={gi}
+                              html={g}
+                              className="text-[13.5px] leading-[1.5] text-cape [&_b]:text-mine"
+                              as="p"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <div className="grid grid-cols-[220px_1fr] items-center gap-6 bg-eden/[0.05] p-[22px_26px] max-[760px]:grid-cols-1 max-[760px]:gap-2.5">
+                    <div className="flex items-center gap-2.5">
+                      <span className="font-kyg-num text-[28px] font-semibold text-eden">
+                        {test.traitsCatalog.totalNum}
+                      </span>
+                      <div className="text-[16px] font-semibold text-mine">{test.traitsCatalog.totalLabel}</div>
+                    </div>
+                    <H html={test.traitsCatalog.totalSub} className="text-[13.5px] font-medium text-cord" as="div" />
+                  </div>
+                </div>
+                <div className="mt-[34px]">
+                  <h3 className="mb-4 text-[20px] font-semibold tracking-[-0.02em]">
+                    {test.traitsCatalog.legendTitle}
+                  </h3>
+                  <div className="grid grid-cols-3 gap-4 max-[1180px]:grid-cols-[repeat(auto-fit,minmax(260px,1fr))] max-[760px]:grid-cols-1">
+                    {test.traitsCatalog.legend.map((l, i) => (
+                      <div key={i} className={`rounded-2xl p-[18px] ${LEGEND_BG[l.tone]}`}>
+                        <div className="mb-2 flex items-center gap-2">
+                          <span
+                            className={`grid size-[26px] shrink-0 place-items-center rounded-[8px] [&_img]:h-[15px] [&_img]:w-auto ${LEGEND_ICO[l.tone]}`}
+                          >
+                            <Ico name={`legend-${l.tone}`} />
+                          </span>
+                          <span className={`text-base font-bold ${LEGEND_FG[l.tone]}`}>{l.label}</span>
+                          <span className={`text-[12.5px] font-semibold opacity-80 ${LEGEND_FG[l.tone]}`}>{l.sub}</span>
+                        </div>
+                        <H html={l.descHtml} className="text-[13.5px] leading-[1.5] text-cape" as="p" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </section>
             )}
 

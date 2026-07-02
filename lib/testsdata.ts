@@ -1550,8 +1550,539 @@ export const ancestry: TestPage = {
   },
 };
 
+// =============================================================================
+// myWellness - 1:1 rebuild of the Figma "My Wellness - Desktop" design.
+// One kit, four sub-reports (Diet / Weight / Fitness / Detox), 52 traits. Uses
+// the optional `traitReports` (in place of `pains`) and `traitsCatalog` (in
+// place of `sampleReport`) sections. Everything else maps to shared sections.
+// Only the hero image is My-Wellness-specific (WLBASE).
+// =============================================================================
+
+const WLBASE = '/tests/my-wellness';
+
+// Sidebar shows the first three; the bundles section shows all four.
+const WELLNESS_BUNDLES: Bundle[] = [
+  {
+    key: 'complete',
+    theme: 'recommended',
+    icon: `${SIC}/bundle-complete.svg`,
+    badge: 'Most complete',
+    title: 'The Complete You',
+    subtitle: 'All 5 KYG reports',
+    desc: "My Wellness + Women's or Men's Health + Ancestry. The most complete genetic picture of yourself.",
+    ctaLabel: 'View bundle',
+    href: '#',
+  },
+  {
+    key: 'wellness-womens',
+    theme: 'complete',
+    icon: `${SIC}/bundle-kbyb.svg`,
+    title: "My Wellness + Women's Health",
+    subtitle: 'For women who want wellness + health',
+    desc: 'Diet, Weight, Fitness, Detox, plus PCOS, pregnancy, bone, joint, and depression risk.',
+    bestFor: '<b>Best for:</b> health-conscious women 25-45.',
+    ctaLabel: 'View bundle',
+    href: '#',
+  },
+  {
+    key: 'wellness-mens',
+    theme: 'couple',
+    icon: `${SIC}/bundle-couple.svg`,
+    title: "My Wellness + Men's Health",
+    subtitle: 'For men who want wellness + health',
+    desc: 'Diet, Weight, Fitness, Detox, plus hormones, fertility, and hair loss risk.',
+    bestFor: '<b>Best for:</b> health-conscious men 25-45.',
+    ctaLabel: 'View bundle',
+    href: '#',
+  },
+  {
+    key: 'kbyb',
+    theme: 'complete',
+    icon: `${SIC}/bundle-kbyb.svg`,
+    title: 'Know Before You Begin',
+    subtitle: 'For couples',
+    desc: "My Wellness + Women's Health + Men's Health + joint counselling.",
+    bestFor: '<b>Best for:</b> couples planning a family.',
+    ctaLabel: 'View bundle',
+    href: '#',
+  },
+];
+
+export const myWellness: TestPage = {
+  slug: 'my-wellness',
+  categorySlug: 'wellness',
+
+  seo: {
+    title: 'My Wellness DNA · KYG · Know Your Genes',
+    description:
+      'Diet, weight, fitness, and detox — 52 genetic traits across four reports from a single saliva kit. Understand why the same diet, effort, and training give you different results.',
+  },
+
+  sidebar: {
+    eyebrow: 'Bundles',
+    introHtml: 'Want to go even further? These bundles take My Wellness further.',
+    bundles: WELLNESS_BUNDLES.slice(0, 3),
+    noteHtml:
+      'Every kit includes a <b>free 30-minute GENEous Care</b> session across all four reports.',
+  },
+
+  hero: {
+    badges: [
+      { label: 'My Wellness' },
+      { label: '4 reports' },
+      { label: '52 traits' },
+      { label: '1 saliva kit' },
+    ],
+    titleHtml: 'Same diet. Same effort. Different results.<br /><span class="hl">Your genes explain why.</span>',
+    anchorWord: 'How well your body handles what it is exposed to.',
+    bodyHtml:
+      'Four questions your body has been answering in its own way for years. My Wellness reads the genetic instructions behind each one. One saliva kit. Four reports. <b>52 traits that finally explain your body to you.</b>',
+    ctaLabel: 'Get my Wellness report',
+    ctaHref: '#order',
+    ctaNoteHtml: 'At-home saliva kit · No needles · 4 reports · Results in 7 days · Free counselling',
+    trust: [
+      { icon: 'saliva', line1: 'At-home saliva kit', line2: 'No clinic visit' },
+      { icon: 'needle', line1: '4 reports in 1 kit', line2: '52 traits' },
+      { icon: 'clock', line1: 'Results in 7 days', line2: 'Delivered digitally' },
+      { icon: 'chat', line1: 'Free counselling', line2: 'On WhatsApp' },
+    ],
+    image: `${WLBASE}/hero-wellness.png`,
+    imageAlt: 'Diet, weight, fitness and detox lifestyle',
+    imageCaption: 'Diet, weight, fitness & detox — the instructions your body came with',
+    stats: [
+      { num: '52', label: 'Traits tested' },
+      { num: '4', label: 'Reports in 1 kit' },
+      { num: 'NABL', label: 'Certified lab' },
+      { num: '7 days', label: 'Results' },
+    ],
+  },
+
+  traitReports: {
+    eyebrow: 'The four tests',
+    titleHtml: 'One kit unlocks four reports. Each one answers a question your body has been asking.',
+    items: [
+      {
+        key: 'diet',
+        accent: 'diet',
+        label: 'Report 1 · My Diet DNA',
+        question: 'Why does the same diet work for some people and not others?',
+        bodyHtml: [
+          'Because how you absorb vitamins, process carbohydrates and fat, and react to foods like milk, gluten, and caffeine is partly written in your genes. The diet your friend swears by may genuinely not work for your body, and vice versa. My Diet DNA tells you which foods work with your biology.',
+        ],
+        calloutHtml:
+          "<b>India-specific insight:</b> Over 60% of South Asians carry a gene variant linked to lactose intolerance. India's high-carb diet of rice, roti, and potatoes actively works against people who carry the FTO risk variant. Most people eating the same meals their families have eaten for generations have no idea whether those foods are helping or fighting their metabolism.",
+        testsLabel: 'What My Diet DNA tests',
+        count: '20 traits',
+        groups: [
+          '<b>12 micronutrients:</b> How well your body absorbs Vitamin A, B6, B9, B12, C, D, E, K, Calcium, Magnesium, Iron, and Omega-3',
+          '<b>4 macronutrient responses:</b> How your body handles carbohydrates, saturated fat, monounsaturated fat, and polyunsaturated fat',
+          '<b>4 food sensitivities:</b> Lactose intolerance, caffeine sensitivity, salt sensitivity, gluten intolerance',
+        ],
+        sampleHtml:
+          "Sample result: 'Carbohydrate sensitivity — High. Your genes suggest your body converts carbs to fat more readily than average. A lower-carb, higher-protein diet is recommended.'",
+        signsTitle: 'Signs your diet is not working for your genes',
+        signs: [
+          'You eat well but still feel low on energy most days',
+          'You bloat or feel heavy after meals that seem perfectly healthy',
+          'The diet that worked for your friend or partner does not move the needle for you',
+          'You take vitamins but are not sure they are doing anything',
+          'Tea or coffee affects you differently than it seems to affect other people',
+        ],
+      },
+      {
+        key: 'weight',
+        accent: 'weight',
+        label: 'Report 2 · My Weight DNA',
+        question: 'Why do some people gain weight easily even when they eat the same as others?',
+        bodyHtml: [
+          'Because weight gain, fat storage, hunger signals, and cravings are all influenced by your genes. Research suggests that weight regain after dieting has a genetic component of around 60%. If you have lost weight and regained it, or struggled to lose it despite genuine effort, your DNA is part of that story.',
+          "My Weight DNA tells you your body's tendency to store fat, how sensitive you are to insulin, how quickly you feel full and how long that feeling lasts, and how your lipid levels, including cholesterol, are likely to behave based on your genes.",
+        ],
+        testsLabel: 'What My Weight DNA tests',
+        count: '17 traits',
+        groups: [
+          '<b>8 weight management traits:</b> Obesity predisposition, fat storage tendency, insulin sensitivity, response to dieting, weight regain risk, waist circumference response, adiponectin levels, cellulite disposition',
+          '<b>5 eating behaviour traits:</b> How quickly you feel full, sweet cravings, bitter taste perception, snacking tendency, binge eating tendency',
+          '<b>4 genetic lipid traits:</b> LDL cholesterol tendency, triglyceride tendency, HDL cholesterol level, fasting serum triacylglycerol',
+        ],
+        sampleHtml:
+          "Sample result: 'Fat storage — High risk. Your genes are linked to a higher tendency to store fat, particularly around the midsection. A fibre-rich, lower glycaemic diet is recommended.'",
+        signsTitle: 'Signs your weight struggles may be genetic',
+        signs: [
+          'You gain weight more easily than people around you who eat similarly',
+          'You lose weight but it keeps coming back despite staying on the same plan',
+          'You feel hungry again very quickly after a full meal',
+          'You have strong sweet or snack cravings that are hard to control',
+          'Your cholesterol or triglycerides have come up in a blood test with no obvious dietary cause',
+        ],
+      },
+      {
+        key: 'fitness',
+        accent: 'fitness',
+        label: 'Report 3 · My Fitness DNA',
+        question: 'Why do two people do the same workout and get different results?',
+        bodyHtml: [
+          'Because your aerobic capacity, the type of exercise your body is best built for, your muscle recovery speed, and your injury risk are all partly genetic. Most people do not know whether they are built more for power or endurance, which means they often spend years doing the type of training that gives them the least return for the effort they put in.',
+        ],
+        calloutHtml:
+          '<b>Sprinter ya marathon runner?</b> My Fitness DNA tells you. And if your injury risk is high for specific areas like the Achilles or ligaments, knowing that before you get hurt is worth considerably more than any training plan.',
+        testsLabel: 'What My Fitness DNA tests',
+        count: '12 traits',
+        groups: [
+          '<b>7 exercise response traits:</b> Aerobic capacity, anaerobic capacity, response to strength training, fat metabolism during exercise, HDL cholesterol response to exercise, adrenaline response, BMI and waist circumference response to exercise',
+          '<b>5 injury and recovery traits:</b> Overall injury risk, muscle recovery speed, Achilles tendinopathy risk, ligament rupture risk, oxidative stress response',
+        ],
+        sampleHtml:
+          "Sample result: 'Aerobic capacity — Good. Anaerobic capacity — Average. You are better built for endurance than power. Allow 48-72 hours between intense sessions.'",
+        signsTitle: 'Signs your training may not match your genes',
+        signs: [
+          'You train consistently but results plateau faster than expected',
+          'Your recovery between sessions takes longer than it seems to for others',
+          'You keep picking up the same injuries or niggles in the same body areas',
+          'You do not know whether your body is better suited to strength training or cardio',
+          'High-intensity sessions leave you more drained than they should',
+        ],
+      },
+      {
+        key: 'detox',
+        accent: 'detox',
+        label: 'Report 4 · My Detox DNA',
+        question: 'Do genes affect how well your body clears toxins from food, air, and water?',
+        bodyHtml: [
+          '<b>Yes.</b> How efficiently your liver neutralises and removes toxins, including pesticide residues in food, pollutants in the air, and chemicals in water, is largely genetic. Two people living in the same city, eating the same food, can have very different detox capacities. In India, where pollution and pesticide residue levels are among the highest in the world, this is not a luxury insight.',
+        ],
+        calloutHtml:
+          '<b>Delhi ki hawa plus aapke genes.</b> If your fat-soluble toxin clearance is poor and your oxidative stress response is high, the environment you live in is having a compounding effect on your body. My Detox DNA tells you where you stand.',
+        testsLabel: 'What My Detox DNA tests',
+        count: '3 traits',
+        groups: [
+          '<b>Fat-soluble toxin clearance:</b> How well your liver eliminates toxins stored in fat tissue, including pesticides and heavy metals',
+          '<b>Water-soluble toxin clearance:</b> How well your body processes and removes toxins through kidney and liver pathways',
+          '<b>Oxidative stress response:</b> How well your body neutralises free radicals, which accelerate inflammation and ageing',
+        ],
+        sampleHtml:
+          "Sample result (HIGH RISK): 'Oxidative stress — High risk. Your genes suggest a lower ability to neutralise free radicals. Increase antioxidant-rich foods, consider glutathione, and reduce processed food exposure.'",
+        signsTitle: 'Signs your detox capacity may need support',
+        signs: [
+          'You feel sluggish or foggy even on days when you have slept and eaten well',
+          'You react more strongly to alcohol or certain medications than others seem to',
+          'You live or work in a high-pollution area and want to understand the genetic side of your exposure',
+          'You have a family history of conditions linked to environmental exposure',
+        ],
+      },
+    ],
+  },
+
+  stat: {
+    quoteHtml: 'Indians with the FTO gene risk variant on a high-carb diet had 2.46 times the obesity risk.',
+    subQuoteHtml: 'We eat rice and roti every single day.',
+    emphasisHtml: 'Most of us have no idea which side of that statistic we are on.',
+    bodyHtml:
+      "Your diet, your weight, your training, and your body's ability to handle what India's environment throws at it — all of it has a genetic layer. My Wellness reads that layer. One saliva kit. Four reports. The instruction manual your body came with but never gave you.",
+    bigNum: '2.46×',
+    bigNumLabel: 'the obesity risk on a high-carb diet',
+    ctaLabel: 'Get my Wellness report',
+    ctaHref: '#order',
+    fineprint: '4 reports in 1 kit · 52 traits · Results in 7 days · Tap to order',
+  },
+
+  traitsCatalog: {
+    eyebrow: 'What you get — all 52 traits',
+    titleHtml: 'One kit. Four reports. Every trait listed below is included.',
+    introHtml:
+      'Each trait gives you your genotype result, a risk level (Good, Average, or Poor), a plain-language interpretation, and specific recommendations. You do not need to buy anything separately. One sample. Results in 7 days.',
+    categories: [
+      {
+        name: 'My Diet',
+        count: '20 traits',
+        accent: 'diet',
+        groups: [
+          '<b>Micronutrients (12):</b> Vitamin A, B6, B9, B12, C, D, E, K, Calcium, Magnesium, Iron, Omega-3',
+          '<b>Macronutrient response (4):</b> Carbohydrate, saturated fat, monounsaturated fat, polyunsaturated fat response',
+          '<b>Food sensitivities (4):</b> Lactose intolerance, caffeine sensitivity, salt sensitivity, gluten intolerance',
+        ],
+      },
+      {
+        name: 'My Weight',
+        count: '17 traits',
+        accent: 'weight',
+        groups: [
+          '<b>Weight management (8):</b> Obesity predisposition, fat storage, insulin sensitivity, response to dieting, weight regain risk, waist circumference response, adiponectin levels, cellulite disposition',
+          '<b>Eating behaviour (5):</b> Satiety response, sweet and bitter perception, snacking tendency, binge eating tendency',
+          '<b>Genetic lipid profile (4):</b> LDL, triglycerides, HDL cholesterol, fasting serum triacylglycerol',
+        ],
+      },
+      {
+        name: 'My Fitness',
+        count: '12 traits',
+        accent: 'fitness',
+        groups: [
+          '<b>Exercise response (7):</b> Aerobic capacity, anaerobic capacity, strength training response, fat metabolism during exercise, HDL response to exercise, adrenaline response, BMI response to exercise',
+          '<b>Injury and recovery (5):</b> Overall injury risk, muscle recovery speed, Achilles tendinopathy risk, ligament rupture risk, oxidative stress response',
+        ],
+      },
+      {
+        name: 'My Detox',
+        count: '3 traits',
+        accent: 'detox',
+        groups: [
+          '<b>Detox profile (3):</b> Fat-soluble toxin clearance, water-soluble toxin clearance, oxidative stress response',
+        ],
+      },
+    ],
+    totalNum: '52',
+    totalLabel: 'Total',
+    totalSub: 'Traits, from one saliva kit, in 7 days.',
+    legendTitle: 'How results are shown',
+    legend: [
+      {
+        label: 'Good',
+        sub: 'Low risk',
+        tone: 'good',
+        descHtml: 'Your genes are in the normal range for this trait.',
+      },
+      {
+        label: 'Average',
+        sub: 'Medium risk',
+        tone: 'avg',
+        descHtml: 'Your genes show some tendency. Follow the report recommendations.',
+      },
+      {
+        label: 'Poor',
+        sub: 'High risk',
+        tone: 'poor',
+        descHtml: 'Your genes suggest elevated tendency. Act on recommendations and speak to a specialist.',
+      },
+    ],
+  },
+
+  howItWorks: {
+    eyebrow: 'How it works',
+    titleHtml: 'From your door to four reports.',
+    introHtml: 'No clinic, no needle, no hassle.',
+    image: `${SHARED}/how-it-works-physician.png`,
+    imageAlt: 'A scientist reviewing genetic analysis',
+    steps: [
+      {
+        num: '01',
+        icon: `${SIC}/icon-step-1.svg`,
+        title: 'Order online',
+        subHtml: 'Your kit arrives in 2 to 3 days.',
+        bodyHtml:
+          'We send the kit straight to your address. Inside: a saliva collection tube, a simple instruction card, and a pre-paid return envelope addressed to the lab. One kit. Four reports. Everything is included.',
+      },
+      {
+        num: '02',
+        icon: `${SIC}/icon-step-2.svg`,
+        title: 'Collect your sample at home in 5 minutes',
+        subHtml: 'No needles. No fasting. No appointments.',
+        bodyHtml:
+          'Open the tube. Spit into it. Seal it. That is the whole collection. You do not need to change your routine or go anywhere. The instruction card inside the kit walks you through it step by step. Most people do it first thing in the morning.',
+      },
+      {
+        num: '03',
+        icon: `${SIC}/icon-step-3.svg`,
+        title: 'Drop it with the courier',
+        subHtml: 'Pre-paid envelope. Pre-labelled. You just hand it over.',
+        bodyHtml:
+          'Place the sealed tube in the pre-paid return envelope inside your kit. A courier picks it up from your address at a time you choose. You can track it in the KYG portal from the moment it leaves your door.',
+      },
+      {
+        num: '04',
+        icon: `${SIC}/icon-step-4.svg`,
+        title: 'Our lab processes your sample',
+        subHtml: "India's highest certified lab. 52 traits analysed from one sample.",
+        bodyHtml:
+          "Your sample goes to Neotech World Lab, which holds India's highest official lab certification (NABL). They use Illumina genotyping technology to read all 52 traits from your single sample. A qualified scientist reviews your results before any report is released.",
+      },
+      {
+        num: '05',
+        icon: `${SIC}/icon-step-5.svg`,
+        title: 'Four reports unlock in 7 days',
+        subHtml: 'Delivered to your account. Explained by a real person.',
+        bodyHtml:
+          'My Diet DNA, My Weight DNA, My Fitness DNA, and My Detox DNA all unlock in your KYG account within 7 days. Each report has its results, risk levels, and plain-language recommendations. Within 2 days of your reports arriving, a GENEous Care counsellor reaches out to book your free 30-minute session.',
+        dark: true,
+      },
+    ],
+    ctaLabel: 'Order my kit',
+    ctaHref: '#order',
+    fineprint: '1 kit · 4 reports · 52 traits · Takes 5 minutes to collect · Results in 7 days',
+  },
+
+  care: {
+    eyebrow: 'Included free with every report',
+    titleHtml: '52 insights are a lot. A real expert helps you know where to start.',
+    leadHtml:
+      "GENEous Care is KYG's free counselling service. A qualified counsellor reaches out after your four reports are ready and gives you a 30-minute session that turns 52 data points into a clear, prioritised action plan. On WhatsApp. In plain language.",
+    bodyHtml:
+      'Other wellness tests give you a dashboard and leave you to figure it out. KYG gives you a person who has looked at your four reports before your session and knows exactly which results need your attention first and which ones you can relax about.',
+    minis: [
+      {
+        title: 'What it is',
+        bodyHtml:
+          'A free 30-minute session with a trained genetic counsellor. Included with every My Wellness kit. No extra charge.',
+      },
+      {
+        title: 'How it works',
+        bodyHtml:
+          'Your four reports unlock. Within 2 days, your counsellor gets in touch to fix a time. Session over WhatsApp call or video.',
+      },
+      {
+        title: 'What you get',
+        bodyHtml:
+          'A plain-language walkthrough of your most important results across all four reports. A clear priority list of what to act on first.',
+      },
+    ],
+    pullQuoteHtml: '"Genetic care, done the GENEous way."',
+    chatTitle: 'GENEous Care',
+    chatStatus: 'Genetic counsellor · online',
+    chat: [
+      {
+        from: 'them',
+        textHtml: "All four reports are in! 52 traits total — but don't worry, only a handful need your attention. 🙂",
+      },
+      { from: 'me', textHtml: 'Where should I even start?' },
+      {
+        from: 'them',
+        textHtml:
+          "I've made you a priority list — top 3 are your carb response, Vitamin D, and detox. I'll walk you through all of it on the call 👍",
+      },
+    ],
+    coversTitle: 'What your counsellor covers in your session',
+    covers: [
+      '<b>My Diet DNA:</b> which food sensitivities and micronutrient gaps to act on first.',
+      '<b>My Weight DNA:</b> what your fat storage and insulin profile mean for how you eat and exercise.',
+      '<b>My Fitness DNA:</b> whether your training type matches your genetic profile and what to change.',
+      '<b>My Detox DNA:</b> how serious your detox risk is and which dietary changes make the most difference.',
+      '<b>Your overall priority list:</b> across all 52 traits, which 5 to 10 things deserve your attention first.',
+      '<b>Practical next steps:</b> specific food, supplement, and lifestyle changes you can start immediately.',
+    ],
+  },
+
+  trust: {
+    eyebrow: "One lab. India's highest certification. 52 traits read from your single sample.",
+    titleHtml: 'The science behind your four reports.',
+    certs: [
+      { img: `${SHARED}/cert-nabl.png`, alt: 'NABL', label: 'NABL MC-6400' },
+      { img: `${SHARED}/cert-iso-9001.png`, alt: 'ISO 9001:2015', label: 'ISO 9001:2015' },
+      { img: `${SHARED}/cert-iso-27001.png`, alt: 'ISO 27001:2013', label: 'ISO 27001:2013' },
+      { img: `${SHARED}/cert-acmg.png`, alt: 'ACMG', label: 'ACMG' },
+      { svg: `${SIC}/cert-cpic.svg`, alt: 'CPIC', label: 'CPIC' },
+      { img: `${SHARED}/cert-hipaa.png`, alt: 'HIPAA', label: 'HIPAA' },
+      { img: `${SHARED}/cert-fda.png`, alt: 'FDA', label: 'FDA' },
+    ],
+    rows: [
+      {
+        label: 'NABL Accredited (ISO 15189) — MC-6400',
+        descHtml:
+          "India's highest official certification for testing labs. Your single sample is handled under strict, independently verified standards across all 52 traits.",
+      },
+      {
+        label: 'ISO 9001:2015 + ISO 27001:2013',
+        descHtml:
+          'Quality management and data security certified. Your personal and genetic information is protected at every step of the process.',
+      },
+      {
+        label: 'ACMG + CPIC Guidelines',
+        descHtml:
+          "Your reports follow the guidelines of two of the world's leading bodies in genetic science, the same standards used by leading hospitals internationally.",
+      },
+      {
+        label: 'Illumina Genotyping Technology',
+        descHtml:
+          "The same gene-reading technology used by the world's largest genetic testing companies. 99%+ accuracy across all traits in your Wellness report.",
+      },
+      {
+        label: 'HIPAA + FDA Standards',
+        descHtml:
+          'Your genetic data is handled under international privacy rules. KYG never sells or shares your information. Your sample is destroyed after processing.',
+      },
+    ],
+    expert: {
+      initials: 'VS',
+      name: 'Dr. Varun Sharma, Ph.D',
+      role: '· Genetic Scientist, Neotech World Lab',
+      lab: 'Based at: Neotech World Lab Pvt. Ltd., MG Road, Gurugram',
+      bodyHtml:
+        "Every My Wellness report is personally reviewed by Dr. Sharma's team before it reaches you. All four sub-reports are checked before release.",
+      accuracyHtml: 'Accuracy: 99%+ reproducibility. Fewer than 2% of samples ever need rechecking.',
+    },
+  },
+
+  faq: {
+    eyebrow: 'Before you order',
+    titleHtml: 'Questions people ask before they order.',
+    items: [
+      {
+        q: 'Is this one test or four separate tests?',
+        aHtml:
+          'One test. A single saliva kit is analysed for all 52 traits, and the results are delivered as four reports — My Diet DNA, My Weight DNA, My Fitness DNA, and My Detox DNA — inside your KYG account. You collect one sample, once.',
+      },
+      {
+        q: 'Do I need to have a health problem to take this test?',
+        aHtml:
+          'No. My Wellness is for anyone who wants to understand how their body is genetically wired around food, weight, exercise, and toxin clearance. Most people take it simply to stop guessing — to know which diet, training, and lifestyle choices actually work with their biology.',
+      },
+      {
+        q: 'I am vegetarian. Will the Diet report still work for me?',
+        aHtml:
+          'Yes. My Diet DNA reads how your genes handle nutrients and foods, not what you currently eat. It is just as useful for vegetarians — for example, it flags how well you absorb Vitamin B12, iron, and Omega-3, which are common gaps on a vegetarian diet, so you know exactly what to prioritise.',
+      },
+      {
+        q: 'Can I just buy one of the four reports instead of all of them?',
+        aHtml:
+          'My Wellness is sold as one kit that unlocks all four reports together, because a single sample is analysed for all 52 traits at once. You get Diet, Weight, Fitness, and Detox as a set — there is no cheaper single-report version, and no extra cost for the full four.',
+      },
+      {
+        q: 'What does a Poor or High Risk result actually mean?',
+        aHtml:
+          'It means your genes are linked to a higher-than-average tendency for that trait, not that you have a condition or definitely will. It is a signal to act sooner. Your report explains exactly what to do, and your free GENEous Care session helps you prioritise which results matter most.',
+      },
+      {
+        q: 'Do I need to fast or prepare before collecting my sample?',
+        aHtml:
+          'No. There is no fasting and no preparation. Just avoid eating, drinking, or smoking for about 30 minutes before you collect your saliva. The instruction card inside the kit walks you through the simple steps.',
+      },
+      {
+        q: 'My genes do not change, so why take this test now?',
+        aHtml:
+          'Exactly because they do not change — the sooner you know your genetic tendencies, the more years you have to act on them. Knowing your carb response, fat storage, injury risk, or detox capacity in your 20s or 30s lets you shape your diet, training, and lifestyle before problems build up, instead of after.',
+      },
+      {
+        q: 'Is this a medical or diagnostic test?',
+        aHtml:
+          'This is a wellness and risk-screening test, not a diagnostic one. It identifies genetic tendencies and predispositions across diet, weight, fitness, and detox. It does not diagnose any condition and is not a substitute for professional medical advice. Discuss results with a qualified doctor before making clinical decisions.',
+      },
+      {
+        q: 'What if I have questions after reading my reports?',
+        aHtml:
+          'Every kit includes a free 30-minute GENEous Care session on WhatsApp. A trained genetic counsellor who has read all four of your reports explains your most important results, gives you a prioritised action plan, and answers anything you want to ask.',
+      },
+    ],
+  },
+
+  bundlesSection: {
+    eyebrow: 'Want to go even further?',
+    titleHtml:
+      'My Wellness gives you the full picture of diet, weight, fitness, and detox. These bundles take it further.',
+    items: WELLNESS_BUNDLES,
+  },
+
+  finalCta: {
+    titleHtml: 'Your body has been running on guesswork.<br />It is time to give it the right instructions.',
+    subHtml:
+      '4 reports. 52 traits. One saliva kit. Everything your body has been trying to tell you, finally decoded.',
+    ctaLabel: 'Get my Wellness report',
+    ctaHref: '#order',
+    fineprint1: '1 kit · 4 reports · 52 traits · NABL Certified Lab · Free counselling included',
+    fineprint2:
+      'Certified lab · 99%+ accuracy · Results in 7 days · Your data stays private · Free GENEous Care session included',
+  },
+};
+
 /** All test pages served by the (tests) routes. */
-export const TEST_PAGES: TestPage[] = [mensHealth, womensHealth, ancestry];
+export const TEST_PAGES: TestPage[] = [mensHealth, womensHealth, ancestry, myWellness];
 
 export function getTestPage(slug: string): TestPage | undefined {
   return TEST_PAGES.find((t) => t.slug === slug);

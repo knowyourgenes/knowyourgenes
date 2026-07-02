@@ -236,6 +236,55 @@ export interface TraceNote {
   items: Html[];
 }
 
+// -----------------------------------------------------------------------------
+// My Wellness-only section models. My Wellness bundles four sub-reports (Diet /
+// Weight / Fitness / Detox) into one kit, so it uses `traitReports` (in place of
+// `pains`) and a `traitsCatalog` (in place of `sampleReport`). Health pages omit
+// both.
+// -----------------------------------------------------------------------------
+
+/** Wellness sub-report accent (green / blue / amber / teal). */
+export type ReportAccent = 'diet' | 'weight' | 'fitness' | 'detox';
+
+/** One "My Wellness" sub-report card (Diet / Weight / Fitness / Detox). Shaped
+ *  like a `Pain` but with a neutral trait-count badge and a bulleted list of
+ *  what it tests instead of a risk grade. */
+export interface TraitReport {
+  key: string;
+  accent: ReportAccent;
+  label: Html; // e.g. "Report 1 · My Diet DNA"
+  question: Html; // h3
+  bodyHtml: Html[]; // 1-2 left-column paragraphs
+  calloutHtml?: Html; // optional insight callout (Weight has none)
+  testsLabel: string; // "What My Diet DNA tests"
+  count: string; // neutral badge, e.g. "20 traits"
+  groups: Html[]; // bulleted list of trait groups
+  sampleHtml: Html; // "Sample result: ..."
+  signsTitle: string;
+  signs: Html[];
+}
+
+/** One category block in the "52 traits" catalog. */
+export interface TraitCategory {
+  name: string; // "My Diet"
+  count: string; // "20 traits"
+  accent: ReportAccent;
+  groups: Html[]; // trait-group descriptions
+}
+
+/** The "what you get - 52 traits" catalog (renders in the sampleReport slot). */
+export interface TraitsCatalog {
+  eyebrow: string;
+  titleHtml: Html;
+  introHtml: Html;
+  categories: TraitCategory[];
+  totalNum: string; // "52"
+  totalLabel: string; // "Total"
+  totalSub: Html; // "Traits, from one saliva kit, in 7 days."
+  legendTitle: string; // "How results are shown"
+  legend: RiskLevel[];
+}
+
 /** The whole test-detail page, rendered by features/tests/components/TestPage. */
 export interface TestPage {
   slug: string;
@@ -266,6 +315,13 @@ export interface TestPage {
     items: DiscoveryLayer[];
   };
 
+  /** My Wellness: the four sub-report cards (renders in the pains slot). */
+  traitReports?: {
+    eyebrow: string;
+    titleHtml: Html;
+    items: TraitReport[];
+  };
+
   stat: Stat;
 
   /** Health pages: the sample result cards + risk legend. Omitted by Ancestry. */
@@ -280,6 +336,9 @@ export interface TestPage {
 
   /** Ancestry: the 10-region breakdown table (renders in the sampleReport slot). */
   regionsTable?: RegionsTable;
+
+  /** My Wellness: the "52 traits" catalog (renders in the sampleReport slot). */
+  traitsCatalog?: TraitsCatalog;
 
   howItWorks: {
     eyebrow: string;
