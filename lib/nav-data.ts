@@ -30,7 +30,7 @@ export const NAV_MENUS: MegaMenu[] = [
         kicker: 'Report 01',
         title: 'My Diet',
         desc: "Nutrition insights personalized for your body. What works, what doesn't.",
-        href: '/wellness/my-diet',
+        href: '/categories/wellness',
         image: `${U}/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80`,
         imageAlt: 'My Diet',
       },
@@ -38,7 +38,7 @@ export const NAV_MENUS: MegaMenu[] = [
         kicker: 'Report 02',
         title: 'My Weight',
         desc: 'Understand your metabolism and weight tendencies.',
-        href: '/wellness/my-weight',
+        href: '/categories/wellness',
         image: `${U}/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=900&q=80`,
         imageAlt: 'My Weight',
       },
@@ -46,7 +46,7 @@ export const NAV_MENUS: MegaMenu[] = [
         kicker: 'Report 03',
         title: 'My Fitness',
         desc: 'Train smarter. Strength, endurance and recovery insights.',
-        href: '/wellness/my-fitness',
+        href: '/categories/wellness',
         image: `${U}/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80`,
         imageAlt: 'My Fitness',
       },
@@ -54,7 +54,7 @@ export const NAV_MENUS: MegaMenu[] = [
         kicker: 'Report 04',
         title: 'My Detox',
         desc: 'Stress response and detoxification pathways.',
-        href: '/wellness/my-detox',
+        href: '/categories/wellness',
         image: `${U}/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80`,
         imageAlt: 'My Detox',
       },
@@ -64,6 +64,6 @@ export const NAV_MENUS: MegaMenu[] = [
 
 export const NAV_LINKS = [
   { label: 'Categories', href: '/categories' },
-  { label: "Men's Health", href: '/mens-health' },
+  { label: "Men's Health", href: '/categories/wellness/mens-health' },
   { label: 'Blog', href: '/blog' },
 ];

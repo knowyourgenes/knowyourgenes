@@ -52,25 +52,12 @@ const BUNDLES: Bundle[] = [
 
 export const mensHealth: TestPage = {
   slug: 'mens-health',
-  categorySlug: 'mens-health',
+  categorySlug: 'wellness',
 
   seo: {
     title: "Men's Health DNA · KYG · Know Your Genes",
     description:
       "Fertility, hormones, hair loss. Three areas of men's health with a strong genetic component. A simple at-home saliva test tells you where you stand, before anything goes wrong.",
-  },
-
-  nav: {
-    brand: 'KnowYourGenes',
-    links: [
-      { label: 'The 3 checks', href: '#pains' },
-      { label: 'Sample report', href: '#sample' },
-      { label: 'How it works', href: '#how' },
-      { label: 'GENEous Care', href: '#care' },
-      { label: 'FAQ', href: '#faq' },
-    ],
-    ctaLabel: 'Check my risk',
-    ctaHref: '#order',
   },
 
   sidebar: {
@@ -86,7 +73,7 @@ export const mensHealth: TestPage = {
       { label: '3 health tests' },
       { label: 'NABL certified lab', img: `${BASE}/hero-badge-nabl.png`, imgAlt: 'NABL' },
     ],
-    titleHtml: 'Men rarely get tested until something goes wrong. <span class="hl">Change that.</span>',
+    titleHtml: 'Men rarely get tested until something goes wrong.<br /><span class="hl">Change that.</span>',
     anchorWord: 'Fertility.',
     bodyHtml:
       "Three areas of men's health that are rarely talked about until a problem forces the conversation. All three are shaped by your genes. A simple saliva test tells you where you stand, <b>before anything goes wrong.</b>",

@@ -1,21 +1,26 @@
 // =============================================================================
 // lib/categoriesdata.ts - test categories + their products
 // -----------------------------------------------------------------------------
-// Drives the /categories listing and each /categories/[slug] page. Clicking a
-// category card on the home page lands on /categories; clicking a category there
-// opens its own page listing the products, each linking to its test page.
+// Drives the /categories listing and each /categories/[category_slug] page.
+// Clicking a category card on the home page lands on /categories; clicking a
+// category there opens its own page listing its (visible) products, each linking
+// to /categories/[category_slug]/[test_slug].
 //
-// Currently only "Wellness" is live (4 products). Men's Health is shown as a
-// second category linking to the new self-contained /mens-health page.
+// Currently there is ONE category, "Wellness". Its individual Diet/Weight/
+// Fitness/Detox reports are being merged into a single combined report (not shown
+// yet). For now only the Men's Health test page is visible; Women's Health, the
+// combined Wellness report and a fourth report are declared but hidden.
 // =============================================================================
 
 export interface CategoryProduct {
   slug: string;
   name: string;
-  /** short trait/panel count shown as a chip, e.g. "20 traits" */
+  /** short trait/panel count shown as a chip, e.g. "3 health checks" */
   meta?: string;
   blurb: string;
   href: string;
+  /** hidden products are declared but not rendered on the category page yet */
+  hidden?: boolean;
 }
 
 export interface TestCategory {
@@ -25,73 +30,60 @@ export interface TestCategory {
   blurb: string;
   /** accent family used for the card + detail header */
   accent: 'wellness' | 'mens' | 'womens';
-  productCountLabel: string;
   products: CategoryProduct[];
 }
 
 export const CATEGORIES: TestCategory[] = [
   {
     slug: 'wellness',
-    name: 'My Wellness',
-    tagline: 'Everyday health, decoded from your DNA',
+    name: 'Wellness',
+    tagline: 'Genetic health reports from one saliva kit',
     blurb:
-      'Four genetic reports that explain how your body actually responds to food, weight, exercise and toxins, so you can stop guessing and start acting on what works for you.',
+      'Understand how your body is genetically wired, from everyday wellness to the health checks most people never think to make. One at-home saliva kit per report.',
     accent: 'wellness',
-    productCountLabel: '4 reports',
     products: [
+      // The 4 old wellness reports are being merged into this single combined
+      // report - hidden until it is built.
       {
-        slug: 'my-diet',
-        name: 'My Diet DNA',
-        meta: '20 traits',
-        blurb:
-          'How you absorb vitamins and respond to carbs, fat, lactose, gluten and caffeine. Eat for your genotype.',
-        href: '/wellness/my-diet',
+        slug: 'my-wellness',
+        name: 'My Wellness',
+        meta: 'Combined report',
+        blurb: 'Diet, Weight, Fitness and Detox insights combined into one report.',
+        href: '/categories/wellness/my-wellness',
+        hidden: true,
       },
-      {
-        slug: 'my-weight',
-        name: 'My Weight DNA',
-        meta: '17 traits',
-        blurb:
-          'Fat storage, insulin sensitivity, eating behaviour and weight-regain risk, largely written in your DNA.',
-        href: '/wellness/my-weight',
-      },
-      {
-        slug: 'my-fitness',
-        name: 'My Fitness DNA',
-        meta: '12 traits',
-        blurb:
-          'Your genetic response to exercise: power vs endurance, recovery, injury risk and the training that suits you.',
-        href: '/wellness/my-fitness',
-      },
-      {
-        slug: 'my-detox',
-        name: 'My Detox DNA',
-        meta: '3 traits',
-        blurb:
-          'How well your body clears toxins and processes what you put into it, and where you may need extra support.',
-        href: '/wellness/my-detox',
-      },
-    ],
-  },
-  {
-    slug: 'mens-health',
-    name: "Men's Health DNA",
-    tagline: 'The checks most men never think to make',
-    blurb:
-      'Fertility, hormones and hair loss. Three areas of male health with a strong genetic component. A simple at-home saliva test tells you where you stand, before anything goes wrong.',
-    accent: 'mens',
-    productCountLabel: '3 health checks',
-    products: [
       {
         slug: 'mens-health',
         name: "Men's Health DNA",
         meta: '3 health checks',
-        blurb: 'Fertility (ART3), hormones (HFE) and hair-loss (AR) risk in one saliva test.',
-        href: '/mens-health',
+        blurb:
+          'Fertility (ART3), hormones (HFE) and hair-loss (AR) risk in one saliva test. Know where you stand before anything goes wrong.',
+        href: '/categories/wellness/mens-health',
+      },
+      {
+        slug: 'womens-health',
+        name: "Women's Health DNA",
+        meta: 'Coming soon',
+        blurb: "Clinical panels focused on women's genetic health.",
+        href: '/categories/wellness/womens-health',
+        hidden: true,
+      },
+      {
+        slug: 'ancestry',
+        name: 'Ancestry DNA',
+        meta: 'Coming soon',
+        blurb: 'Trace your heritage and genetic origins.',
+        href: '/categories/wellness/ancestry',
+        hidden: true,
       },
     ],
   },
 ];
+
+/** Products that should actually render on a category page. */
+export function visibleProducts(category: TestCategory): CategoryProduct[] {
+  return category.products.filter((p) => !p.hidden);
+}
 
 export function getCategory(slug: string): TestCategory | undefined {
   return CATEGORIES.find((c) => c.slug === slug);

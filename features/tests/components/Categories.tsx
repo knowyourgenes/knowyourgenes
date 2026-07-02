@@ -1,6 +1,10 @@
 import Link from 'next/link';
-import type { TestCategory } from '@/lib/categoriesdata';
+import { visibleProducts, type TestCategory } from '@/lib/categoriesdata';
 import { Arrow } from './icons';
+
+function countLabel(n: number) {
+  return `${n} ${n === 1 ? 'report' : 'reports'}`;
+}
 
 const CSS = `
 .kyg-cat {
@@ -62,7 +66,7 @@ export function CategoriesView({ categories }: { categories: TestCategory[] }) {
         <div className="kyg-cat__grid">
           {categories.map((c) => (
             <Link href={`/categories/${c.slug}`} className="kyg-cat__card" data-acc={c.accent} key={c.slug}>
-              <span className="kyg-cat__chip">{c.productCountLabel}</span>
+              <span className="kyg-cat__chip">{countLabel(visibleProducts(c).length)}</span>
               <h2>{c.name}</h2>
               <span className="tag">{c.tagline}</span>
               <span className="blurb">{c.blurb}</span>
@@ -87,11 +91,11 @@ export function CategoryDetailView({ category }: { category: TestCategory }) {
           <span>/</span>
           <span>{category.name}</span>
         </div>
-        <span className="eyebrow">{category.productCountLabel}</span>
+        <span className="eyebrow">{countLabel(visibleProducts(category).length)}</span>
         <h1 className="kyg-cat__title">{category.name}</h1>
         <p className="kyg-cat__intro">{category.blurb}</p>
         <div className="kyg-cat__products">
-          {category.products.map((p) => (
+          {visibleProducts(category).map((p) => (
             <Link href={p.href} className="kyg-cat__product" key={p.slug}>
               <div className="ph">
                 <h3>{p.name}</h3>

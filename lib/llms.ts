@@ -5,11 +5,11 @@
 //                        (Portable Text → markdown) and test FAQ Q&A inlined.
 //
 // Data sources (this project):
-//   • Static pages + genetic tests  → @/features/catalog/data/tests (local, always available)
+//   • Static pages + genetic tests  → @/lib/testsdata (local, always available)
 //   • Blog articles                  → Sanity CMS via @/features/blog (best-effort)
 
 import { siteConfig, absoluteUrl, cleanTitle } from '@/lib/site-config';
-import { TESTS } from '@/features/catalog/data/tests';
+import { TEST_PAGES } from '@/lib/testsdata';
 import { sanityFetch, blogListQuery, blogPostQuery } from '@/features/blog';
 
 // ---------------------------------------------------------------------------
@@ -52,7 +52,16 @@ const LEGAL_PAGES: { path: string; label: string }[] = [
 /** Blog posts live at /blog/<slug>. NOTE: a public /blog route is not wired yet
  *  - these URLs resolve only once that route exists. */
 const blogUrl = (slug: string) => absoluteUrl(`/blog/${slug}`);
-const testUrl = (categorySlug: string, slug: string) => absoluteUrl(`/${categorySlug}/${slug}`);
+const testUrl = (categorySlug: string, slug: string) => absoluteUrl(`/categories/${categorySlug}/${slug}`);
+
+/** Strip inline HTML tags + collapse entities from an HTML copy string. */
+const stripHtml = (html: string) =>
+  html
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
 
 // ---------------------------------------------------------------------------
 // Sanity blog types (shapes returned by the reused GROQ queries)
@@ -168,7 +177,7 @@ function legalSection(): string {
 }
 
 function testsSection(full: boolean): string {
-  const blocks = TESTS.map((t) => {
+  const blocks = TEST_PAGES.map((t) => {
     const label = cleanTitle(t.seo.title);
     const url = testUrl(t.categorySlug, t.slug);
     if (!full) return `- [${label}](${url}): ${t.seo.description}`;
@@ -176,7 +185,7 @@ function testsSection(full: boolean): string {
     let block = `### ${label}\n${url}\n\n${t.seo.description}`;
     const faqs = t.faq?.items ?? [];
     if (faqs.length) {
-      const qa = faqs.map((f) => `**Q: ${f.q}**\n\n${f.a}`).join('\n\n');
+      const qa = faqs.map((f) => `**Q: ${stripHtml(f.q)}**\n\n${stripHtml(f.aHtml)}`).join('\n\n');
       block += `\n\n#### FAQ\n\n${qa}`;
     }
     return block;

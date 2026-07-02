@@ -52,6 +52,16 @@ export function Dot({ className }: { className?: string }) {
   );
 }
 
+/** Small "bundle" glyph used in the collapsed sidebar rail. */
+export function Package({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 22 24" fill="none" aria-hidden>
+      <path d="M11 1.5 20 6v12l-9 4.5L2 18V6l9-4.5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M2 6l9 4.5L20 6M11 10.5V22.5" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 const trustIcons: Record<string, ReactElement> = {
   saliva: (
     <path
@@ -97,6 +107,18 @@ const trustIcons: Record<string, ReactElement> = {
       fill="none"
       strokeLinejoin="round"
     />
+  ),
+  eye: (
+    <>
+      <path
+        d="M1.4 8S4 3.6 8 3.6 14.6 8 14.6 8 12 12.4 8 12.4 1.4 8 1.4 8Z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        fill="none"
+        strokeLinejoin="round"
+      />
+      <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.4" fill="none" />
+    </>
   ),
 };
 

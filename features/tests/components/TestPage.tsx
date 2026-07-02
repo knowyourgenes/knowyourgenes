@@ -1,10 +1,45 @@
 'use client';
 
-import { useRef, useState, type ElementType } from 'react';
-import { useRevealOnScroll } from '@/hooks/use-scroll';
+import { useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
 import type { Bundle, TestPage } from '@/features/tests/types';
 import TestPageStyles from './styles';
-import { Arrow, Alert, Check, Dot, TrustIcon } from './icons';
+import { Arrow, Alert, Check, Package } from './icons';
+
+const IC = '/tests/mens-health/icons';
+
+/** Renders an exact Figma icon exported to /public. */
+function Ico({ name, className, alt = '' }: { name: string; className?: string; alt?: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={`${IC}/${name}.svg`} alt={alt} className={className} />;
+}
+
+/** Self-contained reveal-on-scroll: adds `is-in` to `.reveal` / `.reveal-r`
+ *  elements as they enter the viewport. Kept local to this feature so it has no
+ *  dependency on shared hooks. */
+function useReveal(rootRef: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const targets = root.querySelectorAll('.reveal, .reveal-r');
+    if (typeof IntersectionObserver === 'undefined') {
+      targets.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -8% 0px' }
+    );
+    targets.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [rootRef]);
+}
 
 /** Render trusted inline HTML authored in lib/testsdata.ts. */
 function H({ html, as: Tag = 'span', className }: { html: string; as?: ElementType; className?: string }) {
@@ -54,48 +89,51 @@ function BundleCard({ b, full }: { b: Bundle; full?: boolean }) {
   );
 }
 
+const CARE_ICONS = ['care-what', 'care-how', 'care-get'];
+
 export default function TestPageView({ test }: { test: TestPage }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  useRevealOnScroll(rootRef);
+  useReveal(rootRef);
   const [collapsed, setCollapsed] = useState(false);
 
-  const badgeIcon = (tone: string) => (tone === 'poor' ? <Alert /> : <Check />);
+  // Pain badge uses the exact Figma badge icons (colour baked to match the pill).
+  const painBadge = (tone: string) => <Ico name={tone === 'poor' ? 'badge-poor' : 'icon-badge-check'} />;
+  // Report-card result marks must recolour to the light-tinted result box, so they
+  // stay inline (currentColor) rather than a fixed-colour file.
+  const resultIcon = (tone: string) => (tone === 'poor' ? <Alert /> : <Check />);
 
   return (
     <div className="kyg-mh" ref={rootRef}>
       <TestPageStyles />
 
-      {/* NAV */}
-      <nav className="kyg-mh__nav">
-        <a href="#top" className="kyg-mh__brand">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/tests/mens-health/icons/logo-mark.svg" alt="" />
-          {test.nav.brand}
-        </a>
-        <div className="kyg-mh__navlinks">
-          {test.nav.links.map((l) => (
-            <a key={l.href} href={l.href}>
-              {l.label}
-            </a>
-          ))}
-        </div>
-        <a href={test.nav.ctaHref} className="btn btn--eden">
-          {test.nav.ctaLabel} <Arrow />
-        </a>
-      </nav>
-
       <div className="kyg-mh__page" id="top">
         <div className={`kyg-mh__shell${collapsed ? ' is-collapsed' : ''}`}>
           {collapsed && (
-            <button
-              type="button"
-              className="kyg-mh__reopen"
-              onClick={() => setCollapsed(false)}
-              aria-label="Show bundles"
-              title="Show bundles"
-            >
-              <Chevron dir="right" />
-            </button>
+            <div className="kyg-mh__rail">
+              <button
+                type="button"
+                className="kyg-mh__rail-toggle"
+                data-tip="Show bundles"
+                onClick={() => setCollapsed(false)}
+                aria-label="Show bundles"
+              >
+                <Chevron dir="right" />
+              </button>
+              <span className="kyg-mh__rail-label">{test.sidebar.eyebrow}</span>
+              {test.sidebar.bundles.map((b) => (
+                <button
+                  key={b.key}
+                  type="button"
+                  className="kyg-mh__rail-item"
+                  data-theme={b.theme}
+                  data-tip={b.title}
+                  onClick={() => setCollapsed(false)}
+                  aria-label={b.title}
+                >
+                  <Package />
+                </button>
+              ))}
+            </div>
           )}
           {/* SIDEBAR (bundles only) */}
           <aside className="kyg-mh__sidebar kyg-scroll">
@@ -149,7 +187,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     {test.hero.trust.map((t, i) => (
                       <div className="kyg-mh__trust-tile" key={i}>
                         <span className="kyg-mh__trust-ico">
-                          <TrustIcon name={t.icon} />
+                          <Ico name={`trust-${t.icon}`} />
                         </span>
                         <div>
                           <H html={t.line1} className="l1" as="div" />
@@ -165,7 +203,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     <img src={test.hero.image} alt={test.hero.imageAlt} />
                     <span className="grad" />
                     <span className="cap">
-                      <TrustIcon name="pin" /> {test.hero.imageCaption}
+                      <Ico name="caption-eye" /> {test.hero.imageCaption}
                     </span>
                   </div>
                   <div className="kyg-mh__hero-stats">
@@ -201,12 +239,15 @@ export default function TestPageView({ test }: { test: TestPage }) {
                         </div>
                         <H html={p.question} as="h3" />
                         <H html={p.answerHtml} className="kyg-mh__pain-answer" as="p" />
-                        <H html={p.calloutHtml} className="kyg-mh__pain-callout" as="div" />
+                        <div className="kyg-mh__pain-callout">
+                          <Ico name="icon-info" />
+                          <H html={p.calloutHtml} />
+                        </div>
                       </div>
                       <div>
                         <div className="kyg-mh__pain-testcard">
                           <span className={`badge badge--${p.badgeTone}`}>
-                            {badgeIcon(p.badgeTone)} {p.badge}
+                            {painBadge(p.badgeTone)} {p.badge}
                           </span>
                           <span className="checks-label">{p.checksLabel}</span>
                           <H html={p.checksBodyHtml} className="checks-body" as="p" />
@@ -217,7 +258,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                           <ul className="kyg-mh__signs-grid">
                             {p.signs.map((s, i) => (
                               <li key={i}>
-                                <Dot /> <H html={s} />
+                                <Ico name="icon-sign" /> <H html={s} />
                               </li>
                             ))}
                           </ul>
@@ -234,15 +275,27 @@ export default function TestPageView({ test }: { test: TestPage }) {
               <div className="kyg-mh__stat-inner reveal">
                 <div className="kyg-mh__stat-grid">
                   <div>
+                    <Ico name="icon-quote" className="kyg-mh__stat-qmark" />
                     <H html={test.stat.quoteHtml} className="kyg-mh__stat-quote" as="div" />
                     <H html={test.stat.subQuoteHtml} className="kyg-mh__stat-sub" as="div" />
                     <H html={test.stat.emphasisHtml} className="kyg-mh__stat-emph" as="div" />
                     <H html={test.stat.bodyHtml} className="kyg-mh__stat-body" as="p" />
                   </div>
                   <div className="kyg-mh__stat-card">
-                    <H html={test.stat.bigNum} className="kyg-mh__stat-big" as="div" />
-                    <H html={test.stat.bigNumLabel} className="cap" as="div" />
-                    <a href={test.stat.ctaHref} className="btn btn--java">
+                    <div className="kyg-mh__stat-row">
+                      <H html={test.stat.bigNum} className="kyg-mh__stat-big" as="div" />
+                      <H html={test.stat.bigNumLabel} className="cap" as="div" />
+                    </div>
+                    <div
+                      className="kyg-mh__progress"
+                      role="progressbar"
+                      aria-valuenow={50}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                    >
+                      <span />
+                    </div>
+                    <a href={test.stat.ctaHref} className="btn btn--java kyg-mh__stat-cta">
                       {test.stat.ctaLabel} <Arrow />
                     </a>
                     <H html={test.stat.fineprint} className="kyg-mh__stat-fine" as="div" />
@@ -266,7 +319,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     <H html={c.desc} className="desc" as="p" />
                     <div className="kyg-mh__report-result" data-tone={c.tone}>
                       <span className="rl">
-                        {badgeIcon(c.tone)} <span className="big">{c.result}</span>
+                        {resultIcon(c.tone)} <span className="big">{c.result}</span>
                         <span className="sub">· {c.resultLabel}</span>
                       </span>
                       <H html={c.noteHtml} className="note" as="span" />
@@ -280,6 +333,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   {test.sampleReport.legend.map((l, i) => (
                     <div className="kyg-mh__legend-card" data-tone={l.tone} key={i}>
                       <div className="lh">
+                        <Ico name={`legend-${l.tone}`} className="lico" />
                         <span className="lab">{l.label}</span>
                         <span className="sub">{l.sub}</span>
                       </div>
@@ -338,6 +392,9 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   <div className="kyg-mh__care-minis">
                     {test.care.minis.map((m, i) => (
                       <div className="kyg-mh__care-mini" key={i}>
+                        <span className="kyg-mh__care-mini-ico">
+                          <Ico name={CARE_ICONS[i] ?? 'care-what'} />
+                        </span>
                         <h4>{m.title}</h4>
                         <H html={m.bodyHtml} as="p" />
                       </div>
@@ -347,8 +404,13 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 </div>
                 <div className="kyg-mh__chat reveal-r">
                   <div className="kyg-mh__chat-head">
-                    <span className="t">{test.care.chatTitle}</span>
-                    <span className="s">{test.care.chatStatus}</span>
+                    <span className="kyg-mh__chat-av">
+                      <Ico name="chat-avatar" />
+                    </span>
+                    <div className="kyg-mh__chat-meta">
+                      <span className="t">{test.care.chatTitle}</span>
+                      <span className="s">{test.care.chatStatus}</span>
+                    </div>
                   </div>
                   <div className="kyg-mh__chat-body">
                     {test.care.chat.map((c, i) => (
@@ -360,9 +422,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     <ul>
                       {test.care.covers.map((c, i) => (
                         <li key={i}>
-                          <span style={{ color: 'var(--eden)' }}>
-                            <Check className="" />
-                          </span>
+                          <Ico name="covers-check" />
                           <H html={c} />
                         </li>
                       ))}
@@ -418,8 +478,10 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 {test.faq.items.map((f, i) => (
                   <details className="kyg-mh__faq reveal" key={i}>
                     <summary>
-                      <span className="kyg-mh__faq-ico">+</span>
                       <H html={f.q} />
+                      <span className="kyg-mh__faq-ico">
+                        <Ico name="faq-plus" />
+                      </span>
                     </summary>
                     <H html={f.aHtml} as="p" />
                   </details>
