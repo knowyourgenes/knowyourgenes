@@ -5219,7 +5219,7 @@ export default function HomePage() {
               Explore our <span className="grad-text">DNA tests</span>.
             </h2>
             <p className="lead" style={{ marginTop: '18px', maxWidth: '680px' } as React.CSSProperties}>
-              One at-home saliva kit. Choose the report that matters most to you — from fertility and hormones to
+              One at-home saliva kit. Choose the report that matters most to you - from fertility and hormones to
               ancestry and whole-body wellness.
             </p>
           </div>
