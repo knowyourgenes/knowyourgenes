@@ -548,7 +548,7 @@ export const womensHealth: TestPage = {
     ],
     titleHtml:
       'Every 1 out of 5 Indian women has PCOS.<br /><span class="hl">Most never learn why. But you can.</span>',
-    anchorWord: 'Bone weakness.',
+    anchorWord: '',
     bodyHtml:
       'Five conditions that affect Indian women more than most people know, and all five have a strong link to your genes. A single saliva test tells you where you stand, <b>before symptoms do.</b>',
     ctaLabel: 'Check my risk',
@@ -1130,7 +1130,7 @@ export const ancestry: TestPage = {
         label: 'Layer 1 · Primary ancestry',
         question: 'What is my largest ancestral origin?',
         bodyHtml: [
-          'Your primary ancestry is the largest percentage in your result — the population group your genetic lineage is most strongly connected to. For most Indians this will be South Asian, but the specific breakdown within that can still be surprising, because South Asian itself is a layered history going back to the Indus Valley civilisation and beyond.',
+          'Your primary ancestry is the largest percentage in your result - the population group your genetic lineage is most strongly connected to. For most Indians this will be South Asian, but the specific breakdown within that can still be surprising, because South Asian itself is a layered history going back to the Indus Valley civilisation and beyond.',
           'This is not just a number. It is the main chapter of a story your family has been carrying in its cells for thousands of years.',
         ],
         cardTitle: 'What your report shows',
@@ -1140,7 +1140,7 @@ export const ancestry: TestPage = {
           'Plain-language context explaining what that primary origin means historically',
         ],
         noteHtml:
-          "Sample result: '72.91% South Asian — your roots are firmly established in the subcontinent, with lineages that trace to some of the oldest known human settlements in the region'",
+          "Sample result: '72.91% South Asian - your roots are firmly established in the subcontinent, with lineages that trace to some of the oldest known human settlements in the region'",
       },
       {
         key: 'secondary',
@@ -1154,7 +1154,7 @@ export const ancestry: TestPage = {
         cardTitle: 'What your report shows',
         shows: [
           'All secondary ancestry percentages above approximately 1%, each with a region label',
-          'Plain-language context for each connection — what migration or historical event it likely reflects',
+          'Plain-language context for each connection - what migration or historical event it likely reflects',
         ],
         chips: ['Malayan 7.79%', 'South Central Asian 7.13%', 'West Caucasian 6.21%'],
         noteHtml:
@@ -1190,7 +1190,7 @@ export const ancestry: TestPage = {
         label: 'Layer 4 · Gene Journey narrative',
         question: 'Do I get a written story of my ancestry, not just numbers?',
         bodyHtml: [
-          '<b>Yes.</b> The Ancestors In Me report includes a written Gene Journey narrative — a personalised story written in flowing language that explains your ancestry results as a human journey across time and continents, not as a table of percentages.',
+          '<b>Yes.</b> The Ancestors In Me report includes a written Gene Journey narrative - a personalised story written in flowing language that explains your ancestry results as a human journey across time and continents, not as a table of percentages.',
           'This is the part of the report most people share with their families. It reads like a story, because it is one.',
         ],
         cardTitle: 'Sample Gene Journey narrative excerpt',
@@ -1208,7 +1208,7 @@ export const ancestry: TestPage = {
     emphasisHtml:
       'Across continents. Through civilisations. All the way back to the first humans who walked out of Africa.',
     bodyHtml:
-      'Your family name, your gotra, your village — these tell one chapter of your story. Your DNA tells all of them. India is one of the most genetically diverse countries on earth, shaped by migrations, trade routes, and cross-cultural contact over thousands of years. Your ancestry is almost certainly more layered and more surprising than you have been told.',
+      'Your family name, your gotra, your village - these tell one chapter of your story. Your DNA tells all of them. India is one of the most genetically diverse countries on earth, shaped by migrations, trade routes, and cross-cultural contact over thousands of years. Your ancestry is almost certainly more layered and more surprising than you have been told.',
     bigNum: '50,000',
     bigNumLabel: 'years of your story, in one saliva sample',
     ctaLabel: 'Discover my ancestors',
@@ -1245,13 +1245,13 @@ export const ancestry: TestPage = {
         region: 'West Caucasian',
         pct: '~6%',
         connectsHtml:
-          'Populations from the Caucasus mountain region — the area between the Black Sea and Caspian Sea, covering modern-day Georgia, Armenia, and Azerbaijan. Connected to ancient Indo-European migration routes.',
+          'Populations from the Caucasus mountain region - the area between the Black Sea and Caspian Sea, covering modern-day Georgia, Armenia, and Azerbaijan. Connected to ancient Indo-European migration routes.',
       },
       {
         region: 'East African',
         pct: '~1.6%',
         connectsHtml:
-          "Some of humanity's oldest known genetic lineages. The direct ancestral populations of the people who first walked out of Africa 50,000 to 70,000 years ago. All humans carry this connection — yours is just a little more visible.",
+          "Some of humanity's oldest known genetic lineages. The direct ancestral populations of the people who first walked out of Africa 50,000 to 70,000 years ago. All humans carry this connection - yours is just a little more visible.",
       },
       {
         region: 'Armenian',
@@ -1269,7 +1269,7 @@ export const ancestry: TestPage = {
         region: 'Near Eastern',
         pct: '~0.8%',
         connectsHtml:
-          'Populations from the Fertile Crescent region — modern-day Iraq, Syria, Lebanon, and Israel. The birthplace of agriculture and some of the earliest urban civilisations in human history.',
+          'Populations from the Fertile Crescent region - modern-day Iraq, Syria, Lebanon, and Israel. The birthplace of agriculture and some of the earliest urban civilisations in human history.',
       },
       {
         region: 'Oceanian',
@@ -1325,7 +1325,7 @@ export const ancestry: TestPage = {
         title: 'Our lab analyses your DNA',
         subHtml: "42,000+ markers. India's highest certified lab. Every result checked.",
         bodyHtml:
-          "Your sample goes to Neotech World Lab, which holds India's highest official lab certification (NABL). They use the Illumina iScan genotyping platform — the same technology used in major global ancestry research — to read 42,000+ genetic markers in your sample. A qualified scientist reviews your results before your report is released.",
+          "Your sample goes to Neotech World Lab, which holds India's highest official lab certification (NABL). They use the Illumina iScan genotyping platform - the same technology used in major global ancestry research - to read 42,000+ genetic markers in your sample. A qualified scientist reviews your results before your report is released.",
       },
       {
         num: '05',
@@ -1333,7 +1333,7 @@ export const ancestry: TestPage = {
         title: 'Your Gene Journey arrives in 7 days',
         subHtml: 'Delivered to your account. A story, not just a spreadsheet.',
         bodyHtml:
-          'Your Ancestors In Me report is delivered to your KYG account. It includes your full ancestry percentage breakdown across all regions, a full-colour ancestry chart, and your personalised Gene Journey narrative — the written story of where your lineage has been. Within 2 days of your report arriving, a GENEous Care counsellor reaches out to book your free 30-minute session.',
+          'Your Ancestors In Me report is delivered to your KYG account. It includes your full ancestry percentage breakdown across all regions, a full-colour ancestry chart, and your personalised Gene Journey narrative - the written story of where your lineage has been. Within 2 days of your report arriving, a GENEous Care counsellor reaches out to book your free 30-minute session.',
         dark: true,
       },
     ],
@@ -1346,7 +1346,7 @@ export const ancestry: TestPage = {
     eyebrow: 'Included free with every report',
     titleHtml: 'Your Gene Journey is more interesting with someone who can explain it.',
     leadHtml:
-      "GENEous Care is KYG's free counselling service. A real expert reaches out after your results and walks you through your ancestry breakdown — what each region means, what surprised other people with similar results, and how to explore further.",
+      "GENEous Care is KYG's free counselling service. A real expert reaches out after your results and walks you through your ancestry breakdown - what each region means, what surprised other people with similar results, and how to explore further.",
     bodyHtml:
       'The Ancestors In Me report has a lot inside it. A counsellor who has seen hundreds of Indian ancestry results can put yours in context in a way the report alone cannot. They have watched people discover connections that changed how they thought about their family, their region, and their history.',
     minis: [
@@ -1372,7 +1372,7 @@ export const ancestry: TestPage = {
     chat: [
       {
         from: 'them',
-        textHtml: 'Just read your Gene Journey — you have a 1.47% Amerindian trace, which is genuinely fascinating! 🌍',
+        textHtml: 'Just read your Gene Journey - you have a 1.47% Amerindian trace, which is genuinely fascinating! 🌍',
       },
       { from: 'me', textHtml: 'Wait, how do Indians end up with that?' },
       {
@@ -1407,7 +1407,7 @@ export const ancestry: TestPage = {
           'The gold standard technology for ancestry analysis worldwide. The same platform used in major global population genetics research. 42,000+ markers means your result has significantly higher resolution than most ancestry tests available in India.',
       },
       {
-        label: 'NABL Accredited (ISO 15189) — MC-6400',
+        label: 'NABL Accredited (ISO 15189) - MC-6400',
         descHtml:
           "India's highest official certification for testing labs. Your sample is processed under independently verified, audited conditions.",
       },
@@ -1465,7 +1465,7 @@ export const ancestry: TestPage = {
       {
         q: 'Is this test the same as the health reports?',
         aHtml:
-          'No. Ancestors In Me analyses your genetic heritage — where your lineage comes from — not your health risks. It does not report on any medical or wellness conditions. If you want both, the "The Complete You" bundle pairs your ancestry result with all five health reports.',
+          'No. Ancestors In Me analyses your genetic heritage - where your lineage comes from - not your health risks. It does not report on any medical or wellness conditions. If you want both, the "The Complete You" bundle pairs your ancestry result with all five health reports.',
       },
       {
         q: 'Can this test confirm my caste, gotra, or regional identity?',
@@ -1607,7 +1607,7 @@ export const myWellness: TestPage = {
   seo: {
     title: 'My Wellness DNA · KYG · Know Your Genes',
     description:
-      'Diet, weight, fitness, and detox — 52 genetic traits across four reports from a single saliva kit. Understand why the same diet, effort, and training give you different results.',
+      'Diet, weight, fitness, and detox - 52 genetic traits across four reports from a single saliva kit. Understand why the same diet, effort, and training give you different results.',
   },
 
   sidebar: {
@@ -1620,9 +1620,9 @@ export const myWellness: TestPage = {
   hero: {
     badges: [{ label: 'My Wellness' }, { label: '4 reports' }, { label: '52 traits' }, { label: '1 saliva kit' }],
     titleHtml: 'Same diet. Same effort. Different results.<br /><span class="hl">Your genes explain why.</span>',
-    anchorWord: 'How well your body handles what it is exposed to.',
+    anchorWord: '',
     bodyHtml:
-      'Four questions your body has been answering in its own way for years. My Wellness reads the genetic instructions behind each one. One saliva kit. Four reports. <b>52 traits that finally explain your body to you.</b>',
+      'Four questions your body has been answering in its own way for years. My Wellness reads the genetic instructions behind each one. <b>One saliva kit. Four reports. 52 traits that finally explain your body to you.</b>',
     ctaLabel: 'Get my Wellness report',
     ctaHref: '#order',
     ctaNoteHtml: 'At-home saliva kit · No needles · 4 reports · Results in 7 days · Free counselling',
@@ -1634,7 +1634,7 @@ export const myWellness: TestPage = {
     ],
     image: `${WLBASE}/hero-wellness.png`,
     imageAlt: 'Diet, weight, fitness and detox lifestyle',
-    imageCaption: 'Diet, weight, fitness & detox — the instructions your body came with',
+    imageCaption: 'Diet, weight, fitness & detox - the instructions your body came with',
     stats: [
       { num: '52', label: 'Traits tested' },
       { num: '4', label: 'Reports in 1 kit' },
@@ -1665,7 +1665,7 @@ export const myWellness: TestPage = {
           '<b>4 food sensitivities:</b> Lactose intolerance, caffeine sensitivity, salt sensitivity, gluten intolerance',
         ],
         sampleHtml:
-          "Sample result: 'Carbohydrate sensitivity — High. Your genes suggest your body converts carbs to fat more readily than average. A lower-carb, higher-protein diet is recommended.'",
+          "Sample result: 'Carbohydrate sensitivity - High. Your genes suggest your body converts carbs to fat more readily than average. A lower-carb, higher-protein diet is recommended.'",
         signsTitle: 'Signs your diet is not working for your genes',
         signs: [
           'You eat well but still feel low on energy most days',
@@ -1692,7 +1692,7 @@ export const myWellness: TestPage = {
           '<b>4 genetic lipid traits:</b> LDL cholesterol tendency, triglyceride tendency, HDL cholesterol level, fasting serum triacylglycerol',
         ],
         sampleHtml:
-          "Sample result: 'Fat storage — High risk. Your genes are linked to a higher tendency to store fat, particularly around the midsection. A fibre-rich, lower glycaemic diet is recommended.'",
+          "Sample result: 'Fat storage - High risk. Your genes are linked to a higher tendency to store fat, particularly around the midsection. A fibre-rich, lower glycaemic diet is recommended.'",
         signsTitle: 'Signs your weight struggles may be genetic',
         signs: [
           'You gain weight more easily than people around you who eat similarly',
@@ -1719,7 +1719,7 @@ export const myWellness: TestPage = {
           '<b>5 injury and recovery traits:</b> Overall injury risk, muscle recovery speed, Achilles tendinopathy risk, ligament rupture risk, oxidative stress response',
         ],
         sampleHtml:
-          "Sample result: 'Aerobic capacity — Good. Anaerobic capacity — Average. You are better built for endurance than power. Allow 48-72 hours between intense sessions.'",
+          "Sample result: 'Aerobic capacity - Good. Anaerobic capacity - Average. You are better built for endurance than power. Allow 48-72 hours between intense sessions.'",
         signsTitle: 'Signs your training may not match your genes',
         signs: [
           'You train consistently but results plateau faster than expected',
@@ -1747,7 +1747,7 @@ export const myWellness: TestPage = {
           '<b>Oxidative stress response:</b> How well your body neutralises free radicals, which accelerate inflammation and ageing',
         ],
         sampleHtml:
-          "Sample result (HIGH RISK): 'Oxidative stress — High risk. Your genes suggest a lower ability to neutralise free radicals. Increase antioxidant-rich foods, consider glutathione, and reduce processed food exposure.'",
+          "Sample result (HIGH RISK): 'Oxidative stress - High risk. Your genes suggest a lower ability to neutralise free radicals. Increase antioxidant-rich foods, consider glutathione, and reduce processed food exposure.'",
         signsTitle: 'Signs your detox capacity may need support',
         signs: [
           'You feel sluggish or foggy even on days when you have slept and eaten well',
@@ -1764,7 +1764,7 @@ export const myWellness: TestPage = {
     subQuoteHtml: 'We eat rice and roti every single day.',
     emphasisHtml: 'Most of us have no idea which side of that statistic we are on.',
     bodyHtml:
-      "Your diet, your weight, your training, and your body's ability to handle what India's environment throws at it — all of it has a genetic layer. My Wellness reads that layer. One saliva kit. Four reports. The instruction manual your body came with but never gave you.",
+      "Your diet, your weight, your training, and your body's ability to handle what India's environment throws at it - all of it has a genetic layer. My Wellness reads that layer. One saliva kit. Four reports. The instruction manual your body came with but never gave you.",
     bigNum: '2.46×',
     bigNumLabel: 'the obesity risk on a high-carb diet',
     ctaLabel: 'Get my Wellness report',
@@ -1773,7 +1773,7 @@ export const myWellness: TestPage = {
   },
 
   traitsCatalog: {
-    eyebrow: 'What you get — all 52 traits',
+    eyebrow: 'What you get - all 52 traits',
     titleHtml: 'One kit. Four reports. Every trait listed below is included.',
     introHtml:
       'Each trait gives you your genotype result, a risk level (Good, Average, or Poor), a plain-language interpretation, and specific recommendations. You do not need to buy anything separately. One sample. Results in 7 days.',
@@ -1926,13 +1926,13 @@ export const myWellness: TestPage = {
     chat: [
       {
         from: 'them',
-        textHtml: "All four reports are in! 52 traits total — but don't worry, only a handful need your attention. 🙂",
+        textHtml: "All four reports are in! 52 traits total - but don't worry, only a handful need your attention. 🙂",
       },
       { from: 'me', textHtml: 'Where should I even start?' },
       {
         from: 'them',
         textHtml:
-          "I've made you a priority list — top 3 are your carb response, Vitamin D, and detox. I'll walk you through all of it on the call 👍",
+          "I've made you a priority list - top 3 are your carb response, Vitamin D, and detox. I'll walk you through all of it on the call 👍",
       },
     ],
     coversTitle: 'What your counsellor covers in your session',
@@ -1960,7 +1960,7 @@ export const myWellness: TestPage = {
     ],
     rows: [
       {
-        label: 'NABL Accredited (ISO 15189) — MC-6400',
+        label: 'NABL Accredited (ISO 15189) - MC-6400',
         descHtml:
           "India's highest official certification for testing labs. Your single sample is handled under strict, independently verified standards across all 52 traits.",
       },
@@ -2003,22 +2003,22 @@ export const myWellness: TestPage = {
       {
         q: 'Is this one test or four separate tests?',
         aHtml:
-          'One test. A single saliva kit is analysed for all 52 traits, and the results are delivered as four reports — My Diet DNA, My Weight DNA, My Fitness DNA, and My Detox DNA — inside your KYG account. You collect one sample, once.',
+          'One test. A single saliva kit is analysed for all 52 traits, and the results are delivered as four reports - My Diet DNA, My Weight DNA, My Fitness DNA, and My Detox DNA - inside your KYG account. You collect one sample, once.',
       },
       {
         q: 'Do I need to have a health problem to take this test?',
         aHtml:
-          'No. My Wellness is for anyone who wants to understand how their body is genetically wired around food, weight, exercise, and toxin clearance. Most people take it simply to stop guessing — to know which diet, training, and lifestyle choices actually work with their biology.',
+          'No. My Wellness is for anyone who wants to understand how their body is genetically wired around food, weight, exercise, and toxin clearance. Most people take it simply to stop guessing - to know which diet, training, and lifestyle choices actually work with their biology.',
       },
       {
         q: 'I am vegetarian. Will the Diet report still work for me?',
         aHtml:
-          'Yes. My Diet DNA reads how your genes handle nutrients and foods, not what you currently eat. It is just as useful for vegetarians — for example, it flags how well you absorb Vitamin B12, iron, and Omega-3, which are common gaps on a vegetarian diet, so you know exactly what to prioritise.',
+          'Yes. My Diet DNA reads how your genes handle nutrients and foods, not what you currently eat. It is just as useful for vegetarians - for example, it flags how well you absorb Vitamin B12, iron, and Omega-3, which are common gaps on a vegetarian diet, so you know exactly what to prioritise.',
       },
       {
         q: 'Can I just buy one of the four reports instead of all of them?',
         aHtml:
-          'My Wellness is sold as one kit that unlocks all four reports together, because a single sample is analysed for all 52 traits at once. You get Diet, Weight, Fitness, and Detox as a set — there is no cheaper single-report version, and no extra cost for the full four.',
+          'My Wellness is sold as one kit that unlocks all four reports together, because a single sample is analysed for all 52 traits at once. You get Diet, Weight, Fitness, and Detox as a set - there is no cheaper single-report version, and no extra cost for the full four.',
       },
       {
         q: 'What does a Poor or High Risk result actually mean?',
@@ -2033,7 +2033,7 @@ export const myWellness: TestPage = {
       {
         q: 'My genes do not change, so why take this test now?',
         aHtml:
-          'Exactly because they do not change — the sooner you know your genetic tendencies, the more years you have to act on them. Knowing your carb response, fat storage, injury risk, or detox capacity in your 20s or 30s lets you shape your diet, training, and lifestyle before problems build up, instead of after.',
+          'Exactly because they do not change - the sooner you know your genetic tendencies, the more years you have to act on them. Knowing your carb response, fat storage, injury risk, or detox capacity in your 20s or 30s lets you shape your diet, training, and lifestyle before problems build up, instead of after.',
       },
       {
         q: 'Is this a medical or diagnostic test?',

@@ -89,6 +89,11 @@ const CARE_ICONS = ['care-what', 'care-how', 'care-get'];
 // bring them back once the bundle products/pricing exist.
 const SHOW_BUNDLES = false;
 
+// Only the Hero CTA ("Check my risk" etc.) is shown for now. The secondary CTAs
+// (Stat, How-it-works, Gift, Final) are hidden until checkout is ready. Flip to
+// `true` to bring them all back.
+const SHOW_CTAS = false;
+
 // Ancestry discovery-layer accents: teal / blue / amber / navy. Blue + navy have
 // no theme token, so use arbitrary hex; teal + amber reuse existing tokens.
 const LAYER: Record<string, { bar: string; chip: string; label: string; card: string; pill: string }> = {
@@ -454,7 +459,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
             <section className={`relative overflow-hidden bg-bottlehero text-spring ${SEC_PAD}`} id="order">
               <span className="pointer-events-none absolute -left-[120px] -top-[140px] size-[520px] rounded-full bg-eden/50 blur-[32px]" />
               <span className="pointer-events-none absolute -bottom-[160px] -right-[100px] size-[460px] rounded-full bg-java/10 blur-[32px]" />
-              <div className="relative grid grid-cols-[1.05fr_0.95fr] items-center gap-[clamp(32px,3.5vw,56px)] max-[1180px]:grid-cols-1 max-[1180px]:gap-[clamp(28px,4vw,44px)]">
+              <div className="relative grid grid-cols-[1.05fr_0.95fr] items-start gap-[clamp(32px,3.5vw,56px)] max-[1180px]:grid-cols-1 max-[1180px]:gap-[clamp(28px,4vw,44px)]">
                 <div className="reveal flex flex-col gap-6">
                   <div className="flex flex-wrap gap-2">
                     {test.hero.badges.map((b, i) => (
@@ -874,9 +879,11 @@ export default function TestPageView({ test }: { test: TestPage }) {
                     >
                       <span className="flow-bar block h-full w-1/2 rounded-full" />
                     </div>
-                    <a href={test.stat.ctaHref} className={`${BTN_JAVA} w-full justify-center`}>
-                      {test.stat.ctaLabel} <Arrow />
-                    </a>
+                    {SHOW_CTAS && (
+                      <a href={test.stat.ctaHref} className={`${BTN_JAVA} w-full justify-center`}>
+                        {test.stat.ctaLabel} <Arrow />
+                      </a>
+                    )}
                     <H
                       html={test.stat.fineprint}
                       className="text-center text-[13.5px] font-semibold text-bermuda"
@@ -964,7 +971,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
               </section>
             )}
 
-            {/* 4 · WHAT YOU GET — 52 TRAITS (My Wellness) */}
+            {/* 4 · WHAT YOU GET - 52 TRAITS (My Wellness) */}
             {test.traitsCatalog && (
               <section id="sample" className={`${SEC_ALT} ${SEC_PAD}`}>
                 <div className={SEC_HEAD}>
@@ -1101,9 +1108,11 @@ export default function TestPageView({ test }: { test: TestPage }) {
                 })}
               </div>
               <div className="mt-7 flex flex-col items-start gap-3">
-                <a href={test.howItWorks.ctaHref} className={BTN_EDEN_LG}>
-                  {test.howItWorks.ctaLabel} <Arrow />
-                </a>
+                {SHOW_CTAS && (
+                  <a href={test.howItWorks.ctaHref} className={BTN_EDEN_LG}>
+                    {test.howItWorks.ctaLabel} <Arrow />
+                  </a>
+                )}
                 <H html={test.howItWorks.fineprint} className="text-[13px] text-cord" as="div" />
               </div>
             </section>
@@ -1304,9 +1313,11 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   ))}
                 </div>
                 <div className="reveal mt-7 flex justify-center">
-                  <a href={test.giftSection.ctaHref} className={BTN_EDEN_LG}>
-                    {test.giftSection.ctaLabel} <Arrow />
-                  </a>
+                  {SHOW_CTAS && (
+                    <a href={test.giftSection.ctaHref} className={BTN_EDEN_LG}>
+                      {test.giftSection.ctaLabel} <Arrow />
+                    </a>
+                  )}
                 </div>
               </section>
             )}
@@ -1338,9 +1349,11 @@ export default function TestPageView({ test }: { test: TestPage }) {
                   className="max-w-[640px] text-[17px] leading-[1.55] text-spring/85"
                   as="p"
                 />
-                <a href={test.finalCta.ctaHref} className={BTN_JAVA_LG}>
-                  {test.finalCta.ctaLabel} <Arrow />
-                </a>
+                {SHOW_CTAS && (
+                  <a href={test.finalCta.ctaHref} className={BTN_JAVA_LG}>
+                    {test.finalCta.ctaLabel} <Arrow />
+                  </a>
+                )}
                 <H html={test.finalCta.fineprint1} className="text-[13px] text-bermuda" as="div" />
                 <H html={test.finalCta.fineprint2} className="text-[13px] text-spring/60" as="div" />
               </div>
