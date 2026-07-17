@@ -1,5 +1,3 @@
-// The KYG wordmark. `tone="dark"` paints it in brand teal (for the light
-// header); `tone="light"` paints the wordmark cream (for the dark footer).
 export function KygLogo({ tone = 'dark', className }: { tone?: 'dark' | 'light'; className?: string }) {
   const wordmark = tone === 'light' ? '#FAF6EF' : '#0E4D4B';
   return (

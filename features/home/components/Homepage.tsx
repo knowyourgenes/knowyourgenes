@@ -401,95 +401,10 @@ const KYG_PAGE_CSS = `/* =======================================================
   transform: translateX(0);
 }
 
-/* ========= Hero ========= */
-.kyg-page .hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 24px 0 80px;
-  overflow: hidden;
-}
-.kyg-page .hero__media {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  border-radius: 0 0 var(--r-2xl) var(--r-2xl);
-}
-.kyg-page .hero__media-img {
-  position: absolute;
-  top: -14%;
-  left: 0;
-  width: 100%;
-  height: 128%;
-  object-fit: cover;
-  object-position: 60% 45%;
-  will-change: transform;
-  filter: saturate(0.92) contrast(1.02);
-}
-.kyg-page .hero__media-veil {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      96deg,
-      rgba(250, 246, 239, 0.99) 0%,
-      rgba(250, 246, 239, 0.92) 26%,
-      rgba(250, 246, 239, 0.62) 46%,
-      rgba(250, 246, 239, 0.22) 64%,
-      rgba(250, 246, 239, 0) 80%
-    ),
-    linear-gradient(180deg, rgba(250, 246, 239, 0) 50%, rgba(250, 246, 239, 0.65) 100%);
-}
-.kyg-page .hero__media-grain {
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
-  opacity: 0.15;
-  mix-blend-mode: multiply;
-}
-
-.kyg-page .hero__inner {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-top: 60px;
-}
-.kyg-page .hero__copy {
-  max-width: 820px;
-}
-.kyg-page .hero__pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 26px 12px 12px;
-  background: var(--c-teal);
-  border: 1px solid rgba(37, 181, 171, 0.32);
-  border-radius: 999px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--c-cream);
-  margin-bottom: 36px;
-  letter-spacing: 0.005em;
-  box-shadow:
-    0 14px 32px -8px rgba(14, 77, 75, 0.42),
-    0 0 0 4px rgba(14, 77, 75, 0.05);
-  position: relative;
-  overflow: hidden;
-}
-.kyg-page .hero__pill::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -30%;
-  width: 30%;
-  background: linear-gradient(90deg, transparent, rgba(248, 228, 204, 0.28), transparent);
-  animation: pillShine 4.5s ease-in-out infinite;
-}
+/* ========= Hero =========
+   The hero markup is now pure Tailwind (see the <section> in the JSX). Only the
+   pill-shine keyframe stays here - it is referenced by the Tailwind utility
+   animate-[pillShine_4.5s_ease-in-out_infinite]. */
 @keyframes pillShine {
   0%,
   70% {
@@ -499,46 +414,6 @@ const KYG_PAGE_CSS = `/* =======================================================
     left: 130%;
   }
 }
-.kyg-page .hero__pill-dot {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, var(--c-peach-2), var(--c-rust));
-  color: var(--c-cream);
-  border-radius: 50%;
-  font-size: 14px;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 4px rgba(248, 228, 204, 0.14);
-}
-.kyg-page .hero__h {
-  font-family: var(--ff);
-  font-size: clamp(48px, 7.4vw, 110px);
-  font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.038em;
-  color: var(--ink-1);
-}
-.kyg-page .hero__h em {
-  font-style: normal;
-  display: block;
-  font-weight: 500;
-}
-.kyg-page .hero__sub {
-  font-size: clamp(17px, 1.45vw, 21px);
-  line-height: 1.5;
-  color: var(--ink-2);
-  margin-top: 28px;
-  max-width: 580px;
-}
-.kyg-page .hero__cta {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 36px;
-}
-
 .kyg-page .hero__aside {
   display: flex;
   flex-direction: column;
@@ -1584,7 +1459,10 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .care {
   position: relative;
   border-radius: var(--r-2xl);
-  margin: 0 var(--gutter);
+  /* Cap at the site width (1530px) and centre; keep the gutter on narrower
+     screens so the card never touches the viewport edge. */
+  width: min(var(--max-w), 100% - 2 * var(--gutter));
+  margin-inline: auto;
   overflow: hidden;
 }
 .kyg-page .care__inner {
@@ -2159,7 +2037,10 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .movement {
   background: linear-gradient(180deg, var(--dark-1) 0%, var(--dark-2) 100%);
   border-radius: var(--r-2xl);
-  margin: 0 var(--gutter);
+  /* Cap at the site width (1530px) and centre; keep the gutter on narrower
+     screens. Below 1180px the overrides below take it full-bleed again. */
+  width: min(var(--max-w), 100% - 2 * var(--gutter));
+  margin-inline: auto;
   overflow: hidden;
   position: relative;
 }
@@ -2351,7 +2232,13 @@ const KYG_PAGE_CSS = `/* =======================================================
 /* Floating squircle photo frames flanking the CTA copy */
 .kyg-page .finalcta__floats {
   position: absolute;
-  inset: 0;
+  /* Constrain the floating photos to the centred 1530px band instead of the
+     full viewport, so they don't drift out to the screen edges on wide screens. */
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--max-w), 100% - 2 * var(--gutter));
   z-index: 0;
   pointer-events: none;
   perspective: 1400px;
@@ -2538,6 +2425,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   }
   .kyg-page .care,
   .kyg-page .movement {
+    width: 100%;
     margin: 0;
     border-radius: 0;
   }
@@ -2734,45 +2622,6 @@ const KYG_PAGE_CSS = `/* =======================================================
 }
 .kyg-page .nav__inner {
   height: 72px;
-}
-
-/* Hero: exact 100vh with content centered and the heading sized to fit. */
-.kyg-page .hero {
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-.kyg-page .hero__media {
-  border-radius: 0;
-}
-.kyg-page .hero__inner {
-  padding-top: 96px;
-  padding-bottom: 32px;
-}
-.kyg-page .hero__copy {
-  max-width: min(1100px, 100%);
-}
-.kyg-page .hero__h {
-  font-size: clamp(34px, 5.8vw, 84px);
-  line-height: 1.02;
-}
-.kyg-page .hero__h-line {
-  display: block;
-}
-/* Keep each line on a single row at desktop widths where we have the space. */
-@media (min-width: 1024px) {
-  .kyg-page .hero__h-line {
-    white-space: nowrap;
-  }
-}
-.kyg-page .hero__sub {
-  margin-top: 20px;
-}
-.kyg-page .hero__cta {
-  margin-top: 28px;
 }
 
 /* Tablet */
@@ -3689,24 +3538,6 @@ const KYG_POLISH_CSS = `/* =====================================================
    KYG_TESTS_CSS so these rules win the cascade on ties.
    ============================================================= */
 
-/* ---------- Hero image jitter fix ---------- */
-.kyg-page .hero__media {
-  /* Isolate the media layer's painting so the parallaxed image
-     does not invalidate adjacent sections every scroll tick. */
-  contain: paint;
-}
-.kyg-page .hero__media-img {
-  /* Force a dedicated compositor layer. backface-visibility is the
-     long-standing trick; the translateZ baseline composes with the
-     scroll-driven translate3d the JS writes on top. */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: translate3d(0, 0, 0) scale(1.04);
-  /* Filter rasterisation can be expensive while transform changes;
-     keep the look but pre-bake it as a one-shot rather than per-frame. */
-  image-rendering: -webkit-optimize-contrast;
-}
-
 /* ---------- General responsive tightening ---------- */
 @media (max-width: 1180px) {
   .kyg-page section.s {
@@ -3839,9 +3670,6 @@ const KYG_POLISH_CSS = `/* =====================================================
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .kyg-page .hero__media-img {
-    transform: scale(1.04) !important;
-  }
 }
 
 /* =================================================================
@@ -3952,6 +3780,7 @@ body {
      so the rounded panels sit flush, full-bleed. */
   .kyg-page .care,
   .kyg-page .movement {
+    width: 100% !important;
     margin: 0 !important;
     border-radius: 0 !important;
   }
@@ -4418,6 +4247,7 @@ export default function HomePage() {
       const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>('.parallax'));
       const ctaParallaxEls = Array.from(document.querySelectorAll<HTMLElement>('.parallax-cta'));
       const heroImg = document.getElementById('heroImg');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let ticking = false;
 
       function applyParallax() {
@@ -4454,12 +4284,18 @@ export default function HomePage() {
           }
         });
         if (heroImg) {
-          // Hero gets the strongest effect, capped at 180px
-          const o = Math.min(sy * 0.32, 180);
-          // Whole-pixel rounding stops the sub-pixel jitter the compositor
-          // produces when transform values change by fractional amounts
-          // every scroll tick on high-refresh displays.
-          heroImg.style.transform = `translate3d(0, ${Math.round(o)}px, 0) scale(1.04)`;
+          if (prefersReducedMotion) {
+            // Respect reduced-motion: hold the image still (no scroll parallax).
+            heroImg.style.transform = 'translate3d(0, 0, 0) scale(1.04)';
+          } else {
+            // Capped at 120px - stays well inside the image's 160px vertical
+            // overscan so the frame never uncovers a gap at the top edge.
+            const o = Math.min(sy * 0.26, 120);
+            // Whole-pixel rounding stops the sub-pixel jitter the compositor
+            // produces when transform values change by fractional amounts
+            // every scroll tick on high-refresh displays.
+            heroImg.style.transform = `translate3d(0, ${Math.round(o)}px, 0) scale(1.04)`;
+          }
         }
         ticking = false;
       }
@@ -4681,38 +4517,53 @@ export default function HomePage() {
       {/* ============================================================
      HERO - Full-width photographic with editorial overlay
      ============================================================ */}
-      <section className="hero">
-        <div className="hero__media">
+      <section className="relative flex h-[100dvh] items-center overflow-hidden">
+        <div className="absolute inset-0 z-[-1] overflow-hidden [contain:paint]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            className="hero__media-img"
             id="heroImg"
             src="/kyg/950448a92b6b.jpg"
             alt="An Indian family at home, a father and son share a moment at a laptop while the mother and daughter cook together in the kitchen"
+            className="absolute -top-[14%] left-0 h-[128%]! w-full max-w-none object-cover [object-position:60%_45%] [filter:saturate(0.92)_contrast(1.02)] [backface-visibility:hidden] will-change-transform"
           />
-          <div className="hero__media-veil"></div>
-          <div className="hero__media-grain"></div>
+          {/* Warm cream veil - fades the photo into readable copy on the left */}
+          <div className="absolute inset-0 bg-[linear-gradient(96deg,rgba(250,246,239,.99)_0%,rgba(250,246,239,.92)_26%,rgba(250,246,239,.62)_46%,rgba(250,246,239,.22)_64%,rgba(250,246,239,0)_80%),linear-gradient(180deg,rgba(250,246,239,0)_50%,rgba(250,246,239,.65)_100%)]" />
+          {/* Fine film grain */}
+          <div
+            className="absolute inset-0 opacity-[0.15] mix-blend-multiply"
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>\")",
+            }}
+          />
         </div>
 
         <div className="container container--wide">
-          <div className="hero__inner">
-            <div className="hero__copy reveal">
-              <div className="hero__pill">
-                <span className="hero__pill-dot">✦</span>
+          <div className="relative flex w-full flex-col items-start pt-[96px] pb-[32px] max-[1180px]:pt-[84px] max-[1180px]:pb-[28px] max-[880px]:pt-[76px] max-[880px]:pb-[24px] max-[720px]:pt-[68px] max-[720px]:pb-[20px]">
+            <div className="reveal max-w-[min(1100px,100%)]">
+              <div className="relative mb-[36px] inline-flex items-center gap-[14px] overflow-hidden rounded-full border border-[rgba(37,181,171,.32)] bg-(--c-teal) py-[12px] pr-[26px] pl-[12px] text-[16px] font-semibold tracking-[.005em] text-(--c-cream) shadow-[0_14px_32px_-8px_rgba(14,77,75,.42),0_0_0_4px_rgba(14,77,75,.05)] max-[1180px]:mb-[22px] max-[880px]:mb-[18px] max-[880px]:py-[8px] max-[880px]:pr-[18px] max-[880px]:pl-[8px] max-[880px]:text-[13px] max-[720px]:mb-[14px] max-[720px]:py-[6px] max-[720px]:pr-[14px] max-[720px]:pl-[6px] max-[720px]:text-[11px]">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 -left-[30%] w-[30%] animate-[pillShine_4.5s_ease-in-out_infinite] bg-[linear-gradient(90deg,transparent,rgba(248,228,204,.28),transparent)]"
+                />
+                <span className="inline-flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--c-peach-2),var(--c-rust))] text-[14px] text-(--c-cream) shadow-[0_0_0_4px_rgba(248,228,204,.14)] max-[880px]:h-[28px] max-[880px]:w-[28px] max-[880px]:text-[13px] max-[720px]:h-[22px] max-[720px]:w-[22px] max-[720px]:text-[13px]">
+                  ✦
+                </span>
                 <span>India's first wellness-led DNA experience</span>
               </div>
-              <h1 className="hero__h">
+              <h1 className="[font-family:var(--ff)] text-[clamp(34px,5.8vw,84px)] font-semibold leading-[1.02] tracking-[-.038em] text-(--ink-1) max-[880px]:text-[clamp(30px,7.4vw,56px)] max-[720px]:text-[clamp(26px,8vw,40px)] max-[720px]:leading-[1.04]">
                 Your body already carries
-                <em>
+                <em className="block font-medium not-italic">
                   <span className="grad-text">clues about your future.</span>
                 </em>
               </h1>
-              <p className="hero__sub">
+              <p className="mt-[20px] max-w-[580px] text-[clamp(17px,1.45vw,21px)] leading-[1.5] text-(--ink-2) max-[720px]:mt-[14px] max-[720px]:max-w-none max-[720px]:text-[14px]">
                 Understand your body better through personalized wellness and genetic insights designed for modern
                 India.
               </p>
               {/* CTA-HIDDEN: hero CTAs */}
               {false && (
-                <div className="hero__cta">
+                <div className="mt-[28px] flex flex-wrap gap-[14px]">
                   <a href="#wellness" className="btn btn--primary">
                     Start your wellness journey
                     <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

@@ -24,7 +24,13 @@ const PRODUCTS = {
 function Arrow() {
   return (
     <svg className="ico" viewBox="0 0 20 20" fill="none" aria-hidden>
-      <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M4 10h12M11 5l5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -332,7 +338,7 @@ export default function DummyHomepage() {
           }
         }
       },
-      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
     );
     targets.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -347,14 +353,15 @@ export default function DummyHomepage() {
         <div className="container">
           <div className="reveal">
             <div className="dh-hero__pill">
-              Know Your Genes <span>·</span> 5 Genetic Reports <span>·</span> 1 Saliva Kit Per Test <span>·</span> NABL Certified Lab
+              Know Your Genes <span>·</span> 5 Genetic Reports <span>·</span> 1 Saliva Kit Per Test <span>·</span> NABL
+              Certified Lab
             </div>
             <h1 className="dh-hero__h">
               Your body already carries <span className="grad-text">clues about your future.</span>
             </h1>
             <p className="dh-hero__sub">
               From how your body handles food and fitness, to health risks specific to you, to where your bloodline
-              actually comes from — KYG turns one saliva sample into answers plain English can explain.
+              actually comes from - KYG turns one saliva sample into answers plain English can explain.
             </p>
             <div className="dh-hero__cta">
               <a href="#choose" className="btn btn--primary">
@@ -433,11 +440,12 @@ export default function DummyHomepage() {
               </p>
               <p>
                 The diet that transformed your colleague. The workout everyone swears by. The health scare that runs in
-                someone else&apos;s family but somehow skips theirs. If none of it lines up for you, it&apos;s not because
-                you didn&apos;t try hard enough — your body was never given the instructions everyone else is following.
+                someone else&apos;s family but somehow skips theirs. If none of it lines up for you, it&apos;s not
+                because you didn&apos;t try hard enough - your body was never given the instructions everyone else is
+                following.
               </p>
               <p>
-                KYG reads those instructions — whatever they cover for you. Diet and fitness. Hormones and fertility.
+                KYG reads those instructions - whatever they cover for you. Diet and fitness. Hormones and fertility.
                 Bone health and PCOS risk. Or the 50,000-year story of where you actually come from. One saliva sample,
                 decoded in plain English.
               </p>
@@ -468,11 +476,15 @@ export default function DummyHomepage() {
                 <li>Results in 7 days</li>
               </ul>
               <span className="dh-card__cta">
-                Explore My Wellness — Rs X,XXX <Arrow />
+                Explore My Wellness - Rs X,XXX <Arrow />
               </span>
             </a>
 
-            <a className="dh-card reveal" href={PRODUCTS.womens} style={{ ['--bar' as string]: '#c0432f', ['--rd' as string]: '0.05s' }}>
+            <a
+              className="dh-card reveal"
+              href={PRODUCTS.womens}
+              style={{ ['--bar' as string]: '#c0432f', ['--rd' as string]: '0.05s' }}
+            >
               <span className="dh-card__kicker">Women&apos;s Health</span>
               <h3 className="dh-card__title">1 in 5 Indian women has PCOS. Most never learn why.</h3>
               <ul className="dh-card__list">
@@ -480,11 +492,15 @@ export default function DummyHomepage() {
                 <li>Results in 7 days</li>
               </ul>
               <span className="dh-card__cta">
-                Explore Women&apos;s Health — Rs X,XXX <Arrow />
+                Explore Women&apos;s Health - Rs X,XXX <Arrow />
               </span>
             </a>
 
-            <a className="dh-card reveal" href={PRODUCTS.mens} style={{ ['--bar' as string]: '#0e4d4b', ['--rd' as string]: '0.1s' }}>
+            <a
+              className="dh-card reveal"
+              href={PRODUCTS.mens}
+              style={{ ['--bar' as string]: '#0e4d4b', ['--rd' as string]: '0.1s' }}
+            >
               <span className="dh-card__kicker">Men&apos;s Health</span>
               <h3 className="dh-card__title">Men rarely get tested until something goes wrong.</h3>
               <ul className="dh-card__list">
@@ -492,11 +508,15 @@ export default function DummyHomepage() {
                 <li>Results in 7 days</li>
               </ul>
               <span className="dh-card__cta">
-                Explore Men&apos;s Health — Rs X,XXX <Arrow />
+                Explore Men&apos;s Health - Rs X,XXX <Arrow />
               </span>
             </a>
 
-            <a className="dh-card reveal" href={PRODUCTS.ancestry} style={{ ['--bar' as string]: '#1e5f9e', ['--rd' as string]: '0.15s' }}>
+            <a
+              className="dh-card reveal"
+              href={PRODUCTS.ancestry}
+              style={{ ['--bar' as string]: '#1e5f9e', ['--rd' as string]: '0.15s' }}
+            >
               <span className="dh-card__kicker">Ancestors In Me</span>
               <h3 className="dh-card__title">KYC toh kar liya. Ab apni asli identity jaano.</h3>
               <ul className="dh-card__list">
@@ -505,7 +525,7 @@ export default function DummyHomepage() {
                 <li>Results in 7 days</li>
               </ul>
               <span className="dh-card__cta">
-                Explore Ancestors In Me — Rs X,XXX <Arrow />
+                Explore Ancestors In Me - Rs X,XXX <Arrow />
               </span>
             </a>
           </div>
@@ -547,7 +567,8 @@ export default function DummyHomepage() {
             </div>
             <div className="dh-wall__item reveal" style={{ ['--rd' as string]: '0.15s' }}>
               <p className="dh-wall__stat">
-                Most Indians can trace their family back 2-3 generations. Your DNA can trace it back <b>50,000 years.</b>
+                Most Indians can trace their family back 2-3 generations. Your DNA can trace it back{' '}
+                <b>50,000 years.</b>
               </p>
               <p className="dh-wall__sub">
                 Across continents, through civilisations, back to the first humans who walked out of Africa.
@@ -588,19 +609,19 @@ export default function DummyHomepage() {
               <span className="dh-grade__tag g-good">
                 <span className="dh-grade__dot" /> GOOD
               </span>
-              <p className="dh-grade__txt">Low risk — your genes are in the normal range for this trait.</p>
+              <p className="dh-grade__txt">Low risk - your genes are in the normal range for this trait.</p>
             </div>
             <div className="dh-grade reveal" style={{ ['--rd' as string]: '0.05s' }}>
               <span className="dh-grade__tag g-avg">
                 <span className="dh-grade__dot" /> AVERAGE
               </span>
-              <p className="dh-grade__txt">Some tendency — follow the recommendations in your report.</p>
+              <p className="dh-grade__txt">Some tendency - follow the recommendations in your report.</p>
             </div>
             <div className="dh-grade reveal" style={{ ['--rd' as string]: '0.1s' }}>
               <span className="dh-grade__tag g-poor">
                 <span className="dh-grade__dot" /> POOR
               </span>
-              <p className="dh-grade__txt">Elevated tendency — act on the recommendations, and talk to a specialist.</p>
+              <p className="dh-grade__txt">Elevated tendency - act on the recommendations, and talk to a specialist.</p>
             </div>
           </div>
         </div>
@@ -619,7 +640,7 @@ export default function DummyHomepage() {
               {
                 n: '01',
                 t: 'Order online',
-                b: 'Your kit arrives in 2 to 3 days. Saliva tube, instruction card, and a prepaid return envelope — everything included.',
+                b: 'Your kit arrives in 2 to 3 days. Saliva tube, instruction card, and a prepaid return envelope - everything included.',
               },
               {
                 n: '02',
@@ -629,12 +650,12 @@ export default function DummyHomepage() {
               {
                 n: '03',
                 t: 'Drop it with the courier',
-                b: "Prepaid, pre-labelled envelope. A courier picks it up from your address — track it in the KYG portal from the moment it's collected.",
+                b: "Prepaid, pre-labelled envelope. A courier picks it up from your address - track it in the KYG portal from the moment it's collected.",
               },
               {
                 n: '04',
                 t: 'Our lab processes your sample',
-                b: "Neotech World Lab — NABL accredited, India's highest official lab certification. Illumina genotyping technology. A qualified scientist reviews every result before release.",
+                b: "Neotech World Lab - NABL accredited, India's highest official lab certification. Illumina genotyping technology. A qualified scientist reviews every result before release.",
               },
               {
                 n: '05',
@@ -658,32 +679,36 @@ export default function DummyHomepage() {
       {/* ===================== 7 · GENEOUS CARE ===================== */}
       <section className="s">
         <div className="container">
-          <div className="s--dark" style={{ borderRadius: 'var(--r-2xl)', padding: 'clamp(44px,6vw,84px) clamp(28px,5vw,72px)' }}>
+          <div
+            className="s--dark"
+            style={{ borderRadius: 'var(--r-2xl)', padding: 'clamp(44px,6vw,84px) clamp(28px,5vw,72px)' }}
+          >
             <div className="dh-care__grid">
               <div className="dh-care__body reveal">
                 <div className="eyebrow eyebrow--light">GENEous Care</div>
                 <h2 className="h2">You will not read your report alone.</h2>
                 <p className="dh-care__lead lead">
-                  GENEous Care is KYG&apos;s free counselling service. A real, qualified counsellor reaches out after your
-                  report is ready and walks you through it — on WhatsApp, in plain language, no medical jargon.
+                  GENEous Care is KYG&apos;s free counselling service. A real, qualified counsellor reaches out after
+                  your report is ready and walks you through it - on WhatsApp, in plain language, no medical jargon.
                 </p>
                 <p>
-                  Other genetic testing brands send a report and a help-page link. KYG gives you a 30-minute conversation
-                  with someone who has already read your specific results and knows exactly what matters for you first.
+                  Other genetic testing brands send a report and a help-page link. KYG gives you a 30-minute
+                  conversation with someone who has already read your specific results and knows exactly what matters
+                  for you first.
                 </p>
                 <p className="muted">
-                  Included free with every report, whichever test you order. Counsellor contacts you within 2 days of your
-                  report being delivered.
+                  Included free with every report, whichever test you order. Counsellor contacts you within 2 days of
+                  your report being delivered.
                 </p>
               </div>
               <div className="dh-chat reveal" style={{ ['--rd' as string]: '0.08s' }}>
                 <div className="dh-bubble">
                   Hi! I&apos;ve read through your report. Free to chat for 30 mins this week?
                 </div>
-                <div className="dh-bubble dh-bubble--me">Yes — where should I start?</div>
+                <div className="dh-bubble dh-bubble--me">Yes - where should I start?</div>
                 <div className="dh-bubble">
-                  I&apos;ve pulled out the 3 results that matter most for you. I&apos;ll walk you through all of it on the
-                  call 👍
+                  I&apos;ve pulled out the 3 results that matter most for you. I&apos;ll walk you through all of it on
+                  the call 👍
                 </div>
               </div>
             </div>
@@ -700,11 +725,26 @@ export default function DummyHomepage() {
           </div>
           <div className="dh-cert reveal">
             {[
-              ['NABL Accredited (ISO 15189) — MC-6400', "India's highest official certification for testing labs. Your sample is handled under strict, independently verified standards."],
-              ['ISO 9001:2015 + ISO 27001:2013', 'Quality management and data security certified. Your personal and genetic data is protected at every step.'],
-              ['ACMG + CPIC Guidelines', "Your reports follow the guidelines of two of the world's leading bodies in genetic science."],
-              ['Illumina Genotyping Technology', "The same gene-reading technology used by the world's largest genetic testing companies. 99%+ accuracy."],
-              ['HIPAA + FDA Standards', 'Your data is handled under international privacy rules. KYG never sells or shares your information.'],
+              [
+                'NABL Accredited (ISO 15189) - MC-6400',
+                "India's highest official certification for testing labs. Your sample is handled under strict, independently verified standards.",
+              ],
+              [
+                'ISO 9001:2015 + ISO 27001:2013',
+                'Quality management and data security certified. Your personal and genetic data is protected at every step.',
+              ],
+              [
+                'ACMG + CPIC Guidelines',
+                "Your reports follow the guidelines of two of the world's leading bodies in genetic science.",
+              ],
+              [
+                'Illumina Genotyping Technology',
+                "The same gene-reading technology used by the world's largest genetic testing companies. 99%+ accuracy.",
+              ],
+              [
+                'HIPAA + FDA Standards',
+                'Your data is handled under international privacy rules. KYG never sells or shares your information.',
+              ],
             ].map(([k, v]) => (
               <div key={k} className="dh-cert__row">
                 <div className="dh-cert__k">{k}</div>
@@ -738,9 +778,11 @@ export default function DummyHomepage() {
             <div className="dh-combo reveal">
               <div className="dh-combo__title">Know Before You Begin</div>
               <div className="dh-combo__sub">For couples getting married or planning a family</div>
-              <div className="dh-combo__what">Women&apos;s Health + Men&apos;s Health + one joint counselling session</div>
+              <div className="dh-combo__what">
+                Women&apos;s Health + Men&apos;s Health + one joint counselling session
+              </div>
               <a href="#" className="dh-combo__cta">
-                View Bundle — Rs X,XXX <Arrow />
+                View Bundle - Rs X,XXX <Arrow />
               </a>
             </div>
             <div className="dh-combo reveal" style={{ ['--rd' as string]: '0.05s' }}>
@@ -748,15 +790,17 @@ export default function DummyHomepage() {
               <div className="dh-combo__sub">The most complete genetic picture available in India</div>
               <div className="dh-combo__what">All 4 health reports + Ancestors In Me</div>
               <a href="#" className="dh-combo__cta">
-                View Bundle — Rs X,XXX <Arrow />
+                View Bundle - Rs X,XXX <Arrow />
               </a>
             </div>
             <div className="dh-combo reveal" style={{ ['--rd' as string]: '0.1s' }}>
               <div className="dh-combo__title">Couple&apos;s Blueprint</div>
-              <div className="dh-combo__sub">For couples who want everyday health insights, not just family-planning data</div>
+              <div className="dh-combo__sub">
+                For couples who want everyday health insights, not just family-planning data
+              </div>
               <div className="dh-combo__what">My Wellness + Women&apos;s Health + Men&apos;s Health</div>
               <a href="#" className="dh-combo__cta">
-                View Bundle — Rs X,XXX <Arrow />
+                View Bundle - Rs X,XXX <Arrow />
               </a>
             </div>
           </div>
@@ -772,7 +816,7 @@ export default function DummyHomepage() {
               <h3 className="h3" style={{ marginTop: 16 }}>
                 Straight answers to the questions Indians actually search about their bodies.
               </h3>
-              <div className="dh-decoded__note">● Coming soon — articles publishing shortly</div>
+              <div className="dh-decoded__note">● Coming soon - articles publishing shortly</div>
             </div>
             <a href="/blog" className="btn btn--ghost">
               Visit the blog <Arrow />
@@ -792,19 +836,19 @@ export default function DummyHomepage() {
             {[
               {
                 q: 'Which KYG test should I take?',
-                a: 'It depends on what you want to know. My Wellness covers diet, weight, fitness, and detox for anyone who wants to understand how their body actually works day to day. Women’s Health and Men’s Health cover specific health risks — PCOS, fertility, hormones, bone health, and more. Ancestors In Me is about heritage, not health. Many people start with My Wellness or the relevant Health report and add Ancestry later.',
+                a: 'It depends on what you want to know. My Wellness covers diet, weight, fitness, and detox for anyone who wants to understand how their body actually works day to day. Women’s Health and Men’s Health cover specific health risks - PCOS, fertility, hormones, bone health, and more. Ancestors In Me is about heritage, not health. Many people start with My Wellness or the relevant Health report and add Ancestry later.',
               },
               {
                 q: 'Are these different tests, or one test that covers everything?',
-                a: 'Each product uses its own saliva sample and answers a different question — Wellness, Women’s Health, Men’s Health, and Ancestry are four separate reports. If you want more than one, you take a separate kit for each, though bundles like The Complete You combine several at once for better value.',
+                a: 'Each product uses its own saliva sample and answers a different question - Wellness, Women’s Health, Men’s Health, and Ancestry are four separate reports. If you want more than one, you take a separate kit for each, though bundles like The Complete You combine several at once for better value.',
               },
               {
                 q: 'Is this the same as an international ancestry test like AncestryDNA or 23andMe?',
-                a: 'No. KYG’s Ancestors In Me is built and processed in India, at an NABL-certified lab, with reference population data relevant to South Asian ancestry — a region many international tests represent less precisely. It is not affiliated with AncestryDNA or 23andMe.',
+                a: 'No. KYG’s Ancestors In Me is built and processed in India, at an NABL-certified lab, with reference population data relevant to South Asian ancestry - a region many international tests represent less precisely. It is not affiliated with AncestryDNA or 23andMe.',
               },
               {
                 q: 'How is this different from a regular blood test at a lab?',
-                a: 'A blood test usually measures what’s happening in your body right now — your current cholesterol, sugar, or hormone levels. A KYG genetic test reads your underlying genetic tendencies, which don’t change over time, and explains the ‘why’ behind patterns a regular blood test can’t. The two are complementary, not competing.',
+                a: 'A blood test usually measures what’s happening in your body right now - your current cholesterol, sugar, or hormone levels. A KYG genetic test reads your underlying genetic tendencies, which don’t change over time, and explains the ‘why’ behind patterns a regular blood test can’t. The two are complementary, not competing.',
               },
               {
                 q: 'Is my genetic data safe?',

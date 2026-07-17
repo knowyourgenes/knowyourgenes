@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { PortableText } from 'next-sanity';
+import { Container } from '@/components/shared/Container';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
 import { categoryLabel, extractHeadings, formatPostDate, imageUrl, type BlogFullPost } from '@/features/blog';
 import { buildPortableComponents } from './portable-text';
@@ -20,7 +21,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
 
   return (
     <div style={CHROME_VARS} className="min-h-screen bg-(--cream) text-(--ink-1)">
-      <div className="mx-auto max-w-[1530px] px-(--gutter) py-[clamp(32px,5vw,64px)]">
+      <Container className="py-[clamp(32px,5vw,64px)]">
         <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-[14px] font-medium text-(--ink-3) transition-colors hover:text-(--teal)"
@@ -30,8 +31,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
 
         <div
           className={
-            'mt-7' +
-            (hasToc ? ' lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-[clamp(40px,5vw,80px)]' : '')
+            'mt-7' + (hasToc ? ' lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-[clamp(40px,5vw,80px)]' : '')
           }
         >
           <article>
@@ -49,7 +49,11 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
               <div className="mt-6 flex flex-wrap items-center gap-3 border-y border-(--ink-line) py-4">
                 {authorPhoto ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={authorPhoto} alt={post.author?.name ?? ''} className="h-11 w-11 rounded-full object-cover" />
+                  <img
+                    src={authorPhoto}
+                    alt={post.author?.name ?? ''}
+                    className="h-11 w-11 rounded-full object-cover"
+                  />
                 ) : null}
                 <div className="flex flex-col">
                   {post.author?.name ? (
@@ -92,7 +96,9 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
                   <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-(--ink-3)">Written by</p>
                   <p className="mt-1 text-[16px] font-semibold text-(--ink-1)">
                     {post.author.name}
-                    {post.author.role ? <span className="font-normal text-(--ink-3)"> · {post.author.role}</span> : null}
+                    {post.author.role ? (
+                      <span className="font-normal text-(--ink-3)"> · {post.author.role}</span>
+                    ) : null}
                   </p>
                   <p className="mt-2 text-[14.5px] leading-[1.6] text-(--ink-3)">{post.author.bio}</p>
                 </div>
@@ -115,7 +121,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
             </aside>
           ) : null}
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

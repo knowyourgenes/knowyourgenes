@@ -62,37 +62,37 @@ export function buildPortableComponents(headingIds?: Map<string, string>) {
         </blockquote>
       ),
     },
-  marks: {
-    strong: ({ children }: { children?: ReactNode }) => (
-      <strong className="font-semibold text-(--ink-1)">{children}</strong>
-    ),
-    em: ({ children }: { children?: ReactNode }) => <em>{children}</em>,
-    link: ({ value, children }: { value?: { href?: string }; children?: ReactNode }) => {
-      const href = value?.href ?? '#';
-      const external = /^https?:\/\//.test(href);
-      return (
-        <a
-          href={href}
-          className="text-(--teal) underline decoration-(--teal)/40 underline-offset-[3px] transition-colors hover:text-(--teal-light)"
-          {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        >
-          {children}
-        </a>
-      );
+    marks: {
+      strong: ({ children }: { children?: ReactNode }) => (
+        <strong className="font-semibold text-(--ink-1)">{children}</strong>
+      ),
+      em: ({ children }: { children?: ReactNode }) => <em>{children}</em>,
+      link: ({ value, children }: { value?: { href?: string }; children?: ReactNode }) => {
+        const href = value?.href ?? '#';
+        const external = /^https?:\/\//.test(href);
+        return (
+          <a
+            href={href}
+            className="text-(--teal) underline decoration-(--teal)/40 underline-offset-[3px] transition-colors hover:text-(--teal-light)"
+            {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            {children}
+          </a>
+        );
+      },
     },
-  },
-  list: {
-    bullet: ({ children }: { children?: ReactNode }) => (
-      <ul className="my-5 ml-5 list-disc space-y-2 text-[17px] leading-[1.8] text-(--ink-2) marker:text-(--teal)">
-        {children}
-      </ul>
-    ),
-    number: ({ children }: { children?: ReactNode }) => (
-      <ol className="my-5 ml-5 list-decimal space-y-2 text-[17px] leading-[1.8] text-(--ink-2) marker:text-(--teal)">
-        {children}
-      </ol>
-    ),
-  },
+    list: {
+      bullet: ({ children }: { children?: ReactNode }) => (
+        <ul className="my-5 ml-5 list-disc space-y-2 text-[17px] leading-[1.8] text-(--ink-2) marker:text-(--teal)">
+          {children}
+        </ul>
+      ),
+      number: ({ children }: { children?: ReactNode }) => (
+        <ol className="my-5 ml-5 list-decimal space-y-2 text-[17px] leading-[1.8] text-(--ink-2) marker:text-(--teal)">
+          {children}
+        </ol>
+      ),
+    },
     listItem: {
       bullet: ({ children }: BlockProps) => <li className="pl-1">{children}</li>,
       number: ({ children }: BlockProps) => <li className="pl-1">{children}</li>,

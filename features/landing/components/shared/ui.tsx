@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Container as SiteContainer } from '@/components/shared/Container';
 
 /* Shared primitives + scoped stylesheet for the PCOS landing page.
  * Everything lives under the `.kyg-lx` root class so nothing leaks globally. */
@@ -10,11 +11,11 @@ export const gTeal = (deg: number) =>
 /** Copper→teal gradient used for "THADA gene" / "managing blindly". */
 export const gCopper = (deg: number) => `linear-gradient(${deg}deg,#C76842 0%,#D4895E 0%,#0E4D4B 91%,#25B5AB 100%)`;
 
-/** 1200px content column, centred with a 120px desktop gutter (matches Figma). */
+/** 1530px content column, centred with a 120px desktop gutter (matches Figma).
+ * Delegates width/centring to the shared SiteContainer; only the landing-specific
+ * gutter is overridden here. */
 export function Container({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return (
-    <div className={`mx-auto w-full max-w-[1530px] px-6 sm:px-10 md:px-16 lg:px-[120px] ${className}`}>{children}</div>
-  );
+  return <SiteContainer className={`px-6 sm:px-10 md:px-16 lg:px-[120px] ${className}`}>{children}</SiteContainer>;
 }
 
 /** Pill label above each section heading. */

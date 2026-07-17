@@ -157,6 +157,11 @@ body {
    shadcn palette above so nothing collides.
    ============================================================================= */
 @theme {
+  /* Homepage trust marquee - registering the animation here (not as a bare
+     arbitrary utility) makes Tailwind v4 emit the @keyframes below when
+     `animate-kyg-marquee` is used, instead of tree-shaking it away. */
+  --animate-kyg-marquee: kyg-marquee 60s linear infinite;
+
   --color-spring: #f6f3ed;
   --color-pearl: #ece6da;
   --color-bottlehero: #0a3b39;
@@ -354,5 +359,19 @@ body {
   [data-slot='sidebar-menu-button']:not(:disabled),
   [data-slot='dialog-close']:not(:disabled) {
     cursor: pointer;
+  }
+}
+
+/* Continuous horizontal marquee - homepage trust strip
+   (features/home/components/sections/TrustMarquee). The track holds two
+   identical copies of the items; translateX(-50%) scrolls exactly one copy,
+   so the loop is seamless. Used via the `animate-kyg-marquee` utility
+   (registered in the @theme block above). */
+@keyframes kyg-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }

@@ -26,7 +26,7 @@ export default function BlogToc({ headings }: { headings: BlogHeading[] }) {
         const first = ids.find((id) => visible.has(id));
         if (first) setActive(first);
       },
-      { rootMargin: '-88px 0px -66% 0px', threshold: 0 },
+      { rootMargin: '-88px 0px -66% 0px', threshold: 0 }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -42,10 +42,7 @@ export default function BlogToc({ headings }: { headings: BlogHeading[] }) {
   };
 
   return (
-    <nav
-      aria-label="On this page"
-      className="sticky top-22 max-h-[calc(100vh-112px)] overflow-y-auto"
-    >
+    <nav aria-label="On this page" className="sticky top-22 max-h-[calc(100vh-112px)] overflow-y-auto">
       <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.16em] text-(--ink-3)">On this page</p>
       <ul className="flex flex-col border-l border-(--ink-line)">
         {headings.map((h) => {

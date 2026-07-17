@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import UserNav from '@/features/admin/components/UserNav';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
 import { NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
+import { Container } from './Container';
 import { KygLogo } from './Logo';
 
 // The home page keeps the nav order/checkout CTAs hidden for now ("CTA-HIDDEN"
@@ -52,8 +53,12 @@ const BTN_BASE =
  * Shared KYG warm-modern site header (mega-menu nav). Self-contained: design
  * tokens are applied inline on the <header> via CHROME_VARS, so it renders
  * identically in any route scope. Used on every public user page.
+ *
+ * `overlay` makes the bar `fixed` (floats over the page, reserves no space) -
+ * used on the home page so it sits over the full-bleed hero. Every other page
+ * leaves it `sticky` (reserves its own row) so content is never hidden beneath.
  */
-export default function SiteHeader() {
+export default function SiteHeader({ overlay = false }: { overlay?: boolean } = {}) {
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const user = session?.user;
@@ -102,11 +107,12 @@ export default function SiteHeader() {
       <header
         style={CHROME_VARS}
         className={cn(
-          'sticky top-0 z-[1000] backdrop-blur-[22px] backdrop-saturate-[1.4] border-b transition-[background,border-color] duration-[400ms] ease-(--e-out)',
+          'top-0 inset-x-0 z-[1000] backdrop-blur-[22px] backdrop-saturate-[1.4] border-b transition-[background,border-color] duration-[400ms] ease-(--e-out)',
+          overlay ? 'fixed' : 'sticky',
           scrolled ? 'bg-[rgba(250,246,239,.88)] border-(--ink-line)' : 'bg-[rgba(250,246,239,.65)] border-transparent'
         )}
       >
-        <div className="w-full max-w-[1530px] mx-auto px-(--gutter) flex items-center justify-between h-16 gap-[32px]">
+        <Container className="flex items-center justify-between h-16 gap-[32px]">
           <Link href="/" className="flex items-center shrink-0" aria-label="KYG, Know Your Genes">
             <KygLogo tone="dark" className="h-9! w-auto" />
           </Link>
@@ -142,7 +148,7 @@ export default function SiteHeader() {
                         : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                     )}
                   >
-                    <div className="max-w-[1530px] mx-auto pt-[44px] px-(--gutter) pb-[56px]">
+                    <Container className="pt-[44px] pb-[56px]">
                       <div className="flex items-end justify-between pb-[18px] mb-[8px] border-b border-(--ink-line)">
                         <div className="text-[13px] tracking-[0.22em] uppercase font-semibold text-(--ink-3)">
                           {menu.title}
@@ -183,7 +189,7 @@ export default function SiteHeader() {
                           </Link>
                         ))}
                       </div>
-                    </div>
+                    </Container>
                   </div>
                 </div>
               );
@@ -250,7 +256,7 @@ export default function SiteHeader() {
               <span className="relative block w-[18px] h-[1.6px] bg-(--ink-1) before:content-[''] before:absolute before:left-0 before:right-0 before:h-[1.6px] before:bg-(--ink-1) before:-top-[6px] after:content-[''] after:absolute after:left-0 after:right-0 after:h-[1.6px] after:bg-(--ink-1) after:top-[6px]" />
             </button>
           </div>
-        </div>
+        </Container>
       </header>
 
       {/* Mobile menu - rendered OUTSIDE <header> so the header's backdrop-filter

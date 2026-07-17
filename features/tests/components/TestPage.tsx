@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ElementType, type RefObject } from 'react';
 import Image from 'next/image';
+import { Container } from '@/components/shared/Container';
 import type { Bundle, ReportCard, TestPage } from '@/features/tests/types';
 import { Arrow, Alert, CheckCircle, Package, SignDot } from './icons';
 
@@ -390,7 +391,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
   return (
     <div ref={rootRef} className="kyg-tests bg-spring font-kyg text-mine antialiased [overflow-x:clip]">
       <div className="flex flex-col items-center" id="top">
-        <div className="mx-auto flex w-full max-w-[1530px] gap-[clamp(20px,2vw,32px)] px-[clamp(18px,3vw,40px)] max-[1024px]:gap-0">
+        <Container className="flex gap-[clamp(20px,2vw,32px)] px-[clamp(18px,3vw,40px)] max-[1024px]:gap-0">
           {SHOW_BUNDLES && collapsed && (
             <div className="sticky top-16 z-30 flex max-h-[calc(100vh-64px)] w-[68px] flex-none flex-col items-center gap-3.5 self-start rounded-2xl bg-pearl/50 py-5 max-[1024px]:hidden">
               <button
@@ -1359,7 +1360,7 @@ export default function TestPageView({ test }: { test: TestPage }) {
               </div>
             </section>
           </main>
-        </div>
+        </Container>
       </div>
     </div>
   );

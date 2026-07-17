@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Container } from '@/components/shared/Container';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
 import { BLOG_CATEGORIES, categoryLabel, formatPostDate, imageUrl, type BlogListItem } from '@/features/blog';
 
@@ -118,7 +119,7 @@ export default function BlogIndex({ posts, activeCategory }: { posts: BlogListIt
 
   return (
     <div style={CHROME_VARS} className="min-h-screen bg-(--cream) text-(--ink-1)">
-      <div className="mx-auto max-w-[1530px] px-(--gutter) py-[clamp(40px,6vw,80px)]">
+      <Container className="py-[clamp(40px,6vw,80px)]">
         <header className="max-w-[640px]">
           <p className="text-[12px] font-bold uppercase tracking-[0.24em] text-(--teal)">The KYG Journal</p>
           <h1 className="mt-3 text-[clamp(34px,5vw,52px)] font-semibold leading-[1.08] tracking-[-0.03em]">
@@ -158,7 +159,7 @@ export default function BlogIndex({ posts, activeCategory }: { posts: BlogListIt
             </div>
           </>
         )}
-      </div>
+      </Container>
     </div>
   );
 }
