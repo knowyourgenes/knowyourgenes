@@ -24,10 +24,10 @@ export default function FeaturesSection({ features }: { features: ProductKit['fe
           {features.cards.map((c) => (
             <div
               key={c.title}
-              className="flex flex-col items-center gap-[15px] rounded-[22px] border border-heavy/10 bg-white p-7 text-center shadow-pdp-soft"
+              className="flex flex-col items-center gap-3.75 rounded-[22px] border border-heavy/10 bg-white p-7 text-center shadow-pdp-soft"
             >
               <span className="grid size-14 place-items-center rounded-[16px] bg-gin">
-                <Icon name={FEATURE_ICON[c.icon]} className="h-8 w-[27px] text-sea" />
+                <Icon name={FEATURE_ICON[c.icon]} className="h-8 w-6.75 text-sea" />
               </span>
               <span className="text-[14.5px] font-semibold leading-snug text-heavy">{c.title}</span>
             </div>
