@@ -1,5 +1,6 @@
 import { prisma } from '@/server/prisma';
 import { verifyWebhookSignature } from '@/features/payments';
+import { linkLabAndNotify } from '@/features/lab';
 
 /**
  * POST /api/webhooks/razorpay
@@ -73,8 +74,14 @@ async function handlePaymentCaptured(p: { id?: string; order_id?: string; amount
   const order = await prisma.order.findFirst({ where: { razorpayOrderId: p.order_id } });
   if (!order) return;
 
-  // Already captured (verify route or earlier webhook ran) - idempotent.
-  if (order.paidAt) return;
+  // Already captured (verify route or earlier webhook ran) - idempotent for the
+  // payment write. We still (re)run lab notification below: it's independently
+  // idempotent via the labId:null claim, so it covers the case where verify
+  // captured the payment but the lab-notify step hadn't completed yet.
+  if (order.paidAt) {
+    await linkLabAndNotify(order.id);
+    return;
+  }
 
   await prisma.$transaction(async (tx) => {
     await tx.order.update({
@@ -129,6 +136,11 @@ async function handlePaymentCaptured(p: { id?: string; order_id?: string; amount
       }
     }
   });
+
+  // Link the processing lab and notify it now the payment is captured. Outside
+  // the transaction (sends email), never throws, idempotent + race-safe with
+  // the /api/checkout/verify path.
+  await linkLabAndNotify(order.id);
 }
 
 async function handlePaymentFailed(p: {

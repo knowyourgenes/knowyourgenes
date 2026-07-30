@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css}\"",
     "typecheck": "tsc --noEmit",
@@ -66,7 +68,8 @@
     "prisma": "^7.7.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

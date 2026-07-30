@@ -2,6 +2,7 @@ import { prisma } from '@/server/prisma';
 import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { checkoutVerify } from '@/lib/validators';
 import { verifyPaymentSignature } from '@/features/payments';
+import { linkLabAndNotify } from '@/features/lab';
 
 /**
  * POST /api/checkout/verify
@@ -82,6 +83,12 @@ export async function POST(req: Request) {
         });
       }
     });
+
+    // Now that the order is paid, link the processing lab and notify it. Runs
+    // outside the transaction (it sends email) and never throws - a lab/email
+    // failure must not undo a captured payment. Idempotent + race-safe with
+    // the razorpay webhook, which calls the same helper.
+    await linkLabAndNotify(order.id);
 
     return ok({
       orderId: order.id,

@@ -1,0 +1,22 @@
+# Throwaway local Postgres for load testing. NEVER point the harness at the
+# shared/prod Aiven DB.
+#
+#   docker compose -f tests/load/docker-compose.yml up -d
+#   export DATABASE_URL=postgresql://kyg:kyg@localhost:5433/kyg_load
+#   pnpm prisma migrate deploy   # or: pnpm db:push
+#   pnpm db:seed
+#   node tests/load/booking-load.mjs
+#
+services:
+  kyg-load-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: kyg
+      POSTGRES_PASSWORD: kyg
+      POSTGRES_DB: kyg_load
+    ports:
+      - '5433:5432' # 5433 on host to avoid clashing with a local 5432
+    tmpfs:
+      - /var/lib/postgresql/data # in-memory: fast + auto-wiped on teardown
+    command: >
+      postgres -c max_connections=200 -c shared_buffers=256MB
