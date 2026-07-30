@@ -193,6 +193,21 @@ body {
   --shadow-kyg-card: 0 4px 14px rgba(10, 27, 48, 0.06), 0 1px 2px rgba(10, 27, 48, 0.05);
   --shadow-kyg-deep: 0 40px 100px -40px rgba(5, 36, 34, 0.45), 0 12px 36px -18px rgba(5, 36, 34, 0.3);
   --shadow-kyg-dark: 0 18px 50px -24px rgba(5, 36, 34, 0.55), 0 4px 16px rgba(5, 36, 34, 0.25);
+
+  /* ---- Product Page (PDP) palette — sampled 1:1 from the Figma "Product Page - UI/UX" frame ---- */
+  --color-linenw: #faf6ef; /* White Linen — page background */
+  --color-gin: #e9f3ec; /* Gin — pills / soft green surfaces */
+  --color-edge: #cfe6d8; /* Edgewater — kit-visual border */
+  --color-fusc: #5b564e; /* Fuscous Gray — muted body text */
+  --color-boulder: #7a7a7a; /* Boulder — disclaimer text */
+  --color-heavy: #1d231e; /* Heavy Metal — headings / product title */
+  --color-wood: #141b1a; /* Woodsmoke — utility bar */
+  --color-greenpea: #1f5f41; /* Green Pea — inline upsell link */
+
+  /* PDP elevation — exact box-shadows from the frame's effect styles */
+  --shadow-pdp-card: 0 18px 50px 0 rgba(20, 27, 26, 0.08), 0 4px 16px 0 rgba(20, 27, 26, 0.06);
+  --shadow-pdp-soft: 0 4px 14px 0 rgba(20, 27, 26, 0.05), 0 1px 2px 0 rgba(20, 27, 26, 0.04);
+  --shadow-pdp-cta: 0 10px 26px 0 rgba(14, 77, 75, 0.22);
 }
 
 /* Effects that Tailwind utilities can't express, scoped to the test pages via

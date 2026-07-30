@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Figtree, Hind } from 'next/font/google';
+import { Geist, Geist_Mono, Figtree, Hind, Cormorant_Garamond } from 'next/font/google';
 import { auth } from '@/features/auth';
 import Providers from '@/components/Providers';
 import AttributionBeacon from '@/features/attribution/components/AttributionBeacon';
@@ -32,6 +32,16 @@ const hind = Hind({
   display: 'swap',
 });
 
+// Serif accent face — used for the italic gradient accent lines on the PDP
+// (e.g. "Get more from the same sample.") exactly as in the Figma.
+const cormorant = Cormorant_Garamond({
+  variable: '--font-cormorant',
+  subsets: ['latin'],
+  weight: ['500', '600'],
+  style: ['italic', 'normal'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: {
     default: 'Know Your Genes - DNA Tests, At-Home Collection in Delhi NCR',
@@ -59,7 +69,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${figtree.variable} ${hind.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${figtree.variable} ${hind.variable} ${cormorant.variable} h-full antialiased`}
     >
       <head>
         {/* Material Symbols - subsetted to the 5 "How it works" step glyphs. */}
