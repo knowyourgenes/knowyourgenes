@@ -10,7 +10,7 @@ function Card({ card }: { card: UpgradeCard }) {
   return (
     <div
       className={cn(
-        'relative flex flex-col rounded-[24px] p-8',
+        'relative flex flex-col rounded-[24px] p-6 sm:p-8',
         card.highlighted
           ? 'border-2 border-sea bg-gin/60 shadow-pdp-card'
           : 'border border-heavy/10 bg-white shadow-pdp-soft'

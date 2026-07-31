@@ -34,7 +34,9 @@ export default function BuyBox({ kit }: { kit: ProductKit }) {
       </div>
 
       {/* title */}
-      <h1 className="pt-[3px] text-[36px] font-extrabold leading-[1.12] tracking-[-0.02em] text-heavy">{kit.title}</h1>
+      <h1 className="pt-[3px] text-[28px] font-extrabold leading-[1.12] tracking-[-0.02em] text-heavy break-words sm:text-[32px] md:text-[36px]">
+        {kit.title}
+      </h1>
 
       {/* rating */}
       <div className="flex flex-wrap items-center gap-x-[10px] gap-y-1">

@@ -24,7 +24,7 @@ export default function FeaturesSection({ features }: { features: ProductKit['fe
           {features.cards.map((c) => (
             <div
               key={c.title}
-              className="flex flex-col items-center gap-3.75 rounded-[22px] border border-heavy/10 bg-white p-7 text-center shadow-pdp-soft"
+              className="flex flex-col items-center gap-3.75 rounded-[22px] border border-heavy/10 bg-white p-5 text-center shadow-pdp-soft sm:p-7"
             >
               <span className="grid size-14 place-items-center rounded-[16px] bg-gin">
                 <Icon name={FEATURE_ICON[c.icon]} className="h-8 w-6.75 text-sea" />
