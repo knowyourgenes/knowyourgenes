@@ -16,11 +16,11 @@ export default function Gallery({ gallery }: { gallery: ProductKit['gallery'] })
     <div className="flex flex-col gap-3 lg:sticky lg:top-[88px] lg:self-start">
       {/* image slot */}
       <div
-        className="grid place-items-center rounded-[26px] border border-heavy/10 px-8 py-[73px] shadow-pdp-card"
+        className="grid place-items-center rounded-[26px] border border-heavy/10 px-4 py-12 shadow-pdp-card sm:px-8 sm:py-[73px]"
         style={{ background: 'linear-gradient(138deg, rgba(14,77,75,0.05) 0%, rgba(46,125,91,0.08) 100%)' }}
       >
         <div
-          className="flex min-h-[352px] w-[320px] max-w-full flex-col items-center justify-center gap-[10px] rounded-[22px] border border-edge px-8 text-center shadow-pdp-card"
+          className="flex min-h-[352px] w-full max-w-[320px] flex-col items-center justify-center gap-[10px] rounded-[22px] border border-edge px-8 text-center shadow-pdp-card"
           style={{ background: 'linear-gradient(130deg, #e9f3ec 0%, #faf6ef 100%)' }}
         >
           <div className="text-[11px] font-bold uppercase leading-none tracking-[0.14em] text-greenpea">
