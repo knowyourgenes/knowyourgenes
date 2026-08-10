@@ -4,8 +4,9 @@ import SiteHeader from '@/components/shared/SiteHeader';
 import SiteFooter from '@/components/shared/SiteFooter';
 import { ProductKitPage, getProductKit, PRODUCT_KIT_SLUGS } from '@/features/products';
 
-// Clean root-level product URLs, e.g. /wellness-comprehensive. Only slugs known
-// to the data file resolve; anything else 404s (won't shadow other routes).
+// Product URLs live under a dedicated /pr segment, e.g. /pr/genetic-testing-kit,
+// so adding kits never collides with other top-level routes. Every slug in the
+// data file is prerendered; anything else 404s.
 export const dynamicParams = false;
 
 type Params = Promise<{ kit_slug: string }>;

@@ -1,9 +1,9 @@
 // =============================================================================
 // features/products — data model for the data-driven Product (PDP) page.
 // -----------------------------------------------------------------------------
-// Every product-kit page (Wellness Comprehensive, and the ~129 tests to come)
+// Every product-kit page (the Genetic Testing Kit, and the ~129 tests to come)
 // is rendered purely from a `ProductKit` object declared in `data.ts`. The
-// route app/(products)/[kit_slug] looks the object up by `slug` and renders it
+// route app/pr/[kit_slug] looks the object up by `slug` and renders it
 // through <ProductKitPage/>. Add a kit = add an entry; the layout never changes.
 // =============================================================================
 
@@ -77,14 +77,14 @@ export interface ProductKit {
   // ---- PDP: gallery ----
   gallery: {
     brandLabel: string; // "KNOW YOUR GENES"
-    title: string; // "Wellness Comprehensive Genetic Test"
+    title: string; // "Genetic Testing Kit"
     subtitle: string; // "Detox · Weight Management · Fitness · Nutrition · 53 traits"
     thumbCount: number; // 4
   };
 
   // ---- PDP: buy box ----
   pills: Pill[];
-  title: string; // H1 "Wellness Comprehensive Test"
+  title: string; // H1 "Genetic Testing Kit"
   rating: number; // 5.0
   reviewCount: number; // 5
   price: string; // "₹____" — placeholder kept from the design
@@ -92,7 +92,7 @@ export interface ProductKit {
   variants: Variant[];
   upsellLinkLabel: string; // "Want more from one sample? See Complete & Total Pack options"
   trustChips: TrustChip[];
-  categoryLine: string; // "Category: Genetic Testing Kit · Wellness Comprehensive Test"
+  category: string; // "Genetic Testing Kit" — rendered as "Category: <b>…</b>"
 
   included: {
     title: string; // "WHAT'S INCLUDED"

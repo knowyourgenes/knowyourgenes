@@ -137,8 +137,7 @@ export default function BuyBox({ kit }: { kit: ProductKit }) {
 
       {/* category line */}
       <div className="border-t border-heavy/10 pt-4 text-[14px] leading-[1.5] text-fusc">
-        Category: <span className="font-bold text-heavy">Genetic Testing Kit</span>
-        {' · Wellness Comprehensive Test'}
+        Category: <span className="font-bold text-heavy">{kit.category}</span>
       </div>
 
       {/* accordions */}

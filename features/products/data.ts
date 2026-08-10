@@ -7,11 +7,12 @@ import type { ProductKit } from './types';
 // the getProductKit() API stays the same.
 // =============================================================================
 
-const wellnessComprehensive: ProductKit = {
-  slug: 'wellness-comprehensive',
+const geneticTestingKit: ProductKit = {
+  slug: 'genetic-testing-kit',
 
   seo: {
-    title: 'Wellness Comprehensive Test — 53 traits from one saliva kit | KnowYourGenes',
+    // The root layout appends "| Know Your Genes", so no brand suffix here.
+    title: 'Genetic Testing Kit — 53 traits from one saliva kit',
     description:
       'Nutrition, Weight Management, Fitness and Detox — 53 genetic traits from a single at-home saliva kit. NABL-accredited lab, results in 7 days, free counselling.',
   },
@@ -25,19 +26,19 @@ const wellnessComprehensive: ProductKit = {
 
   gallery: {
     brandLabel: 'KNOW YOUR GENES',
-    title: 'Wellness Comprehensive Genetic Test',
+    title: 'Genetic Testing Kit',
     subtitle: 'Detox · Weight Management · Fitness · Nutrition · 53 traits',
     thumbCount: 4,
   },
 
   pills: [{ label: '4 reports' }, { label: '53 traits' }, { label: '1 saliva kit' }],
-  title: 'Wellness Comprehensive Test',
+  title: 'Genetic Testing Kit',
   rating: 5.0,
   reviewCount: 5,
   price: '₹____',
   variantLabel: 'SELECT REPORT',
   variants: [
-    { value: 'essential', label: 'Essential Pack · Wellness Comprehensive' },
+    { value: 'essential', label: 'Essential Pack · Genetic Testing Kit' },
     { value: 'complete', label: 'Complete Pack · + Men’s & Women’s Health' },
     { value: 'total', label: 'Total Pack · Every KYG test' },
   ],
@@ -48,7 +49,7 @@ const wellnessComprehensive: ProductKit = {
     { icon: 'shield', line1: 'NABL-accredited lab', line2: '' },
     { icon: 'chat', line1: 'Free counselling', line2: '' },
   ],
-  categoryLine: 'Category: Genetic Testing Kit · Wellness Comprehensive Test',
+  category: 'Genetic Testing Kit',
 
   included: {
     title: "WHAT'S INCLUDED",
@@ -111,7 +112,7 @@ const wellnessComprehensive: ProductKit = {
         kicker: 'UPGRADE TO COMPLETE PACK',
         badge: 'MOST VALUE',
         title: "+ Men's Wellness & Women's Health",
-        desc: 'Adds Hormones, Hair Fall & Fertility and PCOS, Pregnancy Loss, Mood, Bones & Joints to your Wellness Comprehensive results.',
+        desc: 'Adds Hormones, Hair Fall & Fertility and PCOS, Pregnancy Loss, Mood, Bones & Joints to your Genetic Testing Kit results.',
         totalLabel: 'Complete Pack total: ₹____',
         ctaLabel: 'Upgrade My Order',
         highlighted: true,
@@ -168,7 +169,7 @@ const wellnessComprehensive: ProductKit = {
         name: '[Customer name]',
         date: '[Date]',
         stars: 5,
-        quote: '[Insert a real quote about a specific result from the Wellness Comprehensive report.]',
+        quote: '[Insert a real quote about a specific result from the Genetic Testing Kit report.]',
       },
       {
         initials: 'C',
@@ -202,7 +203,7 @@ const wellnessComprehensive: ProductKit = {
   },
 };
 
-export const PRODUCT_KITS: ProductKit[] = [wellnessComprehensive];
+export const PRODUCT_KITS: ProductKit[] = [geneticTestingKit];
 
 export function getProductKit(slug: string): ProductKit | undefined {
   return PRODUCT_KITS.find((k) => k.slug === slug);

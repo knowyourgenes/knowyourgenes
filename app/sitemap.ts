@@ -3,6 +3,7 @@ import { absoluteUrl } from '@/lib/site-config';
 import { TEST_PAGES } from '@/lib/testsdata';
 import { CATEGORIES } from '@/lib/categoriesdata';
 import { sanityFetch, blogListQuery } from '@/features/blog';
+import { PRODUCT_KIT_SLUGS, productKitHref } from '@/features/products';
 
 export const revalidate = 3600;
 
@@ -35,6 +36,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const path of ['/privacy', '/terms', '/refunds', '/shipping', '/consent']) {
     add(path, { changeFrequency: 'yearly', priority: 0.3 });
+  }
+
+  // --- Product kits (PDPs, local data) ---
+  for (const slug of PRODUCT_KIT_SLUGS) {
+    add(productKitHref(slug), { changeFrequency: 'weekly', priority: 0.9 });
   }
 
   // --- Categories + genetic tests (local data, always available) ---
