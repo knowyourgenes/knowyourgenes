@@ -93,4 +93,11 @@ export const NAV_MENUS: MegaMenu[] = [
   },
 ];
 
+/**
+ * Flat links rendered BEFORE the mega menus, i.e. leftmost in the desktop nav.
+ * Separate from NAV_LINKS (which render after the menus) purely so the order is
+ * declared in the data rather than hard-coded in the header.
+ */
+export const NAV_LEAD_LINKS = [{ label: 'Contact', href: '/contact' }];
+
 export const NAV_LINKS = [{ label: 'Blog', href: '/blog' }];

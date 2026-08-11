@@ -42,39 +42,17 @@ export const CATEGORIES: TestCategory[] = [
       'Understand how your body is genetically wired, from everyday wellness to the health checks most people never think to make. One at-home saliva kit per report.',
     accent: 'wellness',
     products: [
-      // The 4 old wellness reports are being merged into this single combined
-      // report - hidden until it is built.
-      {
-        slug: 'my-wellness',
-        name: 'My Wellness',
-        meta: 'Combined report',
-        blurb: 'Diet, Weight, Fitness and Detox insights combined into one report.',
-        href: '/categories/wellness/my-wellness',
-        hidden: true,
-      },
-      {
-        slug: 'mens-health',
-        name: "Men's Health DNA",
-        meta: '3 health checks',
-        blurb:
-          'Fertility (ART3), hormones (HFE) and hair-loss (AR) risk in one saliva test. Know where you stand before anything goes wrong.',
-        href: '/categories/wellness/mens-health',
-      },
+      // Women's Health is the first test rebuilt on the section-array layout
+      // (see lib/testsdata.ts). Men's Health, Ancestry and My Wellness were
+      // removed with the old fixed-shape renderer and return here as they are
+      // rebuilt on the new structure - one entry per rebuilt test.
       {
         slug: 'womens-health',
         name: "Women's Health DNA",
-        meta: 'Coming soon',
-        blurb: "Clinical panels focused on women's genetic health.",
+        meta: '5 health checks',
+        blurb:
+          'PCOS, pregnancy loss, peripartum mood, bone density and joint risk - five answers from one at-home saliva sample.',
         href: '/categories/wellness/womens-health',
-        hidden: true,
-      },
-      {
-        slug: 'ancestry',
-        name: 'Ancestry DNA',
-        meta: 'Coming soon',
-        blurb: 'Trace your heritage and genetic origins.',
-        href: '/categories/wellness/ancestry',
-        hidden: true,
       },
     ],
   },

@@ -161,6 +161,8 @@ body {
      arbitrary utility) makes Tailwind v4 emit the @keyframes below when
      `animate-kyg-marquee` is used, instead of tree-shaking it away. */
   --animate-kyg-marquee: kyg-marquee 60s linear infinite;
+  /* The test pages' accreditation strip runs faster than the homepage's. */
+  --animate-tst-marquee: kyg-marquee 34s linear infinite;
 
   --color-spring: #f6f3ed;
   --color-pearl: #ece6da;
@@ -208,6 +210,116 @@ body {
   --shadow-pdp-card: 0 18px 50px 0 rgba(20, 27, 26, 0.08), 0 4px 16px 0 rgba(20, 27, 26, 0.06);
   --shadow-pdp-soft: 0 4px 14px 0 rgba(20, 27, 26, 0.05), 0 1px 2px 0 rgba(20, 27, 26, 0.04);
   --shadow-pdp-cta: 0 10px 26px 0 rgba(14, 77, 75, 0.22);
+
+  /* ---- Test page (features/tests) palette — read 1:1 from the Figma
+     "Women's Health" frame via the REST API (not eyeballed). Most of this
+     design's teal half already existed above: eden #0e4d4b, eden2 #15605d,
+     java #25b5ab, java2 #2ac3a2, surfie #0e7c77, sea #2e7d5b, mojo #c0432f,
+     linenw #faf6ef, mine #222222, fusc #5b564e, boulder #7a7a7a and
+     wood #141b1a are all EXACT matches. Only the crimson family and the
+     tinted section grounds below are genuinely new. ---- */
+  --color-crimson: #c73c70; /* accent — serif italic, dots, step 5 */
+  --color-crimson-deep: #9a2855; /* eyebrow label text on blush pills */
+  --color-crimson-soft: #e39bb4; /* stat numerals on ink grounds */
+  --color-blush: #fbeef3; /* blush eyebrow-pill ground */
+  --color-ink: #141b1a; /* the-numbers / final / footer — same as --color-wood */
+  --color-mint: #e6f4f3; /* teal eyebrow-pill ground */
+  --color-ice: #7fe3d6; /* light teal accents on ink */
+  --color-gold: #e8c24e; /* accreditation badge stroke */
+
+  /* Section grounds. Several are gradients in the frame, not flat fills. */
+  --color-veil: #ffffff; /* used at 70% over the cream page — see .tst-veil */
+  --color-sage: #f1f7f6; /* WHO IT'S FOR gradient end */
+  --color-sage2: #e9f4f3; /* BODY MAP gradient start */
+  --color-sage3: #eff6f5; /* REPORT gradient start */
+  --color-sand: #f5eddf; /* TRUST gradient end */
+
+  /* Test-page elevation — the frame's exact effect styles. The first two are
+     byte-identical to --shadow-pdp-soft / --shadow-pdp-card above; kept under
+     their own names so the test pages can diverge later without touching the
+     PDP. */
+  --shadow-tst-soft: 0 4px 14px 0 rgba(20, 27, 26, 0.05), 0 1px 2px 0 rgba(20, 27, 26, 0.04);
+  --shadow-tst-card: 0 18px 50px 0 rgba(20, 27, 26, 0.08), 0 4px 16px 0 rgba(20, 27, 26, 0.06);
+  --shadow-tst-float: 0 40px 100px 0 rgba(20, 27, 26, 0.14), 0 12px 36px 0 rgba(20, 27, 26, 0.1);
+  /* The primary CTA carries BOTH of the frame's effects: a 4px java halo and
+     the eden drop. One token so the two can never be applied separately. */
+  --shadow-tst-cta: 0 0 0 4px rgba(37, 181, 171, 0.1), 0 14px 32px 0 rgba(14, 77, 75, 0.3);
+  --shadow-tst-ghost: 0 6px 18px 0 rgba(20, 27, 26, 0.08);
+  --shadow-tst-crimson: 0 6px 18px 0 rgba(199, 60, 112, 0.1);
+
+  /* The display serif used for every italic accent on the test pages. Loaded
+     once in app/layout.tsx as --font-cormorant. Registered as its own utility
+     (`font-tst`) rather than overriding Tailwind's global `font-serif`, so
+     nothing outside features/tests changes. */
+  --font-tst: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+}
+
+/* =============================================================================
+   Test-page accent spans. Data files write `<em class="tst-em">…</em>` inside
+   an Html field; these rules are the only place the accent styling lives, so a
+   page restyles its accent by swapping the class, not the copy.
+
+   TWO THINGS MATTER HERE, both of which were bugs before:
+
+   1. `@layer components`. Tailwind v4 emits utilities into `@layer utilities`,
+      and UNLAYERED css beats every layer regardless of specificity. While these
+      rules sat unlayered, any `[&_.tst-em]:text-*` override in a component was
+      silently ignored — which is exactly how seven sections ended up rendering
+      a flat colour where the frame has a gradient.
+
+   2. The frame fills these runs with a GRADIENT, not a flat colour. That is the
+      default here (background-clip:text), so a section gets it for free. Where
+      the frame really is flat — e.g. "Guesswork." on the ink band — a component
+      overrides with a plain `text-*` utility, which now wins thanks to (1).
+      Overriding requires killing the gradient too, hence `.tst-flat`.
+   ============================================================================= */
+@layer components {
+  .tst-em,
+  .tst-em-teal {
+    font-family: var(--font-tst);
+    font-style: italic;
+    font-weight: 600; /* Cormorant Garamond 600 italic — the frame's heading accent */
+    letter-spacing: 0; /* the serif runs at ls=0 even where the sans beside it is negative */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Hero H1: #9a2855 → #c73c70 → #c73c70 */
+  .tst-em {
+    background-image: linear-gradient(90deg, #9a2855 0%, var(--color-crimson) 55%, var(--color-crimson) 100%);
+  }
+
+  /* The 5-stop teal used by nearly every H2 accent on the page. */
+  .tst-em-teal {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-eden) 0%,
+      var(--color-eden2) 25%,
+      var(--color-java) 50%,
+      var(--color-eden2) 75%,
+      var(--color-eden) 100%
+    );
+  }
+
+  /* Opt out of the gradient so a plain text-* utility can take over. */
+  .tst-flat .tst-em,
+  .tst-flat .tst-em-teal {
+    background-image: none;
+    color: inherit;
+  }
+
+  /* Bold sans run inside an otherwise-serif line (and vice versa). */
+  .tst-strong {
+    font-family: var(--font-kyg);
+    font-style: normal;
+    font-weight: 700;
+    color: var(--color-heavy);
+  }
+
+  .bg-ink .tst-strong {
+    color: inherit;
+  }
 }
 
 /* Effects that Tailwind utilities can't express, scoped to the test pages via
@@ -217,14 +329,18 @@ body {
   background: var(--color-eden);
   color: var(--color-spring);
 }
-.kyg-tests .reveal {
+/* Reveal-on-scroll. Values match the reference build exactly: 30px rise, 0.95s
+   on the (0.16,1,0.3,1) curve, and a per-element stagger the observer copies
+   out of `data-rd` into `--rd`. */
+.kyg-tests .reveal-on .reveal {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(30px);
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--rd, 0s);
 }
-.kyg-tests .reveal-r {
+.kyg-tests .reveal-on .reveal-r {
   opacity: 0;
   transform: translateX(26px);
   transition:
@@ -332,6 +448,175 @@ body {
     background-position: 220% 0;
   }
 }
+/* =============================================================================
+   Interaction layer — ported 1:1 from the reference build
+   ("Women's Health - Landing Page Build/womens-health - Revamp v2.html").
+   Timings, curves and distances are that file's, not approximations.
+   ============================================================================= */
+
+/* ---- animated gradient text -------------------------------------------- */
+/* The accents are not static gradients in the build: the ramp drifts across
+   the glyphs on a 9s loop. `.tst-em*` already paints the gradient (see the
+   @layer components block above); this only sets it in motion. */
+.kyg-tests .tst-em,
+.kyg-tests .tst-em-teal {
+  background-size: 240% 100%;
+  animation: kyg-gradshift 9s ease-in-out infinite;
+}
+.kyg-tests .tst-flat .tst-em,
+.kyg-tests .tst-flat .tst-em-teal {
+  animation: none;
+}
+@keyframes kyg-gradshift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ---- lift-on-hover ------------------------------------------------------ */
+.kyg-tests .lift {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s;
+}
+.kyg-tests .lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 60px rgba(20, 27, 26, 0.14);
+}
+
+/* ---- primary CTA: perpetual sheen sweep + hover lift -------------------- */
+.kyg-tests .btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.kyg-tests .btn-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -65%;
+  width: 38%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-18deg);
+  animation: kyg-sheen 4.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes kyg-sheen {
+  0% {
+    left: -65%;
+  }
+  55%,
+  100% {
+    left: 130%;
+  }
+}
+
+/* ---- media zoom inside a hovered card ---------------------------------- */
+.kyg-tests .zoomcard img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.kyg-tests .zoomcard:hover img {
+  transform: scale(1.05);
+}
+
+/* ---- dimmed (filtered-out) card ---------------------------------------- */
+.kyg-tests .tcard {
+  transition:
+    opacity 0.45s ease,
+    filter 0.45s ease,
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s;
+}
+.kyg-tests .tcard.dim {
+  opacity: 0.32;
+  filter: saturate(0.6);
+  transform: scale(0.985);
+}
+
+/* ---- body-map hotspot --------------------------------------------------- */
+.kyg-tests .hot .pin {
+  /* the `scale` property, not `transform: scale()` — the dot already carries a
+     -50%/-50% translate, and these compose instead of overwriting each other */
+  transition: scale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+}
+.kyg-tests .hot:hover .pin,
+.kyg-tests .hot:focus-visible .pin {
+  scale: 1.35;
+}
+.kyg-tests .hot .halo {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: kyg-halo 2.6s ease-in-out infinite;
+}
+@keyframes kyg-halo {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.12;
+    transform: scale(1.45);
+  }
+}
+
+/* ---- accreditation marquee --------------------------------------------- */
+.kyg-tests .mq {
+  overflow: hidden;
+  position: relative;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.kyg-tests .mq-track {
+  display: flex;
+  width: max-content;
+  animation: kyg-mq 34s linear infinite;
+}
+.kyg-tests .mq:hover .mq-track {
+  animation-play-state: paused;
+}
+@keyframes kyg-mq {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- flowing timeline rail --------------------------------------------- */
+.kyg-tests .flow-line {
+  background-size: 240% 100%;
+  animation: kyg-flowx 8s linear infinite;
+}
+.kyg-tests .flow-band {
+  background-size: 240% 100%;
+  animation: kyg-flowx 10s linear infinite;
+}
+
+/* ---- hero results card drift -------------------------------------------- */
+.kyg-tests .floaty {
+  animation: kyg-floaty 9s ease-in-out infinite;
+}
+@keyframes kyg-floaty {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-16px) translateX(6px);
+  }
+}
+
+/* ---- stat rail: width is set by JS once the card scrolls in ------------- */
+.kyg-tests .bar {
+  width: 0;
+  transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .kyg-tests .reveal,
   .kyg-tests .reveal-r {
@@ -339,11 +624,22 @@ body {
     transform: none;
     transition: none;
   }
-  .kyg-tests .sheen::after {
+  .kyg-tests .sheen::after,
+  .kyg-tests .btn-sheen::after {
     display: none;
   }
-  .kyg-tests .flow-bar {
+  .kyg-tests .flow-bar,
+  .kyg-tests .flow-line,
+  .kyg-tests .flow-band,
+  .kyg-tests .mq-track,
+  .kyg-tests .floaty,
+  .kyg-tests .hot .halo,
+  .kyg-tests .tst-em,
+  .kyg-tests .tst-em-teal {
     animation: none;
+  }
+  .kyg-tests .bar {
+    transition: none;
   }
 }
 

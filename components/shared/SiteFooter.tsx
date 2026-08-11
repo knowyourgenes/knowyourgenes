@@ -61,7 +61,9 @@ const FOOTER_COLS = [
   },
   {
     title: 'Company',
+    // Contact leads the column, matching the Figma "Contact Us" footer.
     links: [
+      { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },
       { label: 'Refund Policy', href: '/refunds' },

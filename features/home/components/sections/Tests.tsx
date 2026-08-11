@@ -1,3 +1,4 @@
+import { getHeroImage } from '@/features/tests';
 import type { CSSProperties, ReactNode } from 'react';
 import { Container } from '@/components/shared/Container';
 import { getTestPage } from '@/lib/testsdata';
@@ -325,7 +326,8 @@ const DEFAULT_TEST_IMAGE = '/kyg/950448a92b6b.jpg';
 function cardImage(cta: TestCard['cta'], title: string): { src: string; alt: string } {
   const slug = cta?.href.split('/').filter(Boolean).pop();
   const test = slug ? getTestPage(slug) : undefined;
-  return test ? { src: test.hero.image, alt: test.hero.imageAlt } : { src: DEFAULT_TEST_IMAGE, alt: title };
+  const hero = test ? getHeroImage(test) : undefined;
+  return hero ?? { src: DEFAULT_TEST_IMAGE, alt: title };
 }
 
 export default function Tests() {
