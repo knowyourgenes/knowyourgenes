@@ -32,12 +32,14 @@ const hind = Hind({
   display: 'swap',
 });
 
-// Serif accent face — used for the italic gradient accent lines on the PDP
-// (e.g. "Get more from the same sample.") exactly as in the Figma.
+// Serif accent face — the italic accent lines on the PDP and on every test
+// page. The Women's Health frame uses Cormorant Garamond 600 italic for
+// headings and 700 italic for the section-closing lines, so both weights are
+// loaded; 500 is kept for the PDP's lighter accents.
 const cormorant = Cormorant_Garamond({
   variable: '--font-cormorant',
   subsets: ['latin'],
-  weight: ['500', '600'],
+  weight: ['500', '600', '700'],
   style: ['italic', 'normal'],
   display: 'swap',
 });

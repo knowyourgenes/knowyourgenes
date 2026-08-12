@@ -5,9 +5,19 @@ import { useEffect, useState, type RefObject } from 'react';
 /** Adds an `is-in` class to `.reveal` / `.reveal-r` elements as they scroll into
  *  view (one-shot). The reveal transitions themselves live in the scoped
  *  stylesheet (components/tests/styles.tsx). */
+/**
+ * NOTE ON `threshold`: a fractional threshold is a trap for tall targets. It
+ * requires that fraction of the ELEMENT to be on screen, so anything taller than
+ * `viewportHeight / threshold` can never satisfy it — at 0.12 on a 667px phone
+ * that is any element over ~5,560px, which a stacked section easily exceeds. Such
+ * an element would stay at opacity:0 permanently.
+ *
+ * So the default is 0: fire as soon as any part intersects. The reveal is then
+ * timed entirely by `rootMargin`, which is independent of element height.
+ */
 export function useRevealOnScroll(
   rootRef: RefObject<HTMLElement | null>,
-  { threshold = 0.1 }: { threshold?: number } = {}
+  { threshold = 0 }: { threshold?: number } = {}
 ) {
   useEffect(() => {
     const root = rootRef.current;
@@ -20,6 +30,10 @@ export function useRevealOnScroll(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
+            // `data-rd` staggers siblings: the value is copied into `--rd`,
+            // which the .reveal rule reads as its transition-delay.
+            const rd = e.target.getAttribute('data-rd');
+            if (rd) (e.target as HTMLElement).style.setProperty('--rd', rd);
             e.target.classList.add('is-in');
             io.unobserve(e.target);
           }

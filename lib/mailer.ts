@@ -19,6 +19,9 @@ export interface MailInput {
   subject: string;
   text: string;
   html?: string;
+  /** Optional Reply-To. Used by the contact form so replying reaches the sender
+   *  rather than the no-reply From address. */
+  replyTo?: string;
 }
 
 export interface MailResult {
@@ -57,6 +60,7 @@ export async function sendMail(input: MailInput): Promise<MailResult> {
       subject: input.subject,
       text: input.text,
       html: input.html,
+      replyTo: input.replyTo,
     });
     return { ok: true, delivered: true, providerId: info.messageId ?? null };
   } catch (err) {

@@ -1,409 +1,382 @@
 // =============================================================================
-// features/tests - type model for a data-driven test-detail page
+// features/tests — type model for a data-driven test-detail page
 // -----------------------------------------------------------------------------
-// Every test page (e.g. Men's Health) is rendered purely from a `TestPage`
-// object declared in `lib/testsdata.ts`. To keep per-page styling flexible, most
-// copy fields are `Html` strings: they are rendered with dangerouslySetInnerHTML,
-// so a page can inline its own markup (a purple <span>, a <b>, a <br/>, an accent
-// highlight, etc.) without any component changes.
+// A test page is an ORDERED LIST OF SECTIONS. `TestPage.sections` is a
+// discriminated union keyed on `type`; <TestPageView/> walks the array and
+// renders one component per entry. That means a new test page can:
 //
-// Structural, repeating content (pains, steps, faqs, bundles) is modelled as
-// typed arrays whose text fields are still `Html`, so the shape stays safe while
-// the copy stays free-form.
+//   • include only the sections it needs      → omit the entry
+//   • run them in its own order               → reorder the array
+//   • never touch a component to add a page   → data only
+//
+// Copy fields are `Html` strings rendered via dangerouslySetInnerHTML, so a page
+// can inline the design's serif-italic accents and colour spans without a
+// component change. Use the `.tst-em` / `.tst-em-teal` classes for those.
+//
+// Authoring rule: `Html` is TRUSTED input. It is hand-written in
+// `lib/testsdata.ts` only — never populate it from a CMS, an API or user input
+// without sanitising first.
 // =============================================================================
 
-/** A string that may contain trusted inline HTML. Rendered via
- *  dangerouslySetInnerHTML - author it in `lib/testsdata.ts` only. */
+/** A string that may contain trusted inline HTML. Authored in `lib/testsdata.ts` only. */
 export type Html = string;
 
-/** Risk grade used by result cards + the grading legend. */
+/** Risk grade shown on result chips, sample results and the legend. */
 export type RiskTone = 'good' | 'avg' | 'poor';
 
-/** Pain-card accent family (drives the accent bar, label + icon chip colour).
- *  `fertility | hormones | hairloss` are the Men's Health topics; `pcos |
- *  pregnancy | depression | bones | joints` are the Women's Health topics. Each
- *  value must have a matching entry in the `PAIN` style map in
- *  `features/tests/components/TestPage.tsx`. */
-export type PainAccent =
-  | 'fertility'
-  | 'hormones'
-  | 'hairloss'
-  | 'pcos'
-  | 'pregnancy'
-  | 'depression'
-  | 'bones'
-  | 'joints';
+/** Which of the five panels a card/hotspot/tab belongs to. Drives accent colour. */
+export type PanelKey = 'pcos' | 'pregnancy' | 'mood' | 'bones' | 'joints';
 
-/** Bundle visual family. */
-export type BundleTheme = 'recommended' | 'complete' | 'couple';
+/** Accent family for eyebrow pills and section grounds. */
+export type Accent = 'crimson' | 'teal';
 
-export interface HeroBadge {
+/** Section ground colour. Sampled from the Figma frame — see globals.css. */
+export type Ground = 'cream' | 'ivory' | 'sage' | 'sand' | 'ink';
+
+/** Named icon key — resolved by `features/tests/components/icons.tsx`. */
+export type IconKey = string;
+
+// ---------------------------------------------------------------------------
+// Shared leaf shapes
+// ---------------------------------------------------------------------------
+
+/** The pill above a section heading, e.g. "● WHO SHOULD TAKE THIS TEST". */
+export interface Eyebrow {
   label: string;
-  /** optional leading image (e.g. small DNA / NABL mark) under /public */
-  img?: string;
-  imgAlt?: string;
+  icon?: IconKey;
+  accent?: Accent; // default: crimson
 }
 
-export interface TrustTile {
-  /** svg filename under /tests/mens-health/icons, or an inline key */
-  icon: string;
-  line1: Html;
-  line2: Html;
-}
-
-export interface StatTile {
-  num: Html;
+/** A call-to-action button. `variant` maps to the design's three button styles. */
+export interface Cta {
   label: string;
-}
-
-/** A compact bundle card - reused in the sidebar and the bundles section. */
-export interface Bundle {
-  key: string;
-  theme: BundleTheme;
-  /** icon shown beside the bundle title (path under /public) */
-  icon: string;
-  badge?: string;
-  title: string;
-  subtitle: string;
-  desc: Html;
-  bestFor?: Html;
-  ctaLabel: string;
   href: string;
+  variant?: 'primary' | 'ghost' | 'light'; // light = white pill on ink grounds
+  icon?: IconKey; // trailing glyph; default arrow
 }
 
-export interface Hero {
-  badges: HeroBadge[];
-  /** big H1 - HTML so the highlight span can be coloured per page */
-  titleHtml: Html;
-  /** rotating gradient pain word(s), e.g. "Fertility." */
-  anchorWord: string;
-  bodyHtml: Html;
-  ctaLabel: string;
-  ctaHref: string;
-  /** optional one-line note rendered under the CTA (e.g. Ancestry's marker line) */
-  ctaNoteHtml?: Html;
-  trust: TrustTile[];
-  image: string;
-  imageAlt: string;
-  imageCaption: string;
-  stats: StatTile[];
-}
-
-export interface Pain {
-  key: string;
-  accent: PainAccent;
-  icon: string;
+/** Small rounded chip, e.g. "No needles", "Test once, for life". */
+export interface Chip {
   label: Html;
-  question: Html;
-  answerHtml: Html;
-  calloutHtml: Html;
-  badge: string;
-  badgeTone: RiskTone;
-  checksLabel: string;
-  checksBodyHtml: Html;
-  sampleHtml: Html;
-  /** the right result card gets a tinted background for high-risk pains */
-  resultTinted?: boolean;
-  signsTitle: string;
-  signs: Html[];
+  icon?: IconKey;
 }
 
-export interface Stat {
-  quoteHtml: Html;
-  subQuoteHtml: Html;
-  emphasisHtml: Html;
+export interface Img {
+  src: string;
+  alt: string;
+}
+
+/** Standard section head: eyebrow + heading + optional lead paragraph. */
+export interface SectionHead {
+  eyebrow?: Eyebrow;
+  /** H2 — HTML so the serif-italic accent can be inlined via `.tst-em`. */
+  titleHtml: Html;
+  leadHtml?: Html;
+}
+
+// ---------------------------------------------------------------------------
+// Section variants
+// ---------------------------------------------------------------------------
+
+/** Sticky in-page anchor nav + brand + CTA. */
+export interface NavSection {
+  type: 'nav';
+  brandHref: string;
+  links: { label: string; href: string }[];
+  cta: Cta;
+}
+
+export interface HeroSection {
+  type: 'hero';
+  eyebrow: Eyebrow;
+  titleHtml: Html;
+  kickerHtml: Html; // "One saliva test, at home."
+  subHtml: Html;
+  ctas: Cta[];
+  chips: Chip[];
+  /** Serif-italic line under the chips. */
+  footnoteHtml: Html;
+  image: Img;
+  /** Floating "Your results" card overlapping the hero image. */
+  resultCard: {
+    title: string;
+    icon?: IconKey;
+    rows: { label: string; value: string; tone: RiskTone }[];
+  };
+}
+
+/** "This test is for you if…" — intro block + a grid of sign cards. */
+export interface WhoForSection {
+  type: 'whoFor';
+  head: SectionHead;
+  image: Img;
+  introTitleHtml: Html;
+  introBodyHtml: Html;
+  chips: Chip[];
+  signs: { icon: IconKey; accent: Accent; textHtml: Html }[];
+  closingHtml: Html;
+  ctas: Cta[];
+}
+
+/** "From Hollywood to Bollywood" — image with floating badges + 3 icon rows. */
+export interface AspirationSection {
+  type: 'aspiration';
+  head: SectionHead;
+  image: Img;
+  badgeTop: Chip;
+  badgeBottom: Chip;
+  rows: { icon: IconKey; title: string; subtitle: string }[];
   bodyHtml: Html;
-  bigNum: Html;
-  bigNumLabel: Html;
-  ctaLabel: string;
-  ctaHref: string;
-  fineprint: Html;
+  /** Tinted quote panel under the body. */
+  quoteHtml: Html;
 }
 
-export interface ReportCard {
-  title: string;
-  /** icon shown in the tinted chip beside the title (path under /public) */
-  icon: string;
-  whatLabel: string;
-  desc: Html;
-  result: string;
-  resultLabel: string;
-  tone: RiskTone;
+/** Two-up "how it used to be" vs "how it works now" comparison. */
+export interface ThenNowSection {
+  type: 'thenNow';
+  then: { icon: IconKey; kicker: string; title: string; items: Html[] };
+  now: { icon: IconKey; kicker: string; title: string; items: Html[] };
+  closingHtml: Html;
+  cta?: Cta;
+}
+
+/** Interactive body diagram with labelled hotspots. */
+export interface BodyMapSection {
+  type: 'bodyMap';
+  head: SectionHead;
+  image: Img;
+  hotspots: {
+    key: PanelKey;
+    label: string;
+    caption: string;
+    /** Tooltip heading, e.g. "PCOS · Gene THADA". */
+    tipTitle: string;
+    /** Tooltip body — the question this panel answers. */
+    tipBody: string;
+    /** Percentage coordinates on the figure, so it scales with the image. */
+    x: number;
+    y: number;
+    side: 'left' | 'right';
+  }[];
+}
+
+/** "Five risks that stay silent" — filter tabs + detail cards. */
+export interface RiskCardsSection {
+  type: 'riskCards';
+  head: SectionHead;
+  allLabel: string; // "All five"
+  cards: {
+    key: PanelKey;
+    tabLabel: string;
+    image: Img;
+    imageCaption: string;
+    geneLabel: string; // "PCOS · Gene THADA"
+    question: Html;
+    bodyHtml: Html;
+    warningHtml: Html;
+    sample: { label: string; valueHtml: Html; tone: RiskTone; percent: number };
+  }[];
+  cta?: Cta;
+  ctaNoteHtml?: Html;
+}
+
+/** Ink-ground statistics band. */
+export interface StatsSection {
+  type: 'stats';
+  head: SectionHead;
+  stats: {
+    kicker: string;
+    value: Html;
+    /**
+     * Numeral + rail colour. The frame runs FOUR distinct accents across five
+     * cards, so this is a named colour rather than a two-value tone.
+     */
+    tone: 'java2' | 'java' | 'ice' | 'pink';
+    /** Rail fill, as a percentage of the card's 172px track. */
+    barPercent: number;
+    bodyHtml: Html;
+  }[];
+  closingHtml: Html;
+  cta?: Cta;
+}
+
+/** "Gene testing sounds complicated. It is not." — 3 illustrated cards. */
+export interface ExplainerSection {
+  type: 'explainer';
+  head: SectionHead;
+  cards: { image: Img; bodyHtml: Html }[];
+  closingHtml: Html;
+}
+
+/** "The gap" — birth-to-symptom timeline. */
+export interface TimelineSection {
+  type: 'timeline';
+  head: SectionHead;
+  startLabel: string;
+  endLabel: string;
+  ticks: string[]; // Birth · Age 20 · Age 30 · Age 40
+  centreChip: Chip;
+}
+
+/** Regret vs peace-of-mind, two illustrated outcome columns. */
+export interface ContrastSection {
+  type: 'contrast';
+  head: SectionHead;
+  negative: { badge: Chip; image: Img; kicker: string; title: string; items: Html[] };
+  positive: { badge: Chip; image: Img; kicker: string; title: string; items: Html[] };
+  closingHtml: Html;
+  cta?: Cta;
+}
+
+/** "The cost of knowing is small" — argument + price card. */
+export interface WorthSection {
+  type: 'worth';
+  head: SectionHead;
+  emphasisHtml: Html;
+  price: {
+    badge: Chip;
+    titleHtml: Html;
+    bodyHtml: Html;
+    chips: Chip[];
+    image: Img;
+  };
+}
+
+/** Tonight / In a few years / Decades from now. */
+export interface OutcomesSection {
+  type: 'outcomes';
+  cards: { icon: IconKey; kicker: string; title: string; bodyHtml: Html }[];
+}
+
+export interface TestimonialSection {
+  type: 'testimonial';
+  quoteHtml: Html;
+  bodyHtml: Html;
+  closingHtml: Html;
+  cta?: Cta;
+}
+
+/** "No gene codes. No jargon." — bullet list + sample report card. */
+export interface ReportPreviewSection {
+  type: 'reportPreview';
+  head: SectionHead;
+  bullets: Html[];
+  cta: Cta;
+  sample: {
+    badge: string;
+    title: string;
+    rows: { label: string; value: string; tone: RiskTone }[];
+    legendHtml: Html;
+  };
+}
+
+/** Numbered "how it works" steps. */
+export interface StepsSection {
+  type: 'steps';
+  head: SectionHead;
+  steps: { icon: IconKey; title: string; bodyHtml: Html; accent?: Accent }[];
+  cta?: Cta;
+  ctaNoteHtml?: Html;
+}
+
+/** GENEous Care counsellor block. */
+export interface CounsellorSection {
+  type: 'counsellor';
+  head: SectionHead;
+  image: Img;
+  points: Html[];
+  floatCard: { title: string; subtitle: string; noteHtml: Html; icon?: IconKey };
+  expert: { initials: string; name: string; role: string; reviewedByLabel: string };
+}
+
+/** "Everything you need, in one box" — contents list + order panel. */
+export interface KitSection {
+  type: 'kit';
+  head: SectionHead;
+  contents: { kicker: string; title: string; items: Html[] };
+  order: { kicker: string; lines: Html[]; cta: Cta; noteHtml: Html };
+}
+
+/** Accreditation badges + trust tiles. */
+export interface TrustSection {
+  type: 'trust';
+  head: SectionHead;
+  badges: { icon?: IconKey; line1: string; line2?: string }[];
+  tiles: { icon?: IconKey; statHtml?: Html; title: string; bodyHtml: Html; accent?: Accent }[];
+}
+
+export interface FaqsSection {
+  type: 'faqs';
+  head: SectionHead;
+  items: { q: Html; a: Html }[];
+}
+
+/** Ink-ground closing call to action. */
+export interface FinalCtaSection {
+  type: 'finalCta';
+  eyebrow: Eyebrow;
+  titleHtml: Html;
+  chips: Chip[];
+  cta: Cta;
   noteHtml: Html;
 }
 
-export interface RiskLevel {
-  label: string;
-  sub: string;
-  tone: RiskTone;
-  descHtml: Html;
-}
-
-export interface Step {
-  num: string;
-  icon: string;
-  title: Html;
-  subHtml: Html;
-  bodyHtml: Html;
-  dark?: boolean;
-}
-
-export interface CareMini {
-  title: string;
+/** Legal line rendered between the final CTA and the footer. */
+export interface DisclaimerSection {
+  type: 'disclaimer';
   bodyHtml: Html;
 }
 
-export interface ChatBubble {
-  from: 'them' | 'me';
-  textHtml: Html;
+/** Page-owned dark footer (distinct from the global SiteFooter). */
+export interface FooterSection {
+  type: 'footer';
+  brand: string;
+  taglineHtml: Html;
+  columns: { title: string; links: { label: string; href: string }[] }[];
+  copyright: string;
+  signoff: string;
 }
 
-export interface CertTile {
-  img?: string;
-  svg?: string;
-  alt: string;
-  label: string;
+/** Every section variant. Add a new page layout by adding a member here. */
+export type Section =
+  | NavSection
+  | HeroSection
+  | WhoForSection
+  | AspirationSection
+  | ThenNowSection
+  | BodyMapSection
+  | RiskCardsSection
+  | StatsSection
+  | ExplainerSection
+  | TimelineSection
+  | ContrastSection
+  | WorthSection
+  | OutcomesSection
+  | TestimonialSection
+  | ReportPreviewSection
+  | StepsSection
+  | CounsellorSection
+  | KitSection
+  | TrustSection
+  | FaqsSection
+  | FinalCtaSection
+  | DisclaimerSection
+  | FooterSection;
+
+/** Ground colour per section, keyed by index — kept beside the section so a
+ *  page can alternate its own rhythm without the renderer hard-coding it. */
+export interface SectionEntry {
+  ground?: Ground;
 }
 
-export interface CertRow {
-  label: Html;
-  descHtml: Html;
-}
+// ---------------------------------------------------------------------------
+// The page
+// ---------------------------------------------------------------------------
 
-export interface Faq {
-  q: Html;
-  aHtml: Html;
-}
-
-// -----------------------------------------------------------------------------
-// Ancestry-only section models. These power the optional sections on the
-// Ancestors In Me page (discovery layers, the 10-region table, the gift block,
-// and the trust "trace note"). Health pages simply omit them.
-// -----------------------------------------------------------------------------
-
-/** Discovery-layer accent family (teal / blue / amber / navy). */
-export type LayerAccent = 'primary' | 'secondary' | 'trace' | 'journey';
-
-/** One ancestry "discovery layer" card (replaces a health `Pain`). */
-export interface DiscoveryLayer {
-  key: string;
-  accent: LayerAccent;
-  label: Html; // e.g. "Layer 1 · Primary ancestry"
-  question: Html; // h3
-  bodyHtml: Html[]; // left-column paragraphs
-  cardTitle: string; // right-card heading, e.g. "What your report shows"
-  shows?: Html[]; // optional bullet list
-  chips?: string[]; // optional region chips, e.g. "Malayan 7.79%"
-  quoteHtml?: Html; // optional pull-quote (Gene Journey excerpt)
-  noteHtml?: Html; // optional closing note / sample result
-}
-
-export interface RegionRow {
-  region: string;
-  pct: string;
-  connectsHtml: Html;
-}
-
-/** The "10 global regions" breakdown table (replaces a health `sampleReport`). */
-export interface RegionsTable {
-  eyebrow: string;
-  titleHtml: Html;
-  introHtml: Html;
-  headers: [string, string, string];
-  rows: RegionRow[];
-  footnote: Html;
-}
-
-export interface GiftCard {
-  title: string;
-  bodyHtml: Html;
-  bestForHtml: Html;
-}
-
-/** The "makes a meaningful gift" block, rendered above the bundles. */
-export interface GiftSection {
-  eyebrow: string;
-  titleHtml: Html;
-  introHtml: Html;
-  cards: GiftCard[];
-  ctaLabel: string;
-  ctaHref: string;
-}
-
-/** Optional "a note on trace percentages" card inside the trust section. */
-export interface TraceNote {
-  title: string;
-  items: Html[];
-}
-
-// -----------------------------------------------------------------------------
-// My Wellness-only section models. My Wellness bundles four sub-reports (Diet /
-// Weight / Fitness / Detox) into one kit, so it uses `traitReports` (in place of
-// `pains`) and a `traitsCatalog` (in place of `sampleReport`). Health pages omit
-// both.
-// -----------------------------------------------------------------------------
-
-/** Wellness sub-report accent (green / blue / amber / teal). */
-export type ReportAccent = 'diet' | 'weight' | 'fitness' | 'detox';
-
-/** One "My Wellness" sub-report card (Diet / Weight / Fitness / Detox). Shaped
- *  like a `Pain` but with a neutral trait-count badge and a bulleted list of
- *  what it tests instead of a risk grade. */
-export interface TraitReport {
-  key: string;
-  accent: ReportAccent;
-  label: Html; // e.g. "Report 1 · My Diet DNA"
-  question: Html; // h3
-  bodyHtml: Html[]; // 1-2 left-column paragraphs
-  calloutHtml?: Html; // optional insight callout (Weight has none)
-  testsLabel: string; // "What My Diet DNA tests"
-  count: string; // neutral badge, e.g. "20 traits"
-  groups: Html[]; // bulleted list of trait groups
-  sampleHtml: Html; // "Sample result: ..."
-  signsTitle: string;
-  signs: Html[];
-}
-
-/** One category block in the "52 traits" catalog. */
-export interface TraitCategory {
-  name: string; // "My Diet"
-  count: string; // "20 traits"
-  accent: ReportAccent;
-  groups: Html[]; // trait-group descriptions
-}
-
-/** The "what you get - 52 traits" catalog (renders in the sampleReport slot). */
-export interface TraitsCatalog {
-  eyebrow: string;
-  titleHtml: Html;
-  introHtml: Html;
-  categories: TraitCategory[];
-  totalNum: string; // "52"
-  totalLabel: string; // "Total"
-  totalSub: Html; // "Traits, from one saliva kit, in 7 days."
-  legendTitle: string; // "How results are shown"
-  legend: RiskLevel[];
-}
-
-/** The whole test-detail page, rendered by features/tests/components/TestPage. */
 export interface TestPage {
   slug: string;
   categorySlug: string;
-
   seo: { title: string; description: string };
-
-  sidebar: {
-    eyebrow: string;
-    introHtml: Html;
-    bundles: Bundle[];
-    noteHtml: Html;
-  };
-
-  hero: Hero;
-
-  /** Health pages: the risk-graded "pains". Omitted by Ancestry. */
-  pains?: {
-    eyebrow: string;
-    titleHtml: Html;
-    items: Pain[];
-  };
-
-  /** Ancestry: the four "discovery layers" (renders in the pains slot). */
-  discoveryLayers?: {
-    eyebrow: string;
-    titleHtml: Html;
-    items: DiscoveryLayer[];
-  };
-
-  /** My Wellness: the four sub-report cards (renders in the pains slot). */
-  traitReports?: {
-    eyebrow: string;
-    titleHtml: Html;
-    items: TraitReport[];
-  };
-
-  stat: Stat;
-
-  /** Health pages: the sample result cards + risk legend. Omitted by Ancestry. */
-  sampleReport?: {
-    eyebrow: string;
-    titleHtml: Html;
-    introHtml: Html;
-    cards: ReportCard[];
-    legendTitle: string;
-    legend: RiskLevel[];
-  };
-
-  /** Ancestry: the 10-region breakdown table (renders in the sampleReport slot). */
-  regionsTable?: RegionsTable;
-
-  /** My Wellness: the "52 traits" catalog (renders in the sampleReport slot). */
-  traitsCatalog?: TraitsCatalog;
-
-  howItWorks: {
-    eyebrow: string;
-    titleHtml: Html;
-    introHtml: Html;
-    image: string;
-    imageAlt: string;
-    steps: Step[];
-    ctaLabel: string;
-    ctaHref: string;
-    fineprint: Html;
-  };
-
-  care: {
-    eyebrow: string;
-    titleHtml: Html;
-    leadHtml: Html;
-    bodyHtml: Html;
-    minis: CareMini[];
-    pullQuoteHtml: Html;
-    chatTitle: string;
-    chatStatus: string;
-    chat: ChatBubble[];
-    coversTitle: string;
-    covers: Html[];
-  };
-
-  trust: {
-    eyebrow: string;
-    titleHtml: Html;
-    certs: CertTile[];
-    rows: CertRow[];
-    expert: {
-      initials: string;
-      name: Html;
-      role: Html;
-      lab: Html;
-      bodyHtml: Html;
-      accuracyHtml: Html;
-    };
-    /** Ancestry only: the "a note on trace percentages" card. */
-    traceNote?: TraceNote;
-  };
-
-  faq: {
-    eyebrow: string;
-    titleHtml: Html;
-    items: Faq[];
-  };
-
-  /** Ancestry only: the "makes a meaningful gift" block, above the bundles. */
-  giftSection?: GiftSection;
-
-  bundlesSection: {
-    eyebrow: string;
-    titleHtml: Html;
-    items: Bundle[];
-  };
-
-  finalCta: {
-    titleHtml: Html;
-    subHtml: Html;
-    ctaLabel: string;
-    ctaHref: string;
-    fineprint1: Html;
-    fineprint2: Html;
-  };
+  /** Rendered in order. This IS the page layout. */
+  sections: (Section & SectionEntry)[];
 }

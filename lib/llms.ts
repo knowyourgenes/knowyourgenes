@@ -8,6 +8,7 @@
 //   • Static pages + genetic tests  → @/lib/testsdata (local, always available)
 //   • Blog articles                  → Sanity CMS via @/features/blog (best-effort)
 
+import { getFaqItems } from '@/features/tests';
 import { siteConfig, absoluteUrl, cleanTitle } from '@/lib/site-config';
 import { TEST_PAGES } from '@/lib/testsdata';
 import { sanityFetch, blogListQuery, blogPostQuery } from '@/features/blog';
@@ -183,9 +184,9 @@ function testsSection(full: boolean): string {
     if (!full) return `- [${label}](${url}): ${t.seo.description}`;
 
     let block = `### ${label}\n${url}\n\n${t.seo.description}`;
-    const faqs = t.faq?.items ?? [];
+    const faqs = getFaqItems(t);
     if (faqs.length) {
-      const qa = faqs.map((f) => `**Q: ${stripHtml(f.q)}**\n\n${stripHtml(f.aHtml)}`).join('\n\n');
+      const qa = faqs.map((f) => `**Q: ${stripHtml(f.q)}**\n\n${stripHtml(f.a)}`).join('\n\n');
       block += `\n\n#### FAQ\n\n${qa}`;
     }
     return block;
