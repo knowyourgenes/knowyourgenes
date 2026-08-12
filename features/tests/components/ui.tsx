@@ -263,20 +263,26 @@ export function ChipRow({ items, accent, className }: { items: ChipT[]; accent?:
 
 // ---- risk tone -------------------------------------------------------------
 
+// `neutral` is the non-grade tone (see RiskTone in types.ts) — brand teal, so a
+// share reads as information rather than as a verdict.
+
 export const TONE_TEXT: Record<RiskTone, string> = {
   good: 'text-sea',
   avg: 'text-mandalay',
   poor: 'text-mojo',
+  neutral: 'text-eden',
 };
 export const TONE_DOT: Record<RiskTone, string> = {
   good: 'bg-sea',
   avg: 'bg-mandalay',
   poor: 'bg-mojo',
+  neutral: 'bg-eden',
 };
 export const TONE_PILL: Record<RiskTone, string> = {
   good: 'bg-sea text-white',
   avg: 'bg-mandalay text-white',
   poor: 'bg-mojo text-white',
+  neutral: 'bg-eden text-white',
 };
 
 /** Thin progress rail under a sample result. */

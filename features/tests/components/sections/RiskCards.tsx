@@ -76,6 +76,9 @@ type Accent = {
   label: string;
   /** Caption inside the image slot. */
   caption: string;
+  /** 2px rule beside an optional scenario quote. Spelt out rather than derived
+   *  from `rule` at runtime — Tailwind only emits classes it can see in source. */
+  border: string;
   /** Tint for a registry badge icon (pages outside Women's Health). */
   badgeText: string;
   /** The design's own glyph for the 44px badge, top-right of the image. */
@@ -91,6 +94,7 @@ const PALETTE: Accent[] = [
     rule: 'from-crimson to-crimson-deep',
     label: 'text-crimson',
     caption: 'text-crimson-deep/80',
+    border: 'border-crimson',
     badgeText: 'text-crimson',
     badge: '5485-455',
   },
@@ -99,6 +103,7 @@ const PALETTE: Accent[] = [
     rule: 'from-eden to-java',
     label: 'text-eden',
     caption: 'text-eden/70',
+    border: 'border-eden',
     badgeText: 'text-eden',
     badge: '5485-868',
   },
@@ -107,6 +112,7 @@ const PALETTE: Accent[] = [
     rule: 'from-java to-surfie',
     label: 'text-surfie',
     caption: 'text-surfie/80',
+    border: 'border-java',
     badgeText: 'text-surfie',
     badge: '5485-1281',
   },
@@ -115,6 +121,7 @@ const PALETTE: Accent[] = [
     rule: 'from-eden2 to-bottlehero',
     label: 'text-eden2',
     caption: 'text-eden2/80',
+    border: 'border-eden2',
     badgeText: 'text-eden2',
     badge: '6108-661',
   },
@@ -123,6 +130,7 @@ const PALETTE: Accent[] = [
     rule: 'from-surfie to-java',
     label: 'text-surfie',
     caption: 'text-surfie/80',
+    border: 'border-surfie',
     badgeText: 'text-surfie',
     badge: '6108-1075',
   },
@@ -289,8 +297,36 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                     dangerouslySetInnerHTML={{ __html: c.question }}
                   />
 
+                  {/* Optional scene-setter above the body: Cormorant italic on
+                      a 2px accent rule, so the card opens on the reader's own
+                      situation before it explains the gene. */}
+                  {c.scenarioHtml ? (
+                    <p
+                      className={cn(
+                        'mt-1 border-l-2 pl-3.5 font-tst text-[17px] font-semibold italic leading-snug text-[#2d2a24]',
+                        a.border
+                      )}
+                      dangerouslySetInnerHTML={{ __html: c.scenarioHtml }}
+                    />
+                  ) : null}
+
                   {/* One uniform 400 run in the frame — see the note above on <b>. */}
                   <Body html={c.bodyHtml} className="pt-1 text-[17.5px] leading-[26.2px]" />
+
+                  {/* Symptom pills — hairline outline, no fill, so they read as
+                      a checklist rather than as another set of tone chips. */}
+                  {c.chips?.length ? (
+                    <div className="flex flex-wrap gap-1.5 pt-2">
+                      {c.chips.map((chip) => (
+                        <span
+                          key={chip}
+                          className="rounded-full border border-mine/10 px-2.5 py-1 font-kyg text-[11.5px] font-semibold leading-tight text-fusc"
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
 
                   <p className="flex items-start gap-2 pb-[13px] pt-[9px] font-kyg text-[13.5px] font-semibold leading-[18.6px] text-mojo">
                     <Glyph id="5881-968" box="size-[19px]" w="w-[19px]" h="h-[23px]" />
@@ -309,6 +345,12 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                       dangerouslySetInnerHTML={{ __html: c.sample.valueHtml }}
                     />
                     <ResultBar tone={c.sample.tone} percent={c.sample.percent} />
+                    {c.sample.noteHtml ? (
+                      <p
+                        className="pt-0.5 font-kyg text-[12.5px] leading-snug text-boulder"
+                        dangerouslySetInnerHTML={{ __html: c.sample.noteHtml }}
+                      />
+                    ) : null}
                   </div>
                 </div>
               </article>

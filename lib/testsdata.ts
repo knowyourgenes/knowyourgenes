@@ -19,11 +19,14 @@
 // =============================================================================
 
 import type { TestPage } from '@/features/tests/types';
+import { ancestry } from '@/lib/tests/ancestry';
 import { eyeHealth } from '@/lib/tests/eye-health';
 import { immunityHealth } from '@/lib/tests/immunity-health';
 import { kidneyHealth } from '@/lib/tests/kidney-health';
 import { mensHealth } from '@/lib/tests/mens-health';
+import { myWellness } from '@/lib/tests/my-wellness';
 import { skinHealth } from '@/lib/tests/skin-health';
+import { sleep } from '@/lib/tests/sleep';
 
 const IMG = '/tests/womens-health';
 
@@ -740,7 +743,17 @@ export const womensHealth: TestPage = {
 /** All test pages served by the /categories/[category_slug]/[test_slug] route.
  *  Order here is the order they prerender in; it does not affect the listing,
  *  which is driven by lib/categoriesdata.ts. */
-export const TEST_PAGES: TestPage[] = [womensHealth, mensHealth, immunityHealth, skinHealth, eyeHealth, kidneyHealth];
+export const TEST_PAGES: TestPage[] = [
+  womensHealth,
+  mensHealth,
+  myWellness,
+  immunityHealth,
+  skinHealth,
+  eyeHealth,
+  kidneyHealth,
+  ancestry,
+  sleep,
+];
 
 export function getTestPage(slug: string): TestPage | undefined {
   return TEST_PAGES.find((t) => t.slug === slug);

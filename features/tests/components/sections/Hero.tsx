@@ -110,7 +110,23 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
           </p>
 
           {/* Figtree 400 19/28.5 #5b564e */}
-          <Lead html={data.subHtml} className="max-w-[500px]" />
+          <Lead html={data.subHtml} className="max-w-[520px]" />
+
+          {/* Optional benefit checklist — Figtree 400 17/24 on a filled tick,
+              the same 12px gap the chip row below uses. */}
+          {data.bullets?.length ? (
+            <ul className="flex max-w-[520px] flex-col gap-3 pt-[21px]">
+              {data.bullets.map((b, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <Icon name="check" className="mt-0.5 size-[21px] shrink-0 text-sea" />
+                  <span
+                    className="font-kyg text-[17px] leading-snug text-[#2d2a24] [&_b]:font-bold"
+                    dangerouslySetInnerHTML={{ __html: b }}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : null}
 
           {/* pad-top 21, gap 12 */}
           <div className="flex flex-wrap items-center gap-3 pt-[21px]">
@@ -205,17 +221,27 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
                 keeping the frame's 24 px overlap as a negative margin; from 640
                 up it is the frame's absolute -24/-24 float again. */}
             <div className="floaty relative mx-auto -mt-6 w-full max-w-[248px] rounded-[22px] border border-mine/10 bg-white/95 p-5 shadow-tst-float backdrop-blur-[4px] sm:absolute sm:-bottom-6 sm:-left-6 sm:mx-0 sm:mt-0 sm:w-[248px]">
-              <div className="flex items-center gap-1.5 pb-3">
-                <span className="flex size-[18px] shrink-0 items-center justify-center">
-                  {cardGlyph ? (
-                    <FigmaIcon id={cardGlyph} className="h-[21px] w-[18px] max-w-none" />
-                  ) : (
-                    <Icon name={card.icon ?? 'flask'} className="size-[18px] text-eden" />
-                  )}
+              {/* `titleRight` splits the header into a labelled pair (the
+                  Men's deck runs "File No. …" against "KYG Lab"); without it
+                  the title sits alone beside the glyph, as the frame draws it. */}
+              <div className="flex items-center justify-between gap-2 pb-3">
+                <span className="flex min-w-0 items-center gap-1.5">
+                  <span className="flex size-[18px] shrink-0 items-center justify-center">
+                    {cardGlyph ? (
+                      <FigmaIcon id={cardGlyph} className="h-[21px] w-[18px] max-w-none" />
+                    ) : (
+                      <Icon name={card.icon ?? 'flask'} className="size-[18px] text-eden" />
+                    )}
+                  </span>
+                  <span className="truncate font-kyg text-[10px] font-bold uppercase leading-[15px] tracking-[0.14em] text-boulder">
+                    {card.title}
+                  </span>
                 </span>
-                <span className="font-kyg text-[10px] font-bold uppercase leading-[15px] tracking-[0.14em] text-boulder">
-                  {card.title}
-                </span>
+                {card.titleRight ? (
+                  <span className="shrink-0 font-kyg text-[10px] font-bold uppercase leading-[15px] tracking-[0.14em] text-boulder">
+                    {card.titleRight}
+                  </span>
+                ) : null}
               </div>
 
               <ul className="flex flex-col">
@@ -234,6 +260,13 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
                   </li>
                 ))}
               </ul>
+
+              {card.footNoteHtml ? (
+                <p
+                  className="mt-3 border-t border-mine/10 pt-3 font-kyg text-[10px] font-bold uppercase leading-[15px] tracking-[0.12em] text-crimson-deep"
+                  dangerouslySetInnerHTML={{ __html: card.footNoteHtml }}
+                />
+              ) : null}
             </div>
           </div>
         </div>

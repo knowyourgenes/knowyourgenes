@@ -38,10 +38,10 @@ export const immunityHealth: TestPage = {
     {
       type: 'hero',
       eyebrow: { label: 'Genetic Testing · Immunity', icon: 'shield' },
-      titleHtml: 'Viral fever is going around again. <em class="tst-em">But why do you always catch it first?</em>',
+      titleHtml:
+        "What's the most effective way to increase immunity? <em class='tst-em'>It starts with your genes, not your diet.</em>",
       kickerHtml: '24 markers. 1 saliva sample.',
-      subHtml:
-        'How quickly you catch something, and how long it keeps you down, are two different genes. This test reads both.',
+      subHtml: 'Eleven readings on how your body handles infection, plus the nutrients and detox behind them.',
       ctas: [
         { label: 'Check My Immunity', href: '#kit' },
         { label: 'See What We Check', href: '#what-we-check', variant: 'ghost', icon: 'arrow-down' },
@@ -51,7 +51,7 @@ export const immunityHealth: TestPage = {
         { label: 'NABL lab', icon: 'badge-check' },
         { label: 'Results in 3 weeks', icon: 'clock' },
       ],
-      footnoteHtml: 'Part of the answer has been in your genes all along.',
+      footnoteHtml: 'Built from your genes. Working since the day you were born.',
       image: { src: `${IMG}/hero.png`, alt: 'A person healthy and getting on with an ordinary day' },
       resultCard: {
         title: 'Sample results',
@@ -72,8 +72,7 @@ export const immunityHealth: TestPage = {
       ground: 'sage',
       head: {
         eyebrow: { label: 'Who should take this test', icon: 'users' },
-        titleHtml:
-          'Anyone can take this test. But if any of this sounds like you, <em class="tst-em">don&rsquo;t wait.</em>',
+        titleHtml: 'Six reasons to test sooner <em class="tst-em">rather than later.</em>',
       },
       image: { src: `${IMG}/who.png`, alt: 'A person going about a normal, healthy day' },
       introTitleHtml: 'This test is for you if&hellip;',
@@ -128,7 +127,7 @@ export const immunityHealth: TestPage = {
       ground: 'ivory',
       head: {
         eyebrow: { label: 'Reactive vs Preventive', icon: 'scale' },
-        titleHtml: 'You always know when you fall ill. <em class="tst-em-teal">You have never known why.</em>',
+        titleHtml: 'You can be low on iron for years <em class="tst-em-teal">without ever knowing it.</em>',
       },
       image: { src: `${IMG}/why-reactive.png`, alt: 'A shield holding, and a shield with a gap' },
       badgeTop: { label: 'Know the weak points', icon: 'shield' },
@@ -466,7 +465,7 @@ export const immunityHealth: TestPage = {
       ground: 'ivory',
       head: {
         eyebrow: { label: 'Fuel and clean-up', icon: 'salad', accent: 'teal' },
-        titleHtml: 'What your immune system runs on, <em class="tst-em-teal">and what slows it down.</em>',
+        titleHtml: 'Eleven nutrients your immune cells need, <em class="tst-em-teal">and three detox readings.</em>',
         leadHtml:
           'Eleven nutrients your immune cells need to do their job, and three results on how well your liver clears what gets in the way.',
       },
@@ -527,7 +526,7 @@ export const immunityHealth: TestPage = {
       ground: 'ink',
       head: {
         eyebrow: { label: 'The numbers, nationally', icon: 'chart', accent: 'teal' },
-        titleHtml: 'The nutrients immunity needs most are the ones India runs short of.',
+        titleHtml: '70% of Indians are short on Vitamin D. Half are short on iron.',
         leadHtml: 'Most people find out only after they have already been ill.',
       },
       stats: [
@@ -564,7 +563,7 @@ export const immunityHealth: TestPage = {
       ground: 'ivory',
       head: {
         eyebrow: { label: 'How genes shape immunity', icon: 'microscope' },
-        titleHtml: 'Genetics sounds complicated. <em class="tst-em">This part isn&rsquo;t.</em>',
+        titleHtml: 'How your genes shape your immune system, <em class="tst-em">in three steps.</em>',
       },
       cards: [
         {
@@ -652,7 +651,7 @@ export const immunityHealth: TestPage = {
       ground: 'ivory',
       head: {
         eyebrow: { label: 'How it works', icon: 'box' },
-        titleHtml: 'From your door to your full report, <em class="tst-em-teal">in 5 simple steps.</em>',
+        titleHtml: 'Five steps, from kit to report. <em class="tst-em-teal">Three weeks, start to finish.</em>',
         leadHtml: 'No clinic. No needle. No fasting. About five minutes of your time.',
       },
       steps: [
@@ -677,7 +676,7 @@ export const immunityHealth: TestPage = {
       ground: 'cream',
       head: {
         eyebrow: { label: 'Second Opinion · Not Google, a real expert', icon: 'users', accent: 'teal' },
-        titleHtml: 'A result on its own is just data. <em class="tst-em-teal">We help you make sense of it.</em>',
+        titleHtml: 'A free call with our genetics team, <em class="tst-em-teal">included with every report.</em>',
       },
       image: { src: `${IMG}/counsellor.png`, alt: 'A KYG genetics expert reviewing an immunity result' },
       points: [
@@ -809,8 +808,7 @@ export const immunityHealth: TestPage = {
       type: 'finalCta',
       ground: 'ink',
       eyebrow: { label: 'Know now, not later', icon: 'zap', accent: 'teal' },
-      titleHtml:
-        'You will never watch your immune system work. <em class="tst-em-teal">But you can finally see how it was built.</em>',
+      titleHtml: 'See what your immune system <em class="tst-em-teal">is actually made of.</em>',
       chips: [{ label: '24 markers, 1 saliva kit' }, { label: 'Results in 3 weeks' }, { label: 'Expert guidance' }],
       cta: { label: 'Check My Immunity', href: '#kit' },
       noteHtml: 'At-home saliva kit · NABL certified lab · Results in 3 weeks',

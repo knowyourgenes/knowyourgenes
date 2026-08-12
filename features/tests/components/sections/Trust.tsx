@@ -206,6 +206,13 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
           );
         })}
       </div>
+
+      {data.noteHtml ? (
+        <p
+          className="mt-8 text-center font-kyg text-[14.5px] leading-snug text-fusc"
+          dangerouslySetInnerHTML={{ __html: data.noteHtml }}
+        />
+      ) : null}
     </Section>
   );
 }

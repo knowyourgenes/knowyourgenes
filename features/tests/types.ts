@@ -21,8 +21,15 @@
 /** A string that may contain trusted inline HTML. Authored in `lib/testsdata.ts` only. */
 export type Html = string;
 
-/** Risk grade shown on result chips, sample results and the legend. */
-export type RiskTone = 'good' | 'avg' | 'poor';
+/**
+ * Result tone for chips, sample results and the legend.
+ *
+ * `good` / `avg` / `poor` are the three risk grades every health panel uses.
+ * `neutral` is NOT a grade: Ancestry reports a share of your origin, not a
+ * risk, so painting "72.91% South Asian" in the red of a poor result would
+ * imply a verdict the test never makes. It renders in brand teal instead.
+ */
+export type RiskTone = 'good' | 'avg' | 'poor' | 'neutral';
 
 /**
  * Which panel a card/hotspot/tab belongs to. Drives accent colour, and doubles
@@ -104,6 +111,8 @@ export interface HeroSection {
   titleHtml: Html;
   kickerHtml: Html; // "One saliva test, at home."
   subHtml: Html;
+  /** Benefit checklist between the sub-line and the CTAs. */
+  bullets?: Html[];
   ctas: Cta[];
   chips: Chip[];
   /** Serif-italic line under the chips. */
@@ -113,7 +122,11 @@ export interface HeroSection {
   resultCard: {
     title: string;
     icon?: IconKey;
+    /** Right-aligned label in the card header, e.g. "KYG Lab". */
+    titleRight?: string;
     rows: { label: string; value: string; tone: RiskTone }[];
+    /** Line under the rows, e.g. "Confidential · Report Enclosed". */
+    footNoteHtml?: Html;
   };
 }
 
@@ -143,11 +156,12 @@ export interface AspirationSection {
   quoteHtml: Html;
 }
 
-/** Two-up "how it used to be" vs "how it works now" comparison. */
+/** Two-up "how it used to be" vs "how it works now" comparison.
+ *  `footerHtml` is the emphasised line some decks rule off below the items. */
 export interface ThenNowSection {
   type: 'thenNow';
-  then: { icon: IconKey; kicker: string; title: string; items: Html[] };
-  now: { icon: IconKey; kicker: string; title: string; items: Html[] };
+  then: { icon: IconKey; kicker: string; title: string; items: Html[]; footerHtml?: Html };
+  now: { icon: IconKey; kicker: string; title: string; items: Html[]; footerHtml?: Html };
   closingHtml: Html;
   cta?: Cta;
 }
@@ -207,9 +221,20 @@ export interface RiskCardsSection {
     imageCaption: string;
     geneLabel: string; // "PCOS · Gene THADA"
     question: Html;
+    /** Serif-italic scene set above the body, on an accent rule. */
+    scenarioHtml?: Html;
     bodyHtml: Html;
+    /** Symptom pills between the body and the warning. */
+    chips?: string[];
     warningHtml: Html;
-    sample: { label: string; valueHtml: Html; tone: RiskTone; percent: number };
+    sample: {
+      label: string;
+      valueHtml: Html;
+      tone: RiskTone;
+      percent: number;
+      /** Line under the rail, e.g. "A high risk result is a warning, not a final answer." */
+      noteHtml?: Html;
+    };
     /**
      * Badge glyph, top-right of the image. The Women's Health panels have their
      * own Figma artwork and leave this unset; every other page names a registry
@@ -222,30 +247,47 @@ export interface RiskCardsSection {
 }
 
 /**
- * Graded tiles in labelled groups — the Skin Health "what you eat, on your
- * face" band: six food sensitivities as compact tiles, then four nutrients as
- * cards with a line of copy. Unlike `riskCards` these carry no photography and
- * no filter, so they stay readable six across.
+ * Tiles in labelled groups — for the parts of a panel that are neither a risk
+ * card nor a stat: Skin Health's "what you eat, on your face", Immunity's "fuel
+ * and clean-up", My Wellness's "all 52 traits". They carry no photography and
+ * no filter, so they stay readable up to six across.
+ *
+ * Three densities, all off the same item shape:
+ *   compact  6-up icon tiles           icon · title · meta · tone pill
+ *   detail   3/4-up cards              icon + tone pill · title · body · meta
+ *   stat     4-up cards, big numeral   statHtml · title · body
  */
 export interface MarkerGridSection {
   type: 'markerGrid';
   head: SectionHead;
+  /**
+   * Anchor id. Defaults to `markers`. A page that uses this section more than
+   * once (Sleep runs three) MUST give the extras their own id — duplicate ids
+   * are invalid, and every in-page link would resolve to the first one.
+   */
+  anchorId?: string;
   groups: {
-    kicker: string;
-    /** `compact` = 6-up icon tiles · `detail` = 4-up cards with body copy. */
-    variant: 'compact' | 'detail';
+    /** Omitted when the grid is the whole point and needs no sub-heading. */
+    kicker?: string;
+    variant: 'compact' | 'detail' | 'stat';
     items: {
-      icon: IconKey;
+      icon?: IconKey;
       /** Icon badge tint. Default: teal. */
       accent?: Accent;
-      title: string;
+      /** `stat` variant — the numeral that replaces the icon badge. */
+      statHtml?: Html;
+      title?: string;
       /** Gene or marker under the title, e.g. "CYP1A2". */
-      meta: string;
-      tone: RiskTone;
-      /** Pill copy — "Good" / "Average" / "Poor". */
-      toneLabel: string;
-      /** `detail` variant only. */
+      meta?: string;
+      tone?: RiskTone;
+      /** Pill copy — "Good" / "Average" / "Poor", or a share like "~73%". */
+      toneLabel?: string;
+      /** `detail` and `stat` variants. */
       bodyHtml?: Html;
+      /** `detail` variant — draws the shared result rail under the body. */
+      percent?: number;
+      /** `detail` variant — the recommendation under the rail. */
+      noteHtml?: Html;
     }[];
   }[];
 }
@@ -264,6 +306,8 @@ export interface StatsSection {
     tone: 'java2' | 'java' | 'ice' | 'pink';
     /** Rail fill, as a percentage of the card's 172px track. */
     barPercent: number;
+    /** Line between the numeral and the rail — what the number actually says. */
+    leadHtml?: Html;
     bodyHtml: Html;
   }[];
   closingHtml: Html;
@@ -296,6 +340,8 @@ export interface ContrastSection {
   positive: { badge: Chip; image: Img; kicker: string; title: string; items: Html[] };
   closingHtml: Html;
   cta?: Cta;
+  /** Note under the CTA, e.g. "3 tests · 1 saliva sample · results in 3 weeks". */
+  ctaNoteHtml?: Html;
 }
 
 /** "The cost of knowing is small" — argument + price card. */
@@ -373,6 +419,8 @@ export interface TrustSection {
   head: SectionHead;
   badges: { icon?: IconKey; line1: string; line2?: string }[];
   tiles: { icon?: IconKey; statHtml?: Html; title: string; bodyHtml: Html; accent?: Accent }[];
+  /** Centred line under the tiles, e.g. where the lab actually is. */
+  noteHtml?: Html;
 }
 
 export interface FaqsSection {

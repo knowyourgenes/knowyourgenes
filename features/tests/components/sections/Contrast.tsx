@@ -152,6 +152,12 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
               this is the same 60px at >=1440 while surviving a bumped-up default
               font size instead of clipping the label. */}
           {data.cta ? <Cta data={data.cta} className="min-h-15 py-0 tracking-[0.06px]" /> : null}
+          {data.ctaNoteHtml ? (
+            <p
+              className="pt-3.5 text-center font-kyg text-[14.5px] leading-snug text-fusc"
+              dangerouslySetInnerHTML={{ __html: data.ctaNoteHtml }}
+            />
+          ) : null}
         </div>
       </div>
     </Section>

@@ -96,6 +96,13 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
                 </li>
               ))}
             </ul>
+
+            {data.then.footerHtml ? (
+              <p
+                className="mt-5 border-t border-mine/10 pt-4 font-kyg text-[15px] font-bold leading-snug text-mojo"
+                dangerouslySetInnerHTML={{ __html: data.then.footerHtml }}
+              />
+            ) : null}
           </div>
 
           {/* -------------------------------------------------------- now ---- */}
@@ -135,6 +142,13 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
                   </li>
                 ))}
               </ul>
+
+              {data.now.footerHtml ? (
+                <p
+                  className="mt-5 border-t border-white/15 pt-4 font-kyg text-[15px] font-bold leading-snug text-java2"
+                  dangerouslySetInnerHTML={{ __html: data.now.footerHtml }}
+                />
+              ) : null}
             </div>
           </div>
         </div>

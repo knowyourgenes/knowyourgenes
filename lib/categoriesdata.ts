@@ -43,10 +43,9 @@ export const CATEGORIES: TestCategory[] = [
     accent: 'wellness',
     products: [
       // Women's Health is the reference build of the section-array layout (see
-      // lib/testsdata.ts); Men's, Immunity, Skin, Eye and Kidney are built on it
-      // from the copy decks in health/, one file each under lib/tests/. Ancestry
-      // and My Wellness were removed with the old fixed-shape renderer and return
-      // here as they are rebuilt - one entry per rebuilt test.
+      // lib/testsdata.ts); every other test here is built on it from the copy
+      // decks in health/, one file each under lib/tests/. This is now the
+      // complete set - nothing is left behind on the old fixed-shape renderer.
       {
         slug: 'womens-health',
         name: "Women's Health DNA",
@@ -61,6 +60,13 @@ export const CATEGORIES: TestCategory[] = [
         meta: '3 health checks',
         blurb: 'Hair fall, testosterone and male fertility - three answers from one at-home saliva sample, in 7 days.',
         href: '/categories/wellness/mens-health',
+      },
+      {
+        slug: 'my-wellness',
+        name: 'My Wellness DNA',
+        meta: '52 traits · 4 reports',
+        blurb: 'Diet, weight, fitness and detox - 52 traits from one saliva kit, delivered as four reports in 7 days.',
+        href: '/categories/wellness/my-wellness',
       },
       {
         slug: 'immunity-health',
@@ -85,6 +91,22 @@ export const CATEGORIES: TestCategory[] = [
         blurb:
           'Glaucoma, retinopathy, cataract, myopia, eye pressure, macular degeneration and retinal occlusion - seven findings from one saliva sample.',
         href: '/categories/wellness/eye-health',
+      },
+      {
+        slug: 'sleep',
+        name: 'Sleep DNA',
+        meta: '28 readings',
+        blurb:
+          'Apnea, insomnia, duration, teeth grinding, restless legs, narcolepsy, your airway and the eight nutrients sleep runs on.',
+        href: '/categories/wellness/sleep',
+      },
+      {
+        slug: 'ancestry',
+        name: 'Ancestry DNA',
+        meta: '10 global regions',
+        blurb:
+          'Ancestors In Me - where you come from, mapped across up to 10 global regions from 42,000+ markers, written up as a Gene Journey.',
+        href: '/categories/wellness/ancestry',
       },
       {
         slug: 'kidney-health',

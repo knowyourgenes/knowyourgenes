@@ -47,6 +47,15 @@ export default function StatCard({ data, accent }: { data: Stat; accent: string 
         </span>
       </div>
 
+      {/* Optional line between the numeral and the rail — what the number
+          actually says, at 80% where the body below sits at 70%. */}
+      {data.leadHtml ? (
+        <p
+          className="mb-1.5 break-words font-kyg text-[13px] leading-snug text-linenw/80"
+          dangerouslySetInnerHTML={{ __html: data.leadHtml }}
+        />
+      ) : null}
+
       {/* 172x4 rail, r9999, #ffffff@10 track. `.bar` starts at width 0 and
           transitions once the inline width lands (globals.css). */}
       <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">

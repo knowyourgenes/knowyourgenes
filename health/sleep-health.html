@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sleep Genetic Test: Apnea · Insomnia · Restless Legs · Narcolepsy | Know Your Genes</title>
+<meta name="description" content="Twenty-eight readings on why you sleep the way you do. One saliva sample covers sleep apnea, insomnia, sleep duration, bruxism, restless legs, narcolepsy, airway health and the nutrients sleep runs on. Results in 3 weeks. NABL-accredited lab." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&family=Hind:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          teal:'#0E4D4B', teal2:'#15605D', teal3:'#0A3B39', tealMid:'#0E7C77', tealLight:'#25B5AB', tealBright:'#2AC3A2',
+          cream:'#FAF6EF', cream2:'#F5EDDF', mint:'#E6F4F3',
+          charcoal:'#222222', gray:'#7A7A7A',
+          /* Sleep identity accent - deep indigo, used sparingly, never on the logo */
+          wrose:'#3D3A6E', wrose700:'#2B2950', wrose50:'#EDECF5', wrose100:'#DAD8EC',
+          good:'#2E7D5B', avg:'#C4972E', poor:'#C0432F',
+          peach:'#F8E4CC', sand:'#EDDDB8',
+          ink:'#222222', ink2:'#2D2A24', ink3:'#5B564E', ink4:'#7A7A7A',
+          line:'rgba(34,34,34,.10)',
+          dark1:'#141B1A', dark2:'#1E2B29',
+        },
+        fontFamily:{
+          sans:['Figtree','system-ui','-apple-system','Segoe UI','sans-serif'],
+          hind:['Hind','Figtree','sans-serif'],
+          serif:['"Cormorant Garamond"','Georgia','serif'],
+        },
+        boxShadow:{
+          's1':'0 1px 2px rgba(20,27,26,.04), 0 4px 14px rgba(20,27,26,.05)',
+          's2':'0 4px 16px rgba(20,27,26,.06), 0 18px 50px rgba(20,27,26,.08)',
+          's3':'0 12px 36px rgba(20,27,26,.10), 0 40px 100px rgba(20,27,26,.14)',
+        },
+        keyframes:{
+          meshDrift:{'0%':{transform:'translate3d(0,0,0) scale(1)'},'50%':{transform:'translate3d(2%,-1.5%,0) scale(1.05)'},'100%':{transform:'translate3d(-1.5%,2%,0) scale(1.02)'}},
+          floatySlow:{'0%,100%':{transform:'translateY(0) translateX(0)'},'50%':{transform:'translateY(-16px) translateX(6px)'}},
+          gradShift:{'0%,100%':{backgroundPosition:'0% 50%'},'50%':{backgroundPosition:'100% 50%'}},
+        },
+        animation:{
+          meshDrift:'meshDrift 26s ease-in-out infinite alternate',
+          floatySlow:'floatySlow 9s ease-in-out infinite',
+          gradShift:'gradShift 9s ease-in-out infinite',
+        },
+      },
+    },
+  }
+</script>
+
+<style>
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{overflow-x:hidden;position:relative;min-height:100vh;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color:#222222;font-family:'Figtree',sans-serif;}
+  ::selection{background:#0E4D4B;color:#fff;}
+  h1,h2,h3,h4{letter-spacing:-.02em;line-height:1.08;}
+  .fr{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;letter-spacing:0;}
+  .fr-b{display:inline;margin:0;}
+  h2 .fr,h1 .fr{white-space:normal;}
+
+  .scrollbar{position:fixed;top:0;left:0;height:3px;width:0;z-index:70;background:linear-gradient(90deg,#0E4D4B,#25B5AB 60%,#3D3A6E);box-shadow:0 0 10px rgba(37,181,171,.5);transition:width .1s linear;}
+  .mark{color:#2B2950;font-weight:800;background:linear-gradient(transparent 60%, rgba(61,58,110,.22) 60%);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+
+  .fpill{cursor:pointer;transition:.25s cubic-bezier(0.16,1,0.3,1);}
+  .fpill[data-active="true"]{background:#0E4D4B;border-color:#0E4D4B;color:#fff;box-shadow:0 8px 20px rgba(14,77,75,.24);transform:translateY(-1px);}
+  .tcard.dim{opacity:.32;filter:saturate(.6);transform:scale(.985);}
+  .tcard{transition:opacity .45s ease,filter .45s ease,transform .45s cubic-bezier(0.16,1,0.3,1),box-shadow .5s;}
+
+  .msym{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;}
+  .msym.fill{font-variation-settings:'FILL' 1,'wght' 350,'GRAD' 0,'opsz' 24;}
+
+  body::before{content:"";position:fixed;inset:-10vh -10vw;z-index:-2;will-change:transform;
+    background:
+      radial-gradient(42vw 52vh at 10% 14%, rgba(230,244,243,.75) 0%, transparent 60%),
+      radial-gradient(36vw 42vh at 90% 6%,  rgba(237,236,245,.7) 0%, transparent 60%),
+      radial-gradient(48vw 48vh at 82% 70%, rgba(218,216,236,.45) 0%, transparent 65%),
+      radial-gradient(40vw 40vh at 16% 90%, rgba(245,237,223,.6) 0%, transparent 60%),
+      #FAF6EF;
+    animation:meshDrift 26s ease-in-out infinite alternate;}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.36;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.13  0 0 0 0 0.13  0 0 0 0 0.13  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}}
+
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:11px 22px 11px 17px;border-radius:999px;background:rgba(61,58,110,.1);border:1px solid rgba(61,58,110,.24);color:#2B2950;font-weight:800;font-size:14px;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 6px 18px rgba(61,58,110,.1);}
+  .eyebrow .msym{font-size:22px;color:#3D3A6E;}
+  .eyebrow--teal{background:rgba(14,77,75,.07);border-color:rgba(14,77,75,.15);color:#0E4D4B;}
+  .eyebrow--teal .msym{color:#15605D;}
+  .eyebrow--light{background:rgba(37,181,171,.14);border-color:rgba(37,181,171,.28);color:#7FE3D6;}
+  .eyebrow--light .msym{color:#7FE3D6;}
+
+  .grad-teal{background:linear-gradient(110deg,#0E4D4B 0%,#15605D 30%,#25B5AB 55%,#15605D 80%,#0E4D4B 100%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradShift 9s ease-in-out infinite;}
+  .grad-rose{background:linear-gradient(110deg,#2B2950 0%,#3D3A6E 45%,#3D3A6E 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradShift 9s ease-in-out infinite;}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .95s cubic-bezier(0.16,1,0.3,1),transform .95s cubic-bezier(0.16,1,0.3,1);transition-delay:var(--rd,0s);}
+  .reveal.is-in{opacity:1;transform:none;}
+
+  .flow-line{background:linear-gradient(90deg, rgba(34,34,34,.05) 0%, rgba(37,181,171,0) 8%, #25B5AB 30%, #0E4D4B 48%, #25B5AB 66%, rgba(37,181,171,0) 92%, rgba(34,34,34,.05) 100%);background-size:240% 100%;animation:flowX 8s linear infinite;box-shadow:0 0 12px rgba(37,181,171,.28);}
+  @keyframes flowX{0%{background-position:240% 0}100%{background-position:0% 0}}
+
+  .btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:10px;background:#0E4D4B;color:#fff;border:1px solid #0E4D4B;padding:17px 34px;border-radius:999px;font-size:16px;font-weight:800;cursor:pointer;transition:.28s cubic-bezier(0.16,1,0.3,1);box-shadow:0 14px 32px rgba(14,77,75,.32),0 0 0 4px rgba(37,181,171,.1);}
+  .btn::after{content:"";position:absolute;top:0;left:-65%;width:38%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-18deg);animation:sheen 4.6s ease-in-out infinite;pointer-events:none;}
+  @keyframes sheen{0%,58%{left:-65%}100%{left:135%}}
+  .btn:hover{background:#15605D;border-color:#15605D;transform:translateY(-3px) scale(1.02);box-shadow:0 22px 46px rgba(14,77,75,.4),0 0 0 5px rgba(37,181,171,.16);}
+  .btn .msym{font-size:20px;transition:transform .3s;position:relative;z-index:1;}
+  .btn:hover .msym{transform:translateX(4px);}
+  .btn.lg{padding:20px 44px;font-size:18px;}
+  .btn.sm{padding:11px 22px;font-size:14px;box-shadow:0 10px 24px rgba(14,77,75,.28);}
+  .btn.ghost{background:#fff;color:#0E4D4B;border-color:rgba(14,77,75,.28);box-shadow:0 6px 18px rgba(20,27,26,.08);}
+  .btn.ghost::after{display:none;}
+  .btn.ghost:hover{background:#E6F4F3;border-color:#0E4D4B;transform:translateY(-3px);}
+  .btn.light{background:#fff;color:#0E4D4B;border-color:#fff;box-shadow:0 14px 32px rgba(0,0,0,.22),0 0 0 4px rgba(255,255,255,.16);}
+  .btn.light::after{background:linear-gradient(100deg,transparent,rgba(14,77,75,.12),transparent);}
+  .btn.light:hover{background:#E6F4F3;border-color:#E6F4F3;}
+
+  .lift{transition:transform .5s cubic-bezier(0.16,1,0.3,1),box-shadow .5s cubic-bezier(0.16,1,0.3,1),border-color .5s;}
+  .lift:hover{transform:translateY(-6px);box-shadow:0 22px 60px rgba(20,27,26,.14);}
+
+  .imgslot{position:relative;overflow:hidden;background:linear-gradient(135deg, rgba(14,77,75,.05), rgba(37,181,171,.06));}
+  .imgslot .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#0E4D4B;opacity:.55;text-align:center;padding:14px;}
+  .imgslot .ph .msym{font-size:34px;}
+  .imgslot .ph span.t{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+  .imgslot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .6s cubic-bezier(0.16,1,0.3,1);}
+
+  .hot{cursor:pointer;}
+  .hot .pin{transition:transform .3s cubic-bezier(0.34,1.56,0.64,1);transform-origin:center;transform-box:fill-box;}
+  .hot:hover .pin{transform:scale(1.35);}
+  .hot .halo{transform-origin:center;transform-box:fill-box;animation:haloPulse 2.6s ease-in-out infinite;}
+  @keyframes haloPulse{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:0;transform:scale(2.1)}}
+  .hot:hover .lbl{fill:#0E4D4B;}
+
+  .fa{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(0.16,1,0.3,1);}
+  .fq.open .fa{max-height:460px;}
+  .fq.open{border-color:#0E4D4B !important;box-shadow:0 12px 30px rgba(14,77,75,.12);}
+  .fq.open .plus{transform:rotate(45deg);}
+
+  .mq{overflow:hidden;position:relative;-webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+  .mq-track{display:flex;width:max-content;animation:mqScroll 34s linear infinite;}
+  .mq:hover .mq-track{animation-play-state:paused;}
+  .mq-item{margin-right:18px;flex:0 0 auto;}
+  @keyframes mqScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(250,246,239,.94);backdrop-filter:blur(12px);border-top:1px solid rgba(34,34,34,.10);padding:11px 18px;display:none;align-items:center;justify-content:space-between;gap:14px;}
+  @media(max-width:640px){.sticky-cta{display:flex;} body{padding-bottom:74px;}}
+</style>
+</head>
+<body class="bg-cream text-ink">
+<div class="scrollbar" id="scrollbar"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-50 bg-cream/85 backdrop-blur-md border-b border-line">
+  <nav class="max-w-[1280px] mx-auto px-5 md:px-8 py-3.5 flex items-center justify-between">
+    <a href="#" class="text-[21px] tracking-tight text-teal"><span class="font-extrabold">Know</span><span class="font-medium">Your</span><span class="font-extrabold">Genes</span></a>
+    <ul class="hidden md:flex gap-7 text-[14.5px] font-medium text-ink3">
+      <li><a href="#why" class="hover:text-teal transition-colors">Why Test</a></li>
+      <li><a href="#tests" class="hover:text-teal transition-colors">What We Read</a></li>
+      <li><a href="#how" class="hover:text-teal transition-colors">How It Works</a></li>
+      <li><a href="#faq" class="hover:text-teal transition-colors">FAQ</a></li>
+    </ul>
+    <a href="#final" class="btn sm">Check My Sleep</a>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden pt-16 pb-20 md:pt-20 md:pb-24">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-12 md:gap-16 items-center relative z-[1]">
+    <div class="reveal">
+      <div class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-3 pr-4 py-2 mb-6 shadow-s1">
+        <span class="w-2 h-2 rounded-full bg-wrose animate-pulse"></span>
+        <span class="text-[11.5px] font-bold tracking-[.14em] uppercase text-wrose700">Genetic Testing · Sleep</span>
+      </div>
+      <h1 class="text-[clamp(40px,5.6vw,64px)] font-extrabold leading-[1.08] mb-5">It's 3 AM. Still wide awake? <span class="fr font-semibold grad-rose">Your genes might explain why.</span></h1>
+      <p class="mb-2 max-w-[520px]"><span class="mark text-[clamp(22px,2.6vw,28px)] font-extrabold leading-tight">28 readings. 1 saliva sample.</span></p>
+      <p class="text-[19px] text-ink3 mb-7 max-w-[520px]">Apnea, insomnia, sleep duration, teeth grinding, restless legs, narcolepsy, your airway, and the eight nutrients sleep runs on.</p>
+
+      <div class="flex flex-wrap gap-3">
+        <a href="#final" class="btn">Check My Sleep <span class="msym">arrow_forward</span></a>
+        <a href="#tests" class="btn ghost">See All 28 Readings <span class="msym">south</span></a>
+      </div>
+
+      <div class="flex flex-wrap gap-2.5 mt-8">
+        <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-2 pr-4 py-2 shadow-s1 lift"><span class="w-8 h-8 rounded-full bg-mint flex items-center justify-center"><span class="msym text-[20px] text-teal">home</span></span><span class="text-[14.5px] font-bold text-ink2">At-home kit</span></span>
+        <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-2 pr-4 py-2 shadow-s1 lift"><span class="w-8 h-8 rounded-full bg-wrose50 flex items-center justify-center"><span class="msym fill text-[20px] text-wrose">water_drop</span></span><span class="text-[14.5px] font-bold text-ink2">No needles</span></span>
+        <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-2 pr-4 py-2 shadow-s1 lift"><span class="w-8 h-8 rounded-full bg-mint flex items-center justify-center"><span class="msym text-[20px] text-teal">schedule</span></span><span class="text-[14.5px] font-bold text-ink2">Results in 3 weeks</span></span>
+        <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-2 pr-4 py-2 shadow-s1 lift"><span class="w-8 h-8 rounded-full bg-mint flex items-center justify-center"><span class="msym text-[20px] text-teal">verified</span></span><span class="text-[14.5px] font-bold text-ink2">NABL-accredited lab</span></span>
+      </div>
+      <p class="fr text-[22px] text-teal2 mt-7">You spend a third of your life asleep. This is what shapes it.</p>
+    </div>
+
+    <div class="relative reveal" style="--rd:.12s">
+      <div class="absolute -inset-6 rounded-[220px] bg-gradient-to-br from-mint via-cream2/60 to-wrose50/60 blur-2xl -z-[1]"></div>
+      <div class="relative">
+        <div class="imgslot w-full aspect-[4/5] rounded-t-[200px] rounded-b-[26px] shadow-s3">
+          <div class="ph"><span class="msym">add_photo_alternate</span><span class="t">Hero visual</span></div>
+          <img src="Visual Assets/Sleep - Hero.png" alt="A person awake at 3am, phone face-down" onerror="this.remove()">
+        </div>
+        <div class="absolute -bottom-6 -left-4 md:-left-6 bg-white/95 backdrop-blur border border-line rounded-[22px] p-5 shadow-s3 w-[272px] animate-floatySlow z-10">
+          <div class="text-[10px] font-bold tracking-[.14em] uppercase text-ink4 mb-3 flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="msym fill text-[17.5px] text-teal">labs</span>Test ID NMC-SL01</span><span>KYG Lab</span></div>
+          <div class="flex items-center justify-between py-[7px] border-b border-line text-[13.5px]"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-poor"></span>Sleeplessness</span><b class="text-poor">Poor</b></div>
+          <div class="flex items-center justify-between py-[7px] border-b border-line text-[13.5px]"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-avg"></span>Sleep Bruxism</span><b class="text-avg">Average</b></div>
+          <div class="flex items-center justify-between py-[7px] text-[13.5px]"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-good"></span>Sleep Apnea</span><b class="text-good">Good</b></div>
+          <div class="mt-3 pt-3 border-t border-line text-[10px] font-bold tracking-[.12em] uppercase text-wrose700">Sample report · 28 readings inside</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO IT'S FOR ============ -->
+<section class="py-[92px] bg-white/70 border-y border-line">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[720px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="msym">groups</span>No one is left out</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Six reasons people finally <span class="fr font-semibold grad-rose">test their sleep.</span></h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1060px] mx-auto">
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-6 lift reveal"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[26px] text-wrose">bedtime_off</span></span><div><div class="text-[18px] font-bold mb-1">You sleep eight hours and wake up tired</div><p class="text-[15.5px] text-ink3 leading-snug">Duration is one reading. Fragmentation, apnea and bruxism are four more.</p></div></div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-6 lift reveal" data-rd=".05s"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[26px] text-wrose">coffee</span></span><div><div class="text-[18px] font-bold mb-1">You are not sure if coffee is the problem</div><p class="text-[15.5px] text-ink3 leading-snug">ADORA2A tells you how sensitive you actually are to caffeine at night.</p></div></div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-6 lift reveal" data-rd=".1s"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[26px] text-wrose">snooze</span></span><div><div class="text-[18px] font-bold mb-1">Someone has told you that you snore</div><p class="text-[15.5px] text-ink3 leading-snug">Seven genes are read for obstructive sleep apnea, plus your airway panel.</p></div></div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-6 lift reveal" data-rd=".15s"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[26px] text-wrose">directions_walk</span></span><div><div class="text-[18px] font-bold mb-1">Your legs will not settle at night</div><p class="text-[15.5px] text-ink3 leading-snug">Restless legs is read through seven markers, and iron deficiency is linked to it.</p></div></div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-6 lift reveal" data-rd=".2s"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[26px] text-wrose">work_history</span></span><div><div class="text-[18px] font-bold mb-1">You work shifts or fly often</div><p class="text-[15.5px] text-ink3 leading-snug">CLOCK sits behind delayed sleep phase. Knowing yours changes how you plan recovery.</p></div></div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-6 lift reveal" data-rd=".25s"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[26px] text-wrose">medication</span></span><div><div class="text-[18px] font-bold mb-1">You are considering sleep medication</div><p class="text-[15.5px] text-ink3 leading-snug">The panel includes a pharmacogenomic reading on how you metabolise modafinil.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY TEST ============ -->
+<section id="why" class="relative overflow-hidden py-[92px]">
+  <div class="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[760px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">help_center</span>Why test</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">35% of adults sleep under seven hours. <span class="fr-b fr font-semibold grad-teal">Almost none know why.</span></h2>
+      <p class="text-[18.5px] text-ink3 mt-3.5">One in three people deal with a sleep disorder. Sleep advice is written for everyone, which means it is written for nobody. Your genes narrow it down.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 items-center mb-14">
+      <div class="relative reveal">
+        <div class="imgslot rounded-[28px] aspect-[5/4] md:aspect-[4/5] border border-line shadow-s2">
+          <div class="ph"><span class="msym">nightlight</span><span class="t">Editorial visual</span></div>
+          <img src="Visual Assets/Sleep - Why.png" alt="A bedroom at 3am, ceiling lit by a phone" onerror="this.remove()">
+        </div>
+        <div class="absolute z-20 -top-3 -left-3 bg-white border border-line rounded-full pl-3 pr-5 py-2.5 shadow-s2 flex items-center gap-2 text-[15px] font-bold text-wrose700 animate-floatySlow"><span class="msym fill text-[20px] text-wrose">schedule</span>Same advice for everyone</div>
+        <div class="absolute z-20 -bottom-3 -right-3 bg-teal text-cream rounded-full pl-3 pr-5 py-2.5 shadow-s2 flex items-center gap-2 text-[15px] font-bold"><span class="msym fill text-[20px] text-tealBright">fingerprint</span>28 answers for you</div>
+      </div>
+      <div class="reveal" style="--rd:.08s">
+        <div class="flex flex-col gap-4 mb-6">
+          <div class="flex gap-3.5">
+            <span class="w-14 h-14 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[28px] text-wrose">coffee</span></span>
+            <div><div class="text-[21px] font-extrabold text-ink leading-tight">Cut out coffee after 4pm</div><div class="text-[17px] text-ink3 leading-snug">Useful only if you are caffeine sensitive. Some people are not.</div></div>
+          </div>
+          <div class="flex gap-3.5">
+            <span class="w-14 h-14 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[28px] text-wrose">hotel</span></span>
+            <div><div class="text-[21px] font-extrabold text-ink leading-tight">Just get eight hours</div><div class="text-[17px] text-ink3 leading-snug">Doesn't help if the problem is fragmentation, apnea or grinding.</div></div>
+          </div>
+          <div class="flex gap-3.5">
+            <span class="w-14 h-14 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[28px] text-wrose">pill</span></span>
+            <div><div class="text-[21px] font-extrabold text-ink leading-tight">Try a supplement</div><div class="text-[17px] text-ink3 leading-snug">Which one? Magnesium, iron, Vitamin D and Vitamin E all affect sleep differently.</div></div>
+          </div>
+        </div>
+        <p class="text-[18px] text-ink3 leading-relaxed">Sleep advice is generic because nobody has read your side of it. This panel reads twenty-eight, including the eight nutrients that low sleep is repeatedly linked to.</p>
+        <div class="mt-6 rounded-2xl bg-wrose50 border border-wrose100 p-6">
+          <p class="fr text-[clamp(20px,2.3vw,25px)] text-wrose700 leading-snug">Monozygotic twins have almost identical sleep cycles, REM patterns and time to fall asleep. <b class="not-italic font-sans font-bold text-ink">Sleep is more inherited than most people assume.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 items-stretch">
+      <div class="rounded-[26px] p-9 border border-line bg-cream reveal">
+        <div class="w-14 h-14 rounded-2xl bg-ink/[.06] flex items-center justify-center mb-5"><span class="msym text-[27px] text-ink4">visibility_off</span></div>
+        <div class="text-[12.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-2">Without the test</div>
+        <h3 class="text-[23px] font-bold mb-5">You try everything, in order</h3>
+        <ul class="flex flex-col gap-3">
+          <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-ink4 shrink-0">remove</span>New mattress. Blackout curtains. No screens. Still awake at 2am.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-ink4 shrink-0">remove</span>You give up coffee for a month and nothing changes.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-ink4 shrink-0">remove</span>You take a supplement because a friend said it worked for them.</li>
+        </ul>
+        <div class="mt-5 pt-4 border-t border-line text-[15px] font-bold text-poor">Years of guessing, one variable at a time.</div>
+      </div>
+      <div class="rounded-[26px] p-9 bg-teal text-cream reveal relative overflow-hidden" data-rd=".08s">
+        <div class="absolute -top-16 -right-16 w-52 h-52 rounded-full bg-tealBright/15 blur-2xl"></div>
+        <div class="relative">
+          <div class="w-14 h-14 rounded-2xl bg-white/12 flex items-center justify-center mb-5"><span class="msym fill text-[27px] text-tealBright">visibility</span></div>
+          <div class="text-[12.5px] font-bold tracking-[.12em] uppercase text-tealBright mb-2">With the test</div>
+          <h3 class="text-[23px] font-bold mb-5 text-cream">You start with the right variable</h3>
+          <ul class="flex flex-col gap-3">
+            <li class="flex gap-3 text-[17.5px] text-cream/85 leading-snug"><span class="msym fill text-[20px] text-tealBright shrink-0">check_circle</span>You know whether caffeine is actually your problem, or a red herring.</li>
+            <li class="flex gap-3 text-[17.5px] text-cream/85 leading-snug"><span class="msym fill text-[20px] text-tealBright shrink-0">check_circle</span><b class="text-cream">You know which of the eight nutrients to check first.</b></li>
+            <li class="flex gap-3 text-[17.5px] text-cream/85 leading-snug"><span class="msym fill text-[20px] text-tealBright shrink-0">check_circle</span>You know whether to raise apnea, restless legs or grinding with a doctor.</li>
+          </ul>
+          <div class="mt-5 pt-4 border-t border-white/15 text-[15px] font-bold text-tealBright">One saliva test. At home. This week.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-12 flex flex-col items-center reveal">
+      <p class="fr text-[clamp(21px,2.7vw,30px)] text-ink2 max-w-[680px] mb-6">You have been treating the symptom. This reads the cause.</p>
+      <a href="#final" class="btn">Check My Sleep <span class="msym">arrow_forward</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BODY MAP ============ -->
+<section class="py-[88px]" style="background:linear-gradient(180deg,#E9F4F3 0%,#FAF6EF 100%)">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[700px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow mb-4" style="font-size:15.5px"><span class="msym">target</span>Where sleep is decided</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Four places your night <span class="fr-b fr font-semibold grad-teal">is actually settled.</span></h2>
+      <p class="text-[18.5px] text-ink3 mt-3.5">Tap any part of the body to see what we read there.</p>
+    </div>
+
+    <div class="flex justify-center reveal">
+      <div class="relative w-full max-w-[760px]" style="aspect-ratio:820/560">
+        <img src="assets/body-sleep-3d.png" alt="Body render" class="absolute z-[1] pointer-events-none" style="left:31%;top:5%;width:38%" onerror="this.remove()">
+        <svg class="absolute inset-0 w-full h-full z-[2]" viewBox="0 0 820 560" role="img" aria-label="Body map of the sleep panel" style="overflow:visible">
+          <defs><filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter></defs>
+          <ellipse cx="410" cy="512" rx="92" ry="12" fill="#0E4D4B" opacity=".1" filter="url(#soft)"/>
+
+          <g class="hot" tabindex="0" data-title="Brain and body clock" data-tip="CLOCK sets your circadian rhythm and is linked to delayed sleep phase disorder. DEC2 governs short sleep. FABP7 affects how often you surface during the night. ADORA2A decides how much caffeine costs you. DRD3 sits behind teeth grinding, COMT behind how you metabolise modafinil.">
+            <line x1="398" y1="58" x2="248" y2="46" stroke="#3D3A6E" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="410" cy="60" r="22" fill="transparent"/>
+            <circle class="halo" cx="410" cy="60" r="10" fill="#3D3A6E" opacity=".4"/><circle class="pin" cx="410" cy="60" r="9" fill="#3D3A6E"/><circle cx="410" cy="60" r="3.2" fill="#fff"/>
+            <text class="lbl" x="236" y="42" text-anchor="end" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Brain &amp; body clock</text>
+            <text x="236" y="63" text-anchor="end" font-family="Figtree" font-size="16" fill="#5B564E">Insomnia · Duration · Bruxism · Caffeine</text>
+          </g>
+
+          <g class="hot" tabindex="0" data-title="Airway and lungs" data-tip="Obstructive sleep apnea is read through TNF, CYBA, HTR2A, APOE, CRP, LEPR and IL-6. Chronic obstructive airway disease adds seventeen more markers including CHRNA3, ADRB2, IL13 and IREB2, because breathing trouble and sleep trouble compound each other.">
+            <line x1="446" y1="150" x2="584" y2="138" stroke="#15605D" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="432" cy="152" r="22" fill="transparent"/>
+            <circle class="halo" cx="432" cy="152" r="10" fill="#15605D" opacity=".35"/><circle class="pin" cx="432" cy="152" r="9" fill="#15605D"/><circle cx="432" cy="152" r="3.2" fill="#fff"/>
+            <text class="lbl" x="596" y="134" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Airway &amp; lungs</text>
+            <text x="596" y="155" font-family="Figtree" font-size="16" fill="#5B564E">Sleep apnea · Airway disease</text>
+          </g>
+
+          <g class="hot" tabindex="0" data-title="Gut and nutrients" data-tip="Eight micronutrients that low sleep is repeatedly linked to: B6, B9, B12, C, D and calcium, E, magnesium and iron. Plus lactose and gluten tolerance, because bloating at night is a sleep problem, and alcohol metabolism through ALDH2.">
+            <line x1="380" y1="256" x2="248" y2="266" stroke="#0E7C77" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="394" cy="254" r="22" fill="transparent"/>
+            <circle class="halo" cx="394" cy="254" r="10" fill="#25B5AB" opacity=".4"/><circle class="pin" cx="394" cy="254" r="9" fill="#0E7C77"/><circle cx="394" cy="254" r="3.2" fill="#fff"/>
+            <text class="lbl" x="236" y="260" text-anchor="end" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Gut &amp; nutrients</text>
+            <text x="236" y="281" text-anchor="end" font-family="Figtree" font-size="16" fill="#5B564E">8 vitamins · Lactose · Gluten · Alcohol</text>
+          </g>
+
+          <g class="hot" tabindex="0" data-title="Legs and nerves" data-tip="Restless legs syndrome is read through PTPRD, MEIS1, BTBD9, GABRA4, TMPRSS6 and two intergenic loci. Narcolepsy adds ten more, mostly in the HLA region. Iron deficiency is directly linked to restless legs, which is why iron is on the same panel.">
+            <line x1="366" y1="430" x2="248" y2="442" stroke="#3D3A6E" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="380" cy="428" r="22" fill="transparent"/>
+            <circle class="halo" cx="380" cy="428" r="10" fill="#3D3A6E" opacity=".4"/><circle class="pin" cx="380" cy="428" r="9" fill="#3D3A6E"/><circle cx="380" cy="428" r="3.2" fill="#fff"/>
+            <text class="lbl" x="236" y="436" text-anchor="end" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Legs &amp; nerves</text>
+            <text x="236" y="457" text-anchor="end" font-family="Figtree" font-size="16" fill="#5B564E">Restless legs · Narcolepsy</text>
+          </g>
+        </svg>
+        <div id="bodyTip" class="absolute z-30 opacity-0 pointer-events-none transition-opacity duration-200" style="max-width:290px;transform:translate(-50%,-100%)">
+          <div class="bg-white border border-line rounded-2xl shadow-s3 p-4">
+            <div class="text-[12px] font-bold tracking-[.07em] uppercase text-teal2 mb-1.5" data-tt="title"></div>
+            <div class="text-[14px] text-ink3 leading-snug" data-tt="body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE 28 READINGS ============ -->
+<section id="tests" class="py-[92px]">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[760px] mx-auto text-center mb-10 reveal">
+      <div class="eyebrow mb-4"><span class="msym">checklist</span>One kit · eight panels</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Twenty-eight readings, <span class="fr font-semibold grad-teal">each with its own grade and its own genes.</span></h2>
+      <p class="text-[18.5px] text-ink3 mt-3.5">Every reading is graded Good, Average or Poor, with the named genes behind it and a recommendation underneath.</p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2.5 mb-10 reveal" id="testFilter">
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3" data-filter="all" data-active="true">All 28</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3" data-filter="sleep">Sleep specific</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3" data-filter="neuro">Nerves &amp; airway</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3" data-filter="nutrient">Micronutrients</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3" data-filter="food">Food &amp; alcohol</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3" data-filter="weight">Weight &amp; lipids</button>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <article data-cat="sleep" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">air</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Obstructive Sleep Apnea</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Breathing repeatedly stops and starts as throat muscles relax. If you snore loudly and still feel tired after a full night, this is the reading to look at.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">7 genes · TNF, CYBA, HTR2A, APOE, CRP, LEPR, IL-6</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-good" style="width:22%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Maintain ideal body weight, balanced diet, regular exercise.</p>
+      </article>
+
+      <article data-cat="sleep" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".04s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">nights_stay</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-poor">Poor</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Sleeplessness</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">CLOCK regulates your circadian rhythm and is associated with delayed sleep phase disorder. A poor grade here is the difference between bad habits and bad timing.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · CLOCK</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-poor" style="width:85%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Sleep and wake at the same time daily to rebalance your circadian rhythm.</p>
+      </article>
+
+      <article data-cat="sleep" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".08s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">local_cafe</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Caffeine-Related Insomnia</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">How sensitive you are to caffeine's effect on sleep. A good grade means an evening coffee is genuinely fine for you. Not everyone gets that.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Genes read · ADORA2A, ADORA2A-AS1</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-good" style="width:22%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">You may have coffee, tea or cocoa in the evening.</p>
+      </article>
+
+      <article data-cat="sleep" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".12s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">schedule</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Duration of Sleep</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">How much sleep your body is built to need. Short sleep duration is linked in population studies to cerebrovascular, mental and metabolic disorders.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Read · PATJ + intergenic ACTG1P22, AC073875.1</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-good" style="width:22%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Regular exercise can improve sleep quality.</p>
+      </article>
+
+      <article data-cat="sleep" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".16s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">timer</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Short Sleep Syndrome</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Some people function normally on under six hours. Most cannot. DEC2 tells you which one you are, so you stop copying someone else's schedule.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · DEC2 (BHLHE41)</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-good" style="width:22%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Take a full 7 to 8 hours of sleep daily.</p>
+      </article>
+
+      <article data-cat="sleep" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".2s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">alarm</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Sleep/Wake Fragmentation</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Repeated short interruptions through the night. You fall asleep quickly, wake several times, and feel it the next day. Often a symptom of apnea or narcolepsy.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · FABP7</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-good" style="width:22%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Take adequate 7 to 8 hours of sound sleep daily.</p>
+      </article>
+
+      <article data-cat="sleep" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".24s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">dentistry</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Sleep Bruxism</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Grinding or clenching teeth during sleep, classified as a movement disorder. Most people find out from a dentist, years after the enamel has gone.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · DRD3</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Reduce stress, avoid nicotine and alcohol before bed, schedule dental exams.</p>
+      </article>
+
+      <article data-cat="sleep" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".28s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">medication</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-poor">Poor</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Modafinil Response (PGx)</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">A pharmacogenomic reading. Modafinil is prescribed for excessive sleepiness from apnea, narcolepsy or shift work. COMT tells you how you metabolise it before you take it.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · COMT</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-poor" style="width:85%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Consult your practitioner about alternative medication or therapy.</p>
+      </article>
+
+      <article data-cat="neuro" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".32s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">directions_walk</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Restless Legs Syndrome</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">An uncontrollable urge to move your legs, usually in the evening when you sit or lie down. Iron deficiency is directly linked to it, which is why iron is on this panel too.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">7 markers · PTPRD, MEIS1, BTBD9, GABRA4, TMPRSS6 + 2 loci</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-good" style="width:22%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Balanced diet, regular exercise, meditation to stay stress free.</p>
+      </article>
+
+      <article data-cat="neuro" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".36s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">neurology</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Narcolepsy</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Overwhelming daytime drowsiness and sudden sleep attacks, sometimes with cataplexy, hallucinations or sleep paralysis. Read across ten markers, mostly in the HLA region.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">10 markers · UBXN2B, HLA-DQA1, HLA-DRB1, TRA, PPAN, P2RY11 + more</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Fixed sleep and wake times, no caffeine or alcohol before bed, no strenuous exercise within three hours.</p>
+      </article>
+
+      <article data-cat="neuro" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".4s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">pulmonology</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Chronic Obstructive Airway Disease</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Obstructed airflow from the lungs, most often from long-term smoke exposure. It compounds any sleep disorder you already have, which is why it sits on this panel.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">17 markers · CHRNA3, ADRB2, IL13, FAM13A, EGLN2, IREB2 + more</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Quit smoking, keep your house dust free, avoid air pollution and exhaust fumes.</p>
+      </article>
+
+      <article data-cat="nutrient" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".44s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">nutrition</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-poor">Poor</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Vitamin E</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Low plasma Vitamin E is associated with poorer nighttime breathing and sleep quality. A poor grade here is one of the most directly actionable results on the panel.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · BUD13</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-poor" style="width:85%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Almonds, sunflower seeds, wheatgerm oil. Avoid a very low-fat diet.</p>
+      </article>
+
+      <article data-cat="nutrient" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".48s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">sunny</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Vitamin D &amp; Calcium</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Sleep of seven hours or less is repeatedly linked to low Vitamin D, calcium, magnesium and niacin. Two genes are read here, VDR and GC.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Genes read · VDR, GC</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">10 to 20 minutes of midmorning sun without sunscreen. Keep a check on your levels.</p>
+      </article>
+
+      <article data-cat="nutrient" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".52s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">bloodtype</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Iron</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Iron deficiency has been directly linked to restless legs syndrome. TMPRSS6 appears twice on this panel, once for iron and once for RLS, because they are the same story.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · TMPRSS6</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Iron-rich foods with Vitamin C for absorption. Avoid tea and coffee with meals.</p>
+      </article>
+
+      <article data-cat="nutrient" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".56s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">spa</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Magnesium</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Low magnesium triggers insomnia, restless sleep and frequent waking. A good grade means you can stop buying magnesium supplements on someone else's advice.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Genes read · MECOM, BRWD1P2</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-good" style="width:22%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Pumpkin seeds, almonds, cashews, spinach, dark chocolate, avocado.</p>
+      </article>
+
+      <article data-cat="nutrient" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".6s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">grass</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Vitamin B9 (Folate)</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">MTHFR activity determines homocysteine levels in your blood, and with it your immune response. Also on the panel: B6, B12 and Vitamin C, each with its own grade.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · MTHFR</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Spinach, fenugreek, mustard greens, broccoli, kale. Monitor homocysteine.</p>
+      </article>
+
+      <article data-cat="food" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".64s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">water_full</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Lactose Intolerance</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Insufficient lactase means bloating and gas, and bloating at night is a sleep problem. MCM6 carries the stop signal that reduces lactase production after infancy.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Genes read · LCT, MCM6</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Almond, soya, coconut or lactose-free milk. Prefer a curd-based diet.</p>
+      </article>
+
+      <article data-cat="food" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".68s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">grain</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Gluten Intolerance</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Gluten reaction can swell neck and throat tissue and narrow the airway, both major contributors to sleep apnea. Reflux and heartburn are common alongside.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Read · HLA-DQ 2.2, HLA-DQ 2.5</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Rice, maize, legumes, and millets like bajra, ragi and jowar.</p>
+      </article>
+
+      <article data-cat="food" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".72s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-wrose">wine_bar</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Alcohol Sensitivity</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">ALDH2 is the second enzyme in alcohol metabolism. Roughly half of East Asians lack the active mitochondrial form, which is why flushing and poor sleep follow a drink.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · ALDH2</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-good" style="width:22%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Normal metabolism, but keep quantity limited.</p>
+      </article>
+
+      <article data-cat="weight" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".76s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">monitor_weight</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-poor">Poor</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Fat Storage</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">PPARG converts excess food into stored fat. Fat around the airway and at the base of the tongue is the single most recognised route from weight gain to sleep apnea.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · PPARG</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-poor" style="width:85%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Fibre-rich foods, avoid refined flour and sugary drinks, monitor HbA1c.</p>
+      </article>
+
+      <article data-cat="weight" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".8s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">science</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">Adiponectin Levels</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Decreased adiponectin correlates with increased severity in sleep apnea patients. Alongside it, obesity predisposition and satiety are both read through FTO.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Gene read · ADIPOQ</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Maintain ideal BMI, fibre-rich diet, regular exercise.</p>
+      </article>
+
+      <article data-cat="weight" class="tcard bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" data-rd=".84s">
+        <div class="flex items-start justify-between gap-3 mb-3"><span class="w-12 h-12 rounded-2xl bg-mint flex items-center justify-center shrink-0"><span class="msym fill text-[25px] text-teal">favorite</span></span><span class="text-[10.5px] font-bold tracking-[.08em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <h3 class="text-[21px] font-bold mb-2">HDL Cholesterol</h3>
+        <p class="text-[16.5px] text-ink3 leading-snug mb-3">Both too much and too little sleep affect lipid levels. Under five hours a night raises the risk of high triglycerides and low HDL. LDL is read separately through APOE and APOA5.</p>
+        <div class="text-[11.5px] font-bold tracking-[.08em] uppercase text-wrose700 mb-2">Genes read · CETP, LIPC</div>
+        <div class="h-1.5 rounded-full bg-line overflow-hidden mb-2"><i class="block h-full rounded-full bg-avg" style="width:55%"></i></div>
+        <p class="text-[13px] text-ink4 leading-snug">Fibre-rich foods and Omega-3 sources. Regular exercise.</p>
+      </article>
+
+    </div>
+
+    <p class="text-center text-[15px] text-ink3 mt-8 reveal">Plus Vitamin B6, Vitamin B12, Vitamin C, obesity predisposition, satiety and LDL cholesterol, each graded separately in your report.</p>
+
+    <div class="text-center mt-10 flex flex-col items-center reveal">
+      <a href="#final" class="btn lg">Get My 28-Reading Report <span class="msym">arrow_forward</span></a>
+      <div class="text-[14.5px] text-ink3 mt-3.5">One kit · eight panels · <b class="text-ink2 font-bold">expert guidance on your results</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE NUMBERS ============ -->
+<section class="py-[92px] bg-dark1 text-cream relative overflow-hidden">
+  <div class="absolute inset-0 opacity-[.5] pointer-events-none" style="background:radial-gradient(50vw 40vh at 15% 10%,rgba(37,181,171,.2),transparent 60%),radial-gradient(46vw 40vh at 85% 90%,rgba(14,77,75,.45),transparent 60%),radial-gradient(30vw 30vh at 60% 40%,rgba(61,58,110,.2),transparent 60%)"></div>
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8 relative">
+    <div class="max-w-[700px] mx-auto text-center mb-14 reveal">
+      <div class="eyebrow eyebrow--light mb-4"><span class="msym">monitoring</span>The numbers most people never check</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold text-cream">Bad sleep is not rare. It is the default.</h2>
+    </div>
+
+    <div class="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))] max-w-[900px] mx-auto">
+      <div class="stat group relative rounded-[22px] border border-white/12 bg-white/[.04] p-7 text-center transition-all duration-500 hover:bg-white/[.07] hover:-translate-y-1.5 reveal">
+        <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-cream/80 mb-3">Short nights</div>
+        <div class="text-[clamp(38px,4.4vw,53px)] font-extrabold tracking-[-.01em] leading-none text-[#9B98D6]"><span class="odo" data-mode="text" data-final="35.3%">35.3%</span></div>
+        <div class="text-[13px] text-cream/80 mt-2.5">of adults report under 7 hours in a typical 24-hour period</div>
+        <div class="mt-4 h-1 rounded-full bg-white/10 overflow-hidden"><i class="bar block h-full w-0 rounded-full bg-[#9B98D6] transition-[width] duration-[1400ms] ease-out" style="--w:35%"></i></div>
+        <div class="text-[13.5px] leading-relaxed text-cream/70 mt-3">The National Sleep Foundation advises 7 to 9 hours for adults, and 8 to 10 for teenagers.</div>
+      </div>
+      <div class="stat group relative rounded-[22px] border border-white/12 bg-white/[.04] p-7 text-center transition-all duration-500 hover:bg-white/[.07] hover:-translate-y-1.5 reveal">
+        <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-cream/80 mb-3">Sleep disorders</div>
+        <div class="text-[clamp(38px,4.4vw,53px)] font-extrabold tracking-[-.01em] leading-none text-tealBright"><span class="odo" data-mode="text" data-final="1 in 3">1 in 3</span></div>
+        <div class="text-[13px] text-cream/80 mt-2.5">people deal with a sleep disorder</div>
+        <div class="mt-4 h-1 rounded-full bg-white/10 overflow-hidden"><i class="bar block h-full w-0 rounded-full bg-tealBright transition-[width] duration-[1400ms] ease-out" style="--w:33%"></i></div>
+        <div class="text-[13.5px] leading-relaxed text-cream/70 mt-3">Most result from complex interactions between genes and environment. Only one half of that has ever been measured.</div>
+      </div>
+      <div class="stat group relative rounded-[22px] border border-white/12 bg-white/[.04] p-7 text-center transition-all duration-500 hover:bg-white/[.07] hover:-translate-y-1.5 reveal">
+        <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-cream/80 mb-3">Poor sleep quality</div>
+        <div class="text-[clamp(38px,4.4vw,53px)] font-extrabold tracking-[-.01em] leading-none text-[#E3C77A]"><span class="odo" data-mode="num" data-final="47" data-suffix="%">0%</span></div>
+        <div class="text-[13px] text-cream/80 mt-2.5">of adults over 19 experience poor quality sleep</div>
+        <div class="mt-4 h-1 rounded-full bg-white/10 overflow-hidden"><i class="bar block h-full w-0 rounded-full bg-[#E3C77A] transition-[width] duration-[1400ms] ease-out" style="--w:47%"></i></div>
+        <div class="text-[13.5px] leading-relaxed text-cream/70 mt-3">Seven hours or less is linked to low Vitamin D, calcium, magnesium and niacin. This panel reads all of those.</div>
+      </div>
+    </div>
+    <p class="fr text-center mt-11 text-[clamp(23px,2.9vw,32px)] text-cream">You are not bad at sleeping. Nobody has read your side of it.</p>
+    <div class="text-center mt-9 reveal"><a href="#final" class="btn light lg">Check My Sleep <span class="msym">arrow_forward</span></a></div>
+  </div>
+</section>
+
+<!-- ============ 30-SECOND EXPLAINER ============ -->
+<section class="py-[92px] bg-white/70 border-y border-line">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[700px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">school</span>The 30-second version</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">How your genes shape your sleep, <span class="fr-b fr font-semibold grad-teal">in three steps.</span></h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 max-w-[1060px] mx-auto">
+      <div class="bg-cream border border-line rounded-[26px] p-8 lift reveal">
+        <div class="w-12 h-12 rounded-full bg-teal text-white text-[17px] font-bold flex items-center justify-center mb-5">1</div>
+        <h3 class="text-[21px] font-bold mb-3">Your body runs a clock</h3>
+        <p class="text-[17px] text-ink3 leading-relaxed">CLOCK and its partners switch other genes on and off across a 24-hour cycle. That cycle decides when you get sleepy, not your willpower.</p>
+      </div>
+      <div class="bg-cream border border-line rounded-[26px] p-8 lift reveal" data-rd=".08s">
+        <div class="w-12 h-12 rounded-full bg-teal text-white text-[17px] font-bold flex items-center justify-center mb-5">2</div>
+        <h3 class="text-[21px] font-bold mb-3">Variants move the clock, and the airway</h3>
+        <p class="text-[17px] text-ink3 leading-relaxed">Some variants shift your timing. Others affect your airway, your legs, your jaw, or how much caffeine costs you. Identical twins share nearly identical sleep cycles, which is how we know.</p>
+      </div>
+      <div class="bg-cream border border-line rounded-[26px] p-8 lift reveal" data-rd=".16s">
+        <div class="w-12 h-12 rounded-full bg-wrose text-white text-[17px] font-bold flex items-center justify-center mb-5">3</div>
+        <h3 class="text-[21px] font-bold mb-3">We read yours, twenty-eight times</h3>
+        <p class="text-[17px] text-ink3 leading-relaxed">One saliva sample, eight panels, twenty-eight grades. Not a diagnosis, but the first sleep advice written for your body instead of everyone's.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REPORT ============ -->
+<section class="py-[92px]" style="background:linear-gradient(180deg,#EFF6F5,#FAF6EF)">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-16 items-center">
+    <div class="reveal">
+      <div class="eyebrow mb-4"><span class="msym">description</span>See a sample report</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">A report you can <span class="fr-b fr font-semibold grad-teal">actually understand.</span></h2>
+      <p class="text-[18.5px] text-ink3 mt-3.5">No gene codes without explanation. No jargon. Just clear grades and clear next steps.</p>
+      <ul class="flex flex-col gap-3.5 my-6">
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>All 28 readings, grouped into eight panel summaries.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>A simple Good, Average or Poor grade for each.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>Your genotype and the gene behind every grade.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>A specific recommendation per reading, down to named foods.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>Yours to keep for life. Genes don't change, so you test once.</li>
+      </ul>
+      <a href="#final" class="btn">Unlock My Report <span class="msym">arrow_forward</span></a>
+    </div>
+    <div class="reveal" data-rd=".1s">
+      <div class="relative bg-white border border-line rounded-[26px] p-8 shadow-s3">
+        <span class="absolute -top-3 left-8 bg-wrose text-white text-[10.5px] font-bold tracking-[.12em] uppercase px-4 py-1.5 rounded-full">Confidential</span>
+        <h4 class="text-[11.5px] font-bold tracking-[.12em] uppercase text-ink4 mt-2 mb-4">Sleep · Sample summary</h4>
+        <div class="flex justify-between items-center gap-3 py-2.5 border-b border-line"><span class="fr text-[17px]">Obstructive Sleep Apnea</span><span class="text-[10px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <div class="flex justify-between items-center gap-3 py-2.5 border-b border-line"><span class="fr text-[17px]">Sleeplessness</span><span class="text-[10px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-poor">Poor</span></div>
+        <div class="flex justify-between items-center gap-3 py-2.5 border-b border-line"><span class="fr text-[17px]">Sleep Bruxism</span><span class="text-[10px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average</span></div>
+        <div class="flex justify-between items-center gap-3 py-2.5 border-b border-line"><span class="fr text-[17px]">Vitamin E</span><span class="text-[10px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-poor">Poor</span></div>
+        <div class="flex justify-between items-center gap-3 py-2.5 border-b border-line"><span class="fr text-[17px]">Magnesium</span><span class="text-[10px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span></div>
+        <div class="flex justify-between items-center gap-3 py-2.5"><span class="fr text-[17px] text-ink4">+ 23 more readings</span><span class="text-[12px] text-ink4 font-semibold">See full report</span></div>
+        <div class="text-[12px] text-ink4 mt-4 pt-3 border-t border-line"><b class="text-ink3">Good</b> = normal or low risk · <b class="text-ink3">Average</b> = medium risk · <b class="text-ink3">Poor</b> = high risk</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="py-[92px]">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[700px] mx-auto text-center mb-14 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">package_2</span>How it works</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Five steps, from kit to report. <span class="fr font-semibold grad-teal">Three weeks, start to finish.</span></h2>
+      <p class="text-[18px] text-ink3 mt-3.5">No clinic. No needle. No sleep lab. About five minutes of your time.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 relative">
+      <div class="hidden lg:block absolute top-[64px] left-[10%] right-[10%] h-[3px] flow-line rounded-full opacity-70"></div>
+      <div class="bg-white border border-line rounded-[26px] p-7 text-center lift reveal relative"><div class="w-9 h-9 rounded-full bg-teal text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">1</div><div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-teal">deployed_code</span></div><h4 class="text-[19px] font-bold mb-2">Order</h4><p class="text-[15px] text-ink3 leading-relaxed">Kit reaches your door in 2 to 3 days with everything inside.</p></div>
+      <div class="bg-white border border-line rounded-[26px] p-7 text-center lift reveal relative" data-rd=".06s"><div class="w-9 h-9 rounded-full bg-teal text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">2</div><div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-teal">water_drop</span></div><h4 class="text-[19px] font-bold mb-2">Collect</h4><p class="text-[15px] text-ink3 leading-relaxed">Spit into the tube at home. Five minutes, no fasting.</p></div>
+      <div class="bg-white border border-line rounded-[26px] p-7 text-center lift reveal relative" data-rd=".12s"><div class="w-9 h-9 rounded-full bg-teal text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">3</div><div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-teal">local_shipping</span></div><h4 class="text-[19px] font-bold mb-2">Return</h4><p class="text-[15px] text-ink3 leading-relaxed">Pre-paid envelope. Courier pickup, trackable in-app.</p></div>
+      <div class="bg-white border border-line rounded-[26px] p-7 text-center lift reveal relative" data-rd=".18s"><div class="w-9 h-9 rounded-full bg-teal text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">4</div><div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-teal">biotech</span></div><h4 class="text-[19px] font-bold mb-2">Lab</h4><p class="text-[15px] text-ink3 leading-relaxed">Illumina Infinium array. A scientist reviews every result.</p></div>
+      <div class="bg-white border border-line rounded-[26px] p-7 text-center lift reveal relative" data-rd=".24s"><div class="w-9 h-9 rounded-full bg-wrose text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">5</div><div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-wrose">clinical_notes</span></div><h4 class="text-[19px] font-bold mb-2">Report</h4><p class="text-[15px] text-ink3 leading-relaxed">Ready in 3 weeks, delivered to your KYG account.</p></div>
+    </div>
+    <div class="text-center mt-12 flex flex-col items-center reveal">
+      <a href="#final" class="btn lg">Order My Kit <span class="msym">arrow_forward</span></a>
+      <div class="text-[16px] text-ink3 mt-4">Ships in 2 to 3 days · <b class="text-ink2 font-bold">Expert guidance available after</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOCTOR ============ -->
+<section class="py-[92px] bg-white/70 border-y border-line">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-14 items-center">
+    <div class="reveal">
+      <div class="relative">
+        <div class="absolute -inset-4 rounded-[30px] bg-gradient-to-br from-tealBright/15 to-mint blur-xl -z-[1]"></div>
+        <div class="imgslot w-full aspect-[4/3] rounded-[26px] shadow-s3 border border-line">
+          <div class="ph"><span class="msym">support_agent</span><span class="t">Genetics expert</span></div>
+          <img src="Visual Assets/Sleep - Expert.png" alt="A KYG genetics expert reviewing a sleep report" onerror="this.remove()">
+        </div>
+        <div class="absolute -bottom-5 -right-3 md:-right-5 bg-white/95 backdrop-blur border border-line rounded-[20px] p-4 shadow-s3 w-[240px] animate-floatySlow z-10">
+          <div class="flex items-center gap-2.5">
+            <span class="w-10 h-10 rounded-full bg-teal text-white flex items-center justify-center shrink-0"><span class="msym fill text-[21px]">diversity_1</span></span>
+            <div><div class="text-[15px] font-extrabold leading-tight">Expert guidance</div><div class="text-[11.5px] text-ink4">Genetic counselling, on call</div></div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-line flex items-center gap-2 text-[12px] text-ink3"><span class="msym fill text-[17px] text-good">check_circle</span>Available with every report</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" data-rd=".1s">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">support_agent</span>Guidance from an expert, not Google</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Every report is checked by a Ph.D scientist <span class="fr-b fr font-semibold grad-teal">before it reaches you.</span></h2>
+      <p class="text-[18.5px] text-ink3 mt-3.5">Twenty-eight grades is a lot to read alone. Book a session with Dr. Varun Sharma, Ph.D, our Human Genetics scientist, and go through yours in plain language.</p>
+      <ul class="flex flex-col gap-3.5 my-6">
+        <li class="flex gap-3 text-[18.5px]"><span class="msym fill text-[21px] text-teal shrink-0">check_circle</span><b class="font-semibold">Where to start:</b>&nbsp;which of your grades to act on first, and which to ignore.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="msym fill text-[21px] text-teal shrink-0">check_circle</span><b class="font-semibold">Nutrients:</b>&nbsp;which of the eight to test in blood before you buy any supplement.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="msym fill text-[21px] text-teal shrink-0">check_circle</span><b class="font-semibold">When to escalate:</b>&nbsp;whether apnea, restless legs or narcolepsy warrants a sleep physician.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="msym fill text-[21px] text-teal shrink-0">check_circle</span><b class="font-semibold">Medication:</b>&nbsp;what your modafinil reading means, before anyone prescribes it.</li>
+      </ul>
+      <div class="inline-flex items-center gap-4 bg-white border-2 border-teal/25 rounded-2xl pl-3.5 pr-7 py-4 shadow-s2">
+        <div class="w-14 h-14 rounded-full bg-teal text-white flex items-center justify-center shrink-0 fr font-semibold text-[22px]">VS</div>
+        <div>
+          <div class="flex items-center gap-1.5 text-[11.5px] font-bold tracking-[.1em] uppercase text-teal2 mb-1"><span class="msym fill text-[18px] text-good">verified</span>Every report reviewed by</div>
+          <div class="text-[20px] font-extrabold text-ink leading-tight">Dr. Varun Sharma, Ph.D</div>
+          <div class="text-[15px] text-ink3 font-medium">Scientist, Human Genetics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ORDER KIT ============ -->
+<section id="order" class="py-[92px]">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[680px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="msym">inventory_2</span>One test. Answers you keep for life.</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Everything you need, <span class="fr font-semibold grad-rose">in one box.</span></h2>
+    </div>
+    <div class="max-w-[920px] mx-auto grid md:grid-cols-[1.15fr_0.85fr] rounded-[28px] overflow-hidden border border-line bg-white shadow-s2 reveal">
+      <div class="p-9 md:p-10 md:border-r border-line">
+        <div class="text-[12px] font-bold tracking-[.12em] uppercase text-wrose700 mb-1.5">Sleep Genetic Kit</div>
+        <h3 class="text-[26px] font-extrabold mb-6">Everything in one box</h3>
+        <ul class="flex flex-col gap-3.5">
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>All 28 readings across 8 panels</li>
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>At-home saliva kit, delivered &amp; picked up free</li>
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>Easy-to-read report in 3 weeks</li>
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>Option to consult Dr. Varun Sharma, Ph.D, about your results</li>
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>NABL-accredited processing · data destroyed after</li>
+        </ul>
+      </div>
+      <div class="p-9 md:p-10 flex flex-col justify-center text-center bg-cream">
+        <div class="text-[12px] font-bold tracking-[.12em] uppercase text-wrose700 mb-2">Ready when you are</div>
+        <div class="fr text-[clamp(34px,4.4vw,46px)] font-semibold text-teal leading-none mb-3">₹____</div>
+        <p class="text-[15px] text-ink3 leading-[1.9] mb-6">Kit at your door in <b class="text-ink">2 to 3 days</b>.<br>Sample takes <b class="text-ink">5 minutes</b>.<br>Report in <b class="text-ink">3 weeks</b>.</p>
+        <a href="#final" class="btn lg justify-center">Order My Kit <span class="msym">arrow_forward</span></a>
+        <div class="flex gap-2.5 mt-5 text-left text-[12.5px] text-ink3 leading-snug"><span class="msym fill text-[19px] text-good shrink-0">verified_user</span><span>Certified NABL lab. Your genetic data is never sold or shared, and your sample is destroyed after processing.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST ============ -->
+<section class="py-[88px]" style="background:linear-gradient(180deg,#FAF6EF,#F5EDDF)">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[700px] mx-auto text-center mb-8 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym fill">verified</span>Tested in a certified lab</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Every result verified. <span class="fr-b fr font-semibold grad-teal">Every report checked by a scientist.</span></h2>
+    </div>
+
+    <div class="mq mb-11 reveal">
+      <div class="mq-track">
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/nabl.jpg" alt="NABL" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'NABL<br>ISO 15189'}))"></div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">workspace_premium</span>ISO 9001:2015</div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/iso.jpg" alt="ISO" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'ISO<br>27001:2013'}))"></div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">biotech</span>Illumina Infinium</div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/hipaa.jpg" alt="HIPAA" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'HIPAA<br>+ FDA'}))"></div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">policy</span>ACMG · CPIC</div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/nabl.jpg" alt="NABL" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'NABL<br>ISO 15189'}))"></div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">workspace_premium</span>ISO 9001:2015</div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/iso.jpg" alt="ISO" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'ISO<br>27001:2013'}))"></div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">biotech</span>Illumina Infinium</div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/hipaa.jpg" alt="HIPAA" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'HIPAA<br>+ FDA'}))"></div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">policy</span>ACMG · CPIC</div>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-5 max-w-[980px] mx-auto reveal">
+      <div class="bg-white border border-line rounded-[24px] p-7 text-center shadow-s1 lift">
+        <div class="text-[clamp(38px,4.6vw,50px)] font-extrabold text-teal leading-none tracking-[-.02em]">99%+</div>
+        <div class="text-[16px] font-bold text-ink mt-3">Reproducibility on repeat testing</div>
+        <div class="text-[14px] text-ink3 mt-1.5 leading-snug">With call rates above 98%, validated in-house.</div>
+      </div>
+      <div class="bg-white border border-line rounded-[24px] p-7 text-center shadow-s1 lift">
+        <div class="w-16 h-16 rounded-2xl bg-mint flex items-center justify-center mx-auto mb-4"><span class="msym fill text-[34px] text-teal">verified</span></div>
+        <div class="text-[16px] font-bold text-ink">Manually reviewed before release</div>
+        <div class="text-[14px] text-ink3 mt-1.5 leading-snug">Every report is checked by Dr. Varun Sharma, Ph.D, Scientist in Human Genetics.</div>
+      </div>
+      <div class="bg-white border border-line rounded-[24px] p-7 text-center shadow-s1 lift">
+        <div class="w-16 h-16 rounded-2xl bg-wrose50 flex items-center justify-center mx-auto mb-4"><span class="msym fill text-[34px] text-wrose">lock</span></div>
+        <div class="text-[16px] font-bold text-ink">Your data, protected</div>
+        <div class="text-[14px] text-ink3 mt-1.5 leading-snug">Never sold or shared. Your sample is destroyed after testing.</div>
+      </div>
+    </div>
+
+    <p class="text-center text-[14.5px] text-ink3 mt-8 reveal">Tested at Neotech Worldlab Pvt. Ltd, MG Road, Gurugram.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="py-[92px]">
+  <div class="max-w-[860px] mx-auto px-5 md:px-8">
+    <div class="text-center mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="msym">help</span>The honest questions</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Before you <span class="fr-b fr font-semibold grad-teal">decide.</span></h2>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Can this diagnose sleep apnea instead of a sleep study?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>No. This reads genetic predisposition, not what is happening in your airway tonight.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>A polysomnography study measures the event. This tells you whether to book one.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>The two answer different questions, and a high grade here is a good reason to have the study done.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Why are vitamins and cholesterol on a sleep test?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Because sleep runs on them. Seven hours or less is repeatedly linked to low Vitamin D, calcium, magnesium and niacin.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Iron deficiency is directly linked to restless legs. Low Vitamin E affects nighttime breathing.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Under five hours a night raises the risk of high triglycerides and low HDL. Sleep and lipids move together.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">I sleep fine. Is there any point?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Bruxism and apnea both run for years without you noticing. A partner or a dentist usually finds them first.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>The pharmacogenomic reading matters before you are ever prescribed anything, not after.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>And a Good grade is a result too. It tells you to stop chasing a problem you do not have.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">What is the modafinil reading and why does it matter?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Modafinil is an approved medication for excessive sleepiness from apnea, narcolepsy or shift work.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>COMT determines how you metabolise it. A poor metaboliser may see side effects rather than benefit.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Knowing this before a prescription, rather than after, is the whole point of pharmacogenomics.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Do I have to visit a clinic or give blood?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>No clinic. No needle. No sleep lab. No fasting.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>The kit comes to your home and you give a saliva sample in about five minutes.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>A courier picks it up in a pre-paid envelope.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Will my genetic data be safe and private?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Your data is never sold or shared with anyone.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Follows ISO 27001, HIPAA and FDA privacy standards, stored on encrypted servers.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Your sample is destroyed after testing.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Do I need to test again later?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>No. Your genes never change, so the grades hold for life.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>You test once and keep the report.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Your blood nutrient levels do change, which is why the report tells you which ones to keep checking.</li>
+        </ul></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL ============ -->
+<section id="final" class="relative overflow-hidden text-center py-[112px] bg-dark1 text-cream">
+  <div class="absolute w-[600px] h-[600px] rounded-full -top-[210px] left-1/2 -translate-x-1/2 blur-[90px] pointer-events-none" style="background:rgba(14,77,75,.55)"></div>
+  <div class="absolute inset-0 opacity-40 pointer-events-none" style="background:radial-gradient(40vw 40vh at 80% 90%,rgba(37,181,171,.25),transparent 60%),radial-gradient(28vw 28vh at 18% 20%,rgba(61,58,110,.24),transparent 60%)"></div>
+  <div class="max-w-[720px] mx-auto px-5 md:px-8 relative z-[1] reveal">
+    <div class="eyebrow eyebrow--light mx-auto mb-3"><span class="msym">bolt</span>Know now, not later</div>
+    <h2 class="text-[clamp(37px,5.2vw,57px)] font-bold my-4">Twenty-eight answers, <span class="fr font-semibold text-tealBright">from one saliva sample.</span></h2>
+    <ul class="flex gap-6 justify-center flex-wrap text-[13.5px] font-semibold text-cream/70 mb-8">
+      <li class="flex gap-2 items-center"><span class="msym fill text-[18.5px] text-tealBright">check_circle</span>28 readings, 1 saliva kit</li>
+      <li class="flex gap-2 items-center"><span class="msym fill text-[18.5px] text-tealBright">check_circle</span>Results in 3 weeks</li>
+      <li class="flex gap-2 items-center"><span class="msym fill text-[18.5px] text-tealBright">check_circle</span>Expert guidance</li>
+    </ul>
+    <a href="#" class="btn light">Start My Report <span class="msym">arrow_forward</span></a>
+    <div class="mt-6 text-[12.5px] text-cream/55">At-home saliva kit · NABL-accredited lab · Results in 3 weeks · Expert guidance available</div>
+  </div>
+</section>
+
+<div class="bg-white border-t border-line py-5 text-center text-[12.5px] text-ink3">
+  <div class="max-w-[1280px] mx-auto px-5">This is general educational information, not medical advice. Genetic interpretation is probabilistic and is not predictive of any specific future disease. Talk to a doctor or genetic counsellor about your own case.</div>
+</div>
+
+<footer class="bg-dark1 text-cream/70 pt-16 pb-9">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr] gap-y-8 gap-x-10 pb-11 border-b border-white/12">
+      <div>
+        <div class="text-[21px] text-cream"><span class="font-extrabold">Know</span><span class="font-medium">Your</span><span class="font-extrabold text-tealBright">Genes</span></div>
+        <p class="text-[14.5px] max-w-[260px] mt-3">Genetic testing made for Indian bodies. Your health deserves clear answers.</p>
+      </div>
+      <div><h5 class="text-[11px] font-bold tracking-[.13em] uppercase mb-4 text-tealBright">Tests</h5><ul class="flex flex-col gap-2.5 text-[14.5px]"><li><a href="#" class="hover:text-cream">All Categories</a></li><li><a href="#tests" class="hover:text-cream">Sleep</a></li><li><a href="#" class="hover:text-cream">Autoimmune</a></li><li><a href="#" class="hover:text-cream">Wellness</a></li></ul></div>
+      <div><h5 class="text-[11px] font-bold tracking-[.13em] uppercase mb-4 text-tealBright">Health</h5><ul class="flex flex-col gap-2.5 text-[14.5px]"><li><a href="#" class="hover:text-cream">Women's Health</a></li><li><a href="#" class="hover:text-cream">Men's Wellness</a></li><li><a href="#" class="hover:text-cream">Immunity</a></li><li><a href="#" class="hover:text-cream">Skin Health</a></li></ul></div>
+      <div><h5 class="text-[11px] font-bold tracking-[.13em] uppercase mb-4 text-tealBright">Company</h5><ul class="flex flex-col gap-2.5 text-[14.5px]"><li><a href="#" class="hover:text-cream">Privacy Policy</a></li><li><a href="#" class="hover:text-cream">Terms of Service</a></li><li><a href="#" class="hover:text-cream">Refund Policy</a></li><li><a href="#" class="hover:text-cream">Shipping &amp; Delivery</a></li></ul></div>
+    </div>
+    <div class="flex justify-between pt-6 text-[12.5px] flex-wrap gap-2.5"><span>© 2026 KnowYourGenes. All rights reserved.</span><span>A third of your life, finally explained.</span></div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="text-[12.5px] leading-tight">Sleep Kit<br><b class="text-teal">28 readings</b> · 1 saliva sample</div>
+  <a href="#final" class="btn sm">Check My Sleep</a>
+</div>
+
+<script>
+  document.querySelectorAll('.fq').forEach(function(f){
+    f.querySelector('button').addEventListener('click', function(){
+      var was = f.classList.contains('open');
+      document.querySelectorAll('.fq').forEach(function(x){ x.classList.remove('open'); });
+      if(!was) f.classList.add('open');
+    });
+  });
+
+  var revIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ var d=e.target.getAttribute('data-rd'); if(d) e.target.style.setProperty('--rd',d); e.target.classList.add('is-in'); revIO.unobserve(e.target); }
+    });
+  },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ revIO.observe(el); });
+
+  var numIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var stat=e.target, odo=stat.querySelector('.odo'), bar=stat.querySelector('.bar');
+      if(bar){ var w=bar.style.getPropertyValue('--w')||'50%'; requestAnimationFrame(function(){ bar.style.width=w; }); }
+      if(odo && odo.dataset.mode==='num'){
+        var final=parseFloat(odo.dataset.final), suf=odo.dataset.suffix||'', start=null, dur=1300;
+        (function run(){ requestAnimationFrame(function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1); var eased=1-Math.pow(1-p,3); odo.textContent=Math.round(eased*final)+suf; if(p<1) requestAnimationFrame(step); }); })();
+      } else if(odo){ odo.animate([{opacity:0,transform:'translateY(10px) scale(.92)'},{opacity:1,transform:'none'}],{duration:600,easing:'cubic-bezier(0.34,1.56,0.64,1)'}); }
+      numIO.unobserve(stat);
+    });
+  },{threshold:.4});
+  document.querySelectorAll('.stat').forEach(function(s){ numIO.observe(s); });
+
+  (function(){
+    var tip=document.getElementById('bodyTip'); if(!tip) return;
+    var wrap=tip.parentElement;
+    var tEl=tip.querySelector('[data-tt="title"]'), bEl=tip.querySelector('[data-tt="body"]');
+    function show(g){
+      tEl.textContent=g.getAttribute('data-title')||'';
+      bEl.textContent=g.getAttribute('data-tip')||'';
+      tip.style.opacity='1';
+      var wr=wrap.getBoundingClientRect(), gr=g.getBoundingClientRect();
+      var cx=gr.left+gr.width/2-wr.left, cy=gr.top-wr.top, cb=gr.bottom-wr.top;
+      var half=tip.offsetWidth/2;
+      cx=Math.max(half+4, Math.min(cx, wr.width-half-4));
+      var below = cy < 150;
+      tip.style.transform = below ? 'translate(-50%,0)' : 'translate(-50%,-100%)';
+      tip.style.left=cx+'px';
+      tip.style.top=(below ? cb+12 : cy-12)+'px';
+    }
+    function hide(){ tip.style.opacity='0'; }
+    document.querySelectorAll('.hot').forEach(function(g){
+      g.addEventListener('mouseenter',function(){ show(g); });
+      g.addEventListener('mouseleave',hide);
+      g.addEventListener('focus',function(){ show(g); });
+      g.addEventListener('blur',hide);
+      g.addEventListener('click',function(e){ e.preventDefault(); show(g); });
+    });
+    document.addEventListener('click',function(e){ if(!e.target.closest('.hot')) hide(); });
+  })();
+
+  var sbar=document.getElementById('scrollbar');
+  var ticking=false;
+  function onScroll(){
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(function(){
+      var st=window.scrollY||document.documentElement.scrollTop;
+      var h=document.documentElement.scrollHeight-window.innerHeight;
+      if(sbar) sbar.style.width=(h>0?(st/h*100):0)+'%';
+      ticking=false;
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var filter=document.getElementById('testFilter');
+  if(filter){
+    var cards=document.querySelectorAll('#tests .tcard');
+    filter.addEventListener('click',function(e){
+      var b=e.target.closest('.fpill'); if(!b) return;
+      filter.querySelectorAll('.fpill').forEach(function(p){ p.setAttribute('data-active', p===b ? 'true':'false'); });
+      var f=b.getAttribute('data-filter');
+      cards.forEach(function(c){ c.classList.toggle('dim', f!=='all' && c.getAttribute('data-cat')!==f); });
+    });
+  }
+</script>
+
+</body>
+</html>

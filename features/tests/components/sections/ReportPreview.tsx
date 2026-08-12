@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import type { Ground, ReportPreviewSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
-import { Cta, Heading, Section, TONE_PILL } from '../ui';
+import { Cta, Heading, Lead, Section, TONE_PILL } from '../ui';
 
 // =============================================================================
 // REPORT — "No gene codes. No jargon."
@@ -38,6 +38,8 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
 
           {/* Figtree 700 51/55 ls -0.02em #222222 + the Cormorant italic accent. */}
           <Heading html={data.head.titleHtml} />
+
+          {data.head.leadHtml ? <Lead html={data.head.leadHtml} /> : null}
 
           {/* pad 8/0, gap 14; rows are 6px eden dot + Figtree 400 18.5/27.8 #222222.
               Every bullet is one line from lg up (that is the frame), so the dot

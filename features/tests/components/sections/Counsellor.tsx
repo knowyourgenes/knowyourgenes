@@ -1,6 +1,6 @@
 import type { CounsellorSection, Ground } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
-import { Heading, Section } from '../ui';
+import { Heading, Lead, Section } from '../ui';
 
 // =============================================================================
 // DOCTOR — "Our GENEous Care expert explains it to you."
@@ -101,6 +101,8 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
               so it is NOT re-declared here. w-full keeps the h2 at the column's
               580 so "explains it to you." breaks onto line two as in the frame. */}
           <Heading html={data.head.titleHtml} className="w-full break-words" />
+
+          {data.head.leadHtml ? <Lead html={data.head.leadHtml} className="w-full" /> : null}
 
           <ul className="flex w-full flex-col gap-[14px] pt-2">
             {data.points.map((p, i) => (
