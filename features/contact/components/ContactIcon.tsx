@@ -14,15 +14,7 @@ const BASE = '/contact/icons';
 
 export const CONTACT_ICON_IDS = Object.keys(ICONS as Record<string, string>);
 
-export function ContactIcon({
-  id,
-  className,
-  alt = '',
-}: {
-  id: string;
-  className?: string;
-  alt?: string;
-}) {
+export function ContactIcon({ id, className, alt = '' }: { id: string; className?: string; alt?: string }) {
   const file = (ICONS as Record<string, string>)[id];
   if (!file) {
     if (process.env.NODE_ENV !== 'production') {
@@ -58,15 +50,7 @@ export function ContactIcon({
  * where all three frames that use this pill (hero 236x46, form 208x46,
  * self-serve 221x46) are 46 — hence the fixed-height flex box below.
  */
-export function ContactEyebrow({
-  label,
-  icon,
-  className,
-}: {
-  label: string;
-  icon?: string;
-  className?: string;
-}) {
+export function ContactEyebrow({ label, icon, className }: { label: string; icon?: string; className?: string }) {
   return (
     <span
       className={

@@ -34,24 +34,13 @@ const GLYPH = {
  * switches off the gradient `.tst-em` carries by default and lets these plain
  * colour utilities take over.
  */
-const QUOTE_RUNS =
-  'tst-flat [&_.tst-em]:font-bold! [&_.tst-em]:text-crimson-deep! [&_.tst-strong]:text-mine!';
+const QUOTE_RUNS = 'tst-flat [&_.tst-em]:font-bold! [&_.tst-em]:text-crimson-deep! [&_.tst-strong]:text-mine!';
 
-export default function Aspiration({
-  data,
-  ground,
-}: {
-  data: AspirationSection;
-  ground?: Ground;
-}) {
+export default function Aspiration({ data, ground }: { data: AspirationSection; ground?: Ground }) {
   const eyebrow = data.head.eyebrow;
 
   return (
-    <Section
-      ground={ground ?? 'ivory'}
-      className="border-t border-mine/10"
-      innerClassName="pb-0"
-    >
+    <Section ground={ground ?? 'ivory'} className="border-t border-mine/10" innerClassName="pb-0">
       {/* ---- head — 720 rail, 16 gap ------------------------------------- */}
       <div className="mx-auto flex max-w-180 flex-col items-center gap-4 text-center">
         {eyebrow ? (

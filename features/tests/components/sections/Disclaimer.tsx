@@ -30,12 +30,7 @@ import type { DisclaimerSection, Ground } from '../../types';
 // scrollbar rather than wrap.
 // =============================================================================
 
-export default function Disclaimer({
-  data,
-}: {
-  data: DisclaimerSection;
-  ground?: Ground;
-}) {
+export default function Disclaimer({ data }: { data: DisclaimerSection; ground?: Ground }) {
   return (
     <div className="border-t border-mine/10 bg-white px-5 pb-5 pt-[19px] sm:px-10 lg:px-20">
       <div className="mx-auto w-full max-w-[1280px] px-0 pb-[0.75px] sm:px-5">

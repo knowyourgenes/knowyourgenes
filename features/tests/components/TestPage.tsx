@@ -12,6 +12,7 @@ import FinalCta from './sections/FinalCta';
 import Footer from './sections/Footer';
 import Hero from './sections/Hero';
 import Kit from './sections/Kit';
+import MarkerGrid from './sections/MarkerGrid';
 import Nav from './sections/Nav';
 import Outcomes from './sections/Outcomes';
 import ReportPreview from './sections/ReportPreview';
@@ -55,6 +56,8 @@ function renderSection(section: Section & { ground?: TestPage['sections'][number
       return <BodyMap key={key} data={section} ground={ground} />;
     case 'riskCards':
       return <RiskCards key={key} data={section} ground={ground} />;
+    case 'markerGrid':
+      return <MarkerGrid key={key} data={section} ground={ground} />;
     case 'stats':
       return <Stats key={key} data={section} ground={ground} />;
     case 'explainer':

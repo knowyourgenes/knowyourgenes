@@ -87,7 +87,7 @@ export default function Kit({ data, ground }: { data: KitSection; ground?: Groun
               // the order panel; once the two cells stack it is just a lopsided
               // gap, so below lg the cell pads symmetrically.
               'flex flex-col gap-1.5 pt-[clamp(22px,2.78vw,40px)] pb-[clamp(22px,2.78vw,40px)] lg:border-r lg:border-mine/10 lg:pb-[clamp(28px,4.1vw,59px)]',
-              PAD,
+              PAD
             )}
           >
             <span className={KICKER}>{data.contents.kicker}</span>

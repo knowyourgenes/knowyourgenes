@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import type { BodyMapSection, Ground, PanelKey } from '../../types';
+import type { BodyMapSection, Ground, HotspotGeom, PanelKey } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Section } from '../ui';
 
@@ -31,22 +31,12 @@ const TIP_W = 270;
 const FIG_W = 720;
 const FIG_H = 492;
 
-type Geom = {
-  /** group bbox — x, y, w, h. The button uses it so the label is part of the hit area. */
-  box: [number, number, number, number];
-  /** dot centre */
-  dot: [number, number];
-  /** leader line — x1,y1 at the text end, x2,y2 at the dot end */
-  line: [number, number, number, number];
-  /** label block anchor: `x` is the RIGHT edge for a left-side label, the LEFT edge for a right-side one */
-  text: { side: 'left' | 'right'; x: number; y: number };
-  /** 18px outer disc */
-  ring: string;
-  /** 16px inner disc — also the leader-line stroke */
-  core: string;
-};
+// `HotspotGeom` (types.ts) is this shape — it lives there because a page whose
+// panels are not the Women's Health five has to author its own numbers, and the
+// data file cannot import from a 'use client' component.
+type Geom = HotspotGeom;
 
-const GEOM: Record<PanelKey, Geom> = {
+const GEOM: Record<string, Geom | undefined> = {
   mood: {
     box: [18, 50, 361, 41],
     dot: [360, 73],
@@ -102,9 +92,20 @@ const CAPTION = 'block font-kyg text-[14.05px] font-normal leading-[16.9px] text
  */
 const EM_WRAP = '[&_.tst-em-teal]:box-decoration-clone';
 
+type Hotspot = BodyMapSection['hotspots'][number];
+/** A hotspot that knows where it sits — either from its own `geom` or from GEOM. */
+type Placed = Hotspot & { g: Geom };
+
 export default function BodyMap({ data, ground }: { data: BodyMapSection; ground?: Ground }) {
   const [active, setActive] = useState<PanelKey | null>(null);
   const eyebrow = data.head.eyebrow;
+
+  // A hotspot with neither its own geometry nor an entry in GEOM has nowhere to
+  // be drawn, so it is dropped rather than crashing the section.
+  const spots: Placed[] = data.hotspots.flatMap((h) => {
+    const g = h.geom ?? GEOM[h.key];
+    return g ? [{ ...h, g }] : [];
+  });
 
   return (
     <Section
@@ -165,13 +166,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
 
           {/* anatomy — 299 × 449, scale=FILL */}
           <div className="absolute" style={{ left: 208, top: 34, width: 299, height: 449 }}>
-            <Image
-              src={data.image.src}
-              alt={data.image.alt}
-              fill
-              sizes="299px"
-              className="object-cover"
-            />
+            <Image src={data.image.src} alt={data.image.alt} fill sizes="299px" className="object-cover" />
           </div>
 
           {/* leader lines — 1.756px solid, one per hotspot */}
@@ -181,8 +176,8 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
             viewBox={`0 0 ${FIG_W} ${FIG_H}`}
             className="pointer-events-none absolute inset-0 h-full w-full"
           >
-            {data.hotspots.map((h) => {
-              const g = GEOM[h.key];
+            {spots.map((h) => {
+              const g = h.g;
               const [x1, y1, x2, y2] = g.line;
               return (
                 <line
@@ -200,8 +195,8 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
           </svg>
 
           {/* hotspots — dot + label, one button per group bbox */}
-          {data.hotspots.map((h) => {
-            const g = GEOM[h.key];
+          {spots.map((h) => {
+            const g = h.g;
             const [bx, by, bw, bh] = g.box;
             const [cx, cy] = g.dot;
             const right = g.text.side === 'left';
@@ -232,11 +227,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                     aria-hidden
                     className="absolute left-1/2 top-1/2 size-[39px] -translate-x-1/2 -translate-y-1/2 rounded-full"
                   />
-                  <span
-                    aria-hidden
-                    className="block size-[18px] rounded-full"
-                    style={{ backgroundColor: g.ring }}
-                  />
+                  <span aria-hidden className="block size-[18px] rounded-full" style={{ backgroundColor: g.ring }} />
                   <span
                     aria-hidden
                     className="absolute left-1/2 top-1/2 size-[16px] -translate-x-1/2 -translate-y-1/2 rounded-full"
@@ -252,7 +243,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                 <span
                   className={cn(
                     'pointer-events-auto absolute block whitespace-nowrap',
-                    right ? 'text-right' : 'text-left',
+                    right ? 'text-right' : 'text-left'
                   )}
                   style={{
                     top: g.text.y - by,
@@ -277,9 +268,9 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                 • its centre is clamped to the figure box so it never bleeds out
                   of the diagram — half the 270px max-width, plus 4px.        */}
           {(() => {
-            const h = data.hotspots.find((x) => x.key === active);
+            const h = spots.find((x) => x.key === active);
             if (!h) return null;
-            const [bx, by, bw, bh] = GEOM[h.key].box;
+            const [bx, by, bw, bh] = h.g.box;
             const half = TIP_W / 2;
             const cx = Math.max(half + 4, Math.min(bx + bw / 2, FIG_W - half - 4));
             const below = by < 150;
@@ -329,8 +320,8 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
           />
         </div>
         <ul className="mx-auto mt-7 grid max-w-[680px] gap-2.5 sm:grid-cols-2">
-          {data.hotspots.map((h) => {
-            const g = GEOM[h.key];
+          {spots.map((h) => {
+            const g = h.g;
             const open = active === h.key;
             return (
               // `self-start` so an open card grows on its own instead of
@@ -351,10 +342,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                     className="relative grid size-[18px] shrink-0 place-items-center rounded-full"
                     style={{ backgroundColor: g.ring }}
                   >
-                    <span
-                      className="absolute size-[16px] rounded-full"
-                      style={{ backgroundColor: g.core }}
-                    />
+                    <span className="absolute size-[16px] rounded-full" style={{ backgroundColor: g.core }} />
                     <span className="absolute size-[6px] rounded-full bg-white" />
                   </span>
                   {/* min-w-0 so a caption that runs past the column wraps rather
@@ -371,26 +359,18 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                     strokeWidth={2}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={cn(
-                      'size-4 shrink-0 text-fusc transition-transform duration-300',
-                      open && 'rotate-180',
-                    )}
+                    className={cn('size-4 shrink-0 text-fusc transition-transform duration-300', open && 'rotate-180')}
                   >
                     <path d="m6 9 6 6 6-6" />
                   </svg>
                 </button>
 
                 {open ? (
-                  <div
-                    id={`bodymap-tip-${h.key}`}
-                    className="border-t border-mine/10 px-4 pb-3.5 pt-3"
-                  >
+                  <div id={`bodymap-tip-${h.key}`} className="border-t border-mine/10 px-4 pb-3.5 pt-3">
                     <div className="mb-1.5 break-words font-kyg text-[12px] font-bold uppercase tracking-[0.07em] text-eden2">
                       {h.tipTitle}
                     </div>
-                    <div className="break-words font-kyg text-[14px] leading-snug text-fusc">
-                      {h.tipBody}
-                    </div>
+                    <div className="break-words font-kyg text-[14px] leading-snug text-fusc">{h.tipBody}</div>
                   </div>
                 ) : null}
               </li>

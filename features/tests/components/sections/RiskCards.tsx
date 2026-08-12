@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { Ground, PanelKey, RiskCardsSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
+import { Icon } from '../icons';
 import { Body, Heading, Lead, Media, ResultBar, Section, TONE_TEXT } from '../ui';
 
 // =============================================================================
@@ -75,47 +76,70 @@ type Accent = {
   label: string;
   /** Caption inside the image slot. */
   caption: string;
+  /** Tint for a registry badge icon (pages outside Women's Health). */
+  badgeText: string;
   /** The design's own glyph for the 44px badge, top-right of the image. */
   badge: string;
 };
 
-const ACCENT: Record<PanelKey, Accent> = {
-  pcos: {
+// The five colourways the frame runs across its cards. A page with more panels
+// than this cycles them by position, which is what the reference build's own
+// pill dots do once they run past the palette.
+const PALETTE: Accent[] = [
+  {
     dot: 'bg-crimson',
     rule: 'from-crimson to-crimson-deep',
     label: 'text-crimson',
     caption: 'text-crimson-deep/80',
+    badgeText: 'text-crimson',
     badge: '5485-455',
   },
-  pregnancy: {
+  {
     dot: 'bg-eden',
     rule: 'from-eden to-java',
     label: 'text-eden',
     caption: 'text-eden/70',
+    badgeText: 'text-eden',
     badge: '5485-868',
   },
-  mood: {
+  {
     dot: 'bg-java',
     rule: 'from-java to-surfie',
     label: 'text-surfie',
     caption: 'text-surfie/80',
+    badgeText: 'text-surfie',
     badge: '5485-1281',
   },
-  bones: {
+  {
     dot: 'bg-eden2',
     rule: 'from-eden2 to-bottlehero',
     label: 'text-eden2',
     caption: 'text-eden2/80',
+    badgeText: 'text-eden2',
     badge: '6108-661',
   },
-  joints: {
+  {
     dot: 'bg-surfie',
     rule: 'from-surfie to-java',
     label: 'text-surfie',
     caption: 'text-surfie/80',
+    badgeText: 'text-surfie',
     badge: '6108-1075',
   },
+];
+
+/** The Women's Health panels keep the exact colourway the frame gives them. */
+const ACCENT: Record<string, Accent | undefined> = {
+  pcos: PALETTE[0],
+  pregnancy: PALETTE[1],
+  mood: PALETTE[2],
+  bones: PALETTE[3],
+  joints: PALETTE[4],
 };
+
+function accentFor(key: PanelKey, index: number): Accent {
+  return ACCENT[key] ?? PALETTE[index % PALETTE.length]!;
+}
 
 /** The frame's glyphs overflow their layout box by a couple of px; this keeps the
  *  box the size Figma reports and lets the artwork bleed, exactly as it does there. */
@@ -161,10 +185,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
           />
 
           {data.head.leadHtml ? (
-            <Lead
-              html={data.head.leadHtml}
-              className="w-full text-[clamp(15px,1.29vw,18.5px)] leading-[1.5027]"
-            />
+            <Lead html={data.head.leadHtml} className="w-full text-[clamp(15px,1.29vw,18.5px)] leading-[1.5027]" />
           ) : null}
         </div>
 
@@ -178,13 +199,13 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
               'inline-flex items-center justify-center rounded-full border px-5 py-[10px] font-kyg text-[13.5px] font-bold leading-[20.2px] transition duration-200',
               filter === 'all'
                 ? '-translate-y-px border-eden bg-eden text-white shadow-[0_8px_20px_0_rgba(14,77,75,0.24)]'
-                : 'border-mine/10 bg-white text-fusc hover:bg-spring',
+                : 'border-mine/10 bg-white text-fusc hover:bg-spring'
             )}
           >
             {data.allLabel}
           </button>
 
-          {data.cards.map((c) => (
+          {data.cards.map((c, i) => (
             <button
               key={c.key}
               type="button"
@@ -194,14 +215,11 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                 'inline-flex items-center gap-2 rounded-full border px-5 py-[10px] font-kyg text-[13.5px] font-bold leading-[20.2px] transition duration-200',
                 filter === c.key
                   ? '-translate-y-px border-eden bg-eden text-white shadow-[0_8px_20px_0_rgba(14,77,75,0.24)]'
-                  : 'border-mine/10 bg-white text-fusc hover:bg-spring',
+                  : 'border-mine/10 bg-white text-fusc hover:bg-spring'
               )}
             >
               <span
-                className={cn(
-                  'size-2 shrink-0 rounded-full',
-                  filter === c.key ? 'bg-white' : ACCENT[c.key].dot,
-                )}
+                className={cn('size-2 shrink-0 rounded-full', filter === c.key ? 'bg-white' : accentFor(c.key, i).dot)}
               />
               {c.tabLabel}
             </button>
@@ -210,8 +228,8 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
 
         {/* ---- cards: 389 wide, gap 24, wrapped and centred ---------------- */}
         <div className="flex w-full flex-wrap justify-center gap-6">
-          {data.cards.map((c) => {
-            const a = ACCENT[c.key];
+          {data.cards.map((c, i) => {
+            const a = accentFor(c.key, i);
             const dim = filter !== 'all' && c.key !== filter;
             return (
               <article
@@ -224,7 +242,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                   // round the last card onto its own line. At the 1216 rail the
                   // 3-up calc is exactly 389, which max-w-[389px] then pins.
                   'w-full max-w-[389px] md:w-[calc((100%-25px)/2)] xl:w-[calc((100%-49px)/3)]',
-                  dim && 'dim',
+                  dim && 'dim'
                 )}
               >
                 {/* image slot 387 x 180 — the aspect box keeps it fluid at every
@@ -235,19 +253,22 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                  *  gutter. The old 45vw/92vw pair shipped a ~660px crop to a
                  *  768 tablet that only ever paints 332. */}
                 <div className="relative w-full">
-                  <Media
-                    img={c.image}
-                    className="aspect-[387/180] w-full"
-                    sizes="(min-width:430px) 389px, 92vw"
-                  />
+                  <Media img={c.image} className="aspect-[387/180] w-full" sizes="(min-width:430px) 389px, 92vw" />
                   {/* r16 — NOT rounded-2xl, which is 18px on this project's scale. */}
+                  {/* The frame's badge artwork exists for the Women's Health
+                      panels only, so any other page names a registry icon and
+                      gets it in that card's accent instead. */}
                   <span className="absolute right-3 top-3 flex size-[44px] items-center justify-center rounded-[16px] bg-white shadow-[inset_0_-10px_22px_0_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.6)]">
-                    <Glyph id={a.badge} box="size-[23px]" w="w-[23px]" h="h-[27px]" />
+                    {c.icon ? (
+                      <Icon name={c.icon} className={cn('size-[23px]', a.badgeText)} />
+                    ) : (
+                      <Glyph id={a.badge} box="size-[23px]" w="w-[23px]" h="h-[27px]" />
+                    )}
                   </span>
                   <span
                     className={cn(
                       'absolute bottom-[10px] left-3 right-3 truncate font-kyg text-[10px] font-bold leading-[15px] tracking-[0.1em]',
-                      a.caption,
+                      a.caption
                     )}
                   >
                     {c.imageCaption}
@@ -259,12 +280,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
 
                 {/* copy block: pad 27/28/28/28, gap 7 */}
                 <div className="flex flex-col gap-[7px] px-7 pb-7 pt-[27px]">
-                  <span
-                    className={cn(
-                      'font-kyg text-[11px] font-bold leading-[16.5px] tracking-[0.1em]',
-                      a.label,
-                    )}
-                  >
+                  <span className={cn('font-kyg text-[11px] font-bold leading-[16.5px] tracking-[0.1em]', a.label)}>
                     {c.geneLabel}
                   </span>
 
@@ -274,10 +290,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                   />
 
                   {/* One uniform 400 run in the frame — see the note above on <b>. */}
-                  <Body
-                    html={c.bodyHtml}
-                    className="pt-1 text-[17.5px] leading-[26.2px]"
-                  />
+                  <Body html={c.bodyHtml} className="pt-1 text-[17.5px] leading-[26.2px]" />
 
                   <p className="flex items-start gap-2 pb-[13px] pt-[9px] font-kyg text-[13.5px] font-semibold leading-[18.6px] text-mojo">
                     <Glyph id="5881-968" box="size-[19px]" w="w-[19px]" h="h-[23px]" />
@@ -291,7 +304,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                     <p
                       className={cn(
                         'pb-[2px] font-tst text-[21px] font-semibold italic leading-[31.5px]',
-                        TONE_TEXT[c.sample.tone],
+                        TONE_TEXT[c.sample.tone]
                       )}
                       dangerouslySetInnerHTML={{ __html: c.sample.valueHtml }}
                     />

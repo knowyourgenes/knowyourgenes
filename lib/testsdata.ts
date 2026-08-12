@@ -13,10 +13,17 @@
 // This is TRUSTED, hand-authored input - never populate it from a CMS or an API.
 //
 // `womensHealth` is a 1:1 rebuild of the Figma "Women's Health" frame and is the
-// reference implementation every future test page should be modelled on.
+// reference implementation every future test page should be modelled on. It
+// stays in this file; every page built ON it lives in `lib/tests/<slug>.ts` and
+// is registered in TEST_PAGES at the bottom.
 // =============================================================================
 
 import type { TestPage } from '@/features/tests/types';
+import { eyeHealth } from '@/lib/tests/eye-health';
+import { immunityHealth } from '@/lib/tests/immunity-health';
+import { kidneyHealth } from '@/lib/tests/kidney-health';
+import { mensHealth } from '@/lib/tests/mens-health';
+import { skinHealth } from '@/lib/tests/skin-health';
 
 const IMG = '/tests/womens-health';
 
@@ -40,13 +47,11 @@ export const womensHealth: TestPage = {
   },
 
   sections: [
-
     // --------------------------------------------------------------- hero ----
     {
       type: 'hero',
       eyebrow: { label: "Women's Health · Genetic Test", icon: 'scan-heart' },
-      titleHtml:
-        'The fittest women you know didn\'t guess. <em class="tst-em">They read their genes first.</em>',
+      titleHtml: 'The fittest women you know didn\'t guess. <em class="tst-em">They read their genes first.</em>',
       kickerHtml: 'One saliva test, at home.',
       subHtml: 'Five answers in 3 weeks. Early enough to act.',
       ctas: [
@@ -69,8 +74,7 @@ export const womensHealth: TestPage = {
       ground: 'sage',
       head: {
         eyebrow: { label: 'Who should take this test', icon: 'users' },
-        titleHtml:
-          'This test is for every woman.<br/>But it might be for <em class="tst-em">you</em> most of all.',
+        titleHtml: 'This test is for every woman.<br/>But it might be for <em class="tst-em">you</em> most of all.',
       },
       image: {
         src: `${IMG}/whofor-pregnant.jpg`,
@@ -109,8 +113,7 @@ export const womensHealth: TestPage = {
         {
           icon: 'frown',
           accent: 'crimson',
-          textHtml:
-            'You often feel low, anxious, or not quite yourself - around your cycle, or after a baby.',
+          textHtml: 'You often feel low, anxious, or not quite yourself - around your cycle, or after a baby.',
         },
         {
           icon: 'person',
@@ -142,8 +145,7 @@ export const womensHealth: TestPage = {
       ground: 'ivory',
       head: {
         eyebrow: { label: 'From Hollywood to Bollywood', icon: 'star' },
-        titleHtml:
-          'The women you look up to have <em class="tst-em-teal">already had their genes tested.</em>',
+        titleHtml: 'The women you look up to have <em class="tst-em-teal">already had their genes tested.</em>',
       },
       image: {
         src: `${IMG}/aspiration-stage.jpg`,
@@ -201,11 +203,61 @@ export const womensHealth: TestPage = {
       },
       image: { src: `${IMG}/bodymap-figure.png`, alt: 'Anatomical figure marking the five tested areas' },
       hotspots: [
-        { key: 'mood', label: 'Mood', caption: 'Depression around pregnancy', tipTitle: 'Mood · Peripartum depression', tipBody: 'Could pregnancy affect my mental health? The COMT gene shows how well your body handles stress hormones, and half of it begins before the baby is born.', x: 49.7, y: 5.6, side: 'left' },
-        { key: 'bones', label: 'Bones', caption: 'Osteoporosis', tipTitle: 'Bones · Osteoporosis', tipBody: 'Will my bones get weak as I get older? Three genes show how fast yours may weaken. Most women only find out when a bone breaks.', x: 69.3, y: 21.0, side: 'right' },
-        { key: 'pcos', label: 'PCOS', caption: 'Hormones and your cycle', tipTitle: 'PCOS · Gene THADA', tipBody: 'Do my genes put me at risk of PCOS? The THADA gene tells you how likely you are to get it. Left alone, it can lead to diabetes.', x: 42.4, y: 43.9, side: 'left' },
-        { key: 'pregnancy', label: 'Pregnancy', caption: 'Trouble having a baby', tipTitle: 'Pregnancy Loss · MTHFR, FOXP3', tipBody: 'Could I have trouble having a baby? Two genes affect folate and how your immune system reacts in pregnancy. Most women never get an answer.', x: 58.1, y: 46.3, side: 'right' },
-        { key: 'joints', label: 'Joints', caption: 'Rheumatoid arthritis', tipTitle: 'Joints · Gene HLA-DRB1', tipBody: 'Could my immune system damage my joints? In rheumatoid arthritis the HLA-DRB1 gene is the clearest warning sign, and joint damage cannot be undone.', x: 41.3, y: 73.4, side: 'left' },
+        {
+          key: 'mood',
+          label: 'Mood',
+          caption: 'Depression around pregnancy',
+          tipTitle: 'Mood · Peripartum depression',
+          tipBody:
+            'Could pregnancy affect my mental health? The COMT gene shows how well your body handles stress hormones, and half of it begins before the baby is born.',
+          x: 49.7,
+          y: 5.6,
+          side: 'left',
+        },
+        {
+          key: 'bones',
+          label: 'Bones',
+          caption: 'Osteoporosis',
+          tipTitle: 'Bones · Osteoporosis',
+          tipBody:
+            'Will my bones get weak as I get older? Three genes show how fast yours may weaken. Most women only find out when a bone breaks.',
+          x: 69.3,
+          y: 21.0,
+          side: 'right',
+        },
+        {
+          key: 'pcos',
+          label: 'PCOS',
+          caption: 'Hormones and your cycle',
+          tipTitle: 'PCOS · Gene THADA',
+          tipBody:
+            'Do my genes put me at risk of PCOS? The THADA gene tells you how likely you are to get it. Left alone, it can lead to diabetes.',
+          x: 42.4,
+          y: 43.9,
+          side: 'left',
+        },
+        {
+          key: 'pregnancy',
+          label: 'Pregnancy',
+          caption: 'Trouble having a baby',
+          tipTitle: 'Pregnancy Loss · MTHFR, FOXP3',
+          tipBody:
+            'Could I have trouble having a baby? Two genes affect folate and how your immune system reacts in pregnancy. Most women never get an answer.',
+          x: 58.1,
+          y: 46.3,
+          side: 'right',
+        },
+        {
+          key: 'joints',
+          label: 'Joints',
+          caption: 'Rheumatoid arthritis',
+          tipTitle: 'Joints · Gene HLA-DRB1',
+          tipBody:
+            'Could my immune system damage my joints? In rheumatoid arthritis the HLA-DRB1 gene is the clearest warning sign, and joint damage cannot be undone.',
+          x: 41.3,
+          y: 73.4,
+          side: 'left',
+        },
       ],
     },
 
@@ -469,8 +521,7 @@ export const womensHealth: TestPage = {
     {
       type: 'testimonial',
       ground: 'cream',
-      quoteHtml:
-        'Finally&hellip; my <em class="tst-em-teal">dream body</em> doesn\'t feel impossible anymore.',
+      quoteHtml: 'Finally&hellip; my <em class="tst-em-teal">dream body</em> doesn\'t feel impossible anymore.',
       bodyHtml:
         'For years you may have blamed yourself for the weight that would not move. When you finally see what your genes are doing, everything changes: you can stop fighting your own body and start working with it, and feel <b>strong, confident, and at home in your own skin again.</b>',
       closingHtml:
@@ -503,8 +554,7 @@ export const womensHealth: TestPage = {
           { label: 'Bones', value: 'Poor · High', tone: 'poor' },
           { label: 'Joints', value: 'Good · Low', tone: 'good' },
         ],
-        legendHtml:
-          '<b>Good</b> = normal · <b>Average</b> = some risk · <b>Poor</b> = higher risk',
+        legendHtml: '<b>Good</b> = normal · <b>Average</b> = some risk · <b>Poor</b> = higher risk',
       },
     },
 
@@ -673,11 +723,7 @@ export const womensHealth: TestPage = {
       ground: 'ink',
       eyebrow: { label: 'Know now, not later', icon: 'zap', accent: 'teal' },
       titleHtml: 'Health Without <em class="tst-em-teal">Guesswork.</em>',
-      chips: [
-        { label: '5 tests, 1 saliva kit' },
-        { label: 'Results in 3 weeks' },
-        { label: 'Expert guidance' },
-      ],
+      chips: [{ label: '5 tests, 1 saliva kit' }, { label: 'Results in 3 weeks' }, { label: 'Expert guidance' }],
       cta: { label: 'Book a Test', href: '#kit' },
       noteHtml: 'At-home saliva kit · NABL certified lab · Results in 3 weeks',
     },
@@ -688,12 +734,13 @@ export const womensHealth: TestPage = {
       bodyHtml:
         'This is general educational information, not medical advice. Talk to a doctor about your own case. If you are struggling with your mental health, please reach out to a doctor or someone you trust.',
     },
-
   ],
 };
 
-/** All test pages served by the /categories/[category_slug]/[test_slug] route. */
-export const TEST_PAGES: TestPage[] = [womensHealth];
+/** All test pages served by the /categories/[category_slug]/[test_slug] route.
+ *  Order here is the order they prerender in; it does not affect the listing,
+ *  which is driven by lib/categoriesdata.ts. */
+export const TEST_PAGES: TestPage[] = [womensHealth, mensHealth, immunityHealth, skinHealth, eyeHealth, kidneyHealth];
 
 export function getTestPage(slug: string): TestPage | undefined {
   return TEST_PAGES.find((t) => t.slug === slug);

@@ -55,16 +55,8 @@ export function Section({
     // `scroll-mt` only when the section is an anchor target: the global
     // SiteHeader is sticky at 64px, so without it every in-page jump lands
     // with the heading hidden behind the bar.
-    <section
-      id={id}
-      className={cn(GROUND[ground], 'px-5 sm:px-10 lg:px-20', id && 'scroll-mt-[80px]', className)}
-    >
-      <div
-        className={cn(
-          'reveal mx-auto w-full max-w-[1280px] py-[clamp(56px,7vw,92px)] lg:px-8',
-          innerClassName,
-        )}
-      >
+    <section id={id} className={cn(GROUND[ground], 'px-5 sm:px-10 lg:px-20', id && 'scroll-mt-[80px]', className)}>
+      <div className={cn('reveal mx-auto w-full max-w-[1280px] py-[clamp(56px,7vw,92px)] lg:px-8', innerClassName)}>
         {children}
       </div>
     </section>
@@ -75,15 +67,7 @@ export function Section({
 // H1  Figtree 800  64/69.1  ls -1.28  (-0.02em)   #222222
 // H2  Figtree 700  51/55    ls -1.02  (-0.02em)   #222222
 
-export function Heading({
-  html,
-  className,
-  as: As = 'h2',
-}: {
-  html: string;
-  className?: string;
-  as?: 'h1' | 'h2';
-}) {
+export function Heading({ html, className, as: As = 'h2' }: { html: string; className?: string; as?: 'h1' | 'h2' }) {
   return (
     <As
       className={cn(
@@ -91,7 +75,7 @@ export function Heading({
         As === 'h1'
           ? 'text-[clamp(34px,4.6vw,64px)] font-extrabold leading-[1.08]'
           : 'text-[clamp(28px,3.7vw,51px)] font-bold leading-[1.08]',
-        className,
+        className
       )}
       dangerouslySetInnerHTML={{ __html: html }}
     />
@@ -124,7 +108,7 @@ export function Closing({ html, className }: { html: string; className?: string 
     <p
       className={cn(
         'mx-auto max-w-[820px] text-center font-tst text-[clamp(20px,2.2vw,30px)] font-bold italic leading-[1.5] text-mine',
-        className,
+        className
       )}
       dangerouslySetInnerHTML={{ __html: html }}
     />
@@ -144,7 +128,7 @@ export function Eyebrow({ data, className }: { data: EyebrowT; className?: strin
     <span
       className={cn(
         'inline-flex items-center gap-2 rounded-full border border-mine/10 bg-white py-2 pl-3 pr-4 shadow-tst-soft',
-        className,
+        className
       )}
     >
       {data.icon ? (
@@ -152,12 +136,7 @@ export function Eyebrow({ data, className }: { data: EyebrowT; className?: strin
       ) : (
         <span className={cn('size-2 rounded-full', DOT[accent])} />
       )}
-      <span
-        className={cn(
-          'font-kyg text-[11.5px] font-bold uppercase tracking-[0.14em]',
-          EYEBROW_TEXT[accent],
-        )}
-      >
+      <span className={cn('font-kyg text-[11.5px] font-bold uppercase tracking-[0.14em]', EYEBROW_TEXT[accent])}>
         {data.label}
       </span>
     </span>
@@ -209,10 +188,7 @@ const CTA_ARROW: Record<keyof typeof BTN_VARIANT, string> = {
 export function Cta({ data, className }: { data: CtaT; className?: string }) {
   const variant = data.variant ?? 'primary';
   return (
-    <Link
-      href={data.href}
-      className={cn(BTN_BASE, BTN_VARIANT[variant], 'px-[34px] pb-[18px] pt-4', className)}
-    >
+    <Link href={data.href} className={cn(BTN_BASE, BTN_VARIANT[variant], 'px-[34px] pb-[18px] pt-4', className)}>
       <span className="relative z-[1]">{data.label}</span>
       {/* A data-supplied `icon` means the design uses something other than the
           arrow here (e.g. the hero's "How does it work? ↓"), so honour it via the
@@ -248,27 +224,19 @@ export function CtaRow({ items, className }: { items: CtaT[]; className?: string
 // Icon sits in a 32px round badge: mint #e6f4f3 (teal) or blush #fbeef3 (crimson).
 // Label: Figtree 700 14.5/21.8 #2d2a24.
 
-export function Chip({
-  data,
-  accent = 'teal',
-  className,
-}: {
-  data: ChipT;
-  accent?: Accent;
-  className?: string;
-}) {
+export function Chip({ data, accent = 'teal', className }: { data: ChipT; accent?: Accent; className?: string }) {
   return (
     <span
       className={cn(
         'inline-flex items-center gap-2 rounded-full border border-mine/10 bg-white py-2 pl-2 pr-4 shadow-tst-soft',
-        className,
+        className
       )}
     >
       {data.icon ? (
         <span
           className={cn(
             'grid size-8 shrink-0 place-items-center rounded-full',
-            accent === 'crimson' ? 'bg-blush text-crimson' : 'bg-mint text-eden',
+            accent === 'crimson' ? 'bg-blush text-crimson' : 'bg-mint text-eden'
           )}
         >
           <Icon name={data.icon} className="size-[18px]" />
@@ -282,15 +250,7 @@ export function Chip({
   );
 }
 
-export function ChipRow({
-  items,
-  accent,
-  className,
-}: {
-  items: ChipT[];
-  accent?: Accent;
-  className?: string;
-}) {
+export function ChipRow({ items, accent, className }: { items: ChipT[]; accent?: Accent; className?: string }) {
   if (!items.length) return null;
   return (
     <div className={cn('flex flex-wrap items-center gap-2.5', className)}>

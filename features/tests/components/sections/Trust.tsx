@@ -64,8 +64,7 @@ const TILE_GLYPH: Record<string, string> = {
 };
 
 /** The frame's mask rectangle: transparent -> black at 7% -> 93% -> transparent. */
-const STRIP_MASK =
-  'linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 7%, #000 93%, rgba(0,0,0,0) 100%)';
+const STRIP_MASK = 'linear-gradient(90deg, rgba(0,0,0,0) 0%, #000 7%, #000 93%, rgba(0,0,0,0) 100%)';
 
 function BadgeCard({ badge }: { badge: TrustSection['badges'][number] }) {
   const stacked = Boolean(badge.line2);
@@ -76,7 +75,7 @@ function BadgeCard({ badge }: { badge: TrustSection['badges'][number] }) {
       className={cn(
         // r16 — NOT rounded-2xl: this project remaps --radius, so that token is 18px
         'flex h-[78px] shrink-0 items-center justify-center gap-2 rounded-[16px] border border-mine/10 bg-white px-6 shadow-tst-soft',
-        stacked && 'min-w-[156px]',
+        stacked && 'min-w-[156px]'
       )}
     >
       {badge.icon ? (
@@ -91,7 +90,7 @@ function BadgeCard({ badge }: { badge: TrustSection['badges'][number] }) {
       <span
         className={cn(
           'text-center font-kyg text-[13px] font-bold text-eden',
-          stacked ? 'leading-[16.2px]' : 'whitespace-nowrap leading-[19.5px]',
+          stacked ? 'leading-[16.2px]' : 'whitespace-nowrap leading-[19.5px]'
         )}
       >
         {badge.line1}
@@ -138,10 +137,7 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
       {/* The frame holds the track twice over; translateX(-50%) therefore
           scrolls exactly one copy and the loop never seams. At rest the first
           card sits flush on the rail's left edge, as in the frame. */}
-      <div
-        className="group mt-8 w-full overflow-hidden"
-        style={{ maskImage: STRIP_MASK, WebkitMaskImage: STRIP_MASK }}
-      >
+      <div className="group mt-8 w-full overflow-hidden" style={{ maskImage: STRIP_MASK, WebkitMaskImage: STRIP_MASK }}>
         <div className="flex w-max animate-tst-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none">
           {[0, 1].map((copy) => (
             <div key={copy} aria-hidden={copy > 0} className="flex w-max">
@@ -180,16 +176,13 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
                   className={cn(
                     // 64 square, r16 (rounded-2xl would paint 18 here)
                     'grid size-16 shrink-0 place-items-center rounded-[16px]',
-                    crimson ? 'bg-blush' : 'bg-mint',
+                    crimson ? 'bg-blush' : 'bg-mint'
                   )}
                 >
                   {glyph ? (
                     <FigmaIcon id={glyph} className="block h-10 w-[34px]" />
                   ) : t.icon ? (
-                    <Icon
-                      name={t.icon}
-                      className={cn('size-[34px]', crimson ? 'text-crimson' : 'text-eden')}
-                    />
+                    <Icon name={t.icon} className={cn('size-[34px]', crimson ? 'text-crimson' : 'text-eden')} />
                   ) : null}
                 </span>
               )}
@@ -197,7 +190,7 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
               <h3
                 className={cn(
                   'wrap-break-word font-kyg text-[16px] font-bold leading-6 text-mine',
-                  t.statHtml ? 'pt-1.5' : 'pt-2.5',
+                  t.statHtml ? 'pt-1.5' : 'pt-2.5'
                 )}
               >
                 {t.title}

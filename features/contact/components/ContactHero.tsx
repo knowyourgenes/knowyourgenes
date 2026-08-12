@@ -18,11 +18,7 @@ export default function ContactHero() {
       <div className="mx-auto flex w-full max-w-[756px] flex-col items-center gap-[19px] pb-14 pt-[clamp(48px,6vw,80px)] text-center">
         {/* max-w-full: the pill is an inline-flex item in a column flex box, so
             its max-content width can escape the 280px content box at 320. */}
-        <ContactEyebrow
-          label={CONTACT_HERO.eyebrow.label}
-          icon={CONTACT_HERO.eyebrow.icon}
-          className="max-w-full"
-        />
+        <ContactEyebrow label={CONTACT_HERO.eyebrow.label} icon={CONTACT_HERO.eyebrow.icon} className="max-w-full" />
 
         {/* 58/61.5 -> 1.0603; the two lines sit in a VERTICAL frame with gap 1. */}
         <h1 className="flex flex-col gap-px font-kyg text-[clamp(32px,4.4vw,58px)] font-extrabold leading-[1.0603] tracking-[-0.02em] text-mine">
@@ -45,9 +41,7 @@ export default function ContactHero() {
               <span className="grid size-8 shrink-0 place-items-center rounded-full bg-mint">
                 <ContactIcon id={c.icon} className="h-[23px] w-[19px]" />
               </span>
-              <span className="font-kyg text-[13.5px] font-bold leading-[20.2px] text-[#2d2a24]">
-                {c.label}
-              </span>
+              <span className="font-kyg text-[13.5px] font-bold leading-[20.2px] text-[#2d2a24]">{c.label}</span>
             </li>
           ))}
         </ul>

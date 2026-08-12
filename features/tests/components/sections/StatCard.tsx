@@ -38,9 +38,8 @@ export default function StatCard({ data, accent }: { data: Stat; accent: string 
         <span
           className={cn(
             'block font-kyg text-[clamp(38px,3.7vw,53px)] font-extrabold leading-none tracking-[-0.01em]',
-            !isCounted &&
-              'transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]',
-            !isCounted && !entered && 'translate-y-2.5 scale-[0.92] opacity-0',
+            !isCounted && 'transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]',
+            !isCounted && !entered && 'translate-y-2.5 scale-[0.92] opacity-0'
           )}
           style={{ color: accent }}
         >

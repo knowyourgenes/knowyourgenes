@@ -88,10 +88,7 @@ export default function FinalCta({ data, ground }: { data: FinalCtaSection; grou
             // to be allowed to wrap instead of pushing out of the band.
             <li key={i} className="flex min-w-0 items-center gap-2">
               {/* 19x22 glyph pulled to the 19x18 box the frame lays out */}
-              <FigmaIcon
-                id={TICK_ICONS[i] ?? TICK_ICONS[0]}
-                className="my-[-2px] h-[22px] w-[19px] shrink-0"
-              />
+              <FigmaIcon id={TICK_ICONS[i] ?? TICK_ICONS[0]} className="my-[-2px] h-[22px] w-[19px] shrink-0" />
               <span
                 className="wrap-break-word font-kyg text-[13.5px] font-semibold leading-[20.2px] text-linenw/70"
                 dangerouslySetInnerHTML={{ __html: c.label }}

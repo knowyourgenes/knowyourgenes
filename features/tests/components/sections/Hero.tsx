@@ -123,10 +123,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
                   {glyph ? (
                     <FigmaIcon
                       id={glyph.id}
-                      className={cn(
-                        'h-6 w-5 shrink-0 transition-transform duration-300',
-                        glyph.motion,
-                      )}
+                      className={cn('h-6 w-5 shrink-0 transition-transform duration-300', glyph.motion)}
                     />
                   ) : (
                     <Icon
@@ -149,10 +146,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
                   className="inline-flex max-w-full items-center gap-2 rounded-full border border-mine/10 bg-white py-2 pl-2 pr-4 shadow-tst-soft"
                 >
                   <span
-                    className={cn(
-                      'grid size-8 shrink-0 place-items-center rounded-full',
-                      glyph?.badge ?? 'bg-mint',
-                    )}
+                    className={cn('grid size-8 shrink-0 place-items-center rounded-full', glyph?.badge ?? 'bg-mint')}
                   >
                     {glyph ? (
                       <FigmaIcon id={glyph.id} className="h-6 w-5" />
@@ -234,12 +228,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
                       <span className={cn('size-2 shrink-0 rounded-full', TONE_DOT[r.tone])} />
                       {r.label}
                     </span>
-                    <span
-                      className={cn(
-                        'font-kyg text-[13.5px] font-bold leading-[20.2px]',
-                        TONE_TEXT[r.tone],
-                      )}
-                    >
+                    <span className={cn('font-kyg text-[13.5px] font-bold leading-[20.2px]', TONE_TEXT[r.tone])}>
                       {r.value}
                     </span>
                   </li>

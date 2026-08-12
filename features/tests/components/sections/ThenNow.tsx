@@ -61,11 +61,7 @@ const ITEM = 'font-kyg text-[clamp(15px,1.22vw,17.5px)] font-normal leading-[1.3
  */
 export default function ThenNow({ data, ground }: { data: ThenNowSection; ground?: Ground }) {
   return (
-    <Section
-      ground={ground ?? 'ivory'}
-      className="border-b border-mine/10"
-      innerClassName="pt-[56px]"
-    >
+    <Section ground={ground ?? 'ivory'} className="border-b border-mine/10" innerClassName="pt-[56px]">
       <div className="flex flex-col gap-12">
         {/* The pair is the argument, so they go side by side as soon as they
             fit: at md each card is (688 - 24)/2 = 332 with 24 of pad, which
@@ -89,10 +85,7 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
             <ul className="flex flex-col gap-3 pt-3">
               {data.then.items.map((it, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <FigmaIcon
-                    id={GLYPH.thenItems[i] ?? GLYPH.thenItems[0]}
-                    className="-mt-0.5 h-6 w-5 shrink-0"
-                  />
+                  <FigmaIcon id={GLYPH.thenItems[i] ?? GLYPH.thenItems[0]} className="-mt-0.5 h-6 w-5 shrink-0" />
                   {/* min-w-0: a flex item's automatic minimum is its
                       min-content width, so without this a long token would
                       widen the card past its track instead of wrapping. */}
@@ -132,17 +125,11 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
               <ul className="flex flex-col gap-3 pt-3">
                 {data.now.items.map((it, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <FigmaIcon
-                      id={GLYPH.nowItems[i] ?? GLYPH.nowItems[0]}
-                      className="-mt-0.5 h-6 w-5 shrink-0"
-                    />
+                    <FigmaIcon id={GLYPH.nowItems[i] ?? GLYPH.nowItems[0]} className="-mt-0.5 h-6 w-5 shrink-0" />
                     {/* plain runs sit at 85%; the frame paints the <b> run at
                         full #faf6ef, Figtree 700. */}
                     <span
-                      className={cn(
-                        ITEM,
-                        'min-w-0 break-words text-linenw/85 [&_b]:font-bold [&_b]:text-linenw',
-                      )}
+                      className={cn(ITEM, 'min-w-0 break-words text-linenw/85 [&_b]:font-bold [&_b]:text-linenw')}
                       dangerouslySetInnerHTML={{ __html: it }}
                     />
                   </li>
@@ -159,10 +146,7 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
             and let the measure do the breaking. Restored at lg, so >=1440 is
             byte-identical. */}
         <div className="flex flex-col items-center">
-          <Closing
-            html={data.closingHtml}
-            className="mb-6 max-w-165 text-[#2d2a24] [&_br]:hidden lg:[&_br]:inline"
-          />
+          <Closing html={data.closingHtml} className="mb-6 max-w-165 text-[#2d2a24] [&_br]:hidden lg:[&_br]:inline" />
           {data.cta ? <Cta data={data.cta} className="h-15 py-0 tracking-[0.06px]" /> : null}
         </div>
       </div>

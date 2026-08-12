@@ -34,11 +34,7 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
   const { eyebrow, titleHtml, leadHtml } = data.head;
 
   return (
-    <Section
-      ground={ground ?? 'ivory'}
-      id="how-it-works-steps"
-      className="border-y border-mine/10"
-    >
+    <Section ground={ground ?? 'ivory'} id="how-it-works-steps" className="border-y border-mine/10">
       {/* ---- head: 680 column, 14px gaps ---------------------------------- */}
       <div className="mx-auto flex max-w-[680px] flex-col items-center gap-3.5 text-center">
         {eyebrow ? (
@@ -93,7 +89,7 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
               <span
                 className={cn(
                   'grid size-9 shrink-0 place-items-center rounded-full font-kyg text-[13.5px] font-bold leading-[20.2px] text-white',
-                  crimson ? 'bg-crimson' : 'bg-eden',
+                  crimson ? 'bg-crimson' : 'bg-eden'
                 )}
               >
                 {i + 1}
@@ -101,10 +97,7 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
 
               {/* 169 x 70 slot, glyph centred; frame ink averages ~39x41 */}
               <span className="mt-5 flex h-[70px] w-full items-center justify-center">
-                <Icon
-                  name={s.icon}
-                  className={cn('size-[48px]', crimson ? 'text-crimson' : 'text-eden')}
-                />
+                <Icon name={s.icon} className={cn('size-[48px]', crimson ? 'text-crimson' : 'text-eden')} />
               </span>
 
               {/* break-words: the xl track is only 139px of copy, so a long
@@ -126,10 +119,7 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
       {/* ---- closing CTA --------------------------------------------------- */}
       {data.cta ? (
         <div className="mt-[clamp(28px,3.4vw,48px)] flex flex-col items-center text-center">
-          <Cta
-            data={data.cta}
-            className="gap-2.5 px-11 py-5 text-[18px] leading-[27px] tracking-[0.004em]"
-          />
+          <Cta data={data.cta} className="gap-2.5 px-11 py-5 text-[18px] leading-[27px] tracking-[0.004em]" />
           {data.ctaNoteHtml ? (
             <p
               className="mt-4 font-kyg text-[16px] leading-6 text-fusc"

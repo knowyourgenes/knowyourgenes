@@ -79,10 +79,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
           {cols.map((col) => {
             const t = TONE[col.tone];
             return (
-              <article
-                key={col.kicker}
-                className={cn('flex flex-col overflow-hidden rounded-[28px] border', t.card)}
-              >
+              <article key={col.kicker} className={cn('flex flex-col overflow-hidden rounded-[28px] border', t.card)}>
                 {/* image slot 594x188 + floating status pill.
                     `sizes` tracks the real rendered width: 594 once the 1280 rail
                     caps out, ~42vw while the two columns share a narrower rail,
@@ -102,7 +99,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
                     <span
                       className={cn(
                         'font-kyg text-[11.5px] font-bold uppercase leading-[17.2px] tracking-[0.08em]',
-                        t.label,
+                        t.label
                       )}
                       dangerouslySetInnerHTML={{ __html: col.badge.label }}
                     />
@@ -114,7 +111,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
                   <span
                     className={cn(
                       'mb-1.5 wrap-break-word font-kyg text-[13.5px] font-bold uppercase leading-[20.2px] tracking-[0.12em]',
-                      t.label,
+                      t.label
                     )}
                   >
                     {col.kicker}
@@ -135,7 +132,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
                         <span
                           className={cn(
                             'min-w-0 wrap-break-word font-kyg text-[clamp(15px,1.22vw,17.5px)] leading-[1.371]',
-                            t.itemText,
+                            t.itemText
                           )}
                           dangerouslySetInnerHTML={{ __html: it }}
                         />

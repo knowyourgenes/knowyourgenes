@@ -37,17 +37,14 @@ export default function Testimonial({ data, ground }: { data: TestimonialSection
           at sm, where the rail is no longer the thing setting the width. */}
       <div className="mx-auto flex w-full max-w-182.5 flex-col items-center gap-1.25 pt-3 text-center sm:px-5">
         {/* 70px glyph in a 28px line box — it overhangs its own box, as in the frame */}
-        <span
-          aria-hidden
-          className="font-tst text-[clamp(46px,4.86vw,70px)] font-bold italic leading-7 text-eden"
-        >
+        <span aria-hidden className="font-tst text-[clamp(46px,4.86vw,70px)] font-bold italic leading-7 text-eden">
           &ldquo;
         </span>
 
         <blockquote
           className={cn(
             'w-full font-tst text-[clamp(28px,2.78vw,40px)] font-bold italic leading-[1.28] text-mine',
-            QUOTE_RUNS,
+            QUOTE_RUNS
           )}
           dangerouslySetInnerHTML={{ __html: data.quoteHtml }}
         />

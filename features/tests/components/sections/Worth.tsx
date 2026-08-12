@@ -126,7 +126,7 @@ export default function Worth({ data, ground }: { data: WorthSection; ground?: G
                     className={cn(
                       'font-kyg text-[13.5px] font-semibold leading-[20.2px]',
                       // the last chip is the emphasised one: #222222, not #5b564e
-                      i === data.price.chips.length - 1 ? 'text-mine' : 'text-fusc',
+                      i === data.price.chips.length - 1 ? 'text-mine' : 'text-fusc'
                     )}
                     dangerouslySetInnerHTML={{ __html: c.label }}
                   />

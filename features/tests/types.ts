@@ -24,8 +24,20 @@ export type Html = string;
 /** Risk grade shown on result chips, sample results and the legend. */
 export type RiskTone = 'good' | 'avg' | 'poor';
 
-/** Which of the five panels a card/hotspot/tab belongs to. Drives accent colour. */
-export type PanelKey = 'pcos' | 'pregnancy' | 'mood' | 'bones' | 'joints';
+/**
+ * Which panel a card/hotspot/tab belongs to. Drives accent colour, and doubles
+ * as the React key inside a section, so it must be unique within its page.
+ *
+ * This was the five Women's Health panels as a closed union. It is open now
+ * because every test page brings its own panels — seven for Eye and Kidney, ten
+ * for Skin, three for Men's. The five original keys still resolve to the exact
+ * Figma accents (see RiskCards/BodyMap); anything else falls back to the same
+ * palette, cycled by position.
+ */
+export type PanelKey = string;
+
+/** The five Women's Health panels — the keys with hand-placed Figma accents. */
+export const WOMENS_PANELS = ['pcos', 'pregnancy', 'mood', 'bones', 'joints'] as const;
 
 /** Accent family for eyebrow pills and section grounds. */
 export type Accent = 'crimson' | 'teal';
@@ -140,6 +152,27 @@ export interface ThenNowSection {
   cta?: Cta;
 }
 
+/**
+ * Hand-placed diagram geometry for one hotspot, in the 720 x 492 figure box.
+ * The frame draws each leader line by hand — no two share a slope — so a page
+ * whose panels are not the Women's Health five MUST supply its own numbers.
+ * See the note at the top of `sections/BodyMap.tsx` for what each field means.
+ */
+export interface HotspotGeom {
+  /** group bbox — x, y, w, h (also the pointer target) */
+  box: [number, number, number, number];
+  /** dot centre */
+  dot: [number, number];
+  /** leader line — x1,y1 at the text end, x2,y2 at the dot end */
+  line: [number, number, number, number];
+  /** label anchor: `x` is the RIGHT edge for a left-side label, the LEFT edge for a right-side one */
+  text: { side: 'left' | 'right'; x: number; y: number };
+  /** 18px outer disc */
+  ring: string;
+  /** 16px inner disc — also the leader-line stroke */
+  core: string;
+}
+
 /** Interactive body diagram with labelled hotspots. */
 export interface BodyMapSection {
   type: 'bodyMap';
@@ -157,6 +190,8 @@ export interface BodyMapSection {
     x: number;
     y: number;
     side: 'left' | 'right';
+    /** Diagram geometry. Required for any key outside `WOMENS_PANELS`. */
+    geom?: HotspotGeom;
   }[];
 }
 
@@ -175,9 +210,44 @@ export interface RiskCardsSection {
     bodyHtml: Html;
     warningHtml: Html;
     sample: { label: string; valueHtml: Html; tone: RiskTone; percent: number };
+    /**
+     * Badge glyph, top-right of the image. The Women's Health panels have their
+     * own Figma artwork and leave this unset; every other page names a registry
+     * icon here, because that artwork only exists for those five.
+     */
+    icon?: IconKey;
   }[];
   cta?: Cta;
   ctaNoteHtml?: Html;
+}
+
+/**
+ * Graded tiles in labelled groups — the Skin Health "what you eat, on your
+ * face" band: six food sensitivities as compact tiles, then four nutrients as
+ * cards with a line of copy. Unlike `riskCards` these carry no photography and
+ * no filter, so they stay readable six across.
+ */
+export interface MarkerGridSection {
+  type: 'markerGrid';
+  head: SectionHead;
+  groups: {
+    kicker: string;
+    /** `compact` = 6-up icon tiles · `detail` = 4-up cards with body copy. */
+    variant: 'compact' | 'detail';
+    items: {
+      icon: IconKey;
+      /** Icon badge tint. Default: teal. */
+      accent?: Accent;
+      title: string;
+      /** Gene or marker under the title, e.g. "CYP1A2". */
+      meta: string;
+      tone: RiskTone;
+      /** Pill copy — "Good" / "Average" / "Poor". */
+      toneLabel: string;
+      /** `detail` variant only. */
+      bodyHtml?: Html;
+    }[];
+  }[];
 }
 
 /** Ink-ground statistics band. */
@@ -346,6 +416,7 @@ export type Section =
   | ThenNowSection
   | BodyMapSection
   | RiskCardsSection
+  | MarkerGridSection
   | StatsSection
   | ExplainerSection
   | TimelineSection

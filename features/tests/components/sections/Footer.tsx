@@ -47,11 +47,7 @@ function BrandMark({ brand }: { brand: string }) {
         <span
           key={`${w}-${i}`}
           className={
-            i > 0 && i < last
-              ? 'font-medium'
-              : i === last && last > 0
-                ? 'font-extrabold text-java2'
-                : 'font-extrabold'
+            i > 0 && i < last ? 'font-medium' : i === last && last > 0 ? 'font-extrabold text-java2' : 'font-extrabold'
           }
         >
           {w}
@@ -100,12 +96,8 @@ export default function Footer({ data }: { data: FooterSection; ground?: Ground 
         </div>
 
         <div className="flex flex-wrap justify-between gap-x-8 gap-y-2 pt-6">
-          <span className="text-[12.5px] font-normal leading-[18.75px] text-linenw/70">
-            {data.copyright}
-          </span>
-          <span className="text-[12.5px] font-normal leading-[18.75px] text-linenw/70">
-            {data.signoff}
-          </span>
+          <span className="text-[12.5px] font-normal leading-[18.75px] text-linenw/70">{data.copyright}</span>
+          <span className="text-[12.5px] font-normal leading-[18.75px] text-linenw/70">{data.signoff}</span>
         </div>
       </div>
     </footer>

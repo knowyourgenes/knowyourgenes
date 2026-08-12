@@ -29,12 +29,7 @@ function ChannelCard({ data }: { data: Channel }) {
 
       <div className="relative flex items-start gap-4">
         {/* 52x52, r16. The eden card's badge carries no fill in the frame. */}
-        <span
-          className={cn(
-            'grid size-13 shrink-0 place-items-center rounded-[16px]',
-            inverted ? null : 'bg-mint',
-          )}
-        >
+        <span className={cn('grid size-13 shrink-0 place-items-center rounded-[16px]', inverted ? null : 'bg-mint')}>
           <ContactIcon id={data.icon} className="h-8 w-[26px]" />
         </span>
 
@@ -43,7 +38,7 @@ function ChannelCard({ data }: { data: Channel }) {
           <div
             className={cn(
               'font-kyg text-[11px] font-bold uppercase leading-[16.5px] tracking-[0.12em]',
-              inverted ? 'text-java2' : 'text-boulder',
+              inverted ? 'text-java2' : 'text-boulder'
             )}
           >
             {data.kicker}
@@ -58,7 +53,7 @@ function ChannelCard({ data }: { data: Channel }) {
                   ? 'text-[clamp(16px,1.4vw,18px)] leading-[24.8px]'
                   : 'text-[clamp(15px,1.35vw,17px)] leading-[23.4px]'
                 : 'text-[clamp(17px,1.5vw,19px)] leading-[28.5px]',
-              inverted ? 'text-linenw' : 'text-mine',
+              inverted ? 'text-linenw' : 'text-mine'
             )}
           >
             {data.title}
@@ -68,7 +63,7 @@ function ChannelCard({ data }: { data: Channel }) {
           <p
             className={cn(
               'mt-[7px] font-kyg text-[14px] font-normal leading-[19.2px]',
-              inverted ? 'text-linenw/80' : 'text-fusc',
+              inverted ? 'text-linenw/80' : 'text-fusc'
             )}
           >
             {data.body}
@@ -85,7 +80,7 @@ function ChannelCard({ data }: { data: Channel }) {
     'relative block overflow-hidden rounded-[24px] p-6 transition duration-200 sm:p-7',
     inverted
       ? 'bg-eden shadow-tst-card'
-      : 'border border-mine/10 bg-white shadow-tst-soft hover:-translate-y-px hover:shadow-tst-card',
+      : 'border border-mine/10 bg-white shadow-tst-soft hover:-translate-y-px hover:shadow-tst-card'
   );
 
   return data.href ? (

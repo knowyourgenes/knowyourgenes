@@ -80,15 +80,11 @@ export default function Timeline({ data, ground }: { data: TimelineSection; grou
         {/* callouts — aligned above their own nodes (columns 1 and 4) */}
         <div className="grid grid-cols-2 gap-x-2 sm:grid-cols-4 sm:gap-x-0">
           <div className="col-start-1 flex flex-col items-center px-1">
-            <span className={`${CALLOUT_PILL} border border-sea/25 bg-sea/10 text-sea`}>
-              {data.startLabel}
-            </span>
+            <span className={`${CALLOUT_PILL} border border-sea/25 bg-sea/10 text-sea`}>{data.startLabel}</span>
             <span className="mt-2 hidden h-5 w-px bg-sea/40 sm:block" />
           </div>
           <div className="col-start-2 flex flex-col items-center px-1 sm:col-start-4">
-            <span className={`${CALLOUT_PILL} border border-mojo/25 bg-mojo/10 text-mojo`}>
-              {data.endLabel}
-            </span>
+            <span className={`${CALLOUT_PILL} border border-mojo/25 bg-mojo/10 text-mojo`}>{data.endLabel}</span>
             <span className="mt-2 hidden h-5 w-px bg-mojo/40 sm:block" />
           </div>
         </div>

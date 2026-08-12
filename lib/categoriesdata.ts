@@ -42,10 +42,11 @@ export const CATEGORIES: TestCategory[] = [
       'Understand how your body is genetically wired, from everyday wellness to the health checks most people never think to make. One at-home saliva kit per report.',
     accent: 'wellness',
     products: [
-      // Women's Health is the first test rebuilt on the section-array layout
-      // (see lib/testsdata.ts). Men's Health, Ancestry and My Wellness were
-      // removed with the old fixed-shape renderer and return here as they are
-      // rebuilt on the new structure - one entry per rebuilt test.
+      // Women's Health is the reference build of the section-array layout (see
+      // lib/testsdata.ts); Men's, Immunity, Skin, Eye and Kidney are built on it
+      // from the copy decks in health/, one file each under lib/tests/. Ancestry
+      // and My Wellness were removed with the old fixed-shape renderer and return
+      // here as they are rebuilt - one entry per rebuilt test.
       {
         slug: 'womens-health',
         name: "Women's Health DNA",
@@ -53,6 +54,45 @@ export const CATEGORIES: TestCategory[] = [
         blurb:
           'PCOS, pregnancy loss, peripartum mood, bone density and joint risk - five answers from one at-home saliva sample.',
         href: '/categories/wellness/womens-health',
+      },
+      {
+        slug: 'mens-health',
+        name: "Men's Wellness DNA",
+        meta: '3 health checks',
+        blurb: 'Hair fall, testosterone and male fertility - three answers from one at-home saliva sample, in 7 days.',
+        href: '/categories/wellness/mens-health',
+      },
+      {
+        slug: 'immunity-health',
+        name: 'Immunity DNA',
+        meta: '24 markers',
+        blurb:
+          'Eleven infection results, eleven micronutrients and three detox readings - why you catch it first, and why it keeps you down longer.',
+        href: '/categories/wellness/immunity-health',
+      },
+      {
+        slug: 'skin-health',
+        name: 'Skin Health DNA',
+        meta: '20 markers',
+        blurb:
+          'Ten skin conditions, six food sensitivities and four nutrients - what your skin is doing years before the mirror shows it.',
+        href: '/categories/wellness/skin-health',
+      },
+      {
+        slug: 'eye-health',
+        name: 'Eye Health DNA',
+        meta: '7 health checks',
+        blurb:
+          'Glaucoma, retinopathy, cataract, myopia, eye pressure, macular degeneration and retinal occlusion - seven findings from one saliva sample.',
+        href: '/categories/wellness/eye-health',
+      },
+      {
+        slug: 'kidney-health',
+        name: 'Kidney Health DNA',
+        meta: '7 health checks',
+        blurb:
+          'Uric acid, cysts, magnesium, chronic kidney disease, protein loss and stones - twelve genetic markers for an organ with no pain nerves.',
+        href: '/categories/wellness/kidney-health',
       },
     ],
   },

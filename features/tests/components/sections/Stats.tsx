@@ -37,7 +37,6 @@ const ACCENT: Record<StatsSection['stats'][number]['tone'], string> = {
 export default function Stats({ data, ground }: { data: StatsSection; ground?: Ground }) {
   const { eyebrow, titleHtml, leadHtml } = data.head;
 
-
   return (
     <Section ground={ground ?? 'ink'}>
       <div className="flex flex-col items-center gap-9">
@@ -54,17 +53,11 @@ export default function Stats({ data, ground }: { data: StatsSection; ground?: G
           ) : null}
 
           {/* Figtree 700 51/55 ls -0.02em #faf6ef — breaks after "are". */}
-          <Heading
-            html={titleHtml}
-            className="pt-[2px] leading-[1.0784] text-linenw"
-          />
+          <Heading html={titleHtml} className="pt-[2px] leading-[1.0784] text-linenw" />
 
           {/* Figtree 400 18.5/27.8 #faf6ef@70 */}
           {leadHtml ? (
-            <Lead
-              html={leadHtml}
-              className="text-[clamp(15px,1.3vw,18.5px)] leading-[1.5027] text-linenw/70"
-            />
+            <Lead html={leadHtml} className="text-[clamp(15px,1.3vw,18.5px)] leading-[1.5027] text-linenw/70" />
           ) : null}
         </div>
 
@@ -81,10 +74,7 @@ export default function Stats({ data, ground }: { data: StatsSection; ground?: G
         </div>
 
         {/* ---- closing: Cormorant 700 italic 32/48 #faf6ef, pad-top 8 ------- */}
-        <Closing
-          html={data.closingHtml}
-          className="pt-2 text-[clamp(21px,2.3vw,32px)] text-linenw"
-        />
+        <Closing html={data.closingHtml} className="pt-2 text-[clamp(21px,2.3vw,32px)] text-linenw" />
 
         {/* ---- cta: 245x69 white pill, 4px white halo + deep drop ----------
             The 44px side padding makes the pill 245 wide, which leaves only

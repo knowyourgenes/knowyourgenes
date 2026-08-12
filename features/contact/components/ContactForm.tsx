@@ -269,10 +269,7 @@ export default function ContactForm() {
         </div>
 
         {state.status === 'error' && !Object.keys(errs).length ? (
-          <p
-            role="alert"
-            className="rounded-[14px] bg-mojo/8 px-4 py-3 font-kyg text-[14px] text-mojo"
-          >
+          <p role="alert" className="rounded-[14px] bg-mojo/8 px-4 py-3 font-kyg text-[14px] text-mojo">
             {state.message}
           </p>
         ) : null}

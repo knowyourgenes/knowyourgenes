@@ -15,13 +15,7 @@ import { Cta, Heading, Section, TONE_PILL } from '../ui';
 // 400-tall card; its four blocks are spaced by a flat 16.
 // =============================================================================
 
-export default function ReportPreview({
-  data,
-  ground,
-}: {
-  data: ReportPreviewSection;
-  ground?: Ground;
-}) {
+export default function ReportPreview({ data, ground }: { data: ReportPreviewSection; ground?: Ground }) {
   const rows = data.sample.rows;
 
   return (
@@ -90,7 +84,7 @@ export default function ReportPreview({
                 key={`${r.label}-${i}`}
                 className={cn(
                   'flex items-center justify-between gap-4 py-3',
-                  i < rows.length - 1 && 'border-b border-mine/10',
+                  i < rows.length - 1 && 'border-b border-mine/10'
                 )}
               >
                 {/* `min-w-0` so a long label wraps inside the row instead of
@@ -101,7 +95,7 @@ export default function ReportPreview({
                 <span
                   className={cn(
                     'shrink-0 rounded-full px-[10px] py-1 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
-                    TONE_PILL[r.tone],
+                    TONE_PILL[r.tone]
                   )}
                 >
                   {r.value}

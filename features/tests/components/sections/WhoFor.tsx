@@ -15,6 +15,7 @@
 import { cn } from '@/lib/utils';
 import type { Ground, WhoForSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
+import { Icon } from '../icons';
 import { Closing, CtaRow, Heading, Media, Section } from '../ui';
 
 // ---- the frame's own glyphs -------------------------------------------------
@@ -24,19 +25,11 @@ import { Closing, CtaRow, Heading, Media, Section } from '../ui';
 const EYEBROW_GLYPH = '1072-584';
 const CHIP_GLYPHS = ['1550-668', '1550-874'];
 
-/** Tile order, top-left -> bottom-right, exactly as the frame lays them out. */
-const SIGN_GLYPHS = [
-  '1681-143',
-  '1681-759',
-  '1784-143',
-  '1784-759',
-  '1886-143',
-  '1886-759',
-  '1989-143',
-  '1989-759',
-];
-
-/** Same glyphs keyed by the data file's icon name, so a reorder still resolves. */
+/** Tile glyphs keyed by the data file's icon name, in the frame's own order
+ *  (top-left -> bottom-right), so a reorder of the tiles still resolves.
+ *  A key that is NOT here belongs to another test page, whose tiles this frame
+ *  has no artwork for — those fall through to the lucide registry rather than
+ *  borrowing, say, the pregnancy-loss glyph for "you catch every cold". */
 const SIGN_GLYPH_BY_KEY: Record<string, string> = {
   calendar: '1681-143',
   baby: '1681-759',
@@ -136,11 +129,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
                 key={i}
                 className="inline-flex items-center gap-2 rounded-full border border-mine/10 bg-white px-5 py-3 shadow-tst-soft"
               >
-                <Glyph
-                  id={CHIP_GLYPHS[i] ?? ''}
-                  box="size-[22px]"
-                  className="h-[26px] w-[22px]"
-                />
+                <Glyph id={CHIP_GLYPHS[i] ?? ''} box="size-[22px]" className="h-[26px] w-[22px]" />
                 <span
                   className="font-kyg text-[15.5px] font-bold leading-[23.2px] text-[#2d2a24]"
                   dangerouslySetInnerHTML={{ __html: c.label }}
@@ -170,13 +159,17 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
             <span
               className={cn(
                 'flex size-11 shrink-0 items-center justify-center rounded-[12px]',
-                SIGN_BADGE[s.accent] ?? SIGN_BADGE.teal,
+                SIGN_BADGE[s.accent] ?? SIGN_BADGE.teal
               )}
             >
-              <FigmaIcon
-                id={SIGN_GLYPH_BY_KEY[s.icon] ?? SIGN_GLYPHS[i] ?? ''}
-                className="h-[27px] w-[23px] max-w-none shrink-0"
-              />
+              {SIGN_GLYPH_BY_KEY[s.icon] ? (
+                <FigmaIcon id={SIGN_GLYPH_BY_KEY[s.icon]!} className="h-[27px] w-[23px] max-w-none shrink-0" />
+              ) : (
+                <Icon
+                  name={s.icon}
+                  className={cn('size-[23px] shrink-0', s.accent === 'crimson' ? 'text-crimson' : 'text-eden')}
+                />
+              )}
             </span>
             {/* Figtree 400 (600 where the copy is <b>) 16.5/22.7 #2d2a24 */}
             <p

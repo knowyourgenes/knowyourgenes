@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Immunity Genetic Test | Know Your Genes</title>
+<meta name="description" content="Viral fever is going around again. But why do you always catch it first? How fast you catch something and how long it keeps you down are two different genes. One saliva sample, at home, reads 24 markers in 3 weeks: bacteria, viruses, fungi, and the nutrients your immune system runs short of. NABL-accredited lab." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&family=Hind:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          /* KYG 5-colour system (Brand Guidelines v1.0) */
+          teal:'#0E4D4B', teal2:'#15605D', teal3:'#0A3B39', tealMid:'#0E7C77', tealLight:'#25B5AB', tealBright:'#2AC3A2',
+          cream:'#FAF6EF', cream2:'#F5EDDF', mint:'#E6F4F3',
+          charcoal:'#222222', gray:'#7A7A7A',
+          /* Immunity identity accent - used sparingly, never on the logo */
+          wrose:'#3A5FCD', wrose700:'#2543A0', wrose50:'#EDF0FB', wrose100:'#D8DFF6',
+          /* result semantics */
+          good:'#2E7D5B', avg:'#C4972E', poor:'#C0432F',
+          /* warm neutral tints kept for surface depth */
+          peach:'#F8E4CC', sand:'#EDDDB8',
+          ink:'#222222', ink2:'#2D2A24', ink3:'#5B564E', ink4:'#7A7A7A',
+          line:'rgba(34,34,34,.10)',
+          dark1:'#141B1A', dark2:'#1E2B29',
+        },
+        fontFamily:{
+          sans:['Figtree','system-ui','-apple-system','Segoe UI','sans-serif'],
+          hind:['Hind','Figtree','sans-serif'],
+          serif:['"Cormorant Garamond"','Georgia','serif'],
+        },
+        boxShadow:{
+          's1':'0 1px 2px rgba(20,27,26,.04), 0 4px 14px rgba(20,27,26,.05)',
+          's2':'0 4px 16px rgba(20,27,26,.06), 0 18px 50px rgba(20,27,26,.08)',
+          's3':'0 12px 36px rgba(20,27,26,.10), 0 40px 100px rgba(20,27,26,.14)',
+        },
+        keyframes:{
+          meshDrift:{'0%':{transform:'translate3d(0,0,0) scale(1)'},'50%':{transform:'translate3d(2%,-1.5%,0) scale(1.05)'},'100%':{transform:'translate3d(-1.5%,2%,0) scale(1.02)'}},
+          floatySlow:{'0%,100%':{transform:'translateY(0) translateX(0)'},'50%':{transform:'translateY(-16px) translateX(6px)'}},
+          pulseRing:{'0%,100%':{boxShadow:'0 0 0 0 rgba(14,77,75,.4)'},'50%':{boxShadow:'0 0 0 10px rgba(14,77,75,0)'}},
+          gradShift:{'0%,100%':{backgroundPosition:'0% 50%'},'50%':{backgroundPosition:'100% 50%'}},
+          spinSlow:{to:{transform:'rotate(360deg)'}},
+          dashflow:{to:{strokeDashoffset:'-160'}},
+        },
+        animation:{
+          meshDrift:'meshDrift 26s ease-in-out infinite alternate',
+          floatySlow:'floatySlow 9s ease-in-out infinite',
+          pulseRing:'pulseRing 2.6s ease-in-out infinite',
+          gradShift:'gradShift 9s ease-in-out infinite',
+          spinSlow:'spinSlow 30s linear infinite',
+        },
+      },
+    },
+  }
+</script>
+
+<style>
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{overflow-x:hidden;position:relative;min-height:100vh;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color:#222222;font-family:'Figtree',sans-serif;}
+  ::selection{background:#0E4D4B;color:#fff;}
+  h1,h2,h3,h4{letter-spacing:-.02em;line-height:1.08;}
+  /* elegant accent italic - used sparingly, never for data */
+  .fr{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;letter-spacing:0;}
+  /* accent phrase now flows inline for one cohesive, impactful heading line */
+  .fr-b{display:inline;margin:0;}
+  h2 .fr,h1 .fr{white-space:normal;}
+
+  /* scroll progress bar */
+  .scrollbar{position:fixed;top:0;left:0;height:3px;width:0;z-index:70;background:linear-gradient(90deg,#0E4D4B,#25B5AB 60%,#3A5FCD);box-shadow:0 0 10px rgba(37,181,171,.5);transition:width .1s linear;}
+
+  /* hero highlight marker */
+  .mark{color:#2543A0;font-weight:800;background:linear-gradient(transparent 60%, rgba(58,95,205,.22) 60%);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+
+  /* interactive test filter pills */
+  .fpill{cursor:pointer;transition:.25s cubic-bezier(0.16,1,0.3,1);}
+  .fpill[data-active="true"]{background:#0E4D4B;border-color:#0E4D4B;color:#fff;box-shadow:0 8px 20px rgba(14,77,75,.24);transform:translateY(-1px);}
+  .tcard.dim{opacity:.32;filter:saturate(.6);transform:scale(.985);}
+  .tcard{transition:opacity .45s ease,filter .45s ease,transform .45s cubic-bezier(0.16,1,0.3,1),box-shadow .5s;}
+
+  .msym{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;}
+  .msym.fill{font-variation-settings:'FILL' 1,'wght' 350,'GRAD' 0,'opsz' 24;}
+
+  /* Drifting warm mesh - teal-led, whisper of accent (not overpowering) */
+  body::before{content:"";position:fixed;inset:-10vh -10vw;z-index:-2;will-change:transform;
+    background:
+      radial-gradient(42vw 52vh at 10% 14%, rgba(230,244,243,.75) 0%, transparent 60%),
+      radial-gradient(36vw 42vh at 90% 6%,  rgba(248,228,204,.42) 0%, transparent 60%),
+      radial-gradient(48vw 48vh at 82% 70%, rgba(237,240,251,.42) 0%, transparent 65%),
+      radial-gradient(40vw 40vh at 16% 90%, rgba(245,237,223,.6) 0%, transparent 60%),
+      #FAF6EF;
+    animation:meshDrift 26s ease-in-out infinite alternate;}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.36;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.13  0 0 0 0 0.13  0 0 0 0 0.13  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}}
+
+  /* Eyebrow - default carries the Immunity identity (small footprint) */
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:11px 22px 11px 17px;border-radius:999px;background:rgba(58,95,205,.1);border:1px solid rgba(58,95,205,.24);color:#2543A0;font-weight:800;font-size:14px;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 6px 18px rgba(58,95,205,.1);}
+  .eyebrow .msym{font-size:22px;color:#3A5FCD;}
+  .eyebrow--teal{background:rgba(14,77,75,.07);border-color:rgba(14,77,75,.15);color:#0E4D4B;}
+  .eyebrow--teal .msym{color:#15605D;}
+  .eyebrow--light{background:rgba(37,181,171,.14);border-color:rgba(37,181,171,.28);color:#7FE3D6;}
+  .eyebrow--light .msym{color:#7FE3D6;}
+
+  .grad-teal{background:linear-gradient(110deg,#0E4D4B 0%,#15605D 30%,#25B5AB 55%,#15605D 80%,#0E4D4B 100%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradShift 9s ease-in-out infinite;}
+  .grad-rose{background:linear-gradient(110deg,#2543A0 0%,#3A5FCD 45%,#3A5FCD 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradShift 9s ease-in-out infinite;}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .95s cubic-bezier(0.16,1,0.3,1),transform .95s cubic-bezier(0.16,1,0.3,1);transition-delay:var(--rd,0s);}
+  .reveal.is-in{opacity:1;transform:none;}
+
+  /* Flowing gradient timeline - teal-led */
+  .flow-line{background:linear-gradient(90deg, rgba(34,34,34,.05) 0%, rgba(37,181,171,0) 8%, #25B5AB 30%, #0E4D4B 48%, #25B5AB 66%, rgba(37,181,171,0) 92%, rgba(34,34,34,.05) 100%);background-size:240% 100%;animation:flowX 8s linear infinite;box-shadow:0 0 12px rgba(37,181,171,.28);}
+  @keyframes flowX{0%{background-position:240% 0}100%{background-position:0% 0}}
+  .flow-band{background:linear-gradient(90deg,rgba(14,77,75,.05),rgba(37,181,171,.16),rgba(14,77,75,.10),rgba(37,181,171,.05));background-size:240% 100%;animation:flowX 10s linear infinite;}
+
+  .helix path{stroke-dasharray:5 11;animation:dashflow 9s linear infinite;}
+
+  /* CTA - Primary Teal per guidelines, made prominent so it never blends in */
+  .btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:10px;background:#0E4D4B;color:#fff;border:1px solid #0E4D4B;padding:17px 34px;border-radius:999px;font-size:16px;font-weight:800;letter-spacing:.004em;cursor:pointer;transition:.28s cubic-bezier(0.16,1,0.3,1);box-shadow:0 14px 32px rgba(14,77,75,.32),0 0 0 4px rgba(37,181,171,.1);}
+  .btn::after{content:"";position:absolute;top:0;left:-65%;width:38%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-18deg);animation:sheen 4.6s ease-in-out infinite;pointer-events:none;}
+  @keyframes sheen{0%,58%{left:-65%}100%{left:135%}}
+  .btn:hover{background:#15605D;border-color:#15605D;transform:translateY(-3px) scale(1.02);box-shadow:0 22px 46px rgba(14,77,75,.4),0 0 0 5px rgba(37,181,171,.16);}
+  .btn .msym{font-size:20px;transition:transform .3s;position:relative;z-index:1;}
+  .btn:hover .msym{transform:translateX(4px);}
+  .btn.lg{padding:20px 44px;font-size:18px;}
+  .btn.sm{padding:11px 22px;font-size:14px;box-shadow:0 10px 24px rgba(14,77,75,.28);}
+  .btn.ghost{background:#fff;color:#0E4D4B;border-color:rgba(14,77,75,.28);box-shadow:0 6px 18px rgba(20,27,26,.08);}
+  .btn.ghost::after{display:none;}
+  .btn.ghost:hover{background:#E6F4F3;border-color:#0E4D4B;color:#0E4D4B;transform:translateY(-3px);}
+  .btn.light{background:#fff;color:#0E4D4B;border-color:#fff;box-shadow:0 14px 32px rgba(0,0,0,.22),0 0 0 4px rgba(255,255,255,.16);}
+  .btn.light::after{background:linear-gradient(100deg,transparent,rgba(14,77,75,.12),transparent);}
+  .btn.light:hover{background:#E6F4F3;border-color:#E6F4F3;}
+
+  .lift{transition:transform .5s cubic-bezier(0.16,1,0.3,1),box-shadow .5s cubic-bezier(0.16,1,0.3,1),border-color .5s;}
+  .lift:hover{transform:translateY(-6px);box-shadow:0 22px 60px rgba(20,27,26,.14);}
+
+  .gchip{position:relative;border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .gchip::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 -10px 22px rgba(0,0,0,.05);pointer-events:none;}
+
+  /* image placeholder slot (developer-swappable) */
+  .imgslot{position:relative;overflow:hidden;background:
+      linear-gradient(135deg, rgba(14,77,75,.05), rgba(37,181,171,.06));}
+  .imgslot .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#0E4D4B;opacity:.55;text-align:center;padding:14px;}
+  .imgslot .ph .msym{font-size:34px;}
+  .imgslot .ph span.t{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+  .imgslot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .6s cubic-bezier(0.16,1,0.3,1);}
+  .tcard:hover .imgslot img{transform:scale(1.05);}
+
+  /* anatomy hotspot */
+  .hot{cursor:pointer;}
+  .hot .pin{transition:transform .3s cubic-bezier(0.34,1.56,0.64,1);transform-origin:center;transform-box:fill-box;}
+  .hot:hover .pin{transform:scale(1.35);}
+  .hot .halo{transform-origin:center;transform-box:fill-box;animation:haloPulse 2.6s ease-in-out infinite;}
+  @keyframes haloPulse{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:0;transform:scale(2.1)}}
+  .hot:hover .lbl{fill:#0E4D4B;}
+
+  .fa{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(0.16,1,0.3,1);}
+  .fq.open .fa{max-height:340px;}
+  .fq.open{border-color:#0E4D4B !important;box-shadow:0 12px 30px rgba(14,77,75,.12);}
+  .fq.open .plus{transform:rotate(45deg);}
+
+  /* smooth infinite logo carousel */
+  .mq{overflow:hidden;position:relative;-webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+  .mq-track{display:flex;width:max-content;animation:mqScroll 34s linear infinite;}
+  .mq:hover .mq-track{animation-play-state:paused;}
+  .mq-item{margin-right:18px;flex:0 0 auto;}
+  @keyframes mqScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(250,246,239,.94);backdrop-filter:blur(12px);border-top:1px solid rgba(34,34,34,.10);padding:11px 18px;display:none;align-items:center;justify-content:space-between;gap:14px;}
+  @media(max-width:640px){.sticky-cta{display:flex;} body{padding-bottom:74px;}}
+</style>
+</head>
+<body class="bg-cream text-ink">
+<div class="scrollbar" id="scrollbar"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-50 bg-cream/85 backdrop-blur-md border-b border-line">
+  <nav class="max-w-[1280px] mx-auto px-5 md:px-8 py-3.5 flex items-center justify-between">
+    <!-- Logo stays fully on-brand teal - never recoloured -->
+    <a href="#" class="text-[21px] tracking-tight text-teal"><span class="font-extrabold">Know</span><span class="font-medium">Your</span><span class="font-extrabold">Genes</span></a>
+    <ul class="hidden md:flex gap-7 text-[14.5px] font-medium text-ink3">
+      <li><a href="#who" class="hover:text-teal transition-colors">Who It's For</a></li>
+      <li><a href="#tests" class="hover:text-teal transition-colors">The 11 Results</a></li>
+      <li><a href="#how" class="hover:text-teal transition-colors">How It Works</a></li>
+      <li><a href="#faq" class="hover:text-teal transition-colors">FAQ</a></li>
+    </ul>
+    <a href="#final" class="btn sm">Check My Immunity</a>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden pt-16 pb-20 md:pt-20 md:pb-24">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-12 md:gap-16 items-center relative z-[1]">
+    <div class="reveal">
+      <div class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-3 pr-4 py-2 mb-6 shadow-s1">
+        <span class="w-2 h-2 rounded-full bg-wrose animate-pulse"></span>
+        <span class="text-[11.5px] font-bold tracking-[.14em] uppercase text-wrose700">Genetic Testing · Immunity</span>
+      </div>
+      <h1 class="text-[clamp(40px,5.6vw,64px)] font-extrabold leading-[1.08] mb-5">Viral fever is going around again. <span class="fr font-semibold grad-rose">But why do you always catch it first?</span></h1>
+      <p class="mb-2 max-w-[520px]"><span class="mark text-[clamp(22px,2.6vw,28px)] font-extrabold leading-tight">24 markers. 1 saliva sample.</span></p>
+      <p class="text-[19px] text-ink3 mb-7 max-w-[500px]">How quickly you catch something, and how long it keeps you down, are two different genes. This test reads both.</p>
+      <div class="flex flex-wrap gap-3">
+        <a href="#final" class="btn">Check My Immunity <span class="msym">arrow_forward</span></a>
+        <a href="#tests" class="btn ghost">See What We Check <span class="msym">south</span></a>
+      </div>
+      <div class="flex flex-wrap gap-2.5 mt-8">
+        <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-2 pr-4 py-2 shadow-s1 lift"><span class="w-8 h-8 rounded-full bg-mint flex items-center justify-center"><span class="msym text-[20px] text-teal">water_drop</span></span><span class="text-[14.5px] font-bold text-ink2">No needles</span></span>
+        <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-2 pr-4 py-2 shadow-s1 lift"><span class="w-8 h-8 rounded-full bg-wrose50 flex items-center justify-center"><span class="msym fill text-[20px] text-wrose">verified</span></span><span class="text-[14.5px] font-bold text-ink2">NABL lab</span></span>
+        <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full pl-2 pr-4 py-2 shadow-s1 lift"><span class="w-8 h-8 rounded-full bg-mint flex items-center justify-center"><span class="msym text-[20px] text-teal">schedule</span></span><span class="text-[14.5px] font-bold text-ink2">Results in 3 weeks</span></span>
+      </div>
+      <p class="fr text-[22px] text-teal2 mt-7">Part of the answer has been in your genes all along.</p>
+    </div>
+
+    <div class="relative reveal" style="--rd:.12s">
+      <div class="absolute -inset-6 rounded-[220px] bg-gradient-to-br from-mint via-cream2/60 to-wrose50/60 blur-2xl -z-[1]"></div>
+      <div class="relative">
+        <div class="imgslot w-full aspect-[4/5] rounded-t-[200px] rounded-b-[26px] shadow-s3">
+          <div class="ph"><span class="msym">add_photo_alternate</span><span class="t">Hero visual</span></div>
+          <img src="Visual Assets/Immunity - Hero.png" alt="A person healthy and getting on with an ordinary day" onerror="this.remove()">
+        </div>
+        <div class="absolute -bottom-6 -left-4 md:-left-6 bg-white/95 backdrop-blur border border-line rounded-[22px] p-5 shadow-s3 w-[256px] animate-floatySlow z-10">
+          <div class="text-[10px] font-bold tracking-[.14em] uppercase text-ink4 mb-3 flex items-center gap-1.5"><span class="msym fill text-[17.5px] text-teal">labs</span>Sample results</div>
+          <div class="flex items-center justify-between py-[7px] border-b border-line text-[13.5px]"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-avg"></span>Bacterial infection</span><b class="text-avg">Average</b></div>
+          <div class="flex items-center justify-between py-[7px] border-b border-line text-[13.5px]"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-poor"></span>Respiratory viruses</span><b class="text-poor">Poor</b></div>
+          <div class="flex items-center justify-between py-[7px] border-b border-line text-[13.5px]"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-good"></span>Fungal infection</span><b class="text-good">Good</b></div>
+          <div class="flex items-center justify-between py-[7px] border-b border-line text-[13.5px]"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-avg"></span>Vitamin D</span><b class="text-avg">Average</b></div>
+          <div class="flex items-center justify-between py-[7px] text-[13.5px]"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-good"></span>Detox</span><b class="text-good">Good</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO IT'S FOR ============ -->
+<section id="who" class="py-[92px]" style="background:linear-gradient(180deg,#FAF6EF,#F1F7F6)">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[720px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="msym">diversity_1</span>Who should take this test</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Anyone can take this test. But if any of this sounds like you, <span class="fr font-semibold grad-rose">don't wait.</span></h2>
+    </div>
+
+    <!-- top: portrait placeholder + intro -->
+    <div class="grid md:grid-cols-[0.85fr_1.15fr] gap-8 items-stretch mb-8">
+      <div class="imgslot rounded-[26px] min-h-[280px] border border-line shadow-s1 reveal">
+        <div class="ph"><span class="msym">add_photo_alternate</span><span class="t">Lifestyle portrait</span></div>
+        <img src="Visual Assets/Immunity - Who.png" alt="A person going about a normal, healthy day" onerror="this.remove()">
+      </div>
+      <div class="flex flex-col justify-center reveal" style="--rd:.08s">
+        <span class="fr text-[clamp(21px,2.5vw,27px)] text-teal2 mb-3">This test is for you if…</span>
+        <p class="text-[18.5px] text-ink3 leading-relaxed">Your genes don't change, so you only ever need to do this once. The answers stay true for the rest of your life. Some people just have more reason to get them early, and one line below is usually enough to know if that's you.</p>
+        <div class="mt-6 flex flex-wrap gap-2.5">
+          <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full px-5 py-3 text-[15.5px] font-bold text-ink2 shadow-s1"><span class="msym text-[22px] text-teal">schedule</span>Test once, for life</span>
+          <span class="inline-flex items-center gap-2 bg-white border border-line rounded-full px-5 py-3 text-[15.5px] font-bold text-ink2 shadow-s1"><span class="msym text-[22px] text-teal">volunteer_activism</span>Preventive, not reactive</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- organised reason tiles -->
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-5 shadow-s1 lift reveal">
+        <span class="w-11 h-11 rounded-xl bg-wrose50 shrink-0 flex items-center justify-center"><span class="msym text-[23px] text-wrose">sick</span></span>
+        <p class="text-[16.5px] text-ink2 leading-snug self-center">You catch <b class="font-semibold">every cold or flu</b> that goes around your home or office.</p>
+      </div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-5 shadow-s1 lift reveal">
+        <span class="w-11 h-11 rounded-xl bg-mint shrink-0 flex items-center justify-center"><span class="msym text-[23px] text-teal">hourglass_bottom</span></span>
+        <p class="text-[16.5px] text-ink2 leading-snug self-center">You get <b class="font-semibold">sick more often</b> than the people around you, or recover more slowly.</p>
+      </div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-5 shadow-s1 lift reveal">
+        <span class="w-11 h-11 rounded-xl bg-wrose50 shrink-0 flex items-center justify-center"><span class="msym text-[23px] text-wrose">family_history</span></span>
+        <p class="text-[16.5px] text-ink2 leading-snug self-center">Autoimmune conditions or <b class="font-semibold">frequent infections run in your family.</b></p>
+      </div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-5 shadow-s1 lift reveal">
+        <span class="w-11 h-11 rounded-xl bg-mint shrink-0 flex items-center justify-center"><span class="msym text-[23px] text-teal">eco</span></span>
+        <p class="text-[16.5px] text-ink2 leading-snug self-center">You eat mostly <b class="font-semibold">plant-based</b>, which can affect Vitamin B12 and iron levels.</p>
+      </div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-5 shadow-s1 lift reveal">
+        <span class="w-11 h-11 rounded-xl bg-wrose50 shrink-0 flex items-center justify-center"><span class="msym text-[23px] text-wrose">healing</span></span>
+        <p class="text-[16.5px] text-ink2 leading-snug self-center">You've had a <b class="font-semibold">serious illness</b> and want to understand what left you vulnerable.</p>
+      </div>
+      <div class="flex gap-4 bg-white border border-line rounded-2xl p-5 shadow-s1 lift reveal">
+        <span class="w-11 h-11 rounded-xl bg-mint shrink-0 flex items-center justify-center"><span class="msym text-[23px] text-teal">verified_user</span></span>
+        <p class="text-[16.5px] text-ink2 leading-snug self-center">You feel completely fine and simply want a <b class="font-semibold">genetic baseline.</b></p>
+      </div>
+    </div>
+
+    <div class="text-center mt-12 flex flex-col items-center reveal">
+      <p class="fr text-[clamp(21px,2.7vw,30px)] text-ink2 max-w-[640px] mb-6">Find out now and you can prepare. Find out later and you are already recovering.</p>
+      <div class="flex flex-wrap gap-3 justify-center">
+        <a href="#final" class="btn">Check My Immunity <span class="msym">arrow_forward</span></a>
+        <a href="#tests" class="btn ghost">Learn More <span class="msym">south</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY TEST · REACTIVE VS PREVENTIVE ============ -->
+<section id="why" class="relative overflow-hidden py-[92px] bg-white/70 border-y border-line">
+  <img src="assets/helix-teal.png" alt="" class="pointer-events-none select-none absolute -bottom-16 -right-12 w-[300px] md:w-[400px] opacity-[.13] rotate-[8deg]" onerror="this.remove()">
+  <div class="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[720px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="msym">balance</span>Reactive vs Preventive</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">You always know when you fall ill. <span class="fr-b fr font-semibold grad-teal">You have never known why.</span></h2>
+    </div>
+
+    <!-- editorial visual + copy -->
+    <div class="grid md:grid-cols-2 gap-10 items-center mb-14">
+      <div class="relative reveal">
+        <div class="imgslot rounded-[28px] aspect-[5/4] md:aspect-[4/5] border border-line shadow-s2">
+          <div class="ph"><span class="msym">shield</span><span class="t">Editorial visual</span></div>
+          <img src="Visual Assets/Immunity - Reactive.png" alt="A shield holding, and a shield with a gap" onerror="this.remove()">
+        </div>
+        <div class="absolute z-20 -top-3 -left-3 bg-white border border-line rounded-full pl-3 pr-5 py-2.5 shadow-s2 flex items-center gap-2 text-[15px] font-bold text-wrose700 animate-floatySlow"><span class="msym fill text-[20px] text-wrose">shield</span>Know the weak points</div>
+        <div class="absolute z-20 -bottom-3 -right-3 bg-teal text-cream rounded-full pl-3 pr-5 py-2.5 shadow-s2 flex items-center gap-2 text-[15px] font-bold"><span class="msym fill text-[20px] text-tealBright">bolt</span>Reinforce, in advance</div>
+      </div>
+      <div class="reveal" style="--rd:.08s">
+        <div class="flex flex-col gap-4 mb-6">
+          <div class="flex gap-3.5">
+            <span class="w-14 h-14 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[28px] text-wrose">sick</span></span>
+            <div><div class="text-[21px] font-extrabold text-ink leading-tight">Every cold</div><div class="text-[17px] text-ink3 leading-snug">that goes around, you catch.</div></div>
+          </div>
+          <div class="flex gap-3.5">
+            <span class="w-14 h-14 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[28px] text-wrose">airline_seat_flat</span></span>
+            <div><div class="text-[21px] font-extrabold text-ink leading-tight">The tiredness</div><div class="text-[17px] text-ink3 leading-snug">you never connect to iron.</div></div>
+          </div>
+          <div class="flex gap-3.5">
+            <span class="w-14 h-14 rounded-2xl bg-wrose50 flex items-center justify-center shrink-0"><span class="msym text-[28px] text-wrose">hourglass_bottom</span></span>
+            <div><div class="text-[21px] font-extrabold text-ink leading-tight">The slow recovery</div><div class="text-[17px] text-ink3 leading-snug">you just put down to bad luck.</div></div>
+          </div>
+        </div>
+        <p class="text-[18px] text-ink3 leading-relaxed">Most people find out where they are weak only after they have already been ill. Or years later, when a routine blood test happens to catch a deficiency that was there the whole time.</p>
+        <div class="mt-6 rounded-2xl bg-wrose50 border border-wrose100 p-6">
+          <p class="fr text-[clamp(20px,2.3vw,25px)] text-wrose700 leading-snug">Your immune system was built from your genes, and it has been working every day since you were born. <b class="not-italic font-sans font-bold text-ink">This test shows you which parts of it are strong, and which parts could use help.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- then vs now - colour contrast -->
+    <div class="grid md:grid-cols-2 gap-6 items-stretch">
+      <div class="rounded-[26px] p-9 border border-line bg-cream reveal">
+        <div class="w-14 h-14 rounded-2xl bg-ink/[.06] flex items-center justify-center mb-5"><span class="msym text-[27px] text-ink4">visibility_off</span></div>
+        <div class="text-[12.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-2">Reactive</div>
+        <h3 class="text-[23px] font-bold mb-5">You wait to fall ill</h3>
+        <ul class="flex flex-col gap-3">
+          <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-ink4 shrink-0">remove</span>An illness finds your weak spot before you do.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-ink4 shrink-0">remove</span>You are low on iron or Vitamin D for years without ever knowing it.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-ink4 shrink-0">remove</span>You put the tiredness, the slow recovery and the constant colds down to bad luck.</li>
+        </ul>
+      </div>
+      <div class="rounded-[26px] p-9 bg-teal text-cream reveal relative overflow-hidden" data-rd=".08s">
+        <div class="absolute -top-16 -right-16 w-52 h-52 rounded-full bg-tealBright/15 blur-2xl"></div>
+        <div class="relative">
+          <div class="w-14 h-14 rounded-2xl bg-white/12 flex items-center justify-center mb-5"><span class="msym fill text-[27px] text-tealBright">shield</span></div>
+          <div class="text-[12.5px] font-bold tracking-[.12em] uppercase text-tealBright mb-2">Preventive</div>
+          <h3 class="text-[23px] font-bold mb-5 text-cream">You know your weak spots</h3>
+          <ul class="flex flex-col gap-3">
+            <li class="flex gap-3 text-[17.5px] text-cream/85 leading-snug"><span class="msym fill text-[20px] text-tealBright shrink-0">check_circle</span>You test once, and know which of the 11 results are weaker for you.</li>
+            <li class="flex gap-3 text-[17.5px] text-cream/85 leading-snug"><span class="msym fill text-[20px] text-tealBright shrink-0">check_circle</span><b class="text-cream">You fix the gaps, a low vitamin or a weak spot, before an illness finds them.</b></li>
+            <li class="flex gap-3 text-[17.5px] text-cream/85 leading-snug"><span class="msym fill text-[20px] text-tealBright shrink-0">check_circle</span>No clinic. No needles. Only preventive care.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-12 flex flex-col items-center reveal">
+      <p class="fr text-[clamp(21px,2.7vw,30px)] text-ink2 max-w-[660px] mb-6">Your immune system is only as strong as its weakest part. This tells you which part that is.</p>
+      <a href="#final" class="btn">Check My Immunity <span class="msym">arrow_forward</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BODY MAP ============ -->
+<section class="py-[88px]" style="background:linear-gradient(180deg,#E9F4F3 0%,#FAF6EF 100%)">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[680px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow mb-4" style="font-size:15.5px"><span class="msym">target</span>Where we look</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Your immune system isn't one organ. <span class="fr-b fr font-semibold grad-teal">It's six places, working together.</span></h2>
+      <p class="text-[18.5px] text-ink3 mt-3.5">Tap any part of the body to see what we check there.</p>
+    </div>
+
+    <div class="flex justify-center reveal">
+      <div class="relative w-full max-w-[720px]" style="aspect-ratio:820/560">
+        <!-- developer-swappable 3D body render (drop PNG at assets/body-immunity-3d.png) -->
+        <img src="assets/body-immunity-3d.png" alt="Body 3D render" class="absolute z-[1] pointer-events-none" style="left:30.5%;top:5.4%;width:39%" onerror="this.remove()">
+        <!-- tappable pins overlay -->
+        <svg class="absolute inset-0 w-full h-full z-[2]" viewBox="0 0 820 560" role="img" aria-label="Body map of the immune network" style="overflow:visible">
+          <defs>
+            <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+          </defs>
+          <ellipse cx="410" cy="512" rx="92" ry="12" fill="#0E4D4B" opacity=".1" filter="url(#soft)"/>
+          <g class="hot" tabindex="0" data-title="Barriers · Skin &amp; mucous membranes" data-tip="Your skin and mucous membranes are the first wall a pathogen has to get through, before your immune system is even involved.">
+            <line x1="398" y1="72" x2="248" y2="72" stroke="#0E4D4B" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="410" cy="72" r="22" fill="transparent"/>
+            <circle class="halo" cx="410" cy="72" r="10" fill="#0E4D4B" opacity=".35"/><circle class="pin" cx="410" cy="72" r="9" fill="#0E4D4B"/><circle cx="410" cy="72" r="3.2" fill="#fff"/>
+            <text class="lbl" x="236" y="68" text-anchor="end" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Barriers</text>
+            <text x="236" y="89" text-anchor="end" font-family="Figtree" font-size="16" fill="#5B564E">Skin &amp; mucous membranes</text>
+          </g>
+          <g class="hot" tabindex="0" data-title="Lymph Nodes · Bacterial &amp; fungal response" data-tip="Where immune cells coordinate their response to bacteria and fungi that make it past your barriers. Genes: MYD88, TLR4, CLEC7A.">
+            <line x1="466" y1="146" x2="584" y2="132" stroke="#15605D" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="452" cy="148" r="22" fill="transparent"/>
+            <circle class="halo" cx="452" cy="148" r="10" fill="#15605D" opacity=".35"/><circle class="pin" cx="452" cy="148" r="9" fill="#15605D"/><circle cx="452" cy="148" r="3.2" fill="#fff"/>
+            <text class="lbl" x="596" y="128" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Lymph Nodes</text>
+            <text x="596" y="149" font-family="Figtree" font-size="16" fill="#5B564E">Bacterial &amp; fungal response</text>
+          </g>
+          <g class="hot" tabindex="0" data-title="Lungs · Respiratory &amp; SARS-CoV" data-tip="How your genes shape respiratory response to viral infection, including COVID-19 severity. Genes: IL6, CCL2, MBL, ACE2.">
+            <line x1="380" y1="196" x2="248" y2="188" stroke="#3A5FCD" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="394" cy="198" r="22" fill="transparent"/>
+            <circle class="halo" cx="394" cy="198" r="10" fill="#3A5FCD" opacity=".4"/><circle class="pin" cx="394" cy="198" r="9" fill="#3A5FCD"/><circle cx="394" cy="198" r="3.2" fill="#fff"/>
+            <text class="lbl" x="236" y="194" text-anchor="end" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Lungs</text>
+            <text x="236" y="215" text-anchor="end" font-family="Figtree" font-size="16" fill="#5B564E">Colds, flu and COVID</text>
+          </g>
+          <g class="hot" tabindex="0" data-title="Liver · Detoxification" data-tip="Phase 1 and Phase 2 detox: how efficiently your liver clears toxins that would otherwise burden your immune system. Genes: CYP1A1, CYP1B1, UGT1A1, GSTP1 and more.">
+            <line x1="440" y1="266" x2="584" y2="290" stroke="#0E7C77" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="426" cy="264" r="22" fill="transparent"/>
+            <circle class="halo" cx="426" cy="264" r="10" fill="#25B5AB" opacity=".4"/><circle class="pin" cx="426" cy="264" r="9" fill="#0E7C77"/><circle cx="426" cy="264" r="3.2" fill="#fff"/>
+            <text class="lbl" x="596" y="286" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Liver</text>
+            <text x="596" y="307" font-family="Figtree" font-size="16" fill="#5B564E">Detox capacity</text>
+          </g>
+          <g class="hot" tabindex="0" data-title="Gut · Inflammatory response" data-tip="A large share of your immune tissue lives along your gut lining. Genes here shape your tendency toward inflammatory bowel conditions. Genes: NOD2, ATG16L1.">
+            <line x1="382" y1="326" x2="248" y2="334" stroke="#0E7C77" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="396" cy="324" r="22" fill="transparent"/>
+            <circle class="halo" cx="396" cy="324" r="10" fill="#25B5AB" opacity=".4"/><circle class="pin" cx="396" cy="324" r="9" fill="#0E7C77"/><circle cx="396" cy="324" r="3.2" fill="#fff"/>
+            <text class="lbl" x="236" y="328" text-anchor="end" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Gut</text>
+            <text x="236" y="349" text-anchor="end" font-family="Figtree" font-size="16" fill="#5B564E">Inflammatory tendency</text>
+          </g>
+          <g class="hot" tabindex="0" data-title="Bone Marrow · Where defenders are made" data-tip="Where your immune cells and red blood cells are made. Shapes how you handle Iron, Vitamin B12 and Magnesium, all essential for immune cell production.">
+            <line x1="440" y1="410" x2="584" y2="424" stroke="#2543A0" stroke-width="2" stroke-dasharray="4 3"/>
+            <circle class="hit" cx="426" cy="408" r="22" fill="transparent"/>
+            <circle class="halo" cx="426" cy="408" r="10" fill="#3A5FCD" opacity=".4"/><circle class="pin" cx="426" cy="408" r="9" fill="#2543A0"/><circle cx="426" cy="408" r="3.2" fill="#fff"/>
+            <text class="lbl" x="596" y="420" font-family="Figtree" font-size="21" font-weight="800" fill="#222">Bone Marrow</text>
+            <text x="596" y="441" font-family="Figtree" font-size="16" fill="#5B564E">Where defenders are made</text>
+          </g>
+        </svg>
+        <div id="bodyTip" class="absolute z-30 opacity-0 pointer-events-none transition-opacity duration-200" style="max-width:270px;transform:translate(-50%,-100%)">
+          <div class="bg-white border border-line rounded-2xl shadow-s3 p-4">
+            <div class="text-[12px] font-bold tracking-[.07em] uppercase text-teal2 mb-1.5" data-tt="title"></div>
+            <div class="text-[14px] text-ink3 leading-snug" data-tt="body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE 11 TESTS ============ -->
+<section id="tests" class="py-[92px]">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[720px] mx-auto text-center mb-10 reveal">
+      <div class="eyebrow mb-4"><span class="msym">checklist</span>What we check</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Eleven answers about how<br><span class="fr font-semibold grad-teal">your body handles an infection.</span></h2>
+      <p class="text-[18.5px] text-ink3 mt-3.5">Each one is graded the same simple way: Good, Average or Poor.</p>
+    </div>
+
+    <!-- interactive filter -->
+    <div class="flex flex-wrap justify-center gap-2.5 mb-10 reveal" id="testFilter">
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3" data-filter="all" data-active="true">All eleven</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3 inline-flex items-center gap-2" data-filter="bacterial"><span class="w-2 h-2 rounded-full bg-teal"></span>Bacterial</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3 inline-flex items-center gap-2" data-filter="viral"><span class="w-2 h-2 rounded-full bg-wrose"></span>Viral</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3 inline-flex items-center gap-2" data-filter="fungal"><span class="w-2 h-2 rounded-full bg-tealMid"></span>Fungal</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3 inline-flex items-center gap-2" data-filter="parasitic"><span class="w-2 h-2 rounded-full bg-teal2"></span>Parasitic</button>
+      <button class="fpill bg-white border border-line rounded-full px-5 py-2.5 text-[13.5px] font-bold text-ink3 inline-flex items-center gap-2" data-filter="inflammatory"><span class="w-2 h-2 rounded-full bg-tealLight"></span>Inflammatory</button>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-6">
+
+      <article id="test-bacterial" data-cat="bacterial" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#E6F4F3,#CFEAE5)">
+          <div class="ph" style="color:#0E4D4B"><span class="msym">add_photo_alternate</span><span class="t">Bacterial visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#0E4D4B">Malaria · TB · Bacteremia · Pneumococcal</span>
+          <img src="Visual Assets/Immunity - Bacterial.png" alt="Bacterial Infection" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#0E4D4B">coronavirus</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#0E4D4B,#25B5AB)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#0E4D4B">Bacterial Infection · Gene MYD88</div>
+          <h3 class="text-[23px] font-bold mb-3">How fast do I respond to bacteria?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">How quickly your immune system recognizes and responds to fast-moving bacterial infections. <b class="text-ink">MYD88 sits at the centre of that alarm.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>These infections move fast. Hours matter.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-avg mb-2">Average · Medium</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-avg" style="width:54%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-gramneg" data-cat="bacterial" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.04s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#E9F2F1,#D3E6E3)">
+          <div class="ph" style="color:#15605D"><span class="msym">add_photo_alternate</span><span class="t">Gram-negative visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#15605D">Pathogen recognition</span>
+          <img src="Visual Assets/Immunity - Gram Negative.png" alt="Gram-Negative Bacteria" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#15605D">travel_explore</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#15605D,#0A3B39)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#15605D">Gram-Negative Bacteria · Gene TLR4</div>
+          <h3 class="text-[23px] font-bold mb-3">Does my body spot gram-negative bacteria?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">How well your innate immune system recognizes and mounts a response to gram-negative bacteria. <b class="text-ink">TLR4 is the receptor that does the spotting.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>Your body cannot fight what it does not spot.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-good mb-2">Good · Low</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-good" style="width:20%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-parasitic" data-cat="parasitic" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.08s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#E4F4F1,#CDEDE7)">
+          <div class="ph" style="color:#0E7C77"><span class="msym">add_photo_alternate</span><span class="t">Parasitic visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#0E7C77">Malaria resistance</span>
+          <img src="Visual Assets/Immunity - Parasitic.png" alt="Parasitic Infection" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#0E7C77">bloodtype</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#0E7C77,#25B5AB)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#0E7C77">Parasitic Infection · Gene HBB</div>
+          <h3 class="text-[23px] font-bold mb-3">Do my red blood cells resist malaria?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">Genetic resistance in your red blood cells against the malaria parasite, one of the oldest selection pressures on human genes. <b class="text-ink">HBB carries that signal.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>Still a live risk across much of India.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-good mb-2">Good · Low</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-good" style="width:20%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-hiv" data-cat="viral" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.12s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#EDF0FB,#D8DFF6)">
+          <div class="ph" style="color:#2543A0"><span class="msym">add_photo_alternate</span><span class="t">HIV visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#3A5FCD">Viral load control</span>
+          <img src="Visual Assets/Immunity - HIV.png" alt="HIV" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#3A5FCD">shield_with_heart</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#3A5FCD,#2543A0)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#3A5FCD">HIV · HCP5, HLA-C</div>
+          <h3 class="text-[23px] font-bold mb-3">How well would I control viral load?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">How effectively your body controls viral load if exposed, which shapes how quickly illness could progress. <b class="text-ink">HCP5 and HLA-C set that control.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>How fast your body reacts changes how the illness unfolds.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-poor mb-2">Poor · High</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-poor" style="width:85%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-respiratory" data-cat="viral" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.16s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#EDF0FB,#D8DFF6)">
+          <div class="ph" style="color:#2543A0"><span class="msym">add_photo_alternate</span><span class="t">Respiratory visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#3A5FCD">Including COVID-19</span>
+          <img src="Visual Assets/Immunity - Respiratory.png" alt="Respiratory Disease" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#3A5FCD">pulmonology</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#3A5FCD,#2543A0)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#3A5FCD">Respiratory Disease · Gene IL6</div>
+          <h3 class="text-[23px] font-bold mb-3">Could my immune system overreact?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">How likely your immune system is to overreact to respiratory viruses, sometimes called a cytokine storm. <b class="text-ink">IL6 expression drives that response.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>Overreaction can be as damaging as the virus.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-poor mb-2">Poor · High</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-poor" style="width:85%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-sars" data-cat="viral" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.20s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#E4F4F2,#C9EAE4)">
+          <div class="ph" style="color:#0E7C77"><span class="msym">add_photo_alternate</span><span class="t">SARS-CoV visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#25B5AB">Susceptibility</span>
+          <img src="Visual Assets/Immunity - SARS.png" alt="SARS-CoV Infection" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#25B5AB">coronavirus</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#25B5AB,#0E7C77)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#25B5AB">SARS-CoV Infection · CCL2, MBL</div>
+          <h3 class="text-[23px] font-bold mb-3">How susceptible am I to SARS-family viruses?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">Genetic susceptibility to infection from the SARS-CoV family of viruses, separate from how severely you'd respond. <b class="text-ink">CCL2 and MBL set that exposure risk.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>Catching something and being badly affected are two different things.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-poor mb-2">Poor · High</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-poor" style="width:85%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-fungal" data-cat="fungal" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.24s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#E4F4F1,#CDEDE7)">
+          <div class="ph" style="color:#0E7C77"><span class="msym">add_photo_alternate</span><span class="t">Fungal visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#0E7C77">Pattern recognition</span>
+          <img src="Visual Assets/Immunity - Fungal.png" alt="Fungal Infection" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#0E7C77">psychiatry</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#0E7C77,#25B5AB)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#0E7C77">Fungal Infection · Gene CLEC7A</div>
+          <h3 class="text-[23px] font-bold mb-3">How well do I recognize fungal invaders?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">How well your body spots and clears fungal infections, which thrive in humid Indian conditions. <b class="text-ink">CLEC7A does that pattern recognition.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>Humidity and heat raise everyday exposure.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-good mb-2">Good · Low</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-good" style="width:20%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-ibd" data-cat="inflammatory" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.28s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#E4F4F2,#C9EAE4)">
+          <div class="ph" style="color:#0E7C77"><span class="msym">add_photo_alternate</span><span class="t">Inflammatory Bowel visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#25B5AB">Colon &amp; small intestine</span>
+          <img src="Visual Assets/Immunity - IBD.png" alt="Inflammatory Bowel Risk" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#25B5AB">gastroenterology</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#25B5AB,#0E7C77)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#25B5AB">Inflammatory Bowel Risk · NOD2, ATG16L1</div>
+          <h3 class="text-[23px] font-bold mb-3">Is my gut prone to inflammation?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">Genetic tendency toward inflammatory conditions of the gut, similar to Crohn's disease. <b class="text-ink">NOD2 and ATG16L1 govern gut-lining immunity.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>A large share of immune tissue lives in your gut.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-avg mb-2">Average · Medium</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-avg" style="width:54%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-asthma" data-cat="inflammatory" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.32s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#E6F4F3,#CFEAE5)">
+          <div class="ph" style="color:#0E4D4B"><span class="msym">add_photo_alternate</span><span class="t">Asthma visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#0E4D4B">Allergic response</span>
+          <img src="Visual Assets/Immunity - Asthma.png" alt="Asthma" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#0E4D4B">air</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#0E4D4B,#25B5AB)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#0E4D4B">Asthma · Gene IL13</div>
+          <h3 class="text-[23px] font-bold mb-3">Do I run a high allergic response?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">A genetic tendency toward elevated allergic response, which raises susceptibility to asthma. <b class="text-ink">IL13 sits behind that reaction.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>Air quality makes this a daily exposure.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-avg mb-2">Average · Medium</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-avg" style="width:54%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-covid" data-cat="viral" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.36s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#EDF0FB,#D8DFF6)">
+          <div class="ph" style="color:#2543A0"><span class="msym">add_photo_alternate</span><span class="t">COVID-19 Severity visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#3A5FCD">Disease severity</span>
+          <img src="Visual Assets/Immunity - COVID.png" alt="COVID-19 Severity" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#3A5FCD">monitor_heart</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#3A5FCD,#2543A0)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#3A5FCD">COVID-19 Severity · Gene ACE2</div>
+          <h3 class="text-[23px] font-bold mb-3">How severely might my body respond?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">How severely your body may respond if infected with COVID-19, rather than how likely you are to catch it. <b class="text-ink">ACE2 is the receptor that matters most here.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>This is about how hard it hits, not whether you catch it.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-poor mb-2">Poor · High</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-poor" style="width:85%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="test-inflammation" data-cat="inflammatory" class="tcard w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white border border-line rounded-[26px] overflow-hidden shadow-s1 lift reveal scroll-mt-24" style="--rd:.40s">
+        <div class="imgslot h-[180px]" style="background:linear-gradient(135deg,#E9F2F1,#D3E6E3)">
+          <div class="ph" style="color:#15605D"><span class="msym">add_photo_alternate</span><span class="t">General Inflammation visual</span></div>
+          <span class="absolute bottom-2.5 left-3 z-[2] text-[10px] font-bold tracking-[.1em] uppercase" style="color:#15605D">TNF expression</span>
+          <img src="Visual Assets/Immunity - Inflammation.png" alt="General Inflammation" onerror="this.remove()">
+          <span class="absolute top-3 right-3 w-11 h-11 gchip z-[2]" style="background:#fff"><span class="msym fill text-[23px]" style="color:#15605D">local_fire_department</span></span>
+        </div>
+        <div class="h-1 w-full" style="background:linear-gradient(90deg,#15605D,#0A3B39)"></div>
+        <div class="p-7">
+          <div class="text-[11px] font-bold tracking-[.1em] uppercase mb-2" style="color:#15605D">General Inflammation · Gene TNF-BETA</div>
+          <h3 class="text-[23px] font-bold mb-3">What is my baseline inflammation?</h3>
+          <p class="text-[17.5px] text-ink3 mb-4">Your baseline tendency toward inflammatory responses across the whole body, not just one system. <b class="text-ink">TNF-BETA sets that resting level.</b></p>
+          <div class="flex gap-2 text-[13.5px] font-semibold text-poor mb-5 leading-snug"><span class="msym text-[19px] shrink-0">warning</span>Low-level inflammation does its damage slowly, over years.</div>
+          <div class="border-t border-line pt-4">
+            <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-1.5">Sample result</div>
+            <div class="fr text-[21px] font-semibold text-avg mb-2">Average · Medium</div>
+            <div class="h-1.5 rounded-full bg-line overflow-hidden"><i class="block h-full rounded-full bg-avg" style="width:54%"></i></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="text-center mt-12 flex flex-col items-center reveal">
+      <a href="#final" class="btn lg">Check My Immunity <span class="msym">arrow_forward</span></a>
+      <div class="text-[14.5px] text-ink3 mt-3.5">24 markers · 1 saliva sample · <b class="text-ink2 font-bold">results in 3 weeks</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FUEL AND CLEAN-UP ============ -->
+<section id="supply" class="py-[92px] bg-white/70 border-y border-line">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[720px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">nutrition</span>Fuel and clean-up</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">What your immune system runs on, <span class="fr-b fr font-semibold grad-teal">and what slows it down.</span></h2>
+      <p class="text-[18.5px] text-ink3 mt-3.5">Eleven nutrients your immune cells need to do their job, and three results on how well your liver clears what gets in the way.</p>
+    </div>
+
+    <div class="text-[12.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-4 reveal">Eleven micronutrients</div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-mint"><span class="msym fill text-[22px] text-teal">nutrition</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Vitamin A</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">BCO1</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good inline-block">Good</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.03s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-mint"><span class="msym fill text-[22px] text-teal">nutrition</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Vitamin B6</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">NBPF3</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good inline-block">Good</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.06s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-cream2"><span class="msym fill text-[22px] text-avg">nutrition</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Vitamin B9</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">MTHFR</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-avg inline-block">Average</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.09s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-mint"><span class="msym fill text-[22px] text-teal">nutrition</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Vitamin B12</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">FUT2</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good inline-block">Good</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.12s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-mint"><span class="msym fill text-[22px] text-teal">eco</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Vitamin C</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">SLC23A1</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good inline-block">Good</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.15s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-cream2"><span class="msym fill text-[22px] text-avg">wb_sunny</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Vitamin D &amp; Calcium</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">VDR · GC</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-avg inline-block">Average</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.18s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-wrose50"><span class="msym fill text-[22px] text-wrose">shield</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Vitamin E</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">BUD13</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-poor inline-block">Poor</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.21s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-cream2"><span class="msym fill text-[22px] text-avg">nutrition</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Vitamin K</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">VKORC1</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-avg inline-block">Average</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.24s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-mint"><span class="msym fill text-[22px] text-teal">electric_bolt</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Magnesium</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">MECOM · BRWD1P2</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good inline-block">Good</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.27s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-cream2"><span class="msym fill text-[22px] text-avg">bloodtype</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Iron</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">TMPRSS6</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-avg inline-block">Average</div>
+      </div>
+      <div class="bg-white border border-line rounded-[22px] p-5 text-center shadow-s1 lift reveal" style="--rd:.30s">
+        <span class="w-11 h-11 gchip mx-auto mb-3 bg-cream2"><span class="msym fill text-[22px] text-avg">set_meal</span></span>
+        <div class="text-[16.5px] font-extrabold text-ink">Omega-3</div>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 mt-1">FADS1 · FADS2</div>
+        <div class="mt-3 text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-avg inline-block">Average</div>
+      </div>
+    </div>
+
+    <div class="text-[12.5px] font-bold tracking-[.12em] uppercase text-ink4 mb-4 reveal">Three detox results</div>
+    <div class="grid sm:grid-cols-3 gap-5">
+      <div class="bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal">
+        <div class="flex items-center justify-between mb-4">
+          <span class="w-11 h-11 gchip bg-mint"><span class="msym fill text-[22px] text-teal">filter_alt</span></span>
+          <span class="text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span>
+        </div>
+        <h4 class="text-[20px] font-bold mb-2">Detox Phase 1</h4>
+        <p class="text-[15.5px] text-ink3 leading-snug mb-3">The first stage of clearing toxins, before they can burden your immune system.</p>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 border-t border-line pt-3">CYP1A1 · CYP1B1</div>
+      </div>
+      <div class="bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" style="--rd:.08s">
+        <div class="flex items-center justify-between mb-4">
+          <span class="w-11 h-11 gchip bg-mint"><span class="msym fill text-[22px] text-teal">cleaning_services</span></span>
+          <span class="text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span>
+        </div>
+        <h4 class="text-[20px] font-bold mb-2">Detox Phase 2</h4>
+        <p class="text-[15.5px] text-ink3 leading-snug mb-3">The second stage, where processed toxins are finally packaged for removal.</p>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 border-t border-line pt-3">UGT1A1 · GSTP1 + 5 more</div>
+      </div>
+      <div class="bg-white border border-line rounded-[24px] p-7 shadow-s1 lift reveal" style="--rd:.16s">
+        <div class="flex items-center justify-between mb-4">
+          <span class="w-11 h-11 gchip bg-mint"><span class="msym fill text-[22px] text-teal">shield</span></span>
+          <span class="text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good</span>
+        </div>
+        <h4 class="text-[20px] font-bold mb-2">Oxidative Stress</h4>
+        <p class="text-[15.5px] text-ink3 leading-snug mb-3">How well you neutralise the free radicals produced by an active immune response.</p>
+        <div class="text-[11px] font-bold tracking-[.08em] uppercase text-ink4 border-t border-line pt-3">SOD2 · NQO1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE NUMBERS ============ -->
+<section class="py-[92px] bg-dark1 text-cream relative overflow-hidden">
+  <!-- India-map backdrop, left-aligned -->
+  <div class="absolute inset-0 pointer-events-none flex items-center justify-start pl-[1%] md:pl-[3%] opacity-100">
+    <img src="assets/Map of India.png" alt="" class="h-[135%] w-auto object-contain" onerror="this.remove()">
+  </div>
+  <div class="absolute inset-0 opacity-[.5] pointer-events-none" style="background:radial-gradient(50vw 40vh at 15% 10%,rgba(37,181,171,.2),transparent 60%),radial-gradient(46vw 40vh at 85% 90%,rgba(14,77,75,.45),transparent 60%),radial-gradient(30vw 30vh at 60% 40%,rgba(58,95,205,.09),transparent 60%)"></div>
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8 relative">
+    <div class="max-w-[680px] mx-auto text-center mb-14 reveal">
+      <div class="eyebrow eyebrow--light mb-4"><span class="msym">monitoring</span>The numbers, nationally</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold text-cream">The nutrients immunity needs most are the ones India runs short of.</h2>
+      <p class="text-[18.5px] text-cream/70 mt-3.5">Most people find out only after they have already been ill.</p>
+    </div>
+
+    <div class="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))] max-w-[900px] mx-auto">
+      <div class="stat group relative rounded-[22px] border border-white/12 bg-white/[.04] p-7 text-center transition-all duration-500 hover:bg-white/[.07] hover:-translate-y-1.5 reveal">
+        <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-cream/80 mb-3">Vitamin D</div>
+        <div class="text-[clamp(38px,4.4vw,53px)] font-extrabold tracking-[-.01em] leading-none text-tealBright"><span class="odo" data-mode="num" data-final="70" data-suffix="%">0%</span></div>
+        <div class="mt-4 h-1 rounded-full bg-white/10 overflow-hidden"><i class="bar block h-full w-0 rounded-full bg-tealBright transition-[width] duration-[1400ms] ease-out" style="--w:70%"></i></div>
+        <div class="text-[13.5px] leading-relaxed text-cream/70 mt-3">of people in India are estimated to have some degree of Vitamin D deficiency or insufficiency.</div>
+      </div>
+      <div class="stat group relative rounded-[22px] border border-white/12 bg-white/[.04] p-7 text-center transition-all duration-500 hover:bg-white/[.07] hover:-translate-y-1.5 reveal">
+        <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-cream/80 mb-3">Iron</div>
+        <div class="text-[clamp(38px,4.4vw,53px)] font-extrabold tracking-[-.01em] leading-none text-tealLight"><span class="odo" data-mode="text" data-final="1 in 2">1 in 2</span></div>
+        <div class="mt-4 h-1 rounded-full bg-white/10 overflow-hidden"><i class="bar block h-full w-0 rounded-full bg-tealLight transition-[width] duration-[1400ms] ease-out" style="--w:50%"></i></div>
+        <div class="text-[13.5px] leading-relaxed text-cream/70 mt-3">people in India have some degree of iron deficiency, a mineral immune cells depend on.</div>
+      </div>
+      <div class="stat group relative rounded-[22px] border border-white/12 bg-white/[.04] p-7 text-center transition-all duration-500 hover:bg-white/[.07] hover:-translate-y-1.5 reveal">
+        <div class="text-[10.5px] font-bold tracking-[.12em] uppercase text-cream/80 mb-3">This panel</div>
+        <div class="text-[clamp(38px,4.4vw,53px)] font-extrabold tracking-[-.01em] leading-none text-[#93A9E8]"><span class="odo" data-mode="num" data-final="24" data-suffix="">0</span></div>
+        <div class="mt-4 h-1 rounded-full bg-white/10 overflow-hidden"><i class="bar block h-full w-0 rounded-full bg-[#93A9E8] transition-[width] duration-[1400ms] ease-out" style="--w:80%"></i></div>
+        <div class="text-[13.5px] leading-relaxed text-cream/70 mt-3">genetic markers read from one saliva sample, across infection, nutrients and detox.</div>
+      </div>
+    </div>
+    <p class="fr text-center mt-11 text-[clamp(23px,2.9vw,32px)] text-cream">A low vitamin is one of the easiest things in medicine to fix. It is also one of the easiest to never notice.</p>
+    <div class="text-center mt-9 reveal"><a href="#final" class="btn light lg">Check My Immunity <span class="msym">arrow_forward</span></a></div>
+  </div>
+</section>
+
+<!-- ============ 30-SECOND EXPLAINER ============ -->
+<section id="what" class="relative overflow-hidden py-[88px] bg-white/70 border-y border-line">
+  <img src="assets/helix-teal.png" alt="" class="pointer-events-none select-none absolute -top-14 -left-14 w-[230px] md:w-[320px] opacity-[.1] -rotate-[14deg]" onerror="this.remove()">
+  <div class="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[680px] mx-auto text-center mb-14 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">biotech</span>How genes shape immunity</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Genetics sounds complicated. <span class="fr-b fr font-semibold grad-rose">This part isn't.</span></h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white border border-line rounded-[26px] p-7 shadow-s1 lift reveal">
+        <div class="imgslot h-[190px] rounded-[20px] mb-6" style="background:linear-gradient(135deg,#E6F4F3,#CFEAE5)">
+          <div class="ph"><span class="msym">add_photo_alternate</span><span class="t">Genes / DNA visual</span></div>
+          <img src="assets/gene-instruction.png" alt="Genes decide how your immune cells are built" onerror="this.remove()">
+        </div>
+        <p class="text-[19px] font-semibold leading-[1.45] text-center">Genes decide how your immune cells are built, and how they communicate.</p>
+      </div>
+      <div class="bg-white border border-line rounded-[26px] p-7 shadow-s1 lift reveal" style="--rd:.08s">
+        <div class="imgslot h-[190px] rounded-[20px] mb-6" style="background:linear-gradient(135deg,#EDF0FB,#D8DFF6)">
+          <div class="ph" style="color:#2543A0"><span class="msym">add_photo_alternate</span><span class="t">Risk visual</span></div>
+          <img src="assets/gene-risk.png" alt="Some genes make you faster to respond, or slower to recover" onerror="this.remove()">
+        </div>
+        <p class="text-[19px] font-semibold leading-[1.45] text-center">Some of them make you faster to respond, or slower to recover.</p>
+      </div>
+      <div class="bg-white border border-line rounded-[26px] p-7 shadow-s1 lift reveal" style="--rd:.16s">
+        <div class="imgslot h-[190px] rounded-[20px] mb-6" style="background:linear-gradient(135deg,#EAF6F2,#D6EFE4)">
+          <div class="ph"><span class="msym">add_photo_alternate</span><span class="t">Prevention visual</span></div>
+          <img src="assets/gene-prevent.png" alt="We check yours so you know where you need help" onerror="this.remove()">
+        </div>
+        <p class="text-[19px] font-semibold leading-[1.45] text-center">We check yours, so you know where you need help instead of guessing.</p>
+      </div>
+    </div>
+    <p class="fr text-center mt-11 text-[clamp(23px,2.9vw,32px)] text-ink2">One saliva sample. That is all it takes.</p>
+  </div>
+</section>
+
+<!-- ============ VALUE ============ -->
+<section class="relative overflow-hidden py-[92px]">
+  <img src="assets/helix-teal.png" alt="" class="pointer-events-none select-none absolute -bottom-20 -left-14 w-[240px] md:w-[340px] opacity-[.09] rotate-[16deg] scale-x-[-1]" onerror="this.remove()">
+  <div class="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[680px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">balance</span>Why it is worth it</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Two women, the same age. <span class="fr-b fr font-semibold grad-teal">One of them tested.</span></h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6 items-stretch">
+      <!-- SAD outcome -->
+      <div class="rounded-[28px] border border-line bg-white overflow-hidden shadow-s1 lift reveal flex flex-col">
+        <div class="imgslot h-[188px]" style="background:linear-gradient(135deg,#ECE4E7,#DFD0D7)">
+          <div class="ph" style="color:#8A7A80"><span class="msym">add_photo_alternate</span><span class="t">Never tested</span></div>
+          <img src="Visual Assets/Immunity - Never Tested.png" alt="Someone unwell again, still guessing" onerror="this.remove()">
+          <span class="absolute top-3.5 left-3.5 z-[3] inline-flex items-center gap-1.5 bg-white/95 border border-line rounded-full pl-2 pr-3.5 py-1.5 shadow-s1"><span class="msym fill text-[19px] text-poor">sentiment_dissatisfied</span><span class="text-[11.5px] font-bold uppercase tracking-[.08em] text-poor">Regret</span></span>
+        </div>
+        <div class="p-8 flex flex-col flex-1">
+          <div class="text-[13.5px] font-bold tracking-[.12em] uppercase text-poor mb-1.5">She never tested</div>
+          <h3 class="text-[24px] font-extrabold mb-5">Still guessing, years later</h3>
+          <ul class="flex flex-col gap-3.5">
+            <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-poor shrink-0">close</span>She keeps catching every cold that goes around, and assumes it's just bad luck.</li>
+            <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-poor shrink-0">close</span>She's mildly iron deficient for years and never connects it to her constant tiredness.</li>
+            <li class="flex gap-3 text-[17.5px] text-ink3 leading-snug"><span class="msym text-[20px] text-poor shrink-0">close</span>She has no idea her genes carry a higher inflammatory tendency until symptoms show up.</li>
+          </ul>
+        </div>
+      </div>
+      <!-- HAPPY outcome -->
+      <div class="rounded-[28px] border overflow-hidden shadow-s2 lift reveal flex flex-col" style="border-color:rgba(46,125,91,.4)" data-rd=".08s">
+        <div class="imgslot h-[188px]" style="background:linear-gradient(135deg,#E6F4EC,#EAF1CE)">
+          <div class="ph" style="color:#2E7D5B"><span class="msym">add_photo_alternate</span><span class="t">Tested early</span></div>
+          <img src="Visual Assets/Immunity - Tested Early.png" alt="Someone healthy years later, having acted early" onerror="this.remove()">
+          <span class="absolute top-3.5 left-3.5 z-[3] inline-flex items-center gap-1.5 bg-white/95 border border-line rounded-full pl-2 pr-3.5 py-1.5 shadow-s1"><span class="msym fill text-[19px] text-good">sentiment_very_satisfied</span><span class="text-[11.5px] font-bold uppercase tracking-[.08em] text-good">Peace of mind</span></span>
+        </div>
+        <div class="p-8 flex flex-col flex-1" style="background:linear-gradient(180deg,rgba(46,125,91,.06),#fff 40%)">
+          <div class="text-[13.5px] font-bold tracking-[.12em] uppercase text-good mb-1.5">She tested early</div>
+          <h3 class="text-[24px] font-extrabold mb-5">Still ahead, years later</h3>
+          <ul class="flex flex-col gap-3.5">
+            <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[20px] text-good shrink-0">check_circle</span>She knows her iron and B12 run low, so her diet already accounts for it.</li>
+            <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[20px] text-good shrink-0">check_circle</span>Her body handles respiratory viruses worse than average, so she doesn't skip her flu shot.</li>
+            <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[20px] text-good shrink-0">check_circle</span>She and her doctor already have a plan for the conditions she's genetically more likely to face.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-12 flex flex-col items-center reveal">
+      <p class="fr text-[clamp(21px,2.7vw,30px)] text-ink2 mb-6">One test today can save you years of catching everything that goes around.</p>
+      <a href="#final" class="btn">Check My Immunity <span class="msym">arrow_forward</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REPORT ============ -->
+<section class="py-[92px]" style="background:linear-gradient(180deg,#EFF6F5,#FAF6EF)">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-16 items-center">
+    <div class="reveal">
+      <div class="eyebrow mb-4"><span class="msym">description</span>Your report</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">A starting point, <span class="fr-b fr font-semibold grad-teal">not a diagnosis.</span></h2>
+      <ul class="flex flex-col gap-3.5 my-6">
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>Twenty-four markers, from one test.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>Your genotype at each marker, and what the science behind that gene says.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>Clear recommendations, so you know exactly what to do about each one.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2.5"></span>Built to be read by you, and handed to your own doctor.</li>
+      </ul>
+      <a href="#final" class="btn">See My Findings <span class="msym">arrow_forward</span></a>
+    </div>
+    <div class="reveal" data-rd=".1s">
+      <div class="relative bg-white border border-line rounded-[26px] p-8 shadow-s3">
+        <span class="absolute -top-3 left-8 bg-teal text-white text-[10.5px] font-bold tracking-[.12em] uppercase px-4 py-1.5 rounded-full">Sample</span>
+        <h4 class="text-[11.5px] font-bold tracking-[.12em] uppercase text-ink4 mt-2 mb-4">Immunity · Results</h4>
+        <div class="flex justify-between items-center gap-3 py-3 border-b border-line"><span class="fr text-[18.5px]">Bacterial Defense</span><span class="text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average · Med</span></div>
+        <div class="flex justify-between items-center gap-3 py-3 border-b border-line"><span class="fr text-[18.5px]">Respiratory Defense</span><span class="text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-poor">Poor · High</span></div>
+        <div class="flex justify-between items-center gap-3 py-3 border-b border-line"><span class="fr text-[18.5px]">Fungal Defense</span><span class="text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good · Low</span></div>
+        <div class="flex justify-between items-center gap-3 py-3 border-b border-line"><span class="fr text-[18.5px]">Vitamin D Supply</span><span class="text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-avg">Average · Med</span></div>
+        <div class="flex justify-between items-center gap-3 py-3"><span class="fr text-[18.5px]">Detox Capacity</span><span class="text-[10.5px] font-bold tracking-[.06em] uppercase px-2.5 py-1 rounded-full text-white bg-good">Good · Low</span></div>
+        <div class="text-[12px] text-ink4 mt-4"><b class="text-ink3">Good</b> = normal · <b class="text-ink3">Average</b> = some risk · <b class="text-ink3">Poor</b> = higher risk</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="py-[92px] bg-white/70 border-y border-line">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[680px] mx-auto text-center mb-14 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">package_2</span>How it works</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">From your door to your full report, <span class="fr font-semibold grad-teal">in 5 simple steps.</span></h2>
+      <p class="text-[18px] text-ink3 mt-3.5">No clinic. No needle. No fasting. About five minutes of your time.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 relative">
+      <div class="hidden lg:block absolute top-[64px] left-[10%] right-[10%] h-[3px] flow-line rounded-full opacity-70"></div>
+      <div class="bg-cream border border-line rounded-[26px] p-7 text-center lift reveal relative">
+        <div class="w-9 h-9 rounded-full bg-teal text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">1</div>
+        <div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-teal">deployed_code</span></div>
+        <h4 class="text-[19px] font-bold mb-2">Order</h4>
+        <p class="text-[15px] text-ink3 leading-relaxed">Kit reaches your door in 2 to 3 days.</p>
+      </div>
+      <div class="bg-cream border border-line rounded-[26px] p-7 text-center lift reveal relative" data-rd=".06s">
+        <div class="w-9 h-9 rounded-full bg-teal text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">2</div>
+        <div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-teal" style="font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 48;">water_drop</span></div>
+        <h4 class="text-[19px] font-bold mb-2">Collect</h4>
+        <p class="text-[15px] text-ink3 leading-relaxed">A saliva sample at home. 5 minutes, no needles, no fasting.</p>
+      </div>
+      <div class="bg-cream border border-line rounded-[26px] p-7 text-center lift reveal relative" data-rd=".12s">
+        <div class="w-9 h-9 rounded-full bg-teal text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">3</div>
+        <div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-teal">local_shipping</span></div>
+        <h4 class="text-[19px] font-bold mb-2">Return</h4>
+        <p class="text-[15px] text-ink3 leading-relaxed">Pre-paid envelope. Free courier pickup.</p>
+      </div>
+      <div class="bg-cream border border-line rounded-[26px] p-7 text-center lift reveal relative" data-rd=".18s">
+        <div class="w-9 h-9 rounded-full bg-teal text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">4</div>
+        <div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-teal">biotech</span></div>
+        <h4 class="text-[19px] font-bold mb-2">NABL lab</h4>
+        <p class="text-[15px] text-ink3 leading-relaxed">A scientist reviews every result.</p>
+      </div>
+      <div class="bg-cream border border-line rounded-[26px] p-7 text-center lift reveal relative" data-rd=".24s">
+        <div class="w-9 h-9 rounded-full bg-wrose text-white text-[13.5px] font-bold flex items-center justify-center mx-auto mb-5 relative z-10">5</div>
+        <div class="h-[70px] flex items-center justify-center mb-3"><span class="msym text-[52px] text-wrose">clinical_notes</span></div>
+        <h4 class="text-[19px] font-bold mb-2">Findings</h4>
+        <p class="text-[15px] text-ink3 leading-relaxed">Ready in 3 weeks, easy to understand on your own.</p>
+      </div>
+    </div>
+    <div class="text-center mt-12 flex flex-col items-center reveal">
+      <a href="#final" class="btn lg">Order My Kit <span class="msym">arrow_forward</span></a>
+      <div class="text-[16px] text-ink3 mt-4">Ships in 2 to 3 days · <b class="text-ink2 font-bold">Free Second Opinion call after</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOCTOR ============ -->
+<section class="py-[92px]">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-14 items-center">
+    <div class="reveal">
+      <div class="relative">
+        <div class="absolute -inset-4 rounded-[30px] bg-gradient-to-br from-tealBright/15 to-mint blur-xl -z-[1]"></div>
+        <div class="imgslot w-full aspect-[4/3] rounded-[26px] shadow-s3 border border-line">
+          <div class="ph"><span class="msym">support_agent</span><span class="t">Second Opinion expert</span></div>
+          <img src="Visual Assets/Immunity - Expert.png" alt="A KYG genetics expert reviewing an immunity result" onerror="this.remove()">
+        </div>
+        <!-- floating Second Opinion badge -->
+        <div class="absolute -bottom-5 -right-3 md:-right-5 bg-white/95 backdrop-blur border border-line rounded-[20px] p-4 shadow-s3 w-[236px] animate-floatySlow z-10">
+          <div class="flex items-center gap-2.5">
+            <span class="w-10 h-10 rounded-full bg-teal text-white flex items-center justify-center shrink-0"><span class="msym fill text-[21px]">diversity_1</span></span>
+            <div><div class="text-[15px] font-extrabold leading-tight">Second Opinion</div><div class="text-[11.5px] text-ink4">Genetic counselling, on call</div></div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-line flex items-center gap-2 text-[12px] text-ink3"><span class="msym fill text-[17px] text-good">check_circle</span>Free with every report</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" data-rd=".1s">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym">support_agent</span>Second Opinion · Not Google, a real expert</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">A result on its own is just data. <span class="fr-b fr font-semibold grad-teal">We help you make sense of it.</span></h2>
+      <ul class="flex flex-col gap-3.5 my-6">
+        <li class="flex gap-3 text-[18.5px]"><span class="msym fill text-[21px] text-teal shrink-0">check_circle</span>Every single report is checked by our genetics team before it reaches you.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="msym fill text-[21px] text-teal shrink-0">check_circle</span>Want a result explained? Book a free Second Opinion session with us.</li>
+        <li class="flex gap-3 text-[18.5px]"><span class="msym fill text-[21px] text-teal shrink-0">check_circle</span>Easy to understand, and easy to hand to your own doctor.</li>
+      </ul>
+      <div class="inline-flex items-center gap-4 bg-white border-2 border-teal/25 rounded-2xl pl-3.5 pr-7 py-4 shadow-s2">
+        <div class="w-14 h-14 rounded-full bg-teal text-white flex items-center justify-center shrink-0 fr font-semibold text-[22px]">VS</div>
+        <div>
+          <div class="flex items-center gap-1.5 text-[11.5px] font-bold tracking-[.1em] uppercase text-teal2 mb-1"><span class="msym fill text-[18px] text-good">verified</span>Every report reviewed by</div>
+          <div class="text-[20px] font-extrabold text-ink leading-tight">Dr. Varun Sharma, Ph.D</div>
+          <div class="text-[15px] text-ink3 font-medium">Scientist, Human Genetics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ORDER KIT ============ -->
+<section id="order" class="py-[92px] bg-white/70 border-y border-line">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[680px] mx-auto text-center mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="msym">inventory_2</span>One test. Answers you keep for life.</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Everything you need, <span class="fr font-semibold grad-rose">in one box.</span></h2>
+    </div>
+    <div class="max-w-[920px] mx-auto grid md:grid-cols-[1.15fr_0.85fr] rounded-[28px] overflow-hidden border border-line bg-white shadow-s2 reveal">
+      <div class="p-9 md:p-10 md:border-r border-line">
+        <div class="text-[12px] font-bold tracking-[.12em] uppercase text-wrose700 mb-1.5">Immunity Genetic Kit</div>
+        <h3 class="text-[26px] font-extrabold mb-6">24 Markers. One Report.</h3>
+        <ul class="flex flex-col gap-3.5">
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>11 infection results: bacterial, viral, fungal and parasitic infection risk, plus inflammatory tendencies</li>
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>11 micronutrients: Vitamin A, B6, B9, B12, C, D, E, K, Magnesium, Iron &amp; Omega-3</li>
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>3 detoxification readings: Phase 1, Phase 2 &amp; Oxidative Stress</li>
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>At-home saliva kit, delivered &amp; picked up free · findings in 3 weeks</li>
+          <li class="flex gap-3 text-[17.5px] text-ink2 leading-snug"><span class="msym fill text-[22px] text-good shrink-0">check_circle</span>NABL-certified processing · your data is never sold</li>
+        </ul>
+      </div>
+      <div class="p-9 md:p-10 flex flex-col justify-center text-center bg-cream">
+        <div class="text-[12px] font-bold tracking-[.12em] uppercase text-wrose700 mb-2">One test · once in your life</div>
+        <div class="fr text-[clamp(34px,4.4vw,46px)] font-semibold text-teal leading-none mb-3">₹____</div>
+        <p class="text-[15px] text-ink3 leading-[1.9] mb-6">Kit at your door in <b class="text-ink">2 to 3 days</b>.<br>Sample takes <b class="text-ink">5 minutes</b>.<br>Report in <b class="text-ink">3 weeks</b>.</p>
+        <a href="#final" class="btn lg justify-center">Order My Kit <span class="msym">arrow_forward</span></a>
+        <div class="flex gap-2.5 mt-5 text-left text-[12.5px] text-ink3 leading-snug"><span class="msym fill text-[19px] text-good shrink-0">verified_user</span><span>Certified NABL lab. Your data is never sold or shared, and your sample is destroyed after processing.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST / ACCREDITATION ============ -->
+<section class="py-[88px]" style="background:linear-gradient(180deg,#FAF6EF,#F5EDDF)">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="max-w-[680px] mx-auto text-center mb-8 reveal">
+      <div class="eyebrow eyebrow--teal mb-4"><span class="msym fill">verified</span>Certified and trusted</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Real lab. <span class="fr-b fr font-semibold grad-teal">Real science.</span></h2>
+    </div>
+
+    <!-- moving certification carousel -->
+    <div class="mq mb-11 reveal">
+      <div class="mq-track">
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/nabl.jpg" alt="NABL" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'NABL<br>MC-6400'}))"></div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">workspace_premium</span>ISO 9001:2015</div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/iso.jpg" alt="ISO" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'ISO<br>9001 · 27001'}))"></div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">biotech</span>Illumina Genotyping</div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/hipaa.jpg" alt="HIPAA" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'HIPAA<br>Compliant'}))"></div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">verified</span>ISO 27001:2013</div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">encrypted</span>HIPAA · FDA</div>
+        <div class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">policy</span>ACMG · CPIC</div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/nabl.jpg" alt="NABL" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'NABL<br>MC-6400'}))"></div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">workspace_premium</span>ISO 9001:2015</div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/iso.jpg" alt="ISO" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'ISO<br>9001 · 27001'}))"></div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">biotech</span>Illumina Genotyping</div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] w-[156px] shadow-s1 flex items-center justify-center"><img src="assets/hipaa.jpg" alt="HIPAA" class="max-h-[46px] w-auto object-contain" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'text-[13px] font-bold text-teal text-center leading-tight',innerHTML:'HIPAA<br>Compliant'}))"></div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">verified</span>ISO 27001:2013</div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">encrypted</span>HIPAA · FDA</div>
+        <div aria-hidden="true" class="mq-item bg-white border border-line rounded-2xl px-6 h-[78px] shadow-s1 flex items-center justify-center gap-2 text-[13px] font-bold text-teal whitespace-nowrap"><span class="msym text-[19px]">policy</span>ACMG · CPIC</div>
+      </div>
+    </div>
+
+    <!-- headline trust facts (below the carousel) -->
+    <div class="grid sm:grid-cols-3 gap-5 max-w-[980px] mx-auto reveal">
+      <div class="bg-white border border-line rounded-[24px] p-7 text-center shadow-s1 lift">
+        <div class="text-[clamp(38px,4.6vw,50px)] font-extrabold text-teal leading-none tracking-[-.02em]">99%+</div>
+        <div class="text-[16px] font-bold text-ink mt-3">Accuracy on testing</div>
+        <div class="text-[14px] text-ink3 mt-1.5 leading-snug">Tested at Neotech Worldlab, MG Road, Gurugram.</div>
+      </div>
+      <div class="bg-white border border-line rounded-[24px] p-7 text-center shadow-s1 lift">
+        <div class="w-16 h-16 rounded-2xl bg-mint flex items-center justify-center mx-auto mb-4"><span class="msym fill text-[34px] text-teal">verified</span></div>
+        <div class="text-[16px] font-bold text-ink">NABL-accredited lab</div>
+        <div class="text-[14px] text-ink3 mt-1.5 leading-snug">India's highest lab standard, on Illumina technology.</div>
+      </div>
+      <div class="bg-white border border-line rounded-[24px] p-7 text-center shadow-s1 lift">
+        <div class="w-16 h-16 rounded-2xl bg-wrose50 flex items-center justify-center mx-auto mb-4"><span class="msym fill text-[34px] text-wrose">lock</span></div>
+        <div class="text-[16px] font-bold text-ink">Your data, protected</div>
+        <div class="text-[14px] text-ink3 mt-1.5 leading-snug">Never sold or shared. Kept for future tests only if you allow.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="py-[92px]">
+  <div class="max-w-[860px] mx-auto px-5 md:px-8">
+    <div class="text-center mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="msym">help</span>Before you decide</div>
+      <h2 class="text-[clamp(33px,4.4vw,51px)] font-bold">Your questions, <span class="fr-b fr font-semibold grad-teal">answered.</span></h2>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">I feel completely healthy. Why should I still test?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Most people only find out where their immune system runs weak after they've already been sick.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Or after a routine blood test flags a deficiency that has been quietly there for years.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Feeling fine is exactly the best time to test, because you can fix a weak spot before an illness finds it.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">How is the sample collected?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>A simple saliva swab at home.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>No blood draw, no fasting, no clinic visit required.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">How long do results take?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>At least 3 weeks.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>That covers processing, genetic testing, and a full review by our genetics team before your report is sent out.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Does a "Poor" result mean I will get sick?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>No. A Poor result means your genetic tendency runs higher than average, not that illness is guaranteed.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>It is exactly the kind of thing worth building extra resilience around, through diet, sleep and vaccination.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Can this replace a blood test for deficiencies?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>No. It tells you your genetic tendency, not your current level.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>It works alongside routine blood tests, not instead of them.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Who reviews my report?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Our genetics team, led by Dr. Varun Sharma, Ph.D.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Every single report is reviewed before it reaches you.</li>
+        </ul></div></div>
+      </div>
+      <div class="fq bg-white border border-line rounded-2xl overflow-hidden transition-all reveal">
+        <button class="w-full text-left flex items-center gap-4 px-6 py-5 text-[19.5px] font-bold"><span class="flex-1">Who can see my genetic data?</span><span class="plus msym text-[25px] text-teal transition-transform duration-300 shrink-0">add</span></button>
+        <div class="fa"><div class="px-6 pb-6"><ul class="flex flex-col gap-2.5">
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>Only you, and the expert who reviews your report.</li>
+          <li class="flex gap-3 text-[17.5px] text-ink3"><span class="w-1.5 h-1.5 rounded-full bg-teal shrink-0 mt-2"></span>It is never sold or shared, and kept only for future tests if you choose to allow it.</li>
+        </ul></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL ============ -->
+<section id="final" class="relative overflow-hidden text-center py-[112px] bg-dark1 text-cream">
+  <div class="absolute w-[600px] h-[600px] rounded-full -top-[210px] left-1/2 -translate-x-1/2 blur-[90px] pointer-events-none" style="background:rgba(14,77,75,.55)"></div>
+  <div class="absolute inset-0 opacity-40 pointer-events-none" style="background:radial-gradient(40vw 40vh at 80% 90%,rgba(37,181,171,.25),transparent 60%),radial-gradient(28vw 28vh at 18% 20%,rgba(58,95,205,.12),transparent 60%)"></div>
+  <div class="max-w-[720px] mx-auto px-5 md:px-8 relative z-[1] reveal">
+    <div class="eyebrow eyebrow--light mx-auto mb-3"><span class="msym">bolt</span>Know now, not later</div>
+    <h2 class="text-[clamp(37px,5.2vw,57px)] font-bold my-4">You will never watch your immune system work. <span class="fr font-semibold text-tealBright">But you can finally see how it was built.</span></h2>
+    <ul class="flex gap-6 justify-center flex-wrap text-[13.5px] font-semibold text-cream/70 mb-8">
+      <li class="flex gap-2 items-center"><span class="msym fill text-[18.5px] text-tealBright">check_circle</span>24 markers, 1 saliva kit</li>
+      <li class="flex gap-2 items-center"><span class="msym fill text-[18.5px] text-tealBright">check_circle</span>Results in 3 weeks</li>
+      <li class="flex gap-2 items-center"><span class="msym fill text-[18.5px] text-tealBright">check_circle</span>Expert guidance</li>
+    </ul>
+    <a href="#" class="btn light">Check My Immunity <span class="msym">arrow_forward</span></a>
+    <div class="mt-6 text-[12.5px] text-cream/55">At-home saliva kit · NABL certified lab · Results in 3 weeks</div>
+  </div>
+</section>
+
+<div class="bg-white border-t border-line py-5 text-center text-[12.5px] text-ink3">
+  <div class="max-w-[1280px] mx-auto px-5">This test is intended for general wellness and informational purposes. It is not a diagnostic tool and does not replace blood testing or clinical evaluation. Please consult a qualified medical professional to interpret your results and to guide any decisions about your health.</div>
+</div>
+
+<footer class="bg-dark1 text-cream/70 pt-16 pb-9">
+  <div class="max-w-[1280px] mx-auto px-5 md:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr] gap-y-8 gap-x-10 pb-11 border-b border-white/12">
+      <div>
+        <div class="text-[21px] text-cream"><span class="font-extrabold">Know</span><span class="font-medium">Your</span><span class="font-extrabold text-tealBright">Genes</span></div>
+        <p class="text-[14.5px] max-w-[260px] mt-3">Genetic testing made for Indian bodies. Your health deserves clear answers.</p>
+      </div>
+      <div><h5 class="text-[11px] font-bold tracking-[.13em] uppercase mb-4 text-tealBright">Immunity</h5><ul class="flex flex-col gap-2.5 text-[14.5px]"><li><a href="#tests" class="hover:text-cream">The 11 Results</a></li><li><a href="#supply" class="hover:text-cream">Nutrients</a></li><li><a href="#" class="hover:text-cream">Detox</a></li></ul></div>
+      <div><h5 class="text-[11px] font-bold tracking-[.13em] uppercase mb-4 text-tealBright">Other Tests</h5><ul class="flex flex-col gap-2.5 text-[14.5px]"><li><a href="#" class="hover:text-cream">All Categories</a></li><li><a href="#" class="hover:text-cream">Wellness</a></li><li><a href="#" class="hover:text-cream">Men's Health</a></li><li><a href="#" class="hover:text-cream">Senior Care</a></li></ul></div>
+      <div><h5 class="text-[11px] font-bold tracking-[.13em] uppercase mb-4 text-tealBright">Company</h5><ul class="flex flex-col gap-2.5 text-[14.5px]"><li><a href="#" class="hover:text-cream">Privacy Policy</a></li><li><a href="#" class="hover:text-cream">Terms of Service</a></li><li><a href="#" class="hover:text-cream">Refund Policy</a></li><li><a href="#" class="hover:text-cream">Shipping &amp; Delivery</a></li></ul></div>
+    </div>
+    <div class="flex justify-between pt-6 text-[12.5px] flex-wrap gap-2.5"><span>© 2026 KnowYourGenes. All rights reserved.</span><span>Why you, and not the person sitting next to you?</span></div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="text-[12.5px] leading-tight">Immunity Kit<br><b class="text-teal">24 markers</b> · 1 saliva sample</div>
+  <a href="#final" class="btn sm">Check My Immunity</a>
+</div>
+
+<script>
+  document.querySelectorAll('.fq').forEach(function(f){
+    f.querySelector('button').addEventListener('click', function(){
+      var was = f.classList.contains('open');
+      document.querySelectorAll('.fq').forEach(function(x){ x.classList.remove('open'); });
+      if(!was) f.classList.add('open');
+    });
+  });
+
+  var revIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ var d=e.target.getAttribute('data-rd'); if(d) e.target.style.setProperty('--rd',d); e.target.classList.add('is-in'); revIO.unobserve(e.target); }
+    });
+  },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ revIO.observe(el); });
+
+  var numIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var stat=e.target, odo=stat.querySelector('.odo'), bar=stat.querySelector('.bar');
+      if(bar){ var w=bar.style.getPropertyValue('--w')||'50%'; requestAnimationFrame(function(){ bar.style.width=w; }); }
+      if(odo && odo.dataset.mode==='num'){
+        var final=parseFloat(odo.dataset.final), suf=odo.dataset.suffix||'', start=null, dur=1300;
+        (function run(){ requestAnimationFrame(function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1); var eased=1-Math.pow(1-p,3); odo.textContent=Math.round(eased*final)+suf; if(p<1) requestAnimationFrame(step); }); })();
+      } else if(odo){ odo.animate([{opacity:0,transform:'translateY(10px) scale(.92)'},{opacity:1,transform:'none'}],{duration:600,easing:'cubic-bezier(0.34,1.56,0.64,1)'}); }
+      numIO.unobserve(stat);
+    });
+  },{threshold:.4});
+  document.querySelectorAll('.stat').forEach(function(s){ numIO.observe(s); });
+
+  /* body-map tooltips on hover / focus / click (no scroll) */
+  (function(){
+    var tip=document.getElementById('bodyTip'); if(!tip) return;
+    var wrap=tip.parentElement;
+    var tEl=tip.querySelector('[data-tt="title"]'), bEl=tip.querySelector('[data-tt="body"]');
+    function show(g){
+      tEl.textContent=g.getAttribute('data-title')||'';
+      bEl.textContent=g.getAttribute('data-tip')||'';
+      tip.style.opacity='1';
+      var wr=wrap.getBoundingClientRect(), gr=g.getBoundingClientRect();
+      var cx=gr.left+gr.width/2-wr.left, cy=gr.top-wr.top, cb=gr.bottom-wr.top;
+      var half=tip.offsetWidth/2;
+      cx=Math.max(half+4, Math.min(cx, wr.width-half-4));
+      var below = cy < 150;
+      tip.style.transform = below ? 'translate(-50%,0)' : 'translate(-50%,-100%)';
+      tip.style.left=cx+'px';
+      tip.style.top=(below ? cb+12 : cy-12)+'px';
+    }
+    function hide(){ tip.style.opacity='0'; }
+    document.querySelectorAll('.hot').forEach(function(g){
+      g.addEventListener('mouseenter',function(){ show(g); });
+      g.addEventListener('mouseleave',hide);
+      g.addEventListener('focus',function(){ show(g); });
+      g.addEventListener('blur',hide);
+      g.addEventListener('click',function(e){ e.preventDefault(); show(g); });
+    });
+    document.addEventListener('click',function(e){ if(!e.target.closest('.hot')) hide(); });
+  })();
+
+  /* scroll progress bar + hero parallax (rAF-throttled, transform only) */
+  var sbar=document.getElementById('scrollbar');
+  var heroCard=document.querySelector('.animate-floatySlow');
+  var ticking=false;
+  function onScroll(){
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(function(){
+      var st=window.scrollY||document.documentElement.scrollTop;
+      var h=document.documentElement.scrollHeight-window.innerHeight;
+      if(sbar) sbar.style.width=(h>0?(st/h*100):0)+'%';
+      ticking=false;
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  /* interactive test filter */
+  var filter=document.getElementById('testFilter');
+  if(filter){
+    var cards=document.querySelectorAll('#tests .tcard');
+    filter.addEventListener('click',function(e){
+      var b=e.target.closest('.fpill'); if(!b) return;
+      filter.querySelectorAll('.fpill').forEach(function(p){ p.setAttribute('data-active', p===b ? 'true':'false'); });
+      var f=b.getAttribute('data-filter');
+      cards.forEach(function(c){ c.classList.toggle('dim', f!=='all' && c.getAttribute('data-cat')!==f); });
+    });
+  }
+</script>
+
+</body>
+</html>

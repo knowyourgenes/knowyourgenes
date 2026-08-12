@@ -102,7 +102,7 @@ export default function Faqs({ data, ground }: { data: FaqsSection; ground?: Gro
                     id={PLUS_ICON}
                     className={cn(
                       '-my-[3px] block h-[31px] w-[25px] shrink-0 transition-transform duration-300',
-                      isOpen && 'rotate-45',
+                      isOpen && 'rotate-45'
                     )}
                   />
                 </button>
@@ -116,9 +116,7 @@ export default function Faqs({ data, ground }: { data: FaqsSection; ground?: Gro
                     // `invisible` keeps a closed answer out of the a11y tree and
                     // the tab order. visibility is specially interpolated, so it
                     // still stays painted for the whole 300ms collapse.
-                    isOpen
-                      ? 'visible grid-rows-[1fr] opacity-100'
-                      : 'invisible grid-rows-[0fr] opacity-0',
+                    isOpen ? 'visible grid-rows-[1fr] opacity-100' : 'invisible grid-rows-[0fr] opacity-0'
                   )}
                 >
                   <div className="overflow-hidden">

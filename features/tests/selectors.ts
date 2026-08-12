@@ -15,7 +15,7 @@ import type { FaqsSection, HeroSection, Img, Section, TestPage } from './types';
 /** First section of a given `type`, or undefined if the page has none. */
 export function findSection<T extends Section['type']>(
   page: TestPage,
-  type: T,
+  type: T
 ): Extract<Section, { type: T }> | undefined {
   return page.sections.find((s): s is Extract<Section, { type: T }> & { ground?: never } => s.type === type) as
     | Extract<Section, { type: T }>

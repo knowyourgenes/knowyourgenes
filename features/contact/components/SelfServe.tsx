@@ -22,11 +22,7 @@ export default function SelfServe() {
     <section className="border-y border-mine/10 bg-white/70 px-5 sm:px-10 lg:px-20">
       <div className="mx-auto w-full max-w-[1180px] py-[clamp(48px,5vw,70px)] lg:px-8">
         <div className="mx-auto flex max-w-[640px] flex-col items-center gap-[15px] text-center">
-          <ContactEyebrow
-            label={SELF_SERVE.eyebrow.label}
-            icon={SELF_SERVE.eyebrow.icon}
-            className="max-w-full"
-          />
+          <ContactEyebrow label={SELF_SERVE.eyebrow.label} icon={SELF_SERVE.eyebrow.icon} className="max-w-full" />
           {/* Figtree 800 38/41 ls -0.76 (-0.02em) #222222 */}
           <h2 className="font-kyg text-[clamp(26px,3vw,38px)] font-extrabold leading-[1.079] tracking-[-0.02em] text-mine">
             {SELF_SERVE.title}
@@ -46,18 +42,13 @@ export default function SelfServe() {
               >
                 {/* 30x30 layout box; the 30x36 glyph bleeds 3px above and below it. */}
                 <span className="relative block h-[30px] w-[30px] shrink-0">
-                  <ContactIcon
-                    id={c.icon}
-                    className="absolute left-0 top-[-3px] h-[36px] w-[30px]"
-                  />
+                  <ContactIcon id={c.icon} className="absolute left-0 top-[-3px] h-[36px] w-[30px]" />
                 </span>
                 {/* gap 6 + the h3 frame's own 16 pad-top = 22 */}
                 <h3 className="mt-[22px] font-kyg text-[clamp(16px,1.4vw,18px)] font-bold leading-[19.4px] tracking-[-0.02em] text-mine">
                   {c.title}
                 </h3>
-                <p className="mt-1.5 font-kyg text-[14px] font-normal leading-[19.2px] text-fusc">
-                  {c.body}
-                </p>
+                <p className="mt-1.5 font-kyg text-[14px] font-normal leading-[19.2px] text-fusc">{c.body}</p>
               </Link>
             </li>
           ))}

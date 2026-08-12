@@ -30,9 +30,7 @@ export function useCountUp(value: string, durationMs = 1300) {
     const el = ref.current;
     if (!el) return;
 
-    const reduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const reduce = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
     if (typeof IntersectionObserver === 'undefined' || reduce) {
       // Land on the final value without animating. Deferred to a frame rather
@@ -64,7 +62,7 @@ export function useCountUp(value: string, durationMs = 1300) {
           requestAnimationFrame(step);
         }
       },
-      { threshold: 0.4 },
+      { threshold: 0.4 }
     );
 
     io.observe(el);
