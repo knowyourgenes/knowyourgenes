@@ -94,10 +94,12 @@ export const NAV_MENUS: MegaMenu[] = [
 ];
 
 /**
- * Flat links rendered BEFORE the mega menus, i.e. leftmost in the desktop nav.
- * Separate from NAV_LINKS (which render after the menus) purely so the order is
- * declared in the data rather than hard-coded in the header.
+ * Flat links rendered AFTER the mega menus — i.e. the right-hand end of the
+ * desktop nav, which is right-aligned (`ml-auto`). Contact sits last so it
+ * reads as the terminal action.
  */
-export const NAV_LEAD_LINKS = [{ label: 'Contact', href: '/contact' }];
-
-export const NAV_LINKS = [{ label: 'Blog', href: '/blog' }];
+export const NAV_LINKS = [
+  { label: 'Blog', href: '/blog' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];

@@ -8,7 +8,7 @@ import { LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import UserNav from '@/features/admin/components/UserNav';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
-import { NAV_LEAD_LINKS, NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
+import { NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
 import { Container } from './Container';
 import { KygLogo } from './Logo';
 
@@ -119,12 +119,6 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
 
           {/* Desktop mega-menu nav */}
           <nav ref={linksRef} className="flex items-center gap-[2px] ml-auto max-[980px]:hidden" aria-label="Main">
-            {NAV_LEAD_LINKS.map((link) => (
-              <Link key={link.label} className={NAV_LINK} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-
             {NAV_MENUS.map((menu) => {
               const isOpen = openKey === menu.key;
               return (
@@ -298,11 +292,10 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
                 </ul>
               </div>
             ))}
-            {/* On mobile the nav is a vertical list, so "leftmost" has no meaning —
-                the lead links join the flat group at the bottom, ahead of NAV_LINKS
-                so their relative order still matches desktop. */}
+            {/* The flat links close the drawer, in the same order they close the
+                desktop bar: Blog, About Us, Contact. */}
             <div className="border-t border-(--ink-line) pt-[16px] flex flex-col gap-[2px]">
-              {[...NAV_LEAD_LINKS, ...NAV_LINKS].map((link) => (
+              {NAV_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}

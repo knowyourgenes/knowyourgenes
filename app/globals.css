@@ -309,6 +309,45 @@ body {
     color: inherit;
   }
 
+  /* -------------------------------------------------------------------------
+     About Us headline accents.
+
+     The frame paints these as a GRADIENT fill on a characterStyleOverride —
+     i.e. part of a heading string, not a whole node. Two ramps: the 5-stop teal
+     on cream/veil grounds, and a brighter one on the two ink sections.
+
+     `box-decoration-break: clone` matters: these runs wrap onto two lines, and
+     without it the ramp is stretched across the union of both line boxes, so
+     line 2 starts mid-gradient instead of restarting.
+     ------------------------------------------------------------------------- */
+  .abt-grad,
+  .abt-grad-ink {
+    font-style: normal;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .abt-grad {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-eden) 0%,
+      var(--color-eden2) 25%,
+      var(--color-java) 50%,
+      var(--color-eden2) 75%,
+      var(--color-eden) 100%
+    );
+  }
+  .abt-grad-ink {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-java2) 0%,
+      var(--color-ice) 50%,
+      var(--color-java2) 100%
+    );
+  }
+
   /* Bold sans run inside an otherwise-serif line (and vice versa). */
   .tst-strong {
     font-family: var(--font-kyg);
