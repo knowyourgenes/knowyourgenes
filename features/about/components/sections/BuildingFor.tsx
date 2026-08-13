@@ -19,19 +19,17 @@
 // portrait" — to HIDDEN in the frame, so the photo replaces the stand-in rather
 // than sitting behind it. The blurred backing stays.
 //
-// PROFILE AVATARS: all four 56px slots now carry photography.
+// PROFILE AVATARS: all four 56px slots carry photography, and all four are
+// VERIFIED against the design — every slot's imageRef was read from the frame
+// and matches the file shipped here.
 //
-// Cards 01-03 came straight from frame 2084:4145. Card 04's image was added to
-// the file later, and by then the Figma nodes endpoint was quota-locked, so its
-// slot could not be read from the design. It was identified from the file's
-// image manifest instead: the three known avatars are all exactly 1254x1254 PNG
-// (one generation batch), and of the six images added to the file since, exactly
-// one shares that signature — and it is a portrait in the same framing, palette
-// and wardrobe as the other three.
-//
-// That is strong evidence but it IS an inference, not a slot mapping read from
-// the frame. If card 04 ever shows the wrong face, swap profile-04.jpg; nothing
-// else depends on it.
+// Card 04 took a detour worth recording. Its image landed in Figma after the
+// REST nodes endpoint had been quota-locked (~59h), so the slot could not be
+// read at the time and the image was identified from the file's image manifest
+// instead: the other three avatars are all exactly 1254x1254 PNG from one
+// generation batch, and of the images added since, exactly one shared that
+// signature. That inference was later confirmed directly — the frame's slot for
+// "The Informed" carries imageRef 65bb1d69…, which is what shipped.
 // =============================================================================
 
 import { AboutIcon } from '../AboutIcon';
