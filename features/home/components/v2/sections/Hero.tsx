@@ -68,9 +68,9 @@ export default function Hero() {
             sticky and takes its own space. Reproducing the source's 88px pad
             literally put the kicker 17px behind the bar at every width up to
             768. So the pad is 64 + 78, floored at 84 on phones. */}
-        <div className="relative z-[3] px-5 pb-[clamp(38px,4.4vw,64px)] pt-[clamp(72px,6.6vw,100px)] sm:px-8 lg:px-[63px]">
-          <div className="mx-auto flex w-full max-w-[1313px] flex-col justify-center lg:min-h-[max(440px,calc(100svh-64px-190px))]">
-            <div className="flex w-full max-w-full flex-col gap-[10px] lg:max-w-[min(58%,760px)]">
+        <div className="relative z-[3] flex flex-col justify-end px-5 pb-[clamp(40px,4.4vw,72px)] pt-[clamp(72px,6.6vw,100px)] sm:px-8 lg:min-h-[100svh] lg:px-[63px]">
+          <div className="mx-auto flex w-full max-w-[1313px] flex-col">
+            <div className="flex w-full max-w-full flex-col gap-[10px] lg:max-w-[min(760px,calc(100vw-min(47vw,760px)-max(63px,(100vw-1313px)/2)-48px))]">
               <HeroReveal delay={0.05}>
                 <Kicker>Genetics for a lifetime</Kicker>
               </HeroReveal>
