@@ -164,6 +164,20 @@ body {
   /* The test pages' accreditation strip runs faster than the homepage's. */
   --animate-tst-marquee: kyg-marquee 34s linear infinite;
 
+  /* ---- homepage v2 (features/home/components/v2) --------------------------
+     Ported 1:1 from the designer's build, "New Homepage Build/index.html".
+     Registered here rather than written as arbitrary `animate-[...]` values so
+     Tailwind v4 actually emits the @keyframes at the bottom of this file — a
+     bare arbitrary animation utility does NOT pull its keyframes in, and the
+     rule ships dead. Durations are the source's, unrounded. */
+  --animate-hv2-bob: hv2-bob 6.4s ease-in-out infinite;
+  --animate-hv2-spin: hv2-spin 64s linear infinite;
+  --animate-hv2-spin-slow: hv2-spin 96s linear infinite reverse;
+  --animate-hv2-pulse: hv2-pulse 7s ease-in-out infinite;
+  --animate-hv2-pane-in: hv2-pane-in 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-hv2-trickle: hv2-trickle 2.1s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  --animate-hv2-cta-pulse: hv2-cta-pulse 3.6s ease-in-out infinite;
+
   --color-spring: #f6f3ed;
   --color-pearl: #ece6da;
   --color-bottlehero: #0a3b39;
@@ -226,6 +240,17 @@ body {
   --color-mint: #e6f4f3; /* teal eyebrow-pill ground */
   --color-ice: #7fe3d6; /* light teal accents on ink */
   --color-gold: #e8c24e; /* accreditation badge stroke */
+
+  /* Homepage redesign (Figma "Homepage - New UI", node 1058:5544). That frame is
+     a dark editorial page, so it needs darker grounds and cooler greys than the
+     cream pages. Its other four colours already had tokens: eden #0e4d4b,
+     linenw #faf6ef, java #25b5ab, java2 #2ac3a2. */
+  --color-abyss: #062927; /* deepest teal — hero + final CTA ground */
+  --color-bistre: #1b1712; /* near-black warm ink — cream-section headings */
+  --color-corduroy: #33403d; /* dark slate-green — card grounds on light */
+  --color-nevada: #5c6b68; /* body copy on the dark ground */
+  --color-pewter: #92a19e; /* muted labels, quiet icons */
+  --color-mist: #e2f1ed; /* MEET GENEe ground — cooler than --color-mint */
 
   /* Section grounds. Several are gradients in the frame, not flat fills. */
   --color-veil: #ffffff; /* used at 70% over the cream page — see .tst-veil */
@@ -723,5 +748,88 @@ body {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* =============================================================================
+   HOMEPAGE v2 — motion, ported from "New Homepage Build/index.html"
+   -----------------------------------------------------------------------------
+   Each of these is used through an `animate-hv2-*` utility whose definition
+   lives in the @theme block near the top of this file. Values are the source's
+   exactly; the frame was traced from that page, so a "tidier" 6s bob or 60s
+   spin would visibly desynchronise the two orbit rings.
+   ============================================================================= */
+
+/* MEET GENEe — the two speech bubbles drift on the same curve, offset by a
+   negative animation-delay so they are never in phase. */
+@keyframes hv2-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-11px);
+  }
+}
+
+/* WHAT WOULD YOU LIKE TO KNOW — the two dashed orbit rings. One runs 64s
+   forward, the other 96s reversed, so the pattern between them never repeats
+   on any comfortable timescale. */
+@keyframes hv2-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* …and the core's glow, breathing under them. */
+@keyframes hv2-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.09);
+  }
+}
+
+/* The orbit's tab panels, on selection. */
+@keyframes hv2-pane-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Hero scroll cue: a 14px lit segment falling down a 40px hairline. It rests
+   for the last 30% of the cycle rather than looping continuously. */
+@keyframes hv2-trickle {
+  0% {
+    transform: translateY(-14px);
+  }
+  70%,
+  100% {
+    transform: translateY(40px);
+  }
+}
+
+/* The hero-weight CTA breathes a ring outward so the eye finds it. Paused on
+   hover at the call site — the button's own hover shadow takes over there. */
+@keyframes hv2-cta-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 6px 18px rgba(14, 77, 75, 0.18),
+      0 0 0 0 rgba(42, 195, 162, 0.45);
+  }
+  55% {
+    box-shadow:
+      0 10px 26px rgba(14, 77, 75, 0.22),
+      0 0 0 13px rgba(42, 195, 162, 0);
   }
 }
