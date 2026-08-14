@@ -78,16 +78,29 @@ export default function Hero() {
               {/* Figtree 300 then 800, both 70.6/69.2 ls -2.47. Only the word
                   "KYG" is teal - a character run inside the line, not its own
                   node, hence the inline <b>. The two lines carry separate
-                  entrance delays, so each is its own reveal. */}
+                  entrance delays, so each is its own reveal.
+
+                  THE TWO LINES ARE A MATCHED PAIR and the styling carries the
+                  argument: line one is light and dimmed because it states what
+                  is already true and unremarkable, line two is extra-bold and
+                  full-strength because it is the turn. "KYC" and "KYG" sit in
+                  the same position in both lines, so the eye reads the swap
+                  before it reads the sentence - which is the whole idea, and
+                  why neither line may be re-wrapped independently of the other.
+
+                  This copy is ~70% longer than the line it replaced, so at the
+                  70.6px cap it wraps to two visual lines per span inside the
+                  760px column. `text-balance` keeps those wraps even rather
+                  than leaving one word stranded on line two. */}
               <h1
                 id="hero-heading"
-                className="pb-[14px] pt-[18px] font-kyg text-[clamp(34px,4.9vw,70.6px)] leading-[0.98] tracking-[-0.035em]"
+                className="text-balance pb-[14px] pt-[18px] font-kyg text-[clamp(34px,4.9vw,70.6px)] leading-[0.98] tracking-[-0.035em]"
               >
                 <HeroReveal as="span" delay={0.14} className="block font-light text-linenw/72">
-                  KYC toh karwa liya.
+                  KYC tells the world who you are.
                 </HeroReveal>
                 <HeroReveal as="span" delay={0.24} className="block font-extrabold text-linenw">
-                  Ab <b className="font-extrabold text-java2">KYG</b> ki baari hai.
+                  <b className="font-extrabold text-java2">KYG</b> tells who you are within.
                 </HeroReveal>
               </h1>
 
