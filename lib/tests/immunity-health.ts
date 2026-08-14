@@ -52,7 +52,7 @@ export const immunityHealth: TestPage = {
         { label: 'Results in 3 weeks', icon: 'clock' },
       ],
       footnoteHtml: 'Built from your genes. Working since the day you were born.',
-      image: { src: `${IMG}/hero.png`, alt: 'A person healthy and getting on with an ordinary day' },
+      image: { src: `${IMG}/hero.webp`, alt: 'A person healthy and getting on with an ordinary day' },
       resultCard: {
         title: 'Sample results',
         icon: 'flask',
@@ -74,7 +74,7 @@ export const immunityHealth: TestPage = {
         eyebrow: { label: 'Who should take this test', icon: 'users' },
         titleHtml: 'Six reasons to test sooner <em class="tst-em">rather than later.</em>',
       },
-      image: { src: `${IMG}/who.png`, alt: 'A person going about a normal, healthy day' },
+      image: { src: `${IMG}/who.webp`, alt: 'A person going about a normal, healthy day' },
       introTitleHtml: 'This test is for you if&hellip;',
       introBodyHtml:
         'Your genes don&rsquo;t change, so you only ever need to do this once. The answers stay true for the rest of your life. Some people just have more reason to get them early, and one line below is usually enough to know if that&rsquo;s you.',
@@ -367,7 +367,7 @@ export const immunityHealth: TestPage = {
           key: 'respiratory',
           tabLabel: 'Respiratory',
           icon: 'stethoscope',
-          image: { src: `${IMG}/risk-respiratory.png`, alt: 'An inflamed respiratory response' },
+          image: { src: `${IMG}/risk-respiratory.webp`, alt: 'An inflamed respiratory response' },
           imageCaption: 'Including COVID-19',
           geneLabel: 'Respiratory Disease · Gene IL6',
           question: 'Could my immune system overreact?',
@@ -445,7 +445,7 @@ export const immunityHealth: TestPage = {
           key: 'inflammation',
           tabLabel: 'Inflammation',
           icon: 'flame',
-          image: { src: `${IMG}/risk-inflammation.png`, alt: 'Baseline inflammation across the body' },
+          image: { src: `${IMG}/risk-inflammation.webp`, alt: 'Baseline inflammation across the body' },
           imageCaption: 'TNF expression',
           geneLabel: 'General Inflammation · Gene TNF-BETA',
           question: 'What is my baseline inflammation?',
@@ -567,15 +567,15 @@ export const immunityHealth: TestPage = {
       },
       cards: [
         {
-          image: { src: `${IMG}/explainer-1.png`, alt: 'Genes decide how your immune cells are built' },
+          image: { src: `${IMG}/explainer-1.webp`, alt: 'Genes decide how your immune cells are built' },
           bodyHtml: 'Genes decide how your immune cells are built, and how they communicate.',
         },
         {
-          image: { src: `${IMG}/explainer-2.png`, alt: 'Some genes make you faster to respond, or slower to recover' },
+          image: { src: `${IMG}/explainer-2.webp`, alt: 'Some genes make you faster to respond, or slower to recover' },
           bodyHtml: 'Some of them make you faster to respond, or slower to recover.',
         },
         {
-          image: { src: `${IMG}/explainer-3.png`, alt: 'We check yours so you know where you need help' },
+          image: { src: `${IMG}/explainer-3.webp`, alt: 'We check yours so you know where you need help' },
           bodyHtml: 'We check yours, so you know where you need help instead of guessing.',
         },
       ],
@@ -678,7 +678,7 @@ export const immunityHealth: TestPage = {
         eyebrow: { label: 'Second Opinion · Not Google, a real expert', icon: 'users', accent: 'teal' },
         titleHtml: 'A free call with our genetics team, <em class="tst-em-teal">included with every report.</em>',
       },
-      image: { src: `${IMG}/counsellor.png`, alt: 'A KYG genetics expert reviewing an immunity result' },
+      image: { src: `${IMG}/counsellor.webp`, alt: 'A KYG genetics expert reviewing an immunity result' },
       points: [
         'Every single report is checked by our genetics team before it reaches you.',
         'Want a result explained? Book a free Second Opinion session with us.',

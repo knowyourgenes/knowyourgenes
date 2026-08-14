@@ -64,7 +64,7 @@ export const sleep: TestPage = {
         { label: 'NABL-accredited lab', icon: 'badge-check' },
       ],
       footnoteHtml: 'You spend a third of your life asleep. This is what shapes it.',
-      image: { src: `${IMG}/hero.png`, alt: 'A person awake at 3am, phone face-down' },
+      image: { src: `${IMG}/hero.webp`, alt: 'A person awake at 3am, phone face-down' },
       resultCard: {
         title: 'Test ID NMC-SL01',
         titleRight: 'KYG Lab',
@@ -723,7 +723,7 @@ export const sleep: TestPage = {
         leadHtml:
           'Twenty-eight grades is a lot to read alone. Book a session with Dr. Varun Sharma, Ph.D, our Human Genetics scientist, and go through yours in plain language.',
       },
-      image: { src: `${IMG}/counsellor.png`, alt: 'A KYG genetics expert reviewing a sleep report' },
+      image: { src: `${IMG}/counsellor.webp`, alt: 'A KYG genetics expert reviewing a sleep report' },
       points: [
         '<b>Where to start:</b> which of your grades to act on first, and which to ignore.',
         '<b>Nutrients:</b> which of the eight to test in blood before you buy any supplement.',
