@@ -32,7 +32,7 @@ const hind = Hind({
   display: 'swap',
 });
 
-// Serif accent face — the italic accent lines on the PDP and on every test
+// Serif accent face - the italic accent lines on the PDP and on every test
 // page. The Women's Health frame uses Cormorant Garamond 600 italic for
 // headings and 700 italic for the section-closing lines, so both weights are
 // loaded; 500 is kept for the PDP's lighter accents.

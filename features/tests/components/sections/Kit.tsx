@@ -5,19 +5,19 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Section } from '../ui';
 
 // =============================================================================
-// ORDER KIT — "Everything you need, in one box."
+// ORDER KIT - "Everything you need, in one box."
 // -----------------------------------------------------------------------------
 // Frame @[0 0 1440 788] pad 92/80, ground #ffffff@70, 1px #222222@10 hairline
 // (the 2px of border is why 92 + 602 + 92 comes to 788).
 // Rail 1280 (pad 32) -> 1216 content, VERTICAL gap 48, centred:
 //
-//   head   680 x 176, gap 16 — crimson eyebrow pill (46) + H2 (114)
+//   head   680 x 176, gap 16 - crimson eyebrow pill (46) + H2 (114)
 //   card   920 x 377 @[260 317], r28, #ffffff, 1px #222222@10, two-layer shadow
 //          -> 918 of inner width split as a 528 / 390 grid, no gutter
 //
 //   left   528 x 375, pad 40/40/59/40, gap 6, 1px #222222@10 on its RIGHT edge
 //          (the frame's own arithmetic proves it: text x=301..748 is 447 wide,
-//          40 + 447 + 40 = 527, and the cell is 528 — the spare pixel is the
+//          40 + 447 + 40 = 527, and the cell is 528 - the spare pixel is the
 //          seam hairline where the #faf6ef panel starts at x=789)
 //          kicker 12/18 ls .12em -> h3 26/28 -> ul (pad-top 18, gap 14)
 //          each li: 22x26 glyph + 12 gap + 17.5/24 copy, glyph overhangs 2 up
@@ -49,7 +49,7 @@ const KICKER = 'font-kyg text-[12px] font-bold uppercase leading-[1.5] tracking-
 /** 40px on the artboard; 2.78vw hits 40.03 at 1440 so the clamp pins it there. */
 const PAD = 'px-[clamp(22px,2.78vw,40px)]';
 
-/** "Everything you need, in one box." — contents list beside the order panel. */
+/** "Everything you need, in one box." - contents list beside the order panel. */
 export default function Kit({ data, ground }: { data: KitSection; ground?: Ground }) {
   const { eyebrow, titleHtml } = data.head;
   const cta = data.order.cta;
@@ -114,7 +114,7 @@ export default function Kit({ data, ground }: { data: KitSection; ground?: Groun
           <div className={cn('flex flex-col bg-linenw py-[clamp(22px,2.78vw,40px)] text-center', PAD)}>
             <span className={cn(KICKER, 'mb-4')}>{data.order.kicker}</span>
 
-            {/* 17/32.3 — the frame runs this at 1.9 leading, not the usual 1.5.
+            {/* 17/32.3 - the frame runs this at 1.9 leading, not the usual 1.5.
                 All three lines are ONE uniform Figtree 400 run in the frame
                 (spec line 51 is a single TEXT node; the extractor splits a node
                 the moment its runs differ in style, as it does for the h2). The
@@ -130,13 +130,13 @@ export default function Kit({ data, ground }: { data: KitSection; ground?: Groun
               ))}
             </div>
 
-            {/* 310x69 primary pill — wider and taller than the ui.tsx default
+            {/* 310x69 primary pill - wider and taller than the ui.tsx default
                 (pad 20/44 vs 16/34, label 18/27 vs 16/24), and it carries the
                 frame's own arrow glyph rather than the shared lucide one.
 
                 The 44 of side padding is the one value that cannot survive 320:
                 the order panel is 236 of inner width there, 88 of it would be
-                padding, and "Order My Kit" + arrow is already 140 — one word
+                padding, and "Order My Kit" + arrow is already 140 - one word
                 longer and the pill overflows. So px-11 starts at sm. The 20 of
                 vertical pad stays (a 67px tap target) as does everything else. */}
             <Link

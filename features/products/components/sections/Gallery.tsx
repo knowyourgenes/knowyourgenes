@@ -33,7 +33,7 @@ export default function Gallery({ gallery }: { gallery: ProductKit['gallery'] })
         </div>
       </div>
 
-      {/* thumbnails — ~square, first active */}
+      {/* thumbnails - ~square, first active */}
       <div className="flex justify-center gap-3">
         {Array.from({ length: gallery.thumbCount }).map((_, i) => {
           const isActive = i === active;

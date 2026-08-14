@@ -14,14 +14,14 @@ const TRUST_ICON: Record<string, IconName> = {
   chat: 'trust-chat',
 };
 
-// Right column of the PDP — exact Figma typography + downloaded design icons.
+// Right column of the PDP - exact Figma typography + downloaded design icons.
 export default function BuyBox({ kit }: { kit: ProductKit }) {
   const [qty, setQty] = useState(1);
   const [variant, setVariant] = useState(kit.variants[0]?.value ?? '');
 
   return (
     <div className="flex flex-col gap-3 lg:self-start">
-      {/* pills — Figtree Bold 12 / Green Pea */}
+      {/* pills - Figtree Bold 12 / Green Pea */}
       <div className="flex flex-wrap gap-2">
         {kit.pills.map((p) => (
           <span
@@ -119,7 +119,7 @@ export default function BuyBox({ kit }: { kit: ProductKit }) {
         <Icon name="arrow-right" className="h-[16px] w-[13px] text-greenpea" />
       </a>
 
-      {/* trust chips 2x2 — SemiBold single line, Sea icons */}
+      {/* trust chips 2x2 - SemiBold single line, Sea icons */}
       <div className="grid grid-cols-2 gap-[10px] py-3">
         {kit.trustChips.map((c) => (
           <div

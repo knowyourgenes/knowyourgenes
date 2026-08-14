@@ -14,7 +14,7 @@ import { useRevealOnScroll } from '@/hooks/use-scroll';
  *
  *  • `.reveal` is only hidden while the root carries `reveal-on`, and that class
  *    is added HERE on mount. If JavaScript never runs, nothing is hidden and the
- *    page reads normally — the reference build hides unconditionally, which
+ *    page reads normally - the reference build hides unconditionally, which
  *    blanks the page when its script fails.
  *  • siblings inside a block are staggered by writing `data-rd`, which the
  *    observer copies into `--rd` (the transition-delay) as each one enters.

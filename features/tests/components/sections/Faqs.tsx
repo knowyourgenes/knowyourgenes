@@ -7,17 +7,17 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Lead, Section } from '../ui';
 
 // =============================================================================
-// FAQ — 1440 frame, section spec 016367_faq. Geometry read 1:1 from the frame:
+// FAQ - 1440 frame, section spec 016367_faq. Geometry read 1:1 from the frame:
 //
 //   FAQ frame     860 x 655 at x=290, vertical, pad 0/32, gap 48
 //                 → the content rail is exactly 796, centred in the 1216 column
 //   head          796, gap 16, centred: eyebrow 46 · h2 57
 //   eyebrow       232 x 46, r999, #c73c70@10 ground, 1px #c73c70@24,
 //                 0 6 18 rgba(199,60,112,.1), pad 11/22/11/17 gap 10.
-//                 Label Figtree 800 14/21 ls .08em #9a2855 — sentence case,
+//                 Label Figtree 800 14/21 ls .08em #9a2855 - sentence case,
 //                 NOT uppercase (the frame's literal string is "Before you
 //                 decide" at 159px wide).
-//   list          796, vertical, gap 12 — six 71-tall rows (167→583, step 83)
+//   list          796, vertical, gap 12 - six 71-tall rows (167→583, step 83)
 //   row           r16, #ffffff, 1px #222222@10, NO shadow
 //   button        794 x 69, pad 20/24, gap 16, centred
 //                 → question 705 (flex-1) + 16 + plus 25 = 746 content
@@ -25,12 +25,12 @@ import { Heading, Lead, Section } from '../ui';
 //   plus          25 slot; the glyph itself is 25x31 and overhangs 3px each way
 //
 // Every row is CLOSED in the frame, so the answer panel below has no Figma
-// counterpart — it inherits the page's standard 17.5/26 body type. State lives
+// counterpart - it inherits the page's standard 17.5/26 body type. State lives
 // in React (not <details>) because the + → × rotation has to animate.
 //
 // The H2 accent ("answered.") is the frame's 5-stop teal gradient. That already
 // ships as `.tst-em-teal` in globals.css (@layer components, background-clip:
-// text), so the data's <em class="tst-em-teal"> gets it for free — nothing to
+// text), so the data's <em class="tst-em-teal"> gets it for free - nothing to
 // re-declare here.
 // =============================================================================
 
@@ -63,7 +63,7 @@ export default function Faqs({ data, ground }: { data: FaqsSection; ground?: Gro
             </span>
           ) : null}
 
-          {/* h2 is the full 796 rail in the frame — no narrower measure. */}
+          {/* h2 is the full 796 rail in the frame - no narrower measure. */}
           <Heading html={titleHtml} />
 
           {leadHtml ? <Lead html={leadHtml} /> : null}

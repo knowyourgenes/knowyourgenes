@@ -1,5 +1,5 @@
 // =============================================================================
-// features/products — data model for the data-driven Product (PDP) page.
+// features/products - data model for the data-driven Product (PDP) page.
 // -----------------------------------------------------------------------------
 // Every product-kit page (the Genetic Testing Kit, and the ~129 tests to come)
 // is rendered purely from a `ProductKit` object declared in `data.ts`. The
@@ -87,12 +87,12 @@ export interface ProductKit {
   title: string; // H1 "Genetic Testing Kit"
   rating: number; // 5.0
   reviewCount: number; // 5
-  price: string; // "₹____" — placeholder kept from the design
+  price: string; // "₹____" - placeholder kept from the design
   variantLabel: string; // "SELECT REPORT"
   variants: Variant[];
   upsellLinkLabel: string; // "Want more from one sample? See Complete & Total Pack options"
   trustChips: TrustChip[];
-  category: string; // "Genetic Testing Kit" — rendered as "Category: <b>…</b>"
+  category: string; // "Genetic Testing Kit" - rendered as "Category: <b>…</b>"
 
   included: {
     title: string; // "WHAT'S INCLUDED"

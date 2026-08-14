@@ -52,3 +52,17 @@ next-env.d.ts
 # blog source material (content lives in Sanity, not the repo)
 /content.docx
 /blog.webp
+
+# Design-source deliverables. These are INPUTS, not build artefacts: the raw
+# PNGs the designer hands over (1.4-2.8 MB each), the hand-built HTML pages the
+# Figma frames were traced from, and the PDF exports. Roughly 120 MB of
+# binaries - git stores each whole, and every re-delivery would add another
+# full copy forever.
+#
+# What ships from them is already committed: the optimised WebP in
+# public/tests/ and public/home/photos/ (3.5 MB total, converted at quality 82),
+# and public/home/brand/. Keep these folders locally; do not commit them.
+/testPages/
+/New Homepage Build/
+/Women's Health - Landing Page Build/
+/*.pdf

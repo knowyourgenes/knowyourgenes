@@ -34,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     add(path, { changeFrequency: 'weekly', priority: 0.9 });
   }
 
+  add('/about', { changeFrequency: 'monthly', priority: 0.6 });
   add('/contact', { changeFrequency: 'monthly', priority: 0.6 });
 
   for (const path of ['/privacy', '/terms', '/refunds', '/shipping', '/consent']) {

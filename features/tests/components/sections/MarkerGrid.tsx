@@ -4,19 +4,19 @@ import { Icon } from '../icons';
 import { Head, ResultBar, Section, TONE_PILL } from '../ui';
 
 // =============================================================================
-// MARKER GRID — tiles in labelled groups.
+// MARKER GRID - tiles in labelled groups.
 // -----------------------------------------------------------------------------
 // Several panels carry a band that is neither a risk card nor a stat: Skin
 // Health reads six food sensitivities and four nutrients, Immunity eleven
 // micronutrients and three detox results, My Wellness splits 52 traits across
 // four reports. None of them have photography, a gene story or a filter, so
-// `riskCards` is the wrong shape — six of those 389px cards would run to three
+// `riskCards` is the wrong shape - six of those 389px cards would run to three
 // rows of near-empty artwork.
 //
 // Three densities, all off the same item:
-//   compact  6-up icon tiles          — 44px badge, title, marker, tone pill
-//   detail   3/4-up cards             — badge + pill row, then title and copy
-//   stat     4-up cards, big numeral  — the count IS the point, so it leads
+//   compact  6-up icon tiles          - 44px badge, title, marker, tone pill
+//   detail   3/4-up cards             - badge + pill row, then title and copy
+//   stat     4-up cards, big numeral  - the count IS the point, so it leads
 //
 // Every field on an item is optional bar none, because the three variants use
 // different subsets. Everything below reuses the frame's own tokens (r16
@@ -30,7 +30,7 @@ const BADGE: Record<'crimson' | 'teal', string> = {
 };
 
 const CARD = 'lift rounded-[24px] border border-mine/10 bg-white shadow-tst-soft';
-/** Figtree 700 11/16.5 ls 0.08em #7a7a7a — the marker under a title. */
+/** Figtree 700 11/16.5 ls 0.08em #7a7a7a - the marker under a title. */
 const META = 'font-kyg text-[11px] font-bold uppercase leading-[16.5px] tracking-[0.08em] text-boulder';
 
 /** Figtree 700 10.5/15.8 ls 0.06em, white on the tone fill. */
@@ -98,7 +98,7 @@ export default function MarkerGrid({ data, ground }: { data: MarkerGridSection; 
               </ul>
             ) : group.variant === 'stat' ? (
               // The count is the headline here, so it takes the numeral slot the
-              // ink-ground Stats band uses — same weight and tracking, on white.
+              // ink-ground Stats band uses - same weight and tracking, on white.
               <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                 {group.items.map((item, i) => (
                   <li key={item.title ?? i} className={cn(CARD, 'flex flex-col items-center p-7 text-center')}>
@@ -147,7 +147,7 @@ export default function MarkerGrid({ data, ground }: { data: MarkerGridSection; 
                     {/* With a rail, the marker reads as its caption and sits
                         directly above it, then the recommendation closes the
                         card. Without one, the marker is the card's footer and
-                        gets the rule — which is how Skin and Immunity draw it.
+                        gets the rule - which is how Skin and Immunity draw it.
                         `mt-auto` goes on whichever element opens that closing
                         block, so short cards pad at the body rather than
                         leaving the rail floating mid-card. */}

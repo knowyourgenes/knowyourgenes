@@ -1,4 +1,4 @@
-/** Glyph id — the "<y>-<x>" position of the icon in the Figma contact frame. */
+/** Glyph id - the "<y>-<x>" position of the icon in the Figma contact frame. */
 export type ContactIconId = string;
 
 export interface HeroChip {

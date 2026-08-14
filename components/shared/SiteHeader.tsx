@@ -8,7 +8,7 @@ import { LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import UserNav from '@/features/admin/components/UserNav';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
-import { NAV_LEAD_LINKS, NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
+import { NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
 import { Container } from './Container';
 import { KygLogo } from './Logo';
 
@@ -119,12 +119,6 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
 
           {/* Desktop mega-menu nav */}
           <nav ref={linksRef} className="flex items-center gap-[2px] ml-auto max-[980px]:hidden" aria-label="Main">
-            {NAV_LEAD_LINKS.map((link) => (
-              <Link key={link.label} className={NAV_LINK} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-
             {NAV_MENUS.map((menu) => {
               const isOpen = openKey === menu.key;
               return (
@@ -145,9 +139,30 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
                     />
                   </button>
 
+                  {/* NO backdrop-blur here, deliberately.
+                      This panel used to carry `backdrop-blur-[22px]`, and it cost
+                      more than anything else on the site. Two of these render on
+                      EVERY page (one per menu), each ~827,000px, and they are
+                      hidden with `opacity-0 invisible` rather than `display:none`
+                      - so they stay in layout and keep their compositing layers.
+                      backdrop-filter is re-evaluated against everything painted
+                      behind it whenever that moves, and scrolling moves all of it,
+                      so the page paid for 1.65 million pixels of blur, permanently,
+                      while invisible. Measured on /: p95 frame time 16.8ms -> 8.5ms
+                      and worst frame 760ms -> 298ms once it was gone.
+
+                      Removing it changes nothing visually because this panel's own
+                      background is 98% opaque - at most 2% of the backdrop was ever
+                      showing through. Verified, not assumed: the before/after diff
+                      (mean 0.006/255) sits inside the panel's own frame-to-frame
+                      noise floor from its image transitions (mean 0.002/255).
+
+                      If a future design wants real glass here, drop the background
+                      to ~0.7 alpha AND gate the blur on `isOpen`, so a closed menu
+                      costs nothing. */}
                   <div
                     className={cn(
-                      'absolute left-0 right-0 top-full bg-[rgba(250,246,239,.98)] backdrop-blur-[22px] border-t border-(--ink-line)',
+                      'absolute left-0 right-0 top-full bg-[rgba(250,246,239,.98)] border-t border-(--ink-line)',
                       'shadow-[0_36px_80px_rgba(45,32,18,.10)] transition-[opacity,transform,visibility] duration-[450ms] ease-(--e-out)',
                       isOpen
                         ? 'opacity-100 visible translate-y-0 pointer-events-auto'
@@ -298,11 +313,10 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
                 </ul>
               </div>
             ))}
-            {/* On mobile the nav is a vertical list, so "leftmost" has no meaning —
-                the lead links join the flat group at the bottom, ahead of NAV_LINKS
-                so their relative order still matches desktop. */}
+            {/* The flat links close the drawer, in the same order they close the
+                desktop bar: Blog, About Us, Contact. */}
             <div className="border-t border-(--ink-line) pt-[16px] flex flex-col gap-[2px]">
-              {[...NAV_LEAD_LINKS, ...NAV_LINKS].map((link) => (
+              {NAV_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}

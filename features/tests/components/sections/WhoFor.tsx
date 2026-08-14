@@ -1,5 +1,5 @@
 // =============================================================================
-// WHO IT'S FOR — 1:1 rebuild of the Figma frame at y=970 (1440 x 1391).
+// WHO IT'S FOR - 1:1 rebuild of the Figma frame at y=970 (1440 x 1391).
 // -----------------------------------------------------------------------------
 // Frame:   pad 92/80, gradient #faf6ef -> #f1f7f6, inner rail 1280 + 32 px
 //          padding => a 1216 content column, children stacked with a 32 gap.
@@ -28,7 +28,7 @@ const CHIP_GLYPHS = ['1550-668', '1550-874'];
 /** Tile glyphs keyed by the data file's icon name, in the frame's own order
  *  (top-left -> bottom-right), so a reorder of the tiles still resolves.
  *  A key that is NOT here belongs to another test page, whose tiles this frame
- *  has no artwork for — those fall through to the lucide registry rather than
+ *  has no artwork for - those fall through to the lucide registry rather than
  *  borrowing, say, the pregnancy-loss glyph for "you catch every cold". */
 const SIGN_GLYPH_BY_KEY: Record<string, string> = {
   calendar: '1681-143',
@@ -48,7 +48,7 @@ const SIGN_BADGE: Record<string, string> = {
 };
 
 /**
- * A 22x22 slot holding a 22x26 instance (or 23x27 on the tiles) — the glyph is
+ * A 22x22 slot holding a 22x26 instance (or 23x27 on the tiles) - the glyph is
  * centred in its instance, so centring the instance reproduces the frame.
  */
 function Glyph({ id, className, box }: { id: string; className: string; box: string }) {
@@ -59,11 +59,11 @@ function Glyph({ id, className, box }: { id: string; className: string; box: str
   );
 }
 
-/** "This test is for every woman" — intro block, then a two-column sign grid. */
+/** "This test is for every woman" - intro block, then a two-column sign grid. */
 export default function WhoFor({ data, ground }: { data: WhoForSection; ground?: Ground }) {
   const eyebrow = data.head.eyebrow;
 
-  // Both CTAs end in one of the frame's OWN arrow glyphs — a 13x13 right arrow
+  // Both CTAs end in one of the frame's OWN arrow glyphs - a 13x13 right arrow
   // on "Book a Test" (2227-660) and a 12x17 down arrow on "Learn More"
   // (2227-856), which is precisely what <Cta/> draws when no `icon` is supplied.
   // The data still carries icon:'arrow-down' on the ghost button, i.e. a lucide
@@ -75,7 +75,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
       {/* ---- head: 720 wide, eyebrow + h2, gap 16 --------------------------- */}
       <div className="mx-auto flex max-w-[720px] flex-col items-center gap-4 text-center">
         {eyebrow ? (
-          /* The pill's intrinsic width is 307 (17+22+10+234+22) — wider than the
+          /* The pill's intrinsic width is 307 (17+22+10+234+22) - wider than the
              280 a 320px viewport leaves. `max-w-full` pins it to the rail, and
              px-4 below sm buys back 7px so it stays a one-liner from 375 up and
              only wraps on the very narrowest phones. That wrap already centres
@@ -90,7 +90,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
         ) : null}
 
         {/* H2 Figtree 700 51/55 ls -0.02em #222222. The serif "you" is
-            GRADIENT_LINEAR(#9a2855,#c73c70,#c73c70) in the frame — which is
+            GRADIENT_LINEAR(#9a2855,#c73c70,#c73c70) in the frame - which is
             exactly what `.tst-em` already paints (globals.css), so do NOT
             re-declare it here: a local `bg-gradient-to-r` would move the middle
             stop from 55% to 50%. */}
@@ -145,7 +145,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
           the row where both tiles are one-liners, 87.4 where one wraps to two
           lines). Default row sizing reproduces that, and cards still stretch to
           match each other WITHIN a row.
-          Radius is 16 — `rounded-2xl` is 18px in this project. */}
+          Radius is 16 - `rounded-2xl` is 18px in this project. */}
       <ul className="mt-8 grid gap-4 md:grid-cols-2">
         {data.signs.map((s, i) => (
           <li
@@ -182,7 +182,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
 
       {/* ---- closing line 640 wide + the two CTAs, gap 12 --------------------
           The frame's closing frame is 640 with its own 3px side padding, so the
-          serif measures 635 — that inset is what puts the break after
+          serif measures 635 - that inset is what puts the break after
           "years to". */}
       <div className="mt-8 pt-4">
         <Closing html={data.closingHtml} className="max-w-[640px] px-[3px] text-[#2d2a24]" />

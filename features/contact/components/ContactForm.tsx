@@ -13,14 +13,14 @@ import { ContactEyebrow, ContactIcon } from './ContactIcon';
 //   input    pad 16, 15.5/18.6  -> 53 tall
 //   select   pad 14/44/14/16, 15.5/23.2 -> 54 tall
 //   textarea pad 14/16, 15.5/23.2, fixed 131 tall
-// Radii are explicit arbitrary values — this project remaps the Tailwind radius
+// Radii are explicit arbitrary values - this project remaps the Tailwind radius
 // scale, so rounded-xl is 14 but rounded-2xl is 18 and rounded-3xl is 22.
 const FIELD_BASE =
   'w-full rounded-[14px] border border-mine/14 bg-white px-4 font-kyg text-[15.5px] text-mine outline-none transition placeholder:text-[#9a968b] focus:border-eden/40 focus:ring-4 focus:ring-java/10 disabled:opacity-60';
 const INPUT = `${FIELD_BASE} py-4 leading-[18.6px]`;
 const SELECT = `${FIELD_BASE} appearance-none py-[14px] pr-11 leading-[23.2px]`;
 const TEXTAREA = `${FIELD_BASE} h-[131px] resize-y py-[14px] leading-[23.2px]`;
-// Figtree 700 13/19.5 ls 0.13 (0.01em) #2d2a24 — a single run, so the "*" and
+// Figtree 700 13/19.5 ls 0.13 (0.01em) #2d2a24 - a single run, so the "*" and
 // the "(optional)" qualifier carry the same weight and colour as the label.
 const LABEL = 'font-kyg text-[13px] font-bold leading-[19.5px] tracking-[0.01em] text-[#2d2a24]';
 const ERR = 'font-kyg text-[12.5px] leading-[18.8px] text-mojo';
@@ -44,7 +44,7 @@ export default function ContactForm() {
     };
 
     // Validate with the SAME schema the API uses, so the user sees field errors
-    // before a round-trip. The server re-validates regardless — this is UX only.
+    // before a round-trip. The server re-validates regardless - this is UX only.
     const parsed = contactSchema.safeParse(raw);
     if (!parsed.success) {
       const fieldErrors: Record<string, string> = {};
@@ -90,7 +90,7 @@ export default function ContactForm() {
           Message sent.
         </h2>
         <p className="max-w-[380px] break-words font-kyg text-[15.5px] leading-[23.2px] text-fusc">
-          Thanks — a real person from the team will get back to you. If it is urgent, email{' '}
+          Thanks - a real person from the team will get back to you. If it is urgent, email{' '}
           <a className="font-bold text-eden underline" href="mailto:hello@kyg.in">
             hello@kyg.in
           </a>
@@ -115,7 +115,7 @@ export default function ContactForm() {
       noValidate
       className="flex flex-col gap-7 rounded-[28px] border border-mine/10 bg-white p-[clamp(24px,3vw,40px)] shadow-tst-card"
     >
-      {/* header — gap 8; the h2 frame carries 7 top / 1 bottom padding */}
+      {/* header - gap 8; the h2 frame carries 7 top / 1 bottom padding */}
       <div className="flex flex-col gap-2">
         <ContactEyebrow
           label={FORM_COPY.eyebrow.label}
@@ -128,16 +128,16 @@ export default function ContactForm() {
         <p className="font-kyg text-[15.5px] leading-[23.2px] text-fusc">{FORM_COPY.lead}</p>
       </div>
 
-      {/* honeypot — hidden from humans, catches naive bots */}
+      {/* honeypot - hidden from humans, catches naive bots */}
       <div aria-hidden className="hidden">
         <label htmlFor={`${uid}-website`}>Website</label>
         <input id={`${uid}-website`} name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
-      {/* form#contactForm — vertical stack, gap 20 */}
+      {/* form#contactForm - vertical stack, gap 20 */}
       <div className="flex flex-col gap-5">
         {/* Two-up from sm, but back to ONE column through lg: the page grid
-            hands this card only ~414px at 1024, i.e. 165px tracks — narrower
+            hands this card only ~414px at 1024, i.e. 165px tracks - narrower
             than the select's widest option ("Which test is right for me") plus
             its 16/44 padding, so the chosen topic would render clipped. It
             widens again at xl, and >= 1440 is the frame's 242px pair.
@@ -200,7 +200,7 @@ export default function ContactForm() {
               What&apos;s it about? *
             </label>
             {/* The chevron is the frame's own 24x24 glyph (12x6 stroke-2 #0e4d4b),
-                inset 15 from the right edge — not a lucide substitute. */}
+                inset 15 from the right edge - not a lucide substitute. */}
             <div className="relative">
               <select
                 id={`${uid}-topic`}
@@ -274,7 +274,7 @@ export default function ContactForm() {
           </p>
         ) : null}
 
-        {/* button row — 4 top padding, gap 16, centred */}
+        {/* button row - 4 top padding, gap 16, centred */}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
           <button
             type="submit"

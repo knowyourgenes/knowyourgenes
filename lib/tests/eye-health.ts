@@ -29,9 +29,9 @@ export const eyeHealth: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: 'Eye Health DNA Test — 7 findings from one saliva sample',
+    title: 'Eye Health DNA Test - 7 findings from one saliva sample',
     description:
-      'Glaucoma, diabetic retinopathy, cataract, myopia, eye pressure, macular degeneration and retinal occlusion — seven genetic findings from a single at-home saliva kit. NABL-accredited lab, results in 3 weeks.',
+      'Glaucoma, diabetic retinopathy, cataract, myopia, eye pressure, macular degeneration and retinal occlusion - seven genetic findings from a single at-home saliva kit. NABL-accredited lab, results in 3 weeks.',
   },
 
   sections: [
@@ -52,7 +52,7 @@ export const eyeHealth: TestPage = {
         { label: 'Results in 3 weeks', icon: 'clock' },
       ],
       footnoteHtml: 'An eye chart tests what you can see. This tests what&rsquo;s coming.',
-      image: { src: `${IMG}/hero-eye.png`, alt: 'A close-up of an eye, calm and clear' },
+      image: { src: `${IMG}/hero-eye.webp`, alt: 'A close-up of an eye, calm and clear' },
       resultCard: {
         title: 'Your findings',
         icon: 'flask',
@@ -77,7 +77,7 @@ export const eyeHealth: TestPage = {
         titleHtml:
           'Your optometrist asks &ldquo;red or green&rdquo; every visit. <em class="tst-em-teal">We&rsquo;re asking a bigger version of it.</em>',
       },
-      image: { src: `${IMG}/why-reactive.png`, alt: 'An eye chart and a lens phoropter side by side' },
+      image: { src: `${IMG}/why-reactive.webp`, alt: 'An eye chart and a lens phoropter side by side' },
       badgeTop: { label: 'See it coming', icon: 'eye' },
       badgeBottom: { label: 'Focus, years early', icon: 'zap' },
       rows: [
@@ -135,7 +135,7 @@ export const eyeHealth: TestPage = {
           key: 'retinopathy',
           tabLabel: 'Retinopathy',
           icon: 'droplet',
-          image: { src: `${IMG}/risk-retinopathy.png`, alt: 'Retinal vessels damaged by high blood sugar' },
+          image: { src: `${IMG}/risk-retinopathy.webp`, alt: 'Retinal vessels damaged by high blood sugar' },
           imageCaption: 'Retinal vessels under sugar stress',
           geneLabel: 'Diabetic Retinopathy · VEGFA, ICAM1, EPO',
           question: 'Is my retina at risk from diabetes?',
@@ -148,7 +148,7 @@ export const eyeHealth: TestPage = {
           key: 'glaucoma',
           tabLabel: 'Glaucoma',
           icon: 'eye',
-          image: { src: `${IMG}/risk-glaucoma.png`, alt: 'Optic nerve under rising pressure' },
+          image: { src: `${IMG}/risk-glaucoma.webp`, alt: 'Optic nerve under rising pressure' },
           imageCaption: 'Optic-nerve pressure over time',
           geneLabel: 'Glaucoma · MYOC, LOXL1-AS1',
           question: 'Could pressure be harming my optic nerve?',
@@ -161,7 +161,7 @@ export const eyeHealth: TestPage = {
           key: 'cataract',
           tabLabel: 'Cataract',
           icon: 'cataract',
-          image: { src: `${IMG}/risk-cataract.png`, alt: "The eye's natural lens slowly clouding" },
+          image: { src: `${IMG}/risk-cataract.webp`, alt: "The eye's natural lens slowly clouding" },
           imageCaption: 'The lens slowly clouding',
           geneLabel: 'Cataract · Gene EPHA2',
           question: 'Will the lens in my eye slowly cloud over?',
@@ -174,7 +174,7 @@ export const eyeHealth: TestPage = {
           key: 'myopia',
           tabLabel: 'Myopia',
           icon: 'glasses',
-          image: { src: `${IMG}/risk-myopia.png`, alt: 'An eye grown slightly too long, blurring distance' },
+          image: { src: `${IMG}/risk-myopia.webp`, alt: 'An eye grown slightly too long, blurring distance' },
           imageCaption: 'The eye grows a little too long',
           geneLabel: 'Myopia · Gene TGFB1',
           question: 'Why does my distance vision keep blurring?',
@@ -187,7 +187,7 @@ export const eyeHealth: TestPage = {
           key: 'pressure',
           tabLabel: 'Eye Pressure',
           icon: 'pressure',
-          image: { src: `${IMG}/risk-pressure.png`, alt: 'Raised pressure inside the eye' },
+          image: { src: `${IMG}/risk-pressure.webp`, alt: 'Raised pressure inside the eye' },
           imageCaption: 'Pressure with no symptoms',
           geneLabel: 'Ocular Hypertension · Gene PTGFR',
           question: 'Is my eye pressure quietly too high?',
@@ -200,7 +200,7 @@ export const eyeHealth: TestPage = {
           key: 'macular',
           tabLabel: 'Macula',
           icon: 'target',
-          image: { src: `${IMG}/risk-macular.png`, alt: 'Central vision breaking down at the macula' },
+          image: { src: `${IMG}/risk-macular.webp`, alt: 'Central vision breaking down at the macula' },
           imageCaption: 'Central vision breaking down',
           geneLabel: 'Macular Degeneration · ARMS2, C2, VEGF',
           question: 'Could I lose my central vision as I age?',
@@ -213,7 +213,7 @@ export const eyeHealth: TestPage = {
           key: 'occlusion',
           tabLabel: 'Occlusion',
           icon: 'alert',
-          image: { src: `${IMG}/risk-occlusion.png`, alt: 'A sudden blockage of blood flow to the retina' },
+          image: { src: `${IMG}/risk-occlusion.webp`, alt: 'A sudden blockage of blood flow to the retina' },
           imageCaption: 'A stroke at the level of the eye',
           geneLabel: 'Retinal Occlusion · AGTR1, ADIPOQ',
           question: 'Am I at risk of a sudden retinal blockage?',
@@ -326,7 +326,7 @@ export const eyeHealth: TestPage = {
         eyebrow: { label: 'Second Opinion · Not Google, a real expert', icon: 'users', accent: 'teal' },
         titleHtml: 'A finding on its own is just data. <em class="tst-em-teal">We help you make sense of it.</em>',
       },
-      image: { src: `${IMG}/counsellor.png`, alt: 'A KYG genetics expert reviewing an eye finding' },
+      image: { src: `${IMG}/counsellor.webp`, alt: 'A KYG genetics expert reviewing an eye finding' },
       points: [
         'Every single report is checked by our genetics team before it reaches you.',
         'Want a finding explained? Book a free Second Opinion session with us.',

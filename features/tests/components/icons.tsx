@@ -1,5 +1,5 @@
 // =============================================================================
-// features/tests — icon registry
+// features/tests - icon registry
 // -----------------------------------------------------------------------------
 // Data files reference icons by STRING KEY (`IconKey`), never by import, so a
 // new test page can pick an icon without touching a component. Everything here
@@ -247,7 +247,7 @@ export function Icon({
   const Glyph = REGISTRY[name];
   if (!Glyph) {
     if (process.env.NODE_ENV !== 'production') {
-      console.warn(`[tests/icons] unknown icon key "${name}" — add it to REGISTRY in icons.tsx`);
+      console.warn(`[tests/icons] unknown icon key "${name}" - add it to REGISTRY in icons.tsx`);
     }
     return null;
   }

@@ -6,7 +6,7 @@ import type { DisclaimerSection, Ground } from '../../types';
 //
 //   div.bg-white  1440 × 59.75, pad 19/80/20/80, fill #ffffff, stroke
 //                 #222222@10 on the TOP EDGE ONLY. The dump prints `@1.0`,
-//                 but that trailing `@N` is only the base strokeWeight — the
+//                 but that trailing `@N` is only the base strokeWeight - the
 //                 node also carries individualStrokeWeights
 //                 {top:1, right:0, bottom:0, left:0}, so it is a single 1px
 //                 rule along the top. (The header and the footer's grid
@@ -17,7 +17,7 @@ import type { DisclaimerSection, Ground } from '../../types';
 //                 19 padTop + 19.75 content + 20 padBottom + 1 top stroke
 //                 (strokesIncludedInLayout).
 //   div.mx-auto   1280 × 20, pad 0/20/0.75/20, CENTER
-//   copy          Figtree 400 12.5/18.75, centred, #5b564e (fuscous — not the
+//   copy          Figtree 400 12.5/18.75, centred, #5b564e (fuscous - not the
 //                 lighter boulder grey).
 //
 // SMALL SCREENS. The rail's own 20px pad is a 1280-rail inset, and on a phone
@@ -25,7 +25,7 @@ import type { DisclaimerSection, Ground } from '../../types';
 // at 320 for 12.5px type (~34 characters, and this is a four-line paragraph).
 // So the inset only starts at sm, where the gutter has grown anyway and the
 // two no longer compete. Identical from 640 up. `break-words` is insurance on
-// the injected HTML — the shipped copy has no token long enough to need it,
+// the injected HTML - the shipped copy has no token long enough to need it,
 // but a URL or an email dropped into `bodyHtml` later would otherwise push a
 // scrollbar rather than wrap.
 // =============================================================================

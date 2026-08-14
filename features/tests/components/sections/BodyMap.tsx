@@ -8,12 +8,12 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Section } from '../ui';
 
 // =============================================================================
-// BODY MAP — frame 'BODY MAP' @ 1440 × 935, pad 88/80.
+// BODY MAP - frame 'BODY MAP' @ 1440 × 935, pad 88/80.
 // -----------------------------------------------------------------------------
 // The diagram is NOT a percentage overlay: the frame draws five hand-placed
 // leader lines, each running from a text block to the edge of its dot, and no
 // two share a slope. So the geometry below is the frame's own numbers, rebased
-// to the diagram box's origin (the frame puts it at 360,355 — 720 × 492).
+// to the diagram box's origin (the frame puts it at 360,355 - 720 × 492).
 //
 //   figure box   720 × 492
 //   ground blur  ellipse 162 × 21 @ (279,457), #0e4d4b, layer blur 14
@@ -25,13 +25,13 @@ import { Heading, Section } from '../ui';
 // rail, so the figure and a plain label list are stacked instead.
 // =============================================================================
 
-/** Tooltip width — the build caps #bodyTip at 270px. */
+/** Tooltip width - the build caps #bodyTip at 270px. */
 const TIP_W = 270;
 
 const FIG_W = 720;
 const FIG_H = 492;
 
-// `HotspotGeom` (types.ts) is this shape — it lives there because a page whose
+// `HotspotGeom` (types.ts) is this shape - it lives there because a page whose
 // panels are not the Women's Health five has to author its own numbers, and the
 // data file cannot import from a 'use client' component.
 type Geom = HotspotGeom;
@@ -79,21 +79,21 @@ const GEOM: Record<string, Geom | undefined> = {
   },
 };
 
-/** Label — Figtree 700 18.44/22.1 #222222. Caption — Figtree 400 14.05/16.9 #5b564e. */
+/** Label - Figtree 700 18.44/22.1 #222222. Caption - Figtree 400 14.05/16.9 #5b564e. */
 const LABEL = 'block font-kyg text-[18.44px] font-bold leading-[22.1px] text-mine';
 const CAPTION = 'block font-kyg text-[14.05px] font-normal leading-[16.9px] text-fusc';
 
 /**
  * The 5-stop teal ramp already lives on `.tst-em-teal` in globals.css (@layer
  * components), so a section must NOT re-declare it. The one thing that global
- * rule cannot know is that THIS accent wraps — "saliva" closes line 1 and
- * "sample." is line 2 — and the frame fills each run with its own full ramp.
+ * rule cannot know is that THIS accent wraps - "saliva" closes line 1 and
+ * "sample." is line 2 - and the frame fills each run with its own full ramp.
  * That is `box-decoration-break: clone`, so that is all this adds.
  */
 const EM_WRAP = '[&_.tst-em-teal]:box-decoration-clone';
 
 type Hotspot = BodyMapSection['hotspots'][number];
-/** A hotspot that knows where it sits — either from its own `geom` or from GEOM. */
+/** A hotspot that knows where it sits - either from its own `geom` or from GEOM. */
 type Placed = Hotspot & { g: Geom };
 
 export default function BodyMap({ data, ground }: { data: BodyMapSection; ground?: Ground }) {
@@ -116,7 +116,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
       // frame pad 88 top/bottom (the shared rail's default is 92)
       innerClassName="py-[clamp(56px,6.2vw,88px)]"
     >
-      {/* ---- head — 680 rail, 14px gaps ------------------------------------ */}
+      {/* ---- head - 680 rail, 14px gaps ------------------------------------ */}
       <div className="mx-auto flex max-w-[680px] flex-col items-center gap-[14px] text-center">
         {eyebrow ? (
           // pill: r999, #c73c70@10 ground, 1px #c73c70@24, 0 6 18 rgba(199,60,112,.1)
@@ -133,13 +133,13 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
           </span>
         ) : null}
 
-        {/* Figtree 700 51/55 ls -0.02em — the shared Heading's leading-[1.08] is
+        {/* Figtree 700 51/55 ls -0.02em - the shared Heading's leading-[1.08] is
             already the frame's ramp, so this only sets the 680 measure. (The h2
             box reads 116 in the frame; that is Figma's font-box overshoot on the
             last line, which the CSS line-box model does not reproduce.) */}
         <Heading html={data.head.titleHtml} className={cn('max-w-[680px]', EM_WRAP)} />
 
-        {/* Figtree 400 18.5/27.8 #5b564e — half a pixel under the shared Lead, so it is local */}
+        {/* Figtree 400 18.5/27.8 #5b564e - half a pixel under the shared Lead, so it is local */}
         {data.head.leadHtml ? (
           <p
             className="max-w-[680px] font-kyg text-[clamp(15px,1.3vw,18.5px)] font-normal leading-[1.503] text-fusc"
@@ -148,12 +148,12 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
         ) : null}
       </div>
 
-      {/* ---- diagram — 1216 row, 720 × 492 box centred, gap 48 -------------- */}
+      {/* ---- diagram - 1216 row, 720 × 492 box centred, gap 48 -------------- */}
       <div className="mt-[clamp(32px,3.4vw,48px)] hidden items-center justify-center lg:flex">
         {/* `shrink-0`: every child below is absolutely placed off this box's own
             720 × 492 origin, so it must never be flex-shrunk. The lg rail is 800
             at its narrowest (1024 - 160 gutter - 64 inner), so this never fires
-            at or above 1440 — it is only insurance for the 1024–1439 band. */}
+            at or above 1440 - it is only insurance for the 1024–1439 band. */}
         <div className="relative shrink-0" style={{ width: FIG_W, height: FIG_H }}>
           {/* ground shadow: 162 × 21 ellipse, #0e4d4b at full alpha (the frame
               lists no fill alpha here, unlike the eyebrow's '#c73c70@0.1'),
@@ -164,12 +164,12 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
             style={{ left: 279, top: 457, width: 162, height: 21 }}
           />
 
-          {/* anatomy — 299 × 449, scale=FILL */}
+          {/* anatomy - 299 × 449, scale=FILL */}
           <div className="absolute" style={{ left: 208, top: 34, width: 299, height: 449 }}>
             <Image src={data.image.src} alt={data.image.alt} fill sizes="299px" className="object-cover" />
           </div>
 
-          {/* leader lines — 1.756px solid, one per hotspot */}
+          {/* leader lines - 1.756px solid, one per hotspot */}
           <svg
             aria-hidden
             fill="none"
@@ -194,7 +194,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
             })}
           </svg>
 
-          {/* hotspots — dot + label, one button per group bbox */}
+          {/* hotspots - dot + label, one button per group bbox */}
           {spots.map((h) => {
             const g = h.g;
             const [bx, by, bw, bh] = g.box;
@@ -204,7 +204,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
               <button
                 key={h.key}
                 type="button"
-                aria-label={`${h.label} — ${h.caption}`}
+                aria-label={`${h.label} - ${h.caption}`}
                 // the lead reads "Tap any part of the body", so the button has to
                 // do something on a real tap, where there is no hover to enter
                 onClick={() => setActive((k) => (k === h.key ? null : h.key))}
@@ -220,8 +220,8 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                   className="pin pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2"
                   style={{ left: cx - bx, top: cy - by }}
                 >
-                  {/* The frame's outer 39px vector carries NO fill — only the
-                      18 / 16 / 6 discs are painted — so this one is transparent
+                  {/* The frame's outer 39px vector carries NO fill - only the
+                      18 / 16 / 6 discs are painted - so this one is transparent
                       and exists purely to widen the pointer target. */}
                   <span
                     aria-hidden
@@ -266,7 +266,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                 • it flips below the hotspot when the group sits within 150px of
                   the figure top (otherwise there is no room above);
                 • its centre is clamped to the figure box so it never bleeds out
-                  of the diagram — half the 270px max-width, plus 4px.        */}
+                  of the diagram - half the 270px max-width, plus 4px.        */}
           {(() => {
             const h = spots.find((x) => x.key === active);
             if (!h) return null;
@@ -297,8 +297,8 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
       </div>
 
       {/* ---- below lg: figure, then the same labels as a list ---------------
-          The 720 × 492 diagram above cannot compress — its five leader lines are
-          hand-placed, not a percentage overlay — so below `lg` the figure is
+          The 720 × 492 diagram above cannot compress - its five leader lines are
+          hand-placed, not a percentage overlay - so below `lg` the figure is
           shown on its own and the five groups become a card list.
 
           The list rows are BUTTONS, not static text: the lead reads "Tap any

@@ -31,7 +31,7 @@ import Worth from './sections/Worth';
  *
  * The switch is EXHAUSTIVE: the `never` assignment at the bottom makes TypeScript
  * fail the build if a new member is added to the `Section` union without a case
- * here. That is the whole point of the discriminated union — data and renderer
+ * here. That is the whole point of the discriminated union - data and renderer
  * cannot drift apart silently.
  *
  * This component stays a server component. Only the four sections that need
@@ -91,7 +91,7 @@ function renderSection(section: Section & { ground?: TestPage['sections'][number
     case 'footer':
       return <Footer key={key} data={section} />;
     default: {
-      // Exhaustiveness guard — see the note above.
+      // Exhaustiveness guard - see the note above.
       const _never: never = section;
       return _never;
     }

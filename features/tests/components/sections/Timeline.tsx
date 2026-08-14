@@ -3,7 +3,7 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Section } from '../ui';
 
 // =============================================================================
-// "The gap" — the years between what your genes already encode and the first
+// "The gap" - the years between what your genes already encode and the first
 // symptom. Geometry read 1:1 from the frame (section spec 008712_timeline):
 //
 //   TIMELINE      1280 × 595, vertical, gap 48, centred
@@ -13,10 +13,10 @@ import { Heading, Section } from '../ui';
 //
 // The callouts, the nodes and the axis labels are three 4-column grids over
 // that same 1102, so a pill, its connector, its node and its label all share
-// one column centre for free — no offset maths, and adding a tick still needs
+// one column centre for free - no offset maths, and adding a tick still needs
 // no layout change.
 //
-// BELOW 1440 (no frame; judgement): the rail itself never stacks — four columns
+// BELOW 1440 (no frame; judgement): the rail itself never stacks - four columns
 // still clear 60 each at 320, which holds a 13.5px "Age 20". What does give way
 // is the callout row: below sm the two pills drop to a 2-col grid (so they sit
 // over the left and right halves rather than over their own nodes) and their
@@ -30,7 +30,7 @@ const NODE_END = 'size-4 rounded-full bg-mojo shadow-[0_0_0_4px_rgba(192,67,47,0
 const NODE_MID = 'size-[10px] rounded-full bg-white shadow-[0_0_0_2px_rgba(122,122,122,0.45)]';
 
 /** The rail: a 22px soft trough with a 3px lit line centred inside it. Both run
- *  from the first node centre to the last — i.e. inset by half a column. */
+ *  from the first node centre to the last - i.e. inset by half a column. */
 const TROUGH =
   'absolute inset-x-[12.5%] top-1/2 h-[22px] -translate-y-1/2 rounded-full bg-[linear-gradient(90deg,rgba(14,77,75,0.05)_0%,rgba(37,181,171,0.16)_33.33%,rgba(14,77,75,0.1)_66.67%,rgba(37,181,171,0.05)_100%)]';
 const LINE =
@@ -38,7 +38,7 @@ const LINE =
 
 /** The two end pills. In the frame these are single-line (174 and 183 wide) in a
  *  1102/4 = 275 column, so nowrap is free. Below lg the column is narrower than
- *  the pill — at 640 it is 127 against 183 — and nowrap would push the pill out
+ *  the pill - at 640 it is 127 against 183 - and nowrap would push the pill out
  *  past the card's own padding, so it only turns on once a column can hold it
  *  (>=1024). Under that the label wraps to two lines inside its column. */
 const CALLOUT_PILL =
@@ -52,7 +52,7 @@ export default function Timeline({ data, ground }: { data: TimelineSection; grou
     <Section ground={ground ?? 'cream'}>
       {/* ---------------------------------------------------------- head ---- */}
       {/* The frame's eyebrow is a TINTED pill (teal@7 ground, 1px teal@15,
-          Figtree 800 14/21 ls .08em) — not the white/uppercase one in ui.tsx,
+          Figtree 800 14/21 ls .08em) - not the white/uppercase one in ui.tsx,
           so it is built here rather than borrowing <Eyebrow/>. */}
       <div className="mx-auto flex w-full max-w-[680px] flex-col items-center gap-[14px] text-center">
         {eyebrow ? (
@@ -77,7 +77,7 @@ export default function Timeline({ data, ground }: { data: TimelineSection; grou
 
       {/* ---------------------------------------------------------- card ---- */}
       <div className="mt-[clamp(32px,3.34vw,48px)] flex flex-col gap-3 rounded-[28px] border border-mine/10 bg-white p-[clamp(20px,3.9vw,56px)] shadow-tst-card">
-        {/* callouts — aligned above their own nodes (columns 1 and 4) */}
+        {/* callouts - aligned above their own nodes (columns 1 and 4) */}
         <div className="grid grid-cols-2 gap-x-2 sm:grid-cols-4 sm:gap-x-0">
           <div className="col-start-1 flex flex-col items-center px-1">
             <span className={`${CALLOUT_PILL} border border-sea/25 bg-sea/10 text-sea`}>{data.startLabel}</span>

@@ -39,9 +39,9 @@ export const sleep: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: 'Sleep DNA Test — 28 readings from one saliva sample',
+    title: 'Sleep DNA Test - 28 readings from one saliva sample',
     description:
-      'Apnea, insomnia, sleep duration, teeth grinding, restless legs, narcolepsy, your airway and the eight nutrients sleep runs on — 28 genetic readings from a single at-home saliva kit, in 3 weeks.',
+      'Apnea, insomnia, sleep duration, teeth grinding, restless legs, narcolepsy, your airway and the eight nutrients sleep runs on - 28 genetic readings from a single at-home saliva kit, in 3 weeks.',
   },
 
   sections: [
@@ -64,7 +64,7 @@ export const sleep: TestPage = {
         { label: 'NABL-accredited lab', icon: 'badge-check' },
       ],
       footnoteHtml: 'You spend a third of your life asleep. This is what shapes it.',
-      image: { src: `${IMG}/hero.png`, alt: 'A person awake at 3am, phone face-down' },
+      image: { src: `${IMG}/hero.webp`, alt: 'A person awake at 3am, phone face-down' },
       resultCard: {
         title: 'Test ID NMC-SL01',
         titleRight: 'KYG Lab',
@@ -723,7 +723,7 @@ export const sleep: TestPage = {
         leadHtml:
           'Twenty-eight grades is a lot to read alone. Book a session with Dr. Varun Sharma, Ph.D, our Human Genetics scientist, and go through yours in plain language.',
       },
-      image: { src: `${IMG}/counsellor.png`, alt: 'A KYG genetics expert reviewing a sleep report' },
+      image: { src: `${IMG}/counsellor.webp`, alt: 'A KYG genetics expert reviewing a sleep report' },
       points: [
         '<b>Where to start:</b> which of your grades to act on first, and which to ignore.',
         '<b>Nutrients:</b> which of the eight to test in blood before you buy any supplement.',
@@ -832,7 +832,7 @@ export const sleep: TestPage = {
         },
         {
           q: 'I sleep fine. Is there any point?',
-          a: 'Bruxism and apnea both run for years without you noticing — a partner or a dentist usually finds them first. The pharmacogenomic reading matters before you are ever prescribed anything, not after. And a Good grade is a result too: it tells you to stop chasing a problem you do not have.',
+          a: 'Bruxism and apnea both run for years without you noticing - a partner or a dentist usually finds them first. The pharmacogenomic reading matters before you are ever prescribed anything, not after. And a Good grade is a result too: it tells you to stop chasing a problem you do not have.',
         },
         {
           q: 'What is the modafinil reading and why does it matter?',
@@ -848,7 +848,7 @@ export const sleep: TestPage = {
         },
         {
           q: 'Do I need to test again later?',
-          a: 'No. Your genes never change, so the grades hold for life — you test once and keep the report. Your blood nutrient levels do change, which is why the report tells you which ones to keep checking.',
+          a: 'No. Your genes never change, so the grades hold for life - you test once and keep the report. Your blood nutrient levels do change, which is why the report tells you which ones to keep checking.',
         },
       ],
     },

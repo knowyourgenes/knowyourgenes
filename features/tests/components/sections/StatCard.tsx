@@ -12,7 +12,7 @@ type Stat = StatsSection['stats'][number];
  * Client-only because the reference build animates each card the first time it
  * scrolls past 40% visible: the numeral counts up (when it is a bare number)
  * and the rail grows from 0 to its own ratio. Everything else in <Stats/> stays
- * a server component — this is the only interactive leaf.
+ * a server component - this is the only interactive leaf.
  */
 export default function StatCard({ data, accent }: { data: Stat; accent: string }) {
   const { ref, shown, entered, isCounted } = useCountUp(data.value);
@@ -33,7 +33,7 @@ export default function StatCard({ data, accent }: { data: Stat; accent: string 
 
       {/* Figtree 800 53/53 ls -0.01em, pad 1 / 0 / 5 / 0.
           Values that are not a bare number ("1 in 5", "2 to 3") cannot count,
-          so they spring in instead — the build gates on the same condition. */}
+          so they spring in instead - the build gates on the same condition. */}
       <div className="pb-[5px] pt-px">
         <span
           className={cn(
@@ -47,7 +47,7 @@ export default function StatCard({ data, accent }: { data: Stat; accent: string 
         </span>
       </div>
 
-      {/* Optional line between the numeral and the rail — what the number
+      {/* Optional line between the numeral and the rail - what the number
           actually says, at 80% where the body below sits at 70%. */}
       {data.leadHtml ? (
         <p

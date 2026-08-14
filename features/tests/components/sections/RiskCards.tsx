@@ -9,14 +9,14 @@ import { Icon } from '../icons';
 import { Body, Heading, Lead, Media, ResultBar, Section, TONE_TEXT } from '../ui';
 
 // =============================================================================
-// Figma: "THE 5 TESTS" — inner rail 1280 @ x=80, pad 0/32 -> 1216 content,
+// Figma: "THE 5 TESTS" - inner rail 1280 @ x=80, pad 0/32 -> 1216 content,
 // VERTICAL gap 40, cross-axis centred. Four blocks: head, filter row, card
 // wrap, CTA. Every number below is read off the frame, not eyeballed.
 // -----------------------------------------------------------------------------
 // Head        720 wide, gap 14, centred.
 // Eyebrow     h46 r999, fill #c73c70@10, 1px #c73c70@24, 0 6 18 rgba(199,60,112,.10)
 //             (= shadow-tst-crimson), pad 11/22/11/17, gap 10. Label Figtree 800
-//             14/21 ls 1.12 (0.08em) #9a2855 — sentence case, NOT uppercased.
+//             14/21 ls 1.12 (0.08em) #9a2855 - sentence case, NOT uppercased.
 // H2          Figtree 700 51/55 ls -1.02 #222222 + Cormorant 600 italic 51/55 on
 //             its own line (two text runs, gap 1) -> the <em> is forced block and
 //             carries that 1px as a margin. The h2 frame also has 2 of top pad,
@@ -47,7 +47,7 @@ import { Body, Heading, Lead, Media, ResultBar, Section, TONE_TEXT } from '../ui
 //             195-200). That is the designer's placeholder scaffolding naming the
 //             artwork to be dropped in; the finished photography now sits in the
 //             slot, so printing "PCOS visual" across it would be a defect. It is
-//             deliberately NOT rendered — same call as star-treatment, price-value
+//             deliberately NOT rendered - same call as star-treatment, price-value
 //             and the 30-second explainer, which carry the identical scaffolding.
 // Rule        4px full-bleed linear gradient between the slot and the copy.
 // Copy block  pad 27/28/28/28, gap 7: gene label (Figtree 700 11/16.5 ls 1.1,
@@ -58,7 +58,7 @@ import { Body, Heading, Lead, Media, ResultBar, Section, TONE_TEXT } from '../ui
 //             ls 1.26 #7a7a7a, value Cormorant 600 italic 21/31.5 tone-coloured
 //             (no dot in the frame), 6px rail on #222222@10.
 //             The body and the CTA note are each a SINGLE 400-weight run in the
-//             frame (the extractor splits a text node per style run — see the
+//             frame (the extractor splits a text node per style run - see the
 //             h2, split at the serif). The data still wraps their last sentence
 //             in <b>, which preflight renders at 700, so the weight is pinned
 //             back to 400 here until the copy loses the tag.
@@ -77,7 +77,7 @@ type Accent = {
   /** Caption inside the image slot. */
   caption: string;
   /** 2px rule beside an optional scenario quote. Spelt out rather than derived
-   *  from `rule` at runtime — Tailwind only emits classes it can see in source. */
+   *  from `rule` at runtime - Tailwind only emits classes it can see in source. */
   border: string;
   /** Tint for a registry badge icon (pages outside Women's Health). */
   badgeText: string;
@@ -159,7 +159,7 @@ function Glyph({ id, box, w, h }: { id: string; box: string; w: string; h: strin
   );
 }
 
-/** "Five risks that stay silent" — filter pills over a wrapped card grid. */
+/** "Five risks that stay silent" - filter pills over a wrapped card grid. */
 export default function RiskCards({ data, ground }: { data: RiskCardsSection; ground?: Ground }) {
   const [filter, setFilter] = useState<PanelKey | 'all'>('all');
   // The reference build DIMS the cards that fall outside the filter rather than
@@ -253,7 +253,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                   dim && 'dim'
                 )}
               >
-                {/* image slot 387 x 180 — the aspect box keeps it fluid at every
+                {/* image slot 387 x 180 - the aspect box keeps it fluid at every
                  *  card width. `sizes`: the card tops out at 389 at EVERY width
                  *  >=430 (where the rail first clears 389), so one 389px hint
                  *  covers the whole tablet/desktop range and the browser reuses a
@@ -262,7 +262,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                  *  768 tablet that only ever paints 332. */}
                 <div className="relative w-full">
                   <Media img={c.image} className="aspect-[387/180] w-full" sizes="(min-width:430px) 389px, 92vw" />
-                  {/* r16 — NOT rounded-2xl, which is 18px on this project's scale. */}
+                  {/* r16 - NOT rounded-2xl, which is 18px on this project's scale. */}
                   {/* The frame's badge artwork exists for the Women's Health
                       panels only, so any other page names a registry icon and
                       gets it in that card's accent instead. */}
@@ -310,10 +310,10 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                     />
                   ) : null}
 
-                  {/* One uniform 400 run in the frame — see the note above on <b>. */}
+                  {/* One uniform 400 run in the frame - see the note above on <b>. */}
                   <Body html={c.bodyHtml} className="pt-1 text-[17.5px] leading-[26.2px]" />
 
-                  {/* Symptom pills — hairline outline, no fill, so they read as
+                  {/* Symptom pills - hairline outline, no fill, so they read as
                       a checklist rather than as another set of tone chips. */}
                   {c.chips?.length ? (
                     <div className="flex flex-wrap gap-1.5 pt-2">
@@ -362,8 +362,8 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
         {data.cta ? (
           <div className="flex w-full flex-col items-center gap-2 pt-2">
             {/* The shared <Cta/> is the 60-tall button (pad 16/34/18/34, label
-             *  16/24); this frame's is the big one — h69, pad 20/44, label 18/27
-             *  — so it is spelt out here with the same tokens and the frame's own
+             *  16/24); this frame's is the big one - h69, pad 20/44, label 18/27
+             *  - so it is spelt out here with the same tokens and the frame's own
              *  arrow glyph. */}
             <Link
               href={data.cta.href}

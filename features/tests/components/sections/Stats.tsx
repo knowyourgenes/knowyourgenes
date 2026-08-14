@@ -1,5 +1,5 @@
 // =============================================================================
-// THE NUMBERS — ink band, 1440x888
+// THE NUMBERS - ink band, 1440x888
 // -----------------------------------------------------------------------------
 // Frame geometry (all values straight off the Figma node tree):
 //   section      pad 92/80  fill #141b1a
@@ -14,7 +14,7 @@
 // #2ac3a2 / #25b5ab / #7fe3d6 across the teal cards and #e39bb4 on the crimson
 // one, and each bar has its own fill ratio (34/95/86/121/138 of 172). Neither is
 // expressible with today's StatsSection type, so both live here as ordered
-// component data — see the report's typeChangesNeeded.
+// component data - see the report's typeChangesNeeded.
 // =============================================================================
 
 import Link from 'next/link';
@@ -52,7 +52,7 @@ export default function Stats({ data, ground }: { data: StatsSection; ground?: G
             </span>
           ) : null}
 
-          {/* Figtree 700 51/55 ls -0.02em #faf6ef — breaks after "are". */}
+          {/* Figtree 700 51/55 ls -0.02em #faf6ef - breaks after "are". */}
           <Heading html={titleHtml} className="pt-[2px] leading-[1.0784] text-linenw" />
 
           {/* Figtree 400 18.5/27.8 #faf6ef@70 */}
@@ -63,7 +63,7 @@ export default function Stats({ data, ground }: { data: StatsSection; ground?: G
 
         {/* ---- five stat cards: 230x237, r22, pad 28, gap 11 ----------------
             Five across only from xl (1280) up, which is where a card is still
-            ~198 wide / 142 of content — the width the frame was signed off at.
+            ~198 wide / 142 of content - the width the frame was signed off at.
             At lg (1024) five tracks leave 91px of content per card, which wraps
             the numeral mid-value ("2 to / 3") and shreds the body copy, so the
             row steps down to three (3 + 2) there and at md. */}
@@ -78,7 +78,7 @@ export default function Stats({ data, ground }: { data: StatsSection; ground?: G
 
         {/* ---- cta: 245x69 white pill, 4px white halo + deep drop ----------
             The 44px side padding makes the pill 245 wide, which leaves only
-            35px of slack in the 280px column at 320 — before the 4px halo. It
+            35px of slack in the 280px column at 320 - before the 4px halo. It
             is `whitespace-nowrap`, so a label any longer than this one would
             push the page sideways; below sm the padding drops to 32. */}
         {data.cta ? (

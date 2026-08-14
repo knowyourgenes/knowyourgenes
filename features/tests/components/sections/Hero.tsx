@@ -1,5 +1,5 @@
 // =============================================================================
-// features/tests — HERO
+// features/tests - HERO
 // -----------------------------------------------------------------------------
 // Rebuilt 1:1 from the Figma frame (node 'HERO', 1440x896).
 //
@@ -28,7 +28,7 @@ import { Eyebrow, Heading, Lead, Section, TONE_DOT, TONE_TEXT } from '../ui';
 /**
  * Trailing button glyphs, both 20x24 with the frame's fill baked in: the white
  * arrow-right (660-268) only ever sits on the eden primary, the eden arrow-down
- * (660-520) only on the white ghost — that is the only pairing the frame ships,
+ * (660-520) only on the white ghost - that is the only pairing the frame ships,
  * and no white arrow-down / eden arrow-right exists in the export.
  * `motion` is the hover nudge, along the axis the glyph actually points.
  */
@@ -39,9 +39,9 @@ const CTA_GLYPH: Record<string, { id: string; motion: string }> = {
 
 /** Chip glyph + the 32 px badge ground behind it (mint for teal, blush for crimson). */
 const CHIP_GLYPH: Record<string, { id: string; badge: string }> = {
-  droplet: { id: '747-127', badge: 'bg-mint' }, // No needles      — teal
-  'badge-check': { id: '747-277', badge: 'bg-blush' }, // NABL lab — crimson
-  clock: { id: '747-415', badge: 'bg-mint' }, // Results in 3 weeks — teal
+  droplet: { id: '747-127', badge: 'bg-mint' }, // No needles      - teal
+  'badge-check': { id: '747-277', badge: 'bg-blush' }, // NABL lab - crimson
+  clock: { id: '747-415', badge: 'bg-mint' }, // Results in 3 weeks - teal
 };
 
 /** Results-card header glyph (18x21). */
@@ -75,7 +75,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
       <div className="grid items-center gap-x-16 gap-y-14 pt-[clamp(48px,5.6vw,80px)] pb-[clamp(64px,6.7vw,96px)] lg:grid-cols-2">
         {/* ------------------------------------------------------------ copy -- */}
         <div className="flex flex-col items-start gap-[7px]">
-          {/* White pill with an 8 px crimson dot — the frame has no glyph here. */}
+          {/* White pill with an 8 px crimson dot - the frame has no glyph here. */}
           <Eyebrow data={{ label: data.eyebrow.label, accent: data.eyebrow.accent }} />
 
           {/* Figtree 800 64/69.1 ls -0.02em #222222. The serif run's
@@ -96,7 +96,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
               highlighter band, 2 px side padding.
               The frame's fill is a VERTICAL gradient (handles (0.5,0)->(0.5,1) =
               180deg) whose two stops SHARE position 0.6: crimson@0 at 60% and
-              crimson@0.22 at 60%. That is a hard edge, not a fade — nothing
+              crimson@0.22 at 60%. That is a hard edge, not a fade - nothing
               above the 60 % line, a flat 22 % crimson band across the bottom
               14 px of the 35 px box. Restated literally rather than through
               `bg-gradient-to-r`, which would fade left-to-right across the whole
@@ -112,7 +112,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
           {/* Figtree 400 19/28.5 #5b564e */}
           <Lead html={data.subHtml} className="max-w-[520px]" />
 
-          {/* Optional benefit checklist — Figtree 400 17/24 on a filled tick,
+          {/* Optional benefit checklist - Figtree 400 17/24 on a filled tick,
               the same 12px gap the chip row below uses. */}
           {data.bullets?.length ? (
             <ul className="flex max-w-[520px] flex-col gap-3 pt-[21px]">
@@ -152,7 +152,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
             })}
           </div>
 
-          {/* pad-top 25, gap 10 — h50 white pills, 32 px badge, label 14.5/21.8 */}
+          {/* pad-top 25, gap 10 - h50 white pills, 32 px badge, label 14.5/21.8 */}
           <div className="flex flex-wrap items-center gap-2.5 pt-[25px]">
             {data.chips.map((c) => {
               const glyph = c.icon ? CHIP_GLYPH[c.icon] : undefined;

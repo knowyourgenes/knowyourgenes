@@ -12,7 +12,7 @@ import type { ContactInput } from '../schemas/contact.schema';
  * first. Email is only a notification, and `sendMail` deliberately no-ops when
  * SMTP is unconfigured (returns { delivered:false, skipped:true }).
  *
- * If we mailed first — or treated a mail failure as an error — a message would
+ * If we mailed first - or treated a mail failure as an error - a message would
  * be silently lost every time SMTP is down or unset. As it stands, the row is
  * already committed before we try to notify anyone, so nothing can go missing:
  * worst case the team reads it from the ContactMessage table.
@@ -34,7 +34,7 @@ function escapeHtml(s: string): string {
 export async function submitContactMessage(input: ContactInput): Promise<ContactResult> {
   const { name, email, phone, topic, message } = input;
 
-  // 1. Persist first — this is what makes the submission durable.
+  // 1. Persist first - this is what makes the submission durable.
   const row = await prisma.contactMessage.create({
     data: { name, email, phone: phone ?? null, topic, message },
     select: { id: true, createdAt: true },
@@ -48,7 +48,7 @@ export async function submitContactMessage(input: ContactInput): Promise<Contact
       '',
       `Name:    ${name}`,
       `Email:   ${email}`,
-      `Phone:   ${phone ?? '—'}`,
+      `Phone:   ${phone ?? '-'}`,
       `Topic:   ${topic}`,
       `Ref:     ${row.id}`,
       '',
@@ -57,13 +57,13 @@ export async function submitContactMessage(input: ContactInput): Promise<Contact
     ];
     const res = await sendMail({
       to: TEAM_INBOX,
-      subject: `[Contact] ${topic} — ${name}`,
+      subject: `[Contact] ${topic} - ${name}`,
       text: lines.join('\n'),
       html:
         `<p><strong>New contact message</strong></p>` +
         `<p><strong>Name:</strong> ${escapeHtml(name)}<br/>` +
         `<strong>Email:</strong> ${escapeHtml(email)}<br/>` +
-        `<strong>Phone:</strong> ${escapeHtml(phone ?? '—')}<br/>` +
+        `<strong>Phone:</strong> ${escapeHtml(phone ?? '-')}<br/>` +
         `<strong>Topic:</strong> ${escapeHtml(topic)}<br/>` +
         `<strong>Ref:</strong> ${row.id}</p>` +
         `<p style="white-space:pre-wrap">${escapeHtml(message)}</p>`,
@@ -72,7 +72,7 @@ export async function submitContactMessage(input: ContactInput): Promise<Contact
     });
     notified = res.delivered;
     if (!res.delivered && !isMailConfigured()) {
-      console.warn(`[contact] stored ${row.id} but SMTP is unconfigured — no notification sent`);
+      console.warn(`[contact] stored ${row.id} but SMTP is unconfigured - no notification sent`);
     }
   } catch (err) {
     // Swallow: the message is already safely stored.

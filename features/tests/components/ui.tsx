@@ -1,12 +1,12 @@
 // =============================================================================
-// features/tests — shared presentational primitives
+// features/tests - shared presentational primitives
 // -----------------------------------------------------------------------------
 // Every value here is read from the Figma frame via the REST API, not eyeballed.
 // The artboard is 1440 wide: section gutter 80, inner rail 1280 with 32 of its
 // own padding, so the real content column is 1216px.
 //
 // Desktop numbers are the clamp() MAX. There is no mobile frame in the file, so
-// the lower bounds are a judgement call — but at >=1440 this matches 1:1.
+// the lower bounds are a judgement call - but at >=1440 this matches 1:1.
 // =============================================================================
 
 import Image from 'next/image';
@@ -27,7 +27,7 @@ import { Icon } from './icons';
 
 // ---- grounds ---------------------------------------------------------------
 // Several sections are gradients over the cream page, and five are plain white
-// at 70% — that is `--color-veil` composited on --color-linenw, not a flat hex.
+// at 70% - that is `--color-veil` composited on --color-linenw, not a flat hex.
 
 export const GROUND: Record<Ground, string> = {
   cream: 'bg-linenw text-mine',
@@ -92,7 +92,7 @@ export function Lead({ html, className }: { html: string; className?: string }) 
   );
 }
 
-/** Figtree 400 17.5/26 #5b564e — card and column body copy. */
+/** Figtree 400 17.5/26 #5b564e - card and column body copy. */
 export function Body({ html, className }: { html: string; className?: string }) {
   return (
     <p
@@ -263,7 +263,7 @@ export function ChipRow({ items, accent, className }: { items: ChipT[]; accent?:
 
 // ---- risk tone -------------------------------------------------------------
 
-// `neutral` is the non-grade tone (see RiskTone in types.ts) — brand teal, so a
+// `neutral` is the non-grade tone (see RiskTone in types.ts) - brand teal, so a
 // share reads as information rather than as a verdict.
 
 export const TONE_TEXT: Record<RiskTone, string> = {

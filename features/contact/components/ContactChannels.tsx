@@ -5,7 +5,7 @@ import type { Channel } from '../types';
 import { ContactIcon } from './ContactIcon';
 
 /**
- * LEFT column of the main section — 499 wide, gap 20.
+ * LEFT column of the main section - 499 wide, gap 20.
  *
  * Three white cards (r24, 1px #222222@10, pad 28, shadow-tst-soft) then the
  * inverted eden card (r24, no stroke, shadow-tst-card), which additionally
@@ -13,7 +13,7 @@ import { ContactIcon } from './ContactIcon';
  *
  * Radii are written as explicit arbitrary values: this project remaps the
  * Tailwind radius scale (--radius: 0.625rem), so rounded-3xl is 22px and
- * rounded-2xl is 18px — neither is the frame's 24 / 16.
+ * rounded-2xl is 18px - neither is the frame's 24 / 16.
  */
 function ChannelCard({ data }: { data: Channel }) {
   const inverted = data.tone === 'inverted';
@@ -44,7 +44,7 @@ function ChannelCard({ data }: { data: Channel }) {
             {data.kicker}
           </div>
 
-          {/* Figtree 800 — 19/28.5 (email, phone), 17/23.4 (lab), 18/24.8 (eden) */}
+          {/* Figtree 800 - 19/28.5 (email, phone), 17/23.4 (lab), 18/24.8 (eden) */}
           <div
             className={cn(
               'mt-[3px] break-words font-kyg font-extrabold',

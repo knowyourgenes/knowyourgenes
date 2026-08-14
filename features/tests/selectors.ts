@@ -1,5 +1,5 @@
 // =============================================================================
-// features/tests — read helpers for a section-array TestPage
+// features/tests - read helpers for a section-array TestPage
 // -----------------------------------------------------------------------------
 // Consumers outside this feature (the homepage test cards, the llms.txt writer,
 // the sitemap) need a couple of specific values out of a page. They must NOT
@@ -22,7 +22,7 @@ export function findSection<T extends Section['type']>(
     | undefined;
 }
 
-/** The page's lead image — used for cards and social previews. */
+/** The page's lead image - used for cards and social previews. */
 export function getHeroImage(page: TestPage): Img | undefined {
   return (findSection(page, 'hero') as HeroSection | undefined)?.image;
 }
