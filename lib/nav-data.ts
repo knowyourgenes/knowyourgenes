@@ -18,7 +18,33 @@ export interface MegaMenu {
   cards: MegaCard[];
 }
 
+/**
+ * Flat links rendered BEFORE the mega menus, i.e. at the left-hand end of the
+ * desktop nav.
+ *
+ * "Categories" rather than "Category": the route lists several categories, so
+ * the plural is what the page actually is. It replaces the Wellness mega menu
+ * (commented out below) and takes its position, which is why it needs its own
+ * list - NAV_LINKS renders AFTER the menus, so putting it there would have
+ * pushed it past Women's Health to the far right.
+ *
+ * The href is RELATIVE on purpose. It was specified as
+ * https://www.knowyourgenes.in/categories, but an absolute URL to our own site
+ * would force a full document reload instead of a client-side navigation, and
+ * on localhost or any preview deployment it would send the visitor to
+ * production mid-session. Next resolves '/categories' against whatever origin
+ * is serving the page, which is what is wanted everywhere.
+ */
+export const NAV_LEAD_LINKS = [{ label: 'Categories', href: '/categories' }];
+
 export const NAV_MENUS: MegaMenu[] = [
+  /*
+   * WELLNESS MEGA MENU - temporarily commented out, replaced by the flat
+   * "Categories" link above. Kept rather than deleted because its five cards
+   * (Men's Health, Women's Health, Ancestry, Skin, My Wellness) carry copy,
+   * hrefs and image paths that would otherwise have to be reconstructed to
+   * bring it back. Uncomment and drop NAV_LEAD_LINKS to restore.
+   *
   {
     key: 'wellness',
     label: 'Wellness',
@@ -59,6 +85,7 @@ export const NAV_MENUS: MegaMenu[] = [
       },
     ],
   },
+  */
   {
     key: 'womens-health',
     label: "Women's Health",

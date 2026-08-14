@@ -8,7 +8,7 @@ import { LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import UserNav from '@/features/admin/components/UserNav';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
-import { NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
+import { NAV_LEAD_LINKS, NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
 import { Container } from './Container';
 import { KygLogo } from './Logo';
 
@@ -119,6 +119,15 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
 
           {/* Desktop mega-menu nav */}
           <nav ref={linksRef} className="flex items-center gap-[2px] ml-auto max-[980px]:hidden" aria-label="Main">
+            {/* Flat links that sit BEFORE the mega menus. Rendered from their
+                own list rather than from NAV_LINKS, which is mapped after the
+                menus - see the note in lib/nav-data.ts. */}
+            {NAV_LEAD_LINKS.map((link) => (
+              <Link key={link.label} className={NAV_LINK} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+
             {NAV_MENUS.map((menu) => {
               const isOpen = openKey === menu.key;
               return (
@@ -293,6 +302,20 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
             aria-label="Mobile"
             className="flex flex-col fixed top-16 right-0 bottom-0 z-[1200] w-[86vw] max-w-[360px] overflow-y-auto bg-(--cream) border-l border-(--ink-line) shadow-[0_0_60px_rgba(0,0,0,.18)] px-[22px] py-[24px] gap-[22px]"
           >
+            {/* Mirrors the desktop bar: the lead links come first, before the
+                menus. Without this the drawer would be the only place
+                "Categories" is unreachable. */}
+            {NAV_LEAD_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="block py-[9px] text-[15px] font-semibold text-(--ink-1) hover:text-(--teal)"
+              >
+                {link.label}
+              </Link>
+            ))}
+
             {NAV_MENUS.map((menu) => (
               <div key={menu.key}>
                 <div className="text-[11px] tracking-[0.2em] uppercase font-bold text-(--ink-3) mb-[10px]">

@@ -28,7 +28,7 @@
 // the overlay would also cover the helix.
 // =============================================================================
 
-import { AssetSlot, Body, Cta, DotRow, Kicker, PHOTO } from '../ui';
+import { AssetSlot, Body, Cta, Kicker, PHOTO } from '../ui';
 import { HeroReveal } from '../motion';
 import { HelixCanvas, HERO_HELIX } from '../HelixCanvas';
 import { HomeIcon } from '../HomeIcon';
@@ -104,14 +104,17 @@ export default function Hero() {
                 </HeroReveal>
               </h1>
 
-              {/* acronym expansion - 1px java rule on the left, two label rows */}
-              <HeroReveal delay={0.34}>
-                <div className="flex flex-col gap-2 border-l border-java2/55 pl-[18px] sm:flex-row sm:gap-[34px]">
-                  <DotRow lead="KYC">Know Your Customer</DotRow>
-                  <DotRow lead="KYG">Know Your Genes</DotRow>
-                </div>
-              </HeroReveal>
+              {/* The acronym expansion rail (KYC · Know Your Customer / KYG ·
+                  Know Your Genes) was removed here to bring the whole hero into
+                  a single viewport. It cost roughly 90px of vertical space plus
+                  its gap, and it was the most expendable block in the stack: the
+                  headline now spells both terms out in plain English, so the
+                  rail was restating what the line above had just said.
 
+                  The entrance delays below keep their original values rather
+                  than being re-sequenced. They were tuned as a wave against the
+                  designer's build, and closing the 0.34 gap would compress the
+                  stagger everywhere after it. */}
               <HeroReveal delay={0.42}>
                 <p className="max-w-[24ch] pt-[23px] font-kyg text-[clamp(17px,1.45vw,20.9px)] font-medium leading-[1.42] tracking-[-0.018em] text-linenw">
                   Your DNA has been with you through every chapter of your life.
