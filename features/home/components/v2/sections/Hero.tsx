@@ -68,9 +68,9 @@ export default function Hero() {
             sticky and takes its own space. Reproducing the source's 88px pad
             literally put the kicker 17px behind the bar at every width up to
             768. So the pad is 64 + 78, floored at 84 on phones. */}
-        <div className="relative z-[3] px-5 pb-[clamp(38px,4.4vw,64px)] pt-[clamp(84px,9.9vw,142px)] sm:px-8 lg:px-[63px]">
-          <div className="mx-auto flex w-full max-w-[1313px] flex-col justify-center lg:min-h-[max(520px,calc(100svh-64px-190px))]">
-            <div className="flex w-full max-w-full flex-col gap-[14px] lg:max-w-[min(58%,760px)]">
+        <div className="relative z-[3] px-5 pb-[clamp(38px,4.4vw,64px)] pt-[clamp(72px,6.6vw,100px)] sm:px-8 lg:px-[63px]">
+          <div className="mx-auto flex w-full max-w-[1313px] flex-col justify-center lg:min-h-[max(440px,calc(100svh-64px-190px))]">
+            <div className="flex w-full max-w-full flex-col gap-[10px] lg:max-w-[min(58%,760px)]">
               <HeroReveal delay={0.05}>
                 <Kicker>Genetics for a lifetime</Kicker>
               </HeroReveal>
@@ -94,7 +94,7 @@ export default function Hero() {
                   than leaving one word stranded on line two. */}
               <h1
                 id="hero-heading"
-                className="text-balance pb-[14px] pt-[18px] font-kyg text-[clamp(34px,4.9vw,70.6px)] leading-[0.98] tracking-[-0.035em]"
+                className="text-balance pb-[10px] pt-[10px] font-kyg text-[clamp(30px,3.9vw,56px)] leading-[1.02] tracking-[-0.035em]"
               >
                 <HeroReveal as="span" delay={0.14} className="block font-light text-linenw/72">
                   KYC tells the world who you are.
@@ -116,7 +116,7 @@ export default function Hero() {
                   designer's build, and closing the 0.34 gap would compress the
                   stagger everywhere after it. */}
               <HeroReveal delay={0.42}>
-                <p className="max-w-[24ch] pt-[23px] font-kyg text-[clamp(17px,1.45vw,20.9px)] font-medium leading-[1.42] tracking-[-0.018em] text-linenw">
+                <p className="max-w-[24ch] pt-[14px] font-kyg text-[clamp(16px,1.3vw,19px)] font-medium leading-[1.42] tracking-[-0.018em] text-linenw">
                   Your DNA has been with you through every chapter of your life.
                 </p>
               </HeroReveal>
@@ -127,7 +127,7 @@ export default function Hero() {
 
               {/* five insight areas - one row at desktop, wrapping below */}
               <HeroReveal delay={0.58}>
-                <ul className="flex list-none flex-wrap gap-x-[26px] gap-y-[10px] pt-[22px]">
+                <ul className="flex list-none flex-wrap gap-x-[26px] gap-y-[10px] pt-[16px]">
                   {AREAS.map((a) => (
                     <li key={a.label} className="group inline-flex min-w-0 items-center gap-[9px]">
                       <HomeIcon
@@ -144,13 +144,13 @@ export default function Hero() {
 
               {/* Cormorant Garamond 500 italic 22/29.7 - the editorial close */}
               <HeroReveal delay={0.64}>
-                <p className="pb-px pt-[18px] font-tst text-[clamp(19px,1.53vw,22px)] font-medium italic leading-[1.35] text-linenw/66">
+                <p className="pb-px pt-[12px] font-tst text-[clamp(17px,1.35vw,20px)] font-medium italic leading-[1.35] text-linenw/66">
                   One you. A lifetime of genetic insight.
                 </p>
               </HeroReveal>
 
               <HeroReveal delay={0.72}>
-                <div className="flex flex-wrap gap-4 pt-[clamp(28px,3.2vw,40px)]">
+                <div className="flex flex-wrap gap-4 pt-[clamp(20px,2.2vw,28px)]">
                   {/* `.btn--glow` in the source: a ring that breathes outward so
                       the eye finds the primary action. Paused on hover, where
                       the button's own lift and shadow take over. */}
