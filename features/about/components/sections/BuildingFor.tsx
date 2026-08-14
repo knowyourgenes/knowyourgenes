@@ -1,5 +1,5 @@
 // =============================================================================
-// About Us — SECTION 09 · "Who we're building for"
+// About Us - SECTION 09 · "Who we're building for"
 // -----------------------------------------------------------------------------
 // Figma frame: 1440 × 1470, pad 92/20, ground = linear gradient #faf6ef → #f1f7f6
 // (linenw → sage, the token literally commented "WHO IT'S FOR gradient end").
@@ -15,12 +15,12 @@
 // column centred against the taller left one.
 //
 // The slot now carries the designer's portrait (frame 2084:4145). Filling it
-// sets the placeholder overlay — glyph 9814-325 plus the caption "Editorial
-// portrait" — to HIDDEN in the frame, so the photo replaces the stand-in rather
+// sets the placeholder overlay - glyph 9814-325 plus the caption "Editorial
+// portrait" - to HIDDEN in the frame, so the photo replaces the stand-in rather
 // than sitting behind it. The blurred backing stays.
 //
 // PROFILE AVATARS: all four 56px slots carry photography, and all four are
-// VERIFIED against the design — every slot's imageRef was read from the frame
+// VERIFIED against the design - every slot's imageRef was read from the frame
 // and matches the file shipped here.
 //
 // Card 04 took a detour worth recording. Its image landed in Figma after the
@@ -28,7 +28,7 @@
 // read at the time and the image was identified from the file's image manifest
 // instead: the other three avatars are all exactly 1254x1254 PNG from one
 // generation batch, and of the images added since, exactly one shared that
-// signature. That inference was later confirmed directly — the frame's slot for
+// signature. That inference was later confirmed directly - the frame's slot for
 // "The Informed" carries imageRef 65bb1d69…, which is what shipped.
 // =============================================================================
 
@@ -51,8 +51,7 @@ const STATEMENTS: { icon: string; text: string }[] = [
   },
   {
     icon: '9926-701',
-    text:
-      "Maybe you simply believe that waiting for something to go wrong isn't the only way to think about health.",
+    text: "Maybe you simply believe that waiting for something to go wrong isn't the only way to think about health.",
   },
 ];
 
@@ -113,9 +112,7 @@ export default function BuildingFor() {
         <Eyebrow label="Who we're building for" icon="9301-601" />
         <Heading
           className="text-[clamp(28px,2.92vw,42px)] leading-[1.05] tracking-[-0.018em]"
-          html={
-            'For the person who <em class="abt-grad">wants to know<br class="hidden md:inline" /> more.</em>'
-          }
+          html={'For the person who <em class="abt-grad">wants to know<br class="hidden md:inline" /> more.</em>'}
         />
       </header>
 
@@ -126,10 +123,10 @@ export default function BuildingFor() {
       <div className="mx-auto grid w-full grid-cols-1 gap-8 lg:grid-cols-[580fr_708fr] lg:items-center lg:gap-12">
         {/* The frame's 580 x 724 portrait slot. Height tracks 724 at 1440
             (724/1440 = 50.28vw) and steps down rather than leaving a huge void
-            on smaller screens. The source is 1122x1402 — near enough the slot's
+            on smaller screens. The source is 1122x1402 - near enough the slot's
             0.80 ratio that object-cover barely crops. */}
         <div className="relative mx-auto w-full max-w-[580px]">
-          {/* the frame's 612 x 756 blurred gradient backing — 16 proud of the
+          {/* the frame's 612 x 756 blurred gradient backing - 16 proud of the
               slot on every side, hence -inset-4 */}
           <div
             aria-hidden="true"
@@ -150,10 +147,7 @@ export default function BuildingFor() {
               className="flex items-start gap-[14px] rounded-[16px] border border-mine/10 bg-white px-5 py-4 shadow-tst-soft"
             >
               <AboutIcon id={statement.icon} className="mt-px h-[25px] w-[21px] shrink-0" />
-              <Body
-                html={statement.text}
-                className="min-w-0 text-[17px] leading-[23.4px] text-[#2d2a24]"
-              />
+              <Body html={statement.text} className="min-w-0 text-[17px] leading-[23.4px] text-[#2d2a24]" />
             </li>
           ))}
         </ul>
@@ -167,7 +161,7 @@ export default function BuildingFor() {
           prefix) to dodge the title wrap between 1280 and ~1330. Tailwind v4
           emits arbitrary min-width variants in a block BEFORE the named
           breakpoints, so such a rule lands earlier in the stylesheet than
-          `sm:grid-cols-2` and loses the cascade at equal specificity — the grid
+          `sm:grid-cols-2` and loses the cascade at equal specificity - the grid
           then silently stays two columns at EVERY width. That bug shipped once;
           measured in the built CSS, the arbitrary rule sat at offset 244840 and
           sm at 246491. An arbitrary min-width variant can never beat a named
@@ -175,7 +169,7 @@ export default function BuildingFor() {
           which is why the ones in WhyWeExist and Understandable are fine.)
 
           Note also that writing such a class inside a comment is enough for the
-          Tailwind scanner to emit it — the string above is deliberately broken
+          Tailwind scanner to emit it - the string above is deliberately broken
           up so no dead rule is generated.
 
           "THE HEALTH-CONSCIOUS" may take two lines in that narrow band; the
@@ -189,7 +183,7 @@ export default function BuildingFor() {
           >
             <div className="flex items-center justify-between gap-4">
               {/* Photo where the frame supplied one (it hides the glyph in that
-                  case); the glyph medallion otherwise. Decorative either way —
+                  case); the glyph medallion otherwise. Decorative either way -
                   the card's title and question carry the meaning. */}
               {profile.img ? (
                 <Photo
@@ -215,7 +209,7 @@ export default function BuildingFor() {
               designer typed it and applies case via `style.textCase`, so the
               sentence-case strings in PROFILES above are correct AS DATA and the
               `uppercase` below is what makes them match the design. Do NOT
-              "correct" this to normal-case — the 0.12em tracking is uppercase
+              "correct" this to normal-case - the 0.12em tracking is uppercase
               tracking and is the giveaway. The card questions below ARE
               AS_TYPED and must stay sentence case.
             */}
@@ -223,19 +217,14 @@ export default function BuildingFor() {
               {profile.title}
             </p>
 
-            <Body
-              html={profile.question}
-              className="mt-[7px] min-w-0 text-[16.5px] leading-[22.7px] text-[#2d2a24]"
-            />
+            <Body html={profile.question} className="mt-[7px] min-w-0 text-[16.5px] leading-[22.7px] text-[#2d2a24]" />
           </li>
         ))}
       </ul>
 
       {/* ---- closing line --------------------------------------------------- */}
       <Body
-        html={
-          'Different questions. <em class="abt-grad">One simple starting point: know more.</em>'
-        }
+        html={'Different questions. <em class="abt-grad">One simple starting point: know more.</em>'}
         className="mx-auto w-full max-w-[900px] text-center text-[clamp(21px,2.22vw,32px)] font-semibold leading-[1.375] text-mine"
       />
     </Section>

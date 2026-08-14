@@ -92,7 +92,7 @@ export async function linkLabAndNotify(orderId: string): Promise<LabNotifyResult
       `Lab:          ${lab.name} (${lab.partner.name})`,
       ``,
       `Please prepare to receive/process this sample.`,
-      `— Know Your Genes`,
+      `- Know Your Genes`,
     ].join('\n');
 
     const mail = await sendMail({ to, subject, text });

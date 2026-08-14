@@ -1,9 +1,9 @@
 // =============================================================================
-// features/about — shared presentational primitives
+// features/about - shared presentational primitives
 // -----------------------------------------------------------------------------
 // Values read from the Figma "About Us" frame (node 2076:2376) via the REST API.
 // The artboard is 1440: section gutter 80, inner rail 1280 with its own 32, so
-// the content column is 1216 — the same system as the tests and contact pages.
+// the content column is 1216 - the same system as the tests and contact pages.
 //
 // RADIUS TRAP: this project remaps Tailwind's radius scale (--radius 0.625rem),
 // so rounded-2xl is 18px and rounded-3xl is 22px. The frame uses 12/16/22/24/26/
@@ -18,7 +18,7 @@ import { AboutIcon } from './AboutIcon';
 
 /**
  * The designer's placeholder photography, dropped into the frame's `div.imgslot`
- * nodes (Figma node 2084:4145 — same layout as 2076:2376, artwork added).
+ * nodes (Figma node 2084:4145 - same layout as 2076:2376, artwork added).
  *
  * In the frame, filling a slot sets its glyph + caption overlay to HIDDEN, so
  * these REPLACE the stand-in rather than layering over it. Every source is
@@ -114,15 +114,15 @@ export function Eyebrow({
 }) {
   return (
     // The frame's own metrics: h 38 = 1 + 8 + 20.2 + 8 + 1, pad 8/17/8/13, gap 9,
-    // glyph 19x23 (NOT square — forcing it squashes the artwork ~17%), label
+    // glyph 19x23 (NOT square - forcing it squashes the artwork ~17%), label
     // Figtree 700 13.5/20.2 ls 1.49 (0.11em).
     //
     // DO NOT override this `uppercase` with `[&>span]:normal-case`. Figma stores
     // TEXT in `characters` exactly as the designer typed it and applies case
     // separately via `style.textCase`, so a spec dump that prints only
     // `characters` shows "Start with knowing" for a pill the frame renders as
-    // "START WITH KNOWING". Every eyebrow on this page — all 61 uppercase runs
-    // in the About frame — is textCase=UPPER; the frame contains no LOWER or
+    // "START WITH KNOWING". Every eyebrow on this page - all 61 uppercase runs
+    // in the About frame - is textCase=UPPER; the frame contains no LOWER or
     // TITLE node at all. Three sections had acquired that override on exactly
     // this misreading and were reverted; the 0.11em tracking is uppercase
     // tracking, which is the giveaway.
@@ -132,7 +132,7 @@ export function Eyebrow({
         tone === 'ink'
           ? 'border border-java/28 bg-java/14 text-ice'
           : 'border border-eden/[0.15] bg-eden/[0.07] text-eden',
-        className,
+        className
       )}
     >
       {icon ? <AboutIcon id={icon} className="h-[23px] w-[19px] shrink-0" /> : null}
@@ -143,7 +143,7 @@ export function Eyebrow({
   );
 }
 
-/** H2 — Figtree 700, clamped from the frame's desktop size. */
+/** H2 - Figtree 700, clamped from the frame's desktop size. */
 export function Heading({
   html,
   className,
@@ -160,14 +160,14 @@ export function Heading({
         As === 'h1'
           ? 'text-[clamp(34px,6.4vw,76px)] font-extrabold leading-[1.02]'
           : 'text-[clamp(26px,3.4vw,46px)] font-bold leading-[1.04]',
-        className,
+        className
       )}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 }
 
-/** Body copy — Figtree 400, #5b564e. */
+/** Body copy - Figtree 400, #5b564e. */
 export function Body({ html, className }: { html: string; className?: string }) {
   return (
     <p
@@ -178,20 +178,12 @@ export function Body({ html, className }: { html: string; className?: string }) 
 }
 
 /** The small pill used throughout for supporting statements. */
-export function Pill({
-  label,
-  icon,
-  className,
-}: {
-  label: string;
-  icon?: string;
-  className?: string;
-}) {
+export function Pill({ label, icon, className }: { label: string; icon?: string; className?: string }) {
   return (
     <span
       className={cn(
         'inline-flex max-w-full items-center gap-2 rounded-full border border-mine/10 bg-white py-2.5 pl-3 pr-4 shadow-tst-soft',
-        className,
+        className
       )}
     >
       {icon ? <AboutIcon id={icon} className="h-[22px] w-[18px] shrink-0" /> : null}

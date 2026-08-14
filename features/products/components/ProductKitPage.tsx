@@ -10,7 +10,7 @@ import ReviewsSection from './sections/ReviewsSection';
 /**
  * Data-driven Product (PDP) page. Everything between the site header and footer.
  * Figtree is applied via the --font-kyg token; the `kyg-pdp` root only sets the
- * page's warm background + ink color. No reveal-on-scroll gating — the design is
+ * page's warm background + ink color. No reveal-on-scroll gating - the design is
  * static, so content is always visible (robust for no-JS / SEO).
  */
 export default function ProductKitPage({ kit }: { kit: ProductKit }) {

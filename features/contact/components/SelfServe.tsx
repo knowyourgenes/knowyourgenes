@@ -3,7 +3,7 @@ import { SELF_SERVE, SELF_SERVE_CARDS } from '../constants';
 import { ContactEyebrow, ContactIcon } from './ContactIcon';
 
 /**
- * SELF-SERVE STRIP — 1440 x 478 on a white@70 ground, hairline #222222@10 on the
+ * SELF-SERVE STRIP - 1440 x 478 on a white@70 ground, hairline #222222@10 on the
  * TOP AND BOTTOM only (the frame's 336 content height = 478 - 70 - 70 - 1 - 1,
  * and the children start at x=130 = the raw side padding, so the strip carries no
  * left/right edge).
@@ -30,7 +30,7 @@ export default function SelfServe() {
         </div>
 
         {/* Four-up only from xl. At lg the rail is 800 wide, so four tracks are
-            185 and the 28 padding leaves 127px of copy — the 14px body would set
+            185 and the 28 padding leaves 127px of copy - the 14px body would set
             at ~17 characters a line. Two-up holds until 1280; >= 1280 (and so
             1440) is the frame's four 264s. */}
         <ul className="mt-[clamp(28px,3.2vw,40px)] grid gap-5 sm:grid-cols-2 xl:grid-cols-4">

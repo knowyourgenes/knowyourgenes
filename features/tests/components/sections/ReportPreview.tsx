@@ -4,11 +4,11 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Cta, Heading, Lead, Section, TONE_PILL } from '../ui';
 
 // =============================================================================
-// REPORT — "No gene codes. No jargon."
+// REPORT - "No gene codes. No jargon."
 // -----------------------------------------------------------------------------
 // Frame 1440x584. Ground is a vertical gradient sage3 #eff6f5 -> linenw #faf6ef
 // (the REPORT ground is the one that starts tinted and fades to cream, hence the
-// className override — GROUND.sage runs the other way, linenw -> sage).
+// className override - GROUND.sage runs the other way, linenw -> sage).
 //
 // Inner rail 1280 with its own 32px padding -> 1216 of content, split
 // 543 | 64 | 609. Left column is 380 tall and vertically centred against the
@@ -59,7 +59,7 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
             ))}
           </ul>
 
-          {/* 211x60 eden pill — the frame's button is 60 tall, not the shared 58. */}
+          {/* 211x60 eden pill - the frame's button is 60 tall, not the shared 58. */}
           <Cta data={data.cta} className="h-[60px] self-start py-0" />
         </div>
 
@@ -68,7 +68,7 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
         <div className="relative rounded-[26px] border border-mine/10 bg-white px-[clamp(20px,2.3vw,32px)] pb-[clamp(20px,2.3vw,32px)] pt-[clamp(28px,2.8vw,40px)] shadow-tst-float">
           {/* 80x28 eden tag straddling the card's top edge (y -11 of the frame).
               Its 32px inset is the card's own left padding, so it tracks the same
-              clamp — otherwise it drifts away from the rows once the padding
+              clamp - otherwise it drifts away from the rows once the padding
               starts shrinking (below ~1392, where 2.3vw drops under 32). */}
           <span className="absolute -top-3 left-[clamp(20px,2.3vw,32px)] whitespace-nowrap rounded-full bg-eden px-4 py-1.5 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.12em] text-white">
             {data.sample.badge}
@@ -106,14 +106,14 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
             ))}
           </ul>
 
-          {/* No rule above the legend in the frame — just 16 of top padding.
+          {/* No rule above the legend in the frame - just 16 of top padding.
               This TEXT node is NOT one uniform run: characterStyleOverrides
               split it. Base style = Figtree 700 #5b564e and covers only the
               three labels (Good / Average / Poor); every connector run
               (" = normal · ", " = some risk · ", " = higher risk") takes
               styleOverrideTable 3 = Figtree 400 #7a7a7a. Size 12/18 ls 0
               throughout. Hence 400/boulder on the <p> with the <b> labels
-              lifted back to 700/fusc — do NOT flatten this to one bold run,
+              lifted back to 700/fusc - do NOT flatten this to one bold run,
               the flattened .txt dump reports a single run and is wrong here. */}
           <p
             className="pt-4 font-kyg text-[12px] font-normal leading-[18px] text-boulder [&_b]:font-bold [&_b]:text-fusc"

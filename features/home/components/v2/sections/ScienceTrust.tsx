@@ -1,23 +1,23 @@
 // =============================================================================
-// Homepage — SECTION 11 · SCIENCE & TRUST
+// Homepage - SECTION 11 · SCIENCE & TRUST
 // -----------------------------------------------------------------------------
 // Ported against the designer's own page (`New Homepage Build/index.html`):
 // `.sci` / `.sci__grid` / `.sci__i` / `.sci__fig` / `.sci__ft` / `.certs`
 // (CSS ~1041-1077) and the markup at line 1901. Where that page and the traced
-// Figma frame disagreed, the page won — it is the executable design.
+// Figma frame disagreed, the page won - it is the executable design.
 //
 // TWO GROUNDS IN ONE FRAME, which is why this does not use <Section>:
 //   div.sec   the dark half   GRADIENT_LINEAR(#0e4d4b -> #0a3b39 -> #062927)
 //   div.certs the cream band  flat #faf6ef, full-bleed
 // The gradient reads vertical in the render (sampled #0d4a48 at the top,
-// #082f2d two thirds down), so it is 180deg — NOT the 160deg the hero uses.
+// #082f2d two thirds down), so it is 180deg - NOT the 160deg the hero uses.
 //
 // VERTICAL RHYTHM IS PER-BLOCK, NOT A UNIFORM GAP. The source gives each block
 // its own margin (header 46..84, figure 38..60, footer 40..66), so this uses a
-// plain block container with margins rather than a flex column with one gap —
+// plain block container with margins rather than a flex column with one gap -
 // a single gap value cannot express three different distances.
 //
-// THE GRID HAS NO CARDS, ONLY RULES, and they TAPER — see the long note on
+// THE GRID HAS NO CARDS, ONLY RULES, and they TAPER - see the long note on
 // CLAIMS below, which is the subtlest thing in this file.
 //
 // RADIUS TRAP: the lab figure is 24, the icon wells are 14, the CTA is 10.
@@ -59,7 +59,7 @@ const CLAIMS: { icon: string; title: string; body: string }[] = [
 ];
 
 /**
- * THE GRID RULES ARE `border-image` GRADIENTS, NOT FLAT BORDERS — and the two
+ * THE GRID RULES ARE `border-image` GRADIENTS, NOT FLAT BORDERS - and the two
  * columns get DIFFERENT ones. This is the part that is easy to get wrong.
  *
  * The source declares `border-top:1px solid` on every cell with a HORIZONTAL
@@ -70,7 +70,7 @@ const CLAIMS: { icon: string; title: string; body: string }[] = [
  * that starts fully transparent, i.e. it disappears.
  *
  * That is reproduced verbatim and is why the two columns carry mutually
- * exclusive classes rather than a shared base plus an override — two bare
+ * exclusive classes rather than a shared base plus an override - two bare
  * `[border-image:…]` utilities on one element would be resolved by stylesheet
  * order, which Tailwind does not guarantee, so the seam could silently lose.
  *
@@ -87,14 +87,14 @@ const RULE_SEAM =
   '[border-image:linear-gradient(180deg,rgba(250,246,239,0)_0%,rgba(250,246,239,0.17)_26%,rgba(250,246,239,0.17)_74%,rgba(250,246,239,0)_100%)_1]';
 
 /**
- * The certification strip — REAL MARKS, delivered as 520x300 white-ground JPEGs
+ * The certification strip - REAL MARKS, delivered as 520x300 white-ground JPEGs
  * in `public/home/brand/`. The source sizes them by HEIGHT only
  * (`height:clamp(30px,3.4vw,44px); width:auto`), so every logo lands on one
  * baseline whatever its lockup; the intrinsic size is passed to next/image only
  * so it can reserve the box, and CSS then drives the render.
  *
  * The alt text is the accreditation name, verbatim from the source's `alt`
- * attributes — these are claims about the lab, so they must reach a screen
+ * attributes - these are claims about the lab, so they must reach a screen
  * reader rather than being decorative chrome.
  */
 const CERTS: { src: string; alt: string }[] = [
@@ -108,7 +108,7 @@ const CERTS: { src: string; alt: string }[] = [
 
 /**
  * The certification strip's hover, on the source's `--e` easing and its three
- * different durations — which is why it is one arbitrary `transition` rather
+ * different durations - which is why it is one arbitrary `transition` rather
  * than Tailwind's duration utilities (those apply one duration to everything).
  *
  * The source transitions `transform`; this lists `translate` instead because
@@ -146,12 +146,12 @@ export default function ScienceTrust() {
             className="mb-[clamp(46px,5vw,84px)] grid grid-cols-1 items-start gap-[clamp(22px,3vw,56px)] lg:grid-cols-[779fr_491fr] lg:items-end"
           >
             {/* the source spaces the kicker off the headline with a margin,
-                clamp(22,2.2vw,32) — expressed as the column's gap */}
+                clamp(22,2.2vw,32) - expressed as the column's gap */}
             <div className="flex min-w-0 flex-col gap-[clamp(22px,2.2vw,32px)]">
               <Kicker>Science &amp; trust</Kicker>
 
               {/* One text frame, two typefaces: Figtree 400 for the statement
-                  and Cormorant Garamond 500 italic for the turn — the italic
+                  and Cormorant Garamond 500 italic for the turn - the italic
                   run is ~10% LARGER, which Heading's default <em> styling does
                   not do on its own, hence the size override. The base scale is
                   Heading's own (50.4 max), NOT the source's 55: that scale is
@@ -163,7 +163,7 @@ export default function ScienceTrust() {
               />
             </div>
 
-            {/* p.lead — the quote glyph sits in the frame's own 52 left pad,
+            {/* p.lead - the quote glyph sits in the frame's own 52 left pad,
                 outside the text column, so it is absolutely placed rather than
                 inlined; that keeps the italic lines flush with each other.
                 `top:.16em` is the source's own value and tracks the clamped
@@ -174,10 +174,7 @@ export default function ScienceTrust() {
                 in the source, not a design, so the pad is kept (44 on phones,
                 where 52 would cost too much of a narrow measure). */}
             <div className="relative min-w-0 pl-[44px] lg:pl-[52px]">
-              <HomeIcon
-                id="11057-886"
-                className="absolute left-0 top-[0.16em] h-8 w-8 shrink-0 opacity-60"
-              />
+              <HomeIcon id="11057-886" className="absolute left-0 top-[0.16em] h-8 w-8 shrink-0 opacity-60" />
               <p className="font-tst text-[clamp(23px,2.3vw,33px)] font-medium italic leading-[1.28] text-linenw/78">
                 Your DNA is deeply personal.
                 <br />
@@ -190,7 +187,7 @@ export default function ScienceTrust() {
               No gap and no top pad: the cells' own padding does the spacing and
               the first row's border sits flush on the grid's top edge. Below lg
               the column seam is gone, so the four claims read as a divided
-              list — no left border pointing at a gutter that isn't there. */}
+              list - no left border pointing at a gutter that isn't there. */}
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {CLAIMS.map((c, i) => {
               const rightColumn = i % 2 === 1;
@@ -199,17 +196,15 @@ export default function ScienceTrust() {
                 // whole cell rather than on the 48px chip alone.
                 <Reveal
                   key={c.title}
-                  // .02 / .08 / .14 / .20 — the source's own --rd stagger
+                  // .02 / .08 / .14 / .20 - the source's own --rd stagger
                   delay={0.02 + i * 0.06}
                   className={[
                     'group flex min-w-0 flex-col border-t border-transparent',
                     'py-[clamp(28px,3vw,44px)] pl-0 pr-[clamp(24px,3vw,50px)]',
-                    rightColumn
-                      ? `${RULE_SEAM} lg:border-l lg:pl-[clamp(24px,3vw,50px)]`
-                      : RULE_ROW,
+                    rightColumn ? `${RULE_SEAM} lg:border-l lg:pl-[clamp(24px,3vw,50px)]` : RULE_ROW,
                   ].join(' ')}
                 >
-                  {/* span.icb — 48 well, radius 14, java2 at 13%, 22 below.
+                  {/* span.icb - 48 well, radius 14, java2 at 13%, 22 below.
                       The source's hover ALSO inverts the well (solid java2 with
                       a teal-ink glyph). That half is deliberately not ported:
                       HomeIcon serves static SVGs with their colours baked in,
@@ -231,12 +226,12 @@ export default function ScienceTrust() {
                     />
                   </span>
 
-                  {/* .h3 — clamp(23,1.75vw,29) / 1.16 / -.022em / 700, 12 below */}
+                  {/* .h3 - clamp(23,1.75vw,29) / 1.16 / -.022em / 700, 12 below */}
                   <h3 className="mb-[12px] font-kyg text-[clamp(23px,1.75vw,29px)] font-bold leading-[1.16] tracking-[-0.022em] text-linenw">
                     {c.title}
                   </h3>
 
-                  {/* flat 17.5, not a clamp — the source's body scale is a fixed
+                  {/* flat 17.5, not a clamp - the source's body scale is a fixed
                       size across the whole page, and clamping only this one
                       block would shrink it out of step with its neighbours */}
                   <Body className="text-[17.5px] leading-[1.64] text-linenw/68">{c.body}</Body>
@@ -247,7 +242,7 @@ export default function ScienceTrust() {
 
           {/* ---- figure#ph-lab -------------------------------------------
               1313 x 500 = 21:8, radius 24, and the photograph has been
-              delivered — so this is AssetSlot's filled state and every scrap of
+              delivered - so this is AssetSlot's filled state and every scrap of
               placeholder chrome (plate, hairline, label stack, and the hand-made
               radial bloom that used to fake the plate's tint) is gone. No
               min-height either: that existed to stop the label stack being
@@ -290,7 +285,7 @@ export default function ScienceTrust() {
               logos are `mix-blend-mode:multiply` so their white JPEG grounds
               drop out into the band. Reveal sets `will-change:opacity,transform`,
               which creates a stacking context and isolates the blend from the
-              band behind it — with nothing to multiply against, the white boxes
+              band behind it - with nothing to multiply against, the white boxes
               would come back as faint lighter rectangles. Repainting the same
               cream INSIDE the isolated group gives the blend its backdrop.
 

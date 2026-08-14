@@ -1,5 +1,5 @@
 // =============================================================================
-// About Us — SECTION 04 · GENES ≠ DESTINY
+// About Us - SECTION 04 · GENES ≠ DESTINY
 // -----------------------------------------------------------------------------
 // Built from the Figma frame 'SECTION 04 · GENES ≠ DESTINY' (page offset 3204).
 // Desktop geometry, verbatim from the spec:
@@ -32,7 +32,7 @@ const MATTERS = [
   { label: 'Your choices matter.', icon: '3798-436' },
 ];
 
-/** What genetic testing should do instead — the three mint chips, right column. */
+/** What genetic testing should do instead - the three mint chips, right column. */
 const INTENT = [
   { label: 'Give you context.', icon: '3780-765' },
   { label: 'Give you awareness.', icon: '3841-765' },
@@ -45,7 +45,7 @@ const INTENT = [
  * WIDTH: 128px is a MEASURED frame width, not a value derived from anything in
  * this component. The frame's cards are 128.0 / 130.2 / 167.4 / 128.0 (pad 24/24)
  * and 245.0 for the result (pad 28/28), while their labels are only 52 / 80 / 117
- * / 71 / 189 — so Genes and Choices are both drawn at 128 despite much shorter
+ * / 71 / 189 - so Genes and Choices are both drawn at 128 despite much shorter
  * labels. (Figma sizes them from a 'span.msym' icon row that is 78-80 wide there;
  * our icon renders at 24, so that row is NOT the mechanism here and cannot be
  * used to explain the number.) Sizing purely from the label gives 100/128/165/
@@ -55,17 +55,9 @@ const INTENT = [
  *
  * The floor is unconditional. min-width only beats max-w-full below a ~176px
  * content column, which no supported viewport reaches, and the row is flex-wrap
- * — so this cannot force an overflow on narrow phones.
+ * - so this cannot force an overflow on narrow phones.
  */
-function TermCard({
-  label,
-  icon,
-  tone,
-}: {
-  label: string;
-  icon: string;
-  tone: 'dark' | 'light' | 'result';
-}) {
+function TermCard({ label, icon, tone }: { label: string; icon: string; tone: 'dark' | 'light' | 'result' }) {
   const isDark = tone !== 'light';
 
   return (
@@ -79,7 +71,7 @@ function TermCard({
       ].join(' ')}
     >
       <AboutIcon id={icon} className="h-[28px] w-[24px] shrink-0" />
-      {/* `uppercase` is NOT a style choice — all five term labels (Genes,
+      {/* `uppercase` is NOT a style choice - all five term labels (Genes,
           Lifestyle, Environment, Choices, Your health journey) are textCase=UPPER
           in the frame. Figma keeps `characters` as typed and applies case via
           style.textCase, so the spec dump shows them sentence-case. The 0.87px
@@ -99,11 +91,7 @@ function TermCard({
 
 export default function NotDestiny() {
   return (
-    <Section
-      id="genes-destiny"
-      ground="cream"
-      innerClassName="flex flex-col items-center gap-12"
-    >
+    <Section id="genes-destiny" ground="cream" innerClassName="flex flex-col items-center gap-12">
       {/* ── 1. header rail ─────────────────────────────────────────────── */}
       <div className="flex w-full max-w-[740px] flex-col items-center gap-[15px] text-center">
         {/* Box/type metrics AND case are all the shared default: this node is
@@ -115,7 +103,7 @@ export default function NotDestiny() {
           // ls -0.76 at 42px = -0.018em, a shade looser than Heading's -0.02em base.
           className="text-center text-[clamp(26px,2.9vw,42px)] leading-[1.05] tracking-[-0.018em]"
           html={
-            "Your genes aren't your fate. <em class=\"abt-grad\">They're <br class=\"hidden lg:inline\" />part of the picture.</em>"
+            'Your genes aren\'t your fate. <em class="abt-grad">They\'re <br class="hidden lg:inline" />part of the picture.</em>'
           }
         />
       </div>

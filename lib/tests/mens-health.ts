@@ -32,9 +32,9 @@ export const mensHealth: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: "Men's Wellness DNA Test — hair, hormones and fertility from one sample",
+    title: "Men's Wellness DNA Test - hair, hormones and fertility from one sample",
     description:
-      'Hair fall, testosterone and male fertility — three genetic answers from a single at-home saliva kit, each marked Good, Average or Poor. NABL-accredited lab, results in 3 weeks, expert guidance included.',
+      'Hair fall, testosterone and male fertility - three genetic answers from a single at-home saliva kit, each marked Good, Average or Poor. NABL-accredited lab, results in 3 weeks, expert guidance included.',
   },
 
   sections: [
@@ -666,7 +666,7 @@ export const mensHealth: TestPage = {
         },
         {
           q: 'What if my result comes back "Poor / High Risk"? Won\'t that just scare me?',
-          a: 'It means "act early". It does not mean this will definitely happen to you — it shows a higher chance, not a diagnosis. Dr. Varun Sharma can explain your result and tell you exactly what to do next.',
+          a: 'It means "act early". It does not mean this will definitely happen to you - it shows a higher chance, not a diagnosis. Dr. Varun Sharma can explain your result and tell you exactly what to do next.',
         },
         {
           q: 'Is this actually accurate, or just a novelty genetic kit?',

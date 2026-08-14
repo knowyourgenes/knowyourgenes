@@ -15,7 +15,7 @@
 // share of ancestry is not a risk, and painting "72.91% South Asian" in the red
 // of a Poor result would imply a verdict this test never makes.
 //
-// SLUG: `ancestry` — the nav mega-menu, the homepage and the kit art
+// SLUG: `ancestry` - the nav mega-menu, the homepage and the kit art
 // (public/tests/ancestry) all already use it. Its redirect is removed in
 // next.config.ts, which leaves that list empty.
 // =============================================================================
@@ -29,7 +29,7 @@ export const ancestry: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: 'Ancestry DNA Test — 10 global regions from one saliva sample',
+    title: 'Ancestry DNA Test - 10 global regions from one saliva sample',
     description:
       'Ancestors In Me maps your origin across up to 10 global regions from 42,000+ genetic markers, and writes it up as a Gene Journey. NABL-accredited lab, results in 3 weeks, free counselling included.',
   },
@@ -315,7 +315,7 @@ export const ancestry: TestPage = {
       },
       groups: [
         {
-          kicker: 'An illustrative sample breakdown — your own will be unique to you',
+          kicker: 'An illustrative sample breakdown - your own will be unique to you',
           variant: 'detail',
           items: [
             {
@@ -699,7 +699,7 @@ export const ancestry: TestPage = {
         },
         {
           q: 'Does an ancestry test only show Indian origin?',
-          a: 'No. Most Indians match 6 to 8 world regions — India is one of the most genetically mixed places on earth.',
+          a: 'No. Most Indians match 6 to 8 world regions - India is one of the most genetically mixed places on earth.',
         },
         {
           q: 'Is an ancestry test a health test?',

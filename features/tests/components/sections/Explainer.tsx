@@ -3,7 +3,7 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Closing, Heading, Lead, Media, Section } from '../ui';
 
 // =============================================================================
-// Figma: "30-SECOND EXPLAINER" — 1440 x 827.
+// Figma: "30-SECOND EXPLAINER" - 1440 x 827.
 // -----------------------------------------------------------------------------
 // Frame        pad 88/80, fill #ffffff@70 (= ground `ivory`), 1px #222222@10
 //              hairline top + bottom.
@@ -12,11 +12,11 @@ import { Closing, Heading, Lead, Media, Section } from '../ui';
 // Head         680 wide, gap 16. That 680 is load-bearing: it is what breaks the
 //              H2 after "sounds" instead of after "complicated.".
 // Eyebrow      h46 r999, fill #0e4d4b@7, 1px #0e4d4b@15, 0 6 18 rgba(199,60,112,.10),
-//              pad 11/22/11/17, gap 10. Label Figtree 800 14/21 ls 1.12 #0e4d4b —
+//              pad 11/22/11/17, gap 10. Label Figtree 800 14/21 ls 1.12 #0e4d4b -
 //              sentence case in the frame, NOT uppercased like the shared pill.
 // Card row     pad-top 12, gap 24, 3 x 389 (389*3 + 24*2 = 1215 ≈ the 1216 rail).
-//              The frame's `align=CENTER/` is on the PRIMARY (horizontal) axis —
-//              justify, not align-items — and the three tracks already fill the
+//              The frame's `align=CENTER/` is on the PRIMARY (horizontal) axis -
+//              justify, not align-items - and the three tracks already fill the
 //              rail, so it needs no utility. The cards therefore STRETCH: all
 //              three are 327 in the frame and must stay equal-height when a body
 //              wraps to a third line below 1440.
@@ -27,7 +27,7 @@ import { Closing, Heading, Lead, Media, Section } from '../ui';
 // Closing      1216 wide, Cormorant Garamond 700 italic 32/48 #2d2a24, centred.
 //
 // BELOW 1440 (no frame; judgement): the 3 x 389 row stacks 1 -> sm:2 -> lg:3.
-// It cannot go 3-up at md — at 768 three tracks are only 213 wide, which leaves
+// It cannot go 3-up at md - at 768 three tracks are only 213 wide, which leaves
 // a 177px image slot (~102 tall) and pushes the body to 5 lines. Two tracks at
 // 640-1023 keep the card between 268 and 459 wide, i.e. within reach of the
 // frame's 389, and 3-up resumes at lg where a track is >=250.
@@ -41,7 +41,7 @@ import { Closing, Heading, Lead, Media, Section } from '../ui';
 // rather than invented.
 // =============================================================================
 
-/** "Gene testing sounds complicated. It is not." — three illustrated cards. */
+/** "Gene testing sounds complicated. It is not." - three illustrated cards. */
 export default function Explainer({ data, ground }: { data: ExplainerSection; ground?: Ground }) {
   const eyebrow = data.head.eyebrow;
 

@@ -1,28 +1,28 @@
 // =============================================================================
-// features/about — SECTION 08 · OUR APPROACH
+// features/about - SECTION 08 · OUR APPROACH
 // -----------------------------------------------------------------------------
 // Figma frame 1440×1242, veil ground (#ffffff@0.7) hairlined top and bottom.
 // Three stacked blocks at 32px rhythm:
 //   1. eyebrow + centred H2 (740 rail)
-//   2. "averages vs you" — cream card → arrow glyph → gradient teal card (900 rail)
+//   2. "averages vs you" - cream card → arrow glyph → gradient teal card (900 rail)
 //   3. the four-principle hub: 2×2 card grid with a cross-hair rule and the
 //      132px "The KYG Approach" medallion pinned dead centre (940 rail)
 //
 // RADIUS TRAP: this project's scale is remapped, so only 22 (rounded-3xl) maps
 // cleanly. The 24px cards and the 16px icon chips are written as arbitrary
-// values on purpose — do not "simplify" them to rounded-2xl/rounded-xl.
+// values on purpose - do not "simplify" them to rounded-2xl/rounded-xl.
 // =============================================================================
 
 import { AboutIcon } from '../AboutIcon';
 import { Body, Eyebrow, Heading, Pill, Section } from '../ui';
 
 /**
- * Figtree 700/800, uppercase, wide tracking — the frame's small label style.
+ * Figtree 700/800, uppercase, wide tracking - the frame's small label style.
  *
  * KEEP `uppercase`. Figma stores copy in `characters` exactly as the designer
  * typed it and applies case separately via `style.textCase`, so a spec dump that
  * prints only `characters` makes these read sentence-case. All six runs this
- * constant renders are textCase=UPPER in the frame — "Most health advice starts
+ * constant renders are textCase=UPPER in the frame - "Most health advice starts
  * with averages" (y=8273), "But you aren't an average" (y=8327), "Four
  * principles, one approach" (y=8548) and the four PRINCIPLES titles (y=8693 /
  * y=8985). The >=0.12em tracking is uppercase tracking, which is the giveaway.
@@ -37,7 +37,7 @@ const LABEL = 'font-kyg font-bold uppercase';
 /**
  * The generic-advice chips. Frame: white capsule, hairline, no shadow, #5b564e.
  *
- * These are textCase=AS_TYPED — they are absent from the frame's uppercase-run
+ * These are textCase=AS_TYPED - they are absent from the frame's uppercase-run
  * manifest, and Pill renders them at 14.5/600 with no tracking, which is body
  * type, not label type. They sit directly under an UPPER label; do not uppercase
  * them by association.
@@ -84,7 +84,7 @@ export default function OurApproach() {
       {/* ── 1. Heading block ────────────────────────────────────────────── */}
       <div className="flex w-full max-w-[740px] flex-col items-center gap-[15px] text-center">
         {/* Frame metrics (pad 8/17/8/13, gap 9, glyph 19×23, label 13.5/20.2
-            ls 0.11em) are the shared Eyebrow's own defaults — no override. */}
+            ls 0.11em) are the shared Eyebrow's own defaults - no override. */}
         <Eyebrow label="Our approach" icon="8062-642" />
         <Heading
           html="Your health is personal. <em class='abt-grad'>Your approach <br class='hidden md:inline' />should be too.</em>"
@@ -102,7 +102,7 @@ export default function OurApproach() {
           <div className="flex flex-wrap gap-2">
             {ADVICE.map((label) => (
               // Frame: pad 7/14/9/14 (symmetric sides), Figtree 600 14.5/21.8,
-              // #5b564e, and NO shadow. `shadow-none` cannot win here — twMerge
+              // #5b564e, and NO shadow. `shadow-none` cannot win here - twMerge
               // reads Pill's `shadow-tst-soft` as a shadow *colour* and keeps
               // both, and Tailwind emits `.shadow-none` first, so the soft
               // shadow survives. `shadow-transparent` is the same twMerge group,
@@ -115,18 +115,11 @@ export default function OurApproach() {
               />
             ))}
           </div>
-          <Body
-            html="General guidance has its place."
-            className="text-[15px] leading-[22.5px] text-boulder"
-          />
+          <Body html="General guidance has its place." className="text-[15px] leading-[22.5px] text-boulder" />
         </div>
 
-        {/* Connector — points right on the desktop row, down once it stacks. */}
-        <AboutIcon
-          id="8346-706"
-          className="h-9 w-[30px] shrink-0 rotate-90 xl:rotate-0"
-          alt=""
-        />
+        {/* Connector - points right on the desktop row, down once it stacks. */}
+        <AboutIcon id="8346-706" className="h-9 w-[30px] shrink-0 rotate-90 xl:rotate-0" alt="" />
 
         {/* You */}
         <div className="relative w-full min-w-0 max-w-[410px] overflow-hidden rounded-[24px] bg-gradient-to-r from-eden to-eden2 p-7 xl:w-[410px]">
@@ -146,25 +139,23 @@ export default function OurApproach() {
       </div>
 
       {/* ── 3. Four principles ──────────────────────────────────────────── */}
-      <p
-        className={`${LABEL} w-full pt-8 text-center text-[13px] leading-[19.5px] tracking-[0.16em] text-boulder`}
-      >
+      <p className={`${LABEL} w-full pt-8 text-center text-[13px] leading-[19.5px] tracking-[0.16em] text-boulder`}>
         Four principles, one approach
       </p>
 
       <div className="relative mx-auto w-full max-w-[940px]">
-        {/* Cross-hair — geometry only reads at the frame's 940 rail, so it is
+        {/* Cross-hair - geometry only reads at the frame's 940 rail, so it is
             xl-only; below that the cards simply stack. */}
         <div aria-hidden className="pointer-events-none absolute inset-0 hidden xl:block">
           <span className={`absolute left-[6%] right-[6%] top-1/2 h-[2px] -translate-y-1/2 ${RULE_H}`} />
           <span className={`absolute bottom-[6%] left-1/2 top-[6%] w-[2px] -translate-x-1/2 ${RULE_V}`} />
         </div>
 
-        {/* Central medallion — pinned to the cross-hair at xl, and simply the
+        {/* Central medallion - pinned to the cross-hair at xl, and simply the
             first thing in the stack below it. */}
         <div className="relative z-10 mx-auto mb-6 flex h-[132px] w-[132px] shrink-0 flex-col items-center justify-center rounded-full border-[5px] border-linenw bg-eden text-center shadow-tst-float xl:absolute xl:left-1/2 xl:top-1/2 xl:mx-0 xl:mb-0 xl:-translate-x-1/2 xl:-translate-y-1/2">
           <AboutIcon id="8821-707" className="h-8 w-[26px]" alt="" />
-          {/* textCase=UPPER in the frame (y=8853, 13/800, 0.06em) — renders
+          {/* textCase=UPPER in the frame (y=8853, 13/800, 0.06em) - renders
               "THE KYG / APPROACH". The manifest's 79px is the hug width of the
               wider line, which only "APPROACH" reaches; sentence case measures
               short. Keep `uppercase`. 79 clears the 122px inner medallion, so
@@ -185,9 +176,7 @@ export default function OurApproach() {
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] bg-mint">
                 <AboutIcon id={p.icon} className="h-7 w-6" alt="" />
               </span>
-              <h3 className={`${LABEL} pt-2 text-[13.5px] leading-[20.2px] tracking-[0.12em] text-eden`}>
-                {p.title}
-              </h3>
+              <h3 className={`${LABEL} pt-2 text-[13.5px] leading-[20.2px] tracking-[0.12em] text-eden`}>{p.title}</h3>
               <Body html={p.body} className="text-[clamp(15px,1.15vw,16.5px)] leading-[22.7px]" />
             </article>
           ))}

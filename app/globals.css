@@ -167,7 +167,7 @@ body {
   /* ---- homepage v2 (features/home/components/v2) --------------------------
      Ported 1:1 from the designer's build, "New Homepage Build/index.html".
      Registered here rather than written as arbitrary `animate-[...]` values so
-     Tailwind v4 actually emits the @keyframes at the bottom of this file — a
+     Tailwind v4 actually emits the @keyframes at the bottom of this file - a
      bare arbitrary animation utility does NOT pull its keyframes in, and the
      rule ships dead. Durations are the source's, unrounded. */
   --animate-hv2-bob: hv2-bob 6.4s ease-in-out infinite;
@@ -210,33 +210,33 @@ body {
   --shadow-kyg-deep: 0 40px 100px -40px rgba(5, 36, 34, 0.45), 0 12px 36px -18px rgba(5, 36, 34, 0.3);
   --shadow-kyg-dark: 0 18px 50px -24px rgba(5, 36, 34, 0.55), 0 4px 16px rgba(5, 36, 34, 0.25);
 
-  /* ---- Product Page (PDP) palette — sampled 1:1 from the Figma "Product Page - UI/UX" frame ---- */
-  --color-linenw: #faf6ef; /* White Linen — page background */
-  --color-gin: #e9f3ec; /* Gin — pills / soft green surfaces */
-  --color-edge: #cfe6d8; /* Edgewater — kit-visual border */
-  --color-fusc: #5b564e; /* Fuscous Gray — muted body text */
-  --color-boulder: #7a7a7a; /* Boulder — disclaimer text */
-  --color-heavy: #1d231e; /* Heavy Metal — headings / product title */
-  --color-wood: #141b1a; /* Woodsmoke — utility bar */
-  --color-greenpea: #1f5f41; /* Green Pea — inline upsell link */
+  /* ---- Product Page (PDP) palette - sampled 1:1 from the Figma "Product Page - UI/UX" frame ---- */
+  --color-linenw: #faf6ef; /* White Linen - page background */
+  --color-gin: #e9f3ec; /* Gin - pills / soft green surfaces */
+  --color-edge: #cfe6d8; /* Edgewater - kit-visual border */
+  --color-fusc: #5b564e; /* Fuscous Gray - muted body text */
+  --color-boulder: #7a7a7a; /* Boulder - disclaimer text */
+  --color-heavy: #1d231e; /* Heavy Metal - headings / product title */
+  --color-wood: #141b1a; /* Woodsmoke - utility bar */
+  --color-greenpea: #1f5f41; /* Green Pea - inline upsell link */
 
-  /* PDP elevation — exact box-shadows from the frame's effect styles */
+  /* PDP elevation - exact box-shadows from the frame's effect styles */
   --shadow-pdp-card: 0 18px 50px 0 rgba(20, 27, 26, 0.08), 0 4px 16px 0 rgba(20, 27, 26, 0.06);
   --shadow-pdp-soft: 0 4px 14px 0 rgba(20, 27, 26, 0.05), 0 1px 2px 0 rgba(20, 27, 26, 0.04);
   --shadow-pdp-cta: 0 10px 26px 0 rgba(14, 77, 75, 0.22);
 
-  /* ---- Test page (features/tests) palette — read 1:1 from the Figma
+  /* ---- Test page (features/tests) palette - read 1:1 from the Figma
      "Women's Health" frame via the REST API (not eyeballed). Most of this
      design's teal half already existed above: eden #0e4d4b, eden2 #15605d,
      java #25b5ab, java2 #2ac3a2, surfie #0e7c77, sea #2e7d5b, mojo #c0432f,
      linenw #faf6ef, mine #222222, fusc #5b564e, boulder #7a7a7a and
      wood #141b1a are all EXACT matches. Only the crimson family and the
      tinted section grounds below are genuinely new. ---- */
-  --color-crimson: #c73c70; /* accent — serif italic, dots, step 5 */
+  --color-crimson: #c73c70; /* accent - serif italic, dots, step 5 */
   --color-crimson-deep: #9a2855; /* eyebrow label text on blush pills */
   --color-crimson-soft: #e39bb4; /* stat numerals on ink grounds */
   --color-blush: #fbeef3; /* blush eyebrow-pill ground */
-  --color-ink: #141b1a; /* the-numbers / final / footer — same as --color-wood */
+  --color-ink: #141b1a; /* the-numbers / final / footer - same as --color-wood */
   --color-mint: #e6f4f3; /* teal eyebrow-pill ground */
   --color-ice: #7fe3d6; /* light teal accents on ink */
   --color-gold: #e8c24e; /* accreditation badge stroke */
@@ -245,21 +245,21 @@ body {
      a dark editorial page, so it needs darker grounds and cooler greys than the
      cream pages. Its other four colours already had tokens: eden #0e4d4b,
      linenw #faf6ef, java #25b5ab, java2 #2ac3a2. */
-  --color-abyss: #062927; /* deepest teal — hero + final CTA ground */
-  --color-bistre: #1b1712; /* near-black warm ink — cream-section headings */
-  --color-corduroy: #33403d; /* dark slate-green — card grounds on light */
+  --color-abyss: #062927; /* deepest teal - hero + final CTA ground */
+  --color-bistre: #1b1712; /* near-black warm ink - cream-section headings */
+  --color-corduroy: #33403d; /* dark slate-green - card grounds on light */
   --color-nevada: #5c6b68; /* body copy on the dark ground */
   --color-pewter: #92a19e; /* muted labels, quiet icons */
-  --color-mist: #e2f1ed; /* MEET GENEe ground — cooler than --color-mint */
+  --color-mist: #e2f1ed; /* MEET GENEe ground - cooler than --color-mint */
 
   /* Section grounds. Several are gradients in the frame, not flat fills. */
-  --color-veil: #ffffff; /* used at 70% over the cream page — see .tst-veil */
+  --color-veil: #ffffff; /* used at 70% over the cream page - see .tst-veil */
   --color-sage: #f1f7f6; /* WHO IT'S FOR gradient end */
   --color-sage2: #e9f4f3; /* BODY MAP gradient start */
   --color-sage3: #eff6f5; /* REPORT gradient start */
   --color-sand: #f5eddf; /* TRUST gradient end */
 
-  /* Test-page elevation — the frame's exact effect styles. The first two are
+  /* Test-page elevation - the frame's exact effect styles. The first two are
      byte-identical to --shadow-pdp-soft / --shadow-pdp-card above; kept under
      their own names so the test pages can diverge later without touching the
      PDP. */
@@ -289,12 +289,12 @@ body {
    1. `@layer components`. Tailwind v4 emits utilities into `@layer utilities`,
       and UNLAYERED css beats every layer regardless of specificity. While these
       rules sat unlayered, any `[&_.tst-em]:text-*` override in a component was
-      silently ignored — which is exactly how seven sections ended up rendering
+      silently ignored - which is exactly how seven sections ended up rendering
       a flat colour where the frame has a gradient.
 
    2. The frame fills these runs with a GRADIENT, not a flat colour. That is the
       default here (background-clip:text), so a section gets it for free. Where
-      the frame really is flat — e.g. "Guesswork." on the ink band — a component
+      the frame really is flat - e.g. "Guesswork." on the ink band - a component
       overrides with a plain `text-*` utility, which now wins thanks to (1).
       Overriding requires killing the gradient too, hence `.tst-flat`.
    ============================================================================= */
@@ -303,7 +303,7 @@ body {
   .tst-em-teal {
     font-family: var(--font-tst);
     font-style: italic;
-    font-weight: 600; /* Cormorant Garamond 600 italic — the frame's heading accent */
+    font-weight: 600; /* Cormorant Garamond 600 italic - the frame's heading accent */
     letter-spacing: 0; /* the serif runs at ls=0 even where the sans beside it is negative */
     -webkit-background-clip: text;
     background-clip: text;
@@ -337,7 +337,7 @@ body {
   /* -------------------------------------------------------------------------
      About Us headline accents.
 
-     The frame paints these as a GRADIENT fill on a characterStyleOverride —
+     The frame paints these as a GRADIENT fill on a characterStyleOverride -
      i.e. part of a heading string, not a whole node. Two ramps: the 5-stop teal
      on cream/veil grounds, and a brighter one on the two ink sections.
 
@@ -365,12 +365,7 @@ body {
     );
   }
   .abt-grad-ink {
-    background-image: linear-gradient(
-      90deg,
-      var(--color-java2) 0%,
-      var(--color-ice) 50%,
-      var(--color-java2) 100%
-    );
+    background-image: linear-gradient(90deg, var(--color-java2) 0%, var(--color-ice) 50%, var(--color-java2) 100%);
   }
 
   /* Bold sans run inside an otherwise-serif line (and vice versa). */
@@ -513,7 +508,7 @@ body {
   }
 }
 /* =============================================================================
-   Interaction layer — ported 1:1 from the reference build
+   Interaction layer - ported 1:1 from the reference build
    ("Women's Health - Landing Page Build/womens-health - Revamp v2.html").
    Timings, curves and distances are that file's, not approximations.
    ============================================================================= */
@@ -604,7 +599,7 @@ body {
 
 /* ---- body-map hotspot --------------------------------------------------- */
 .kyg-tests .hot .pin {
-  /* the `scale` property, not `transform: scale()` — the dot already carries a
+  /* the `scale` property, not `transform: scale()` - the dot already carries a
      -50%/-50% translate, and these compose instead of overwriting each other */
   transition: scale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-origin: center;
@@ -752,7 +747,7 @@ body {
 }
 
 /* =============================================================================
-   HOMEPAGE v2 — motion, ported from "New Homepage Build/index.html"
+   HOMEPAGE v2 - motion, ported from "New Homepage Build/index.html"
    -----------------------------------------------------------------------------
    Each of these is used through an `animate-hv2-*` utility whose definition
    lives in the @theme block near the top of this file. Values are the source's
@@ -760,7 +755,7 @@ body {
    spin would visibly desynchronise the two orbit rings.
    ============================================================================= */
 
-/* MEET GENEe — the two speech bubbles drift on the same curve, offset by a
+/* MEET GENEe - the two speech bubbles drift on the same curve, offset by a
    negative animation-delay so they are never in phase. */
 @keyframes hv2-bob {
   0%,
@@ -772,7 +767,7 @@ body {
   }
 }
 
-/* WHAT WOULD YOU LIKE TO KNOW — the two dashed orbit rings. One runs 64s
+/* WHAT WOULD YOU LIKE TO KNOW - the two dashed orbit rings. One runs 64s
    forward, the other 96s reversed, so the pattern between them never repeats
    on any comfortable timescale. */
 @keyframes hv2-spin {
@@ -819,7 +814,7 @@ body {
 }
 
 /* The hero-weight CTA breathes a ring outward so the eye finds it. Paused on
-   hover at the call site — the button's own hover shadow takes over there. */
+   hover at the call site - the button's own hover shadow takes over there. */
 @keyframes hv2-cta-pulse {
   0%,
   100% {

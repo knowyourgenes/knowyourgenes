@@ -1,13 +1,13 @@
 'use client';
 
 // =============================================================================
-// Homepage — PARTICLE HELIX
+// Homepage - PARTICLE HELIX
 // -----------------------------------------------------------------------------
 // A direct port of `makeHelix` from the designer's build ("New Homepage Build/
 // index.html", section 7 of its script). Two instances run on the page:
 //
-//   hero      #helix   — the large strand behind the hero portrait
-//   final cta #helix2  — a smaller, dimmer strand behind the closing panel
+//   hero      #helix   - the large strand behind the hero portrait
+//   final cta #helix2  - a smaller, dimmer strand behind the closing panel
 //
 // The maths is reproduced EXACTLY, constant for constant, because the Figma
 // frame was traced from this page: the particle count, the turn count and the
@@ -17,7 +17,7 @@
 // WHY A CANVAS AND NOT AN SVG/CSS EFFECT: every particle is drawn from one
 // cached radial-gradient sprite composited with `lighter`, so overlapping
 // particles ADD their light. That additive bloom is the whole look and there is
-// no CSS equivalent — `mix-blend-mode:screen` on 340 DOM nodes is not viable.
+// no CSS equivalent - `mix-blend-mode:screen` on 340 DOM nodes is not viable.
 //
 // TWO BEHAVIOURS WORTH KNOWING BEFORE EDITING:
 //   * The pointer does not push the particles directly. A smoothed cursor (mx,
@@ -77,7 +77,7 @@ const DEFAULTS: HelixConfig = {
   rung: 5,
 };
 
-/** Hero strand — tall, tight, bright. */
+/** Hero strand - tall, tight, bright. */
 export const HERO_HELIX: Partial<HelixConfig> = {
   ax: 0.63,
   rad: 0.055,
@@ -96,7 +96,7 @@ export const HERO_HELIX: Partial<HelixConfig> = {
   dimN: 0.5,
 };
 
-/** Closing-panel strand — centred, slower, dimmer so the CTA stays dominant. */
+/** Closing-panel strand - centred, slower, dimmer so the CTA stays dominant. */
 export const FINAL_HELIX: Partial<HelixConfig> = {
   ax: 0.5,
   rad: 0.05,
@@ -116,20 +116,14 @@ export const FINAL_HELIX: Partial<HelixConfig> = {
 type Particle = { s: number; u: number; x: number; y: number; vx: number; vy: number; z: number };
 type Mote = { u: number; w: number; ph: number; sp: number };
 
-export function HelixCanvas({
-  config,
-  className,
-}: {
-  config: Partial<HelixConfig>;
-  className?: string;
-}) {
+export function HelixCanvas({ config, className }: { config: Partial<HelixConfig>; className?: string }) {
   const ref = useRef<HTMLCanvasElement | null>(null);
   // Read ONCE, at mount, via lazy initial state.
   //
   // The two presets are module constants so their identity is already stable,
   // but a caller passing an object literal inline would give a new identity on
   // every parent render. If the effect keyed on that, the whole simulation
-  // would tear down and rebuild mid-scroll — every particle's position and
+  // would tear down and rebuild mid-scroll - every particle's position and
   // velocity discarded, so the strand visibly snaps back to its seed shape.
   // (Writing `config` into a ref during render is the other obvious way to
   // pin it, and is exactly the render-phase ref mutation React forbids.)
@@ -211,11 +205,11 @@ export function HelixCanvas({
       cv!.height = Math.round(H * dpr);
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       // below 760 the canvas is narrow and sits UNDER the copy, so the strand
-      // moves toward the edge, tightens and dims — that is what *N supplies.
+      // moves toward the edge, tightens and dims - that is what *N supplies.
       const narrow = W < 760;
       R = Math.min(
         W * (narrow && c.radN !== undefined ? c.radN : c.rad),
-        narrow && c.radMaxN !== undefined ? c.radMaxN : c.radMax,
+        narrow && c.radMaxN !== undefined ? c.radMaxN : c.radMax
       );
       AX = W * (narrow && c.axN !== undefined ? c.axN : c.ax);
       DIM = narrow && c.dimN !== undefined ? c.dimN : c.dim;
@@ -278,7 +272,7 @@ export function HelixCanvas({
         }
       }
 
-      /* base pairs — the rungs between the two strands, faded by mean depth */
+      /* base pairs - the rungs between the two strands, faded by mean depth */
       ctx!.strokeStyle = 'rgba(42,195,162,1)';
       ctx!.lineWidth = 1;
       for (let i = 0; i < c.per; i += c.rung) {
@@ -302,7 +296,7 @@ export function HelixCanvas({
         ctx!.drawImage(sprite, ux - 2.6, uy - 2.6, 5.2, 5.2);
       }
 
-      /* strand particles — alpha and size both track depth, so the far side of
+      /* strand particles - alpha and size both track depth, so the far side of
          the twist reads as genuinely behind rather than merely smaller */
       for (let i = 0; i < P.length; i++) {
         const p = P[i]!;
@@ -358,9 +352,12 @@ export function HelixCanvas({
       window.addEventListener('pointermove', onMove, { passive: true });
       document.addEventListener('pointerleave', onLeave);
       if ('IntersectionObserver' in window) {
-        io = new IntersectionObserver((en) => {
-          vis = !!en[0]?.isIntersecting;
-        }, { threshold: 0 });
+        io = new IntersectionObserver(
+          (en) => {
+            vis = !!en[0]?.isIntersecting;
+          },
+          { threshold: 0 }
+        );
         io.observe(cv);
       }
       raf = requestAnimationFrame(frame);

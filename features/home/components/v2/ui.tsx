@@ -1,12 +1,12 @@
 // =============================================================================
-// features/home/v2 — shared presentational primitives
+// features/home/v2 - shared presentational primitives
 // -----------------------------------------------------------------------------
 // Built from the Figma frame "Homepage - New UI" (node 1058:5544), 1440 x 16692.
 // The artboard's content rail is 1313 wide inside a 63 gutter (x=63 -> 1376),
-// which is wider than the cream pages' 1216 rail — this page is deliberately
+// which is wider than the cream pages' 1216 rail - this page is deliberately
 // more full-bleed.
 //
-// FONTS — all four already load in app/layout.tsx, so nothing new is imported:
+// FONTS - all four already load in app/layout.tsx, so nothing new is imported:
 //   Figtree            -> font-kyg      (headings, body, labels)
 //   Hind               -> font-kyg-num  (small caps-y labels, acronym rows)
 //   Cormorant Garamond -> font-tst      (the italic editorial accents)
@@ -16,12 +16,12 @@
 // CASE IS DATA, NOT DECORATION. Figma stores every string in `characters`
 // exactly as typed and applies capitalisation separately via style.textCase.
 // This frame has 30 UPPER runs against 238 as-typed. Where a component sets
-// `uppercase` it is reproducing textCase=UPPER from the frame — the giveaway is
+// `uppercase` it is reproducing textCase=UPPER from the frame - the giveaway is
 // the wide tracking that always accompanies it. Do not "correct" those strings.
 //
 // RADIUS TRAP: this project remaps Tailwind's radius scale (--radius 0.625rem),
 // so rounded-2xl is 18px and rounded-3xl is 22px. The frame uses
-// 2/3.5/4/6.5/7/10/11/12/14/16/17/20/24/33/46/999 — almost none of which map
+// 2/3.5/4/6.5/7/10/11/12/14/16/17/20/24/33/46/999 - almost none of which map
 // cleanly, so they are written as explicit arbitrary values throughout.
 // =============================================================================
 
@@ -75,7 +75,7 @@ const GROUND: Record<HomeGround, string> = {
   abyss: 'bg-[linear-gradient(160deg,#0a3b39_0%,#093330_55%,#062927_100%)] text-linenw',
   eden: 'bg-eden text-linenw',
   cream: 'bg-linenw text-bistre',
-  // the deeper cream the page alternates to — NOT linenw, which is lighter
+  // the deeper cream the page alternates to - NOT linenw, which is lighter
   sand: 'bg-sand text-bistre',
   // MEET GENEe's ground. Distinct from --color-mint (#e6f4f3), which is the
   // eyebrow-pill tint on the cream pages and reads noticeably greener.
@@ -121,17 +121,15 @@ export function Section({
         // the source's 92 literally would leave 28px of dead space above every
         // anchored section.
         id && 'scroll-mt-[84px]',
-        className,
+        className
       )}
     >
       {/* The source's `--sp-sec`: clamp(84px, 10vw, 168px) on `.sec`. Two
-          sections legitimately override it — `.priv` at clamp(62px,7vw,110px)
-          and `.fin` at clamp(96px,11vw,180px) — and those pass innerClassName.
+          sections legitimately override it - `.priv` at clamp(62px,7vw,110px)
+          and `.fin` at clamp(96px,11vw,180px) - and those pass innerClassName.
           Everything else must inherit this, or consecutive sections breathe
           differently and the page's vertical rhythm visibly stutters. */}
-      <div className={cn('mx-auto w-full max-w-[1313px] py-[clamp(84px,10vw,168px)]', innerClassName)}>
-        {children}
-      </div>
+      <div className={cn('mx-auto w-full max-w-[1313px] py-[clamp(84px,10vw,168px)]', innerClassName)}>{children}</div>
     </section>
   );
 }
@@ -141,7 +139,7 @@ export function Section({
 /* -------------------------------------------------------------------------- */
 
 /**
- * Section kicker — Figtree 800, uppercase, ~0.13em tracking.
+ * Section kicker - Figtree 800, uppercase, ~0.13em tracking.
  *
  * The `uppercase` is textCase=UPPER in the frame, not a style choice; the
  * strings are stored sentence-case ("Genetics for a lifetime") and render
@@ -157,7 +155,7 @@ export function Kicker({
   className?: string;
   tone?: 'java' | 'pewter' | 'eden';
   /**
-   * Most kickers are textCase=UPPER at 0.13em, but not all — section 07's is
+   * Most kickers are textCase=UPPER at 0.13em, but not all - section 07's is
    * Figtree 800 18/22.3 ls 0.54, i.e. sentence case at 0.03em. Opting out here
    * beats overriding `uppercase` at the call site, which relies on twMerge
    * resolving two text-transform utilities.
@@ -171,14 +169,14 @@ export function Kicker({
         // `.kick--case` is `calc(--fs-kick + 1.5px)` = 18px; neither scales with
         // the viewport. The clamp this used to carry only reached 16.5 at
         // 1435px, so every kicker on the page was undersized at every real
-        // width — and 13px on a phone is close to the legibility floor for
+        // width - and 13px on a phone is close to the legibility floor for
         // 0.13em-tracked uppercase.
         'font-kyg font-extrabold leading-[1.24]',
         upper ? 'text-[16.5px] uppercase tracking-[0.13em]' : 'text-[18px] tracking-[0.03em]',
         tone === 'java' && 'text-java2',
         tone === 'pewter' && 'text-pewter',
         tone === 'eden' && 'text-eden',
-        className,
+        className
       )}
     >
       {children}
@@ -198,7 +196,7 @@ export function Heading({
   as: As = 'h2',
 }: {
   html: string;
-  /** Target for the owning Section's `labelledBy` — see the note there. */
+  /** Target for the owning Section's `labelledBy` - see the note there. */
   id?: string;
   className?: string;
   as?: 'h1' | 'h2' | 'h3';
@@ -211,7 +209,7 @@ export function Heading({
         As === 'h1'
           ? 'text-[clamp(38px,4.9vw,70.6px)] leading-[0.98]'
           : 'text-[clamp(30px,3.5vw,50.4px)] leading-[1.14]',
-        className,
+        className
       )}
       dangerouslySetInnerHTML={{ __html: html }}
     />
@@ -219,24 +217,9 @@ export function Heading({
 }
 
 /** Body copy. Figtree 400, generous leading. */
-export function Body({
-  html,
-  children,
-  className,
-}: {
-  html?: string;
-  children?: React.ReactNode;
-  className?: string;
-}) {
-  const cls = cn(
-    'font-kyg text-[clamp(15px,1.29vw,18.5px)] font-normal leading-[1.6] tracking-[-0.005em]',
-    className,
-  );
-  return html ? (
-    <p className={cls} dangerouslySetInnerHTML={{ __html: html }} />
-  ) : (
-    <p className={cls}>{children}</p>
-  );
+export function Body({ html, children, className }: { html?: string; children?: React.ReactNode; className?: string }) {
+  const cls = cn('font-kyg text-[clamp(15px,1.29vw,18.5px)] font-normal leading-[1.6] tracking-[-0.005em]', className);
+  return html ? <p className={cls} dangerouslySetInnerHTML={{ __html: html }} /> : <p className={cls}>{children}</p>;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -246,12 +229,12 @@ export function Body({
 /**
  * The frame's two button shapes.
  *
- * NOT capsules — radius is 10, height 58, pad 19/30, gap 13, label Figtree 700
+ * NOT capsules - radius is 10, height 58, pad 19/30, gap 13, label Figtree 700
  * 17/17 ls -0.14. The ghost has no border: the frame draws it with an
  * INNER_SHADOW 0 0 0 2 rgba(250,246,239,0.3), i.e. a 2px INSET ring, which is
  * why it uses ring-inset rather than `border` (a border would change the box).
  *
- * Both carry a `::after` sheen — a translucent cream gradient the width of the
+ * Both carry a `::after` sheen - a translucent cream gradient the width of the
  * button that sweeps across on hover.
  */
 export function Cta({
@@ -288,12 +271,11 @@ export function Cta({
         // is 2px, which reads as a nudge rather than a lift.
         variant === 'primary' &&
           'bg-java2 text-abyss shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] hover:-translate-y-[3px] hover:shadow-[0_16px_40px_rgba(14,77,75,0.30),0_0_0_6px_rgba(42,195,162,0.16)]',
-        variant === 'ghost' &&
-          'text-linenw ring-2 ring-inset ring-linenw/30 hover:ring-linenw/55',
+        variant === 'ghost' && 'text-linenw ring-2 ring-inset ring-linenw/30 hover:ring-linenw/55',
         variant === 'light' && 'bg-white text-eden ring-2 ring-inset ring-eden/20 hover:bg-mint',
         variant === 'ghostLight' &&
           'bg-transparent text-eden ring-2 ring-inset ring-eden/25 hover:bg-eden/[0.05] hover:ring-eden/45',
-        className,
+        className
       )}
     >
       {/* the frame's sheen: parked off the left edge, swept across on hover */}
@@ -305,12 +287,12 @@ export function Cta({
           'pointer-events-none absolute inset-y-0 -z-10 w-[36%] -translate-x-[220%] skew-x-[-18deg]',
           'bg-[linear-gradient(90deg,rgba(250,246,239,0),rgba(250,246,239,0.28),rgba(250,246,239,0))]',
           'transition-transform duration-[1050ms] ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-x-[400%]',
-          'motion-reduce:transition-none motion-reduce:group-hover:translate-x-[-220%]',
+          'motion-reduce:transition-none motion-reduce:group-hover:translate-x-[-220%]'
         )}
       />
       <span className="min-w-0">{children}</span>
       {icon ? (
-        // 5px of travel, not 2 — `.btn:hover svg{ transform:translateX(5px) }`.
+        // 5px of travel, not 2 - `.btn:hover svg{ transform:translateX(5px) }`.
         // The arrow is the button's whole gesture; at 2px it reads as a jitter.
         <HomeIcon
           id={icon}
@@ -331,19 +313,19 @@ export function Cta({
  * TWO STATES, exactly as the designer's build has it (`.ph` and `.ph--filled`):
  *
  *   photo given    the photograph fills the frame, object-cover, and ALL the
- *                  placeholder chrome is dropped — the source does this with
+ *                  placeholder chrome is dropped - the source does this with
  *                  `.ph--filled{ background:none }` plus `display:none` on its
  *                  ::before/::after/.ph__in.
  *   photo absent   the labelled plate: a tinted gradient ground, a 4-radius
  *                  hairline inset 14, then a centred stack of glyph / uppercase
  *                  title / description / mono file-path chip.
  *
- * Keeping the plate rather than rendering nothing is deliberate — a section
+ * Keeping the plate rather than rendering nothing is deliberate - a section
  * whose art has not been delivered reads as obviously pending instead of
  * looking like an intentional empty panel.
  *
  * `next/image` is used with `fill`, so every call site must be `relative` and
- * carry its own size (they all already do — the frame gives each slot an
+ * carry its own size (they all already do - the frame gives each slot an
  * explicit aspect ratio).
  */
 export function AssetSlot({
@@ -371,22 +353,22 @@ export function AssetSlot({
   sizes?: string;
   /**
    * `null` renders NO glyph. Most `div.ph__in` groups in this frame are
-   * title/meta/path only — the hero's is one of the few that carries a mark —
+   * title/meta/path only - the hero's is one of the few that carries a mark -
    * so sections were reduced to hiding it with `[&_img]:hidden`, which still
    * emitted the element. Passing null is the honest opt-out.
    */
   icon?: string | null;
   className?: string;
   /**
-   * dark   — on the deep teal grounds
-   * light  — cool sage, for the mint/white sections
-   * sand   — warm cream (#f3eada -> #efe3ce + an #edddb8 bloom), which is what
+   * dark   - on the deep teal grounds
+   * light  - cool sage, for the mint/white sections
+   * sand   - warm cream (#f3eada -> #efe3ce + an #edddb8 bloom), which is what
    *          every placeholder on this page's cream sections actually uses
    */
   tone?: 'dark' | 'light' | 'sand';
   compact?: boolean;
   /**
-   * Slot titles are textCase=UPPER nearly everywhere, but not always — the
+   * Slot titles are textCase=UPPER nearly everywhere, but not always - the
    * GENEe card's title is AS_TYPED and upper-casing it renders "GENEE",
    * destroying the character's own name. Hence an explicit opt-out.
    */
@@ -397,14 +379,7 @@ export function AssetSlot({
   if (photo) {
     return (
       <div className={cn('relative isolate min-w-0 overflow-hidden', className)}>
-        <Image
-          src={photo}
-          alt={alt ?? ''}
-          fill
-          sizes={sizes}
-          priority={priority}
-          className="object-cover"
-        />
+        <Image src={photo} alt={alt ?? ''} fill sizes={sizes} priority={priority} className="object-cover" />
       </div>
     );
   }
@@ -417,7 +392,7 @@ export function AssetSlot({
         tone === 'light' && 'bg-[linear-gradient(150deg,#eef5f3_0%,#e2ece9_100%)]',
         tone === 'sand' &&
           'bg-[radial-gradient(120%_120%_at_18%_12%,rgba(237,221,184,0.75),rgba(237,221,184,0)_60%),linear-gradient(135deg,#f3eada_0%,#efe3ce_100%)]',
-        className,
+        className
       )}
     >
       {/* the frame's inset hairline: 14 in from every edge, 4 radius, 20% */}
@@ -425,28 +400,26 @@ export function AssetSlot({
         aria-hidden="true"
         className={cn(
           'pointer-events-none absolute inset-[14px] rounded-[4px] border',
-          tone === 'dark' ? 'border-linenw/20' : 'border-eden/15',
+          tone === 'dark' ? 'border-linenw/20' : 'border-eden/15'
         )}
       />
       <div
         className={cn(
           'relative flex min-w-0 flex-col items-center gap-2 p-[26px] text-center',
-          compact && 'gap-1.5 p-4',
+          compact && 'gap-1.5 p-4'
         )}
       >
         {/* No opacity class here. The exported SVGs already bake the frame's
             instance opacity in (e.g. 06618-0342 carries <g opacity="0.75">), so
             adding opacity-75 on top dimmed every glyph to ~0.56. */}
-        {icon ? (
-          <HomeIcon id={icon} className={compact ? 'h-6 w-6' : 'h-[30px] w-[30px]'} />
-        ) : null}
-        {/* Figtree 800 14/19.9 ls 2.1 — textCase=UPPER in the frame. */}
+        {icon ? <HomeIcon id={icon} className={compact ? 'h-6 w-6' : 'h-[30px] w-[30px]'} /> : null}
+        {/* Figtree 800 14/19.9 ls 2.1 - textCase=UPPER in the frame. */}
         <span
           className={cn(
             'font-kyg font-extrabold leading-[1.42]',
             upperTitle ? 'uppercase tracking-[0.15em]' : 'tracking-[0.06em]',
             compact ? 'text-[11px]' : 'text-[clamp(12px,1vw,14px)]',
-            tone === 'dark' ? 'text-linenw/94' : 'text-eden',
+            tone === 'dark' ? 'text-linenw/94' : 'text-eden'
           )}
         >
           {title}
@@ -456,7 +429,7 @@ export function AssetSlot({
             className={cn(
               // ls 1.08 on Hind 13.5 = 0.08em; the primitive used to drop it
               'max-w-[320px] font-kyg-num text-[clamp(12px,0.94vw,13.5px)] leading-[1.62] tracking-[0.08em]',
-              tone === 'dark' ? 'text-linenw/60' : 'text-eden/60',
+              tone === 'dark' ? 'text-linenw/60' : 'text-eden/60'
             )}
           >
             {meta}
@@ -468,7 +441,7 @@ export function AssetSlot({
               'mt-1 rounded-[7px] px-[11px] py-1.5 font-mono text-[clamp(10.5px,0.87vw,12.5px)] leading-[1.35]',
               tone === 'dark'
                 ? 'bg-black/16 text-linenw/72 ring-1 ring-inset ring-linenw/25'
-                : 'bg-eden/[0.06] text-eden/70 ring-1 ring-inset ring-eden/20',
+                : 'bg-eden/[0.06] text-eden/70 ring-1 ring-inset ring-eden/20'
             )}
           >
             {path}
@@ -484,29 +457,17 @@ export function AssetSlot({
 /* -------------------------------------------------------------------------- */
 
 /** Label + value row used by the acronym expansion and several stat rows. */
-export function DotRow({
-  lead,
-  children,
-  className,
-}: {
-  lead: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
+export function DotRow({ lead, children, className }: { lead: string; children: React.ReactNode; className?: string }) {
   return (
     <span className={cn('inline-flex min-w-0 items-center gap-[13px]', className)}>
-      <span className="shrink-0 font-kyg-num text-[15.5px] font-bold leading-[1.62] text-linenw/92">
-        {lead}
-      </span>
+      <span className="shrink-0 font-kyg-num text-[15.5px] font-bold leading-[1.62] text-linenw/92">{lead}</span>
       <span aria-hidden="true" className="h-1 w-1 shrink-0 rounded-[2px] bg-java2/85" />
-      <span className="min-w-0 font-kyg-num text-[15.5px] font-medium leading-[1.62] text-linenw/62">
-        {children}
-      </span>
+      <span className="min-w-0 font-kyg-num text-[15.5px] font-medium leading-[1.62] text-linenw/62">{children}</span>
     </span>
   );
 }
 
-/** Rounded outline chip — used by the hero rail and several section headers. */
+/** Rounded outline chip - used by the hero rail and several section headers. */
 export function Chip({
   children,
   icon,
@@ -526,7 +487,7 @@ export function Chip({
         tone === 'dark'
           ? 'border border-linenw/18 bg-linenw/[0.04] text-linenw/88'
           : 'border border-eden/12 bg-white text-eden',
-        className,
+        className
       )}
     >
       {icon ? <HomeIcon id={icon} className="h-[18px] w-[18px] shrink-0" /> : null}

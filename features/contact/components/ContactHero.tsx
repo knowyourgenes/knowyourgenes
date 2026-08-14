@@ -2,13 +2,13 @@ import { CONTACT_HERO, HERO_CHIPS } from '../constants';
 import { ContactEyebrow, ContactIcon } from './ContactIcon';
 
 /**
- * HERO — 1440 x 485, pad 80/342/56/342, so the copy column is exactly 756 wide
+ * HERO - 1440 x 485, pad 80/342/56/342, so the copy column is exactly 756 wide
  * and centred. Vertical gap 19.
  *
  * The second headline line is Cormorant Garamond 600 italic at the same 58/61.5
  * as the roman line above it, filled with the frame's 5-stop teal gradient
- * (#0e4d4b -> #15605d -> #25b5ab -> #15605d -> #0e4d4b). That ramp — plus the
- * serif family, italic, 600 and ls=0 — is exactly what `.tst-em-teal` already
+ * (#0e4d4b -> #15605d -> #25b5ab -> #15605d -> #0e4d4b). That ramp - plus the
+ * serif family, italic, 600 and ls=0 - is exactly what `.tst-em-teal` already
  * paints from globals.css (@layer components, background-clip: text), so the
  * span just wears the class instead of carrying a second copy of the gradient.
  */
@@ -26,12 +26,12 @@ export default function ContactHero() {
           <span className="tst-em-teal">{CONTACT_HERO.titleAccent}</span>
         </h1>
 
-        {/* p.text-ink3 — 620 wide, 19/28.5, and the frame's 1px bottom padding. */}
+        {/* p.text-ink3 - 620 wide, 19/28.5, and the frame's 1px bottom padding. */}
         <p className="max-w-[620px] pb-px font-kyg text-[clamp(15.5px,1.35vw,19px)] font-normal leading-[1.5] text-fusc">
           {CONTACT_HERO.lead}
         </p>
 
-        {/* div.flex — pad 13/0/0/0, gap 10, main axis centred; chips are 50 tall. */}
+        {/* div.flex - pad 13/0/0/0, gap 10, main axis centred; chips are 50 tall. */}
         <ul className="flex flex-wrap items-center justify-center gap-2.5 pt-[13px]">
           {HERO_CHIPS.map((c) => (
             <li

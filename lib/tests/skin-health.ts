@@ -17,9 +17,9 @@ export const skinHealth: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: 'Skin Health DNA Test — 20 markers from one saliva sample',
+    title: 'Skin Health DNA Test - 20 markers from one saliva sample',
     description:
-      'Ten skin conditions, six food sensitivities and four nutrients — twenty genetic markers from a single at-home saliva kit. Oxidative stress, glycation, collagen, acne, sun and pollution, graded and explained.',
+      'Ten skin conditions, six food sensitivities and four nutrients - twenty genetic markers from a single at-home saliva kit. Oxidative stress, glycation, collagen, acne, sun and pollution, graded and explained.',
   },
 
   sections: [

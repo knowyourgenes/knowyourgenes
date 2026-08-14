@@ -1,5 +1,5 @@
 // =============================================================================
-// About Us — SECTION 02 · WHY WE EXIST
+// About Us - SECTION 02 · WHY WE EXIST
 // -----------------------------------------------------------------------------
 // Figma: frame 1440×1093, pad 88/20, white@0.7 ground with a mine/10 hairline.
 // The rail here is WIDER than the page default: outer gutter 20 + inner rail
@@ -16,9 +16,9 @@ import { AboutIcon } from '../AboutIcon';
 import { Body, Eyebrow, Heading, Photo, Section } from '../ui';
 
 /**
- * The muted "old way" chain — four beats, each a stone-coloured capsule.
+ * The muted "old way" chain - four beats, each a stone-coloured capsule.
  *
- * CASE: these four labels are textCase=AS_TYPED in the frame — they are NOT in
+ * CASE: these four labels are textCase=AS_TYPED in the frame - they are NOT in
  * the uppercase manifest, and their 0.02em tracking is body tracking, not the
  * >=0.06em uppercase tracking every UPPER run on this page carries. Render them
  * exactly as typed; do not "match" them to the uppercase labels around them.
@@ -45,13 +45,13 @@ const NARRATIVE_POINTS = [
 const PAYOFF = "And that's exactly where our story begins.";
 
 /**
- * The 22×2 gradient rule with its 7px dot, drawn locally — the extracted glyph
+ * The 22×2 gradient rule with its 7px dot, drawn locally - the extracted glyph
  * for this connector clips the dot to a 2px-tall box, so CSS reproduces it.
  *
  * In the frame a connector only ever sits BETWEEN two capsules, so it may only
  * be shown at a width where the whole four-beat chain fits on one line. That
  * needs 1026px of rail; the content column is vw−104 from lg up, i.e. 1176 at
- * xl and only 920 at lg — so xl is the first breakpoint that clears it. Below
+ * xl and only 920 at lg - so xl is the first breakpoint that clears it. Below
  * that the capsules wrap (or stack) on their own, with no stub left pointing at
  * nothing.
  */
@@ -95,7 +95,7 @@ export default function WhyWeExist() {
             breaks that rail symmetrically: x=207..1233 = 1026 (capsules
             239+168+218+280 = 905, three 22px connectors, six 9px gaps), 33px
             proud on each side. The wrapper is therefore sized to the chain, not
-            to the 960 label rail — the label is centred text, so it is unmoved —
+            to the 960 label rail - the label is centred text, so it is unmoved -
             with enough headroom above 1026 to absorb font-metric drift before
             anything wraps. */}
         <div className="flex w-full max-w-[1120px] flex-col gap-5">
@@ -120,9 +120,7 @@ export default function WhyWeExist() {
         {/* ---------- transition statement --------------------------------- */}
         <Body
           className="max-w-[760px] text-center text-[clamp(22px,2.4vw,34px)] font-semibold leading-[1.24] tracking-normal text-mine"
-          html={
-            'But health doesn\'t suddenly begin <em class="abt-grad">when a symptom appears.</em>'
-          }
+          html={'But health doesn\'t suddenly begin <em class="abt-grad">when a symptom appears.</em>'}
         />
 
         {/* ---------- panel + the three narrative points -------------------- */}
@@ -130,7 +128,7 @@ export default function WhyWeExist() {
           {/* Editorial panel. In the frame the photograph is laid OVER the tinted
               slot as a sibling rectangle rather than replacing it, so the glyph
               and its "Everyday life · before symptoms" caption are covered, not
-              deleted — same net result, and the eden wash still sits on top.
+              deleted - same net result, and the eden wash still sits on top.
               The source is portrait (1122x1402) in a 1.65:1 landscape slot, so
               object-cover crops hard; held at 42% to keep the face in frame. */}
           <div className="relative min-h-[240px] overflow-hidden rounded-4xl border border-mine/10 shadow-tst-card sm:min-h-[300px] lg:min-h-[365px]">
@@ -178,7 +176,7 @@ export default function WhyWeExist() {
         </div>
 
         {/* ---------- reactive → understanding earlier ---------------------- */}
-        {/* Frame: HORIZONTAL, gap 16, both axes centred — the arrow reads as the
+        {/* Frame: HORIZONTAL, gap 16, both axes centred - the arrow reads as the
             transition BETWEEN the two pills, so it has to stay between them at
             every width. The row measures 146 + 16 + 24 + 16 + 273 = 475 and the
             rail is vw−40 here, so it stops fitting just above 515px: below that
@@ -193,10 +191,7 @@ export default function WhyWeExist() {
           </span>
           {/* Rotation is keyed off the SAME query as the direction switch above,
               so the arrow can never point down beside a pill or across a stack. */}
-          <AboutIcon
-            id="2208-644"
-            className="h-[28px] w-[24px] shrink-0 rotate-90 min-[560px]:rotate-0"
-          />
+          <AboutIcon id="2208-644" className="h-[28px] w-[24px] shrink-0 rotate-90 min-[560px]:rotate-0" />
           <span className="inline-flex max-w-full items-center gap-2 rounded-full bg-eden px-5 py-[10px]">
             <AboutIcon id="2211-705" className="h-[22px] w-[18px] shrink-0" />
             <span className="min-w-0 break-words font-kyg text-[14px] font-bold uppercase leading-[21px] tracking-[0.1em] text-linenw">

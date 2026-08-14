@@ -1,15 +1,15 @@
 // =============================================================================
-// Homepage — SECTION 10 · GENEous CARE
+// Homepage - SECTION 10 · GENEous CARE
 // -----------------------------------------------------------------------------
 // Ported from the designer's hand-built page, `New Homepage Build/index.html`:
 // CSS block "15 · GENEous CARE" (~line 995) and the markup at line 1820. That
 // page is the executable design the Figma frame was traced from, so where it and
-// the frame disagreed, it won — the notable corrections are recorded below.
+// the frame disagreed, it won - the notable corrections are recorded below.
 //
 // Ground is `--c-cream-2` (#f5eddf), which is exactly this project's `sand`
 // token, so the section takes ground="sand" rather than a hex override. Cards on
 // top are linenw (--c-cream), so the whole section reads as cards floating on
-// sand — that contrast IS the design, and swapping the ground for linenw would
+// sand - that contrast IS the design, and swapping the ground for linenw would
 // flatten it.
 //
 // RHYTHM IS MARGINS, NOT A FLEX GAP. The source spaces the five blocks with five
@@ -20,7 +20,7 @@
 // CASE TRAP: the kicker is `.kick--case`, unlike every other kicker on this
 // page. "GENEous Care" is a brand lockup whose lowercase "ous" is the whole joke
 // (GENE + genius); uppercasing it to "GENEOUS CARE" destroys it. The
-// corroborating tell is the tracking — .03em, a quarter of the .13em the real
+// corroborating tell is the tracking - .03em, a quarter of the .13em the real
 // UPPER kickers carry. Hence `upper={false}` on <Kicker>.
 //
 // RADIUS TRAP: this project remaps Tailwind's radius scale (--radius .625rem),
@@ -49,14 +49,14 @@ const E_SOFT = 'ease-[cubic-bezier(0.16,1,0.3,1)]';
  *
  * and then `:last-of-type` overrides the terminal pill to solid teal on cream
  * with no ring at all. Tailwind scans raw file text, so the tints cannot be
- * computed from an index — every class has to appear literally, which is why
+ * computed from an index - every class has to appear literally, which is why
  * this is a table rather than a formula.
  *
  * `arrow` is the connector that FOLLOWS the pill; the last step has none.
  * Ids are frame-absolute: spec y=503 + section offset 9406 = 9909.
  */
 const FLOW: { label: string; skin: string; arrow?: string }[] = [
-  // k=0 mixes in 0% teal, i.e. --ink-3 untouched — that is the `nevada` token.
+  // k=0 mixes in 0% teal, i.e. --ink-3 untouched - that is the `nevada` token.
   { label: 'Result', skin: 'bg-eden/5 text-nevada ring-eden/10', arrow: '9909-166' },
   {
     label: 'Context',
@@ -68,7 +68,7 @@ const FLOW: { label: string; skin: string; arrow?: string }[] = [
     skin: 'bg-eden/15 text-[color:color-mix(in_oklab,#5c6b68,#0e4d4b_84%)] ring-eden/[0.34]',
     arrow: '9909-511',
   },
-  // `:last-of-type` — solid eden, cream label, and NO inset ring. ring-0 kills
+  // `:last-of-type` - solid eden, cream label, and NO inset ring. ring-0 kills
   // the one <Chip> would otherwise inherit from the shared FLOW_PILL string.
   { label: 'Next step', skin: 'bg-eden text-linenw ring-0' },
 ];
@@ -144,7 +144,7 @@ export default function GeneousCare() {
     >
       {/* ---- header: kicker / two-voice headline / lead ------------------- */}
       <Reveal as="header">
-        {/* `.kick--case` — see the CASE TRAP note in the header block. 1.25vw
+        {/* `.kick--case` - see the CASE TRAP note in the header block. 1.25vw
             hits the source's fixed 18px exactly at the 1440 artboard width. */}
         <Kicker tone="eden" upper={false} className="mb-[clamp(22px,2.2vw,32px)] text-[clamp(15px,1.25vw,18px)]">
           GENEous Care
@@ -153,7 +153,7 @@ export default function GeneousCare() {
         {/* Two typefaces inside one heading, exactly as the source draws it:
             Figtree 400 for the statement, then Cormorant Garamond 500 italic at
             1.1em for the turn. The serif run continues mid-line rather than
-            starting a new block, so it has to be an inline <em> — <Heading>
+            starting a new block, so it has to be an inline <em> - <Heading>
             styles <em> as the italic serif for exactly this reason.
 
             NO MANUAL <br>. The source breaks this headline with `max-width:22ch`
@@ -180,7 +180,7 @@ export default function GeneousCare() {
 
           IT WRAPS, IT DOES NOT STACK. The source is one `flex-wrap:wrap` row at
           gap 10 with the pills and arrows as flat siblings, so a narrow viewport
-          breaks the sequence across lines and every arrow keeps pointing right —
+          breaks the sequence across lines and every arrow keeps pointing right -
           into the pill that actually follows it. An earlier version turned this
           into a column below md and rotated the arrows 90°; that reads as a
           different device, and the connectors then point at nothing on the wrap
@@ -198,7 +198,7 @@ export default function GeneousCare() {
         </div>
       </Reveal>
 
-      {/* `.body.care__lead` — Figtree 400 18/1.66 on --ink-3 (nevada). The 70ch
+      {/* `.body.care__lead` - Figtree 400 18/1.66 on --ink-3 (nevada). The 70ch
           measure is the source's own override of `.body`'s default 64ch, and it
           is what produces the frame's break after "identify". */}
       <Reveal className="mb-[clamp(30px,3.4vw,46px)]">
@@ -216,7 +216,7 @@ export default function GeneousCare() {
           md makes them 221px, which is the smaller of the two available errors
           (lg would leave a 163px-wide band showing one column where the source
           shows three). */}
-      {/* Three up, collapsing to one below 860 — `@media (max-width:860px){
+      {/* Three up, collapsing to one below 860 - `@media (max-width:860px){
           .care__grid{ grid-template-columns:1fr }}`.
 
           Expressed as a MAX-width variant on a 3-column base rather than
@@ -224,13 +224,13 @@ export default function GeneousCare() {
           860: between those two widths a 3-column layout squeezes each card to
           ~240px and the section measured 2.3x shorter than the reference.
           A max-* variant is also the one arbitrary-breakpoint form that is
-          safe here — it has no named breakpoint competing for the same
+          safe here - it has no named breakpoint competing for the same
           property, so the cascade-order trap does not apply. */}
       <div className="grid grid-cols-3 gap-[clamp(18px,2vw,28px)] max-[860px]:grid-cols-1">
         {CARDS.map((card) => (
           // The reveal sits OUTSIDE the card, not on it. <Reveal> writes
           // `transform` as an INLINE style, and an inline transform beats any
-          // `hover:-translate-y` class — put both on one element and the card
+          // `hover:-translate-y` class - put both on one element and the card
           // silently stops lifting.
           <Reveal key={card.title} delay={card.delay}>
             <article
@@ -242,14 +242,14 @@ export default function GeneousCare() {
               className={`group relative flex h-full min-w-0 flex-col rounded-[24px] bg-linenw shadow-[0_1px_2px_0_rgba(45,32,18,0.05),0_4px_14px_0_rgba(45,32,18,0.05)] transition-[translate,box-shadow] duration-850 ${E_SOFT} hover:-translate-y-[7px] hover:shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)] motion-reduce:transition-none`}
             >
               {/* THE BADGE IS A SIBLING OF THE FIGURE, NOT A CHILD. The source
-                  nests it inside `.care__f`, which is `overflow:hidden` — so its
+                  nests it inside `.care__f`, which is `overflow:hidden` - so its
                   own rule (`bottom:-25px`, plus a 22px drop shadow) is clipped
                   flat against the photo's bottom edge. The 44px of top padding
                   waiting for it in `.care__b` shows the overhang is the intent
                   and the clip is not, so the badge is lifted one level into this
                   unclipped wrapper. Same coordinates, shadow intact. */}
               <div className="relative">
-                {/* `.care__f` — 16:10, top corners only (the card body supplies
+                {/* `.care__f` - 16:10, top corners only (the card body supplies
                     the bottom two). overflow-hidden here is load-bearing: it is
                     what crops the 1.06 hover zoom of the photo inside it. */}
                 <figure className="relative aspect-[16/10] overflow-hidden rounded-t-[24px]">
@@ -264,7 +264,7 @@ export default function GeneousCare() {
                   />
                 </figure>
 
-                {/* `.icb` — 48 square, r14, straddling the seam 25px below the
+                {/* `.icb` - 48 square, r14, straddling the seam 25px below the
                     photo. The source transitions its background at 0.83s and its
                     transform/shadow at 0.85s; folded into one 850ms leg because
                     20ms is below the threshold of noticing and one shorthand
@@ -276,7 +276,7 @@ export default function GeneousCare() {
                   {/* HomeIcon serves a static <img> with #0e4d4b baked into the
                       stroke, so the source's glyph recolour (teal → cream on the
                       now-teal badge) cannot be done with `color`. brightness-0
-                      crushes the stroke to black and invert takes it to white —
+                      crushes the stroke to black and invert takes it to white -
                       the only way to keep the glyph visible once the well turns
                       eden underneath it. */}
                   <HomeIcon
@@ -286,7 +286,7 @@ export default function GeneousCare() {
                 </span>
               </div>
 
-              {/* `.care__b` — the 44px top padding is what clears the badge. */}
+              {/* `.care__b` - the 44px top padding is what clears the badge. */}
               <div className="flex min-w-0 flex-1 flex-col px-[clamp(20px,2vw,26px)] pb-[clamp(24px,2.4vw,30px)] pt-[44px]">
                 {/* `.h4` + the hover recolour to teal */}
                 <h3
@@ -307,7 +307,7 @@ export default function GeneousCare() {
           SPACE_BETWEEN across the full rail, above a rule that TAPERS. The rule
           is the page's `.fade-t` recipe: --line (rgba(27,23,18,.11)) held solid
           to 34% and then faded to nothing by 92%, applied as a border-image. It
-          is NOT a solid bistre hairline — an earlier reading sampled the 1px
+          is NOT a solid bistre hairline - an earlier reading sampled the 1px
           line off the slice and mistook the darkest pixel at its left end for
           the whole rule. border-transparent is the fallback that keeps a
           border-image failure invisible rather than drawing a full-strength

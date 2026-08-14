@@ -8,7 +8,7 @@ import { useEffect, useState, type RefObject } from 'react';
 /**
  * NOTE ON `threshold`: a fractional threshold is a trap for tall targets. It
  * requires that fraction of the ELEMENT to be on screen, so anything taller than
- * `viewportHeight / threshold` can never satisfy it — at 0.12 on a 667px phone
+ * `viewportHeight / threshold` can never satisfy it - at 0.12 on a 667px phone
  * that is any element over ~5,560px, which a stacked section easily exceeds. Such
  * an element would stay at opacity:0 permanently.
  *

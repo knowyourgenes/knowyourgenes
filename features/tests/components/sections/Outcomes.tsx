@@ -4,13 +4,13 @@ import { Icon } from '../icons';
 import { Section } from '../ui';
 
 // =============================================================================
-// PRICE VALUE — block 3 of 5: "Tonight / In a few years / Decades from now".
+// PRICE VALUE - block 3 of 5: "Tonight / In a few years / Decades from now".
 // -----------------------------------------------------------------------------
 // One Figma frame ('PRICE VALUE' @[80 0 1280 1919], VERTICAL, gap 44) holds all
 // five blocks: head + price card (Worth.tsx), these three cards, then the pull
 // quote + closing CTA (Testimonial.tsx). The frame carries NO padding of its
 // own, so this file opens with pt-11 (the frame's 44 gap) and closes with pb-0;
-// Testimonial re-opens with the same 44. The three files are one frame —
+// Testimonial re-opens with the same 44. The three files are one frame -
 // changing the padding on one without the other two breaks the rhythm.
 //
 //   grid   @[112 1042 1216 333]  HORIZONTAL, gap 24 -> three 389 columns
@@ -44,7 +44,7 @@ export default function Outcomes({ data, ground }: { data: OutcomesSection; grou
               key={c.title}
               className="relative flex flex-col gap-2 overflow-hidden lift rounded-[26px] border border-mine/10 bg-white p-6 shadow-tst-soft xl:p-8"
             >
-              {/* 387x4 @[113 1043] — sits inside the hairline, so inset-x-0 on
+              {/* 387x4 @[113 1043] - sits inside the hairline, so inset-x-0 on
                   the padding box lands it exactly; the radius clips its ends. */}
               <span aria-hidden className="absolute inset-x-0 top-0 h-1 bg-eden" />
 
@@ -70,7 +70,7 @@ export default function Outcomes({ data, ground }: { data: OutcomesSection; grou
               </h3>
 
               {/* Figtree 400 17.5/28.4 #5b564e inside the 323 column. Spec lines
-                  67/79/91 are each ONE TEXT entry across 4-5 lines — the extractor
+                  67/79/91 are each ONE TEXT entry across 4-5 lines - the extractor
                   splits mixed-style runs, so a single entry proves a single weight.
                   The data wraps a closing sentence of every card in <b>, which
                   preflight paints at 700, hence. */}

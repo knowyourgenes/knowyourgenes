@@ -1,7 +1,7 @@
 'use client';
 
 // =============================================================================
-// Homepage — SECTION 09 · HOW IT WORKS
+// Homepage - SECTION 09 · HOW IT WORKS
 // -----------------------------------------------------------------------------
 // Rebuilt against the designer's own build ("New Homepage Build/index.html",
 // CSS section 14 "HOW IT WORKS · the rail", markup at `section.how`, behaviour
@@ -10,7 +10,7 @@
 //
 // WHAT CHANGED AGAINST THE FIGMA READING. The frame flattens this section into a
 // static hairline with five inert cream discs, and it exports the five step
-// glyphs at opacity 0 — which read as "the icons are switched off". They are
+// glyphs at opacity 0 - which read as "the icons are switched off". They are
 // not: in the executable page they are the HOVER state of each disc, and the
 // hairline is a SCROLL-LINKED PROGRESS TRACK, not decoration. Both are restored
 // here.
@@ -22,14 +22,14 @@
 //                `p`, published to CSS as `--p` so ONE inline value can drive a
 //                width at desktop and a height on phones without a resize
 //                listener or a second render path.
-// `p` comes from useScrollProgress(0.78, 0.42) — the source's own numbers: the
+// `p` comes from useScrollProgress(0.78, 0.42) - the source's own numbers: the
 // draw starts when the rail's top crosses 78% down the viewport and completes
 // when it has travelled to 42%.
 //
 // THE DISCS MASK THE TRACK. Each 66px disc is filled with the SECTION'S OWN
 // GROUND (--c-cream = #faf6ef = linenw) and sits at z-2 over the line, so it
 // punches a hole in the hairline rather than sitting on a visible stripe. Change
-// the section ground and this breaks — the disc must stay bg-linenw.
+// the section ground and this breaks - the disc must stay bg-linenw.
 //
 // TWO GEOMETRIES, ONE MARKUP. The source flips the whole rail at 1000px: the
 // track becomes a 1px COLUMN at left 33px, the fill grows downward, and each
@@ -37,12 +37,12 @@
 // (1024) and the house rule forbids pairing an arbitrary min-width with named
 // breakpoints (v4 emits arbitrary min-widths first, so they always lose), so the
 // flip lands at 1024 instead of 1000. Mobile is the base case here, desktop is
-// the `lg:` case — the reverse of most of this page, because the source writes
+// the `lg:` case - the reverse of most of this page, because the source writes
 // the horizontal rail as the default and the vertical one in the media query.
 //
 // WHY THIS FILE IS A CLIENT COMPONENT. useScrollProgress is a hook, and the fill
 // plus the five `on` flags all read from it. There is no server-rendered half of
-// this section worth splitting out — the header and the CTA are three elements —
+// this section worth splitting out - the header and the CTA are three elements -
 // so the whole section opts in rather than being cut into two files.
 //
 // RADIUS TRAP: this project remaps Tailwind's radius scale (--radius 0.625rem),
@@ -67,8 +67,8 @@ type Step = {
   body: string;
   /**
    * The glyph the disc crossfades to on hover. These are the frame's own
-   * 'Component 13' instances — search / test-tube / microscope / file-text /
-   * route — which Figma exports at opacity 0 because the frame captures the
+   * 'Component 13' instances - search / test-tube / microscope / file-text /
+   * route - which Figma exports at opacity 0 because the frame captures the
    * REST state. The source shows them on `.how__s:hover`, so they are wired up.
    */
   icon: string;
@@ -117,7 +117,7 @@ const STEPS: Step[] = [
 /**
  * How far past a step the fill must be before that step lights up: the source's
  * `q * howSteps.length >= i + 0.18`. The 0.18 bias is what stops a step from
- * flicking on the instant the bar touches its left edge — the bar has to be
+ * flicking on the instant the bar touches its left edge - the bar has to be
  * visibly INTO the step's own fifth before the disc reacts.
  */
 const ON_BIAS = 0.18;
@@ -136,7 +136,7 @@ export default function HowItWorks() {
           How it works
         </Kicker>
         {/* Two voices in one line: Figtree for the statement, Cormorant Garamond
-            italic for the turn. Both runs are as-typed — do not uppercase. */}
+            italic for the turn. Both runs are as-typed - do not uppercase. */}
         <Heading
           html="A lot of science. <em>Made remarkably simple.</em>"
           className="max-w-[16ch] [text-wrap:balance]"
@@ -145,13 +145,13 @@ export default function HowItWorks() {
 
       {/* ---- the rail ------------------------------------------------------
           The ref is the MEASURED element for the scroll progress, so it must
-          wrap the track and every step and nothing else — put it on the section
+          wrap the track and every step and nothing else - put it on the section
           and the bar would already be half drawn before the first disc appears. */}
       <div ref={railRef} className="relative">
         {/* The track. Vertical by default (the source's <=1000 case): a 1px
             column at left 33px, which is the horizontal centre of the 66px disc
             column beside it. From lg it lies down across the full rail at top
-            33px — the same 33, now the vertical centre of the disc row.
+            33px - the same 33, now the vertical centre of the disc row.
 
             The 90deg feathered gradient is kept in BOTH orientations because the
             source keeps it: compressed into a 1px-wide column its stops all land
@@ -162,7 +162,7 @@ export default function HowItWorks() {
           className={cn(
             'pointer-events-none absolute bottom-0 left-[33px] top-0 w-px',
             'bg-[linear-gradient(90deg,rgba(27,23,18,0)_0%,rgba(27,23,18,0.11)_5%,rgba(27,23,18,0.11)_88%,rgba(27,23,18,0)_100%)]',
-            'lg:bottom-auto lg:left-0 lg:right-0 lg:top-[33px] lg:h-px lg:w-auto',
+            'lg:bottom-auto lg:left-0 lg:right-0 lg:top-[33px] lg:h-px lg:w-auto'
           )}
         >
           {/* The drawn part. `--p` is published once and consumed as a height
@@ -208,15 +208,15 @@ export default function HowItWorks() {
                     'group-hover:bg-eden group-hover:text-linenw group-hover:[transform:translateY(-3px)]',
                     on
                       ? // lit by the scroll: solid teal under a 7px soft halo.
-                        // No group-hover shadow in this branch — in the source
+                        // No group-hover shadow in this branch - in the source
                         // the `.on` rule is authored AFTER the hover rule at
                         // equal specificity, so a lit step keeps its halo while
                         // hovered instead of swapping to the drop shadow.
                         'bg-eden text-linenw shadow-[0_0_0_7px_rgba(14,77,75,0.09)]'
                       : // at rest: INSET hairline (the source's
-                        // `inset 0 0 0 1px`), never a border — a border would
+                        // `inset 0 0 0 1px`), never a border - a border would
                         // grow the 66px box and knock the disc off the track
-                        'shadow-[inset_0_0_0_1px_rgba(27,23,18,0.11)] group-hover:shadow-[0_12px_28px_rgba(14,77,75,0.24)]',
+                        'shadow-[inset_0_0_0_1px_rgba(27,23,18,0.11)] group-hover:shadow-[0_12px_28px_rgba(14,77,75,0.24)]'
                   )}
                 >
                   {/* Two durations, one declaration: the fade (0.64s) is
@@ -234,7 +234,7 @@ export default function HowItWorks() {
                       // out-order a shorthand in the emitted sheet, so the swap
                       // would keep animating
                       '[transition:opacity_0.64s_cubic-bezier(0.16,1,0.3,1),transform_0.79s_cubic-bezier(0.16,1,0.3,1)]',
-                      'motion-reduce:[transition:none]',
+                      'motion-reduce:[transition:none]'
                     )}
                   >
                     {step.n}
@@ -244,7 +244,7 @@ export default function HowItWorks() {
                       leaves. The exported SVGs bake the frame's rest colour
                       (#92a19e) into their fills and an <img> cannot inherit
                       currentColor, so brightness-0+invert forces them to white
-                      — the disc is always teal whenever this is visible, so
+                      - the disc is always teal whenever this is visible, so
                       there is no state where the flattened colour shows. */}
                   <HomeIcon
                     id={step.icon}
@@ -253,7 +253,7 @@ export default function HowItWorks() {
                       'opacity-0 [transform:scale(0.62)_rotate(-16deg)]',
                       'group-hover:opacity-100 group-hover:[transform:none]',
                       '[transition:opacity_0.64s_cubic-bezier(0.16,1,0.3,1),transform_0.79s_cubic-bezier(0.16,1,0.3,1)]',
-                      'motion-reduce:[transition:none]',
+                      'motion-reduce:[transition:none]'
                     )}
                   />
                 </span>
@@ -278,8 +278,8 @@ export default function HowItWorks() {
 
       {/* ---- footer CTA -----------------------------------------------------
           `.how__ft` margin-top clamp(46,5vw,74). On this cream ground the source
-          uses the default `.btn` — teal fill, cream label, radius 10, drop
-          shadow 0 6 18 rgba(14,77,75,.18) — but the primary variant ships the
+          uses the default `.btn` - teal fill, cream label, radius 10, drop
+          shadow 0 6 18 rgba(14,77,75,.18) - but the primary variant ships the
           java2/abyss pairing meant for dark grounds, so eden/linenw is passed
           through className (twMerge drops the conflicting bg/text). The label is
           stored with those capitals; it is not a text-transform. */}

@@ -11,13 +11,13 @@ import { useEffect, useRef, useState } from 'react';
  *   • sets the rail's width, which CSS then transitions.
  *
  * Values that are not a bare number ("1 in 5", "2 to 3", "50%", "3x") cannot be
- * counted, so those pop in with a spring instead — same as the build, which
+ * counted, so those pop in with a spring instead - same as the build, which
  * gates on `data-mode === 'num'`.
  *
  * Returns a ref to attach to the card and the string to render.
  */
 export function useCountUp(value: string, durationMs = 1300) {
-  // A bare integer, optionally with a trailing unit — "30", "50%", "3x".
+  // A bare integer, optionally with a trailing unit - "30", "50%", "3x".
   const match = /^(\d+)(\D*)$/.exec(value.trim());
   const target = match ? Number(match[1]) : null;
   const suffix = match ? match[2] : '';

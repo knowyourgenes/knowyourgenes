@@ -1,8 +1,8 @@
 // =============================================================================
-// About Us — SECTION 12 · FINAL CTA
+// About Us - SECTION 12 · FINAL CTA
 // -----------------------------------------------------------------------------
 // Figma frame: 1440 x 841, ink ground (#141b1a), pad 116/310. The 820-wide inner
-// column carries its own 32 of padding, so the real content rail is 756 — which
+// column carries its own 32 of padding, so the real content rail is 756 - which
 // is what <Section> + max-w-[756px] reproduces at 1440.
 //
 // Two decorative layers sit behind the copy: a 620px eden circle bleeding off the
@@ -23,9 +23,7 @@ function ChainNode({ icon, label }: { icon: string; label: string }) {
   return (
     <span className="inline-flex h-[49px] shrink-0 items-center gap-2 rounded-full border border-eden bg-eden px-[21px] shadow-[0_12px_30px_0_rgba(14,77,75,0.28)]">
       <AboutIcon id={icon} className="h-[25px] w-[21px] shrink-0" />
-      <span className="font-kyg text-[15px] font-extrabold leading-[17px] tracking-[0.3px] text-linenw">
-        {label}
-      </span>
+      <span className="font-kyg text-[15px] font-extrabold leading-[17px] tracking-[0.3px] text-linenw">{label}</span>
     </span>
   );
 }
@@ -80,7 +78,7 @@ export default function FinalCta() {
             // Every metric (pad 8/17/8/13, gap 9, glyph 19x23, label 13.5/20.2
             // ls 0.11em, weight 700) comes from the shared primitive, INCLUDING
             // the case: this node is textCase=UPPER in the frame, like all 61
-            // uppercase runs on the page. See the Eyebrow note in ui.tsx — the
+            // uppercase runs on the page. See the Eyebrow note in ui.tsx - the
             // `characters` field stores text as-typed, so it reads "Start with
             // knowing" while the frame renders "START WITH KNOWING".
           />
@@ -97,13 +95,13 @@ export default function FinalCta() {
         </div>
 
         {/* ---- full-circle: the hero's flow, now complete and fully lit -----
-            CASE GUARD — do NOT add `uppercase` to these four capsules. The Hero
+            CASE GUARD - do NOT add `uppercase` to these four capsules. The Hero
             renders the same Genes/Information/Insight/Awareness chain and THOSE
             are textCase=UPPER (manifest y=1107.3, 13px/700, ls 0.14em). This
             chain is a different node: 15px/800, ls 0.3px (0.02em), and it is
             absent from .about-case-manifest.json, i.e. textCase=AS_TYPED. The
             manifest is exhaustive for the About frame, so "same words as the
-            hero" is not evidence — sentence case here is frame-accurate. */}
+            hero" is not evidence - sentence case here is frame-accurate. */}
         <div className="flex flex-wrap items-center justify-center gap-x-[9px] gap-y-2.5 pt-1 lg:flex-nowrap">
           <ChainNode icon="13364-363" label="Genes" />
           <ChainLink />
@@ -120,9 +118,7 @@ export default function FinalCta() {
             href="/categories/wellness"
             className="inline-flex min-h-[56px] items-center justify-center gap-[9px] rounded-full border border-white bg-white px-7 py-[15px] shadow-[0_10px_26px_0_rgba(14,77,75,0.22)] transition-transform duration-200 hover:-translate-y-0.5"
           >
-            <span className="font-kyg text-[15.5px] font-bold leading-[23px] text-eden">
-              Explore Genetic Testing
-            </span>
+            <span className="font-kyg text-[15.5px] font-bold leading-[23px] text-eden">Explore Genetic Testing</span>
             <AboutIcon id="13453-688" className="h-[23px] w-[19px] shrink-0" />
           </Link>
 
@@ -130,9 +126,7 @@ export default function FinalCta() {
             href="/categories/wellness/womens-health#how-it-works-steps"
             className="inline-flex min-h-[56px] items-center justify-center gap-[9px] rounded-full border border-[rgba(234,246,243,0.28)] px-7 py-[15px] transition-colors duration-200 hover:border-[rgba(234,246,243,0.55)] hover:bg-white/5"
           >
-            <span className="font-kyg text-[15.5px] font-bold leading-[23px] text-[#eaf6f3]">
-              See How It Works
-            </span>
+            <span className="font-kyg text-[15.5px] font-bold leading-[23px] text-[#eaf6f3]">See How It Works</span>
             <AboutIcon id="13453-913" className="h-[23px] w-[19px] shrink-0" />
           </Link>
         </div>

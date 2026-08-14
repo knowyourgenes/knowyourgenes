@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-// Rating stars — the Figma renders these as the ★ text glyph in Hokey Pokey gold
+// Rating stars - the Figma renders these as the ★ text glyph in Hokey Pokey gold
 // (#D4A72C), not as SVG icons. Reproduce exactly with the star character.
 export default function Stars({
   count = 5,

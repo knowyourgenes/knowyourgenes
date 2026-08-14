@@ -1,5 +1,5 @@
 // =============================================================================
-// About Us — SECTION 11 · THE BIGGER PICTURE
+// About Us - SECTION 11 · THE BIGGER PICTURE
 // -----------------------------------------------------------------------------
 // Figma frame is 1400 wide inside the 1440 artboard; the shared <Section> rail
 // (1280 → 1216 content) holds every child of this frame, whose widest block is
@@ -67,10 +67,7 @@ function Stage({
 }) {
   return (
     <div
-      className={cn(
-        'relative flex min-w-0 flex-1 flex-col gap-2 overflow-hidden rounded-[24px] p-[28px]',
-        className,
-      )}
+      className={cn('relative flex min-w-0 flex-1 flex-col gap-2 overflow-hidden rounded-[24px] p-[28px]', className)}
     >
       {ornament ? (
         // The frame's blurred teal orb, clipped by the card's own corner radius.
@@ -80,15 +77,12 @@ function Stage({
         />
       ) : null}
       <span
-        className={cn(
-          'relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px]',
-          chipClassName,
-        )}
+        className={cn('relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px]', chipClassName)}
       >
         <AboutIcon id={icon} className="h-[28px] w-[24px]" />
       </span>
       {/*
-        CASE: all three stage labels are textCase=UPPER in the frame — the frame
+        CASE: all three stage labels are textCase=UPPER in the frame - the frame
         renders REACTIVE HEALTHCARE / PERSONALIZED HEALTH / PREVENTIVE HEALTH.
         Figma keeps `characters` as the designer typed it and applies case
         separately via `style.textCase`, so the sentence-case strings passed in
@@ -100,7 +94,7 @@ function Stage({
       <p
         className={cn(
           'relative pt-2 font-kyg text-[13px] font-bold uppercase leading-[19.5px] tracking-[0.12em]',
-          labelClassName,
+          labelClassName
         )}
       >
         {label}
@@ -143,7 +137,7 @@ export default function BiggerPicture() {
                   key={shift.label}
                   label={shift.label}
                   icon={shift.icon}
-                  // Frame: pad 8/16, gap 8, label Figtree 600 15/22.5, stroke only —
+                  // Frame: pad 8/16, gap 8, label Figtree 600 15/22.5, stroke only -
                   // no effects[], so the primitive's shadow-tst-soft has to go. It has
                   // to go via the arbitrary PROPERTY: `shadow-none` loses (tailwind-merge
                   // files shadow-tst-soft under shadow-color, so both classes survive,
@@ -170,16 +164,14 @@ export default function BiggerPicture() {
                 key={row.text}
                 className={cn(
                   'flex items-center gap-4 rounded-[16px] px-5 py-4',
-                  row.strong
-                    ? 'border-2 border-eden/25 bg-white shadow-tst-soft'
-                    : 'border border-mine/10 bg-linenw',
+                  row.strong ? 'border-2 border-eden/25 bg-white shadow-tst-soft' : 'border border-mine/10 bg-linenw'
                 )}
               >
                 <AboutIcon id={row.icon} className="h-[26px] w-[22px] shrink-0" />
                 <p
                   className={cn(
                     'min-w-0 break-words font-kyg text-[15.5px] leading-[1.5] sm:text-[16.5px]',
-                    row.strong ? 'font-semibold text-[#2d2a24]' : 'font-normal text-fusc',
+                    row.strong ? 'font-semibold text-[#2d2a24]' : 'font-normal text-fusc'
                   )}
                 >
                   {row.text}
@@ -225,9 +217,7 @@ export default function BiggerPicture() {
         {/* ── closing statement ───────────────────────────────────────────── */}
         <p className="w-full max-w-[820px] break-words pt-[15px] text-center font-kyg text-[clamp(22px,2.4vw,34px)] font-semibold leading-[1.26] text-mine">
           The future of healthcare shouldn&apos;t only be about treating problems better.{' '}
-          <em className="abt-grad">
-            It should also be about understanding ourselves earlier.
-          </em>
+          <em className="abt-grad">It should also be about understanding ourselves earlier.</em>
         </p>
       </div>
     </Section>

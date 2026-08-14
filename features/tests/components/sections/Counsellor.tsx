@@ -3,7 +3,7 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Lead, Section } from '../ui';
 
 // =============================================================================
-// DOCTOR — "Our GENEous Care expert explains it to you."
+// DOCTOR - "Our GENEous Care expert explains it to you."
 // -----------------------------------------------------------------------------
 // Frame: 1280 x 468, HORIZONTAL, pad 0/32, gap 56, align CENTER/CENTER.
 // Two 580px columns (580 + 56 + 580 = 1216 = the 1280 rail minus its own 32/32).
@@ -24,7 +24,7 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
   return (
     <Section ground={ground ?? 'cream'}>
       <div className="grid items-center gap-x-14 gap-y-16 lg:grid-cols-2">
-        {/* ------------------------------------------------ visual — 580x435 -- */}
+        {/* ------------------------------------------------ visual - 580x435 -- */}
         <div className="relative mx-auto w-full max-w-[580px] lg:mx-0">
           {/* The glow is pinned to the slot, not to the column, so that the badge
               dropping into flow below 640 does not drag the plate down with it. */}
@@ -35,7 +35,7 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
               className="pointer-events-none absolute -inset-4 rounded-[30px] bg-[linear-gradient(135deg,rgba(42,195,162,0.15),#e6f4f3)] blur-[12px]"
             />
 
-            {/* The frame ships this as an EMPTY image slot — a tinted plate with the
+            {/* The frame ships this as an EMPTY image slot - a tinted plate with the
                 design's own caduceus glyph and a caption, not a photograph. There is
                 no counsellor export in the file, so it is rebuilt here 1:1. */}
             <div className="relative flex aspect-[580/435] flex-col items-center justify-center gap-[2px] overflow-hidden rounded-[26px] border border-mine/10 bg-[linear-gradient(135deg,rgba(14,77,75,0.05),rgba(37,181,171,0.06))] shadow-tst-float">
@@ -46,7 +46,7 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
             </div>
           </div>
 
-          {/* floating GENEous Care badge — 236x117, r20, overhang -20/-20.
+          {/* floating GENEous Care badge - 236x117, r20, overhang -20/-20.
               Under 640 the slot is only ~210-290 tall, so a 117-tall badge pinned
               -20/-20 lands on top of the centred caption AND its right edge runs
               flush into the 20px page gutter. Below sm it therefore drops out of
@@ -79,15 +79,15 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
           </div>
         </div>
 
-        {/* -------------------------------------------------- copy — 580x468 -- */}
+        {/* -------------------------------------------------- copy - 580x468 -- */}
         <div className="flex w-full flex-col items-start gap-4">
-          {/* eyebrow: NOT the shared white pill — eden@7 ground, eden@15 hairline,
+          {/* eyebrow: NOT the shared white pill - eden@7 ground, eden@15 hairline,
               crimson glow, Figtree 800 14/21 ls 1.12, sentence case. */}
           {eyebrow ? (
             <span className="inline-flex items-center gap-2.5 rounded-full border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
               <FigmaIcon id="14283-766" className="my-[-2px] h-[26px] w-[22px] shrink-0" />
               {/* the label is 366 wide at 1440 and the pill is only ~209 of usable
-                  width at 320 — min-w-0 lets it wrap inside the pill rather than
+                  width at 320 - min-w-0 lets it wrap inside the pill rather than
                   stretching the pill past the gutter. */}
               <span className="min-w-0 break-words font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-eden">
                 {eyebrow.label}
@@ -97,7 +97,7 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
 
           {/* H2 Figtree 700 51/55 ls -0.02em #222222. The serif accent's 5-stop
               teal gradient (#0e4d4b -> #15605d -> #25b5ab -> #15605d -> #0e4d4b)
-              is already carried by `.tst-em-teal`, which the data's <em> uses —
+              is already carried by `.tst-em-teal`, which the data's <em> uses -
               so it is NOT re-declared here. w-full keeps the h2 at the column's
               580 so "explains it to you." breaks onto line two as in the frame. */}
           <Heading html={data.head.titleHtml} className="w-full break-words" />
@@ -108,7 +108,7 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
             {data.points.map((p, i) => (
               <li key={i} className="flex items-start gap-3">
                 <FigmaIcon id="14469-748" className="mt-[-2px] h-[25px] w-[21px] shrink-0" />
-                {/* the frame runs all three bullets at Figtree 400 — the <b> in the
+                {/* the frame runs all three bullets at Figtree 400 - the <b> in the
                     data has no counterpart in the design, so it is neutralised.
                     18.5/27.8 => ratio 1.5027, kept as a ratio for the clamp. */}
                 <span
@@ -119,11 +119,11 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
             ))}
           </ul>
 
-          {/* expert credit — inline-flex 335x114, r16, 2px #0e4d4b@25, card shadow.
+          {/* expert credit - inline-flex 335x114, r16, 2px #0e4d4b@25, card shadow.
               r16 must be literal: this project remaps --radius, so rounded-2xl
               is 18px here, not 16. */}
           {/* max-w-full already caps w-fit at the column, so the card never pushes
-              past 320 — but 28 of right padding is a lot of the ~166 left for the
+              past 320 - but 28 of right padding is a lot of the ~166 left for the
               name there, so the frame's pr-7 only starts at sm. */}
           <div className="flex w-fit max-w-full items-center gap-4 rounded-[16px] border-2 border-eden/25 bg-white pb-4 pl-3.5 pr-5 pt-6 shadow-tst-card sm:pr-7">
             <span className="flex size-14 shrink-0 items-start justify-center rounded-full bg-eden pt-[11px]">

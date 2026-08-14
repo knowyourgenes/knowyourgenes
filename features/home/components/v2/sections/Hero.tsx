@@ -1,11 +1,11 @@
 // =============================================================================
-// Homepage — SECTION 03 · HERO
+// Homepage - SECTION 03 · HERO
 // -----------------------------------------------------------------------------
 // Rebuilt against the designer's own build ("New Homepage Build/index.html",
 // `section.hero`), which is the page the Figma frame was traced from. Where the
 // two disagree the HTML wins, because it is the executable version.
 //
-// GROUND — three paints, in this order (the frame flattens them, the HTML does
+// GROUND - three paints, in this order (the frame flattens them, the HTML does
 // not, and the positions matter):
 //   radial 78% 62% at 74%  8%   #25b5ab @0.20
 //   radial 64% 54% at  6% 96%   #edddb8 @0.10
@@ -14,7 +14,7 @@
 // PAINT ORDER is the whole trick of this section, and it is expressed in z-index
 // rather than DOM order:
 //   z-1  the portrait, bleeding off the right edge behind a diagonal MASK
-//   z-2  the particle helix canvas — over the portrait, spanning the section
+//   z-2  the particle helix canvas - over the portrait, spanning the section
 //   z-3  the copy shell and the ledger band
 // The wrapper around the portrait is `relative` with NO z-index, so it does not
 // open a stacking context and its child can still be compared against the
@@ -23,8 +23,8 @@
 //
 // THE PORTRAIT IS MASKED, NOT OVERLAID. The source uses
 // `mask-image:linear-gradient(97deg,...)`, so the photo's left edge genuinely
-// dissolves into the ground. An opaque gradient laid on top instead — which is
-// what this section used to do — cannot do that over a moving canvas, because
+// dissolves into the ground. An opaque gradient laid on top instead - which is
+// what this section used to do - cannot do that over a moving canvas, because
 // the overlay would also cover the helix.
 // =============================================================================
 
@@ -53,7 +53,7 @@ export default function Hero() {
       className="relative isolate overflow-clip bg-[radial-gradient(78%_62%_at_74%_8%,rgba(37,181,171,0.20),transparent_62%),radial-gradient(64%_54%_at_6%_96%,rgba(237,221,184,0.10),transparent_60%),linear-gradient(168deg,#0a3b39_0%,#093330_58%,#062927_100%)] text-linenw"
     >
       {/* ---- upper region: portrait + copy ---------------------------------
-          `relative` with no z-index on purpose — see the header note. Its only
+          `relative` with no z-index on purpose - see the header note. Its only
           job is to give the portrait a bottom edge at the top of the ledger,
           which is what the source computes in JS as `--ledger-h`. Doing it with
           a wrapper instead means no measurement and no layout shift. */}
@@ -61,10 +61,10 @@ export default function Hero() {
         {/* ---- copy shell --------------------------------------------------
             RAIL: padding on the outer box, max-width on the inner one. Both on
             one element caps the OUTER box at 1313 and then eats the gutter out
-            of it, leaving 1187 of content — the frame wants 1313 from x=63.
+            of it, leaving 1187 of content - the frame wants 1313 from x=63.
 
             TOP PADDING MUST CLEAR THE FIXED HEADER. SiteHeader is `overlay`
-            here — fixed, 64px — so it sits ON the hero; the source's header is
+            here - fixed, 64px - so it sits ON the hero; the source's header is
             sticky and takes its own space. Reproducing the source's 88px pad
             literally put the kicker 17px behind the bar at every width up to
             768. So the pad is 64 + 78, floored at 84 on phones. */}
@@ -76,7 +76,7 @@ export default function Hero() {
               </HeroReveal>
 
               {/* Figtree 300 then 800, both 70.6/69.2 ls -2.47. Only the word
-                  "KYG" is teal — a character run inside the line, not its own
+                  "KYG" is teal - a character run inside the line, not its own
                   node, hence the inline <b>. The two lines carry separate
                   entrance delays, so each is its own reveal. */}
               <h1
@@ -91,7 +91,7 @@ export default function Hero() {
                 </HeroReveal>
               </h1>
 
-              {/* acronym expansion — 1px java rule on the left, two label rows */}
+              {/* acronym expansion - 1px java rule on the left, two label rows */}
               <HeroReveal delay={0.34}>
                 <div className="flex flex-col gap-2 border-l border-java2/55 pl-[18px] sm:flex-row sm:gap-[34px]">
                   <DotRow lead="KYC">Know Your Customer</DotRow>
@@ -106,12 +106,10 @@ export default function Hero() {
               </HeroReveal>
 
               <HeroReveal delay={0.5}>
-                <Body className="max-w-[44ch] text-linenw/70">
-                  Now, it can help you understand what comes next.
-                </Body>
+                <Body className="max-w-[44ch] text-linenw/70">Now, it can help you understand what comes next.</Body>
               </HeroReveal>
 
-              {/* five insight areas — one row at desktop, wrapping below */}
+              {/* five insight areas - one row at desktop, wrapping below */}
               <HeroReveal delay={0.58}>
                 <ul className="flex list-none flex-wrap gap-x-[26px] gap-y-[10px] pt-[22px]">
                   {AREAS.map((a) => (
@@ -128,7 +126,7 @@ export default function Hero() {
                 </ul>
               </HeroReveal>
 
-              {/* Cormorant Garamond 500 italic 22/29.7 — the editorial close */}
+              {/* Cormorant Garamond 500 italic 22/29.7 - the editorial close */}
               <HeroReveal delay={0.64}>
                 <p className="pb-px pt-[18px] font-tst text-[clamp(19px,1.53vw,22px)] font-medium italic leading-[1.35] text-linenw/66">
                   One you. A lifetime of genetic insight.
@@ -160,7 +158,7 @@ export default function Hero() {
             DOM order is the MOBILE order, and it is deliberate: the source's
             `@media (max-width:1000px)` makes the hero a flex column and gives
             the copy order:1 and the art order:2, so on a phone the photograph
-            follows the CTAs as a stacked card. It is NOT dropped — a hero with
+            follows the CTAs as a stacked card. It is NOT dropped - a hero with
             no photograph on the device most people arrive on is the one thing
             this section cannot afford.
 
@@ -187,7 +185,7 @@ export default function Hero() {
               sizes="(max-width: 1024px) 100vw, 47vw"
               className="h-full w-full"
             />
-            {/* `.hero__art::after` — grounds the photo's bottom edge into the
+            {/* `.hero__art::after` - grounds the photo's bottom edge into the
                 ledger so the crop never reads as a hard cut. Desktop only. */}
             <span
               aria-hidden="true"
@@ -200,10 +198,7 @@ export default function Hero() {
       {/* ---- the particle helix --------------------------------------------
           Spans the WHOLE section (the ledger included, as in the source) and
           sits at z-2: over the portrait, under the copy. */}
-      <HelixCanvas
-        config={HERO_HELIX}
-        className="pointer-events-none absolute inset-0 z-[2] h-full w-full"
-      />
+      <HelixCanvas config={HERO_HELIX} className="pointer-events-none absolute inset-0 z-[2] h-full w-full" />
 
       {/* ---- ledger band ----------------------------------------------------
           Full-bleed #062927 @0.42 with a 1px hairline above, split .82fr/1.18fr
@@ -217,7 +212,7 @@ export default function Hero() {
           <div className="px-5 sm:px-8 lg:px-[63px]">
             <div className="mx-auto grid w-full max-w-[1313px] grid-cols-1 gap-y-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-y-0">
               <div className="flex flex-col gap-[7px] py-[clamp(24px,2.6vw,36px)]">
-                {/* Figtree 700 14/22.7 ls 2.1 — textCase=UPPER in the frame */}
+                {/* Figtree 700 14/22.7 ls 2.1 - textCase=UPPER in the frame */}
                 <p className="font-kyg text-[14px] font-bold uppercase leading-[1.62] tracking-[0.15em] text-linenw/50">
                   What you know
                 </p>
@@ -260,10 +255,7 @@ export default function Hero() {
             className="absolute bottom-full right-0 hidden items-center gap-[11px] pb-[18px] font-kyg text-[14px] font-bold uppercase leading-[1.62] tracking-[0.14em] text-linenw/55 transition-colors duration-500 hover:text-java2 lg:flex"
           >
             Scroll
-            <i
-              aria-hidden="true"
-              className="relative block h-10 w-px overflow-hidden bg-linenw/[0.17] not-italic"
-            >
+            <i aria-hidden="true" className="relative block h-10 w-px overflow-hidden bg-linenw/[0.17] not-italic">
               <span className="absolute left-0 top-0 block h-[14px] w-px bg-java2 animate-hv2-trickle motion-reduce:animate-none" />
             </i>
           </a>

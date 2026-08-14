@@ -3,7 +3,7 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Media, Section } from '../ui';
 
 // =============================================================================
-// STAR TREATMENT — top half ("From Hollywood to Bollywood")
+// STAR TREATMENT - top half ("From Hollywood to Bollywood")
 // -----------------------------------------------------------------------------
 // The Figma frame 'STAR TREATMENT' (1440x1738) holds BOTH this section and
 // <ThenNow/>. Its vertical rhythm is: 92 top pad -> head (173) -> 48 -> the
@@ -29,8 +29,8 @@ const GLYPH = {
 // globals.css, so the accent needs no component override at all.
 
 /**
- * The quote panel is the opposite case: both runs are FLAT — Cormorant 700
- * #9a2855 for the serif and Figtree 700 #222222 for the sans — so `tst-flat`
+ * The quote panel is the opposite case: both runs are FLAT - Cormorant 700
+ * #9a2855 for the serif and Figtree 700 #222222 for the sans - so `tst-flat`
  * switches off the gradient `.tst-em` carries by default and lets these plain
  * colour utilities take over.
  */
@@ -41,7 +41,7 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
 
   return (
     <Section ground={ground ?? 'ivory'} className="border-t border-mine/10" innerClassName="pb-0">
-      {/* ---- head — 720 rail, 16 gap ------------------------------------- */}
+      {/* ---- head - 720 rail, 16 gap ------------------------------------- */}
       <div className="mx-auto flex max-w-180 flex-col items-center gap-4 text-center">
         {eyebrow ? (
           /* pill: r999, #c73c70@10 on a #c73c70@24 hairline, 0 6 18 crimson@10,
@@ -67,16 +67,16 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
 
         {/* Figtree 700 51/55 ls -.02em, second line Cormorant 600 italic on the
             teal gradient (`.tst-em-teal`, no override needed). The break after
-            "…look up to have" is natural at this measure — the sans run is 712
+            "…look up to have" is natural at this measure - the sans run is 712
             wide, so " already" cannot follow it inside the 720 rail. */}
         <Heading html={data.head.titleHtml} />
       </div>
 
-      {/* ---- editorial visual + copy — 588 | 40 | 588, centred ------------ */}
+      {/* ---- editorial visual + copy - 588 | 40 | 588, centred ------------ */}
       <div className="mt-12 grid items-center gap-10 lg:grid-cols-2">
         {/* Image, with a badge pinned to each diagonal corner at -12. No bottom
             margin: as a grid item it would grow the row track by 60px and push
-            the next block past where the frame puts it — the rail's own gap
+            the next block past where the frame puts it - the rail's own gap
             already supplies the spacing.
 
             Both badge labels are Figtree 700 15/22.5; `leading-normal` is 1.5
@@ -85,14 +85,14 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
             no stroke (10 + 23 + 10 = 43). */}
         {/* Capped at its own 588 and centred, the way Counsellor treats the
             same portrait slot. Single-column under lg the content rail is wider
-            than the frame ever draws this image, and 588/735 is portrait — at
+            than the frame ever draws this image, and 588/735 is portrait - at
             768 an uncapped w-full renders 688x860, a full viewport of scroll for
             one editorial photo. The cap is a no-op from 1024 up (the column is
             380 -> 588 there), so desktop is untouched. */}
         <div className="relative mx-auto w-full max-w-[588px] lg:mx-0">
           {/* The column is 588 only from 1440 up. Below that it is
               (100vw - 264)/2 on lg (gutter 80x2 + rail pad 32x2 + the 40 gap),
-              the 588 cap from md, and the full content width on phones — or the
+              the 588 cap from md, and the full content width on phones - or the
               browser downloads the 1200w candidate for a 280px slot. */}
           <Media
             img={data.image}
@@ -102,7 +102,7 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
 
           {/* Both badges hug their label, so at 320 they cover 72% / 84% of a
               280-wide image. Below sm they step down to 13px with tighter pad
-              (~182 / ~205) — still legible, no longer swallowing the photo. */}
+              (~182 / ~205) - still legible, no longer swallowing the photo. */}
           <span className="absolute -left-3 -top-3 inline-flex items-center gap-1.5 rounded-full border border-mine/10 bg-white py-2 pl-2.5 pr-3.5 shadow-tst-card sm:gap-2 sm:py-[10px] sm:pl-3 sm:pr-5">
             <span className="relative grid size-5 shrink-0 place-items-center">
               <FigmaIcon id={GLYPH.badgeTop} className="absolute h-6 w-5 max-w-none" />
@@ -129,7 +129,7 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
           <ul className="flex flex-col gap-4">
             {data.rows.map((r, i) => (
               <li key={r.title} className="flex items-start gap-[14px]">
-                {/* 56x56, radius 16 (NOT rounded-2xl — that token is 18 here). */}
+                {/* 56x56, radius 16 (NOT rounded-2xl - that token is 18 here). */}
                 <span className="grid size-14 shrink-0 place-items-center rounded-[16px] bg-blush">
                   <FigmaIcon id={GLYPH.rows[i] ?? GLYPH.rows[0]} className="h-[34px] w-[28px]" />
                 </span>
@@ -145,7 +145,7 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
             ))}
           </ul>
 
-          {/* Figtree 400 18/29.2 #5b564e — four lines at 588, plus the frame's
+          {/* Figtree 400 18/29.2 #5b564e - four lines at 588, plus the frame's
               own 1px bottom pad (4 x 29.2 + 1 = the spec's 118). */}
           <p
             className="break-words pb-px font-kyg text-[clamp(15px,1.3vw,18px)] font-normal leading-[1.622] text-fusc"

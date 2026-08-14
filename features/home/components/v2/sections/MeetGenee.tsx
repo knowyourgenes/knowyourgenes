@@ -1,23 +1,23 @@
 // =============================================================================
-// Homepage — SECTION 07 · MEET GENEe
+// Homepage - SECTION 07 · MEET GENEe
 // -----------------------------------------------------------------------------
 // Rebuilt against the designer's own build ("New Homepage Build/index.html",
 // `section.gee` + CSS block 12), which is the page the Figma frame was traced
-// from. Where the frame and the HTML disagreed, the HTML won — it is the
+// from. Where the frame and the HTML disagreed, the HTML won - it is the
 // executable version, and several of its numbers (the bubble overhangs, the
 // tapering list rules, the inline serif turn in the headline) are things the
 // frame could only flatten.
 //
-// GROUND is `--c-mint` #e2f1ed, which is the `mist` token — NOT `mint`
+// GROUND is `--c-mint` #e2f1ed, which is the `mist` token - NOT `mint`
 // (#e6f4f3, the eyebrow-pill tint on the cream pages), which reads greener.
 // The section also carries the source's `isolation:isolate` + `overflow:clip`:
 // isolate keeps the bubbles' z-3 from escaping into the page's stacking order,
-// and clip (not hidden — it never becomes a scroll container) is what contains
+// and clip (not hidden - it never becomes a scroll container) is what contains
 // the two bubble overhangs and their rotated tails at every width.
 //
 // THE ART WAS NEVER DELIVERED. The source points this slot at
-// `/Users/honeynandal/…/Mascot (Packaging) - 1.png` — an absolute path on the
-// designer's own machine that resolves nowhere — so what the source ACTUALLY
+// `/Users/honeynandal/…/Mascot (Packaging) - 1.png` - an absolute path on the
+// designer's own machine that resolves nowhere - so what the source ACTUALLY
 // renders here is the labelled placeholder plate, and so does this. There is no
 // `PHOTO.genee`; it is the only section on the page still waiting on art.
 //
@@ -30,8 +30,8 @@
 //
 // BREAKPOINT: the source collapses this section at max-width 900 (columns to
 // one, art capped at 460, both overhangs pulled back flush). Tailwind's `lg`
-// (1024) is used for all of it instead — an arbitrary min-width variant would
-// be emitted BEFORE the named ones in v4 and silently lose — so the collapse
+// (1024) is used for all of it instead - an arbitrary min-width variant would
+// be emitted BEFORE the named ones in v4 and silently lose - so the collapse
 // simply happens 124px earlier than in the source. All of it moves together, so
 // there is no width at which the layout is half-collapsed.
 //
@@ -56,7 +56,7 @@ import { HomeIcon } from '../HomeIcon';
  *
  * The glyphs are `<img>` exports with the design's colours baked in, so the
  * marker cannot tint them with `currentColor` the way the source's inline SVG
- * does — the check is already stroked cream (#faf6ef) and both minuses eden
+ * does - the check is already stroked cream (#faf6ef) and both minuses eden
  * (#0e4d4b), which is exactly the pairing each disc needs.
  *
  * Icon ids are frame-absolute: the minus glyphs sit at y=532/588 and the check
@@ -71,15 +71,15 @@ const PROMISES: { icon: string; text: string; strong?: boolean }[] = [
 /** `--sh-2`, the page's warm mid elevation. Carried by the figure and both bubbles. */
 const SH2 = 'shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)]';
 
-/** `.bub` — everything the two speech bubbles share. Only ground, ink, corner and phase differ. */
+/** `.bub` - everything the two speech bubbles share. Only ground, ink, corner and phase differ. */
 const BUBBLE = cn(
   'absolute z-[3] max-w-[min(76%,300px)] rounded-[20px] px-5 py-[15px]',
   'font-kyg text-[16.5px] font-semibold leading-[1.4] tracking-[-0.01em]',
   SH2,
-  'animate-hv2-bob motion-reduce:animate-none',
+  'animate-hv2-bob motion-reduce:animate-none'
 );
 
-/** `.bub::after` — a 16px square rotated 45deg, half-buried under the bubble's edge. */
+/** `.bub::after` - a 16px square rotated 45deg, half-buried under the bubble's edge. */
 const TAIL = 'absolute block h-4 w-4 rotate-45';
 
 export default function MeetGenee() {
@@ -89,7 +89,7 @@ export default function MeetGenee() {
       aria-labelledby="meet-genee-heading"
       className="relative isolate scroll-mt-20 overflow-clip bg-mist px-5 py-[clamp(84px,10vw,168px)] text-bistre sm:px-8 lg:px-[63px]"
     >
-      {/* div.gee__g — minmax(0,.94fr) / minmax(0,1.06fr) with a shared
+      {/* div.gee__g - minmax(0,.94fr) / minmax(0,1.06fr) with a shared
           clamp(34px,4.4vw,84px) gap. The minmax(0,…) is the source's own and is
           load-bearing: a bare `fr` floors at min-content, so the 300px bubble
           and the long promise strings would push the columns past the rail. */}
@@ -97,19 +97,19 @@ export default function MeetGenee() {
         {/* ---- div.gee__art : the character plate + its two bubbles --------
             This IS the positioning context for both bubbles, so `relative`
             belongs on the Reveal itself rather than on an extra wrapper. `.rv-s`
-            in the source, i.e. the scale variant — image plates bloom, they do
+            in the source, i.e. the scale variant - image plates bloom, they do
             not slide.
 
             The 460 cap is the source's own below its 900 breakpoint: an
             unbounded art column on a phone would render a 9:10 plate taller
             than the viewport before the copy even starts. */}
         <Reveal variant="scale" className="relative w-full min-w-0 max-w-[460px] lg:max-w-none">
-          {/* figure.gee__fig — aspect 9/10, radius 46 (--r-xl), --sh-2.
+          {/* figure.gee__fig - aspect 9/10, radius 46 (--r-xl), --sh-2.
 
               The ground is the source's DEFAULT `.ph` paint, three stacked
               layers, not AssetSlot's own dark gradient: twMerge drops the
               primitive's because both land in its bg-image group. Percentages
-              and positions are the source's verbatim — the teal bloom is a
+              and positions are the source's verbatim - the teal bloom is a
               118%x84% ellipse at 18%/12%, not a circle at 20%/16%.
 
               upperTitle={false} is the primitive's documented opt-out for
@@ -128,11 +128,11 @@ export default function MeetGenee() {
             className={cn(
               'aspect-[9/10] w-full rounded-[46px]',
               'bg-[radial-gradient(118%_84%_at_18%_12%,rgba(42,195,162,0.34),transparent_58%),radial-gradient(96%_78%_at_88%_88%,rgba(237,221,184,0.34),transparent_60%),linear-gradient(158deg,#20605B_0%,#154744_58%,#0E3634_100%)]',
-              SH2,
+              SH2
             )}
           />
 
-          {/* .bub--1 — GENEe speaking. top 6%, right -4% (of the art column, so
+          {/* .bub--1 - GENEe speaking. top 6%, right -4% (of the art column, so
               ~23px past its edge and safely inside the 63px page gutter), tail
               hanging off the BOTTOM edge 32px in from the left. No width: an
               absolutely positioned box shrink-to-fits, which is what keeps this
@@ -142,16 +142,11 @@ export default function MeetGenee() {
             <span aria-hidden="true" className={cn(TAIL, '-bottom-[6px] left-[32px] bg-linenw')} />
           </p>
 
-          {/* .bub--2 — the reader speaking, so it is the inverse fill and its
+          {/* .bub--2 - the reader speaking, so it is the inverse fill and its
               tail points UP-right, back at the character. bottom 9%, left -5%,
               and the -3.2s delay drops it exactly half a cycle out of phase
               with bubble 1 (bob is 6.4s). */}
-          <p
-            className={cn(
-              BUBBLE,
-              'bottom-[9%] left-0 bg-eden text-linenw [animation-delay:-3.2s] lg:left-[-5%]',
-            )}
-          >
+          <p className={cn(BUBBLE, 'bottom-[9%] left-0 bg-eden text-linenw [animation-delay:-3.2s] lg:left-[-5%]')}>
             Why does the same diet affect two people differently?
             <span aria-hidden="true" className={cn(TAIL, '-top-[6px] right-[36px] bg-eden')} />
           </p>
@@ -166,7 +161,7 @@ export default function MeetGenee() {
             flex-col reproduces the source's spacing exactly, since flex items
             never collapse margins in the first place. */}
         <div className="flex min-w-0 flex-col">
-          {/* `.kick--case` — Figtree 800 18/1.24 at 0.03em, sentence case. This
+          {/* `.kick--case` - Figtree 800 18/1.24 at 0.03em, sentence case. This
               frame has no UPPER run anywhere in it, hence upper={false} (the
               primitive's own opt-out) rather than fighting `uppercase` with a
               second text-transform utility at the call site. */}
@@ -179,7 +174,7 @@ export default function MeetGenee() {
           {/* Two voices in ONE LINE, not two: the source runs the Cormorant
               turn inline after a space, at 1.1em of the Figtree statement, and
               lets text-wrap:balance decide where it folds. Forcing the <em> to
-              its own block — which this section used to do — hard-codes a break
+              its own block - which this section used to do - hard-codes a break
               the source never asked for and reads as two headlines.
 
               The id lives on a wrapper because <Heading> is shared and takes no
@@ -194,7 +189,7 @@ export default function MeetGenee() {
             </Reveal>
           </div>
 
-          {/* `.lead` — clamp(19,1.45vw,24)/1.46 ls -0.015em, ink-2. No measure:
+          {/* `.lead` - clamp(19,1.45vw,24)/1.46 ls -0.015em, ink-2. No measure:
               the source gives .lead no max-width, and capping it here pulled
               the one-line sentence onto two at desktop. */}
           <Reveal delay={0.1} className="mt-[22px]">
@@ -203,15 +198,14 @@ export default function MeetGenee() {
             </Body>
           </Reveal>
 
-          {/* `.body` — a flat 18/1.66 ink-3 on the source's own 64ch measure.
+          {/* `.body` - a flat 18/1.66 ink-3 on the source's own 64ch measure.
               The size is stated because Body's default clamps to 18.5, wide
               enough to break the first line early and turn this into four lines
               instead of three. */}
           <Reveal delay={0.14} className="mt-[16px]">
             <Body className="max-w-[64ch] text-[18px] leading-[1.66] text-nevada">
-              From explaining why the same diet can affect two people differently to helping you
-              understand unfamiliar genetic concepts, GENEe makes genetics simpler, friendlier and
-              easier to explore.
+              From explaining why the same diet can affect two people differently to helping you understand unfamiliar
+              genetic concepts, GENEe makes genetics simpler, friendlier and easier to explore.
             </Body>
           </Reveal>
 
@@ -233,8 +227,8 @@ export default function MeetGenee() {
                           // that drops border-image still gets the plain rule
                           // instead of an invisible one.
                           'border-b border-[rgba(27,23,18,0.11)]',
-                          '[border-image:linear-gradient(90deg,rgba(27,23,18,0.11)_0%,rgba(27,23,18,0.11)_34%,rgba(27,23,18,0)_92%)_1]',
-                        ),
+                          '[border-image:linear-gradient(90deg,rgba(27,23,18,0.11)_0%,rgba(27,23,18,0.11)_34%,rgba(27,23,18,0)_92%)_1]'
+                        )
                   )}
                 >
                   {/* Top-aligned with a 2px nudge, NOT vertically centred: on a
@@ -245,7 +239,7 @@ export default function MeetGenee() {
                     aria-hidden="true"
                     className={cn(
                       'mt-[2px] grid h-6 w-6 shrink-0 place-items-center rounded-full',
-                      p.strong ? 'bg-eden' : 'bg-eden/[0.09]',
+                      p.strong ? 'bg-eden' : 'bg-eden/[0.09]'
                     )}
                   >
                     <HomeIcon id={p.icon} className="h-[14px] w-[14px]" />
@@ -260,7 +254,7 @@ export default function MeetGenee() {
 
           {/* `.gee__rule` and `.btn` are both inline-level in the source and sit
               on the SAME line, separated by nothing but the whitespace between
-              the two tags — which is why the frame measures them 4px apart.
+              the two tags - which is why the frame measures them 4px apart.
               They read as one control pair. Only the wrap gap is opened up. */}
           <div className="my-[clamp(24px,2.8vw,36px)] flex flex-wrap items-center gap-x-[4px] gap-y-3">
             <Reveal delay={0.22}>
@@ -278,7 +272,7 @@ export default function MeetGenee() {
             </Reveal>
 
             <Reveal delay={0.26}>
-              {/* The source's DEFAULT `.btn` — eden fill, cream label — not the
+              {/* The source's DEFAULT `.btn` - eden fill, cream label - not the
                   java2 primary, which is the on-dark variant. Radius 10, h58,
                   0 6 18 eden shadow all come from the primitive. */}
               <Cta

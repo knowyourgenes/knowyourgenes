@@ -30,9 +30,9 @@ export const myWellness: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: 'My Wellness DNA Test — 52 traits, 4 reports, one saliva sample',
+    title: 'My Wellness DNA Test - 52 traits, 4 reports, one saliva sample',
     description:
-      'Diet, weight, fitness and detox — 52 genetic traits read from a single at-home saliva kit and delivered as four reports in 7 days. NABL-accredited lab, free counselling session.',
+      'Diet, weight, fitness and detox - 52 genetic traits read from a single at-home saliva kit and delivered as four reports in 7 days. NABL-accredited lab, free counselling session.',
   },
 
   sections: [

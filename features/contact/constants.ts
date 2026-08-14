@@ -1,9 +1,9 @@
 // =============================================================================
-// features/contact — page content
+// features/contact - page content
 // -----------------------------------------------------------------------------
 // Copy and icon ids transcribed from the Figma "Contact Us" frame (node
 // 2066:1568). Icon ids are the glyph's "<y>-<x>" position in that frame, which
-// is exactly what the extracted specs report — see components/ContactIcon.tsx.
+// is exactly what the extracted specs report - see components/ContactIcon.tsx.
 // =============================================================================
 
 import type { Channel, HeroChip, SelfServeCard } from './types';

@@ -1,5 +1,5 @@
 // =============================================================================
-// Homepage — SECTION 14 · THE JOURNAL
+// Homepage - SECTION 14 · THE JOURNAL
 // -----------------------------------------------------------------------------
 // Rebuilt against the designer's own build ("New Homepage Build/index.html",
 // `section.jrn` + CSS block 19), which is the page the Figma frame was traced
@@ -7,8 +7,8 @@
 //
 // WHAT CHANGED FROM THE FIGMA READING: the frame flattened this section into a
 // 1440-wide artboard holding seven 330.5 cards on a 356 pitch, which read as a
-// fixed-width carousel. The HTML shows the real rule — the cards are FLUID,
-// `flex:0 0 clamp(250px,25vw,330px)` on a `clamp(16px,1.8vw,26px)` gap — so 330
+// fixed-width carousel. The HTML shows the real rule - the cards are FLUID,
+// `flex:0 0 clamp(250px,25vw,330px)` on a `clamp(16px,1.8vw,26px)` gap - so 330
 // and 356 are only what that formula evaluates to at 1320. Nothing here is a
 // fixed card width any more.
 //
@@ -23,7 +23,7 @@
 //
 // SCROLLBAR IS HIDDEN, deliberately (`scrollbar-width:none` in the source). The
 // scroll cue is the sliver of the next card, and keyboard users still traverse
-// the rail by tabbing the card links — the browser scrolls each into view and
+// the rail by tabbing the card links - the browser scrolls each into view and
 // honours the scroll-padding below, so nothing is unreachable without a mouse.
 //
 // RADIUS TRAP: the card figures are var(--r-sm) = 16 and the CTA var(--r-xs) =
@@ -51,7 +51,7 @@ import { HomeIcon } from '../HomeIcon';
  *
  * `meta` / `path` are the placeholder strings exactly as the source stores them,
  * middle dots and multiplication sign included. `alt` is the source's own <img>
- * alt text for the delivered photograph — it describes the picture, not the
+ * alt text for the delivered photograph - it describes the picture, not the
  * article, which is correct for an image sitting beside its own visible title.
  *
  * `href` points at the existing /blog route (the journal's real home) with a
@@ -125,7 +125,7 @@ const POSTS: {
 ];
 
 /**
- * `.jcard` — the flex item. `flex:0 0 clamp(250px,25vw,330px)` verbatim, so the
+ * `.jcard` - the flex item. `flex:0 0 clamp(250px,25vw,330px)` verbatim, so the
  * rail always overflows (7 × 330 + 6 × 26 = 2466 against a 1440 artboard) and
  * scrolls at EVERY width. Nothing is dropped or reflowed on a phone; the design
  * is a carousel, not a grid that happens to scroll.
@@ -133,19 +133,19 @@ const POSTS: {
 const CARD = 'min-w-0 flex-[0_0_clamp(250px,25vw,330px)] snap-start';
 
 /**
- * `.jcard__f` — the figure shell.
+ * `.jcard__f` - the figure shell.
  *
  * THE HOVER IS A LIFT, NOT A ZOOM. The source moves the whole figure
  * `translateY(-6px)` and swaps --sh-1 for the much deeper --sh-2 over 0.77s;
  * the photograph inside does NOT scale. (Section 10's `.care__f > .ph` is the
- * one place on this page that scales an image, at 1.06 — do not borrow it here.)
+ * one place on this page that scales an image, at 1.06 - do not borrow it here.)
  *
  *   --sh-1  0 1px 2px rgba(45,32,18,.05), 0 4px 14px rgba(45,32,18,.05)
  *   --sh-2  0 4px 16px rgba(45,32,18,.07), 0 18px 50px rgba(45,32,18,.09)
  *   --e     cubic-bezier(.22,1,.36,1)
  *
  * `group-hover` rather than a bare `hover` because the trigger in the source is
- * `.jcard:hover`, i.e. anywhere on the card — the title and the "Read" row are
+ * `.jcard:hover`, i.e. anywhere on the card - the title and the "Read" row are
  * part of the same hover target, and the group lives on the wrapping <Link>.
  */
 const FIGURE =
@@ -156,17 +156,17 @@ const FIGURE =
   'group-hover:shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)] ' +
   'motion-reduce:transition-none';
 
-/** `.jcard__t` — 20/1.28 ls -.018em on ink-1, turning teal over 0.51s on hover. */
+/** `.jcard__t` - 20/1.28 ls -.018em on ink-1, turning teal over 0.51s on hover. */
 const TITLE =
   'mt-[18px] font-kyg text-[20px] font-bold leading-[1.28] tracking-[-0.018em] text-bistre ' +
   'transition-colors duration-[510ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-eden ' +
   'motion-reduce:transition-none';
 
-/** `.jcard__s` — the ask card's subtitle, the only card that carries one. */
+/** `.jcard__s` - the ask card's subtitle, the only card that carries one. */
 const SUB = 'mt-[5px] font-kyg text-[16.5px] font-normal leading-[1.45] text-nevada';
 
 /**
- * `.jcard__r` — the "Read →" / "Ask →" affordance. Figtree 700 15.5 on the body's
+ * `.jcard__r` - the "Read →" / "Ask →" affordance. Figtree 700 15.5 on the body's
  * inherited 1.62 leading, gap 8, teal. The glyph is `.ic--arw` at 19px (the
  * exported SVGs have a 20 viewBox, so the size is set explicitly) and slides 4px
  * right over 0.64s while the card is hovered.
@@ -195,7 +195,7 @@ export default function Journal() {
       className="relative overflow-clip scroll-mt-20 bg-linenw py-[clamp(84px,10vw,168px)] text-bistre"
     >
       {/* ---- header shell ---------------------------------------------------
-          The gutter goes on the OUTER box and the rail cap on the inner one —
+          The gutter goes on the OUTER box and the rail cap on the inner one -
           exactly how <Section> does it. Putting max-w and px on the SAME element
           would make 1313 the border-box (box-sizing:border-box is global),
           leaving only 1187 of content starting 63px right of the card rail. */}
@@ -225,13 +225,13 @@ export default function Journal() {
 
               {/* `.h2`: clamp(31px,3.5vw,55px)/1.14, ls -.03em, weight 400,
                   text-wrap:balance. The italic turn is an INLINE <em> run that
-                  runs on after "genetics" — the Figma reading had it as its own
+                  runs on after "genetics" - the Figma reading had it as its own
                   block line, which the HTML contradicts. `.h2 em` is Cormorant
                   Garamond 500 italic at 1.1em with the sans tracking dropped,
                   which <Heading> already applies except for the size bump. */}
               {/* The id sits on a wrapper, not the <h2>: <Heading> takes only
                   html/className/as, and aria-labelledby resolves the referenced
-                  element's text content — which here is exactly the heading. */}
+                  element's text content - which here is exactly the heading. */}
               <div id="jrn-heading">
                 <Heading
                   as="h2"
@@ -243,14 +243,14 @@ export default function Journal() {
 
             {/* `.jrn__aside`: lead then body, separated by `p + p{margin-top:14px}` */}
             <div className="min-w-0">
-              {/* `.lead` — clamp(19px,1.45vw,24px)/1.46 ls -.015em on ink-2 */}
+              {/* `.lead` - clamp(19px,1.45vw,24px)/1.46 ls -.015em on ink-2 */}
               <p className="font-kyg text-[clamp(19px,1.45vw,24px)] font-normal leading-[1.46] tracking-[-0.015em] text-corduroy">
                 The more you know, the better you can ask.
               </p>
-              {/* `.body` — a flat 18/1.66 on ink-3, capped at the source's 64ch */}
+              {/* `.body` - a flat 18/1.66 on ink-3, capped at the source's 64ch */}
               <Body className="mt-[14px] max-w-[64ch] text-[18px] leading-[1.66] text-nevada">
-                Stories, explainers, myths, conversations and the questions about your body you’ve probably wondered about
-                but never knew whom to ask.
+                Stories, explainers, myths, conversations and the questions about your body you’ve probably wondered
+                about but never knew whom to ask.
               </Body>
             </div>
           </Reveal>
@@ -288,7 +288,7 @@ export default function Journal() {
                  Cards past the rail's right edge are clipped by its
                  `overflow-x`, so the IntersectionObserver reports them as not
                  intersecting and they stay hidden until you scroll them into
-                 view — at which point each reveals once. That is a feature of
+                 view - at which point each reveals once. That is a feature of
                  moving the reveal onto the card, not a bug to pad around. */
               <Reveal key={post.title} as="li" delay={i * 0.06} className={CARD}>
                 <Link href={post.href} className="group block">
@@ -340,7 +340,7 @@ export default function Journal() {
       {/* ---- `.jrn__ft` -----------------------------------------------------
           Back on the rail, clamp(34px,3.6vw,50px) below the scroller. `.btn` is
           r10 / pad 19-30 / gap 13 / Figtree 700 17, teal fill with a cream label
-          — the inverse of the hero's java button, so the `primary` variant's two
+          - the inverse of the hero's java button, so the `primary` variant's two
           colours are overridden the way section 10 does it. */}
       <div className="px-5 sm:px-8 lg:px-[63px]">
         <div className="mx-auto mt-[clamp(34px,3.6vw,50px)] w-full max-w-[1313px]">

@@ -1,5 +1,5 @@
 // =============================================================================
-// features/about — the design's own icons
+// features/about - the design's own icons
 // -----------------------------------------------------------------------------
 // Rebuilt from the Figma frame's vector geometry (same pipeline as the tests and
 // contact pages, including the verified vertical-flip correction), so shapes and
@@ -16,19 +16,11 @@ const BASE = '/about/icons';
 
 export const ABOUT_ICON_IDS = Object.keys(ICONS as Record<string, string>);
 
-export function AboutIcon({
-  id,
-  className,
-  alt = '',
-}: {
-  id: string;
-  className?: string;
-  alt?: string;
-}) {
+export function AboutIcon({ id, className, alt = '' }: { id: string; className?: string; alt?: string }) {
   const file = (ICONS as Record<string, string>)[id];
   if (!file) {
     if (process.env.NODE_ENV !== 'production') {
-      console.warn(`[about/AboutIcon] no glyph for id "${id}" — check public/about/icons/`);
+      console.warn(`[about/AboutIcon] no glyph for id "${id}" - check public/about/icons/`);
     }
     return null;
   }

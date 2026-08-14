@@ -1,8 +1,8 @@
 // =============================================================================
-// Homepage — SECTION 06 · ONE LIFETIME. ONE DNA
+// Homepage - SECTION 06 · ONE LIFETIME. ONE DNA
 // -----------------------------------------------------------------------------
 // Rebuilt against the designer's own build ("New Homepage Build/index.html",
-// `section.sec.life`, CSS block 11) — the page the Figma frame was traced from.
+// `section.sec.life`, CSS block 11) - the page the Figma frame was traced from.
 // Where the frame and that HTML disagreed, the HTML won, and it disagreed a lot
 // here: the frame flattens a scroll-DRAWN strand into a static vector and pins
 // five hand-measured row heights (403 / 106.7 / 403 / 145.3 / 403) so the wave's
@@ -10,14 +10,14 @@
 // station size to its own content and generates the strand from the rail's
 // measured box, which is why the pinned heights are gone.
 //
-// A CENTRED TIMELINE. Each station is a 3-column grid — 1fr / 120px / 1fr — with
+// A CENTRED TIMELINE. Each station is a 3-column grid - 1fr / 120px / 1fr - with
 // the strand rail absolutely positioned down that middle 120px column. The 13px
 // node dot sits on the centre line at the station's vertical midpoint; the
 // strand waves PAST it rather than threading through it, exactly as the source
 // draws it. Do not "correct" the dots onto the curve.
 //
 // Rows alternate by nth-child parity in the source, so the side is derived from
-// the index here rather than stored as data — storing it would let the two drift
+// the index here rather than stored as data - storing it would let the two drift
 // apart. Odd stations (01/03/05) put the line right-aligned in column 1 and the
 // photograph in column 3; even stations (02/04) put the line left-aligned in
 // column 3 and carry no art at all.
@@ -47,10 +47,10 @@ import { AssetSlot, Cta, Heading, Kicker, PHOTO, Section } from '../ui';
 type Station = {
   /**
    * The plain head of the line. Keeps its trailing space so head + refrain read
-   * as one sentence — the source has them as one text node with an inline <em>.
+   * as one sentence - the source has them as one text node with an inline <em>.
    */
   line: string;
-  /** `.lstn__x em` — the bold teal refrain. Station 05 deliberately drops it. */
+  /** `.lstn__x em` - the bold teal refrain. Station 05 deliberately drops it. */
   accent?: string;
   /** `figure.lstn__f`. Only the odd stations carry art in the source. */
   photo?: {
@@ -96,7 +96,7 @@ const STATIONS: Station[] = [
     accent: 'it was there.',
   },
   {
-    // the turn — the only station the source gives no teal run, because it drops
+    // the turn - the only station the source gives no teal run, because it drops
     // the refrain rather than repeating it
     line: 'As your body changes, it remains part of your story.',
     photo: {
@@ -109,7 +109,7 @@ const STATIONS: Station[] = [
   },
 ];
 
-/** `--sh-2` — the warm-tinted double drop shadow every plate on this page uses. */
+/** `--sh-2` - the warm-tinted double drop shadow every plate on this page uses. */
 const SH_2 = 'shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)]';
 
 export default function OneLifetime() {
@@ -133,7 +133,7 @@ export default function OneLifetime() {
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(58%_44%_at_50%_30%,rgba(237,221,184,0.5),transparent_66%),radial-gradient(46%_38%_at_84%_84%,rgba(248,228,204,0.42),transparent_64%)]"
       />
 
-      {/* `.hx.hx--l.hx--life` — the ink helix bleeding off the right edge. The
+      {/* `.hx.hx--l.hx--life` - the ink helix bleeding off the right edge. The
           radial mask is what stops the PNG's rectangle from showing as a hard
           edge, and multiply is what lets the cream ground tint it rather than
           the artwork sitting on top as a grey rectangle. Dimmed on small
@@ -145,7 +145,7 @@ export default function OneLifetime() {
           'bg-[url(/home/brand/helix-ink.png)] bg-contain bg-center bg-no-repeat',
           'opacity-[0.07] mix-blend-multiply md:opacity-[0.15]',
           '[-webkit-mask-image:radial-gradient(closest-side,#000_58%,transparent_100%)]',
-          '[mask-image:radial-gradient(closest-side,#000_58%,transparent_100%)]',
+          '[mask-image:radial-gradient(closest-side,#000_58%,transparent_100%)]'
         )}
       />
 
@@ -156,7 +156,7 @@ export default function OneLifetime() {
         </Kicker>
 
         {/* One heading, two voices: Figtree 400 for the statement, then
-            Cormorant Garamond 500 italic for the turn — an inline <em>, NOT a
+            Cormorant Garamond 500 italic for the turn - an inline <em>, NOT a
             forced line break. The 19ch cap plus text-wrap:balance is what breaks
             it into two even lines at every width, which a <br> cannot do.
             The 1.1em is the source's `.h2 em` size bump: Cormorant runs small
@@ -175,7 +175,7 @@ export default function OneLifetime() {
       <div className="relative">
         {/* THE STRAND. Five sine waves under a half-sine envelope, generated
             from the rail's measured pixel box and drawn on scroll by animating
-            stroke-dashoffset — the shared LifeStrand is a verbatim port of the
+            stroke-dashoffset - the shared LifeStrand is a verbatim port of the
             source's buildStrand()/tick() pair, including the 0.82 -> 0.34
             viewport window.
 
@@ -192,7 +192,7 @@ export default function OneLifetime() {
             'pointer-events-none absolute inset-y-0 left-[20px] z-0 w-[60px]',
             'md:left-1/2 md:w-[120px] md:-translate-x-1/2',
             '[&>svg>path]:stroke-[#0e4d4b] [&>svg>path]:opacity-50 [&>svg>path]:[stroke-width:1.4]',
-            '[&>svg>path:last-child]:stroke-[#25b5ab] [&>svg>path:last-child]:opacity-95 [&>svg>path:last-child]:[stroke-width:2.4]',
+            '[&>svg>path:last-child]:stroke-[#25b5ab] [&>svg>path:last-child]:opacity-95 [&>svg>path:last-child]:[stroke-width:2.4]'
           )}
         />
 
@@ -214,10 +214,10 @@ export default function OneLifetime() {
                   // z-index of 1 keeps the copy above the rail, which sits at 0.
                   'group relative z-[1] grid items-center',
                   'grid-cols-[60px_minmax(0,1fr)] gap-x-[18px] py-[22px]',
-                  'md:grid-cols-[minmax(0,1fr)_120px_minmax(0,1fr)] md:gap-x-[clamp(10px,2vw,32px)] md:py-[clamp(20px,2.4vw,34px)]',
+                  'md:grid-cols-[minmax(0,1fr)_120px_minmax(0,1fr)] md:gap-x-[clamp(10px,2vw,32px)] md:py-[clamp(20px,2.4vw,34px)]'
                 )}
               >
-                {/* The 13px node dot — cream fill, 2px teal ring, 8px halo, all
+                {/* The 13px node dot - cream fill, 2px teal ring, 8px halo, all
                     three drawn as one box-shadow so nothing takes layout space
                     and the halo can grow on hover without nudging the row.
 
@@ -233,34 +233,30 @@ export default function OneLifetime() {
                     'transition-[box-shadow,background-color] duration-[640ms] ease-[cubic-bezier(0.22,1,0.36,1)]',
                     'group-hover:bg-java2 group-hover:shadow-[0_0_0_2px_#2ac3a2,0_0_0_12px_rgba(42,195,162,0.18)]',
                     'motion-reduce:transition-none',
-                    'md:left-1/2 md:top-1/2',
+                    'md:left-1/2 md:top-1/2'
                   )}
                 />
 
                 {/* Figtree 400 clamp(21,2.2vw,32) / 1.22, ls -0.026em. The
-                    refrain is a bold eden <em> with the italic switched OFF —
+                    refrain is a bold eden <em> with the italic switched OFF -
                     this is the one <em> on the page that is NOT the Cormorant
                     editorial voice. */}
                 <p
                   className={cn(
                     'col-start-2 min-w-0 text-balance text-left',
                     'font-kyg text-[clamp(21px,2.2vw,32px)] font-normal leading-[1.22] tracking-[-0.026em] text-bistre',
-                    odd ? 'md:col-start-1 md:text-right' : 'md:col-start-3 md:text-left',
+                    odd ? 'md:col-start-1 md:text-right' : 'md:col-start-3 md:text-left'
                   )}
                 >
                   {station.line}
-                  {station.accent ? (
-                    <em className="font-bold not-italic text-eden">{station.accent}</em>
-                  ) : null}
+                  {station.accent ? <em className="font-bold not-italic text-eden">{station.accent}</em> : null}
                 </p>
 
                 {/* 4:5 photograph, radius 24, capped at 268 (220 stacked). The
-                    plate chrome is dropped automatically once `photo` is set —
+                    plate chrome is dropped automatically once `photo` is set -
                     title/meta/path stay only as the fallback if the art is ever
                     pulled. */}
-                {station.photo ? (
-                  <AssetPhoto photo={station.photo} />
-                ) : null}
+                {station.photo ? <AssetPhoto photo={station.photo} /> : null}
               </Reveal>
             );
           })}
@@ -269,13 +265,13 @@ export default function OneLifetime() {
 
       {/* ---- the turn ------------------------------------------------------- */}
       <Reveal className="mt-[clamp(50px,5.5vw,86px)] text-center">
-        {/* Cormorant Garamond 500 italic clamp(28,3.2vw,48) — the section's
+        {/* Cormorant Garamond 500 italic clamp(28,3.2vw,48) - the section's
             close. 20ch + balance breaks it evenly without a hard <br>. */}
         <p className="mx-auto max-w-[20ch] text-balance font-tst text-[clamp(28px,3.2vw,48px)] font-medium italic leading-[1.2] text-bistre">
           Perhaps it’s time you got to know them.
         </p>
 
-        {/* eden fill, not the default java2 — the source's `.btn` base skin on a
+        {/* eden fill, not the default java2 - the source's `.btn` base skin on a
             cream ground, with its own 0 6 18 eden shadow */}
         <Cta
           href="/categories"
@@ -299,7 +295,7 @@ export default function OneLifetime() {
  *
  * Column placement is unconditional at md: every station that HAS a photo is an
  * odd one, so the source's `:nth-child(even) .lstn__f` rule (column 1,
- * justify-self end) is dead code and is deliberately not ported — porting it
+ * justify-self end) is dead code and is deliberately not ported - porting it
  * would imply an even station could grow art, which would then also need the
  * text moved out of column 3.
  */
@@ -318,7 +314,7 @@ function AssetPhoto({ photo }: { photo: NonNullable<Station['photo']> }) {
       className={cn(
         'col-start-2 mt-[18px] aspect-[4/5] w-[min(100%,220px)] justify-self-start rounded-[24px]',
         SH_2,
-        'md:col-start-3 md:mt-0 md:w-[min(100%,268px)]',
+        'md:col-start-3 md:mt-0 md:w-[min(100%,268px)]'
       )}
     />
   );

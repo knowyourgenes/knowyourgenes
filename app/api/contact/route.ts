@@ -3,7 +3,7 @@ import { contactSchema, submitContactMessage } from '@/features/contact';
 import { created, fail, zodFail } from '@/server/api';
 
 /**
- * POST /api/contact — public contact-form intake.
+ * POST /api/contact - public contact-form intake.
  *
  * Public by design, so it does its own defending rather than relying on the
  * proxy (which skips /api entirely):
@@ -49,7 +49,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   const parsed = contactSchema.safeParse(body);
   if (!parsed.success) return zodFail(parsed.error);
 
-  // Honeypot tripped — pretend it worked, do nothing.
+  // Honeypot tripped - pretend it worked, do nothing.
   if (parsed.data.website) return created({ id: null, notified: false });
 
   if (rateLimited(clientIp(req))) {

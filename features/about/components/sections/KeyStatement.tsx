@@ -1,5 +1,5 @@
 // =============================================================================
-// features/about — KEY VISUAL STATEMENT
+// features/about - KEY VISUAL STATEMENT
 // -----------------------------------------------------------------------------
 // Figma: 'KEY VISUAL STATEMENT - the strongest moment on the page'
 //        1440 x 543, ink ground (#141b1a), pad 128 / 220, plus a full-bleed
@@ -10,7 +10,7 @@
 //   • 32px gap between the eyebrow and the statement
 //   • the statement is TWO EXPLICIT ROWS, not a reflow: the frame free-positions
 //     'Information' (x=397 w=550) and '≠' (x=979 w=64) on row y=180..284, then
-//     'Destiny' (x=541 w=359) on row y=316..415 — h=235 = 104 + 32 + 99. Leaving
+//     'Destiny' (x=541 w=359) on row y=316..415 - h=235 = 104 + 32 + 99. Leaving
 //     that break to flex-wrap only produced it above ~1275px (row 1 + Destiny is
 //     narrower than the rail at 768/1024), so the composition collapsed to one
 //     line everywhere else. flex-col makes the two-beat lockup structural at
@@ -18,7 +18,7 @@
 //     (646 of 936 at 1440, 344 of 688 at 768).
 //   • the 32px gap is the gap at the 104px desktop type size, so it scales on
 //     the same vw ramp as the type (32/1440 = 2.222vw) and bottoms out at 11.7px
-//     — 0.308em of the 38px clamp floor, the frame's exact gap-to-type ratio.
+//     - 0.308em of the 38px clamp floor, the frame's exact gap-to-type ratio.
 //
 // RADIUS TRAP: nothing in this section is rounded, so nothing to remap.
 // =============================================================================
@@ -45,7 +45,7 @@ export default function KeyStatement() {
       <div className="relative mx-auto flex w-full max-w-[936px] flex-col gap-8">
         {/* Figtree 700 13/19.5, ls 2.86 (0.22em), #2ac3a2 @ 80%, centred.
             CASE: this run is textCase=UPPER in the frame (y=4159, measured width
-            137) — the source string is sentence case but it RENDERS "REMEMBER
+            137) - the source string is sentence case but it RENDERS "REMEMBER
             THIS". The `uppercase` below is frame-accurate; do not "correct" it. */}
         <p className="text-center font-kyg text-[13px] font-bold uppercase leading-[19.5px] tracking-[0.22em] text-java2/80">
           Remember this
@@ -56,11 +56,11 @@ export default function KeyStatement() {
             the taller operator on the same optical line, so items-center rather
             than baseline. Row heights land at 104.4 + 32 + 98.8 = 235.2, the
             frame's h=235.
-            CASE: the display lockup is textCase=AS_TYPED — it is absent from the
+            CASE: the display lockup is textCase=AS_TYPED - it is absent from the
             About textCase=UPPER manifest, and "Information" only appears there as
             the Hero's 13px chain run (y=1107). Leave these two rows sentence case. */}
         <h2 className="flex flex-col items-center gap-[clamp(11.7px,2.222vw,32px)] text-center font-kyg">
-          {/* Row 1 — 'Information ≠'. flex-wrap is a guard only: the row is far
+          {/* Row 1 - 'Information ≠'. flex-wrap is a guard only: the row is far
               inside the rail at every width, but a font-metric drift should
               stack rather than overflow. */}
           <span className="flex flex-wrap items-center justify-center gap-[clamp(11.7px,2.222vw,32px)]">
@@ -76,7 +76,7 @@ export default function KeyStatement() {
               &#8800;
             </span>
           </span>{' '}
-          {/* Row 2 — 'Destiny', the frame's second line. */}
+          {/* Row 2 - 'Destiny', the frame's second line. */}
           <span className="min-w-0 break-words text-[clamp(38px,7.22vw,104px)] font-extrabold leading-[0.95] tracking-[-0.02em] text-linenw/45">
             Destiny
           </span>

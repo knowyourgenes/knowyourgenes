@@ -3,7 +3,7 @@ import type { Ground, TestimonialSection } from '../../types';
 import { Closing, Cta, Section } from '../ui';
 
 // =============================================================================
-// PRICE VALUE — blocks 4 and 5 of 5: the pull quote, then the closing line + CTA.
+// PRICE VALUE - blocks 4 and 5 of 5: the pull quote, then the closing line + CTA.
 // -----------------------------------------------------------------------------
 // Same frame as Worth.tsx and Outcomes.tsx ('PRICE VALUE' @[80 0 1280 1919],
 // VERTICAL, gap 44, no padding of its own): Outcomes closes with pb-0, so this
@@ -23,7 +23,7 @@ import { Closing, Cta, Section } from '../ui';
 /**
  * The whole quote is one Cormorant Garamond 700 italic 40/51.2 run at #222222,
  * EXCEPT "dream body": Figma's styleOverrideTable paints that run #0e4d4b (eden).
- * So this is NOT the teal gradient `.tst-em-teal` carries by default — `tst-flat`
+ * So this is NOT the teal gradient `.tst-em-teal` carries by default - `tst-flat`
  * switches the gradient off and the accent takes a flat eden, matching the frame.
  */
 const QUOTE_RUNS = 'tst-flat [&_.tst-em-teal]:font-bold [&_.tst-em-teal]:text-eden';
@@ -36,7 +36,7 @@ export default function Testimonial({ data, ground }: { data: TestimonialSection
           of Section's own px-5 and costs the 40px column twice. It only starts
           at sm, where the rail is no longer the thing setting the width. */}
       <div className="mx-auto flex w-full max-w-182.5 flex-col items-center gap-1.25 pt-3 text-center sm:px-5">
-        {/* 70px glyph in a 28px line box — it overhangs its own box, as in the frame */}
+        {/* 70px glyph in a 28px line box - it overhangs its own box, as in the frame */}
         <span aria-hidden className="font-tst text-[clamp(46px,4.86vw,70px)] font-bold italic leading-7 text-eden">
           &ldquo;
         </span>
@@ -49,7 +49,7 @@ export default function Testimonial({ data, ground }: { data: TestimonialSection
           dangerouslySetInnerHTML={{ __html: data.quoteHtml }}
         />
 
-        {/* Spec line 99 is a single TEXT entry — Figtree 400 flat #5b564e across
+        {/* Spec line 99 is a single TEXT entry - Figtree 400 flat #5b564e across
             all four lines, tail included. The data bolds the closing clause, so drops it back to the frame's single weight. */}
         <p
           className="max-w-140 pt-2.5 font-kyg text-[clamp(15px,1.22vw,17.5px)] leading-[1.623] text-fusc"
@@ -59,7 +59,7 @@ export default function Testimonial({ data, ground }: { data: TestimonialSection
 
       {/* ---- block 5: closing serif line (mb 24) + the primary pill ------- */}
       <div className="mt-11 flex flex-col items-center pt-1">
-        {/* 30/45 Cormorant 700 italic #2d2a24 — 700 wide, so it breaks in two */}
+        {/* 30/45 Cormorant 700 italic #2d2a24 - 700 wide, so it breaks in two */}
         <Closing html={data.closingHtml} className="mb-6 max-w-175 text-[#2d2a24]" />
 
         {data.cta ? <Cta data={data.cta} className="h-15 py-0 tracking-[0.06px]" /> : null}

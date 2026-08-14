@@ -9,7 +9,7 @@ import { useRevealOnScroll } from '@/hooks/use-scroll';
  * Same contract as the test pages': `.reveal` is only hidden once this mounts
  * and adds `reveal-on`, so a JS failure degrades to plain visible content
  * instead of a blank page. `kyg-tests` is what scopes the reveal/animation
- * rules in globals.css — reused here rather than duplicating that block.
+ * rules in globals.css - reused here rather than duplicating that block.
  *
  * threshold 0, deliberately: a fractional threshold can never be satisfied by an
  * element taller than viewportHeight/threshold, and these sections stack well

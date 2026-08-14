@@ -1,12 +1,12 @@
 // =============================================================================
-// About Us — SECTION 07 · WHAT DO YOU DO WITH THE INFORMATION
+// About Us - SECTION 07 · WHAT DO YOU DO WITH THE INFORMATION
 // -----------------------------------------------------------------------------
 // Figma: header block (740) → 2×2 question cards (960) → conversation-starter
 // callout (980) → QUESTION → CONVERSATION → AWARENESS → INFORMED CHOICE flow.
 // Section stack gap is 40; the cards grid and the flow row each carry the
 // frame's extra 8px top pad.
 //
-// RADIUS: the project's scale is remapped — rounded-3xl IS the frame's 22px.
+// RADIUS: the project's scale is remapped - rounded-3xl IS the frame's 22px.
 // Everything else here (12, 28, 2) is written as an arbitrary value.
 // =============================================================================
 
@@ -15,7 +15,7 @@ import { Fragment } from 'react';
 import { AboutIcon } from '../AboutIcon';
 import { Eyebrow, Heading, Photo, Section } from '../ui';
 
-/** The four "click to consider" cards — Figma order is row-major. */
+/** The four "click to consider" cards - Figma order is row-major. */
 const QUESTIONS: { icon: string; text: string }[] = [
   { icon: '7243-280', text: "Could this explain something I've always wondered about?" },
   { icon: '7243-770', text: 'Should I pay more attention to this part of my lifestyle?' },
@@ -26,7 +26,7 @@ const QUESTIONS: { icon: string; text: string }[] = [
 /**
  * The visual flow rail. The last step is the filled eden chip.
  *
- * CASE: these four labels are textCase=AS_TYPED in the frame — none of them is in
+ * CASE: these four labels are textCase=AS_TYPED in the frame - none of them is in
  * the About uppercase manifest, and the 0.02em tracking below is body tracking,
  * not uppercase tracking. The Hero renders a similar Question/Awareness chain that
  * IS uppercase (y 1107, 13px, 0.14em); same words, different run. Keep these
@@ -44,7 +44,7 @@ export default function WhatYouDo() {
     <Section id="what-you-do" ground="cream">
       <div className="flex flex-col items-center gap-10">
         {/* ---------------------------------------------------------------- */}
-        {/* Header — eyebrow + h2, 740 rail, centred                          */}
+        {/* Header - eyebrow + h2, 740 rail, centred                          */}
         {/* ---------------------------------------------------------------- */}
         <div className="mx-auto flex w-full max-w-[740px] flex-col items-center gap-[15px] text-center">
           <Eyebrow label="What do you do with the information?" icon="7022-532" />
@@ -55,7 +55,7 @@ export default function WhatYouDo() {
         </div>
 
         {/* ---------------------------------------------------------------- */}
-        {/* Interactive questions (click to consider) — 2 × 470 cards         */}
+        {/* Interactive questions (click to consider) - 2 × 470 cards         */}
         {/* ---------------------------------------------------------------- */}
         <ul className="mx-auto grid w-full max-w-[960px] grid-cols-1 gap-5 pt-2 md:grid-cols-2">
           {QUESTIONS.map((q) => (
@@ -63,7 +63,7 @@ export default function WhatYouDo() {
               key={q.icon}
               className="relative min-w-0 overflow-hidden rounded-3xl border border-mine/10 bg-white p-7 shadow-tst-soft"
             >
-              {/* qglow — mint blob bleeding out of the top-right corner */}
+              {/* qglow - mint blob bleeding out of the top-right corner */}
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-[55px] -top-[55px] h-40 w-40 rounded-full bg-mint blur-[20px]"
@@ -83,12 +83,12 @@ export default function WhatYouDo() {
         </ul>
 
         {/* ---------------------------------------------------------------- */}
-        {/* Conversation-starter callout — tinted panel + copy                */}
+        {/* Conversation-starter callout - tinted panel + copy                */}
         {/* ---------------------------------------------------------------- */}
         <div className="mx-auto grid w-full max-w-[980px] grid-cols-1 overflow-hidden rounded-[28px] border border-eden/20 bg-white shadow-tst-soft md:grid-cols-[477fr_501fr]">
           {/* The designer's photograph (frame 2084:4145). Filling this slot sets
-              its placeholder overlay — glyph 7594-453 and the caption "A real
-              conversation" — to HIDDEN in the frame, so the photo replaces the
+              its placeholder overlay - glyph 7594-453 and the caption "A real
+              conversation" - to HIDDEN in the frame, so the photo replaces the
               stand-in. Source is 4:3 into a 1.64:1 slot, so object-cover trims
               top and bottom only. */}
           <Photo
@@ -100,12 +100,11 @@ export default function WhatYouDo() {
 
           <div className="flex min-w-0 flex-col justify-center bg-mint/40 p-[clamp(24px,4vw,40px)]">
             <p className="mb-3 break-words font-kyg text-[clamp(21px,2.1vw,28px)] font-semibold leading-[1.38] text-mine">
-              A genetic insight isn&apos;t a command.{' '}
-              <em className="abt-grad">It&apos;s a conversation starter.</em>
+              A genetic insight isn&apos;t a command. <em className="abt-grad">It&apos;s a conversation starter.</em>
             </p>
             <p className="break-words font-kyg text-[clamp(15px,1.2vw,17px)] font-normal leading-[1.62] text-fusc">
-              The goal isn&apos;t to make every decision based on your genes. It&apos;s to give you
-              one more informed piece of the puzzle.
+              The goal isn&apos;t to make every decision based on your genes. It&apos;s to give you one more informed
+              piece of the puzzle.
             </p>
           </div>
         </div>
@@ -116,14 +115,14 @@ export default function WhatYouDo() {
         {/*
           The frame is ONE unbroken 960 rail: 645 of fixed-width chips + 54 of
           gaps + three 87px connectors. The chips cannot shrink, so 699px is the
-          floor for a single row — more than the 688 available at 768. A wrapping
+          floor for a single row - more than the 688 available at 768. A wrapping
           row therefore stranded a connector at a row edge (and started a row
           with one) anywhere between 640 and ~1085.
           So the connectors exist only from lg up, where the row is also switched
           to nowrap and each connector flexes into whatever the chips leave
           (basis 0, so it can never force a wrap; capped at the frame's 87px,
           which is exactly what it gets once the rail hits its 960 cap).
-          Below lg the connectors are gone and the chips wrap on their own — no
+          Below lg the connectors are gone and the chips wrap on their own - no
           rule ever points at nothing.
         */}
         <div className="mx-auto flex w-full max-w-[960px] flex-wrap items-center justify-center gap-x-[9px] gap-y-3 pt-2 lg:flex-nowrap">

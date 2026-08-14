@@ -28,9 +28,9 @@ export const immunityHealth: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: 'Immunity DNA Test — 24 markers from one saliva sample',
+    title: 'Immunity DNA Test - 24 markers from one saliva sample',
     description:
-      'Eleven infection results, eleven micronutrients and three detox readings — how quickly you catch something and how long it keeps you down, read from a single at-home saliva kit.',
+      'Eleven infection results, eleven micronutrients and three detox readings - how quickly you catch something and how long it keeps you down, read from a single at-home saliva kit.',
   },
 
   sections: [

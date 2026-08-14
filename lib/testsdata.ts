@@ -44,9 +44,9 @@ export const womensHealth: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: "Women's Health DNA Test — 5 answers from one saliva sample",
+    title: "Women's Health DNA Test - 5 answers from one saliva sample",
     description:
-      'PCOS, pregnancy loss, peripartum mood, bone density and joint risk — five genetic answers from a single at-home saliva kit. NABL-accredited lab, results in 3 weeks, free GENEous Care counselling.',
+      'PCOS, pregnancy loss, peripartum mood, bone density and joint risk - five genetic answers from a single at-home saliva kit. NABL-accredited lab, results in 3 weeks, free GENEous Care counselling.',
   },
 
   sections: [
@@ -109,7 +109,7 @@ export const womensHealth: TestPage = {
         {
           icon: 'family',
           accent: 'teal',
-          // Figtree 600 in the frame, unlike its neighbours at 400 — the <b> is
+          // Figtree 600 in the frame, unlike its neighbours at 400 - the <b> is
           // what WhoFor maps to font-semibold.
           textHtml: '<b>PCOS, thyroid, weak bones or arthritis runs in your family.</b>',
         },

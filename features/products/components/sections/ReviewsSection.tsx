@@ -2,7 +2,7 @@ import type { ProductKit } from '../../types';
 import SectionHeader from '../ui/SectionHeader';
 import Stars from '../ui/Stars';
 
-// "Reviews" — disclaimer + five placeholder review cards.
+// "Reviews" - disclaimer + five placeholder review cards.
 export default function ReviewsSection({ reviews }: { reviews: ProductKit['reviews'] }) {
   return (
     <section id="reviews" className="scroll-mt-24 border-t border-heavy/10 py-14 md:py-[72px]">

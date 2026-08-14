@@ -1,10 +1,10 @@
 // =============================================================================
-// About Us — SECTION 06 · FROM GENES TO INSIGHT
+// About Us - SECTION 06 · FROM GENES TO INSIGHT
 // -----------------------------------------------------------------------------
 // Figma frame is 1440 wide, 1410 tall, on a #eff6f5 -> #faf6ef vertical gradient
 // (the shared `sageFade` ground). Three stacked blocks, 56px apart:
 //   1. centred eyebrow + 42px h2                       (720 wide)
-//   2. the flowing-spine journey — 860 wide, 104px left
+//   2. the flowing-spine journey - 860 wide, 104px left
 //      rail holding the 54px node medallions, cards 756 wide, 24px apart
 //   3. the "Genes -> Data -> Insight -> Awareness" chip row (900 wide)
 //
@@ -21,7 +21,7 @@ import { AboutIcon } from '../AboutIcon';
 import { Eyebrow, Heading, Photo, Section } from '../ui';
 
 /* -------------------------------------------------------------------------- */
-/* copy — verbatim from the frame                                             */
+/* copy - verbatim from the frame                                             */
 /* -------------------------------------------------------------------------- */
 
 type Step = {
@@ -86,7 +86,7 @@ const FLOW = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* local bits — the frame's own shapes, none of which the shared primitives     */
+/* local bits - the frame's own shapes, none of which the shared primitives     */
 /* cover (dark-ground pills, spine medallions, the connector chips)             */
 /* -------------------------------------------------------------------------- */
 
@@ -94,19 +94,19 @@ const FLOW = [
 const CARD_NUMBER = 'font-kyg text-[26px] font-semibold leading-[26px]';
 // textCase=UPPER in the frame. Figma keeps `characters` as typed ("Collect") and
 // applies case via style.textCase, so the spec dump reads sentence case while the
-// frame renders COLLECT. All four consumers — Collect / Analyse / Interpret and
-// the 04 "GENEous Lab" kicker (y 5839.2 / 6010.7 / 6208.6 / 6432.5) — are UPPER
+// frame renders COLLECT. All four consumers - Collect / Analyse / Interpret and
+// the 04 "GENEous Lab" kicker (y 5839.2 / 6010.7 / 6208.6 / 6432.5) - are UPPER
 // runs, so the transform lives on the constant. The 0.14em is uppercase tracking:
 // do NOT "correct" this back to sentence case.
 //
 // One caller opts out: the GENEous Lab kicker adds `normal-case` to keep the
 // partner brand's own capitalisation. That is a product decision, not a frame
-// reading — see the BRAND EXCEPTION note at its call site.
+// reading - see the BRAND EXCEPTION note at its call site.
 const CARD_KICKER = 'font-kyg text-[13px] font-bold uppercase leading-[19.5px] tracking-[0.14em]';
 const CARD_TITLE =
   'font-kyg text-[clamp(18px,1.39vw,20px)] font-bold leading-[1.14] tracking-[-0.018em] lg:leading-[1.05]';
 const CARD_BODY = 'break-words pt-0.5 font-kyg text-[clamp(15px,1.15vw,16.5px)] leading-[1.62]';
-// textCase=UPPER in the frame — same story as CARD_KICKER. Every CardSlot caption
+// textCase=UPPER in the frame - same story as CARD_KICKER. Every CardSlot caption
 // is an UPPER run (Saliva kit / Lab analysis / Counsellor & report / GENEous Lab,
 // y 5887.2 / 6071.9 / 6283.3 / 6571.8); 0.12em is the uppercase tracking. The
 // GENEous Lab caption opts out via CardSlot's `labelClassName` for the same brand
@@ -134,7 +134,7 @@ function SpineNode({ icon, accent = false }: { icon: string; accent?: boolean })
 /**
  * Left tile of every card: teal wash + glyph + letter-spaced caption.
  *
- * `labelClassName` exists for exactly one caller — the GENEous Lab card, which
+ * `labelClassName` exists for exactly one caller - the GENEous Lab card, which
  * opts out of SLOT_LABEL's frame-accurate `uppercase` to preserve the partner
  * brand's own casing. See the BRAND EXCEPTION note at the 04 kicker.
  */
@@ -155,7 +155,7 @@ function CardSlot({
 }) {
   // Filling a slot hides its glyph + caption in the frame, so the photo replaces
   // the stand-in entirely. The tile stretches to the card's height (the frame's
-  // slots are 145.5 / 171.9 / 198.8 / 328.2 tall — each card's own height) and
+  // slots are 145.5 / 171.9 / 198.8 / 328.2 tall - each card's own height) and
   // keeps the 317 width it has at sm and up.
   if (img) {
     return (
@@ -178,9 +178,7 @@ function CardSlot({
       )}
     >
       <AboutIcon id={icon} className="h-[40px] w-[34px]" />
-      <span className={cn(SLOT_LABEL, 'text-center', accent ? 'text-ice' : 'text-eden', labelClassName)}>
-        {label}
-      </span>
+      <span className={cn(SLOT_LABEL, 'text-center', accent ? 'text-ice' : 'text-eden', labelClassName)}>{label}</span>
     </div>
   );
 }
@@ -243,20 +241,18 @@ export default function GenesToInsight() {
       {/* --- heading block ------------------------------------------------- */}
       <div className="mx-auto flex w-full max-w-[720px] flex-col items-center gap-[15px] text-center">
         {/* pad 8/17/8/13, gap 9, 19x23 glyph and Figtree 700 13.5/20.2 ls 0.11em
-            are the shared Eyebrow's own metrics now — and so is the uppercase:
+            are the shared Eyebrow's own metrics now - and so is the uppercase:
             this node is textCase=UPPER. See the Eyebrow note in ui.tsx. */}
         <Eyebrow label="From genes to insight" icon="5612-606" />
         <Heading
-          html={
-            'It starts with something simple: <em class="abt-grad">your <br class="hidden sm:inline" />genes.</em>'
-          }
+          html={'It starts with something simple: <em class="abt-grad">your <br class="hidden sm:inline" />genes.</em>'}
           className="text-[clamp(28px,2.92vw,42px)] leading-[1.05] tracking-[-0.018em]"
         />
       </div>
 
       {/* --- the flowing-spine journey ------------------------------------- */}
       <div className="relative mx-auto w-full max-w-[860px] md:pl-[104px]">
-        {/* the spine itself — hidden once the 104px rail collapses */}
+        {/* the spine itself - hidden once the 104px rail collapses */}
         <span
           aria-hidden
           className="absolute inset-y-3 left-[44px] hidden w-[3px] rounded-full bg-[linear-gradient(180deg,rgba(34,34,34,0.05),#25b5ab,#0e4d4b,#25b5ab,rgba(34,34,34,0.05))] md:block"
@@ -267,12 +263,7 @@ export default function GenesToInsight() {
             <li key={step.index} className="relative flex flex-col items-center md:block">
               <SpineNode icon={step.nodeIcon} />
               <div className="flex w-full flex-col overflow-hidden rounded-[24px] border border-mine/10 bg-white shadow-tst-soft sm:flex-row">
-                <CardSlot
-                  icon={step.slotIcon}
-                  label={step.slotLabel}
-                  img={step.slotImg}
-                  alt={step.slotAlt}
-                />
+                <CardSlot icon={step.slotIcon} label={step.slotLabel} img={step.slotImg} alt={step.slotAlt} />
                 <div className="flex min-w-0 flex-1 flex-col gap-1.5 p-5 sm:p-[28px]">
                   <div className="flex items-baseline gap-[11px]">
                     <span className={cn(CARD_NUMBER, 'text-eden/30')}>{step.index}</span>
@@ -285,7 +276,7 @@ export default function GenesToInsight() {
             </li>
           ))}
 
-          {/* 04 — GENEous Lab: trust & science, not an ad */}
+          {/* 04 - GENEous Lab: trust & science, not an ad */}
           <li className="relative flex flex-col items-center md:block">
             <SpineNode icon="6412-322" accent />
             <div className="flex w-full flex-col overflow-hidden rounded-[24px] bg-[linear-gradient(135deg,#141b1a,#1e2b29)] sm:flex-row">
@@ -306,7 +297,7 @@ export default function GenesToInsight() {
                 <div className="relative flex flex-col gap-1.5">
                   <div className="flex items-baseline gap-[11px]">
                     <span className={cn(CARD_NUMBER, 'text-java2/40')}>04</span>
-                    {/* BRAND EXCEPTION — the only deliberate deviation from the
+                    {/* BRAND EXCEPTION - the only deliberate deviation from the
                         frame's textCase on this page. y=6432.5 is textCase=UPPER
                         like its three sibling kickers, so the frame renders
                         "GENEOUS LAB", but that flattens the intentional GENE-ous
@@ -320,7 +311,7 @@ export default function GenesToInsight() {
                     Testing is powered through our GENEous Lab partner, NeoTech, helping turn your DNA sample into
                     genetic insights you can understand and explore.
                   </p>
-                  {/* frame 'div.flex' is layout=VERTICAL pad=10/0/0/0 gap=10 — both
+                  {/* frame 'div.flex' is layout=VERTICAL pad=10/0/0/0 gap=10 - both
                       pills start at x=740, i.e. a left-aligned stack, not a row
                       that happens to wrap. */}
                   <div className="flex flex-col items-start gap-2.5 pt-2.5">

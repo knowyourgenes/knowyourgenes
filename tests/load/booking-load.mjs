@@ -1,10 +1,10 @@
 /**
- * Booking load harness — DB-level capacity test for the paid-booking path.
+ * Booking load harness - DB-level capacity test for the paid-booking path.
  *
  * Why DB-level (not HTTP): /api/checkout is behind a next-auth **JWT** session,
  * so an HTTP load tool would need a real signed session cookie per virtual user
  * (painful to mint). The real capacity ceiling for booking is the database
- * write path, so this harness exercises exactly that — faithfully mirroring the
+ * write path, so this harness exercises exactly that - faithfully mirroring the
  * production sequence:
  *
  *   1. nextOrderNumber(): COUNT(orders this year) then build KYG-YYYY-NNNNNN
@@ -16,7 +16,7 @@
  *      -> notification.create -> orderEvent.create               (the new flow)
  *
  * It reports throughput and latency percentiles under a configurable closed-loop
- * concurrency, and — critically — counts duplicate order numbers, which is how
+ * concurrency, and - critically - counts duplicate order numbers, which is how
  * the COUNT-based numbering fails under concurrency.
  *
  * SAFETY: refuses to run against a non-local DATABASE_URL unless
@@ -46,7 +46,7 @@ if (!isLocal && !ALLOW_REMOTE) {
     `\nREFUSING TO RUN: DATABASE_URL is not local.\n` +
       `This harness writes thousands of rows and must NOT hit a shared/prod DB.\n` +
       `Point it at a throwaway local Postgres (see tests/load/docker-compose.yml),\n` +
-      `or set LOADTEST_ALLOW_REMOTE=1 if you REALLY mean to.\n`,
+      `or set LOADTEST_ALLOW_REMOTE=1 if you REALLY mean to.\n`
   );
   process.exit(1);
 }
@@ -63,7 +63,7 @@ async function ensureFixtures() {
   const pkg = await prisma.package.findFirst({ where: { active: true } });
   if (!pkg) throw new Error('No active Package found. Run `pnpm db:seed` against the load DB first.');
   const lab = await prisma.lab.findFirst({ where: { active: true } });
-  if (!lab) console.warn('[warn] No active Lab found — notify path will hit the "no-lab" branch.');
+  if (!lab) console.warn('[warn] No active Lab found - notify path will hit the "no-lab" branch.');
 
   let user = await prisma.user.findFirst({ where: { email: 'loadtest@knowyourgenes.local' } });
   if (!user) user = await prisma.user.create({ data: { email: 'loadtest@knowyourgenes.local', name: 'Load Test' } });
@@ -152,7 +152,7 @@ async function onePaidBooking(fx) {
 
 async function main() {
   console.log(
-    `\nBooking load: concurrency=${CONCURRENCY}, duration=${DURATION_SEC}s\nDB=${DB.replace(/:[^:@/]+@/, ':****@')}\n`,
+    `\nBooking load: concurrency=${CONCURRENCY}, duration=${DURATION_SEC}s\nDB=${DB.replace(/:[^:@/]+@/, ':****@')}\n`
   );
   const fx = await ensureFixtures();
 
@@ -209,9 +209,9 @@ async function main() {
   console.log(JSON.stringify(report, null, 2));
   if (dupes > 0) {
     console.log(
-      `\n⚠  ${dupes} DUPLICATE order numbers generated under load — the COUNT-based\n` +
+      `\n⚠  ${dupes} DUPLICATE order numbers generated under load - the COUNT-based\n` +
         `   nextOrderNumber() races. This is the #1 thing to fix before high traffic\n` +
-        `   (use a Postgres SEQUENCE / identity column).`,
+        `   (use a Postgres SEQUENCE / identity column).`
     );
   }
   await prisma.$disconnect();

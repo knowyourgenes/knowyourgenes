@@ -9,12 +9,12 @@ import SelfServe from './SelfServe';
  * The route lives under app/(site)/, so the global SiteHeader/SiteFooter wrap
  * this. The Figma frame draws its own header and footer, but those are ordinary
  * SITE chrome (brand, nav, CTA / dark 3-column footer) rather than anything
- * page-specific — forking a third bespoke copy per page is exactly what caused
+ * page-specific - forking a third bespoke copy per page is exactly what caused
  * the duplication already flagged across this repo. Aligning SiteHeader and
  * SiteFooter with the frame is a separate, site-wide change.
  *
  * MAIN section geometry: 1180 rail with 32 side padding, left column 499,
- * right column 585, 32 gap — reproduced here as a 499/585 fractional grid so it
+ * right column 585, 32 gap - reproduced here as a 499/585 fractional grid so it
  * holds its proportions at every width and stacks below `lg`.
  */
 export default function ContactPage() {

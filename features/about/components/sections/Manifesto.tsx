@@ -1,5 +1,5 @@
 // =============================================================================
-// About Us — SECTION 10 · WHAT WE BELIEVE (manifesto)
+// About Us - SECTION 10 · WHAT WE BELIEVE (manifesto)
 // -----------------------------------------------------------------------------
 // Figma frame: 1440 x 1105, ink ground (#141b1a), pad 120/220. The inner rail is
 // 1000 with its own 32 -> a 936 content column, narrower than the page's usual
@@ -15,7 +15,7 @@
 import { Body, Eyebrow, Heading, Section } from '../ui';
 
 /**
- * Frame line 15-29 — the four manifesto statements, verbatim.
+ * Frame line 15-29 - the four manifesto statements, verbatim.
  *
  * CASE: these are textCase=AS_TYPED in the frame and must stay sentence case.
  * This section's ONLY textCase=UPPER run is the eyebrow (y=10799.7); the audit of
@@ -26,7 +26,7 @@ const BELIEFS = [
   {
     n: '01',
     // "Your genes don't decide who you\nbecome."
-    html: "Your genes don't decide who you<br class=\"hidden lg:inline\" /> become.",
+    html: 'Your genes don\'t decide who you<br class="hidden lg:inline" /> become.',
   },
   {
     n: '02',
@@ -57,13 +57,13 @@ export default function Manifesto() {
         {/* ---- header (frame 'div.text-center', gap 20, centred) ------------ */}
         <div className="flex flex-col items-center gap-5 text-center">
           {/* Frame pill: pad 8/17/8/13, gap 9, glyph 19x23, label Figtree 700
-              13.5/20.2 ls 1.49 — every one of those is already the shared
+              13.5/20.2 ls 1.49 - every one of those is already the shared
               <Eyebrow> default, so this carries NO local override. The old one
               re-stated the pad/type and forced the glyph into a 19x19 box, which
               letterboxed the 19x23 artwork down ~17% (min(19/19, 19/23) = 0.826)
               and made this eyebrow visibly smaller than its siblings. */}
           {/* textCase=UPPER in the frame (y=10799.7, 13.5/700, ls 1.49 = 0.11em,
-              measured width 142) — it renders "WHAT WE BELIEVE", not the sentence
+              measured width 142) - it renders "WHAT WE BELIEVE", not the sentence
               case stored in `characters`. The shared <Eyebrow> already emits
               `uppercase` at exactly that tracking, so this needs no local class
               and must NOT be given a normal-case override. */}

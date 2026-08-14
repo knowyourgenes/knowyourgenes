@@ -1,5 +1,5 @@
 // =============================================================================
-// features/tests — the design's own icons
+// features/tests - the design's own icons
 // -----------------------------------------------------------------------------
 // These are NOT a third-party icon set. Every glyph under
 // /public/tests/womens-health/icons/ was rebuilt from the Figma frame's own
@@ -19,7 +19,7 @@ import ICONS from './figma-icons.json';
 
 const BASE = '/tests/womens-health/icons';
 
-/** Every id present on disk — exported so a data file can be validated. */
+/** Every id present on disk - exported so a data file can be validated. */
 export const FIGMA_ICON_IDS = Object.keys(ICONS as Record<string, string>);
 
 export function FigmaIcon({
@@ -37,7 +37,7 @@ export function FigmaIcon({
   const file = (ICONS as Record<string, string>)[id];
   if (!file) {
     if (process.env.NODE_ENV !== 'production') {
-      console.warn(`[tests/FigmaIcon] no glyph for id "${id}" — check public/tests/womens-health/icons/`);
+      console.warn(`[tests/FigmaIcon] no glyph for id "${id}" - check public/tests/womens-health/icons/`);
     }
     return null;
   }

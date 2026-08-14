@@ -2,7 +2,7 @@ import type { ProductKit } from '../../types';
 import SectionHeader from '../ui/SectionHeader';
 import Accordion from '../ui/Accordion';
 
-// "Before you order" — six card accordions in a narrower centered column.
+// "Before you order" - six card accordions in a narrower centered column.
 export default function FaqSection({ faq }: { faq: ProductKit['faq'] }) {
   return (
     <section className="border-t border-heavy/10 bg-white/60 py-14 md:py-[72px]">

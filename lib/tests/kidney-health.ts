@@ -15,9 +15,9 @@ export const kidneyHealth: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: 'Kidney Health DNA Test — 7 findings from one saliva sample',
+    title: 'Kidney Health DNA Test - 7 findings from one saliva sample',
     description:
-      'Uric acid, polycystic kidney disease, magnesium retention, chronic kidney disease, nephrotic syndrome, membranous nephropathy and kidney stones — twelve genetic markers from a single at-home saliva kit.',
+      'Uric acid, polycystic kidney disease, magnesium retention, chronic kidney disease, nephrotic syndrome, membranous nephropathy and kidney stones - twelve genetic markers from a single at-home saliva kit.',
   },
 
   sections: [

@@ -1,14 +1,14 @@
 // =============================================================================
-// Homepage — SECTION 05 · DISCOVER WHAT'S RIGHT FOR YOU
+// Homepage - SECTION 05 · DISCOVER WHAT'S RIGHT FOR YOU
 // -----------------------------------------------------------------------------
 // Ported against the designer's build (`New Homepage Build/index.html`,
 // `.disc` block at CSS ~718-762, markup at 1501). The Figma frame was traced
-// FROM that page, so where the two disagree the HTML wins — which here only
+// FROM that page, so where the two disagree the HTML wins - which here only
 // means the responsive bounds, since at 1440 every clamp lands exactly on the
 // number the frame reports (5vw = 72 numeral, 1.6vw = 23 gutter, 1.75vw = 25.2
 // heading, 4vw = 57.6 column gap).
 //
-// Ground is #f5eddf — a shade DEEPER than the cream token (linenw #faf6ef) the
+// Ground is #f5eddf - a shade DEEPER than the cream token (linenw #faf6ef) the
 // neighbouring sections use. That hex is already tokenised as `sand`, so
 // `ground="cream"` supplies the shell (rail, gutters, bistre ink) and `bg-sand`
 // swaps only the fill.
@@ -22,7 +22,7 @@
 // the source drops the stickiness too.
 //
 // ROW ANATOMY (every row identical, only the copy length changes):
-//   a fading 1px rule on top — a gradient border-image, NOT a flat line
+//   a fading 1px rule on top - a gradient border-image, NOT a flat line
 //   numeral col clamp(50,5vw,78) · gutter clamp(14,1.6vw,26) · body · 34 arrow
 //   whole-row hover: the ground lifts to 78% linenw, the row indents, the
 //   numeral warms to java, the heading goes eden, the icon chip flips solid and
@@ -33,7 +33,7 @@
 //
 // ICON NOTE: the row hover circle's own ids (2613-1324 …) all dedupe to a
 // CREAM-stroked arrow file, which would be invisible on this ground, so the
-// circle reuses the row's eden text-link arrow — same glyph, correct paint.
+// circle reuses the row's eden text-link arrow - same glyph, correct paint.
 // =============================================================================
 
 import Link from 'next/link';
@@ -43,7 +43,7 @@ import { HomeIcon } from '../HomeIcon';
 import { Reveal } from '../motion';
 
 type DiscoverRow = {
-  /** The frame's own numeral — displayed, not derived from the index. */
+  /** The frame's own numeral - displayed, not derived from the index. */
   n: string;
   /** 19x19 stroked glyph inside the 38px tinted tile. */
   icon: string;
@@ -62,7 +62,7 @@ type DiscoverRow = {
  *
  * Only wellness and ancestry have real category routes today; the other four
  * intents have no landing page yet and point at the /categories hub rather than
- * shipping a 404. See `escalate` — these want real destinations.
+ * shipping a 404. See `escalate` - these want real destinations.
  */
 const ROWS: DiscoverRow[] = [
   {
@@ -137,11 +137,10 @@ const ROWS: DiscoverRow[] = [
  *
  * It has to be an inline style rather than a utility because `border-image`
  * takes a gradient plus a slice, and `Reveal` already owns the element's
- * `style` — hence it lands on the inner row box, which is also what carries the
+ * `style` - hence it lands on the inner row box, which is also what carries the
  * padding and the hover ground, exactly like `.drow` itself does.
  */
-const FADE_RULE =
-  'linear-gradient(90deg, rgba(27,23,18,0.11) 0%, rgba(27,23,18,0.11) 34%, rgba(27,23,18,0) 92%) 1';
+const FADE_RULE = 'linear-gradient(90deg, rgba(27,23,18,0.11) 0%, rgba(27,23,18,0.11) 34%, rgba(27,23,18,0) 92%) 1';
 const RULE_TOP: React.CSSProperties = {
   borderStyle: 'solid',
   borderWidth: '1px 0 0',
@@ -160,8 +159,8 @@ export default function Discover() {
       id="discover-whats-right-for-you"
       ground="cream"
       // The frame fills this section #f5eddf, which is NOT linenw (#faf6ef).
-      // That hex already has a token — `sand`, sampled from the test pages'
-      // TRUST gradient — so it is reused rather than hard-coded. `cn` is
+      // That hex already has a token - `sand`, sampled from the test pages'
+      // TRUST gradient - so it is reused rather than hard-coded. `cn` is
       // tailwind-merge, so this bg wins over the `cream` ground's bg-linenw
       // while that ground's text-bistre survives.
       className="bg-sand"
@@ -184,10 +183,7 @@ export default function Discover() {
             own 44 of breathing room. The source says calc(--hdr-h + 44) where
             --hdr-h is 92, but that is ITS header; pinning to 136 here would
             leave a visible gap under our shorter one. */}
-        <Reveal
-          variant="left"
-          className="flex min-w-0 flex-col gap-[19px] lg:sticky lg:top-[108px] lg:self-start"
-        >
+        <Reveal variant="left" className="flex min-w-0 flex-col gap-[19px] lg:sticky lg:top-[108px] lg:self-start">
           <Kicker tone="eden">Discover what’s right for you</Kicker>
 
           {/* Two voices in one heading, as in section 04: Figtree 400 50.4/57.5
@@ -201,7 +197,7 @@ export default function Discover() {
             </span>
           </h2>
 
-          {/* 378 of text in a 392 box — the break is authored, not a wrap. */}
+          {/* 378 of text in a 392 box - the break is authored, not a wrap. */}
           <Body className="max-w-[392px] pb-[14px] text-nevada">
             You don’t need to understand genetics to know
             <br className="hidden sm:inline" /> where you want answers.
@@ -229,7 +225,7 @@ export default function Discover() {
               key={row.n}
               delay={row.rd}
               // `group` is on the li, not the padded box, so EVERY hover state
-              // below — chip, numeral, heading, arrows, ground — fires from one
+              // below - chip, numeral, heading, arrows, ground - fires from one
               // pointer test. group-focus-within stands in for the source's
               // `.ic-h:focus-visible`: there the whole row is the anchor, here
               // the text link is, so keyboard focus has to be relayed up.
@@ -238,12 +234,12 @@ export default function Discover() {
               <div
                 style={i === ROWS.length - 1 ? RULE_BOTH : RULE_TOP}
                 // Padding and columns are the source's, verbatim. The left pad
-                // GROWS on hover (6→12 min, 12→24 max) — the row physically
+                // GROWS on hover (6→12 min, 12→24 max) - the row physically
                 // steps toward the reader; that indent is the section's whole
                 // hover idea and the transition is what keeps it from twitching.
                 className="grid grid-cols-[clamp(42px,9vw,60px)_minmax(0,1fr)] items-start gap-x-[clamp(14px,1.6vw,26px)] gap-y-0 py-[clamp(24px,2.6vw,36px)] pl-[clamp(6px,0.8vw,12px)] pr-[clamp(10px,1.2vw,18px)] transition-[background-color,padding-left] duration-790 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-linenw/78 group-hover:pl-[clamp(12px,1.6vw,24px)] group-focus-within:bg-linenw/78 group-focus-within:pl-[clamp(12px,1.6vw,24px)] lg:grid-cols-[clamp(50px,5vw,78px)_minmax(0,1fr)_34px]"
               >
-                {/* tabular-nums keeps 01…06 on one optical column — Figtree's
+                {/* tabular-nums keeps 01…06 on one optical column - Figtree's
                     proportional 1 is narrow enough to visibly shift the pair.
                     The source asks for weight 200; only 300+ is loaded in
                     app/layout.tsx (and the frame measured 300), so 300 is the
@@ -269,7 +265,7 @@ export default function Discover() {
                     <span className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[11px] bg-eden/[0.08] transition-[background-color,translate,rotate,box-shadow] duration-850 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1 group-hover:rotate-[-5deg] group-hover:bg-eden group-hover:shadow-[0_12px_26px_rgba(14,77,75,0.26)] group-focus-within:-translate-y-1 group-focus-within:rotate-[-5deg] group-focus-within:bg-eden group-focus-within:shadow-[0_12px_26px_rgba(14,77,75,0.26)] motion-reduce:transition-none">
                       {/* HomeIcon serves a static <img>, so the source's
                           `color:var(--c-cream)` on the hovered chip cannot be
-                          inherited — the eden stroke is baked into the file.
+                          inherited - the eden stroke is baked into the file.
                           brightness(0) flattens every painted pixel to black
                           (alpha untouched) and invert(1) lifts it to white,
                           which is the only way to recolour an <img> glyph. The
@@ -286,7 +282,7 @@ export default function Discover() {
                   </div>
 
                   {/* 17.5 flat, not a clamp: the source never scales this down,
-                      and the 56ch cap only binds above ~1500 — under that the
+                      and the 56ch cap only binds above ~1500 - under that the
                       body track is already the narrower constraint (597.5 at
                       1440, which is the 597.7 the frame reports). */}
                   <p className="max-w-[56ch] font-kyg text-[17.5px] font-normal leading-[1.6] tracking-[-0.005em] text-nevada">
@@ -300,7 +296,7 @@ export default function Discover() {
                     // at 27px tall before, which is under the 44px minimum and the
                     // smallest interactive element on the page. The negative top
                     // margin absorbs the extra height so the frame's 4px gap above
-                    // the link is unchanged — the row does not grow.
+                    // the link is unchanged - the row does not grow.
                     className="-mb-[8px] -mt-[8px] inline-flex min-h-11 w-fit items-center gap-[9px] pt-[4px] font-kyg text-[16px] font-bold leading-[1.62] tracking-[-0.008em] text-eden"
                   >
                     <span className="min-w-0">{row.cta}</span>
@@ -316,7 +312,7 @@ export default function Discover() {
 
                 {/* The frame's op=0.0 circle: a 34px ring (INNER_SHADOW 1px at
                     11% ink) parked 8px left of its slot, which slides home and
-                    FILLS solid eden as the row is hovered — the ring is what it
+                    FILLS solid eden as the row is hovered - the ring is what it
                     looks like arriving, not what it looks like at rest.
                     Desktop only: below lg the source drops this column entirely,
                     since there is no rail to park it on and it duplicates the

@@ -4,7 +4,7 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Section } from '../ui';
 
 // =============================================================================
-// FINAL — ink closing band, 1440 x 532 (section spec 017114_final)
+// FINAL - ink closing band, 1440 x 532 (section spec 017114_final)
 // -----------------------------------------------------------------------------
 // Frame geometry, straight off the node tree:
 //
@@ -25,12 +25,12 @@ import { Heading, Section } from '../ui';
 //     is why 17+22+10+188+22 = 259 is reported as 261 and 17+24+17 = 58 as 60.
 //     `border` + border-box reproduces both exactly.
 //   • the h2 box is 75 tall but its line box is 61.6 and sits 11 from the top,
-//     so the heading carries pt-11/pb-2 rather than a taller leading — that
+//     so the heading carries pt-11/pb-2 rather than a taller leading - that
 //     keeps the text where the frame puts it AND the next gap where it lands.
 //
 // The eyebrow is the tinted-on-ink pill (teal@14 ground, ice label), not the
 // white one in ui.tsx, and the CTA carries the frame's own arrow glyph and the
-// white-halo shadow pair — same treatment as the THE NUMBERS button. Both are
+// white-halo shadow pair - same treatment as the THE NUMBERS button. Both are
 // built here for that reason.
 // =============================================================================
 
@@ -46,14 +46,14 @@ export default function FinalCta({ data, ground }: { data: FinalCtaSection; grou
     >
       {/* The frame's single decorative element: a 600px eden disc centred on the
           artboard, top at -210 (i.e. -322 from the content top), clipped by the
-          band. Figma layer blur 90 ≈ CSS blur(45px) — the radius is twice the
+          band. Figma layer blur 90 ≈ CSS blur(45px) - the radius is twice the
           Gaussian sigma CSS filters take. */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-[-210px] size-[600px] -translate-x-1/2 rounded-full bg-eden/55 blur-[45px]"
       />
 
-      {/* The frame's 32px column padding is the FRAME's own gutter — below sm it
+      {/* The frame's 32px column padding is the FRAME's own gutter - below sm it
           would sit on top of the shell's px-5 and squeeze the 261px eyebrow into
           216px, so it only kicks in once the viewport can afford it. */}
       <div className="relative mx-auto flex w-full max-w-[720px] flex-col items-center gap-4 text-center sm:px-8">
@@ -84,7 +84,7 @@ export default function FinalCta({ data, ground }: { data: FinalCtaSection; grou
         <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pb-4">
           {data.chips.map((c, i) => (
             // min-w-0: the three ticks total 453 of the frame's 656, so they
-            // never shrink there — but on a 280px phone column a long label has
+            // never shrink there - but on a 280px phone column a long label has
             // to be allowed to wrap instead of pushing out of the band.
             <li key={i} className="flex min-w-0 items-center gap-2">
               {/* 19x22 glyph pulled to the 19x18 box the frame lays out */}
@@ -98,7 +98,7 @@ export default function FinalCta({ data, ground }: { data: FinalCtaSection; grou
         </ul>
 
         {/* ---- cta: 186x60, pad 17/34, gap 10, Figtree 800 16/24 #0e4d4b --- */}
-        {/* ls is 0.06 PX in the frame (0.00375em), not 0.004em — written in px so
+        {/* ls is 0.06 PX in the frame (0.00375em), not 0.004em - written in px so
             it stays exact and does not scale with the fixed 16px label. */}
         <Link
           href={data.cta.href}

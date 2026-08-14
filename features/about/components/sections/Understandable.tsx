@@ -1,5 +1,5 @@
 // =============================================================================
-// About Us — SECTION 05 · MAKING GENETICS UNDERSTANDABLE
+// About Us - SECTION 05 · MAKING GENETICS UNDERSTANDABLE
 // -----------------------------------------------------------------------------
 // Figma frame @ page y=4574 (h=937). White-70 veil ground with a 1px #222222@0.1
 // hairline top and bottom, 92px vertical padding.
@@ -27,16 +27,16 @@ const INPUT_CHIPS: { label: string; icon: string }[] = [
 ];
 
 /**
- * Small-caps label used by all five 13px labels in this section — the four
+ * Small-caps label used by all five 13px labels in this section - the four
  * card/lens headers plus the java2 pill (13px · 700 · tracked).
  *
- * The `uppercase` here is FRAME-ACCURATE — do not strip it. Figma keeps the
+ * The `uppercase` here is FRAME-ACCURATE - do not strip it. Figma keeps the
  * string in `characters` as the designer typed it and applies case separately
  * via `style.textCase`, so a spec dump that prints only `characters` shows
  * "Filter" for a node the frame renders as "FILTER". All five consumers of this
  * constant are textCase=UPPER runs in .about-case-manifest.json (y=4935.2
  * "Simple human insight", 4936.2 "Complex genetic information", 4990.6
- * "Filter", 4996.2 "Lower · act early", 5134.1 "Interpretation") — there is no
+ * "Filter", 4996.2 "Lower · act early", 5134.1 "Interpretation") - there is no
  * AS_TYPED consumer, which is why the transform lives on the constant. The
  * >= 0.06em tracking on every call site is uppercase tracking, the giveaway.
  *
@@ -54,11 +54,11 @@ export default function Understandable() {
       className="border-y border-mine/10 lg:px-5"
       innerClassName="max-w-[1400px] lg:px-8"
     >
-      {/* ── header block — 740 wide, centred, gap 15 ─────────────────────── */}
+      {/* ── header block - 740 wide, centred, gap 15 ─────────────────────── */}
       <div className="mx-auto flex w-full max-w-[740px] flex-col items-center gap-[15px] text-center">
-        {/* The shared Eyebrow already emits this frame's metrics exactly — pad
+        {/* The shared Eyebrow already emits this frame's metrics exactly - pad
             8/17/8/13, gap 9, glyph 19x23, label Figtree 700 13.5/20.2 ls 0.11em
-            — so nothing is overridden locally. */}
+            - so nothing is overridden locally. */}
         <Eyebrow icon="4674-556" label="Making genetics understandable" />
 
         {/* 42/44.1, ls −0.76 → −0.76/42 = −0.018em (the Heading base is −0.02em). */}
@@ -73,14 +73,14 @@ export default function Understandable() {
         />
       </div>
 
-      {/* ── transformation visual — complex → lens → simple insight ───────
+      {/* ── transformation visual - complex → lens → simple insight ───────
           Desktop tracks are the frame's exact 621 / 143 / 540 with 16px gaps;
           below lg the three blocks stack in reading order and the lens arrows
           rotate a quarter turn (see the note on them), so the flow still reads
           complex -> filter -> interpretation -> simple, top-to-bottom.
           The lens track carries a 143px floor: as a bare fr it collapses to
-          ~97px between lg and ~1285px and the 126px "INTERPRETATION" label —
-          one unbreakable word — spills into both gutters. */}
+          ~97px between lg and ~1285px and the 126px "INTERPRETATION" label -
+          one unbreakable word - spills into both gutters. */}
       <div className="mt-[39px] grid grid-cols-1 gap-6 pt-[17px] lg:grid-cols-[621fr_minmax(143px,143fr)_540fr] lg:gap-4">
         {/* ---- complex input -------------------------------------------- */}
         <div className="relative min-w-0 rounded-4xl border border-mine/10 bg-linenw p-6 lg:p-[29px]">
@@ -99,7 +99,7 @@ export default function Understandable() {
                 key={chip.label}
                 className="inline-flex max-w-full items-center gap-1.5 rounded-[10px] border border-mine/[0.12] bg-white px-[13px] py-2 shadow-[0_6px_16px_0_rgba(20,27,26,0.05)]"
               >
-                {/* chip glyphs export at 18x22 — same true-ratio + pull-back
+                {/* chip glyphs export at 18x22 - same true-ratio + pull-back
                     treatment, so the chip still reads as an 18px square box. */}
                 <AboutIcon id={chip.icon} className="-my-[2px] h-[22px] w-[18px] shrink-0" />
                 <span className="min-w-0 break-words font-kyg text-[15px] font-bold leading-[22.5px] text-[#6b665d]">
@@ -144,7 +144,7 @@ export default function Understandable() {
               an unrotated arrow points sideways into the gutter. Rotated a
               quarter turn under lg; the glyph is a plain chevron, so a rotation
               is honest artwork reuse rather than a different icon.
-              w/h stay 34x28 — rotate() does not affect layout size, and the
+              w/h stay 34x28 - rotate() does not affect layout size, and the
               parent centres it either way. */}
           <AboutIcon id="5019-741" className="mt-[8px] h-[28px] w-[34px] rotate-90 lg:rotate-0" />
 
@@ -171,9 +171,7 @@ export default function Understandable() {
           <div className="relative flex min-w-0 flex-1 flex-col">
             <div className="mb-4 flex items-center gap-2">
               <AboutIcon id="4934-876" className="-my-[2px] h-[23px] w-[19px] shrink-0" />
-              <span className={`${MICRO} min-w-0 break-words tracking-[0.12em] text-java2`}>
-                Simple human insight
-              </span>
+              <span className={`${MICRO} min-w-0 break-words tracking-[0.12em] text-java2`}>Simple human insight</span>
             </div>
 
             <div className="flex flex-col gap-3 rounded-[16px] border border-white/15 bg-white/10 p-5">
@@ -185,13 +183,11 @@ export default function Understandable() {
                     the frame measures this string at 137px, which is its
                     uppercase advance width (sentence case is 115px). */}
                 <span className="inline-flex max-w-full items-center rounded-full bg-java2 px-2.5 py-1">
-                  <span className={`${MICRO} min-w-0 break-words tracking-[0.06em] text-ink`}>
-                    Lower · act early
-                  </span>
+                  <span className={`${MICRO} min-w-0 break-words tracking-[0.06em] text-ink`}>Lower · act early</span>
                 </span>
               </div>
               {/* The frame's break belongs to a 442px text box, which this card
-                  only reaches once the 1400 rail is full — i.e. at 1440, not lg
+                  only reaches once the 1400 rail is full - i.e. at 1440, not lg
                   (~272px there, where the forced break just orphans a line). */}
               <p className="min-w-0 break-words font-kyg text-[15.5px] font-normal leading-[21.3px] text-linenw/85">
                 Your body may hold on to less vitamin D, so a small daily habit{' '}
@@ -207,14 +203,14 @@ export default function Understandable() {
         </div>
       </div>
 
-      {/* ── closing copy — 720 wide, centred ─────────────────────────────── */}
+      {/* ── closing copy - 720 wide, centred ─────────────────────────────── */}
       <p className="mx-auto mt-[39px] w-full max-w-[720px] break-words text-center font-kyg text-[clamp(15px,1.15vw,16.5px)] font-normal leading-[1.5] text-fusc">
         {"That's the gap Know Your Genes is built to address. We take complex genetic information and "}
         <br className="hidden lg:inline" />
         turn it into clear, accessible insights that are easier to understand and explore.
       </p>
 
-      {/* ── closing statement — 820 wide, 34/42.2, bold run on the second half */}
+      {/* ── closing statement - 820 wide, 34/42.2, bold run on the second half */}
       <p className="mx-auto mt-[39px] w-full max-w-[820px] break-words text-center font-kyg text-[clamp(24px,2.36vw,34px)] font-semibold leading-[1.24] text-mine">
         {"Too many data isn't useful. "}
         <em className="abt-grad">

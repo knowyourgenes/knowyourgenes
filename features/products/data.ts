@@ -3,7 +3,7 @@ import type { ProductKit } from './types';
 // =============================================================================
 // Product-kit content. One entry per kit; the PDP layout is identical for all,
 // so scaling to the ~129 tests is purely additive here. When this list grows
-// large, split into `data/<slug>.ts` files and re-export them from this array —
+// large, split into `data/<slug>.ts` files and re-export them from this array -
 // the getProductKit() API stays the same.
 // =============================================================================
 
@@ -12,9 +12,9 @@ const geneticTestingKit: ProductKit = {
 
   seo: {
     // The root layout appends "| Know Your Genes", so no brand suffix here.
-    title: 'Genetic Testing Kit — 53 traits from one saliva kit',
+    title: 'Genetic Testing Kit - 53 traits from one saliva kit',
     description:
-      'Nutrition, Weight Management, Fitness and Detox — 53 genetic traits from a single at-home saliva kit. NABL-accredited lab, results in 7 days, free counselling.',
+      'Nutrition, Weight Management, Fitness and Detox - 53 genetic traits from a single at-home saliva kit. NABL-accredited lab, results in 7 days, free counselling.',
   },
 
   utilityBar: {
@@ -79,7 +79,7 @@ const geneticTestingKit: ProductKit = {
   specs: [
     {
       title: 'SAMPLE TYPE',
-      body: 'A simple saliva sample, collected at home with the included kit — no needles and no clinic visit. Seal it in the prepaid pouch and we arrange the pickup.',
+      body: 'A simple saliva sample, collected at home with the included kit - no needles and no clinic visit. Seal it in the prepaid pouch and we arrange the pickup.',
     },
     {
       title: 'TESTING TECHNIQUE',
@@ -87,7 +87,7 @@ const geneticTestingKit: ProductKit = {
     },
     {
       title: "WHAT YOU'LL RECEIVE",
-      body: 'A personalised PDF report across all trait groups with clear, actionable guidance — plus a free one-on-one counselling session to walk you through your results.',
+      body: 'A personalised PDF report across all trait groups with clear, actionable guidance - plus a free one-on-one counselling session to walk you through your results.',
     },
   ],
 
@@ -137,11 +137,11 @@ const geneticTestingKit: ProductKit = {
       },
       {
         q: 'Is this one test or four?',
-        a: 'It is one kit and one saliva sample that produces four connected reports — Nutrition, Weight Management, Fitness and Detox — for a combined 53 traits.',
+        a: 'It is one kit and one saliva sample that produces four connected reports - Nutrition, Weight Management, Fitness and Detox - for a combined 53 traits.',
       },
       {
         q: "Can I add other tests, like Men's Wellness or Skin, to this kit?",
-        a: 'Yes. Before checkout you can upgrade to the Complete or Total Pack and answer far more of your biology from the same saliva sample — no second kit required.',
+        a: 'Yes. Before checkout you can upgrade to the Complete or Total Pack and answer far more of your biology from the same saliva sample - no second kit required.',
       },
       {
         q: 'How long does it take to get the report?',

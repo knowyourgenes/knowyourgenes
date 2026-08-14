@@ -144,7 +144,7 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
                       more than anything else on the site. Two of these render on
                       EVERY page (one per menu), each ~827,000px, and they are
                       hidden with `opacity-0 invisible` rather than `display:none`
-                      — so they stay in layout and keep their compositing layers.
+                      - so they stay in layout and keep their compositing layers.
                       backdrop-filter is re-evaluated against everything painted
                       behind it whenever that moves, and scrolling moves all of it,
                       so the page paid for 1.65 million pixels of blur, permanently,
@@ -152,7 +152,7 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
                       and worst frame 760ms -> 298ms once it was gone.
 
                       Removing it changes nothing visually because this panel's own
-                      background is 98% opaque — at most 2% of the backdrop was ever
+                      background is 98% opaque - at most 2% of the backdrop was ever
                       showing through. Verified, not assumed: the before/after diff
                       (mean 0.006/255) sits inside the panel's own frame-to-frame
                       noise floor from its image transitions (mean 0.002/255).

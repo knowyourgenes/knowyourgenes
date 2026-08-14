@@ -1,20 +1,20 @@
 'use client';
 
 // =============================================================================
-// Homepage — MOTION PRIMITIVES
+// Homepage - MOTION PRIMITIVES
 // -----------------------------------------------------------------------------
 // Ports sections 1 and 6 of the designer's build script ("New Homepage Build/
 // index.html"): the scroll-reveal observer, the hero's time-based entrance, and
 // the two scroll-LINKED drawings (the lifetime strand and the how-it-works
-// rail). Everything here is a faithful port — same thresholds, same easing,
-// same durations — because the frame was traced from that page.
+// rail). Everything here is a faithful port - same thresholds, same easing,
+// same durations - because the frame was traced from that page.
 //
 // THE EASING is `--e-soft: cubic-bezier(.16,1,.3,1)` throughout. It is a long,
 // heavily front-loaded ease; at 0.85s it reads as "settling into place" rather
 // than "sliding in", and shortening it makes the whole page feel cheaper.
 //
 // EVERY primitive here honours prefers-reduced-motion by rendering the FINAL
-// state immediately — never by freezing an element at opacity 0.
+// state immediately - never by freezing an element at opacity 0.
 // =============================================================================
 
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
@@ -35,12 +35,12 @@ function subscribeReduce(onChange: () => void) {
  *
  * A media query is an external store, and reading one into state inside an
  * effect means every consumer renders once with the wrong answer and then
- * again with the right one — which for `Reveal` means the element is briefly
+ * again with the right one - which for `Reveal` means the element is briefly
  * mounted at opacity 0 even for a user who asked for no motion. It also trips
  * `react-hooks/set-state-in-effect`, correctly.
  *
  * The server snapshot is `false` (assume motion is allowed): the server cannot
- * know the preference, and the alternative — assuming reduced — would ship the
+ * know the preference, and the alternative - assuming reduced - would ship the
  * page with every entrance already finished and then animate it away on
  * hydration for everyone else.
  */
@@ -48,7 +48,7 @@ function usePrefersReducedMotion() {
   return useSyncExternalStore(
     subscribeReduce,
     () => window.matchMedia(REDUCE_QUERY).matches,
-    () => false,
+    () => false
   );
 }
 
@@ -60,7 +60,7 @@ function usePrefersReducedMotion() {
  * The source's `.rv` / `.rv-l` / `.rv-s` classes plus its single shared
  * IntersectionObserver, expressed as a component.
  *
- *   up    translateY(26px)   the default — most blocks rise into place
+ *   up    translateY(26px)   the default - most blocks rise into place
  *   left  translateX(-22px)  for copy columns that sit beside an image
  *   scale scale(0.965)       for image plates, so they bloom rather than slide
  *
@@ -97,7 +97,7 @@ export function Reveal({
     if (reduce) return;
     const el = ref.current;
     if (!el) return;
-    // Defensive only — IntersectionObserver is available everywhere this app
+    // Defensive only - IntersectionObserver is available everywhere this app
     // ships. Deferred by a frame rather than called inline so it stays out of
     // the effect body (a synchronous setState there cascades a second render).
     if (typeof IntersectionObserver === 'undefined') {
@@ -113,18 +113,13 @@ export function Reveal({
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -5% 0px' },
+      { threshold: 0.12, rootMargin: '0px 0px -5% 0px' }
     );
     io.observe(el);
     return () => io.disconnect();
   }, [reduce]);
 
-  const hidden =
-    variant === 'left'
-      ? 'translateX(-22px)'
-      : variant === 'scale'
-        ? 'scale(0.965)'
-        : 'translateY(26px)';
+  const hidden = variant === 'left' ? 'translateX(-22px)' : variant === 'scale' ? 'scale(0.965)' : 'translateY(26px)';
 
   return (
     <As
@@ -133,9 +128,7 @@ export function Reveal({
       style={{
         opacity: shown ? 1 : 0,
         transform: shown ? 'none' : hidden,
-        transition: shown
-          ? `opacity 0.85s ${EASE} ${delay}s, transform 0.85s ${EASE} ${delay}s`
-          : undefined,
+        transition: shown ? `opacity 0.85s ${EASE} ${delay}s, transform 0.85s ${EASE} ${delay}s` : undefined,
       }}
     >
       {children}
@@ -145,7 +138,7 @@ export function Reveal({
 
 /**
  * The hero's entrance (`.hv` + `@keyframes heroIn`). Time-based, not scroll
- * based — the hero is above the fold, so an observer would fire instantly and
+ * based - the hero is above the fold, so an observer would fire instantly and
  * the stagger would be lost. Each child names its own delay via `--rd`.
  */
 export function HeroReveal({
@@ -164,7 +157,7 @@ export function HeroReveal({
 
   useEffect(() => {
     // one frame's grace so the initial (hidden) style is committed before the
-    // transition to the shown style — otherwise React lands both in one paint
+    // transition to the shown style - otherwise React lands both in one paint
     // and nothing animates
     const id = requestAnimationFrame(() => setShown(true));
     return () => cancelAnimationFrame(id);
@@ -220,7 +213,7 @@ export function useScrollProgress<T extends HTMLElement>(a: number, b: number) {
   const reduce = usePrefersReducedMotion();
   // Derived rather than assigned in the effect: under reduced motion the rail
   // must render COMPLETE, not empty-then-corrected. An empty rail is not a
-  // neutral fallback — it is a drawing that failed.
+  // neutral fallback - it is a drawing that failed.
   const p = reduce ? 1 : raw;
 
   useEffect(() => {
@@ -260,7 +253,7 @@ export function useScrollProgress<T extends HTMLElement>(a: number, b: number) {
  * of 5 waves whose amplitude is itself shaped by sin(pi * p), so the strand
  * pinches to nothing at the top and bottom and is widest in the middle.
  *
- * Two copies of the same path are drawn — a static faint one and a bright one
+ * Two copies of the same path are drawn - a static faint one and a bright one
  * revealed by animating stroke-dashoffset from its full length down to 0 as the
  * section scrolls. That is what makes the strand look "drawn" on the way down.
  *
@@ -278,8 +271,7 @@ export function LifeStrand({ className }: { className?: string }) {
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const measure = () =>
-      setBox({ w: el.offsetWidth || 120, h: el.offsetHeight || 1 });
+    const measure = () => setBox({ w: el.offsetWidth || 120, h: el.offsetHeight || 1 });
     measure();
     if (!('ResizeObserver' in window)) return;
     const ro = new ResizeObserver(measure);
@@ -309,13 +301,7 @@ export function LifeStrand({ className }: { className?: string }) {
 
   return (
     <div ref={wrapRef} className={className} aria-hidden="true">
-      <svg
-        viewBox={`0 0 ${w} ${h}`}
-        width={w}
-        height={h}
-        fill="none"
-        className="h-full w-full overflow-visible"
-      >
+      <svg viewBox={`0 0 ${w} ${h}`} width={w} height={h} fill="none" className="h-full w-full overflow-visible">
         <path d={d} stroke="rgba(14,77,75,0.14)" strokeWidth={1.5} />
         <path
           ref={brightRef}

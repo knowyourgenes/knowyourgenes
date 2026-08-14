@@ -1,11 +1,11 @@
 // =============================================================================
-// Homepage — HELIX GROUND
+// Homepage - HELIX GROUND
 // -----------------------------------------------------------------------------
 // The brand helix artwork, laid in behind four sections as a ground texture.
 // Ported from `.hx` in the designer's build ("New Homepage Build/index.html",
 // CSS block 04c) and its four placements at markup lines 1590, 1653, 1693, 1902.
 //
-// This is NOT the particle helix — that one is a live canvas (HelixCanvas) and
+// This is NOT the particle helix - that one is a live canvas (HelixCanvas) and
 // only appears in the hero and the closing panel. This is a still render of the
 // same motif, sunk to 15-16% so it reads as watermark rather than illustration.
 //
@@ -33,13 +33,13 @@ import { cn } from '@/lib/utils';
 
 /** The four placements, each hand-positioned against its own section. */
 const PLACE = {
-  /** 06 ONE LIFETIME — right edge, upper half */
+  /** 06 ONE LIFETIME - right edge, upper half */
   life: 'right-[-9%] top-[6%] h-[70%] w-[min(32vw,400px)]',
-  /** 07 MEET GENEe — left edge, hanging below the section's bottom */
+  /** 07 MEET GENEe - left edge, hanging below the section's bottom */
   genee: 'bottom-[-14%] left-[-10%] h-[88%] w-[min(26vw,330px)]',
-  /** 08 WHAT WOULD YOU LIKE TO KNOW — left edge, nearly full height */
+  /** 08 WHAT WOULD YOU LIKE TO KNOW - left edge, nearly full height */
   explore: 'left-[-7%] top-[-5%] h-[90%] w-[min(32vw,410px)]',
-  /** 11 SCIENCE & TRUST — right edge, full height */
+  /** 11 SCIENCE & TRUST - right edge, full height */
   science: 'right-[-5%] top-0 h-[98%] w-[min(28vw,370px)]',
 } as const;
 
@@ -49,7 +49,7 @@ export function HelixGround({
   className,
 }: {
   place: keyof typeof PLACE;
-  /** must match the section's ground — see the header note */
+  /** must match the section's ground - see the header note */
   tone: 'dark' | 'light';
   className?: string;
 }) {
@@ -69,7 +69,7 @@ export function HelixGround({
         // than the copy column, so at full strength it reads as a smudge behind
         // the text rather than as a ground.
         'max-[820px]:!opacity-[0.07]',
-        className,
+        className
       )}
     />
   );

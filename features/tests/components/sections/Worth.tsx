@@ -4,7 +4,7 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Media, Section } from '../ui';
 
 // =============================================================================
-// PRICE VALUE — "The cost of knowing is small."
+// PRICE VALUE - "The cost of knowing is small."
 // -----------------------------------------------------------------------------
 // Frame 'PRICE VALUE' @[80 0 1280 1919], pad 0/32/0/32 -> 1216 content column,
 // VERTICAL with gap 44 between FIVE stacked blocks:
@@ -17,7 +17,7 @@ import { Heading, Media, Section } from '../ui';
 // The frame carries NO vertical padding of its own, so this section keeps the
 // page's top rhythm and drops its bottom padding; Outcomes and Testimonial
 // re-open with pt-11 (44px) to rebuild the frame's gap. The three files are one
-// Figma frame — changing the padding on one without the other two breaks it.
+// Figma frame - changing the padding on one without the other two breaks it.
 // =============================================================================
 
 /**
@@ -51,10 +51,10 @@ export default function Worth({ data, ground }: { data: WorthSection; ground?: G
 
         {/* Figtree 700 51/55 ls -0.02em #222222; the serif run is the frame's
             5-stop teal gradient, which `.tst-em-teal` already paints by default
-            (globals.css @layer components) — do NOT restate it here. */}
+            (globals.css @layer components) - do NOT restate it here. */}
         <Heading html={data.head.titleHtml} className="max-w-[720px]" />
 
-        {/* Figtree 400 18.5/27.8 #5b564e — three centred lines inside 720. */}
+        {/* Figtree 400 18.5/27.8 #5b564e - three centred lines inside 720. */}
         {data.head.leadHtml ? (
           <p
             className="max-w-[720px] font-kyg text-[clamp(15px,1.29vw,18.5px)] leading-[1.503] text-fusc"
@@ -105,7 +105,7 @@ export default function Worth({ data, ground }: { data: WorthSection; ground?: G
 
           {/* Figtree 400 17.5/28.4 #5b564e, four lines inside 560; mb 24. Spec
               line 32 is ONE TEXT entry at a single weight, but the data bolds
-"only once" — keeps the run uniform. */}
+"only once" - keeps the run uniform. */}
           <p
             className="mb-6 font-kyg text-[clamp(15px,1.22vw,17.5px)] leading-[1.623] text-fusc"
             dangerouslySetInnerHTML={{ __html: data.price.bodyHtml }}
@@ -136,7 +136,7 @@ export default function Worth({ data, ground }: { data: WorthSection; ground?: G
           </div>
         </div>
 
-        {/* right panel 558x583 — full-bleed photo, no radius of its own. The
+        {/* right panel 558x583 - full-bleed photo, no radius of its own. The
             imgslot carries stroke #222222@10 at a mixed weight, i.e. one edge:
             the only interior edge it owns is the 769 seam against the left
             panel, so it renders as a left hairline. */}

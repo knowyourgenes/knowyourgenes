@@ -42,7 +42,7 @@ function Card({ card }: { card: UpgradeCard }) {
   );
 }
 
-// "One sample, more answers" — upsell to Complete / Total pack, above the FAQ.
+// "One sample, more answers" - upsell to Complete / Total pack, above the FAQ.
 export default function UpgradeSection({ upgrade }: { upgrade: ProductKit['upgrade'] }) {
   return (
     <section id="upgrade" className="scroll-mt-24 border-t border-heavy/10 py-14 md:py-[72px]">

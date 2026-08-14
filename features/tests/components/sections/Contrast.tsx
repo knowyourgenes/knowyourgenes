@@ -4,7 +4,7 @@ import { FigmaIcon } from '../FigmaIcon';
 import { Closing, Cta, Heading, Media, Section } from '../ui';
 
 // =============================================================================
-// VALUE — "Take one test now. Stay in control for life."
+// VALUE - "Take one test now. Stay in control for life."
 // -----------------------------------------------------------------------------
 // Frame @[0 0 1440 1187] pad 92/80, fill #ffffff@70, 1px #222222@10 hairline.
 // Rail 1280 (pad 32) -> 1216 content, vertical gap 48 between head / grid / close.
@@ -14,9 +14,9 @@ import { Closing, Cta, Heading, Media, Section } from '../ui';
 /** Per-column styling, read straight off the frame (see spec lines 14 / 62). */
 const TONE = {
   negative: {
-    /** Component 2 @[x=136 y=337] — frowning face, #c0432f. */
+    /** Component 2 @[x=136 y=337] - frowning face, #c0432f. */
     badgeIcon: '9734-136',
-    /** Component 2 @[x=145 y=609] — cross, #c0432f. */
+    /** Component 2 @[x=145 y=609] - cross, #c0432f. */
     itemIcon: '10006-145',
     card: 'border-mine/10 bg-white shadow-tst-soft',
     body: '',
@@ -24,9 +24,9 @@ const TONE = {
     itemText: 'text-fusc',
   },
   positive: {
-    /** Component 2 @[x=756 y=337] — smiling face, #2e7d5b. */
+    /** Component 2 @[x=756 y=337] - smiling face, #2e7d5b. */
     badgeIcon: '9734-756',
-    /** Component 2 @[x=765 y=609] — upward check, #2e7d5b. */
+    /** Component 2 @[x=765 y=609] - upward check, #2e7d5b. */
     itemIcon: '10006-765',
     card: 'border-sea/40 bg-transparent shadow-tst-card',
     body: 'bg-gradient-to-b from-[rgba(46,125,91,0.06)] to-white',
@@ -41,12 +41,12 @@ const TONE = {
  * globals.css, so the gradient is NOT restated here.
  *
  * The one thing the global rule cannot know is that Figma paints "Stay in" and
- * "control for life." as two separately-filled runs — i.e. the ramp restarts on
+ * "control for life." as two separately-filled runs - i.e. the ramp restarts on
  * each line box. `box-decoration-clone` is what re-runs it per fragment.
  */
 const EM_CLONE = '[&_.tst-em-teal]:box-decoration-clone';
 
-/** "She never tested" vs "She tested early" — two illustrated outcome columns. */
+/** "She never tested" vs "She tested early" - two illustrated outcome columns. */
 export default function Contrast({ data, ground }: { data: ContrastSection; ground?: Ground }) {
   const cols = [
     { ...data.negative, tone: 'negative' as const },
@@ -57,10 +57,10 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
   return (
     <Section ground={ground ?? 'ivory'} className="border-y border-mine/10">
       <div className="flex flex-col items-center gap-12">
-        {/* head — 680 wide, gap 16, centred ------------------------------- */}
+        {/* head - 680 wide, gap 16, centred ------------------------------- */}
         <div className="flex w-full max-w-170 flex-col items-center gap-4 text-center">
           {/* `min-h` not `h`: the frame's 46px already clears the 26px glyph, so
-              this renders identically at >=1440 — but a label forced to wrap in a
+              this renders identically at >=1440 - but a label forced to wrap in a
               280px column now grows the pill instead of spilling out of it. */}
           {eyebrow ? (
             <span className="inline-flex min-h-11.5 max-w-full items-center gap-2.5 rounded-full border border-eden/15 bg-eden/[0.07] pl-4.25 pr-5.5 shadow-tst-crimson">
@@ -74,7 +74,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
           <Heading html={data.head.titleHtml} className={cn('max-w-170', EM_CLONE)} />
         </div>
 
-        {/* the two outcome cards — 596 each, gap 24 ----------------------- */}
+        {/* the two outcome cards - 596 each, gap 24 ----------------------- */}
         <div className="grid w-full gap-6 lg:grid-cols-2">
           {cols.map((col) => {
             const t = TONE[col.tone];
@@ -83,7 +83,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
                 {/* image slot 594x188 + floating status pill.
                     `sizes` tracks the real rendered width: 594 once the 1280 rail
                     caps out, ~42vw while the two columns share a narrower rail,
-                    then the full gutter-less column once the grid stacks — so a
+                    then the full gutter-less column once the grid stacks - so a
                     phone is not served the 594px desktop crop. */}
                 <div className="relative">
                   <Media
@@ -106,7 +106,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
                   </span>
                 </div>
 
-                {/* body — pad 32, kicker (mb 6) / h3 (mb 20) / list gap 14 */}
+                {/* body - pad 32, kicker (mb 6) / h3 (mb 20) / list gap 14 */}
                 <div className={cn('flex flex-1 flex-col p-6 lg:p-8', t.body)}>
                   <span
                     className={cn(

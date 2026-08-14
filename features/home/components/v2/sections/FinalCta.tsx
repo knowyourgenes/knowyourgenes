@@ -1,10 +1,10 @@
 // =============================================================================
-// Homepage — SECTION 15 · FINAL CTA
+// Homepage - SECTION 15 · FINAL CTA
 // -----------------------------------------------------------------------------
 // Rebuilt against the designer's own build ("New Homepage Build/index.html",
 // `section.fin`, CSS section 20), which is the page the Figma frame was traced
 // from. Where the flattened frame and the HTML disagree the HTML wins, because
-// it is the executable version — and it disagreed about the whole backdrop.
+// it is the executable version - and it disagreed about the whole backdrop.
 //
 // WHAT THE BACKDROP ACTUALLY IS. The frame reads as "helix artwork at 75%", so
 // this section used to render an exported PNG. It is not a PNG: it is the
@@ -14,7 +14,7 @@
 //
 // PAINT ORDER, straight from the source's z-indexes:
 //   section background   radial bloom over the 172deg linear (one `background`,
-//                        two layers — the bloom is a layer of the fill, NOT a
+//                        two layers - the bloom is a layer of the fill, NOT a
 //                        separate element, so it can never sit over the canvas)
 //   z-1  .fin__cv        the particle strand, spanning the whole panel
 //   z-2  .fin__in        the copy shell
@@ -25,15 +25,15 @@
 //
 // The two headline faces share ONE line-height: `.fin__h` is 1.12 and the
 // Cormorant `em` inherits it at 1.1em of the size. Do not "fix" that to a px
-// value — the italic's larger body would then sit off the sans baseline.
+// value - the italic's larger body would then sit off the sans baseline.
 //
-// CASE TRAP: "KNOW YOUR GENES" is stored uppercase in the source's own markup —
+// CASE TRAP: "KNOW YOUR GENES" is stored uppercase in the source's own markup -
 // it is not a text-transform. It is written out literally and carries no
 // `uppercase` class. Its FLUID tracking (clamp .06em -> .18em) is what makes the
 // line read as a wordmark; at 320px the 0.18em would push it to three lines,
 // which is why the source lets the tracking shrink with the type.
 //
-// RADIUS TRAP: both CTAs are radius 10, not capsules — that comes free from
+// RADIUS TRAP: both CTAs are radius 10, not capsules - that comes free from
 // <Cta> (`--r-xs:10px` in the source). Nothing here is 999.
 // =============================================================================
 
@@ -46,7 +46,7 @@ export default function FinalCta() {
     <Section
       id="final-cta"
       // ground="abyss" supplies the cream ink for this dark panel; the fill
-      // itself is overridden below because `.fin` is NOT the hero's ground —
+      // itself is overridden below because `.fin` is NOT the hero's ground -
       // it is a flatter 172deg two-stop with its own bloom placed high and
       // centre (60% 56% at 50% 34%), which is what lights the headline rather
       // than the hero's off-centre corner wash.
@@ -58,7 +58,7 @@ export default function FinalCta() {
         'overflow-clip',
         'bg-[radial-gradient(60%_56%_at_50%_34%,rgba(37,181,171,0.20),transparent_66%),linear-gradient(172deg,#0a3b39_0%,#062927_100%)]',
       ].join(' ')}
-      // `.fin{ padding-block:clamp(96px,11vw,180px) }` — the page's deepest
+      // `.fin{ padding-block:clamp(96px,11vw,180px) }` - the page's deepest
       // section padding, and the reason the closing panel reads as an ending.
       innerClassName="py-[clamp(96px,11vw,180px)]"
     >
@@ -67,7 +67,7 @@ export default function FinalCta() {
 
           <Section> puts the gutter on the <section> itself (px-5 / sm:px-8 /
           lg:px-[63px]) and the containing block of an absolutely positioned
-          child is the PADDING box of its nearest positioned ancestor — the
+          child is the PADDING box of its nearest positioned ancestor - the
           padding AREA is inside that box, so `inset-0` here is already the full
           1440 bleed, gutter included, even though this canvas is nested inside
           the 1313 rail. The rail div is deliberately NOT `relative`; making it
@@ -88,7 +88,7 @@ export default function FinalCta() {
           this section used to carry) fixes the break at the desktop width and
           leaves an orphaned "Or have you?" on a phone.
 
-          `em` is the Cormorant italic run — <Heading> already styles it
+          `em` is the Cormorant italic run - <Heading> already styles it
           (font-tst / 500 / italic / tracking-normal); only the source's 1.1em
           size bump is added, because Cormorant runs small against Figtree. */}
       <Reveal>
@@ -104,12 +104,11 @@ export default function FinalCta() {
           so it cannot collapse through the animated box. */}
       <Reveal delay={0.06} className="mt-[clamp(24px,2.6vw,34px)]">
         <Body className="mx-auto max-w-[60ch] leading-[1.64] text-linenw/70">
-          One sample can open a new conversation with your body, your health, your family and your
-          story.
+          One sample can open a new conversation with your body, your health, your family and your story.
         </Body>
       </Reveal>
 
-      {/* `.fin__t`: Cormorant 500 italic, teal-bright, tracking reset to 0 —
+      {/* `.fin__t`: Cormorant 500 italic, teal-bright, tracking reset to 0 -
           the page's -0.005em body tracking would close the italic up. */}
       <Reveal delay={0.1} className="mt-[22px]">
         <p className="font-tst text-[clamp(22px,2.2vw,31px)] font-medium italic leading-[1.3] tracking-normal text-java2">
@@ -140,15 +139,12 @@ export default function FinalCta() {
 
       {/* ---- signature ------------------------------------------------------
           `.fin__sig` carries BOTH a margin-top clamp(64px,7vw,110px) and a
-          padding-top clamp(30px,3.2vw,44px) — ~154px of air at desktop. Both are
+          padding-top clamp(30px,3.2vw,44px) - ~154px of air at desktop. Both are
           kept rather than folded into one value: the margin is the gap to the
           CTAs and the padding is the wordmark's own breathing room, and they
           scale on different curves. The empty space IS the design here, which is
           why it shrinks with the viewport instead of being dropped. */}
-      <Reveal
-        delay={0.2}
-        className="mt-[clamp(64px,7vw,110px)] pt-[clamp(30px,3.2vw,44px)]"
-      >
+      <Reveal delay={0.2} className="mt-[clamp(64px,7vw,110px)] pt-[clamp(30px,3.2vw,44px)]">
         <p className="font-kyg text-[clamp(20px,3.4vw,46px)] font-extrabold leading-[1.1] tracking-[clamp(0.06em,0.9vw,0.18em)] text-linenw/90">
           KNOW YOUR GENES
         </p>

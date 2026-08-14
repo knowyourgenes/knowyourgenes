@@ -1,12 +1,12 @@
 // =============================================================================
-// Homepage — SECTION 13 · BORN IN INDIA
+// Homepage - SECTION 13 · BORN IN INDIA
 // -----------------------------------------------------------------------------
 // Rebuilt against the designer's own build ("New Homepage Build/index.html",
 // `section.ind`, CSS at 1100-1125, markup at 1989), which is the page the Figma
 // frame was traced from. Where the two disagree the HTML wins, because it is the
 // executable version.
 //
-// GROUND — TWO paints, not one. The frame flattens them into a single diagonal
+// GROUND - TWO paints, not one. The frame flattens them into a single diagonal
 // ramp, which is why this section used to carry a lone 135deg linear:
 //   radial 62% 52% at 22% 26%   #f8e4cc @0.9 -> transparent 68%
 //   linear 150deg               #edddb8 -> #f8e4cc 52% -> #f5eddf
@@ -21,7 +21,7 @@
 //
 // SECTION RHYTHM is deliberately NOT the source's `--sp-sec`
 // (clamp(84px,10vw,168px)). Every other section in this build ships
-// clamp(64px,10vw,144px) — the middle term is identical, so the two agree at the
+// clamp(64px,10vw,144px) - the middle term is identical, so the two agree at the
 // 1440 design width and only diverge below ~840 and above ~1680. Changing the
 // page's vertical rhythm in one section would make this the only block on a
 // 16,000px page with a different beat.
@@ -33,7 +33,7 @@ import { Body, Heading, Kicker } from '../ui';
 import { Reveal } from '../motion';
 
 /**
- * ul.ind__l — the four "this is for…" lines.
+ * ul.ind__l - the four "this is for…" lines.
  *
  * `rd` is the source's own per-row `--rd`, i.e. the reveal's transition-delay in
  * seconds. It is stamped literally (0.10 / 0.14 / 0.18 / 0.22) rather than
@@ -54,7 +54,7 @@ const AUDIENCE: { line: string; rd: number }[] = [
  *
  * NOTE the companion `border-transparent`: `border-b` only sets a WIDTH, and if
  * the border-image ever fails to resolve the edge falls back to border-color,
- * which without this would be currentColor — a hard ink rule across the row.
+ * which without this would be currentColor - a hard ink rule across the row.
  */
 const ROW_RULE =
   '[border-image:linear-gradient(90deg,rgba(27,23,18,0.11)_0%,rgba(27,23,18,0.11)_34%,rgba(27,23,18,0)_92%)_1]';
@@ -66,11 +66,11 @@ export default function BornInIndia() {
       aria-labelledby="born-in-india-heading"
       className="relative scroll-mt-20 overflow-clip bg-[radial-gradient(62%_52%_at_22%_26%,rgba(248,228,204,0.9),transparent_68%),linear-gradient(150deg,#edddb8_0%,#f8e4cc_52%,#f5eddf_100%)] px-5 py-[clamp(84px,10vw,168px)] text-bistre sm:px-8 lg:px-[63px]"
     >
-      {/* .ind__g — minmax(0,.86fr) / minmax(0,1.14fr), gap clamp(30,4.4vw,84).
+      {/* .ind__g - minmax(0,.86fr) / minmax(0,1.14fr), gap clamp(30,4.4vw,84).
           The source collapses to one column at max-width:900px; that lands
           between Tailwind's md (768) and lg (1024), and an arbitrary min-width
           variant would be emitted BEFORE the named ones and always lose, so the
-          switch is lg. The minmax(0,…) is not decoration — without it a long
+          switch is lg. The minmax(0,…) is not decoration - without it a long
           unbroken word in the copy column can blow the track past its share. */}
       <div className="mx-auto grid w-full max-w-[1313px] grid-cols-1 items-center gap-[clamp(30px,4.4vw,84px)] lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)]">
         {/* ---- figure.ind__map -----------------------------------------------
@@ -82,7 +82,7 @@ export default function BornInIndia() {
             `isolate` reproduces what the source only gets by accident. Its
             ::after is `z-index:-1` inside a `position:relative` figure with no
             z-index of its own, so the glow belongs to the ROOT stacking context
-            and paints beneath the section's opaque ground — invisible. Scoping
+            and paints beneath the section's opaque ground - invisible. Scoping
             it to the figure puts it where the design clearly intends: behind the
             map, over the ground. (Reveal's will-change already forces a stacking
             context here, but relying on that is a trap for whoever edits it
@@ -97,13 +97,13 @@ export default function BornInIndia() {
             alt="Map of India"
             width={1000}
             height={1000}
-            // width:100% + height:auto, exactly as the source has it — the
+            // width:100% + height:auto, exactly as the source has it - the
             // square export then sets the figure's height, which is what the
             // 120% glow below is measured against.
             sizes="(max-width: 1024px) 320px, 440px"
             className="h-auto w-full opacity-[0.94]"
           />
-          {/* '::after' — 120% x 120%, centred, radius 50%, a 9%-opacity teal
+          {/* '::after' - 120% x 120%, centred, radius 50%, a 9%-opacity teal
               circle fading out at 66%. It is the ground shadow the artwork sits
               on; the radius is 50% (an ellipse of the box) and NOT 999, so it
               stays rounded-[50%] even though the box is square today. */}
@@ -125,7 +125,7 @@ export default function BornInIndia() {
             <Kicker tone="eden">Born in India</Kicker>
           </Reveal>
 
-          {/* h2 — Figtree 400 clamp(31,3.5vw,55)/1.14 ls -.03em, text-wrap
+          {/* h2 - Figtree 400 clamp(31,3.5vw,55)/1.14 ls -.03em, text-wrap
               balance, with a Cormorant Garamond 500 italic run at 1.1em. The
               serif is sized up because Cormorant reads visibly smaller than
               Figtree at equal px; dropping the bump breaks the pairing at every
@@ -133,7 +133,7 @@ export default function BornInIndia() {
               are the flattened Figma numbers, so both are overridden here.
 
               The id lives on a wrapper because <Heading> takes no `id` prop and
-              ui.tsx is shared — this section is not the place to widen its API.
+              ui.tsx is shared - this section is not the place to widen its API.
               aria-labelledby resolves the name from the subtree, so the wrapper
               names the region with the heading's own text. */}
           <Reveal delay={0.04}>
@@ -146,7 +146,7 @@ export default function BornInIndia() {
             </div>
           </Reveal>
 
-          {/* p.lead — Figtree 400 clamp(19,1.45vw,24)/1.46 ls -.015em, #33403d */}
+          {/* p.lead - Figtree 400 clamp(19,1.45vw,24)/1.46 ls -.015em, #33403d */}
           <Reveal delay={0.08} className="mt-[20px]">
             <p className="font-kyg text-[clamp(19px,1.45vw,24px)] font-normal leading-[1.46] tracking-[-0.015em] text-corduroy">
               Genetics belongs to everyone.
@@ -164,7 +164,7 @@ export default function BornInIndia() {
                 delay={rd}
                 className={`relative border-b border-transparent py-[13px] pl-[30px] font-kyg text-[18px] font-medium leading-[1.5] text-corduroy ${ROW_RULE}`}
               >
-                {/* '::before' — 14 x 1.5 dash, #0e4d4b @0.6, sitting in the 30px
+                {/* '::before' - 14 x 1.5 dash, #0e4d4b @0.6, sitting in the 30px
                     gutter. `top:1.32em` pins it to the FIRST line's optical
                     centre rather than the row's, so it stays beside the text
                     when a row wraps to two lines on a narrow screen. */}
@@ -177,25 +177,24 @@ export default function BornInIndia() {
             ))}
           </ul>
 
-          {/* p.ind__amb — Figtree 400 18/1.62, #5c6b68, measure capped at 56ch.
+          {/* p.ind__amb - Figtree 400 18/1.62, #5c6b68, measure capped at 56ch.
               The source sets no manual break here; the 56ch measure is what
               decides where the line turns, at every width. */}
           <Reveal delay={0.26} className="mb-[clamp(24px,2.6vw,34px)]">
             <Body className="max-w-[56ch] text-[18px] leading-[1.62] text-nevada">
-              Our ambition is to make genetic science more understandable, responsible and
-              accessible.
+              Our ambition is to make genetic science more understandable, responsible and accessible.
             </Body>
           </Reveal>
 
-          {/* div.ind__close — no gap, the two lines deliberately touching.
+          {/* div.ind__close - no gap, the two lines deliberately touching.
               The second line is `p + p`, and TWO rules in the source match it at
               equal specificity: the shared serif-accent rule (Cormorant, italic,
               500, ls 0) and .ind__close's own (1.1em, 600, teal). The later rule
               wins per-property, so the outcome is Cormorant italic 600 with
-              tracking reset — hence font-semibold AND tracking-normal here.
+              tracking reset - hence font-semibold AND tracking-normal here.
 
               19.8px is not a guess: `font-size:1.1em` resolves against the
-              PARENT (div.ind__close), which inherits the 18px body size — not
+              PARENT (div.ind__close), which inherits the 18px body size - not
               against the 36px line above it. That deliberate drop from the first
               line to the second is the whole gesture of the close. */}
           <Reveal delay={0.3}>

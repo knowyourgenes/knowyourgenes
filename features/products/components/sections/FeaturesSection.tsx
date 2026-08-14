@@ -9,7 +9,7 @@ const FEATURE_ICON: Record<string, IconName> = {
   lock: 'feature-secure',
 };
 
-// "Why KYG" — centered header + a row of four feature cards.
+// "Why KYG" - centered header + a row of four feature cards.
 export default function FeaturesSection({ features }: { features: ProductKit['features'] }) {
   return (
     <section className="border-t border-heavy/10 bg-white/60 py-14 md:py-17.5">

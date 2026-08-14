@@ -29,9 +29,9 @@ export const eyeHealth: TestPage = {
   categorySlug: 'wellness',
 
   seo: {
-    title: 'Eye Health DNA Test — 7 findings from one saliva sample',
+    title: 'Eye Health DNA Test - 7 findings from one saliva sample',
     description:
-      'Glaucoma, diabetic retinopathy, cataract, myopia, eye pressure, macular degeneration and retinal occlusion — seven genetic findings from a single at-home saliva kit. NABL-accredited lab, results in 3 weeks.',
+      'Glaucoma, diabetic retinopathy, cataract, myopia, eye pressure, macular degeneration and retinal occlusion - seven genetic findings from a single at-home saliva kit. NABL-accredited lab, results in 3 weeks.',
   },
 
   sections: [

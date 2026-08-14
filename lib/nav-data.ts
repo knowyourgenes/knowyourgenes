@@ -94,7 +94,7 @@ export const NAV_MENUS: MegaMenu[] = [
 ];
 
 /**
- * Flat links rendered AFTER the mega menus — i.e. the right-hand end of the
+ * Flat links rendered AFTER the mega menus - i.e. the right-hand end of the
  * desktop nav, which is right-aligned (`ml-auto`). Contact sits last so it
  * reads as the terminal action.
  */

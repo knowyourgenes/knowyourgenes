@@ -5,7 +5,7 @@ import { Icon } from '../icons';
 import { Cta, Heading, Section } from '../ui';
 
 // =============================================================================
-// HOW IT WORKS — 1440 frame, section y 13269, height 912.
+// HOW IT WORKS - 1440 frame, section y 13269, height 912.
 // -----------------------------------------------------------------------------
 // Frame        pad 92/80, ground #ffffff@0.7, 1px #222222@0.1 hairline (border-y).
 // Inner rail   1280 + 32 side padding -> 1216 content, three blocks, gap 48.
@@ -20,7 +20,7 @@ import { Cta, Heading, Section } from '../ui';
 // `.tst-em-teal` in globals.css, so the heading takes no gradient class here.
 //
 // The five step glyphs (frame ids 13722-200/447/694/941/1188) were NOT captured
-// by the icon extractor — figma-icons.json only holds this section's eyebrow
+// by the icon extractor - figma-icons.json only holds this section's eyebrow
 // (13372-642) and CTA arrow (14002-770). Until they exist the registry glyph
 // stands in, sized so its ink matches the frame's vectors (39x43, 34x43, 47x34,
 // 30x41, 43x43 inside a 52x62 msym box).
@@ -64,7 +64,7 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
           copy) and at 1440 it is the frame's 227; at lg it would be 144 (88 of
           copy), which shreds every body line into three or four words. So the
           five-across kicks in at xl and the smaller widths step down 3 / 2 / 1.
-          The 28px card padding is untouched — the rail's top-[72px] is measured
+          The 28px card padding is untouched - the rail's top-[72px] is measured
           off it (8 grid pad + 28 card pad + 36 badge). */}
       <div className="relative mt-[clamp(28px,3.4vw,48px)] grid gap-5 pt-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
         {/* Rail sits at the badge baseline, behind the opaque cards. It only

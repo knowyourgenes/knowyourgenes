@@ -1,7 +1,7 @@
 'use client';
 
 // =============================================================================
-// Homepage — SECTION 08 · WHAT WOULD YOU LIKE TO KNOW  (`.exp` / `.orb`)
+// Homepage - SECTION 08 · WHAT WOULD YOU LIKE TO KNOW  (`.exp` / `.orb`)
 // -----------------------------------------------------------------------------
 // Ported from the designer's own build ("New Homepage Build/index.html": CSS
 // block 13 at ~line 874, markup at 1692, JS block 5 ORBIT TABLIST at 2302 and
@@ -11,7 +11,7 @@
 // THIS IS A REAL TABLIST, NOT A STATIC LIST. The earlier port rendered only the
 // selected state because the Figma frame carries copy for pane 1 alone. The HTML
 // carries all six panes, a `role="tablist"` with roving tabindex, and full
-// Arrow/Home/End keyboard handling — so all of that is reproduced here, and the
+// Arrow/Home/End keyboard handling - so all of that is reproduced here, and the
 // component is a client component purely to hold the selected index.
 //
 // THE RING IS POLAR, NOT A HAND-PLACED HEXAGON. Each node is positioned by
@@ -36,13 +36,13 @@
 // ICON COLOUR IS THE ONE THING THIS PORT CANNOT DO THE SOURCE'S WAY. The source
 // draws every glyph from a `currentColor` sprite, so a node's icon simply
 // follows its text colour through the selected/unselected transition. HomeIcon
-// serves standalone SVG files as <img>, with the frame's colour BAKED IN — and
+// serves standalone SVG files as <img>, with the frame's colour BAKED IN - and
 // the exported set is a snapshot of ONE state: 7665-292 (heart-pulse) is
 // #062927 because pane 1 was selected in the frame, while the other five are
 // #faf6ef because theirs were not. Rendered as-is, the heart-pulse would be
 // invisible on the unselected pill's #062927 ground and the other five would be
 // cream on teal when selected. So each glyph is re-tinted with a filter chain
-// that starts at brightness(0) — which flattens whatever colour is baked in —
+// that starts at brightness(0) - which flattens whatever colour is baked in -
 // and lands on the exact target hex (see TINT_* below).
 //
 // RADIUS TRAP: this project remaps Tailwind's radius scale (--radius .625rem),
@@ -74,7 +74,7 @@ import { Body, Cta, Heading, Kicker, Section } from '../ui';
  * on two channels, which is below the perceptual floor).
  *
  * This exists because HomeIcon renders `<img>`, and an <img> cannot inherit
- * `currentColor` — see the header note. If HomeIcon ever gains a mask-based
+ * `currentColor` - see the header note. If HomeIcon ever gains a mask-based
  * mode, all three constants should be deleted in favour of `text-*`.
  */
 /** -> #faf6ef, the source's `--c-cream` */
@@ -100,7 +100,7 @@ type Area = {
    *
    * The frame does ship a native 23px heart-pulse (7716-761) for pane 1, but it
    * is stroked 1.5 on a 23 viewBox (0.065 relative) while the 18px set is
-   * stroked 1.5 on an 18 viewBox (0.083) — which is exactly the source sprite's
+   * stroked 1.5 on an 18 viewBox (0.083) - which is exactly the source sprite's
    * Lucide ratio (2 on 24). Scaling the 18px glyph up therefore matches the
    * SOURCE's stroke weight and keeps all six pane headers identical, which the
    * mixed set could not.
@@ -189,7 +189,7 @@ export default function WhatToKnow() {
   const [selected, setSelected] = useState(0);
   // `--R` is 33.5% of the ring's rendered width. It cannot be a percentage in
   // the transform because translateX(%) resolves against the NODE's own width,
-  // not the ring's — which is why the source computes it in JS too.
+  // not the ring's - which is why the source computes it in JS too.
   const [radius, setRadius] = useState(R_FALLBACK);
   const ringRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -228,7 +228,7 @@ export default function WhatToKnow() {
     const last = AREAS.length - 1;
     let next: number | null = null;
     // Both axes move the selection, because this tablist is a RING at lg and a
-    // vertical stack below it — neither orientation is wrong for it.
+    // vertical stack below it - neither orientation is wrong for it.
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = i === last ? 0 : i + 1;
     else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = i === 0 ? last : i - 1;
     else if (e.key === 'Home') next = 0;
@@ -246,7 +246,7 @@ export default function WhatToKnow() {
       // abyss. `isolate` + a non-transparent fill are what keep HelixGround's
       // z-index:-1 behind this section rather than behind the page.
       className="relative isolate overflow-clip bg-[linear-gradient(172deg,#0a3b39_0%,#062927_100%)]"
-      // --sp-sec, this page's section rhythm — larger than the Section
+      // --sp-sec, this page's section rhythm - larger than the Section
       // primitive's default, which is tuned for the shorter cream sections.
       innerClassName="py-[clamp(84px,10vw,168px)]"
     >
@@ -264,7 +264,7 @@ export default function WhatToKnow() {
         <div className="min-w-0">
           <Kicker className="mb-[clamp(22px,2.2vw,32px)]">Explore KYG</Kicker>
 
-          {/* .h2 is 400 weight with the turn in Cormorant italic at 1.1em — one
+          {/* .h2 is 400 weight with the turn in Cormorant italic at 1.1em - one
               <h2>, two typefaces. No <br>: the source relies on text-wrap
               balance, which breaks the line where it actually fits instead of
               where a 1440 artboard happened to. */}
@@ -274,7 +274,7 @@ export default function WhatToKnow() {
           />
         </div>
 
-        {/* .lead — larger than Body's default ramp, hence the overrides. */}
+        {/* .lead - larger than Body's default ramp, hence the overrides. */}
         <Body className="text-[clamp(19px,1.45vw,24px)] leading-[1.46] tracking-[-0.015em] text-linenw/[0.86]">
           Six directions, one set of genes. Choose the question that sounds most like yours.
         </Body>
@@ -303,7 +303,7 @@ export default function WhatToKnow() {
 
               transform-origin is set on BOTH animated circles. The source only
               sets it on `.dash`, which leaves `.dash2` spinning about the
-              viewBox origin (0,0) rather than its own centre — a circle swung
+              viewBox origin (0,0) rather than its own centre - a circle swung
               around a corner, which is plainly not the intent. */}
           <svg
             viewBox="0 0 100 100"
@@ -345,7 +345,7 @@ export default function WhatToKnow() {
             />
           </svg>
 
-          {/* span.orb__glow — the centring translate is duplicated here AND in
+          {/* span.orb__glow - the centring translate is duplicated here AND in
               the keyframes: the animation owns the transform while it runs, but
               under prefers-reduced-motion it is switched off and the static
               translate is all that stops the glow sitting at the ring's
@@ -355,7 +355,7 @@ export default function WhatToKnow() {
             className="animate-hv2-pulse pointer-events-none absolute left-1/2 top-1/2 hidden h-[52%] w-[52%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(42,195,162,0.3),transparent_68%)] blur-[14px] motion-reduce:animate-none lg:block"
           />
 
-          {/* div.orb__core — 31% of the ring, so it scales with it. "GENES" is
+          {/* div.orb__core - 31% of the ring, so it scales with it. "GENES" is
               typed in caps in the source rather than upper-cased in CSS; no
               `uppercase` here, which would hide that. */}
           <div
@@ -400,7 +400,7 @@ export default function WhatToKnow() {
                   className={cn(
                     'group inline-flex w-full items-center justify-start gap-[10px] whitespace-normal',
                     // 15+15 pad over a 25.1 line box = 55 tall stacked, 47.1 on
-                    // the ring — both clear the 44px tap-target floor.
+                    // the ring - both clear the 44px tap-target floor.
                     'rounded-[10px] px-[18px] py-[15px] text-left',
                     'font-kyg text-[15.5px] font-bold leading-[1.62] tracking-[-0.008em]',
                     'transition-[background-color,box-shadow,color] duration-580 ease-[cubic-bezier(0.22,1,0.36,1)]',
@@ -411,9 +411,9 @@ export default function WhatToKnow() {
                       ? // the second shadow is a 6px SPREAD at 0 blur, i.e. a
                         // halo ring rather than a glow
                         'bg-java2 text-abyss shadow-[0_0_0_6px_rgba(42,195,162,0.16),0_10px_30px_rgba(0,0,0,0.28)]'
-                      : // an INSET hairline, not a border — a border would grow
+                      : // an INSET hairline, not a border - a border would grow
                         // the 47.1 box and break the ring's spacing
-                        'bg-[rgba(6,41,39,0.82)] text-linenw/[0.82] shadow-[inset_0_0_0_1px_rgba(250,246,239,0.17)] hover:text-linenw hover:shadow-[inset_0_0_0_1px_rgba(42,195,162,0.5)]',
+                        'bg-[rgba(6,41,39,0.82)] text-linenw/[0.82] shadow-[inset_0_0_0_1px_rgba(250,246,239,0.17)] hover:text-linenw hover:shadow-[inset_0_0_0_1px_rgba(42,195,162,0.5)]'
                   )}
                 >
                   <HomeIcon
@@ -428,9 +428,7 @@ export default function WhatToKnow() {
                       // list naming only `transform` would never animate it
                       'transition-[opacity,transform,scale,filter] duration-770 ease-[cubic-bezier(0.16,1,0.3,1)]',
                       'group-hover:scale-110 motion-reduce:transition-none',
-                      on
-                        ? cn(TINT_ABYSS, 'opacity-100')
-                        : cn(TINT_CREAM, 'opacity-[0.72] group-hover:opacity-100'),
+                      on ? cn(TINT_ABYSS, 'opacity-100') : cn(TINT_CREAM, 'opacity-[0.72] group-hover:opacity-100')
                     )}
                   />
                   <span className="min-w-0">{area.label}</span>
@@ -442,7 +440,7 @@ export default function WhatToKnow() {
 
         {/* --- div.orb__panes ----------------------------------------------
             All six panels stay in the DOM and the inactive ones carry `hidden`
-            — aria-controls has to resolve to a real element, and re-mounting
+            - aria-controls has to resolve to a real element, and re-mounting
             would throw away the panel the user just tabbed into. The 330 floor
             stops the column resizing as the copy changes length; below lg it is
             dropped, where a 330 floor would just add dead space. */}
@@ -460,12 +458,12 @@ export default function WhatToKnow() {
                 tabIndex={0}
                 hidden={!on}
                 // The class is applied CONDITIONALLY, mirroring the source's
-                // `.orb__p:not([hidden])` — that is what re-triggers the
+                // `.orb__p:not([hidden])` - that is what re-triggers the
                 // entrance on every switch. A permanent class would only ever
                 // play once, at mount.
                 className={cn('relative', on && 'animate-hv2-pane-in motion-reduce:animate-none')}
               >
-                {/* span.orb__hd — the 48 tile is radius 14, and the glyph is
+                {/* span.orb__hd - the 48 tile is radius 14, and the glyph is
                     re-tinted to teal because the exported file's baked colour
                     is whatever state the frame captured. */}
                 <span className="mb-[18px] flex items-center gap-[14px]">
@@ -481,7 +479,7 @@ export default function WhatToKnow() {
                 </span>
 
                 {/* The source marks this up as a <p>. It is an h3 here because
-                    it is the panel's visible title and the only heading in it —
+                    it is the panel's visible title and the only heading in it -
                     subordinate to the section's own h2, never a second section
                     heading. Nothing about the rendering changes: .orb__q is
                     400 weight, so the h3 is explicitly un-bolded. */}
@@ -491,13 +489,11 @@ export default function WhatToKnow() {
 
                 {/* .orb__d is a flat 18px, not the Body ramp, and 52ch wide.
                     Its bottom margin is 10 rather than the source's 24 because
-                    the link below buys the missing 14 back as top padding —
+                    the link below buys the missing 14 back as top padding -
                     see there. */}
-                <Body className="mb-[10px] max-w-[52ch] text-[18px] leading-[1.66] text-linenw/70">
-                  {area.detail}
-                </Body>
+                <Body className="mb-[10px] max-w-[52ch] text-[18px] leading-[1.66] text-linenw/70">{area.detail}</Body>
 
-                {/* a.tlink — a text link, no fill and no radius. The rule under
+                {/* a.tlink - a text link, no fill and no radius. The rule under
                     it wipes in from the left on hover and the arrow steps 5px
                     right, both from the source.
 
