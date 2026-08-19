@@ -15,7 +15,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { discountPercent, formatPaise } from '@/lib/catalog';
 import { useCart } from '@/features/cart/hooks/use-cart';
 import type { SelectableReport } from '../../server/reports';
@@ -32,8 +32,16 @@ export function KitConfigurator({
   shippingFee: number;
 }) {
   const router = useRouter();
-  const { setSelection } = useCart();
+  const { addSelection, openDrawer } = useCart();
   const [busy, setBusy] = useState(false);
+  const listId = useId();
+
+  // The tick list starts COLLAPSED. It is the longest thing on the page, and a
+  // visitor arriving from a test page already has the report they came for
+  // ticked - so opening to a wall of ten checkboxes buries the price and the
+  // buttons below the fold. The trigger always states what is selected, so
+  // nothing is hidden, only folded.
+  const [listOpen, setListOpen] = useState(false);
 
   const [selected, setSelected] = useState<string[]>(() =>
     preselect.filter((slug) => reports.some((r) => r.slug === slug && r.inStock))
@@ -47,11 +55,34 @@ export function KitConfigurator({
   const total = chosen.length > 0 ? reportsTotal + shippingFee : 0;
   const saved = chosen.reduce((sum, r) => sum + Math.max(0, (r.compareAtPrice ?? r.price) - r.price), 0);
 
-  function order() {
+  /**
+   * ADD keeps whatever is already in the basket and merges these into it.
+   *
+   * That is what the label promises, and it is also what the product is: one
+   * kit, one sample, every ticked report read from that same sample. There is
+   * no way to buy one report "separately", so a union is what the physical
+   * thing actually does. `addSelection` skips slugs already present, so
+   * pressing this twice cannot order the same report twice.
+   */
+  function addToCart() {
+    if (chosen.length === 0) return;
+    addSelection(chosen.map((r) => r.slug));
+    openDrawer();
+  }
+
+  /**
+   * BUY NOW merges too, then goes straight to payment.
+   *
+   * Deliberately NOT the old setSelection (which replaced the basket): quietly
+   * dropping reports the customer added earlier, on their way to pay, would be
+   * the worst possible moment to lose them. Checkout itemises every line before
+   * the Razorpay modal opens, so nothing is charged that they have not seen.
+   */
+  function buyNow() {
     if (chosen.length === 0) return;
     setBusy(true);
-    setSelection(chosen.map((r) => r.slug));
-    router.push('/cart');
+    addSelection(chosen.map((r) => r.slug));
+    router.push('/checkout');
   }
 
   return (
@@ -74,8 +105,45 @@ export function KitConfigurator({
         only give a sample once.
       </p>
 
-      {/* ---- the tick list ---- */}
-      <ul className="flex flex-col gap-2">
+      {/* ---- the tick list, behind a disclosure ----
+          A real button with aria-expanded/aria-controls rather than
+          details/summary: the chevron animates, and Safari still forces
+          display:block on an open summary's sibling, which fights any
+          transition on the panel. */}
+      <button
+        type="button"
+        onClick={() => setListOpen((o) => !o)}
+        aria-expanded={listOpen}
+        aria-controls={listId}
+        className="flex w-full items-center justify-between gap-3 rounded-[14px] border border-heavy/12 bg-white px-4 py-3 text-left transition hover:border-sea/45"
+      >
+        <span className="min-w-0">
+          <span className="block text-[14px] font-extrabold text-heavy">
+            {chosen.length === 0
+              ? 'Choose your reports'
+              : `${chosen.length} report${chosen.length === 1 ? '' : 's'} selected`}
+          </span>
+          <span className="mt-0.5 block truncate text-[12.5px] text-fusc">
+            {chosen.length === 0
+              ? `${reports.length} available - tap to see them all`
+              : chosen.map((r) => r.name).join(', ')}
+          </span>
+        </span>
+        <span
+          aria-hidden="true"
+          className={`grid h-7 w-7 shrink-0 place-items-center rounded-full bg-heavy/[0.06] text-heavy transition-transform duration-300 ${
+            listOpen ? 'rotate-180' : ''
+          }`}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="h-[15px] w-[15px]">
+            <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </button>
+
+      {/* `hidden` rather than unmounting: the checkboxes keep their DOM state,
+          and a collapsed list stays out of the tab order for free. */}
+      <ul id={listId} hidden={!listOpen} className="flex flex-col gap-2">
         {reports.map((r) => {
           const isOn = selected.includes(r.slug);
           const off = discountPercent(r.price, r.compareAtPrice);
@@ -158,17 +226,31 @@ export function KitConfigurator({
         )}
       </div>
 
-      <button
-        type="button"
-        onClick={order}
-        disabled={chosen.length === 0 || busy}
-        className="flex h-[57.75px] items-center justify-center gap-[9px] rounded-full bg-eden text-[14.5px] font-bold text-white shadow-pdp-cta transition-[transform,background] duration-200 hover:-translate-y-px hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
-      >
-        <Icon name="cart" className="h-[19px] w-[16px] text-white" />
-        {chosen.length === 0
-          ? 'Select a report to continue'
-          : `Order my kit · ${chosen.length} report${chosen.length === 1 ? '' : 's'}`}
-      </button>
+      {/* Buy now is filled and sits first: it is the action this page exists
+          for. Add to cart is outlined, so the pair reads as primary/secondary
+          rather than as two equal choices the customer has to weigh. */}
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <button
+          type="button"
+          onClick={buyNow}
+          disabled={chosen.length === 0 || busy}
+          className="flex h-[57.75px] flex-1 items-center justify-center gap-[9px] rounded-full bg-eden text-[14.5px] font-bold text-white shadow-pdp-cta transition-[transform,background] duration-200 hover:-translate-y-px hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+        >
+          {chosen.length === 0
+            ? 'Select a report to continue'
+            : `Buy now · ${chosen.length} report${chosen.length === 1 ? '' : 's'}`}
+        </button>
+
+        <button
+          type="button"
+          onClick={addToCart}
+          disabled={chosen.length === 0 || busy}
+          className="flex h-[57.75px] items-center justify-center gap-[9px] rounded-full border-[1.5px] border-eden/30 bg-white px-6 text-[14.5px] font-bold text-eden transition-[transform,background,border-color] duration-200 hover:-translate-y-px hover:border-eden/60 hover:bg-gin disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+        >
+          <Icon name="cart" className="h-[19px] w-[16px] text-eden" />
+          Add to cart
+        </button>
+      </div>
     </div>
   );
 }

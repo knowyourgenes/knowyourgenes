@@ -138,6 +138,28 @@ interface CartContextValue {
    * behind reports the customer had just deselected.
    */
   setSelection: (slugs: string[]) => void;
+
+  /**
+   * ADD these reports to whatever is already in the basket, one of each.
+   *
+   * The counterpart to `setSelection`. Used by the configurator's "Add to cart",
+   * where the label promises addition and silently discarding a basket the
+   * customer built earlier would be a bug.
+   *
+   * Merging is also the honest model for this product: one kit, one sample, and
+   * every ticked report is read from that same sample. There is no such thing as
+   * buying one report "separately", so a union is what the physical thing does.
+   */
+  addSelection: (slugs: string[]) => void;
+
+  /* ---- drawer ----------------------------------------------------------
+     The slide-over basket. Kept on the cart context rather than in its own
+     provider because everything that opens it (the header button, "Add to
+     cart") already consumes this hook, and a second provider would have to be
+     mounted in exactly the same place for no gain. */
+  drawerOpen: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -158,6 +180,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
   const { lines, couponCode } = stored;
 
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [pricedRaw, setPricedRaw] = useState<PricedCart | null>(null);
   const [pricing, setPricing] = useState(false);
 
@@ -255,6 +278,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     write({ ...current, lines: unique.map((slug) => ({ slug, quantity: 1 })) });
   }, []);
 
+  const addSelection = useCallback((slugs: string[]) => {
+    const current = getSnapshot();
+    const have = new Set(current.lines.map((l) => l.slug));
+    // Only genuinely new slugs are appended: re-adding a report that is already
+    // on the kit must not bump it to quantity 2. One kit reads each report once.
+    const fresh = [...new Set(slugs)].filter((slug) => !have.has(slug));
+    if (fresh.length === 0) return;
+    write({ ...current, lines: [...current.lines, ...fresh.map((slug) => ({ slug, quantity: 1 }))] });
+  }, []);
+
   const applyCoupon = useCallback((code: string | null) => {
     const current = getSnapshot();
     write({ ...current, couponCode: code ? code.trim().toUpperCase() : null });
@@ -262,6 +295,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // Before the first server response, fall back to the local count so the header
   // badge updates the instant something is added.
+  const openDrawer = useCallback(() => setDrawerOpen(true), []);
+  const closeDrawer = useCallback(() => setDrawerOpen(false), []);
+
   const itemCount = priced?.itemCount ?? lines.reduce((sum, l) => sum + l.quantity, 0);
 
   return (
@@ -279,6 +315,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         clear,
         applyCoupon,
         setSelection,
+        addSelection,
+        drawerOpen,
+        openDrawer,
+        closeDrawer,
       }}
     >
       {children}
