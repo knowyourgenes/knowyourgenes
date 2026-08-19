@@ -3,134 +3,148 @@ import { prisma } from '@/server/prisma';
 import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { checkoutCreate } from '@/lib/validators';
 import { readAttributionCookie, attributionToOrderFields } from '@/features/attribution/server/attribution';
-import { applyCoupon, nextOrderNumber, resolveCampaignId } from '@/features/orders';
+import { nextOrderNumber, resolveCampaignId } from '@/features/orders';
+import { priceCart } from '@/features/cart';
 import { createRazorpayOrder, RAZORPAY_KEY_ID_PUBLIC, RAZORPAY_MOCK } from '@/features/payments';
 
 /**
  * POST /api/checkout
  *
- * Creates a BOOKED order + a Razorpay order, ready for the client-side
- * Razorpay Checkout modal to take payment. The attribution cookie (kyg_attr)
- * is verified and denormalised onto the Order row at this moment - so even if
- * the user clears cookies later, we keep a record of where they came from.
+ * Turns a cart into a BOOKED order plus a Razorpay order, ready for the
+ * client-side Checkout modal to take payment.
+ *
+ * PRICING IS RECOMPUTED HERE. The body carries slugs and quantities only - the
+ * browser never sends a price - and priceCart() re-reads live Package rows, so
+ * what we bill cannot drift from the catalogue no matter what the client sends.
+ *
+ * If the re-price disagrees with what the customer was shown (a kit sold out, a
+ * quantity had to be clamped), we refuse with 409 and hand back the corrected
+ * cart rather than charging a total they never saw.
  *
  * Flow:
- *   1. Auth - require any logged-in user (USER, AGENT, ADMIN, etc.).
- *   2. Validate body (package, address, slot, coupon).
- *   3. Compute pricing (subtotal + kit shipping if KIT_BY_POST − coupon discount).
- *   4. Read + verify attribution cookie; resolve to a Campaign FK if slug matches.
- *   5. Generate order number; create Order + Payment row in one transaction.
- *   6. Call Razorpay to mint an order_id.
- *   7. Persist the razorpay order_id on Order + Payment.
- *   8. Return the params the client needs to open Razorpay Checkout.
+ *   1. Auth - require any logged-in user.
+ *   2. Validate body (lines, address, optional slot, coupon).
+ *   3. Re-price the cart server-side; bail on any rejection/adjustment.
+ *   4. Require a collection slot only if the cart contains an at-home line.
+ *   5. Read + verify the attribution cookie; resolve to a Campaign FK.
+ *   6. Create Order + OrderItem[] + Payment in one transaction.
+ *   7. Mint the Razorpay order, persist its id.
  *
- * Verification is a separate endpoint: POST /api/checkout/verify.
+ * Stock is NOT decremented here - see /api/checkout/verify. An unpaid order
+ * must not hold inventory hostage.
  */
 export async function POST(req: Request) {
   return handle(async () => {
     const guard = await requireApiRole(['USER', 'ADMIN', 'AGENT', 'COUNSELLOR', 'PARTNER']);
     if (isResponse(guard)) return guard;
 
-    const body = await req.json();
-    const input = checkoutCreate.parse(body);
+    const input = checkoutCreate.parse(await req.json());
 
-    const [pkg, address] = await Promise.all([
-      prisma.package.findUnique({ where: { id: input.packageId } }),
-      prisma.address.findUnique({ where: { id: input.addressId } }),
-    ]);
-    if (!pkg || !pkg.active) return fail('Package not found or inactive', 404);
+    const address = await prisma.address.findUnique({ where: { id: input.addressId } });
     if (!address || address.userId !== guard.id) return fail('Address not found', 404);
 
-    // Decide fulfillment. Honour the requested mode if the package supports it.
-    const fulfillmentMode =
-      input.fulfillmentMode ?? (pkg.fulfillmentType === 'EITHER' ? 'KIT_BY_POST' : pkg.fulfillmentType);
+    // ---- authoritative pricing -------------------------------------------
+    const cart = await priceCart({ lines: input.lines, couponCode: input.couponCode });
 
-    if (pkg.fulfillmentType !== 'EITHER' && pkg.fulfillmentType !== fulfillmentMode) {
-      return fail(`This package only supports ${pkg.fulfillmentType}`, 400);
+    if (cart.lines.length === 0) {
+      return fail('Your cart is empty', 400, { cart });
+    }
+    if (cart.rejected.length > 0 || cart.adjusted.length > 0) {
+      return fail('Your cart changed - please review it before paying', 409, { cart });
     }
 
-    // Pricing - subtotal is the package price; add kit shipping for KIT_BY_POST.
-    const subtotal = pkg.price;
-    const kitFee = fulfillmentMode === 'KIT_BY_POST' ? pkg.kitShippingFee : 0;
-    const coupon = await applyCoupon({ code: input.couponCode ?? null, subtotalPaise: subtotal });
-    if (coupon.error) return fail(coupon.error, 400);
-    const total = subtotal + kitFee - coupon.discount;
-    if (total < 0) return fail('Total cannot be negative', 400);
+    // ---- slot ------------------------------------------------------------
+    // Only an at-home collection needs a human to turn up. A posted kit stores
+    // no slot at all, and we drop one if the client sent it anyway.
+    if (cart.requiresSlot && (!input.slotDate || !input.slotWindow)) {
+      return fail('This cart needs a collection date and time slot', 400);
+    }
+    const slotDate = cart.requiresSlot && input.slotDate ? new Date(input.slotDate) : null;
+    const slotWindow = cart.requiresSlot ? (input.slotWindow ?? null) : null;
 
-    // Attribution - read the signed cookie, resolve campaign FK by slug.
+    // ---- attribution -----------------------------------------------------
     const cookieStore = await cookies();
     const attrPayload = readAttributionCookie(cookieStore);
     const attr = attributionToOrderFields(attrPayload);
     const campaignId = await resolveCampaignId(attrPayload);
 
     const orderNumber = await nextOrderNumber();
+    const primary = cart.lines[0]!;
 
-    // Create order + initial payment row in one transaction. Razorpay order
-    // is minted *after* DB insert so a failed Razorpay call doesn't leave us
-    // with an orphan row - we update with the razorpay id on success.
-    const order = await prisma.$transaction(async (tx) => {
-      const created = await tx.order.create({
-        data: {
-          orderNumber,
-          userId: guard.id,
-          packageId: pkg.id,
-          addressId: address.id,
-          couponCode: coupon.couponCode,
-          subtotal,
-          discount: coupon.discount,
-          collectionFee: kitFee,
-          total,
-          slotDate: new Date(input.slotDate),
-          slotWindow: input.slotWindow,
-          status: 'BOOKED',
-          fulfillmentMode,
-          campaignId,
-          attrSource: attr.attrSource,
-          attrMedium: attr.attrMedium,
-          attrCampaign: attr.attrCampaign,
-          attrTerm: attr.attrTerm,
-          attrContent: attr.attrContent,
-          attrReferrer: attr.attrReferrer,
-          attrLandingPath: attr.attrLandingPath,
-          attrFirstSeenAt: attr.attrFirstSeenAt,
-          attrPayload: (attr.attrPayload ?? undefined) as object | undefined,
-          events: {
-            create: {
-              label: 'Order booked, awaiting payment',
-              actorId: guard.id,
-              meta: attr.attrSource ? { attribution: { source: attr.attrSource, medium: attr.attrMedium } } : undefined,
-            },
-          },
-          payments: {
-            create: {
-              amount: total,
-              currency: 'INR',
-              status: 'PENDING',
-            },
+    // Razorpay is called *after* the DB insert so a failed API call cannot leave
+    // an orphan row; the order stays BOOKED/PENDING and is retryable.
+    // Relations are written with `connect`, not scalar FKs. Once ANY nested
+    // write is present (items/events/payments), Prisma resolves `data` to the
+    // checked variant, which rejects bare `userId`/`addressId` with a confusing
+    // "Argument `user` is missing".
+    const order = await prisma.order.create({
+      data: {
+        orderNumber,
+        user: { connect: { id: guard.id } },
+        // Denormalised primary line - see the comment on Order.packageId.
+        package: { connect: { id: primary.packageId } },
+        address: { connect: { id: address.id } },
+        couponCode: cart.coupon?.applied ? cart.coupon.code : null,
+        subtotal: cart.subtotal,
+        discount: cart.discount,
+        collectionFee: cart.shipping,
+        total: cart.total,
+        slotDate,
+        slotWindow,
+        status: 'BOOKED',
+        fulfillmentMode: input.fulfillmentMode ?? primary.fulfillmentType,
+        ...(campaignId ? { campaign: { connect: { id: campaignId } } } : {}),
+        attrSource: attr.attrSource,
+        attrMedium: attr.attrMedium,
+        attrCampaign: attr.attrCampaign,
+        attrTerm: attr.attrTerm,
+        attrContent: attr.attrContent,
+        attrReferrer: attr.attrReferrer,
+        attrLandingPath: attr.attrLandingPath,
+        attrFirstSeenAt: attr.attrFirstSeenAt,
+        attrPayload: (attr.attrPayload ?? undefined) as object | undefined,
+        items: {
+          create: cart.lines.map((line) => ({
+            package: { connect: { id: line.packageId } },
+            nameSnapshot: line.name,
+            slugSnapshot: line.slug,
+            unitPrice: line.unitPrice,
+            quantity: line.quantity,
+            lineTotal: line.lineTotal,
+            kitShippingFee: line.kitShippingFee,
+            fulfillmentMode: line.fulfillmentType,
+          })),
+        },
+        events: {
+          create: {
+            label:
+              cart.lines.length === 1
+                ? 'Order booked, awaiting payment'
+                : `Order booked (${cart.itemCount} reports), awaiting payment`,
+            actorId: guard.id,
+            meta: attr.attrSource ? { attribution: { source: attr.attrSource, medium: attr.attrMedium } } : undefined,
           },
         },
-        include: { payments: true },
-      });
-      return created;
+        payments: {
+          create: { amount: cart.total, currency: 'INR', status: 'PENDING' },
+        },
+      },
+      include: { payments: true, items: true },
     });
 
-    // Razorpay order. If this fails the KYG order still exists (status BOOKED,
-    // payment PENDING). The user can retry payment from /my orders without
-    // duplicating the order.
     let razorpayOrder;
     try {
       razorpayOrder = await createRazorpayOrder({
-        amountPaise: total,
+        amountPaise: cart.total,
         receipt: orderNumber,
         notes: {
           kyg_order_id: order.id,
-          package_slug: pkg.slug,
-          fulfillment: fulfillmentMode,
+          items: cart.lines.map((l) => `${l.slug}x${l.quantity}`).join(','),
           user_id: guard.id,
         },
       });
     } catch (err) {
-      // Surface the error but leave the KYG order intact for retry.
+      // Surface the error but leave the order intact for retry.
       return fail(err instanceof Error ? err.message : 'Razorpay order creation failed', 502, {
         orderId: order.id,
         orderNumber,
@@ -138,12 +152,9 @@ export async function POST(req: Request) {
     }
 
     await prisma.$transaction([
-      prisma.order.update({
-        where: { id: order.id },
-        data: { razorpayOrderId: razorpayOrder.id },
-      }),
+      prisma.order.update({ where: { id: order.id }, data: { razorpayOrderId: razorpayOrder.id } }),
       prisma.payment.update({
-        where: { id: order.payments[0].id },
+        where: { id: order.payments[0]!.id },
         data: { razorpayOrderId: razorpayOrder.id },
       }),
     ]);
@@ -151,8 +162,14 @@ export async function POST(req: Request) {
     return ok({
       orderId: order.id,
       orderNumber,
-      total,
+      total: cart.total,
       currency: 'INR',
+      items: order.items.map((i) => ({
+        slug: i.slugSnapshot,
+        name: i.nameSnapshot,
+        quantity: i.quantity,
+        lineTotal: i.lineTotal,
+      })),
       razorpay: {
         keyId: RAZORPAY_KEY_ID_PUBLIC,
         orderId: razorpayOrder.id,

@@ -4,6 +4,7 @@ import SiteFooter from '@/components/shared/SiteFooter';
 import SiteHeader from '@/components/shared/SiteHeader';
 import { TEST_PAGES, getTestPage } from '@/lib/testsdata';
 import { TestPageView } from '@/features/tests';
+import { getKitPricing } from '@/features/products/server/kit-pricing';
 
 type Params = Promise<{ category_slug: string; test_slug: string }>;
 
@@ -33,11 +34,15 @@ export default async function TestDetailRoute({ params }: { params: Params }) {
   const test = getTestPage(test_slug);
   if (!test || test.categorySlug !== category_slug) notFound();
 
+  // The kit section shows this report's price before handing over to the kit
+  // page, where it arrives pre-ticked.
+  const pricing = await getKitPricing(test_slug);
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <TestPageView test={test} />
+        <TestPageView test={test} pricing={pricing} />
       </main>
       <SiteFooter />
     </div>

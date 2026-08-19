@@ -7,6 +7,12 @@ import { CategoryDetailView } from '@/features/tests';
 
 type Params = Promise<{ category_slug: string }>;
 
+// No caching directive on purpose. The cards carry live price and stock, and
+// this route already renders per request because the root layout reads the
+// session - so prices are always current. If the app is ever made statically
+// renderable, add `revalidate` here, and remember the cart and checkout
+// re-price from the database anyway, so a stale card can never mis-bill.
+
 export function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category_slug: c.slug }));
 }

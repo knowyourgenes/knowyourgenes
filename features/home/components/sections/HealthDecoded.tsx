@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Container } from '@/components/shared/Container';
 import { EYEBROW, EYEBROW_DASH_TEAL, GRAD_TEXT, HEADING, LEAD, SECTION_PY } from './styles';
 
@@ -95,13 +96,13 @@ export default function HealthDecoded() {
                 <p className="mt-[10px] max-h-0 overflow-hidden text-[13.5px] leading-[1.5] text-white/[0.78] opacity-0 transition-all duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:max-h-[120px] group-hover:opacity-100">
                   {card.desc}
                 </p>
-                <a
+                <Link
                   className="mt-[16px] inline-flex items-center gap-[8px] text-[13px] font-semibold text-white"
-                  href="#"
+                  href="/blog"
                 >
                   Read article
                   {arrow}
-                </a>
+                </Link>
               </div>
             </article>
           ))}
@@ -118,10 +119,13 @@ export default function HealthDecoded() {
               <p className="mt-[14px] text-[13.5px] leading-[1.5] text-[rgba(250,246,239,0.75)]">
                 New articles every week, written for real people in real life. Subscribe and never miss a beat.
               </p>
-              <a className="mt-[16px] inline-flex items-center gap-[8px] text-[13px] font-semibold text-white" href="#">
+              <Link
+                className="mt-[16px] inline-flex items-center gap-[8px] text-[13px] font-semibold text-white"
+                href="/blog"
+              >
                 Explore Health Decoded
                 {arrow}
-              </a>
+              </Link>
             </div>
           </article>
         </div>

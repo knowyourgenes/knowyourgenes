@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import { LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import UserNav from '@/features/admin/components/UserNav';
+import { CartLink } from '@/features/cart/components/CartLink';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
 import { NAV_LEAD_LINKS, NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
 import { Container } from './Container';
@@ -232,8 +233,12 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
             ))}
           </nav>
 
-          {/* Right: CTA (hidden by default) + burger */}
+          {/* Right: cart + CTA (hidden by default) + burger */}
           <div className="flex items-center gap-[10px] shrink-0">
+            {/* Shown independently of SHOW_NAV_CTA: a filled cart must always be
+                reachable, even while the marketing CTAs are parked. */}
+            <CartLink />
+
             {SHOW_NAV_CTA &&
               (user ? (
                 <>

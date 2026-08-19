@@ -1,13 +1,21 @@
+import Link from 'next/link';
 import { prisma } from '@/server/prisma';
 import { auth } from '@/features/auth';
 import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ClipboardList } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { formatPaise } from '@/lib/catalog';
 
 export const dynamic = 'force-dynamic';
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'outline' | 'destructive'> = {
   BOOKED: 'secondary',
+  KIT_DISPATCHED: 'outline',
+  KIT_DELIVERED: 'outline',
+  SAMPLE_PICKED_UP: 'outline',
+  SAMPLE_IN_TRANSIT: 'outline',
   AGENT_ASSIGNED: 'outline',
   AGENT_EN_ROUTE: 'outline',
   SAMPLE_COLLECTED: 'outline',
@@ -32,7 +40,9 @@ export default async function UserOrdersPage() {
       slotDate: true,
       slotWindow: true,
       createdAt: true,
+      paidAt: true,
       package: { select: { name: true } },
+      items: { select: { id: true, nameSnapshot: true, quantity: true, lineTotal: true } },
       agent: { select: { user: { select: { name: true } } } },
     },
   });
@@ -54,44 +64,67 @@ export default async function UserOrdersPage() {
             <p className="mt-1 max-w-sm text-sm text-muted-foreground">
               Once you book a test, it&apos;ll appear here with live status updates.
             </p>
+            <Link href="/categories" className={cn(buttonVariants(), 'mt-4')}>
+              Browse tests
+            </Link>
           </CardContent>
         </Card>
       ) : (
         <div className="grid gap-3">
-          {orders.map((o) => (
-            <Card key={o.id}>
-              <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
-                <div>
-                  <CardTitle className="text-base">{o.package.name}</CardTitle>
-                  <CardDescription className="font-mono text-xs">{o.orderNumber}</CardDescription>
-                </div>
-                <Badge variant={statusVariant[o.status] ?? 'secondary'}>{o.status}</Badge>
-              </CardHeader>
-              <CardContent className="grid gap-3 sm:grid-cols-4">
-                <div>
-                  <p className="text-xs text-muted-foreground">Slot</p>
-                  <p className="text-sm font-medium">
-                    {new Date(o.slotDate).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
-                  </p>
-                  <p className="text-xs text-muted-foreground">{o.slotWindow}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Agent</p>
-                  <p className="text-sm font-medium">{o.agent?.user.name ?? '-'}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Booked</p>
-                  <p className="text-sm font-medium">
-                    {new Date(o.createdAt).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Amount</p>
-                  <p className="text-sm font-medium">₹{Math.floor(o.total / 100).toLocaleString('en-IN')}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+          {orders.map((o) => {
+            // Pre-cart orders have no items; fall back to the primary package.
+            const lines = o.items.length
+              ? o.items.map((i) => ({ key: i.id, label: i.nameSnapshot, quantity: i.quantity }))
+              : [{ key: o.id, label: o.package?.name ?? 'Test', quantity: 1 }];
+
+            return (
+              <Card key={o.id}>
+                <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
+                  <div className="min-w-0">
+                    <CardTitle className="text-base">
+                      {lines.map((l) => (l.quantity > 1 ? `${l.label} × ${l.quantity}` : l.label)).join(' + ')}
+                    </CardTitle>
+                    <CardDescription className="font-mono text-xs">{o.orderNumber}</CardDescription>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-2">
+                    {!o.paidAt && o.status === 'BOOKED' && <Badge variant="outline">Payment pending</Badge>}
+                    <Badge variant={statusVariant[o.status] ?? 'secondary'}>{o.status.replaceAll('_', ' ')}</Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="grid gap-3 sm:grid-cols-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Collection</p>
+                    <p className="text-sm font-medium">
+                      {o.slotDate
+                        ? new Date(o.slotDate).toLocaleDateString('en-IN', { dateStyle: 'medium' })
+                        : 'Kit by post'}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{o.slotWindow ?? 'Couriered to your address'}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Agent</p>
+                    <p className="text-sm font-medium">{o.agent?.user.name ?? '-'}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Booked</p>
+                    <p className="text-sm font-medium">
+                      {new Date(o.createdAt).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
+                    </p>
+                  </div>
+                  <div className="sm:text-right">
+                    <p className="text-xs text-muted-foreground">Amount</p>
+                    <p className="text-sm font-medium">{formatPaise(o.total)}</p>
+                    <Link
+                      href={`/dashboard/orders/${o.orderNumber}`}
+                      className="text-xs font-medium text-primary hover:underline"
+                    >
+                      View details →
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>

@@ -64,6 +64,19 @@ export interface Review {
   quote: string;
 }
 
+/**
+ * Live commerce data for a kit, read from the Package row that shares its slug.
+ * Null on a PDP whose Package is missing or de-listed, in which case the BuyBox
+ * shows the content placeholder rather than a price.
+ */
+export interface KitPricing {
+  price: number; // paise
+  compareAtPrice: number | null;
+  inStock: boolean;
+  maxQuantity: number;
+  kitShippingFee: number;
+}
+
 export interface ProductKit {
   slug: string;
 

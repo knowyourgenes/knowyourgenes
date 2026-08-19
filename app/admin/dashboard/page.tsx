@@ -73,9 +73,16 @@ export default async function AdminDashboardPage({ searchParams }: { searchParam
       include: {
         user: { select: { name: true, email: true } },
         package: { select: { name: true } },
+        items: { select: { nameSnapshot: true, quantity: true } },
       },
     }),
   ]);
+
+  /** "Sleep DNA + Skin Health DNA × 2", or the primary package pre-cart. */
+  const orderTests = (o: { items: { nameSnapshot: string; quantity: number }[]; package: { name: string } | null }) =>
+    o.items.length
+      ? o.items.map((i) => (i.quantity > 1 ? `${i.nameSnapshot} × ${i.quantity}` : i.nameSnapshot)).join(' + ')
+      : (o.package?.name ?? '-');
 
   const rupees = (paise: number | null | undefined) =>
     paise ? `₹${Math.floor(paise / 100).toLocaleString('en-IN')}` : '₹0';
@@ -163,7 +170,7 @@ export default async function AdminDashboardPage({ searchParams }: { searchParam
                     <TableCell className="text-center font-mono text-xs text-muted-foreground">{i + 1}</TableCell>
                     <TableCell className="font-mono text-xs">{o.orderNumber}</TableCell>
                     <TableCell>{o.user.name ?? o.user.email}</TableCell>
-                    <TableCell>{o.package.name}</TableCell>
+                    <TableCell>{orderTests(o)}</TableCell>
                     <TableCell>
                       <Badge variant={statusVariant[o.status] ?? 'secondary'}>{o.status}</Badge>
                     </TableCell>

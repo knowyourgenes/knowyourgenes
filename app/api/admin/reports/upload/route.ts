@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
     const order = await prisma.order.findUnique({
       where: { id: orderId },
-      include: { package: { select: { name: true } } },
+      include: { package: { select: { name: true } }, items: { select: { nameSnapshot: true } } },
     });
     if (!order) return fail('Order not found', 404);
 
@@ -70,7 +70,11 @@ export async function POST(req: Request) {
         reportNumber,
         orderId,
         userId: order.userId,
-        packageName: order.package.name,
+        // A Report is 1:1 with an Order, so a multi-test order produces one
+        // report covering every test on it - name them all rather than picking.
+        packageName: order.items.length
+          ? order.items.map((i) => i.nameSnapshot).join(' + ')
+          : (order.package?.name ?? 'Unknown test'),
         pdfKey: key,
         summary,
         criticalFinding,

@@ -1,5 +1,6 @@
 import { prisma } from '@/server/prisma';
 import { verifyWebhookSignature } from '@/features/payments';
+import { captureOrderPayment } from '@/features/orders';
 import { linkLabAndNotify } from '@/features/lab';
 
 /**
@@ -74,72 +75,20 @@ async function handlePaymentCaptured(p: { id?: string; order_id?: string; amount
   const order = await prisma.order.findFirst({ where: { razorpayOrderId: p.order_id } });
   if (!order) return;
 
-  // Already captured (verify route or earlier webhook ran) - idempotent for the
-  // payment write. We still (re)run lab notification below: it's independently
-  // idempotent via the labId:null claim, so it covers the case where verify
-  // captured the payment but the lab-notify step hadn't completed yet.
-  if (order.paidAt) {
-    await linkLabAndNotify(order.id);
-    return;
-  }
-
-  await prisma.$transaction(async (tx) => {
-    await tx.order.update({
-      where: { id: order.id },
-      data: {
-        paidAt: new Date(),
-        razorpayPaymentId: p.id,
-        events: { create: { label: 'Payment captured (webhook)' } },
-      },
-    });
-
-    // Find the matching pending Payment row, or create one if absent.
-    const existing = await tx.payment.findFirst({
-      where: { orderId: order.id, razorpayOrderId: p.order_id },
-    });
-    if (existing) {
-      await tx.payment.update({
-        where: { id: existing.id },
-        data: {
-          status: 'CAPTURED',
-          razorpayPaymentId: p.id,
-          method: p.method,
-          capturedAt: new Date(),
-        },
-      });
-    } else {
-      await tx.payment.create({
-        data: {
-          orderId: order.id,
-          amount: p.amount ?? order.total,
-          status: 'CAPTURED',
-          method: p.method,
-          razorpayOrderId: p.order_id,
-          razorpayPaymentId: p.id,
-          capturedAt: new Date(),
-        },
-      });
-    }
-
-    // Consume coupon now if not already (verify endpoint may have done it).
-    if (order.couponCode) {
-      const coupon = await tx.coupon.findUnique({ where: { code: order.couponCode } });
-      // Avoid double-increment: if verify route already bumped it, we'd over-count.
-      // Cheap heuristic: only increment if we created the Payment row in this txn
-      // (i.e., verify never ran). When existing was found and already CAPTURED,
-      // verify already incremented.
-      if (coupon && !existing) {
-        await tx.coupon.update({
-          where: { code: order.couponCode },
-          data: { usageCount: { increment: 1 } },
-        });
-      }
-    }
+  // Claims the capture atomically. If /api/checkout/verify already ran, this
+  // returns claimed:false and writes nothing - which is what makes the coupon
+  // redemption count exactly once across both paths.
+  await captureOrderPayment({
+    orderId: order.id,
+    razorpayPaymentId: p.id!,
+    method: p.method,
+    amount: p.amount,
+    source: 'webhook',
   });
 
-  // Link the processing lab and notify it now the payment is captured. Outside
-  // the transaction (sends email), never throws, idempotent + race-safe with
-  // the /api/checkout/verify path.
+  // Always (re)run lab notification, claimed or not: it is independently
+  // idempotent via its labId:null claim, so this covers the case where verify
+  // captured the payment but its lab-notify step hadn't completed yet.
   await linkLabAndNotify(order.id);
 }
 

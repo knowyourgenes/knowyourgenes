@@ -34,7 +34,11 @@ function makeOrder(overrides: Record<string, unknown> = {}) {
     slotDate: new Date('2026-08-01T00:00:00.000Z'),
     slotWindow: 'MORNING',
     couponCode: null,
+    // `package` is the denormalised primary line; `items` is what the order
+    // really contains and what the email is built from. Both are in the
+    // route's include, so both belong in the fixture.
     package: { name: 'Ancestors In Me' },
+    items: [{ nameSnapshot: 'Ancestors In Me', quantity: 1 }],
     user: { name: 'Asha K', email: 'asha@example.com' },
     address: { city: 'Gurugram', pincode: '122001' },
     ...overrides,

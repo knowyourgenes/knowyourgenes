@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { toast } from 'sonner';
 import type { ProductKit } from '../../types';
+import type { SelectableReport } from '../../server/reports';
 import Stars from '../ui/Stars';
 import Accordion from '../ui/Accordion';
 import Icon, { type IconName } from '../ui/Icon';
+import { KitConfigurator } from './KitConfigurator';
 
 const TRUST_ICON: Record<string, IconName> = {
   saliva: 'trust-saliva',
@@ -14,11 +14,26 @@ const TRUST_ICON: Record<string, IconName> = {
   chat: 'trust-chat',
 };
 
-// Right column of the PDP - exact Figma typography + downloaded design icons.
-export default function BuyBox({ kit }: { kit: ProductKit }) {
-  const [qty, setQty] = useState(1);
-  const [variant, setVariant] = useState(kit.variants[0]?.value ?? '');
-
+/**
+ * Right column of the PDP - Figma typography + the design's own icons.
+ *
+ * The kit has NO price of its own. It is the vehicle: what you pay for is the
+ * set of reports read from the sample it brings back, so the old fixed price /
+ * variant dropdown / quantity stepper are gone and <KitConfigurator/> carries
+ * the money. `kit.price` and `kit.variants` remain in the content file but are
+ * no longer rendered - they describe packs that were never wired to a Package.
+ */
+export default function BuyBox({
+  kit,
+  reports,
+  preselect,
+  shippingFee,
+}: {
+  kit: ProductKit;
+  reports: SelectableReport[];
+  preselect: string[];
+  shippingFee: number;
+}) {
   return (
     <div className="flex flex-col gap-3 lg:self-start">
       {/* pills - Figtree Bold 12 / Green Pea */}
@@ -50,74 +65,15 @@ export default function BuyBox({ kit }: { kit: ProductKit }) {
         </a>
       </div>
 
-      {/* price */}
-      <div className="pt-1 text-[30px] font-extrabold leading-[1.5] text-heavy">{kit.price}</div>
-
-      {/* variant select */}
-      <div className="flex flex-col gap-2 pt-[7px]">
-        <label htmlFor="report-select" className="text-[11px] font-bold uppercase tracking-[0.08em] text-boulder">
-          {kit.variantLabel}
-        </label>
-        <div className="relative">
-          <select
-            id="report-select"
-            value={variant}
-            onChange={(e) => setVariant(e.target.value)}
-            className="w-full appearance-none rounded-[12px] border border-heavy/20 bg-white px-[15px] py-[13px] pr-[44px] text-[14.5px] font-semibold text-heavy outline-none transition-colors focus:border-sea"
-          >
-            {kit.variants.map((v) => (
-              <option key={v.value} value={v.value}>
-                {v.label}
-              </option>
-            ))}
-          </select>
-          <Icon
-            name="chevron-down"
-            className="pointer-events-none absolute right-[15px] top-1/2 size-[18px] -translate-y-1/2 text-heavy"
-          />
-        </div>
+      {/* The kit's price IS the reports the customer picks, so the configurator
+          replaces the old fixed price, variant dropdown and quantity stepper. */}
+      <div className="pt-2">
+        <KitConfigurator reports={reports} preselect={preselect} shippingFee={shippingFee} />
       </div>
 
-      {/* qty + add to cart */}
-      <div className="flex items-stretch gap-3 pt-2">
-        <div className="flex items-center rounded-[12px] border border-heavy/15 bg-white">
-          <button
-            type="button"
-            aria-label="Decrease quantity"
-            onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="grid h-12 w-11 place-items-center text-[20px] font-normal text-heavy"
-          >
-            −
-          </button>
-          <span className="w-11 text-center text-[15px] font-bold text-heavy tabular-nums">{qty}</span>
-          <button
-            type="button"
-            aria-label="Increase quantity"
-            onClick={() => setQty((q) => q + 1)}
-            className="grid h-12 w-11 place-items-center text-[20px] font-normal text-heavy"
-          >
-            +
-          </button>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => toast.success('Added to cart', { description: `${kit.title} × ${qty}` })}
-          className="flex h-[57.75px] flex-1 items-center justify-center gap-[9px] rounded-full bg-eden text-[14.5px] font-bold text-white shadow-pdp-cta transition-[transform,background] duration-200 hover:-translate-y-px hover:bg-eden2"
-        >
-          <Icon name="cart" className="h-[19px] w-[16px] text-white" />
-          Add to cart
-        </button>
-      </div>
-
-      {/* upsell link */}
-      <a
-        href="#upgrade"
-        className="inline-flex items-center gap-[6px] text-[12.5px] font-semibold text-greenpea hover:underline"
-      >
-        {kit.upsellLinkLabel}
-        <Icon name="arrow-right" className="h-[16px] w-[13px] text-greenpea" />
-      </a>
+      {/* The old "see Complete & Total Pack options" link pointed at #upgrade,
+          a section that no longer renders - the tick list above IS the way to
+          get more from one sample, so the link had nowhere left to go. */}
 
       {/* trust chips 2x2 - SemiBold single line, Sea icons */}
       <div className="grid grid-cols-2 gap-[10px] py-3">

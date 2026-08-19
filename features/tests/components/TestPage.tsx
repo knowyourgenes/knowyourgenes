@@ -1,3 +1,5 @@
+import type { KitPricing } from '@/features/products/types';
+import { resolveKitLinks } from '../kit-link';
 import type { Section, TestPage } from '../types';
 import RevealRoot from './RevealRoot';
 import ScrollProgress from './ScrollProgress';
@@ -38,7 +40,13 @@ import Worth from './sections/Worth';
  * browser state (Nav, BodyMap, RiskCards, Faqs) and the reveal wrapper are
  * `'use client'`, so the bulk of this very long page ships as zero JS.
  */
-function renderSection(section: Section & { ground?: TestPage['sections'][number]['ground'] }, key: number) {
+function renderSection(
+  section: Section & { ground?: TestPage['sections'][number]['ground'] },
+  key: number,
+  // The kit section shows this report's price; every other section renders
+  // from `section` alone.
+  product: { pricing: KitPricing | null }
+) {
   const ground = section.ground;
 
   switch (section.type) {
@@ -79,7 +87,7 @@ function renderSection(section: Section & { ground?: TestPage['sections'][number
     case 'counsellor':
       return <Counsellor key={key} data={section} ground={ground} />;
     case 'kit':
-      return <Kit key={key} data={section} ground={ground} />;
+      return <Kit key={key} data={section} ground={ground} pricing={product.pricing} />;
     case 'trust':
       return <Trust key={key} data={section} ground={ground} />;
     case 'faqs':
@@ -98,11 +106,24 @@ function renderSection(section: Section & { ground?: TestPage['sections'][number
   }
 }
 
-export default function TestPageView({ test }: { test: TestPage }) {
+export default function TestPageView({
+  test,
+  pricing,
+}: {
+  test: TestPage;
+  /** Live price, or null when this test has no active Package row. */
+  pricing: KitPricing | null;
+}) {
+  const product = { pricing };
+
+  // Every `#kit` CTA on the page becomes a hand-off to the kit page with this
+  // report pre-ticked. See features/tests/kit-link.ts.
+  const sections = resolveKitLinks(test.sections, test.slug);
+
   return (
     <div className="kyg-tests bg-linenw">
       <ScrollProgress />
-      <RevealRoot>{test.sections.map((s, i) => renderSection(s, i))}</RevealRoot>
+      <RevealRoot>{sections.map((s, i) => renderSection(s, i, product))}</RevealRoot>
     </div>
   );
 }

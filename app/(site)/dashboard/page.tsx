@@ -37,6 +37,7 @@ export default async function DashboardOverviewPage() {
         slotWindow: true,
         createdAt: true,
         package: { select: { name: true } },
+        items: { select: { nameSnapshot: true, quantity: true } },
       },
     }),
     prisma.report.findMany({
@@ -64,10 +65,18 @@ export default async function DashboardOverviewPage() {
         slotDate: true,
         slotWindow: true,
         package: { select: { name: true } },
+        items: { select: { nameSnapshot: true, quantity: true } },
         agent: { select: { user: { select: { name: true } } } },
       },
     }),
   ]);
+
+  /** An order is a basket now, so name every test on it. `package` is only the
+   *  denormalised primary line, kept for orders placed before the cart shipped. */
+  const orderTests = (o: { items: { nameSnapshot: string; quantity: number }[]; package: { name: string } | null }) =>
+    o.items.length
+      ? o.items.map((i) => (i.quantity > 1 ? `${i.nameSnapshot} × ${i.quantity}` : i.nameSnapshot)).join(' + ')
+      : (o.package?.name ?? 'Test');
 
   const activeOrders = orders.filter((o) => !['REPORT_READY', 'CANCELLED', 'REFUNDED'].includes(o.status)).length;
 
@@ -123,14 +132,16 @@ export default async function DashboardOverviewPage() {
             <div className="grid gap-3 sm:grid-cols-3">
               <div>
                 <p className="text-xs text-muted-foreground">Test</p>
-                <p className="mt-1 font-medium">{upcoming.package.name}</p>
+                <p className="mt-1 font-medium">{orderTests(upcoming)}</p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Slot</p>
                 <p className="mt-1 font-medium">
-                  {new Date(upcoming.slotDate).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
+                  {upcoming.slotDate
+                    ? new Date(upcoming.slotDate).toLocaleDateString('en-IN', { dateStyle: 'medium' })
+                    : 'Kit by post'}
                 </p>
-                <p className="text-xs text-muted-foreground">{upcoming.slotWindow}</p>
+                <p className="text-xs text-muted-foreground">{upcoming.slotWindow ?? 'No home visit needed'}</p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Agent</p>
@@ -173,7 +184,7 @@ export default async function DashboardOverviewPage() {
               {orders.map((o) => (
                 <li key={o.id} className="flex items-center justify-between py-3">
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium">{o.package.name}</p>
+                    <p className="font-medium">{orderTests(o)}</p>
                     <p className="text-xs text-muted-foreground">
                       <span className="font-mono">{o.orderNumber}</span> ·{' '}
                       {new Date(o.createdAt).toLocaleDateString('en-IN', { dateStyle: 'medium' })}

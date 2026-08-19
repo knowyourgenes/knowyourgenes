@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getHeroImage } from '@/features/tests';
 import type { CSSProperties, ReactNode } from 'react';
 import { Container } from '@/components/shared/Container';
@@ -272,12 +273,17 @@ const TEST_CARDS: TestCard[] = [
   },
 ];
 
+// NOTE: bundles are NOT sellable yet. Each one is a set of reports that would
+// come off a single saliva kit, but there is no Package row behind them and no
+// agreed bundle price, so their CTAs point at the catalogue rather than a
+// checkout. To make them real: seed a Package per bundle (or add a coupon that
+// discounts the set) and swap these hrefs for an add-to-cart.
 type Bundle = { title: string; href: string; color: string; icon: ReactNode; desc: string };
 
 const BUNDLES: Bundle[] = [
   {
     title: "Couple's Blueprint",
-    href: '#',
+    href: '/categories/wellness',
     color: '#C73C70',
     icon: (
       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
@@ -286,7 +292,7 @@ const BUNDLES: Bundle[] = [
   },
   {
     title: 'Family Starter',
-    href: '#',
+    href: '/categories/wellness',
     color: '#2F8C5C',
     icon: (
       <>
@@ -299,7 +305,7 @@ const BUNDLES: Bundle[] = [
   },
   {
     title: 'The Complete You',
-    href: '#',
+    href: '/categories/wellness',
     color: '#6F61E8',
     icon: (
       <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
@@ -425,13 +431,13 @@ export default function Tests() {
                     </span>
                   ))}
                 </div>
-                <a
+                <Link
                   href="/categories/wellness/my-wellness"
                   className="group inline-flex items-center gap-[10px] rounded-full bg-[var(--t-accent-500)] px-[22px] py-[12px] text-[14.5px] font-semibold tracking-[-.005em] text-white transition-[background,transform,box-shadow] duration-[450ms] hover:-translate-y-[2px] hover:bg-[var(--t-accent-700)] hover:shadow-[0_12px_28px_-8px_rgba(31,107,67,.45)] max-[880px]:w-full max-[880px]:justify-center"
                 >
                   Know more
                   <CtaArrow />
-                </a>
+                </Link>
               </div>
             </article>
           </div>

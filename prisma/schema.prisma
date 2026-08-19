@@ -360,41 +360,42 @@ model Category {
 }
 
 model Package {
-  id              String          @id @default(cuid())
-  slug            String          @unique
-  name            String
-  category        PackageCategory
-  tagline         String
-  description     String          @db.Text
-  price           Int // in paise (₹1 = 100)
-  compareAtPrice  Int?
-  tatMinDays      Int             @default(7)
-  tatMaxDays      Int             @default(14)
-  sampleType      SampleType
-  biomarkerCount  Int
-  highlights      Json // string[]
-  biomarkerList   Json // string[] of gene codes
-  faq             Json // [{q, a}]
-  coverImageUrl   String?
-  popular         Boolean         @default(false)
-  recommended     Boolean         @default(false)
-  active          Boolean         @default(true)
-  position        Int             @default(0)
+  id                String          @id @default(cuid())
+  slug              String          @unique
+  name              String
+  category          PackageCategory
+  tagline           String
+  description       String          @db.Text
+  price             Int // in paise (₹1 = 100)
+  compareAtPrice    Int?
+  tatMinDays        Int             @default(7)
+  tatMaxDays        Int             @default(14)
+  sampleType        SampleType
+  biomarkerCount    Int
+  highlights        Json // string[]
+  biomarkerList     Json // string[] of gene codes
+  faq               Json // [{q, a}]
+  coverImageUrl     String?
+  popular           Boolean         @default(false)
+  recommended       Boolean         @default(false)
+  active            Boolean         @default(true)
+  position          Int             @default(0)
   // Inventory. stockQuantity is the count of kits sitting in the lab/warehouse
   // ready to ship. lowStockThreshold drives the "Low stock" badge in admin.
-  stockQuantity      Int @default(0)
-  lowStockThreshold  Int @default(10)
+  stockQuantity     Int             @default(0)
+  lowStockThreshold Int             @default(10)
   // How this package can be fulfilled. AT_HOME means an agent collects in person;
   // KIT_BY_POST means a kit is couriered to the user and reverse-picked. EITHER lets
   // the user pick at checkout.
-  fulfillmentType FulfillmentType @default(AT_HOME_PHLEBOTOMIST)
+  fulfillmentType   FulfillmentType @default(AT_HOME_PHLEBOTOMIST)
   // Extra fee (paise) added to subtotal when this package is fulfilled by post.
   // Covers forward + reverse courier cost. Ignored for AT_HOME orders.
-  kitShippingFee  Int             @default(0)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  kitShippingFee    Int             @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
 
-  orders Order[]
+  orders     Order[]
+  orderItems OrderItem[]
 
   @@index([active])
   @@index([category])
@@ -408,7 +409,15 @@ model Order {
   id          String  @id @default(cuid())
   orderNumber String  @unique // Human-facing: KYG-2026-000412
   userId      String
-  packageId   String
+  // PRIMARY package - the first line of the order, denormalised.
+  //
+  // An order is a CART: its real contents are `items` (OrderItem[]). This
+  // column is kept, and kept in sync with items[0], because the agent, lab and
+  // report flows are all single-package by design - a Report is 1:1 with an
+  // Order, so a multi-kit order still produces one report against its primary
+  // package. Read `items` for anything money- or catalogue-related; read
+  // `package` only where a single representative kit is genuinely wanted.
+  packageId   String?
   addressId   String
   agentId     String?
   partnerId   String? // parent partner organization (Neotech)
@@ -422,8 +431,11 @@ model Order {
   total         Int
 
   // Slot
-  slotDate   DateTime   @db.Date
-  slotWindow SlotWindow
+  // Collection slot. Only meaningful for AT_HOME_PHLEBOTOMIST orders, where a
+  // person has to turn up. KIT_BY_POST orders are couriered and carry no slot,
+  // so both columns are null there - checkout must not invent one.
+  slotDate   DateTime?   @db.Date
+  slotWindow SlotWindow?
 
   // Status
   status       OrderStatus @default(BOOKED)
@@ -463,12 +475,13 @@ model Order {
   deliveredAt DateTime?
 
   user      User          @relation(fields: [userId], references: [id])
-  package   Package       @relation(fields: [packageId], references: [id])
+  package   Package?      @relation(fields: [packageId], references: [id])
   address   Address       @relation(fields: [addressId], references: [id])
   agent     AgentProfile? @relation("AssignedAgent", fields: [agentId], references: [userId])
   partner   LabPartner?   @relation("ProcessingPartner", fields: [partnerId], references: [id])
   lab       Lab?          @relation("ProcessingLab", fields: [labId], references: [id])
   campaign  Campaign?     @relation(fields: [campaignId], references: [id])
+  items     OrderItem[]
   events    OrderEvent[]
   payments  Payment[]
   shipments Shipment[]
@@ -483,6 +496,40 @@ model Order {
   @@index([orderNumber])
   @@index([campaignId])
   @@index([attrSource, attrMedium])
+}
+
+/// One line of a cart, frozen at checkout.
+///
+/// Every money column is a SNAPSHOT taken when the order was placed. A later
+/// price change, rename or de-listing in `Package` must never rewrite what a
+/// customer was charged or what their invoice says, so name/slug/unitPrice are
+/// copied here rather than joined at read time. `package` stays as an FK purely
+/// so ops can still pivot orders by catalogue item.
+model OrderItem {
+  id      String @id @default(cuid())
+  orderId String
+
+  packageId    String
+  nameSnapshot String // Package.name at time of purchase
+  slugSnapshot String // Package.slug at time of purchase
+
+  // All paise. lineTotal = unitPrice * quantity (kit shipping is NOT in here -
+  // it is summed onto Order.collectionFee so one order ships as one consignment).
+  unitPrice      Int
+  quantity       Int @default(1)
+  lineTotal      Int
+  kitShippingFee Int @default(0)
+
+  /// Locked per line: a cart may mix a posted kit with an at-home collection.
+  fulfillmentMode FulfillmentType @default(KIT_BY_POST)
+
+  createdAt DateTime @default(now())
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  package Package @relation(fields: [packageId], references: [id])
+
+  @@index([orderId])
+  @@index([packageId])
 }
 
 model OrderEvent {

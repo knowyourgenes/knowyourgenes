@@ -38,7 +38,10 @@ export async function linkLabAndNotify(orderId: string): Promise<LabNotifyResult
   try {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
-      include: { package: true, user: true, address: true },
+      // `items` is the real contents of the order; `package` is only the
+      // denormalised primary line and is null on orders placed after the cart
+      // shipped, so the email is built from items.
+      include: { package: true, items: true, user: true, address: true },
     });
     if (!order) return { status: 'error', detail: 'order not found' };
 
@@ -78,13 +81,22 @@ export async function linkLabAndNotify(orderId: string): Promise<LabNotifyResult
 
     const to = lab.contactEmail || lab.partner.contactEmail;
     const patient = order.user?.name ?? order.user?.email ?? 'Customer';
-    const slot = `${order.slotDate.toISOString().slice(0, 10)} (${order.slotWindow})`;
-    const subject = `New sample booked · ${order.orderNumber} · ${order.package.name}`;
+    // A posted kit has no collection visit, so there is genuinely no slot.
+    const slot = order.slotDate
+      ? `${order.slotDate.toISOString().slice(0, 10)} (${order.slotWindow})`
+      : 'Not applicable (kit by post)';
+    // One order can now carry several tests. Fall back to the primary package
+    // for orders placed before OrderItem existed.
+    const testLines = order.items.length
+      ? order.items.map((i) => (i.quantity > 1 ? `${i.nameSnapshot} × ${i.quantity}` : i.nameSnapshot))
+      : [order.package?.name ?? 'Unknown test'];
+    const testSummary = testLines.join(', ');
+    const subject = `New sample booked · ${order.orderNumber} · ${testSummary}`;
     const text = [
       `A new sample has been booked and paid for.`,
       ``,
       `Order:        ${order.orderNumber}`,
-      `Test:         ${order.package.name}`,
+      `Test:         ${testLines.join('\n              ')}`,
       `Fulfillment:  ${order.fulfillmentMode}`,
       `Patient:      ${patient}`,
       `Slot:         ${slot}`,
@@ -110,7 +122,7 @@ export async function linkLabAndNotify(orderId: string): Promise<LabNotifyResult
           orderNumber: order.orderNumber,
           labId: lab.id,
           partnerId: lab.partnerId,
-          package: order.package.name,
+          package: testSummary,
         },
         providerId: mail.providerId ?? null,
         sentAt: mail.delivered ? new Date() : null,

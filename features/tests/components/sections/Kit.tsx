@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { discountPercent, formatPaise } from '@/lib/catalog';
+import type { KitPricing } from '@/features/products/types';
 import type { Ground, KitSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Section } from '../ui';
@@ -49,10 +51,35 @@ const KICKER = 'font-kyg text-[12px] font-bold uppercase leading-[1.5] tracking-
 /** 40px on the artboard; 2.78vw hits 40.03 at 1440 so the clamp pins it there. */
 const PAD = 'px-[clamp(22px,2.78vw,40px)]';
 
-/** "Everything you need, in one box." - contents list beside the order panel. */
-export default function Kit({ data, ground }: { data: KitSection; ground?: Ground }) {
+/**
+ * "Everything you need, in one box." - contents list beside the order panel.
+ *
+ * This is the page's HAND-OFF, not its checkout. Every CTA on a test page is
+ * authored as `#kit`; TestPageView rewrites all of them (this panel's own button
+ * included) to /pr/genetic-testing-kit?select=<slug>, where the report is
+ * pre-ticked and the customer can add others to the same kit before ordering.
+ * Before that, the button pointed at `#kit` too - it scrolled to itself.
+ *
+ * The price shown here is this one report; the kit adds nothing on its own.
+ * `pricing` is null when the test has no active Package row, and the panel then
+ * shows the CTA without a number rather than implying it is free.
+ */
+export default function Kit({
+  data,
+  ground,
+  pricing,
+}: {
+  data: KitSection;
+  ground?: Ground;
+  pricing: KitPricing | null;
+}) {
   const { eyebrow, titleHtml } = data.head;
   const cta = data.order.cta;
+  const off = pricing ? discountPercent(pricing.price, pricing.compareAtPrice) : null;
+
+  /** Shared with the fallback link so both render identically. */
+  const CTA_CLASS =
+    'group inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-eden bg-eden px-6 py-5 font-kyg text-[18px] font-extrabold leading-6.75 tracking-[0.004em] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java sm:px-11';
 
   return (
     <Section ground={ground ?? 'ivory'} id="kit" className="border-y border-mine/10">
@@ -139,16 +166,47 @@ export default function Kit({ data, ground }: { data: KitSection; ground?: Groun
                 padding, and "Order My Kit" + arrow is already 140 - one word
                 longer and the pill overflows. So px-11 starts at sm. The 20 of
                 vertical pad stays (a 67px tap target) as does everything else. */}
-            <Link
-              href={cta.href}
-              className="group inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-eden bg-eden px-6 py-5 font-kyg text-[18px] font-extrabold leading-6.75 tracking-[0.004em] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java sm:px-11"
-            >
-              {cta.label}
-              <FigmaIcon
-                id="15367-1034"
-                className="-my-0.5 block h-6 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5"
-              />
-            </Link>
+            {/* price - sits directly above the button so the number and the
+                commitment are read together */}
+            {pricing && (
+              <div className="mb-5 flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1">
+                <span className="font-kyg text-[clamp(28px,2.4vw,34px)] font-extrabold leading-none tracking-[-0.02em] text-mine">
+                  {formatPaise(pricing.price)}
+                </span>
+                {pricing.compareAtPrice && (
+                  <span className="font-kyg text-[17px] font-semibold text-fusc line-through">
+                    {formatPaise(pricing.compareAtPrice)}
+                  </span>
+                )}
+                {off !== null && (
+                  <span className="rounded-full bg-eden/10 px-2.5 py-1 font-kyg text-[12.5px] font-bold text-eden">
+                    {off}% off
+                  </span>
+                )}
+              </div>
+            )}
+
+            {pricing && !pricing.inStock ? (
+              <span className={cn(CTA_CLASS, 'cursor-not-allowed border-mine/15 bg-mine/20 hover:translate-y-0')}>
+                Out of stock
+              </span>
+            ) : (
+              // `cta.href` has already been rewritten to the kit page with this
+              // report pre-ticked - see features/tests/kit-link.ts.
+              <Link href={cta.href} className={CTA_CLASS}>
+                {cta.label}
+                <FigmaIcon
+                  id="15367-1034"
+                  className="-my-0.5 block h-6 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5"
+                />
+              </Link>
+            )}
+
+            {pricing && (
+              <p className="mt-3 font-kyg text-[12.5px] leading-[1.5] text-fusc">
+                Add other reports to the same kit on the next step - one sample covers them all.
+              </p>
+            )}
 
             {/* reassurance note: 19x23 shield + 12.5/17.2, left-aligned */}
             <div className="mt-5 flex items-start gap-2.5 text-left">

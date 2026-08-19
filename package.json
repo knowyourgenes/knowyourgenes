@@ -17,7 +17,9 @@
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
     "db:seed-pincodes": "tsx prisma/seed-pincodes.ts",
-    "db:reset": "prisma migrate reset --force"
+    "db:reset": "prisma migrate reset --force",
+    "db:seed:catalog": "tsx prisma/seed-catalog.ts",
+    "smoke": "tsx scripts/smoke.ts"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.5.0",

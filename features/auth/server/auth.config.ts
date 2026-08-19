@@ -10,6 +10,21 @@ export default {
   // `UntrustedHost`. We terminate TLS at a trusted proxy that sets the Host
   // header, so trusting it is safe. (Dev auto-trusts localhost regardless.)
   trustHost: true,
+
+  // Cookies are scoped by HOST, not by port, so every Next app on localhost
+  // shares one jar. This repo and D:/DN/DNMS/WEBISTE_DNMS both run there with
+  // Auth.js defaults, so both write "authjs.session-token" - and whichever you
+  // signed into last leaves a cookie the other cannot decrypt:
+  //
+  //   [auth][error] JWTSessionError
+  //   [auth][cause]: Error: no matching decryption secret
+  //
+  // A project-specific name in DEVELOPMENT keeps the two apart. Production
+  // deliberately keeps the default name: renaming it there would sign out every
+  // live user once, to fix something that only happens on a dev machine.
+  // Auth.js merges this over its defaults, so httpOnly/sameSite/path/secure are
+  // untouched (see merge(defaultCookies(...), config.cookies) in @auth/core).
+  ...(process.env.NODE_ENV === 'development' ? { cookies: { sessionToken: { name: 'kyg.dev.session-token' } } } : {}),
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,

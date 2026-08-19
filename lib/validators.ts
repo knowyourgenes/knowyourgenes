@@ -356,19 +356,73 @@ export const shipmentQuery = z.object({
 // Checkout (customer-facing order creation)
 // ---------------------------------------------------------------------------
 
-export const checkoutCreate = z.object({
-  packageId: z.string().min(1),
-  addressId: z.string().min(1),
-  slotDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD required'),
-  slotWindow: SlotWindowEnum,
-  fulfillmentMode: FulfillmentTypeEnum.optional(), // defaults from Package.fulfillmentType
-  couponCode: z
+const couponCodeField = z
+  .string()
+  .max(32)
+  .regex(/^[A-Z0-9_]*$/, 'Coupons are uppercase alphanumeric + underscore')
+  .optional()
+  .nullable();
+
+/** One cart line as the browser sends it: a slug and a count, never a price. */
+export const cartLine = z.object({
+  slug: z
     .string()
-    .max(32)
-    .regex(/^[A-Z0-9_]*$/, 'Coupons are uppercase alphanumeric + underscore')
+    .min(1)
+    .max(64)
+    .regex(/^[a-z0-9-]+$/, 'Slugs are lowercase kebab-case'),
+  quantity: z.coerce.number().int().min(1).max(10),
+});
+
+/** Body of POST /api/cart - re-price a cart. Empty carts are legal (total ₹0). */
+export const cartPrice = z.object({
+  lines: z.array(cartLine).max(20),
+  couponCode: couponCodeField,
+});
+
+/**
+ * Body of POST /api/checkout.
+ *
+ * `lines` replaced the old single `packageId` when the cart shipped - an order
+ * is now a basket. slotDate/slotWindow are optional because a KIT_BY_POST order
+ * has no collection visit; the route rejects a missing slot only when the cart
+ * actually contains an at-home line.
+ */
+export const checkoutCreate = z.object({
+  lines: z.array(cartLine).min(1, 'Cart is empty').max(20),
+  addressId: z.string().min(1),
+  slotDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD required')
     .optional()
     .nullable(),
+  slotWindow: SlotWindowEnum.optional().nullable(),
+  fulfillmentMode: FulfillmentTypeEnum.optional(), // defaults from Package.fulfillmentType
+  couponCode: couponCodeField,
 });
+
+// ---------------------------------------------------------------------------
+// Addresses (customer-facing - the delivery address a kit is couriered to)
+// ---------------------------------------------------------------------------
+
+export const addressCreate = z.object({
+  fullName: z.string().min(2).max(120),
+  // Deliberately loose: Indian numbers get typed with +91, spaces and dashes.
+  // The route normalises to 10 digits rather than rejecting a valid number.
+  phone: z
+    .string()
+    .min(10)
+    .max(20)
+    .regex(/^[0-9+\-\s()]+$/, 'Digits, spaces, + - ( ) only'),
+  line1: z.string().min(3).max(200),
+  line2: z.string().max(200).optional().nullable(),
+  area: z.string().min(2).max(120),
+  city: z.string().min(2).max(120),
+  pincode: z.string().regex(/^\d{6}$/, 'A 6-digit Indian PIN code'),
+  landmark: z.string().max(200).optional().nullable(),
+  isDefault: z.boolean().optional(),
+});
+
+export const addressUpdate = addressCreate.partial();
 
 export const checkoutVerify = z.object({
   orderId: z.string().min(1), // KYG Order.id
