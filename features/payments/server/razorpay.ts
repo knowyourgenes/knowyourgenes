@@ -7,8 +7,27 @@
  *
  * Two modes:
  *   - Real:  RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET → live calls.
- *   - Mock:  auto-enabled when the key is empty; returns deterministic fake
- *            order_id / payment_id so the rest of the system is testable.
+ *   - Mock:  DEV AND TEST ONLY. Returns deterministic fake order_id /
+ *            payment_id so the whole buying journey stays runnable without
+ *            credentials, including in CI.
+ *
+ * MOCK CANNOT ENGAGE IN PRODUCTION, and that is the point of the guard below.
+ * It used to be a plain fallback - `!KEY_ID || !KEY_SECRET` - which made a
+ * missing environment variable silently turn checkout into a giveaway:
+ * /api/checkout answered `mock: true`, the browser skipped the Razorpay modal
+ * entirely and posted the literal string 'mock_signature', this file accepted
+ * any non-empty signature, and the order was captured, stock decremented, the
+ * coupon consumed and the lab emailed to expect a sample. The order still
+ * recorded the FULL amount as CAPTURED, so nothing internal disagreed with
+ * anything else; only an empty Razorpay dashboard would ever have shown it.
+ *
+ * That is not hypothetical drift. RAZORPAY_WEBHOOK_SECRET is already missing
+ * from this repo's .env, and the webhook - the one path that could have caught
+ * it - is dead under exactly the same misconfiguration.
+ *
+ * So in production, absent keys are a HARD FAILURE at the point of use rather
+ * than a quiet downgrade. A checkout that 502s is a bad afternoon; a checkout
+ * that hands out genetic test kits for nothing is a bad quarter.
  */
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
@@ -16,7 +35,37 @@ const BASE_URL = 'https://api.razorpay.com/v1';
 const KEY_ID = process.env.RAZORPAY_KEY_ID ?? '';
 const KEY_SECRET = process.env.RAZORPAY_KEY_SECRET ?? '';
 const WEBHOOK_SECRET = process.env.RAZORPAY_WEBHOOK_SECRET ?? '';
-export const RAZORPAY_MOCK = !KEY_ID || !KEY_SECRET;
+
+/**
+ * Whether the fake payment path may be used at all.
+ *
+ * Keyed on NODE_ENV, which Next sets to 'production' for `next build` and
+ * `next start` and cannot be flipped by an ordinary env var at runtime. A
+ * deployment is therefore incapable of mocking a payment no matter what is or
+ * is not configured.
+ */
+const MOCK_PERMITTED = process.env.NODE_ENV !== 'production';
+
+/** True only when mocking is BOTH permitted and actually needed. */
+export const RAZORPAY_MOCK = MOCK_PERMITTED && (!KEY_ID || !KEY_SECRET);
+
+/** True when we are expected to talk to Razorpay for real but cannot. */
+export const RAZORPAY_MISCONFIGURED = !RAZORPAY_MOCK && (!KEY_ID || !KEY_SECRET);
+
+/**
+ * Thrown rather than returned: every caller already handles a rejection from
+ * createRazorpayOrder by leaving the order BOOKED and unpaid, which is exactly
+ * the right outcome. Returning a falsy value instead would need each call site
+ * to remember to check.
+ */
+function assertConfigured(): void {
+  if (RAZORPAY_MISCONFIGURED) {
+    throw new Error(
+      'Razorpay is not configured: RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET must both be set. ' +
+        'Refusing to process a payment.'
+    );
+  }
+}
 
 function authHeader(): string {
   const b64 = Buffer.from(`${KEY_ID}:${KEY_SECRET}`).toString('base64');
@@ -41,6 +90,8 @@ export async function createRazorpayOrder(opts: {
   receipt: string;
   notes?: Record<string, string>;
 }): Promise<RazorpayOrder> {
+  assertConfigured();
+
   if (RAZORPAY_MOCK) {
     return {
       id: `order_MOCK${Date.now().toString().slice(-10)}`,
@@ -84,8 +135,16 @@ export function verifyPaymentSignature(opts: {
   razorpayPaymentId: string;
   razorpaySignature: string;
 }): boolean {
+  // Fail CLOSED before anything else. Without a secret there is no signature to
+  // check against, so the only honest answer is "not verified" - never "sure,
+  // looks fine". This mirrors verifyWebhookSignature below, which already did
+  // the right thing; the two now agree.
+  if (RAZORPAY_MISCONFIGURED) return false;
+
   if (RAZORPAY_MOCK) {
-    // In mock mode, accept any non-empty signature so e2e tests can pass.
+    // Dev and CI only - MOCK_PERMITTED makes this unreachable in production.
+    // Accepts any non-empty signature so the e2e buying journey can run without
+    // credentials.
     return opts.razorpaySignature.length > 0;
   }
   const expected = createHmac('sha256', KEY_SECRET)

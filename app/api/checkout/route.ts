@@ -6,7 +6,12 @@ import { checkoutCreate, checkoutGuest } from '@/lib/validators';
 import { readAttributionCookie, attributionToOrderFields } from '@/features/attribution/server/attribution';
 import { nextOrderNumber, resolveCampaignId } from '@/features/orders';
 import { priceCart } from '@/features/cart';
-import { createRazorpayOrder, RAZORPAY_KEY_ID_PUBLIC, RAZORPAY_MOCK } from '@/features/payments';
+import {
+  createRazorpayOrder,
+  RAZORPAY_KEY_ID_PUBLIC,
+  RAZORPAY_MISCONFIGURED,
+  RAZORPAY_MOCK,
+} from '@/features/payments';
 
 /**
  * POST /api/checkout
@@ -46,6 +51,14 @@ import { createRazorpayOrder, RAZORPAY_KEY_ID_PUBLIC, RAZORPAY_MOCK } from '@/fe
  */
 export async function POST(req: Request) {
   return handle(async () => {
+    // Refuse BEFORE touching the database. Without keys the payment cannot be
+    // taken, so every row created past this point would be an orphan BOOKED
+    // order that no one can pay. Fails loudly on the first attempt rather than
+    // accumulating litter until someone reads the table.
+    if (RAZORPAY_MISCONFIGURED) {
+      return fail('Payments are temporarily unavailable. Please try again shortly.', 503);
+    }
+
     const session = await auth();
     // `body` is kept because checkoutCreate strips unknown keys, and the guest
     // payload is parsed separately against its own schema.
