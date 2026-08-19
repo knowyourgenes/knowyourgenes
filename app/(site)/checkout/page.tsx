@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import { auth } from '@/features/auth';
 import { prisma } from '@/server/prisma';
 import { CheckoutView } from '@/features/checkout/components/CheckoutView';
@@ -14,14 +13,18 @@ export const metadata: Metadata = {
 
 export default async function CheckoutPage() {
   const session = await auth();
-  // Payment needs an account: the order has to belong to someone who can be
-  // shipped to, contacted about a report, and refunded.
-  if (!session?.user) redirect('/login?from=/checkout');
 
-  const addresses = await prisma.address.findMany({
-    where: { userId: session.user.id },
-    orderBy: [{ isDefault: 'desc' }, { createdAt: 'desc' }],
-  });
+  // NO LOGIN WALL. A first-time buyer types an email and an address and pays;
+  // the order is attached to that email so it is waiting for them the first
+  // time they do sign in. Requiring an account before payment is the single
+  // biggest drop-off point in a checkout, and nothing here needs one - the
+  // order carries its own delivery address and contact.
+  const addresses = session?.user?.id
+    ? await prisma.address.findMany({
+        where: { userId: session.user.id },
+        orderBy: [{ isDefault: 'desc' }, { createdAt: 'desc' }],
+      })
+    : [];
 
   return (
     <div className="kyg-tests min-h-[70vh] bg-spring font-kyg text-mine antialiased">
@@ -30,7 +33,12 @@ export default async function CheckoutPage() {
         <h1 className="mt-3 text-[clamp(30px,4.4vw,46px)] font-semibold leading-[1.06] tracking-[-0.025em]">
           Checkout
         </h1>
-        <CheckoutView addresses={addresses} customerName={session.user.name ?? ''} />
+        <CheckoutView
+          addresses={addresses}
+          customerName={session?.user?.name ?? ''}
+          guest={!session?.user?.id}
+          knownEmail={session?.user?.email ?? ''}
+        />
       </div>
     </div>
   );

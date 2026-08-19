@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers';
 import { prisma } from '@/server/prisma';
-import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
-import { checkoutCreate } from '@/lib/validators';
+import { fail, handle, ok } from '@/server/api';
+import { auth } from '@/features/auth';
+import { checkoutCreate, checkoutGuest } from '@/lib/validators';
 import { readAttributionCookie, attributionToOrderFields } from '@/features/attribution/server/attribution';
 import { nextOrderNumber, resolveCampaignId } from '@/features/orders';
 import { priceCart } from '@/features/cart';
@@ -21,8 +22,18 @@ import { createRazorpayOrder, RAZORPAY_KEY_ID_PUBLIC, RAZORPAY_MOCK } from '@/fe
  * quantity had to be clamped), we refuse with 409 and hand back the corrected
  * cart rather than charging a total they never saw.
  *
+ * GUESTS CAN BUY. There is no login wall: an unauthenticated caller sends an
+ * email plus an address inline and the order is attached to that email - to the
+ * existing account if one has that address, otherwise to a freshly created one.
+ * Nobody is signed in by this route. Creating a session from an email typed into
+ * a form would hand any stranger the account - and its genetic reports - of
+ * whoever owns that mailbox.
+ *
+ * The response is IDENTICAL either way, deliberately: a different message for
+ * "email already registered" turns checkout into an account-existence oracle.
+ *
  * Flow:
- *   1. Auth - require any logged-in user.
+ *   1. Auth - a session if there is one, otherwise the guest branch.
  *   2. Validate body (lines, address, optional slot, coupon).
  *   3. Re-price the cart server-side; bail on any rejection/adjustment.
  *   4. Require a collection slot only if the cart contains an at-home line.
@@ -35,13 +46,63 @@ import { createRazorpayOrder, RAZORPAY_KEY_ID_PUBLIC, RAZORPAY_MOCK } from '@/fe
  */
 export async function POST(req: Request) {
   return handle(async () => {
-    const guard = await requireApiRole(['USER', 'ADMIN', 'AGENT', 'COUNSELLOR', 'PARTNER']);
-    if (isResponse(guard)) return guard;
+    const session = await auth();
+    // `body` is kept because checkoutCreate strips unknown keys, and the guest
+    // payload is parsed separately against its own schema.
+    const body = (await req.json()) as unknown;
+    const input = checkoutCreate.parse(body);
 
-    const input = checkoutCreate.parse(await req.json());
+    let userId: string;
+    let addressId: string;
 
-    const address = await prisma.address.findUnique({ where: { id: input.addressId } });
-    if (!address || address.userId !== guard.id) return fail('Address not found', 404);
+    if (session?.user?.id) {
+      // ---- signed in: the address must already be theirs -----------------
+      if (!input.addressId) return fail('Choose a delivery address', 400);
+      const address = await prisma.address.findUnique({ where: { id: input.addressId } });
+      if (!address || address.userId !== session.user.id) return fail('Address not found', 404);
+      userId = session.user.id;
+      addressId = address.id;
+    } else {
+      // ---- guest ---------------------------------------------------------
+      const guest = checkoutGuest.parse((body as { guest?: unknown })?.guest);
+      const email = guest.email.trim().toLowerCase();
+
+      // upsert, not find-then-create: two tabs paying at once would otherwise
+      // race and one would hit the unique constraint on User.email.
+      //
+      // `update: {}` is doing real work - it means an EXISTING account is left
+      // completely untouched. A guest must not be able to rename someone, mark
+      // their email verified, or change their role by typing their address into
+      // a checkout form. All a guest can do is add an order to it.
+      //
+      // `phone` is deliberately NOT copied onto the User: that column is unique
+      // site-wide, so a shared family number would make the second buyer's
+      // account creation fail at the database.
+      const user = await prisma.user.upsert({
+        where: { email },
+        update: {},
+        create: { email, name: guest.address.fullName },
+        select: { id: true },
+      });
+
+      const created = await prisma.address.create({
+        data: {
+          userId: user.id,
+          fullName: guest.address.fullName,
+          phone: guest.address.phone,
+          line1: guest.address.line1,
+          line2: guest.address.line2 || null,
+          area: guest.address.area,
+          city: guest.address.city,
+          pincode: guest.address.pincode,
+          landmark: guest.address.landmark || null,
+        },
+        select: { id: true },
+      });
+
+      userId = user.id;
+      addressId = created.id;
+    }
 
     // ---- authoritative pricing -------------------------------------------
     const cart = await priceCart({ lines: input.lines, couponCode: input.couponCode });
@@ -80,10 +141,10 @@ export async function POST(req: Request) {
     const order = await prisma.order.create({
       data: {
         orderNumber,
-        user: { connect: { id: guard.id } },
+        user: { connect: { id: userId } },
         // Denormalised primary line - see the comment on Order.packageId.
         package: { connect: { id: primary.packageId } },
-        address: { connect: { id: address.id } },
+        address: { connect: { id: addressId } },
         couponCode: cart.coupon?.applied ? cart.coupon.code : null,
         subtotal: cart.subtotal,
         discount: cart.discount,
@@ -121,7 +182,7 @@ export async function POST(req: Request) {
               cart.lines.length === 1
                 ? 'Order booked, awaiting payment'
                 : `Order booked (${cart.itemCount} reports), awaiting payment`,
-            actorId: guard.id,
+            actorId: userId,
             meta: attr.attrSource ? { attribution: { source: attr.attrSource, medium: attr.attrMedium } } : undefined,
           },
         },
@@ -140,7 +201,7 @@ export async function POST(req: Request) {
         notes: {
           kyg_order_id: order.id,
           items: cart.lines.map((l) => `${l.slug}x${l.quantity}`).join(','),
-          user_id: guard.id,
+          user_id: userId,
         },
       });
     } catch (err) {
