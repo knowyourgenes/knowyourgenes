@@ -1,5 +1,8 @@
+import { cookies } from 'next/headers';
 import { prisma } from '@/server/prisma';
-import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { fail, handle, ok } from '@/server/api';
+import { auth } from '@/features/auth';
+import { RECENT_ORDER_COOKIE, RECENT_ORDER_MAX_AGE } from '@/features/orders/recent-order';
 import { checkoutVerify } from '@/lib/validators';
 import { verifyPaymentSignature } from '@/features/payments';
 import { captureOrderPayment } from '@/features/orders';
@@ -17,18 +20,29 @@ import { linkLabAndNotify } from '@/features/lab';
  * route is the authoritative payment confirmation - it runs server-to-server
  * and reconciles missed verify calls (e.g., user closes the tab before the
  * client-side call lands).
+ *
+ * GUESTS REACH THIS WITHOUT A SESSION, and that is safe because the session was
+ * never what secured it. The real proof is `verifyPaymentSignature`: an
+ * HMAC over (razorpay_order_id | razorpay_payment_id) using our key secret.
+ * Only Razorpay can produce it, and it is checked against the razorpayOrderId
+ * already stored on the order. A caller who guesses an order id but cannot
+ * forge that signature gets a 400 and nothing else. For a signed-in caller the
+ * ownership check is still enforced on top, so nothing is loosened for them.
  */
 export async function POST(req: Request) {
   return handle(async () => {
-    const guard = await requireApiRole(['USER', 'ADMIN', 'AGENT', 'COUNSELLOR', 'PARTNER']);
-    if (isResponse(guard)) return guard;
+    const session = await auth();
 
     const body = await req.json();
     const input = checkoutVerify.parse(body);
 
     const order = await prisma.order.findUnique({ where: { id: input.orderId } });
     if (!order) return fail('Order not found', 404);
-    if (order.userId !== guard.id && guard.role !== 'ADMIN') return fail('Forbidden', 403);
+    // Only meaningful when there IS a session. A guest has no identity to check
+    // against, which is why the signature below carries the whole proof.
+    if (session?.user?.id && order.userId !== session.user.id && session.user.role !== 'ADMIN') {
+      return fail('Forbidden', 403);
+    }
 
     // The razorpay order id on file must match what the client claims succeeded.
     if (!order.razorpayOrderId || order.razorpayOrderId !== input.razorpayOrderId) {
@@ -48,8 +62,24 @@ export async function POST(req: Request) {
       orderId: order.id,
       razorpayPaymentId: input.razorpayPaymentId,
       razorpaySignature: input.razorpaySignature,
-      actorId: guard.id,
+      // The order's own user, not the caller: a guest is not signed in, so there
+      // is no actor id to record, and attributing the capture to the buyer is
+      // what the order timeline wants to show anyway.
+      actorId: order.userId,
       source: 'verify',
+    });
+
+    // Lets THIS browser - and only this browser - see the confirmation page for
+    // an order it has no session to prove it owns. httpOnly so script cannot
+    // read it, lax so it survives the return trip from Razorpay, and short
+    // lived because it is a receipt stub, not a credential.
+    const jar = await cookies();
+    jar.set(RECENT_ORDER_COOKIE, order.orderNumber, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: RECENT_ORDER_MAX_AGE,
     });
 
     if (!claimed) {

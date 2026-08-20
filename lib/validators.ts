@@ -389,7 +389,12 @@ export const cartPrice = z.object({
  */
 export const checkoutCreate = z.object({
   lines: z.array(cartLine).min(1, 'Cart is empty').max(20),
-  addressId: z.string().min(1),
+  // Optional because a GUEST has no saved addresses to point at - they send
+  // `guest` instead (see checkoutGuest below) and the route creates the row.
+  // Exactly one of the two is required, and which one is decided by the SESSION
+  // on the server, never by the client: letting the body choose would let a
+  // logged-in caller pass someone else's address id.
+  addressId: z.string().min(1).optional(),
   slotDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD required')
@@ -420,6 +425,23 @@ export const addressCreate = z.object({
   pincode: z.string().regex(/^\d{6}$/, 'A 6-digit Indian PIN code'),
   landmark: z.string().max(200).optional().nullable(),
   isDefault: z.boolean().optional(),
+});
+
+/**
+ * What an unauthenticated buyer sends instead of `addressId`.
+ *
+ * Placed immediately after `addressCreate` because it reuses it, and a `const`
+ * cannot be read before its initialiser has run - defining this any earlier in
+ * the file would throw at module load.
+ *
+ * The email is the ONLY handle we get on a guest: it is what the order is
+ * attached to, and therefore what they will later sign in with to see it. The
+ * route normalises it (trim + lowercase) before it reaches the database, so
+ * "A@b.com " and "a@b.com" cannot become two separate accounts.
+ */
+export const checkoutGuest = z.object({
+  email: z.string().min(3).max(200).email('A valid email is required'),
+  address: addressCreate,
 });
 
 export const addressUpdate = addressCreate.partial();

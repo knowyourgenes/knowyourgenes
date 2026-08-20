@@ -78,12 +78,27 @@ function tomorrowISO(): string {
   return d.toISOString().slice(0, 10);
 }
 
-export function CheckoutView({ addresses, customerName }: { addresses: SavedAddress[]; customerName: string }) {
+export function CheckoutView({
+  addresses,
+  customerName,
+  guest = false,
+  knownEmail = '',
+}: {
+  addresses: SavedAddress[];
+  customerName: string;
+  /** No session. Collect an email and post the address inline. */
+  guest?: boolean;
+  /** Prefill for signed-in buyers; never used to identify a guest. */
+  knownEmail?: string;
+}) {
   const router = useRouter();
   const { lines, priced, hydrated, couponCode, clear } = useCart();
 
   const [addressId, setAddressId] = useState<string | null>(addresses.find((a) => a.isDefault)?.id ?? null);
-  const [showNewAddress, setShowNewAddress] = useState(addresses.length === 0);
+  // A guest has nothing saved, so the form is the only option and cannot be
+  // toggled away from.
+  const [showNewAddress, setShowNewAddress] = useState(guest || addresses.length === 0);
+  const [email, setEmail] = useState(knownEmail);
   const [draft, setDraft] = useState<AddressDraft>({ ...EMPTY_ADDRESS, fullName: customerName });
   const [slotDate, setSlotDate] = useState(tomorrowISO());
   const [slotWindow, setSlotWindow] = useState<string>('MORNING');
@@ -108,7 +123,14 @@ export function CheckoutView({ addresses, customerName }: { addresses: SavedAddr
     );
   }
 
-  /** Saves the typed address and returns its id, or null if it was rejected. */
+  /**
+   * Saves the typed address and returns its id, or null if it was rejected.
+   *
+   * GUESTS NEVER GET HERE: /api/addresses requires a session, and a guest has
+   * no user to hang an address off yet. Their address travels inside the
+   * checkout body instead, and the route creates the user and the address
+   * together - see the guest branch in app/api/checkout/route.ts.
+   */
   async function ensureAddressId(): Promise<string | null> {
     if (!showNewAddress && addressId) return addressId;
 
@@ -133,8 +155,22 @@ export function CheckoutView({ addresses, customerName }: { addresses: SavedAddr
   async function pay() {
     setBusy(true);
     try {
-      const finalAddressId = await ensureAddressId();
-      if (!finalAddressId) return;
+      // A guest sends { guest: { email, address } }; a signed-in buyer sends an
+      // addressId. The SERVER decides which branch runs, from the session - the
+      // body only offers what it has.
+      let identity: Record<string, unknown>;
+      if (guest) {
+        identity = {
+          guest: {
+            email: email.trim().toLowerCase(),
+            address: { ...draft, line2: draft.line2 || null, landmark: draft.landmark || null },
+          },
+        };
+      } else {
+        const finalAddressId = await ensureAddressId();
+        if (!finalAddressId) return;
+        identity = { addressId: finalAddressId };
+      }
 
       // ---- create the order --------------------------------------------
       const res = await fetch('/api/checkout', {
@@ -142,7 +178,7 @@ export function CheckoutView({ addresses, customerName }: { addresses: SavedAddr
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           lines,
-          addressId: finalAddressId,
+          ...identity,
           couponCode,
           ...(priced!.requiresSlot ? { slotDate, slotWindow } : {}),
         }),
@@ -195,7 +231,13 @@ export function CheckoutView({ addresses, customerName }: { addresses: SavedAddr
         currency: razorpay.currency,
         name: 'Know Your Genes',
         description: `Order ${orderNumber}`,
-        prefill: { name: draft.fullName || customerName },
+        prefill: {
+          name: draft.fullName || customerName,
+          // Razorpay emails its own receipt to this address, and it is the same
+          // one the order is filed under, so the two never disagree.
+          ...(email ? { email: email.trim().toLowerCase() } : {}),
+          ...(draft.phone ? { contact: draft.phone } : {}),
+        },
         handler: (r: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
           void verify(orderId, orderNumber, r);
         },
@@ -244,13 +286,41 @@ export function CheckoutView({ addresses, customerName }: { addresses: SavedAddr
   }
 
   const canPay =
-    !busy && (showNewAddress ? draft.fullName && draft.phone && draft.line1 && draft.area && draft.pincode : addressId);
+    !busy &&
+    // A guest with no email would place an order nobody can be reached about,
+    // and which they could never find again once the tab closes.
+    (!guest || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) &&
+    (showNewAddress ? draft.fullName && draft.phone && draft.line1 && draft.area && draft.pincode : addressId);
 
   return (
     <div className="mt-9 grid items-start gap-6 lg:grid-cols-[1.5fr_1fr]">
       <div className="space-y-4">
         {/* ---- address ---- */}
         <section className={`${CARD} p-6`}>
+          {guest && (
+            <div className="mb-5">
+              <label htmlFor="guest-email" className="block text-[13.5px] font-semibold text-mine">
+                Email
+              </label>
+              <p className="mt-0.5 text-[12.5px] leading-[1.5] text-cape">
+                Your order confirmation goes here, and your report when it is ready. Sign in with this address later to
+                track it - there is nothing to create now.
+              </p>
+              <input
+                id="guest-email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                required
+                value={email}
+                disabled={busy}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="mt-2 h-[46px] w-full rounded-[12px] border border-zeus/[0.14] bg-white px-3.5 text-[14.5px] text-mine outline-none transition focus:border-eden focus:ring-2 focus:ring-eden/15 disabled:opacity-60"
+              />
+            </div>
+          )}
+
           <h2 className="text-[17px] font-semibold tracking-[-0.015em]">Delivery address</h2>
           <p className="mt-1 text-[13.5px] text-cord">We courier the kit here, and collect the sample from here.</p>
 

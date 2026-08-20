@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
+import { cookies } from 'next/headers';
 import { auth } from '@/features/auth';
 import { prisma } from '@/server/prisma';
+import { RECENT_ORDER_COOKIE } from '@/features/orders/recent-order';
+import { GuestAccountPrompt } from '@/features/checkout/components/GuestAccountPrompt';
 import { formatPaise } from '@/lib/catalog';
 
 export const dynamic = 'force-dynamic';
@@ -17,14 +20,29 @@ type SearchParams = Promise<{ order?: string }>;
 export default async function CheckoutSuccessPage({ searchParams }: { searchParams: SearchParams }) {
   const { order: orderNumber } = await searchParams;
   const session = await auth();
-  if (!session?.user) redirect('/login');
   if (!orderNumber) notFound();
+
+  // A GUEST HAS NO SESSION TO CHECK, so the receipt cookie set by
+  // /api/checkout/verify stands in: it names the one order this browser just
+  // paid for. Without it, `?order=` would be an enumeration hole - order
+  // numbers are sequential, and the page prints a name, a full postal address
+  // and the exact genetic tests bought.
+  const jar = await cookies();
+  const receipt = jar.get(RECENT_ORDER_COOKIE)?.value;
 
   const order = await prisma.order.findUnique({
     where: { orderNumber },
-    include: { items: true, address: true },
+    include: { items: true, address: true, user: { select: { email: true } } },
   });
-  if (!order || order.userId !== session.user.id) notFound();
+  if (!order) notFound();
+
+  const owns = session?.user?.id === order.userId;
+  const justPaid = receipt === order.orderNumber;
+  if (!owns && !justPaid) notFound();
+
+  // Only for someone with no session: a signed-in buyer is already where the
+  // prompt would send them, so showing it to them is pure noise.
+  const showGuestPrompt = !session?.user?.id && justPaid;
 
   const steps = order.slotDate
     ? [
@@ -118,6 +136,10 @@ export default async function CheckoutSuccessPage({ searchParams }: { searchPara
           </Link>
         </div>
       </div>
+      {showGuestPrompt && (
+        <GuestAccountPrompt email={order.user?.email ?? ''} orderNumber={order.orderNumber} />
+      )}
+
     </div>
   );
 }
