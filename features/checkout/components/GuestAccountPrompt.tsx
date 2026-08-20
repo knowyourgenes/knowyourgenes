@@ -41,11 +41,7 @@ export function GuestAccountPrompt({ email, orderNumber }: { email: string; orde
 
   return (
     <div className="fixed inset-0 z-[1400] flex items-end justify-center p-4 sm:items-center">
-      <div
-        onClick={() => setOpen(false)}
-        className="absolute inset-0 bg-[rgba(20,15,10,0.45)]"
-        aria-hidden="true"
-      />
+      <div onClick={() => setOpen(false)} className="absolute inset-0 bg-[rgba(20,15,10,0.45)]" aria-hidden="true" />
 
       <div
         ref={panelRef}

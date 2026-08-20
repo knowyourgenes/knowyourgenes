@@ -136,10 +136,7 @@ export default async function CheckoutSuccessPage({ searchParams }: { searchPara
           </Link>
         </div>
       </div>
-      {showGuestPrompt && (
-        <GuestAccountPrompt email={order.user?.email ?? ''} orderNumber={order.orderNumber} />
-      )}
-
+      {showGuestPrompt && <GuestAccountPrompt email={order.user?.email ?? ''} orderNumber={order.orderNumber} />}
     </div>
   );
 }

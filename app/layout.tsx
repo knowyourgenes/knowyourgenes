@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Geist, Geist_Mono, Figtree, Hind, Cormorant_Garamond } from 'next/font/google';
 import { auth } from '@/features/auth';
 import Providers from '@/components/Providers';
@@ -58,6 +59,10 @@ export const metadata: Metadata = {
   },
 };
 
+// Google Analytics 4 measurement ID. Loaded site-wide through next/script with
+// the default `afterInteractive` strategy, so the tag never blocks hydration.
+const GA_MEASUREMENT_ID = 'G-YBXZN9CQYY';
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -85,6 +90,14 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-white text-slate-900">
         <Providers session={session}>{children}</Providers>
         <AttributionBeacon />
+        {/* Google tag (gtag.js) */}
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}');`}
+        </Script>
       </body>
     </html>
   );
