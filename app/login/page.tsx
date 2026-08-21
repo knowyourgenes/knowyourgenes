@@ -1,19 +1,41 @@
 'use client';
 
+// =============================================================================
+// /login — the split sign-in screen
+// -----------------------------------------------------------------------------
+// Built from Figma "KYG - Homepage UI" node 1078:2802 ("Sign In") plus the
+// Sign In.pdf export. The frame is 1440 x 900, split
+// `minmax(0,44fr) minmax(0,56fr)`: a dark brand ground on the left, the form on
+// a cream field to the right.
+//
+// THE HELIX IS THE HOMEPAGE'S, not a picture of it. The frame shows the strand
+// as a flat image fill, but the brief was the live one - so this mounts the
+// same <HelixCanvas> the hero uses, with the same HERO_HELIX preset. It keeps
+// the pointer interaction (particles are pushed away from the cursor and spring
+// back), which is the "helical on hover" behaviour and the reason not to ship
+// the flat export.
+//
+// NO SITE CHROME. /login sits directly under app/ with no route-group layout,
+// so SiteHeader and SiteFooter never mount here. That is deliberate and matches
+// the frame: the left panel carries its own logo, assurance line and legal
+// links, and a second header above it would fight them.
+//
+// BELOW lg THE BRAND PANEL IS DROPPED and the logo moves above the form. The
+// frame only specifies 1440; stacking a 900px-tall decorative panel on top of a
+// phone would push the actual sign-in form off-screen, which is the one thing
+// this page cannot afford.
+// =============================================================================
+
 import Link from 'next/link';
-import Image from 'next/image';
-import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, Suspense } from 'react';
-import { AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Suspense, useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { AlertCircle, Eye, EyeOff, Lock, Mail, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { KygLogo } from '@/components/shared/Logo';
+import { HelixCanvas, HERO_HELIX } from '@/features/home/components/v2/HelixCanvas';
+import { HomeIcon } from '@/features/home/components/v2/HomeIcon';
 
 /**
  * Only allow relative paths to flow through `?from`. Anything else (absolute
@@ -30,6 +52,30 @@ function safeFrom(raw: string | null): string {
   return raw;
 }
 
+/** The five insight areas, with the hero's own 17x17 stroked glyphs. */
+const AREAS: { label: string; icon: string }[] = [
+  { label: 'Wellness', icon: '638-63' },
+  { label: 'Family', icon: '638-184' },
+  { label: 'Health', icon: '638-287' },
+  { label: 'Longevity', icon: '638-391' },
+  { label: 'Ancestry', icon: '638-520' },
+];
+
+/** Figtree 700 16/25.6, eden, with the frame's 28%-opacity underline. */
+const TLINK =
+  'font-kyg text-[16px] font-bold leading-[1.6] tracking-[-0.007em] text-eden ' +
+  'shadow-[inset_0_-1px_0_0_rgba(14,77,75,0.28)] transition-shadow hover:shadow-[inset_0_-1px_0_0_rgba(14,77,75,0.9)]';
+
+/** 452 x 62.8, radius 10, white, with the frame's two-layer shadow + inset ring. */
+const FIELD_SHELL =
+  'relative flex w-full items-center rounded-[10px] bg-white ' +
+  'shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] ' +
+  'transition-shadow focus-within:shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(14,77,75,0.55)]';
+
+const INPUT =
+  'h-[62.8px] w-full rounded-[10px] bg-transparent pl-[48px] pr-[18px] ' +
+  'font-kyg text-[18px] tracking-[-0.008em] text-bistre outline-none placeholder:text-pewter';
+
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
@@ -38,6 +84,7 @@ function LoginForm() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,95 +104,299 @@ function LoginForm() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center px-4 py-16">
+    <div className="relative isolate min-h-screen bg-linenw">
+      {/* The homepage's paper grain: the frame carries it as a full-bleed
+          `::after` at 42% over a 180x180 noise tile. Fixed rather than
+          scrolled - it is texture on the screen, not printed on the page. */}
       <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,var(--color-brand-soft),transparent_70%)]"
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[60] opacity-[0.42] mix-blend-soft-light [background-image:url(&quot;data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='.82'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='180'%20height='180'%20filter='url(%23n)'/%3E%3C/svg%3E&quot;)]"
       />
-      <div className="w-full max-w-md">
-        <Link href="/" className="mb-8 flex items-center justify-center" prefetch={false}>
-          <Image
-            src="/kyglogo.webp"
-            alt="Know Your Genes"
-            width={200}
-            height={56}
-            className="h-14 w-auto object-contain"
-            style={{ width: 'auto' }}
-            priority
-          />
-        </Link>
 
-        <Card>
-          {/* <CardHeader>
-            <CardTitle>Sign in</CardTitle>
-            <CardDescription>Use your email or phone with your password.</CardDescription>
-          </CardHeader> */}
-          <CardContent className="space-y-4">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="identifier">Email</Label>
-                <Input
-                  id="identifier"
-                  value={identifier}
-                  onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="you@example.com"
-                  autoComplete="username"
-                  className="h-11"
-                  required
-                />
+      <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[44fr_56fr]">
+        {/* ================= brand ground ================= */}
+        <aside className="relative isolate hidden flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_12%_0%,rgba(42,195,162,0.16)_0%,rgba(42,195,162,0)_58%),linear-gradient(163deg,#0E4D4B_0%,#0A3B39_57%,#062927_100%)] px-[clamp(32px,3.4vw,49px)] py-[clamp(28px,2.2vw,31px)] lg:flex">
+          {/* The live strand, same component and same preset as the hero. It
+              sits at z-0 under the copy, and is pointer-events-none inside the
+              component, so it never intercepts a click on the logo. */}
+          <HelixCanvas config={HERO_HELIX} className="absolute inset-0 -z-10 h-full w-full" />
+
+          <Link href="/" aria-label="Know Your Genes, home" className="relative w-fit">
+            <KygLogo tone="light" className="h-16 w-auto" />
+          </Link>
+
+          <div className="relative flex flex-col gap-[19.2px] py-[27px]">
+            {/* Figtree 800 16.5/20.46 ls 0.15em, textCase=UPPER in the frame */}
+            <p className="font-kyg text-[16.5px] font-extrabold uppercase leading-[1.24] tracking-[0.15em] text-java2">
+              Your KYG account
+            </p>
+
+            {/* Two voices in one heading: Figtree 400 46/52.44 states it,
+                Cormorant Garamond 500 italic 50.6/57.68 turns it. The frame
+                sets a -1.12 gap between the lines, so they very nearly touch. */}
+            <h2 className="max-w-[340px] font-kyg text-[clamp(34px,3.2vw,46px)] font-normal leading-[1.14] tracking-[-0.03em] text-linenw">
+              Everything you
+              <br />
+              have learned
+              <br />
+              about yourself,
+              <span className="-mt-[2px] block font-tst text-[clamp(37px,3.5vw,50.6px)] font-medium italic leading-[1.14] tracking-normal">
+                in one place.
+              </span>
+            </h2>
+
+            <p className="max-w-[455px] font-kyg text-[clamp(17px,1.45vw,20.9px)] font-normal leading-[1.52] tracking-[-0.014em] text-linenw/72">
+              Your reports, insights and next steps. Private to you, for as long as you want them.
+            </p>
+
+            {/* Five capsules, radius 999, cream at 5% with a 9% inset hairline */}
+            <ul className="mt-[6px] flex max-w-[462px] list-none flex-wrap gap-[10px]">
+              {AREAS.map((a) => (
+                <li
+                  key={a.label}
+                  className="inline-flex items-center gap-[9px] rounded-full bg-linenw/[0.05] py-[9.5px] pl-[13px] pr-[16px] shadow-[inset_0_0_0_1px_rgba(250,246,239,0.09)]"
+                >
+                  <HomeIcon id={a.icon} className="h-[17px] w-[17px] shrink-0" />
+                  <span className="font-kyg text-[16px] font-semibold leading-[1.6] tracking-[-0.008em] text-linenw/90">
+                    {a.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="relative border-t border-linenw/50 pt-[31px]">
+            <div className="flex flex-wrap items-center gap-x-[18px] gap-y-2">
+              <span className="inline-flex items-center gap-[9px]">
+                <ShieldCheck className="h-4 w-4 shrink-0 text-linenw/85" aria-hidden="true" />
+                <span className="font-kyg text-[15.5px] leading-[1.6] tracking-[-0.007em] text-linenw/50">
+                  Your data stays confidential
+                </span>
+              </span>
+              <span className="font-kyg text-[15.5px] leading-[1.6] tracking-[-0.007em] text-linenw/50">
+                © 2026 Know Your Genes
+              </span>
+            </div>
+
+            <div className="mt-[7px] flex flex-wrap gap-x-[18px]">
+              {[
+                { label: 'Privacy', href: '/privacy' },
+                { label: 'Terms', href: '/terms' },
+                { label: 'Cookies', href: '/privacy#cookies' },
+              ].map((l) => (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  className="font-kyg text-[15.5px] leading-[1.6] tracking-[-0.007em] text-linenw/50 underline-offset-4 transition-colors hover:text-linenw/80 hover:underline"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </aside>
+
+        {/* ================= form ================= */}
+        <main className="relative flex flex-col justify-center overflow-hidden px-[clamp(20px,5vw,177px)] py-[clamp(40px,4vw,60px)]">
+          {/* the frame's cool bloom, mint at 55% off the top-right */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 opacity-55 [background:radial-gradient(circle_at_88%_6%,#E2F1ED_0%,rgba(226,241,237,0)_62%)]"
+          />
+
+          {/* Only below lg, where the brand panel is gone and the page would
+              otherwise open with no mark on it at all. */}
+          <Link href="/" aria-label="Know Your Genes, home" className="mb-8 w-fit lg:hidden">
+            <KygLogo tone="dark" className="h-12 w-auto" />
+          </Link>
+
+          <div className="flex w-full flex-col gap-[19.8px]">
+            <header className="flex flex-col gap-[12px]">
+              <h1 className="font-kyg text-[clamp(32px,3.2vw,46px)] font-normal leading-[1.14] tracking-[-0.03em] text-bistre">
+                Good to see you{' '}
+                <em className="font-tst text-[clamp(35px,3.5vw,50.6px)] font-medium italic tracking-normal">
+                  again.
+                </em>
+              </h1>
+              <p className="max-w-[430px] font-kyg text-[clamp(17px,1.45vw,20.9px)] leading-[1.5] tracking-[-0.014em] text-nevada">
+                Sign in to reach your reports, insights and GENEous Care.
+              </p>
+            </header>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-[18px] pt-[2.7px]">
+              {/* ---- email ---- */}
+              <div className="flex flex-col gap-[9px]">
+                <label
+                  htmlFor="identifier"
+                  className="font-kyg text-[16px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre"
+                >
+                  Email address
+                </label>
+                <div className={FIELD_SHELL}>
+                  <Mail
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-[16px] h-5 w-5 text-pewter"
+                  />
+                  <input
+                    id="identifier"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
+                    placeholder="you@example.com"
+                    autoComplete="username"
+                    required
+                    className={INPUT}
+                  />
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Input
+
+              {/* ---- password ---- */}
+              <div className="flex flex-col gap-[9px]">
+                <div className="flex items-baseline justify-between gap-3">
+                  <label
+                    htmlFor="password"
+                    className="font-kyg text-[16px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre"
+                  >
+                    Password
+                  </label>
+                  {/* There is no password-reset route in this app - only
+                      app/api/auth/register exists, and no /forgot-password page.
+                      Rather than ship a link into a 404, this opens a mail to the
+                      same care address the frame already prints below as the
+                      "locked out" contact, so the two agree. */}
+                  <a href="mailto:care@knowyourgenes.in?subject=Password%20reset" className={TLINK}>
+                    Forgot password?
+                  </a>
+                </div>
+                <div className={FIELD_SHELL}>
+                  <Lock
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-[16px] h-5 w-5 text-pewter"
+                  />
+                  <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="• • • • • • • •"
+                    placeholder="Your password"
                     autoComplete="current-password"
-                    className="h-11 pr-10"
                     required
+                    className={INPUT + ' !pr-[56px]'}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                     aria-pressed={showPassword}
-                    className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground hover:text-foreground"
                     tabIndex={-1}
+                    className="absolute right-[10px] grid h-[42px] w-[42px] place-items-center rounded-[9px] text-nevada transition hover:bg-eden/[0.06] hover:text-eden"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
                 </div>
               </div>
 
+              {/* ---- remember ----
+                  A real checkbox, visually replaced. The native input keeps the
+                  label association, the space key and screen-reader state that a
+                  div-with-onClick would throw away. */}
+              <label className="inline-flex w-fit cursor-pointer items-center gap-[11px]">
+                <span className="relative grid h-[23px] w-[23px] place-items-center">
+                  <input
+                    type="checkbox"
+                    checked={remember}
+                    onChange={(e) => setRemember(e.target.checked)}
+                    className="peer absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-[7px] shadow-[inset_0_0_0_1.5px_#0E4D4B] transition-colors checked:bg-eden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java"
+                  />
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    className="pointer-events-none relative h-[15px] w-[15px] text-linenw opacity-0 transition-opacity peer-checked:opacity-100"
+                  >
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                <span className="font-kyg text-[16.5px] leading-[1.6] tracking-[-0.0065em] text-corduroy">
+                  Keep me signed in on this device
+                </span>
+              </label>
+
               {error && (
-                <Alert variant="destructive">
-                  <AlertCircle />
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
+                <p
+                  role="alert"
+                  className="flex items-center gap-2 rounded-[10px] bg-mojo/[0.08] px-4 py-3 font-kyg text-[15px] text-mojo shadow-[inset_0_0_0_1px_rgba(192,67,47,0.25)]"
+                >
+                  <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  {error}
+                </p>
               )}
 
-              <Button type="submit" size="lg" className="h-11 w-full" disabled={loading}>
+              <button
+                type="submit"
+                disabled={loading}
+                className="group flex h-[58px] w-full items-center justify-center gap-[13px] rounded-[10px] bg-eden font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-linenw shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] transition-[transform,background,box-shadow] duration-300 hover:-translate-y-[2px] hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+              >
                 {loading ? 'Signing in…' : 'Sign in'}
-              </Button>
+                {!loading && (
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-[4px]"
+                  >
+                    <path d="M5 12h14M13 5l7 7-7 7" />
+                  </svg>
+                )}
+              </button>
             </form>
 
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <Separator className="flex-1" /> OR <Separator className="flex-1" />
+            {/* ---- or ---- two rules that fade AWAY from the word, so it reads
+                as a break in a line rather than a label on a rule. */}
+            <div className="flex items-center gap-4" aria-hidden="true">
+              <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(27,23,18,0)_0%,rgba(27,23,18,0.11)_100%)]" />
+              <span className="font-kyg text-[15.5px] font-bold uppercase leading-[1.6] tracking-[0.1em] text-pewter">
+                or
+              </span>
+              <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(27,23,18,0.11)_0%,rgba(27,23,18,0)_100%)]" />
             </div>
 
-            <Button
-              variant="outline"
-              size="lg"
-              className="h-11 w-full"
+            <button
+              type="button"
               onClick={() => signIn('google', { callbackUrl: from })}
+              className="flex h-[59px] w-full items-center justify-center gap-[13px] rounded-[10px] bg-white font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-bistre shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_0_rgba(45,32,18,0.08),inset_0_0_0_1.5px_rgba(27,23,18,0.18)]"
             >
-              <GoogleIcon className="h-4 w-4" /> Continue with Google
-            </Button>
-          </CardContent>
-        </Card>
+              <GoogleIcon className="h-[21px] w-[21px]" />
+              Continue with Google
+            </button>
+
+            <div className="border-t border-nevada/40 pt-[25px]">
+              <p className="font-kyg text-[16.5px] leading-[1.6] tracking-[-0.0065em] text-nevada">
+                {/* No /register page exists in this app - only the
+                    app/api/auth/register endpoint - so this points at the route
+                    that does create an account today: buying a kit, which since
+                    guest checkout files the order against the email and creates
+                    the account with it. */}
+                New to KYG?{' '}
+                <Link href="/categories" className={TLINK}>
+                  Create an account
+                </Link>
+                . Locked out?
+                <br />
+                <a href="mailto:care@knowyourgenes.in" className={TLINK}>
+                  care@knowyourgenes.in
+                </a>
+              </p>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );
@@ -176,7 +427,7 @@ function GoogleIcon({ className }: { className?: string }) {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-sm text-muted-foreground">Loading…</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-linenw" />}>
       <LoginForm />
     </Suspense>
   );
