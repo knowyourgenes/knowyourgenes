@@ -379,13 +379,8 @@ function LoginForm() {
 
             <div className="border-t border-nevada/40 pt-[25px]">
               <p className="font-kyg text-[16.5px] leading-[1.6] tracking-[-0.0065em] text-nevada">
-                {/* No /register page exists in this app - only the
-                    app/api/auth/register endpoint - so this points at the route
-                    that does create an account today: buying a kit, which since
-                    guest checkout files the order against the email and creates
-                    the account with it. */}
                 New to KYG?{' '}
-                <Link href="/categories" className={TLINK}>
+                <Link href="/register" className={TLINK}>
                   Create an account
                 </Link>
                 . Locked out?

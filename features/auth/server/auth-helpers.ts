@@ -25,11 +25,23 @@ export async function verifyPassword(plain: string, hash: string) {
 export const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Valid email required'),
+  /**
+   * OPTIONAL. The sign-up screen (Figma 1078:3000) collects name, email and
+   * password only, and User.phone is `String? @unique` so null is a legal
+   * state. Guest checkout already creates users with no phone, so phone-less
+   * accounts are not new here - requiring one at signup would have made the
+   * designed form impossible to submit.
+   *
+   * An empty string is normalised to undefined so a blank input is "not given"
+   * rather than a phone number of "".
+   */
   phone: z
     .string()
-    .min(10)
     .max(15)
-    .transform((s) => s.replace(/\D/g, '').replace(/^91/, '')),
+    .transform((v) => v.replace(/\D/g, '').replace(/^91/, ''))
+    .refine((v) => v === '' || v.length >= 10, 'Enter at least 10 digits')
+    .transform((v) => (v === '' ? undefined : v))
+    .optional(),
   password: z
     .string()
     .min(8, 'Password must be at least 8 characters')
@@ -43,10 +55,15 @@ export async function registerUser(raw: RegisterInput) {
   const parsed = registerSchema.parse(raw);
   const normalizedEmail = parsed.email.toLowerCase();
 
+  // The phone clause is only added when a phone was actually given. Passing
+  // `{ phone: undefined }` inside an OR makes Prisma drop the condition, which
+  // would silently turn this into an email-only check - harmless today, but the
+  // kind of thing that looks deliberate later and is not.
+  const or: { email?: string; phone?: string }[] = [{ email: normalizedEmail }];
+  if (parsed.phone) or.push({ phone: parsed.phone });
+
   const existing = await prisma.user.findFirst({
-    where: {
-      OR: [{ email: normalizedEmail }, { phone: parsed.phone }],
-    },
+    where: { OR: or },
     select: { id: true, email: true, phone: true },
   });
 
@@ -63,7 +80,7 @@ export async function registerUser(raw: RegisterInput) {
     data: {
       name: parsed.name,
       email: normalizedEmail,
-      phone: parsed.phone,
+      phone: parsed.phone ?? null,
       passwordHash,
       role: 'USER',
     },
