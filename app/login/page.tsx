@@ -63,7 +63,7 @@ const AREAS: { label: string; icon: string }[] = [
 
 /** Figtree 700 16/25.6, eden, with the frame's 28%-opacity underline. */
 const TLINK =
-  'font-kyg text-[16px] font-bold leading-[1.6] tracking-[-0.007em] text-eden ' +
+  'font-kyg text-[15px] font-bold leading-[1.6] tracking-[-0.007em] text-eden ' +
   'shadow-[inset_0_-1px_0_0_rgba(14,77,75,0.28)] transition-shadow hover:shadow-[inset_0_-1px_0_0_rgba(14,77,75,0.9)]';
 
 /** 452 x 62.8, radius 10, white, with the frame's two-layer shadow + inset ring. */
@@ -73,8 +73,8 @@ const FIELD_SHELL =
   'transition-shadow focus-within:shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(14,77,75,0.55)]';
 
 const INPUT =
-  'h-[clamp(48px,7vh,62.8px)] w-full rounded-[10px] bg-transparent pl-[48px] pr-[18px] ' +
-  'font-kyg text-[18px] tracking-[-0.008em] text-bistre outline-none placeholder:text-pewter';
+  'h-[clamp(44px,6.2vh,56px)] w-full rounded-[10px] bg-transparent pl-[44px] pr-[16px] ' +
+  'font-kyg text-[16.5px] tracking-[-0.008em] text-bistre outline-none placeholder:text-pewter';
 
 function LoginForm() {
   const router = useRouter();
@@ -197,7 +197,7 @@ function LoginForm() {
         </aside>
 
         {/* ================= form ================= */}
-        <main className="relative flex flex-col justify-center overflow-y-auto px-5 py-[clamp(12px,2.4vh,60px)] sm:px-8 lg:min-h-0 lg:px-[clamp(24px,4.4vw,64px)]">
+        <main className="relative flex flex-col justify-center overflow-y-auto px-5 py-[clamp(16px,3vh,72px)] sm:px-8 lg:min-h-0 lg:px-[clamp(40px,7vw,120px)] lg:py-[clamp(32px,5vh,88px)]">
           {/* the frame's cool bloom, mint at 55% off the top-right */}
           <div
             aria-hidden="true"
@@ -206,21 +206,21 @@ function LoginForm() {
 
           {/* Only below lg, where the brand panel is gone and the page would
               otherwise open with no mark on it at all. */}
-          <div className="mx-auto mb-4 w-full max-w-[452px] sm:mb-6 lg:hidden">
+          <div className="mx-auto mb-4 w-full max-w-[404px] sm:mb-6 lg:hidden">
             <Link href="/" aria-label="Know Your Genes, home" className="block w-fit">
               <KygLogo tone="dark" className="h-11 w-auto" />
             </Link>
           </div>
 
-          <div className="mx-auto flex w-full max-w-[452px] flex-col gap-[clamp(12px,2.2vh,19.8px)]">
+          <div className="mx-auto flex w-full max-w-[404px] flex-col gap-[clamp(12px,2.2vh,19.8px)]">
             <header className="flex flex-col gap-[clamp(6px,1.4vh,12px)]">
-              <h1 className="font-kyg text-[clamp(27px,min(3.2vw,5.1vh),46px)] font-normal leading-[1.12] tracking-[-0.03em] text-bistre">
+              <h1 className="font-kyg text-[clamp(25px,min(2.7vw,4.4vh),40px)] font-normal leading-[1.12] tracking-[-0.03em] text-bistre">
                 Good to see you{' '}
-                <em className="font-tst text-[clamp(29px,min(3.5vw,5.6vh),50.6px)] font-medium italic tracking-normal">
+                <em className="font-tst text-[clamp(27px,min(3vw,4.8vh),44px)] font-medium italic tracking-normal">
                   again.
                 </em>
               </h1>
-              <p className="max-w-[430px] font-kyg text-[clamp(15px,min(1.45vw,2.3vh),20.9px)] leading-[1.45] tracking-[-0.014em] text-nevada">
+              <p className="max-w-[430px] font-kyg text-[clamp(14.5px,min(1.25vw,2vh),18px)] leading-[1.45] tracking-[-0.014em] text-nevada">
                 Sign in to reach your reports, insights and GENEous Care.
               </p>
             </header>
@@ -230,14 +230,14 @@ function LoginForm() {
               <div className="flex flex-col gap-[clamp(5px,1vh,9px)]">
                 <label
                   htmlFor="identifier"
-                  className="font-kyg text-[16px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre"
+                  className="font-kyg text-[15px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre"
                 >
                   Email address
                 </label>
                 <div className={FIELD_SHELL}>
                   <Mail
                     aria-hidden="true"
-                    className="pointer-events-none absolute left-[16px] h-5 w-5 text-pewter"
+                    className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter"
                   />
                   <input
                     id="identifier"
@@ -256,7 +256,7 @@ function LoginForm() {
                 <div className="flex items-baseline justify-between gap-3">
                   <label
                     htmlFor="password"
-                    className="font-kyg text-[16px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre"
+                    className="font-kyg text-[15px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre"
                   >
                     Password
                   </label>
@@ -272,7 +272,7 @@ function LoginForm() {
                 <div className={FIELD_SHELL}>
                   <Lock
                     aria-hidden="true"
-                    className="pointer-events-none absolute left-[16px] h-5 w-5 text-pewter"
+                    className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter"
                   />
                   <input
                     id="password"
@@ -282,7 +282,7 @@ function LoginForm() {
                     placeholder="Your password"
                     autoComplete="current-password"
                     required
-                    className={INPUT + ' !pr-[56px]'}
+                    className={INPUT + ' !pr-[50px]'}
                   />
                   <button
                     type="button"
@@ -290,7 +290,7 @@ function LoginForm() {
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                     aria-pressed={showPassword}
                     tabIndex={-1}
-                    className="absolute right-[10px] grid h-[clamp(36px,4.6vh,42px)] w-[clamp(36px,4.6vh,42px)] place-items-center rounded-[9px] text-nevada transition hover:bg-eden/[0.06] hover:text-eden"
+                    className="absolute right-[9px] grid h-[clamp(32px,4.1vh,38px)] w-[clamp(32px,4.1vh,38px)] place-items-center rounded-[9px] text-nevada transition hover:bg-eden/[0.06] hover:text-eden"
                   >
                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
@@ -322,7 +322,7 @@ function LoginForm() {
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
                 </span>
-                <span className="font-kyg text-[16.5px] leading-[1.6] tracking-[-0.0065em] text-corduroy">
+                <span className="font-kyg text-[15.5px] leading-[1.55] tracking-[-0.0065em] text-corduroy">
                   Keep me signed in on this device
                 </span>
               </label>
@@ -340,7 +340,7 @@ function LoginForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="group flex h-[clamp(48px,6.6vh,58px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-eden font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-linenw shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] transition-[transform,background,box-shadow] duration-300 hover:-translate-y-[2px] hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                className="group flex h-[clamp(44px,5.9vh,52px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-eden font-kyg text-[15.5px] font-bold leading-none tracking-[-0.008em] text-linenw shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] transition-[transform,background,box-shadow] duration-300 hover:-translate-y-[2px] hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
               >
                 {loading ? 'Signing in…' : 'Sign in'}
                 {!loading && (
@@ -364,7 +364,7 @@ function LoginForm() {
                 as a break in a line rather than a label on a rule. */}
             <div className="flex items-center gap-4" aria-hidden="true">
               <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(27,23,18,0)_0%,rgba(27,23,18,0.11)_100%)]" />
-              <span className="font-kyg text-[15.5px] font-bold uppercase leading-[1.6] tracking-[0.1em] text-pewter">
+              <span className="font-kyg text-[14px] font-bold uppercase leading-[1.6] tracking-[0.1em] text-pewter">
                 or
               </span>
               <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(27,23,18,0.11)_0%,rgba(27,23,18,0)_100%)]" />
@@ -373,14 +373,14 @@ function LoginForm() {
             <button
               type="button"
               onClick={() => signIn('google', { callbackUrl: from })}
-              className="flex h-[clamp(48px,6.6vh,59px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-white font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-bistre shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_0_rgba(45,32,18,0.08),inset_0_0_0_1.5px_rgba(27,23,18,0.18)]"
+              className="flex h-[clamp(44px,5.9vh,52px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-white font-kyg text-[15.5px] font-bold leading-none tracking-[-0.008em] text-bistre shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_0_rgba(45,32,18,0.08),inset_0_0_0_1.5px_rgba(27,23,18,0.18)]"
             >
               <GoogleIcon className="h-[21px] w-[21px]" />
               Continue with Google
             </button>
 
             <div className="border-t border-nevada/40 pt-[25px]">
-              <p className="font-kyg text-[16.5px] leading-[1.6] tracking-[-0.0065em] text-nevada">
+              <p className="font-kyg text-[15.5px] leading-[1.55] tracking-[-0.0065em] text-nevada">
                 New to KYG?{' '}
                 <Link href="/register" className={TLINK}>
                   Create an account

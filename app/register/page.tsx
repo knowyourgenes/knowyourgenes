@@ -57,7 +57,7 @@ const BENEFITS: { icon: typeof FileText; title: string; body: string }[] = [
 
 /** Figtree 700 16, eden, with the frame's 30%-opacity underline. */
 const TLINK =
-  'font-kyg font-bold text-eden shadow-[inset_0_-1px_0_0_rgba(14,77,75,0.3)] ' +
+  'font-kyg text-[15px] font-bold text-eden shadow-[inset_0_-1px_0_0_rgba(14,77,75,0.3)] ' +
   'transition-shadow hover:shadow-[inset_0_-1px_0_0_rgba(14,77,75,0.9)]';
 
 const FIELD_SHELL =
@@ -66,10 +66,10 @@ const FIELD_SHELL =
   'transition-shadow focus-within:shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(14,77,75,0.55)]';
 
 const INPUT =
-  'h-[clamp(48px,7vh,62.8px)] w-full rounded-[10px] bg-transparent pl-[48px] pr-[18px] ' +
-  'font-kyg text-[18px] tracking-[-0.008em] text-bistre outline-none placeholder:text-pewter';
+  'h-[clamp(44px,6.2vh,56px)] w-full rounded-[10px] bg-transparent pl-[44px] pr-[16px] ' +
+  'font-kyg text-[16.5px] tracking-[-0.008em] text-bistre outline-none placeholder:text-pewter';
 
-const LABEL = 'font-kyg text-[16px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre';
+const LABEL = 'font-kyg text-[15px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre';
 
 /**
  * Scores a password against the rules the SERVER actually enforces, and says
@@ -242,7 +242,7 @@ export default function RegisterPage() {
         </aside>
 
         {/* ================= form ================= */}
-        <main className="relative flex flex-col justify-center overflow-y-auto px-5 py-[clamp(12px,2.4vh,60px)] sm:px-8 lg:min-h-0 lg:px-[clamp(24px,4.4vw,64px)]">
+        <main className="relative flex flex-col justify-center overflow-y-auto px-5 py-[clamp(16px,3vh,72px)] sm:px-8 lg:min-h-0 lg:px-[clamp(40px,7vw,120px)] lg:py-[clamp(32px,5vh,88px)]">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10 opacity-55 [background:radial-gradient(circle_at_88%_6%,#E2F1ED_0%,rgba(226,241,237,0)_62%)]"
@@ -251,26 +251,26 @@ export default function RegisterPage() {
           {/* The frame parks this in the panel's top-right corner. On lg it is
               absolute so it never pushes the centred form down; below lg it
               becomes an ordinary line above the logo. */}
-          <p className="order-1 mx-auto mb-3 w-full max-w-[508px] font-kyg text-[15.5px] leading-[1.6] tracking-[-0.0065em] text-nevada lg:absolute lg:right-[clamp(24px,4.4vw,64px)] lg:top-[26px] lg:mx-0 lg:mb-0 lg:w-auto lg:max-w-none lg:text-[16.5px]">
+          <p className="order-1 mx-auto mb-3 w-full max-w-[452px] font-kyg text-[15.5px] leading-[1.6] tracking-[-0.0065em] text-nevada lg:absolute lg:right-[clamp(40px,7vw,120px)] lg:top-[30px] lg:mx-0 lg:mb-0 lg:w-auto lg:max-w-none lg:text-[16.5px]">
             Already have an account?{' '}
             <Link href="/login" className={TLINK}>
               Sign in
             </Link>
           </p>
 
-          <div className="order-2 mx-auto mb-4 w-full max-w-[508px] sm:mb-6 lg:hidden">
+          <div className="order-2 mx-auto mb-4 w-full max-w-[452px] sm:mb-6 lg:hidden">
             <Link href="/" aria-label="Know Your Genes, home" className="block w-fit">
               <KygLogo tone="dark" className="h-11 w-auto" />
             </Link>
           </div>
 
-          <div className="order-3 mx-auto flex w-full max-w-[508px] flex-col gap-[clamp(12px,2.2vh,19.8px)]">
+          <div className="order-3 mx-auto flex w-full max-w-[452px] flex-col gap-[clamp(12px,2.2vh,19.8px)]">
             <header className="flex flex-col gap-[clamp(6px,1.4vh,12px)]">
-              <h1 className="font-kyg text-[clamp(27px,min(3.2vw,5.1vh),46px)] font-normal leading-[1.12] tracking-[-0.03em] text-bistre">
+              <h1 className="font-kyg text-[clamp(25px,min(2.7vw,4.4vh),40px)] font-normal leading-[1.12] tracking-[-0.03em] text-bistre">
                 Good to meet{' '}
-                <em className="font-tst text-[clamp(29px,min(3.5vw,5.6vh),50.6px)] font-medium italic tracking-normal">you.</em>
+                <em className="font-tst text-[clamp(27px,min(3vw,4.8vh),44px)] font-medium italic tracking-normal">you.</em>
               </h1>
-              <p className="max-w-[460px] font-kyg text-[clamp(15px,min(1.45vw,2.3vh),20.9px)] leading-[1.45] tracking-[-0.014em] text-nevada">
+              <p className="max-w-[460px] font-kyg text-[clamp(14.5px,min(1.25vw,2vh),18px)] leading-[1.45] tracking-[-0.014em] text-nevada">
                 Follow your results and what comes next.
               </p>
             </header>
@@ -282,7 +282,7 @@ export default function RegisterPage() {
                   Full name
                 </label>
                 <div className={FIELD_SHELL}>
-                  <User aria-hidden="true" className="pointer-events-none absolute left-[16px] h-5 w-5 text-pewter" />
+                  <User aria-hidden="true" className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter" />
                   <input
                     id="name"
                     value={name}
@@ -301,7 +301,7 @@ export default function RegisterPage() {
                   Email address
                 </label>
                 <div className={FIELD_SHELL}>
-                  <Mail aria-hidden="true" className="pointer-events-none absolute left-[16px] h-5 w-5 text-pewter" />
+                  <Mail aria-hidden="true" className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter" />
                   <input
                     id="email"
                     type="email"
@@ -321,7 +321,7 @@ export default function RegisterPage() {
                   Password
                 </label>
                 <div className={FIELD_SHELL}>
-                  <Lock aria-hidden="true" className="pointer-events-none absolute left-[16px] h-5 w-5 text-pewter" />
+                  <Lock aria-hidden="true" className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter" />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
@@ -331,7 +331,7 @@ export default function RegisterPage() {
                     autoComplete="new-password"
                     required
                     aria-describedby="pw-hint"
-                    className={INPUT + ' !pr-[56px]'}
+                    className={INPUT + ' !pr-[50px]'}
                   />
                   <button
                     type="button"
@@ -339,7 +339,7 @@ export default function RegisterPage() {
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                     aria-pressed={showPassword}
                     tabIndex={-1}
-                    className="absolute right-[10px] grid h-[clamp(36px,4.6vh,42px)] w-[clamp(36px,4.6vh,42px)] place-items-center rounded-[9px] text-nevada transition hover:bg-eden/[0.06] hover:text-eden"
+                    className="absolute right-[9px] grid h-[clamp(32px,4.1vh,38px)] w-[clamp(32px,4.1vh,38px)] place-items-center rounded-[9px] text-nevada transition hover:bg-eden/[0.06] hover:text-eden"
                   >
                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
@@ -362,7 +362,7 @@ export default function RegisterPage() {
                   <span
                     id="pw-hint"
                     aria-live="polite"
-                    className="font-kyg text-[15px] font-semibold leading-[1.6] tracking-[-0.0072em] text-pewter"
+                    className="font-kyg text-[14px] font-semibold leading-[1.6] tracking-[-0.0072em] text-pewter"
                   >
                     {hint}
                   </span>
@@ -395,7 +395,7 @@ export default function RegisterPage() {
                     <path d="M20 6 9 17l-5-5" />
                   </svg>
                 </span>
-                <span className="font-kyg text-[16px] leading-[1.45] tracking-[-0.0068em] text-corduroy">
+                <span className="font-kyg text-[15px] leading-[1.45] tracking-[-0.0068em] text-corduroy">
                   I agree to the{' '}
                   <Link href="/terms" className={TLINK} onClick={(e) => e.stopPropagation()}>
                     Terms
@@ -421,7 +421,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={!canSubmit}
-                className="group flex h-[clamp(48px,6.6vh,58px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-eden font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-linenw shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] transition-[transform,background,box-shadow] duration-300 hover:-translate-y-[2px] hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+                className="group flex h-[clamp(44px,5.9vh,52px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-eden font-kyg text-[15.5px] font-bold leading-none tracking-[-0.008em] text-linenw shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] transition-[transform,background,box-shadow] duration-300 hover:-translate-y-[2px] hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
               >
                 {loading ? 'Creating your account…' : 'Create account'}
                 {!loading && (
@@ -443,7 +443,7 @@ export default function RegisterPage() {
 
             <div className="flex items-center gap-4" aria-hidden="true">
               <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(27,23,18,0)_0%,rgba(27,23,18,0.11)_100%)]" />
-              <span className="font-kyg text-[15.5px] font-bold uppercase leading-[1.6] tracking-[0.1em] text-pewter">
+              <span className="font-kyg text-[14px] font-bold uppercase leading-[1.6] tracking-[0.1em] text-pewter">
                 or
               </span>
               <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(27,23,18,0.11)_0%,rgba(27,23,18,0)_100%)]" />
@@ -452,7 +452,7 @@ export default function RegisterPage() {
             <button
               type="button"
               onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
-              className="flex h-[clamp(48px,6.6vh,59px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-white font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-bistre shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_0_rgba(45,32,18,0.08),inset_0_0_0_1.5px_rgba(27,23,18,0.18)]"
+              className="flex h-[clamp(44px,5.9vh,52px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-white font-kyg text-[15.5px] font-bold leading-none tracking-[-0.008em] text-bistre shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_0_rgba(45,32,18,0.08),inset_0_0_0_1.5px_rgba(27,23,18,0.18)]"
             >
               <GoogleIcon className="h-[21px] w-[21px]" />
               Continue with Google
