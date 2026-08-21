@@ -19,15 +19,13 @@
 // `uppercase` it is reproducing textCase=UPPER from the frame - the giveaway is
 // the wide tracking that always accompanies it. Do not "correct" those strings.
 //
-// RADIUS TRAP: this project remaps Tailwind's radius scale (--radius 0.625rem),
-// so rounded-2xl is 18px and rounded-3xl is 22px. The frame uses
-// 2/3.5/4/6.5/7/10/11/12/14/16/17/20/24/33/46/999 - almost none of which map
-// cleanly, so they are written as explicit arbitrary values throughout.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { BTN } from '@/components/shared/button-styles';
 import { cn } from '@/lib/utils';
 
 import { HomeIcon } from './HomeIcon';
@@ -129,7 +127,7 @@ export function Section({
           and `.fin` at clamp(96px,11vw,180px) - and those pass innerClassName.
           Everything else must inherit this, or consecutive sections breathe
           differently and the page's vertical rhythm visibly stutters. */}
-      <div className={cn('mx-auto w-full max-w-[1313px] py-[clamp(84px,10vw,168px)]', innerClassName)}>{children}</div>
+      <div className={cn('mx-auto w-full max-w-[1600px] py-[clamp(84px,10vw,168px)]', innerClassName)}>{children}</div>
     </section>
   );
 }
@@ -262,9 +260,11 @@ export function Cta({
     <Link
       href={href}
       className={cn(
-        'group relative isolate inline-flex min-h-[58px] max-w-full items-center justify-center gap-[13px]',
-        'overflow-hidden rounded-[10px] px-[30px] py-[19px]',
-        'font-kyg text-[clamp(15px,1.18vw,17px)] font-bold leading-none tracking-[-0.008em]',
+        // The source drew these at 58px. One button height site-wide now - BTN,
+        // 38px (components/shared/button-styles). Weight, face and motion stay.
+        BTN,
+        'group relative isolate max-w-full overflow-hidden',
+        'font-kyg font-bold tracking-[-0.008em]',
         'transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
         // -3px, not -2. The source's `.btn:hover` is translateY(-3px) with a
         // 0 0 0 6px glow ring on top of a deeper shadow; Tailwind's -translate-y-0.5
@@ -399,7 +399,7 @@ export function AssetSlot({
       <span
         aria-hidden="true"
         className={cn(
-          'pointer-events-none absolute inset-[14px] rounded-[4px] border',
+          'pointer-events-none absolute inset-[14px] rounded-sm border',
           tone === 'dark' ? 'border-linenw/20' : 'border-eden/15'
         )}
       />
@@ -438,7 +438,7 @@ export function AssetSlot({
         {path && !compact ? (
           <code
             className={cn(
-              'mt-1 rounded-[7px] px-[11px] py-1.5 font-mono text-[clamp(10.5px,0.87vw,12.5px)] leading-[1.35]',
+              'mt-1 rounded-sm px-[11px] py-1.5 font-mono text-[clamp(10.5px,0.87vw,12.5px)] leading-[1.35]',
               tone === 'dark'
                 ? 'bg-black/16 text-linenw/72 ring-1 ring-inset ring-linenw/25'
                 : 'bg-eden/[0.06] text-eden/70 ring-1 ring-inset ring-eden/20'
@@ -461,7 +461,7 @@ export function DotRow({ lead, children, className }: { lead: string; children: 
   return (
     <span className={cn('inline-flex min-w-0 items-center gap-[13px]', className)}>
       <span className="shrink-0 font-kyg-num text-[15.5px] font-bold leading-[1.62] text-linenw/92">{lead}</span>
-      <span aria-hidden="true" className="h-1 w-1 shrink-0 rounded-[2px] bg-java2/85" />
+      <span aria-hidden="true" className="h-1 w-1 shrink-0 rounded-sm bg-java2/85" />
       <span className="min-w-0 font-kyg-num text-[15.5px] font-medium leading-[1.62] text-linenw/62">{children}</span>
     </span>
   );
@@ -482,7 +482,7 @@ export function Chip({
   return (
     <span
       className={cn(
-        'inline-flex min-w-0 items-center gap-2 rounded-full px-[17px] py-2.5',
+        'inline-flex min-w-0 items-center gap-2 rounded-sm px-[17px] py-2.5',
         'font-kyg text-[clamp(13px,1.05vw,15px)] font-medium leading-[1.5]',
         tone === 'dark'
           ? 'border border-linenw/18 bg-linenw/[0.04] text-linenw/88'

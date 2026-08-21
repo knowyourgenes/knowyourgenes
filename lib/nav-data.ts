@@ -130,3 +130,37 @@ export const NAV_LINKS = [
   { label: 'About Us', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];
+
+// ---------------------------------------------------------------------------
+// Search overlay data
+// ---------------------------------------------------------------------------
+
+export interface SitePage {
+  label: string;
+  href: string;
+  /** Words people search for that do not appear in the label. */
+  keywords: string[];
+}
+
+/**
+ * Public pages the header's search overlay can return under "Pages".
+ *
+ * Hand-listed rather than derived from the route tree on purpose: `app/` also
+ * contains authed dashboard routes, admin, the Sanity studio and the API, none
+ * of which belong in a shopper-facing result list. A page appears here because
+ * someone decided it should be findable, not because a file exists.
+ *
+ * `/categories` is intentionally absent - it is the products lane of the overlay
+ * already, and listing it as a page too just duplicates the better result.
+ */
+export const SITE_PAGES: SitePage[] = [
+  { label: 'Blog', href: '/blog', keywords: ['articles', 'insights', 'reading', 'news'] },
+  { label: 'About Us', href: '/about', keywords: ['company', 'who we are', 'team', 'story'] },
+  { label: 'Contact', href: '/contact', keywords: ['support', 'help', 'phone', 'email', 'talk to someone'] },
+  { label: 'Shipping', href: '/shipping', keywords: ['delivery', 'courier', 'dispatch', 'when will it arrive'] },
+  { label: 'Refunds', href: '/refunds', keywords: ['returns', 'cancellation', 'money back', 'refund policy'] },
+  { label: 'Privacy Policy', href: '/privacy', keywords: ['data', 'personal information', 'confidential'] },
+  { label: 'Terms', href: '/terms', keywords: ['terms and conditions', 'legal', 'agreement'] },
+  { label: 'Consent', href: '/consent', keywords: ['consent form', 'permission', 'sample consent'] },
+  { label: 'Your cart', href: '/cart', keywords: ['basket', 'bag', 'checkout', 'order'] },
+];

@@ -168,7 +168,7 @@ export default async function DashboardOverviewPage() {
         <CardContent>
           {orders.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-10 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-primary/10 text-primary">
                 <Microscope className="h-5 w-5" />
               </div>
               <p className="mt-4 font-medium">No orders yet</p>

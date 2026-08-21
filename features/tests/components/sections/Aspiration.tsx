@@ -46,7 +46,7 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
         {eyebrow ? (
           /* pill: r999, #c73c70@10 on a #c73c70@24 hairline, 0 6 18 crimson@10,
              pad 11/22/11/17, gap 10 -> 353x46 at desktop. */
-          <span className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+          <span className="inline-flex max-w-full items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
             <span className="relative grid size-[22px] shrink-0 place-items-center">
               <FigmaIcon id={GLYPH.eyebrow} className="absolute h-[26px] w-[22px] max-w-none" />
             </span>
@@ -96,14 +96,14 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
               browser downloads the 1200w candidate for a 280px slot. */}
           <Media
             img={data.image}
-            className="aspect-588/735 w-full rounded-[28px] border border-mine/10 shadow-tst-card"
+            className="aspect-588/735 w-full rounded-sm border border-mine/10 shadow-tst-card"
             sizes="(min-width: 1440px) 588px, (min-width: 1024px) calc((100vw - 264px) / 2), (min-width: 768px) 588px, 100vw"
           />
 
           {/* Both badges hug their label, so at 320 they cover 72% / 84% of a
               280-wide image. Below sm they step down to 13px with tighter pad
               (~182 / ~205) - still legible, no longer swallowing the photo. */}
-          <span className="absolute -left-3 -top-3 inline-flex items-center gap-1.5 rounded-full border border-mine/10 bg-white py-2 pl-2.5 pr-3.5 shadow-tst-card sm:gap-2 sm:py-[10px] sm:pl-3 sm:pr-5">
+          <span className="absolute -left-3 -top-3 inline-flex items-center gap-1.5 rounded-sm border border-mine/10 bg-white py-2 pl-2.5 pr-3.5 shadow-tst-card sm:gap-2 sm:py-[10px] sm:pl-3 sm:pr-5">
             <span className="relative grid size-5 shrink-0 place-items-center">
               <FigmaIcon id={GLYPH.badgeTop} className="absolute h-6 w-5 max-w-none" />
             </span>
@@ -113,7 +113,7 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
             />
           </span>
 
-          <span className="absolute -bottom-3 -right-3 inline-flex items-center gap-1.5 rounded-full bg-eden py-2 pl-2.5 pr-3.5 shadow-tst-card sm:gap-2 sm:py-2.5 sm:pl-3 sm:pr-5">
+          <span className="absolute -bottom-3 -right-3 inline-flex items-center gap-1.5 rounded-sm bg-eden py-2 pl-2.5 pr-3.5 shadow-tst-card sm:gap-2 sm:py-2.5 sm:pl-3 sm:pr-5">
             <span className="relative grid size-5 shrink-0 place-items-center">
               <FigmaIcon id={GLYPH.badgeBottom} className="absolute h-6 w-5 max-w-none" />
             </span>
@@ -129,8 +129,8 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
           <ul className="flex flex-col gap-4">
             {data.rows.map((r, i) => (
               <li key={r.title} className="flex items-start gap-[14px]">
-                {/* 56x56, radius 16 (NOT rounded-2xl - that token is 18 here). */}
-                <span className="grid size-14 shrink-0 place-items-center rounded-[16px] bg-blush">
+                {/* 56x56. The frame's r16 is rounded-sm (6px) - one radius, DESIGN.md §2. */}
+                <span className="grid size-14 shrink-0 place-items-center rounded-sm bg-blush">
                   <FigmaIcon id={GLYPH.rows[i] ?? GLYPH.rows[0]} className="h-[34px] w-[28px]" />
                 </span>
                 <span className="flex min-w-0 flex-col">
@@ -152,12 +152,12 @@ export default function Aspiration({ data, ground }: { data: AspirationSection; 
             dangerouslySetInnerHTML={{ __html: data.bodyHtml }}
           />
 
-          {/* r16 (rounded-2xl is 18 in this theme) #fbeef3 on a #f6dce6
+          {/* Frame r16, painted rounded-sm. #fbeef3 on a #f6dce6
               hairline, pad 25/24/24/24 -> 25 + 105 + 24 + 2 = 156 tall. The 24
               side pad eats 17% of a 280px phone column, so it drops to 20 under
               sm; the panel is unchanged from 640 up. */}
           <div
-            className={`break-words rounded-[16px] border border-[#f6dce6] bg-blush px-5 pb-6 pt-6.25 font-kyg text-[clamp(18px,1.8vw,25px)] font-bold leading-[1.376] text-mine sm:px-6 ${QUOTE_RUNS}`}
+            className={`break-words rounded-sm border border-[#f6dce6] bg-blush px-5 pb-6 pt-6.25 font-kyg text-[clamp(18px,1.8vw,25px)] font-bold leading-[1.376] text-mine sm:px-6 ${QUOTE_RUNS}`}
             dangerouslySetInnerHTML={{ __html: data.quoteHtml }}
           />
         </div>

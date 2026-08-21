@@ -63,7 +63,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
               this renders identically at >=1440 - but a label forced to wrap in a
               280px column now grows the pill instead of spilling out of it. */}
           {eyebrow ? (
-            <span className="inline-flex min-h-11.5 max-w-full items-center gap-2.5 rounded-full border border-eden/15 bg-eden/[0.07] pl-4.25 pr-5.5 shadow-tst-crimson">
+            <span className="inline-flex min-h-11.5 max-w-full items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] pl-4.25 pr-5.5 shadow-tst-crimson">
               <FigmaIcon id="9500-623" className="h-6.5 w-5.5 shrink-0" />
               <span className="font-kyg text-[14px] font-extrabold uppercase leading-5.25 tracking-[0.08em] text-eden">
                 {eyebrow.label}
@@ -79,7 +79,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
           {cols.map((col) => {
             const t = TONE[col.tone];
             return (
-              <article key={col.kicker} className={cn('flex flex-col overflow-hidden rounded-[28px] border', t.card)}>
+              <article key={col.kicker} className={cn('flex flex-col overflow-hidden rounded-sm border', t.card)}>
                 {/* image slot 594x188 + floating status pill.
                     `sizes` tracks the real rendered width: 594 once the 1280 rail
                     caps out, ~42vw while the two columns share a narrower rail,
@@ -94,7 +94,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
                   {/* min-h + max-w keep the badge inside the 278px-wide mobile
                       image slot if a longer label ever has to wrap; at 594 both
                       are inert. */}
-                  <span className="absolute left-3.5 top-3.5 inline-flex min-h-8.25 max-w-[calc(100%-28px)] items-center gap-1.5 rounded-full border border-mine/10 bg-white/95 pl-2 pr-3.5 shadow-tst-soft">
+                  <span className="absolute left-3.5 top-3.5 inline-flex min-h-8.25 max-w-[calc(100%-28px)] items-center gap-1.5 rounded-sm border border-mine/10 bg-white/95 pl-2 pr-3.5 shadow-tst-soft">
                     <FigmaIcon id={t.badgeIcon} className="h-5.75 w-4.75 shrink-0" />
                     <span
                       className={cn(
@@ -151,7 +151,7 @@ export default function Contrast({ data, ground }: { data: ContrastSection; grou
           {/* min-h-15, not h-15: the frame's 60px pill holds a 24px label line, so
               this is the same 60px at >=1440 while surviving a bumped-up default
               font size instead of clipping the label. */}
-          {data.cta ? <Cta data={data.cta} className="min-h-15 py-0 tracking-[0.06px]" /> : null}
+          {data.cta ? <Cta data={data.cta} className="tracking-[0.06px]" /> : null}
           {data.ctaNoteHtml ? (
             <p
               className="pt-3.5 text-center font-kyg text-[14.5px] leading-snug text-fusc"

@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { BTN } from '@/components/shared/button-styles';
+import { cn } from '@/lib/utils';
 import type { FinalCtaSection, Ground } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
 import { Heading, Section } from '../ui';
@@ -61,7 +63,7 @@ export default function FinalCta({ data, ground }: { data: FinalCtaSection; grou
         {/* min-h + py-[9px] instead of a hard h-[46px]: 26 (glyph) + 18 + 2
             (border) = 46 exactly, so the pill is pixel-identical on the frame,
             but a label that has to wrap grows the pill instead of spilling out. */}
-        <span className="inline-flex min-h-[46px] shrink-0 items-center gap-2.5 rounded-full border border-java/28 bg-java/14 py-[9px] pl-[17px] pr-[22px] shadow-tst-crimson">
+        <span className="inline-flex min-h-[46px] shrink-0 items-center gap-2.5 rounded-sm border border-java/28 bg-java/14 py-[9px] pl-[17px] pr-[22px] shadow-tst-crimson">
           {/* 22x26 glyph in a 22px optical box, centred on the pill's midline */}
           <FigmaIcon id="17236-608" className="h-[26px] w-[22px] shrink-0" />
           <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-ice">
@@ -102,7 +104,10 @@ export default function FinalCta({ data, ground }: { data: FinalCtaSection; grou
             it stays exact and does not scale with the fixed 16px label. */}
         <Link
           href={data.cta.href}
-          className="group inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full border border-white bg-white px-[34px] py-[17px] font-kyg text-[16px] font-extrabold leading-6 tracking-[0.06px] text-eden shadow-[0_0_0_4px_rgba(255,255,255,0.16),0_14px_32px_0_rgba(0,0,0,0.22)] transition duration-200 hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java"
+          className={cn(
+            BTN,
+            'group border border-white bg-white font-kyg font-extrabold tracking-[0.06px] text-eden shadow-[0_0_0_4px_rgba(255,255,255,0.16),0_14px_32px_0_rgba(0,0,0,0.22)] transition duration-200 hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java'
+          )}
         >
           {data.cta.label}
           <FigmaIcon

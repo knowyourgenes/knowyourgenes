@@ -87,7 +87,7 @@ export default function WellnessPackages() {
             <a
               key={card.href}
               href={card.href}
-              className="group relative isolate flex aspect-[4/5.4] flex-col overflow-hidden rounded-[var(--r-md)] bg-(--c-cream-2) text-inherit no-underline transition-[transform,box-shadow] duration-[800ms] ease-[var(--e-out)] hover:-translate-y-2 hover:shadow-[0_32px_70px_rgba(45,32,18,0.18)]"
+              className="group relative isolate flex aspect-[4/5.4] flex-col overflow-hidden rounded-sm bg-(--c-cream-2) text-inherit no-underline transition-[transform,box-shadow] duration-[800ms] ease-[var(--e-out)] hover:-translate-y-2 hover:shadow-[0_32px_70px_rgba(45,32,18,0.18)]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -97,10 +97,10 @@ export default function WellnessPackages() {
                 loading="lazy"
               />
               <div className="absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(31,26,20,0)_30%,rgba(31,26,20,0.65)_70%,rgba(31,26,20,0.92)_100%)]" />
-              <div className="absolute left-[18px] top-[18px] z-[2] rounded-full border border-white/[0.22] bg-white/[0.18] px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white backdrop-blur-[10px]">
+              <div className="absolute left-[18px] top-[18px] z-[2] rounded-sm border border-white/[0.22] bg-white/[0.18] px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white backdrop-blur-[10px]">
                 {card.num}
               </div>
-              <div className="absolute right-[18px] top-[18px] z-[2] flex h-[38px] w-[38px] items-center justify-center rounded-full bg-white/[0.95] text-(--ink-1) transition-[transform,background] duration-[600ms] ease-[var(--e-out)] group-hover:-rotate-45 group-hover:bg-(--c-teal-light) group-hover:text-white">
+              <div className="absolute right-[18px] top-[18px] z-[2] flex h-[38px] w-[38px] items-center justify-center rounded-sm bg-white/[0.95] text-(--ink-1) transition-[transform,background] duration-[600ms] ease-[var(--e-out)] group-hover:-rotate-45 group-hover:bg-(--c-teal-light) group-hover:text-white">
                 <svg
                   width="14"
                   height="14"
@@ -124,7 +124,7 @@ export default function WellnessPackages() {
                     {card.list.map((item) => (
                       <li
                         key={item}
-                        className="relative pl-[18px] text-[12.5px] leading-[1.4] text-white/[0.85] before:absolute before:left-0 before:top-2 before:h-[1.5px] before:w-[10px] before:rounded-[2px] before:bg-(--c-teal-light) before:content-['']"
+                        className="relative pl-[18px] text-[12.5px] leading-[1.4] text-white/[0.85] before:absolute before:left-0 before:top-2 before:h-[1.5px] before:w-[10px] before:rounded-sm before:bg-(--c-teal-light) before:content-['']"
                       >
                         {item}
                       </li>

@@ -81,7 +81,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
              only wraps on the very narrowest phones. That wrap already centres
              itself: `text-align` inherits from the head's `text-center`. The
              frame's own 17/22 padding is restored from sm up. */
-          <span className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-crimson/24 bg-crimson/10 px-4 py-[11px] shadow-tst-crimson sm:pl-[17px] sm:pr-[22px]">
+          <span className="inline-flex max-w-full items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 px-4 py-[11px] shadow-tst-crimson sm:pl-[17px] sm:pr-[22px]">
             <Glyph id={EYEBROW_GLYPH} box="size-[22px]" className="h-[26px] w-[22px]" />
             <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-crimson-deep">
               {eyebrow.label}
@@ -105,7 +105,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
             smaller than the box it has to fill. */}
         <Media
           img={data.image}
-          className="aspect-[503/280] w-full rounded-[26px] border border-mine/10 shadow-tst-soft"
+          className="aspect-[503/280] w-full rounded-sm border border-mine/10 shadow-tst-soft"
           sizes="(min-width: 1440px) 503px, (min-width: 1024px) 40vw, (min-width: 640px) 93vw, 95vw"
         />
 
@@ -127,7 +127,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
             {data.chips.map((c, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-2 rounded-full border border-mine/10 bg-white px-5 py-3 shadow-tst-soft"
+                className="inline-flex items-center gap-2 rounded-sm border border-mine/10 bg-white px-5 py-3 shadow-tst-soft"
               >
                 <Glyph id={CHIP_GLYPHS[i] ?? ''} box="size-[22px]" className="h-[26px] w-[22px]" />
                 <span
@@ -145,7 +145,7 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
           the row where both tiles are one-liners, 87.4 where one wraps to two
           lines). Default row sizing reproduces that, and cards still stretch to
           match each other WITHIN a row.
-          Radius is 16 - `rounded-2xl` is 18px in this project. */}
+          Radius is 16 - `rounded-sm` is 18px in this project. */}
       <ul className="mt-8 grid gap-4 md:grid-cols-2">
         {data.signs.map((s, i) => (
           <li
@@ -154,11 +154,11 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
                badge leave the copy only 180px, which runs the longest tile to
                eight lines. Trimming both to 16/12 below sm gives it 208px back;
                everything is the frame's again from sm up. */
-            className="flex items-center gap-3 rounded-[16px] border border-mine/10 bg-white p-4 shadow-tst-soft sm:gap-4 sm:p-5"
+            className="flex items-center gap-3 rounded-sm border border-mine/10 bg-white p-4 shadow-tst-soft sm:gap-4 sm:p-5"
           >
             <span
               className={cn(
-                'flex size-11 shrink-0 items-center justify-center rounded-[12px]',
+                'flex size-11 shrink-0 items-center justify-center rounded-sm',
                 SIGN_BADGE[s.accent] ?? SIGN_BADGE.teal
               )}
             >

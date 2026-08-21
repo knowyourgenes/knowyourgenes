@@ -20,7 +20,7 @@ export default function EyebrowPill({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-[9px] rounded-full border py-[8px] pl-[13px] pr-[17px]',
+        'inline-flex items-center gap-[9px] rounded-sm border py-[8px] pl-[13px] pr-[17px]',
         'text-[12px] font-bold uppercase leading-none tracking-[0.11em]',
         tint,
         className

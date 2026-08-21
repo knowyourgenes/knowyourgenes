@@ -30,9 +30,7 @@
 // At 768 the three-column layout still fits: 704 of content minus the 120 rail
 // and two ~15px gaps leaves ~277 per column, which clears the 268 photo.
 //
-// RADIUS TRAP: the photographs are radius 24 (`--r-md`), written as an explicit
-// arbitrary value. This project remaps Tailwind's radius scale (--radius
-// .625rem), so the named 2xl/3xl steps resolve to 18/22 and cannot be used here.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { cn } from '@/lib/utils';
@@ -312,7 +310,7 @@ function AssetPhoto({ photo }: { photo: NonNullable<Station['photo']> }) {
       // capped at 268 CSS px, so a 2x screen never needs more than ~536
       sizes="(max-width: 767px) 220px, 268px"
       className={cn(
-        'col-start-2 mt-[18px] aspect-[4/5] w-[min(100%,220px)] justify-self-start rounded-[24px]',
+        'col-start-2 mt-[18px] aspect-[4/5] w-[min(100%,220px)] justify-self-start rounded-sm',
         SH_2,
         'md:col-start-3 md:mt-0 md:w-[min(100%,268px)]'
       )}

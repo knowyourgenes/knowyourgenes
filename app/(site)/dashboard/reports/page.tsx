@@ -33,7 +33,7 @@ export default async function UserReportsPage() {
       {reports.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-primary/10 text-primary">
               <FileText className="h-5 w-5" />
             </div>
             <p className="mt-4 font-medium">No reports yet</p>

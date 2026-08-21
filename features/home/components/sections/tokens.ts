@@ -39,12 +39,6 @@ export const KYG_HOME_VARS = {
   '--dark-3': '#2e3d3a',
 
   // Squircle radii
-  '--r-xs': '12px',
-  '--r-sm': '18px',
-  '--r-md': '26px',
-  '--r-lg': '34px',
-  '--r-xl': '44px',
-  '--r-2xl': '56px',
 
   // Layout
   '--max-w': '1530px',

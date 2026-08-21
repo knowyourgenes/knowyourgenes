@@ -47,7 +47,7 @@ export default function AgentCollectionsPage() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`px-3 py-1.5 rounded-full text-sm whitespace-nowrap border ${
+            className={`px-3 py-1.5 rounded-sm text-sm whitespace-nowrap border ${
               tab === t.key ? 'bg-primary text-primary-foreground border-primary' : 'bg-background'
             }`}
           >
@@ -61,7 +61,7 @@ export default function AgentCollectionsPage() {
       ) : orders.length === 0 ? (
         <div className="text-sm text-muted-foreground py-8 text-center">No jobs in this tab.</div>
       ) : (
-        <ul className="divide-y rounded-lg border bg-background">
+        <ul className="divide-y rounded-sm border bg-background">
           {orders.map((o) => (
             <li key={o.id}>
               <Link href={`/agent/collections/${o.id}`} className="flex items-center gap-3 p-3 hover:bg-muted/50">
@@ -90,7 +90,7 @@ export default function AgentCollectionsPage() {
                   <a
                     href={`tel:${o.user.phone}`}
                     onClick={(e) => e.stopPropagation()}
-                    className="rounded-full p-2 hover:bg-muted"
+                    className="rounded-sm p-2 hover:bg-muted"
                     aria-label="Call"
                   >
                     <Phone className="h-4 w-4" />

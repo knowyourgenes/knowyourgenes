@@ -36,7 +36,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
         >
           <article>
             <header>
-              <span className="inline-flex items-center rounded-full bg-(--acc-50) px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-(--teal)">
+              <span className="inline-flex items-center rounded-sm bg-(--acc-50) px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-(--teal)">
                 {categoryLabel(post.category)}
               </span>
               <h1 className="mt-4 text-[clamp(30px,4.5vw,46px)] font-semibold leading-[1.1] tracking-[-0.03em]">
@@ -49,11 +49,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
               <div className="mt-6 flex flex-wrap items-center gap-3 border-y border-(--ink-line) py-4">
                 {authorPhoto ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={authorPhoto}
-                    alt={post.author?.name ?? ''}
-                    className="h-11 w-11 rounded-full object-cover"
-                  />
+                  <img src={authorPhoto} alt={post.author?.name ?? ''} className="h-11 w-11 rounded-sm object-cover" />
                 ) : null}
                 <div className="flex flex-col">
                   {post.author?.name ? (
@@ -68,7 +64,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
             </header>
 
             {hero ? (
-              <figure className="mt-8 overflow-hidden rounded-(--r-lg) border border-(--ink-line)">
+              <figure className="mt-8 overflow-hidden rounded-sm border border-(--ink-line)">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={hero} alt={post.heroImage?.alt ?? post.title} className="aspect-[16/9] w-full object-cover" />
               </figure>
@@ -83,13 +79,13 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
             </div>
 
             {post.author?.bio ? (
-              <aside className="mt-14 flex flex-col gap-4 rounded-(--r-md) border border-(--ink-line) bg-white p-6 sm:flex-row sm:items-start">
+              <aside className="mt-14 flex flex-col gap-4 rounded-sm border border-(--ink-line) bg-white p-6 sm:flex-row sm:items-start">
                 {authorPhoto ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={authorPhoto}
                     alt={post.author.name ?? ''}
-                    className="h-14 w-14 shrink-0 rounded-full object-cover"
+                    className="h-14 w-14 shrink-0 rounded-sm object-cover"
                   />
                 ) : null}
                 <div>
@@ -108,7 +104,7 @@ export default function BlogArticle({ post }: { post: BlogFullPost }) {
             <div className="mt-12">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 rounded-full border border-(--ink-line) bg-white px-5 py-3 text-[14px] font-semibold text-(--ink-1) transition-colors hover:border-(--teal) hover:text-(--teal)"
+                className="inline-flex items-center gap-2 rounded-sm border border-(--ink-line) bg-white px-5 py-3 text-[14px] font-semibold text-(--ink-1) transition-colors hover:border-(--teal) hover:text-(--teal)"
               >
                 <span aria-hidden>←</span> Back to all articles
               </Link>

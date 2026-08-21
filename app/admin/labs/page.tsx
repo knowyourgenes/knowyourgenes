@@ -613,14 +613,14 @@ export default function AdminLabsPage() {
                 if (!currentDefault) return null;
                 if (form.isDefault) {
                   return (
-                    <div className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+                    <div className="rounded-sm border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-900">
                       Saving will replace <span className="font-semibold">{currentDefault.name}</span> as the default
                       lab. New kit-by-post orders without an explicit lab will start shipping from this one instead.
                     </div>
                   );
                 }
                 return (
-                  <div className="rounded-md border border-muted bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
+                  <div className="rounded-sm border border-muted bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
                     <span className="font-semibold text-foreground">{currentDefault.name}</span> is the current default
                     lab. Tick <span className="font-semibold">Default lab</span> above to replace it.
                   </div>
@@ -628,7 +628,7 @@ export default function AdminLabsPage() {
               })()}
 
               {!form.id && (
-                <div className="space-y-3 rounded-md border bg-muted/30 p-3">
+                <div className="space-y-3 rounded-sm border bg-muted/30 p-3">
                   <label className="flex items-center gap-2 text-sm font-medium">
                     <Checkbox
                       checked={form.createLogin}

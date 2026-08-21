@@ -73,8 +73,7 @@ function BadgeCard({ badge }: { badge: TrustSection['badges'][number] }) {
   return (
     <div
       className={cn(
-        // r16 - NOT rounded-2xl: this project remaps --radius, so that token is 18px
-        'flex h-[78px] shrink-0 items-center justify-center gap-2 rounded-[16px] border border-mine/10 bg-white px-6 shadow-tst-soft',
+        'flex h-[78px] shrink-0 items-center justify-center gap-2 rounded-sm border border-mine/10 bg-white px-6 shadow-tst-soft',
         stacked && 'min-w-[156px]'
       )}
     >
@@ -114,7 +113,7 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
       {/* ---- head: 680 column, 16px gap ------------------------------------ */}
       <div className="mx-auto flex max-w-[680px] flex-col items-center gap-4 text-center">
         {eyebrow ? (
-          <span className="inline-flex items-center gap-2.5 rounded-full border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+          <span className="inline-flex items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
             {/* 22x22 slot; the glyph is 22x26 and overhangs by 2px */}
             <FigmaIcon id="15717-605" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
             <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-eden">
@@ -157,14 +156,13 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
           const crimson = t.accent === 'crimson';
           const glyph = t.icon ? TILE_GLYPH[t.icon] : undefined;
 
-          // r24 - NOT rounded-3xl, which is 22px on this project's radius scale
           return (
             <div
               key={t.title}
               // 28 is the frame's card padding. Between md and lg the three-up
               // row is only ~216 wide, so 28+28 leaves the 16px title 158px to
               // sit in; 24 until lg buys it back. Unchanged from lg up.
-              className="flex flex-col items-center gap-1.5 rounded-[24px] border border-mine/10 bg-white p-6 text-center shadow-tst-soft lg:p-7"
+              className="flex flex-col items-center gap-1.5 rounded-sm border border-mine/10 bg-white p-6 text-center shadow-tst-soft lg:p-7"
             >
               {t.statHtml ? (
                 <span
@@ -174,8 +172,8 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
               ) : (
                 <span
                   className={cn(
-                    // 64 square, r16 (rounded-2xl would paint 18 here)
-                    'grid size-16 shrink-0 place-items-center rounded-[16px]',
+                    // 64 square; the frame's r16 is rounded-sm here
+                    'grid size-16 shrink-0 place-items-center rounded-sm',
                     crimson ? 'bg-blush' : 'bg-mint'
                   )}
                 >

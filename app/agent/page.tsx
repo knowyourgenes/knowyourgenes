@@ -95,7 +95,7 @@ export default function AgentHomePage() {
                       <a
                         href={`tel:${o.user.phone}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="rounded-full p-2 hover:bg-muted"
+                        className="rounded-sm p-2 hover:bg-muted"
                         aria-label="Call"
                       >
                         <Phone className="h-4 w-4" />
@@ -111,11 +111,11 @@ export default function AgentHomePage() {
       </Card>
 
       <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
-        <div className="rounded-lg border bg-background p-3">
+        <div className="rounded-sm border bg-background p-3">
           <div>Zone</div>
           <div className="text-foreground font-medium">{me.profile.zone}</div>
         </div>
-        <div className="rounded-lg border bg-background p-3">
+        <div className="rounded-sm border bg-background p-3">
           <div>On-time</div>
           <div className="text-foreground font-medium">{Math.round(me.profile.onTimeRate * 100)}%</div>
         </div>
@@ -126,7 +126,7 @@ export default function AgentHomePage() {
 
 function KpiCard({ label, value, highlight }: { label: string; value: number; highlight?: boolean }) {
   return (
-    <div className={`rounded-lg border bg-background p-3 ${highlight ? 'border-primary/50' : ''}`}>
+    <div className={`rounded-sm border bg-background p-3 ${highlight ? 'border-primary/50' : ''}`}>
       <div className="text-xs text-muted-foreground">{label}</div>
       <div className="text-2xl font-semibold">{value}</div>
     </div>

@@ -47,7 +47,7 @@ describe('searchProducts', () => {
     expect(slugsFor('ancest')).toContain('ancestry');
   });
 
-  it('ANDs its tokens — extra words narrow, never widen', () => {
+  it('ANDs its tokens - extra words narrow, never widen', () => {
     const hair = slugsFor('hair');
     const hairFall = slugsFor('hair fall');
     expect(hairFall.length).toBeLessThanOrEqual(hair.length);

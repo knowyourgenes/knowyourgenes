@@ -15,7 +15,7 @@ import { Children, useRef, useState, type ReactNode } from 'react';
  */
 
 const arrowBtn =
-  'inline-flex h-[40px] w-[40px] items-center justify-center rounded-full border border-(--ink-line) bg-white text-(--ink-2) transition-[background,color,border-color,opacity] duration-300 enabled:hover:border-(--c-teal) enabled:hover:bg-(--c-teal) enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-35';
+  'inline-flex h-[40px] w-[40px] items-center justify-center rounded-sm border border-(--ink-line) bg-white text-(--ink-2) transition-[background,color,border-color,opacity] duration-300 enabled:hover:border-(--c-teal) enabled:hover:bg-(--c-teal) enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-35';
 
 export function Carousel({ label, children }: { label: string; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -93,7 +93,7 @@ export function Carousel({ label, children }: { label: string; children: ReactNo
         ref={ref}
         onScroll={onScroll}
         aria-label="Test packages"
-        className="flex snap-x snap-mandatory items-stretch overflow-x-auto scroll-smooth rounded-[var(--r-lg)] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory items-stretch overflow-x-auto scroll-smooth rounded-sm [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {children}
       </div>
@@ -107,7 +107,7 @@ export function Carousel({ label, children }: { label: string; children: ReactNo
             aria-label={`Go to test ${i + 1}`}
             aria-current={i === active}
             onClick={() => goTo(i)}
-            className={`h-[8px] rounded-full transition-[width,background-color] duration-300 ${
+            className={`h-[8px] rounded-sm transition-[width,background-color] duration-300 ${
               i === active ? 'w-[26px] bg-(--c-teal)' : 'w-[8px] bg-(--ink-line) hover:bg-(--ink-3)'
             }`}
           />

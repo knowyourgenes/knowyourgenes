@@ -37,7 +37,7 @@ const GET_BULLETS: { icon: string; node: React.ReactNode }[] = [
 
 function MockReport() {
   return (
-    <div className="reveal-r overflow-hidden rounded-7.5 border border-[rgba(31,26,20,0.08)] bg-white shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)]">
+    <div className="reveal-r overflow-hidden rounded-sm border border-[rgba(31,26,20,0.08)] bg-white shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)]">
       <div
         className="relative overflow-hidden px-8 pb-8 pt-7"
         style={{ background: 'linear-gradient(175deg, #0E4D4B 0%, #0A3B39 100%)' }}
@@ -45,7 +45,7 @@ function MockReport() {
         <div className="pointer-events-none absolute -right-6 -top-8 size-[224px] rounded-full bg-[rgba(37,181,171,0.2)] blur-10" />
         <div className="relative flex items-center justify-between">
           <KygLogo tone="light" className="h-6.5 w-auto" />
-          <span className="rounded-full bg-white/15 px-3 py-[6px] text-2.5 font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-sm]">
+          <span className="rounded-sm bg-white/15 px-3 py-[6px] text-2.5 font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-sm]">
             Panel 03 / 05
           </span>
         </div>
@@ -62,13 +62,13 @@ function MockReport() {
 
       <div className="flex flex-col gap-4 px-8 py-7">
         <div className="grid grid-cols-2 gap-4">
-          <div className="rounded-4 bg-[rgba(245,237,223,0.7)] px-5 pb-5 pt-4.75">
+          <div className="rounded-sm bg-[rgba(245,237,223,0.7)] px-5 pb-5 pt-4.75">
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Your genotype</div>
             <div className="mt-[6px] font-hind text-[34px] font-semibold leading-none tracking-[-0.025em] text-[#1F1A14]">
               AA
             </div>
           </div>
-          <div className="rounded-4 bg-[rgba(199,104,66,0.1)] px-5 pb-6 pt-4.75">
+          <div className="rounded-sm bg-[rgba(199,104,66,0.1)] px-5 pb-6 pt-4.75">
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(199,104,66,0.9)]">
               Your response
             </div>
@@ -84,7 +84,7 @@ function MockReport() {
           dopamine levels, a lower pain threshold, and enhanced vulnerability to stress.
         </p>
 
-        <div className="flex flex-col gap-1.25 rounded-4 bg-[rgba(14,77,75,0.06)] p-4">
+        <div className="flex flex-col gap-1.25 rounded-sm bg-[rgba(14,77,75,0.06)] p-4">
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">
             <FigIcon src="/landing/icons/meditation.svg" className="size-4 text-[#0E4D4B]" />
             Recommendation
@@ -104,7 +104,7 @@ function MockReport() {
             ))}
           </div>
           <div
-            className="relative h-2 rounded-full"
+            className="relative h-2 rounded-sm"
             style={{ background: 'linear-gradient(90deg, #2AC3A2 0%, #F3D5B2 50%, #C76842 100%)' }}
           >
             <span className="absolute right-[4%] top-1/2 size-3.5 -translate-y-1/2 rounded-full border-[3px] border-white bg-[#C76842] shadow-[0_2px_6px_rgba(0,0,0,0.2)]" />
@@ -154,7 +154,7 @@ export function WhatYouGetSection() {
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-col gap-2 rounded-5.5 border border-[rgba(31,26,20,0.08)] bg-white/60 px-6 pb-8 pt-[36px]">
+            <div className="mt-8 flex flex-col gap-2 rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/60 px-6 pb-8 pt-[36px]">
               <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
                 <FigIcon src="/landing/icons/layers.svg" className="size-[17px] text-[#0E4D4B]" />
                 And this is just Panel 03 of 5
@@ -224,9 +224,9 @@ export function WhatKnowingChangesSection() {
           {CHANGES.map(({ icon, title, body }) => (
             <div
               key={title}
-              className="reveal flex flex-col gap-[7px] rounded-7 border border-[rgba(31,26,20,0.08)] bg-white/75 p-8 shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
+              className="reveal flex flex-col gap-[7px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 p-8 shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
             >
-              <span className="grid size-14 place-items-center rounded-4 bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
+              <span className="grid size-14 place-items-center rounded-sm bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
                 <FigIcon src={icon} className="size-7" />
               </span>
               <h3 className="mt-[11px] text-4.75 font-semibold leading-[28.5px] tracking-[-0.025em] text-[#1F1A14]">
@@ -238,12 +238,12 @@ export function WhatKnowingChangesSection() {
         </div>
 
         <div
-          className="reveal relative mt-6 overflow-hidden rounded-7 px-8 py-11 shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)] sm:px-12"
+          className="reveal relative mt-6 overflow-hidden rounded-sm px-8 py-11 shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)] sm:px-12"
           style={{ background: 'linear-gradient(179deg, #0E4D4B 0%, #0A3B39 100%)' }}
         >
           <div className="pointer-events-none absolute -right-10 -top-12 size-56 rounded-full bg-[rgba(37,181,171,0.2)] blur-3xl" />
           <div className="relative flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-            <span className="grid size-12 shrink-0 place-items-center rounded-4 bg-white/10 text-[#F3D5B2]">
+            <span className="grid size-12 shrink-0 place-items-center rounded-sm bg-white/10 text-[#F3D5B2]">
               <FigIcon src="/landing/icons/sparkles.svg" className="size-6.5" />
             </span>
             <p className="text-5.5 font-semibold leading-[1.28] tracking-[-0.015em] sm:text-[25px] lg:text-[27px] lg:leading-[34.56px]">
@@ -291,7 +291,7 @@ export function DataStatsSection() {
           </h2>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-7 bg-white/10 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-sm bg-white/10 lg:grid-cols-4">
           {STATS.map((s) => (
             <div key={s.label} className="flex flex-col gap-3 bg-[#15201E] p-7 sm:p-8">
               <div
@@ -382,11 +382,11 @@ export function BeforeAfterSection() {
           {BEFORE_AFTER.map((row, i) => (
             <div
               key={i}
-              className="reveal grid overflow-hidden rounded-6 border border-[rgba(31,26,20,0.08)] bg-[rgba(31,26,20,0.08)] sm:grid-cols-2"
+              className="reveal grid overflow-hidden rounded-sm border border-[rgba(31,26,20,0.08)] bg-[rgba(31,26,20,0.08)] sm:grid-cols-2"
             >
               <div className="flex flex-col gap-3 bg-[rgba(245,237,223,0.6)] p-8">
                 <span className="inline-flex items-center gap-2">
-                  <span className="grid size-7 place-items-center rounded-2 bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
+                  <span className="grid size-7 place-items-center rounded-sm bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
                     <FigIcon src="/landing/icons/pp-history-clock.svg" className="size-4" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Before</span>
@@ -395,7 +395,7 @@ export function BeforeAfterSection() {
               </div>
               <div className="flex flex-col gap-3 bg-[rgba(14,77,75,0.06)] p-8">
                 <span className="inline-flex items-center gap-2">
-                  <span className="grid size-7 place-items-center rounded-2 text-[#0E4D4B]">
+                  <span className="grid size-7 place-items-center rounded-sm text-[#0E4D4B]">
                     <FigIcon src="/landing/icons/check.svg" className="size-4" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">After</span>
@@ -437,7 +437,7 @@ function ForYouChecklist() {
 
   return (
     <div className="reveal-r flex flex-col gap-5">
-      <ul className="flex flex-col rounded-7.5 border border-[rgba(31,26,20,0.08)] bg-white/75 p-6 shadow-[0_18px_50px_rgba(20,45,40,0.09),0_4px_16px_rgba(20,45,40,0.06)]">
+      <ul className="flex flex-col rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 p-6 shadow-[0_18px_50px_rgba(20,45,40,0.09),0_4px_16px_rgba(20,45,40,0.06)]">
         {STATEMENTS.map((label, i) => (
           <li key={i}>
             <button
@@ -449,7 +449,7 @@ function ForYouChecklist() {
               }`}
             >
               <span className="mt-px grid size-6 shrink-0 place-items-center">
-                <span className="sx-box grid size-6 place-items-center rounded-2 border-2 border-[rgba(14,77,75,0.3)]">
+                <span className="sx-box grid size-6 place-items-center rounded-sm border-2 border-[rgba(14,77,75,0.3)]">
                   <FigIcon src="/landing/icons/check.svg" className="sx-tick size-3.5 text-[#FAF6EF]" />
                 </span>
               </span>
@@ -460,12 +460,12 @@ function ForYouChecklist() {
       </ul>
 
       <div
-        className="relative overflow-hidden rounded-6 p-6"
+        className="relative overflow-hidden rounded-sm p-6"
         style={{ background: 'linear-gradient(175deg, #0E4D4B 0%, #0B3D3B 100%)' }}
       >
         <div className="pointer-events-none absolute -top-9 right-0 size-[144px] rounded-full bg-[rgba(37,181,171,0.15)] blur-10" />
         <div className="relative flex items-center gap-5">
-          <span className="relative grid size-[64px] shrink-0 place-items-center rounded-full bg-white/10 text-[#F3D5B2]">
+          <span className="relative grid size-[64px] shrink-0 place-items-center rounded-sm bg-white/10 text-[#F3D5B2]">
             <FigIcon src="/landing/icons/meditation.svg" className="size-7" />
             {count > 0 && (
               <span className="absolute -right-1 -top-1 grid size-6 place-items-center rounded-full bg-[#F3D5B2] font-hind text-[13px] font-semibold text-[#1F1A14]">
@@ -482,7 +482,7 @@ function ForYouChecklist() {
         </div>
         <a
           href="#check"
-          className="sheen group relative mt-5 flex items-center justify-center gap-2 overflow-hidden rounded-full bg-[#FAF6EF] px-6 py-3.5 text-[15px] font-semibold text-[#1F1A14]"
+          className="sheen group relative mt-5 flex items-center justify-center gap-2 overflow-hidden rounded-sm bg-[#FAF6EF] px-6 py-3.5 text-[15px] font-semibold text-[#1F1A14]"
         >
           <span className="relative z-[1] inline-flex items-center gap-2">
             Know my genetic vulnerability
@@ -516,7 +516,7 @@ export function WhoThisIsForSection() {
             <p className="mt-5 text-4 leading-6.5 text-[#2D2A24]">
               Every line is a gentle tap on the shoulder. Tap the ones that feel like you.
             </p>
-            <div className="mt-6 flex items-center gap-3 rounded-5 border border-[rgba(31,26,20,0.08)] bg-white/60 px-5 pb-5 pt-7">
+            <div className="mt-6 flex items-center gap-3 rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/60 px-5 pb-5 pt-7">
               <FigIcon src="/landing/icons/pp-lock.svg" className="size-6.5 shrink-0 text-[#0E4D4B]" />
               <p className="text-3.5 leading-5 text-[#2D2A24]">
                 Whatever you select stays on your device. Nothing is submitted. This is just for you.

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { LogOut, UserCog, Loader2, User } from 'lucide-react';
 import type { Role } from '@prisma/client';
 
+import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -35,11 +36,18 @@ export default function UserNav({
   email,
   role,
   image,
+  compact = false,
 }: {
   name: string;
   email: string;
   role: Role;
   image?: string | null;
+  /**
+   * Avatar only, no name/role beside it. For the public site header, where this
+   * is one of three same-sized icons and a name would break the row. The admin
+   * layout leaves it off and keeps the full trigger.
+   */
+  compact?: boolean;
 }) {
   const router = useRouter();
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -72,12 +80,12 @@ export default function UserNav({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex cursor-pointer items-center gap-2 rounded-full p-1 outline-none transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring">
+        <DropdownMenuTrigger className="flex cursor-pointer items-center gap-2 rounded-sm p-1 outline-none transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring">
           <Avatar className="h-9 w-9">
             {image && <AvatarImage src={image} alt={name} />}
             <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">{initials}</AvatarFallback>
           </Avatar>
-          <div className="hidden text-left leading-tight sm:block">
+          <div className={cn('hidden text-left leading-tight', compact ? '' : 'sm:block')}>
             <div className="text-sm font-medium">{name}</div>
             <div className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{role}</div>
           </div>

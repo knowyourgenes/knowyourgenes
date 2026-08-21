@@ -5,8 +5,7 @@
 // (1280 → 1216 content) holds every child of this frame, whose widest block is
 // the 1040 transformation row. Vertical rhythm is the frame's own 48px gap.
 //
-// RADIUS TRAP: the project remaps Tailwind's radius scale, so 16 and 24 are
-// written as arbitrary values (rounded-[16px] / rounded-[24px]).
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { cn } from '@/lib/utils';
@@ -66,9 +65,7 @@ function Stage({
   ornament?: boolean;
 }) {
   return (
-    <div
-      className={cn('relative flex min-w-0 flex-1 flex-col gap-2 overflow-hidden rounded-[24px] p-[28px]', className)}
-    >
+    <div className={cn('relative flex min-w-0 flex-1 flex-col gap-2 overflow-hidden rounded-sm p-[28px]', className)}>
       {ornament ? (
         // The frame's blurred teal orb, clipped by the card's own corner radius.
         <span
@@ -76,9 +73,7 @@ function Stage({
           className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-java2/15 blur-[20px]"
         />
       ) : null}
-      <span
-        className={cn('relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px]', chipClassName)}
-      >
+      <span className={cn('relative flex h-12 w-12 shrink-0 items-center justify-center rounded-sm', chipClassName)}>
         <AboutIcon id={icon} className="h-[28px] w-[24px]" />
       </span>
       {/*
@@ -129,7 +124,7 @@ export default function BiggerPicture() {
         </div>
 
         {/* ── two-column body (476 + 48 + 476) ────────────────────────────── */}
-        <div className="grid w-full max-w-[1000px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="grid w-full max-w-[1600px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12">
           <div className="flex min-w-0 flex-col gap-[15px]">
             <div className="flex flex-wrap gap-2.5">
               {SHIFTS.map((shift) => (
@@ -163,7 +158,7 @@ export default function BiggerPicture() {
               <div
                 key={row.text}
                 className={cn(
-                  'flex items-center gap-4 rounded-[16px] px-5 py-4',
+                  'flex items-center gap-4 rounded-sm px-5 py-4',
                   row.strong ? 'border-2 border-eden/25 bg-white shadow-tst-soft' : 'border border-mine/10 bg-linenw'
                 )}
               >
@@ -182,7 +177,7 @@ export default function BiggerPicture() {
         </div>
 
         {/* ── reactive → personalized → preventive ────────────────────────── */}
-        <div className="flex w-full max-w-[1040px] flex-col items-stretch gap-4 pt-2 lg:flex-row">
+        <div className="flex w-full max-w-[1600px] flex-col items-stretch gap-4 pt-2 lg:flex-row">
           <Stage
             icon="12449-241"
             className="border border-mine/10 bg-linenw"

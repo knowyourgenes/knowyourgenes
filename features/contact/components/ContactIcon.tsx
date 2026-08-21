@@ -54,7 +54,7 @@ export function ContactEyebrow({ label, icon, className }: { label: string; icon
   return (
     <span
       className={
-        'inline-flex items-center gap-2.5 rounded-full border border-eden/[0.16] bg-eden/[0.08] py-[11px] pl-[17px] pr-[22px] shadow-[0_6px_18px_0_rgba(14,77,75,0.08)] ' +
+        'inline-flex items-center gap-2.5 rounded-sm border border-eden/[0.16] bg-eden/[0.08] py-[11px] pl-[17px] pr-[22px] shadow-[0_6px_18px_0_rgba(14,77,75,0.08)] ' +
         (className ?? '')
       }
     >

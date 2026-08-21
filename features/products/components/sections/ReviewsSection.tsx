@@ -18,8 +18,8 @@ export default function ReviewsSection({ reviews }: { reviews: ProductKit['revie
 
         <div className="flex flex-col gap-5 pt-7">
           {reviews.items.map((r, i) => (
-            <div key={i} className="flex gap-4 rounded-[20px] border border-heavy/10 bg-white p-6 shadow-pdp-soft">
-              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-gin text-[14px] font-bold text-sea">
+            <div key={i} className="flex gap-4 rounded-sm border border-heavy/10 bg-white p-6 shadow-pdp-soft">
+              <span className="grid size-10 shrink-0 place-items-center rounded-sm bg-gin text-[14px] font-bold text-sea">
                 {r.initials}
               </span>
               <div className="flex-1">

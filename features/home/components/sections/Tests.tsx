@@ -59,7 +59,7 @@ function Blob() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute -right-[140px] -bottom-[140px] z-0 h-[360px] w-[360px] rounded-full bg-[radial-gradient(closest-side,var(--t-accent-50),transparent_72%)]"
+      className="pointer-events-none absolute -right-[140px] -bottom-[140px] z-0 h-[360px] w-[360px] rounded-sm bg-[radial-gradient(closest-side,var(--t-accent-50),transparent_72%)]"
     />
   );
 }
@@ -315,12 +315,12 @@ const BUNDLES: Bundle[] = [
 ];
 
 const cardShell =
-  'relative flex flex-col overflow-hidden rounded-[var(--r-lg)] border border-(--ink-line) bg-white p-[clamp(26px,2.8vw,40px)] shadow-[0_2px_6px_rgba(45,32,18,.04),0_18px_50px_-24px_rgba(45,32,18,.18)] max-[560px]:p-[24px]';
+  'relative flex flex-col overflow-hidden rounded-sm border border-(--ink-line) bg-white p-[clamp(26px,2.8vw,40px)] shadow-[0_2px_6px_rgba(45,32,18,.04),0_18px_50px_-24px_rgba(45,32,18,.18)] max-[560px]:p-[24px]';
 const tagPill =
-  'inline-flex items-center rounded-full bg-[var(--t-accent-50)] px-[14px] py-[7px] text-[11.5px] font-bold uppercase tracking-[0.14em] text-[var(--t-accent-700)]';
+  'inline-flex items-center rounded-sm bg-[var(--t-accent-50)] px-[14px] py-[7px] text-[11.5px] font-bold uppercase tracking-[0.14em] text-[var(--t-accent-700)]';
 const subLabCls = 'mb-[16px] text-[12px] font-bold uppercase tracking-[0.16em] text-(--ink-3)';
 const softPill =
-  'inline-flex items-center rounded-full border border-(--ink-line) bg-[rgba(31,26,20,.04)] px-[14px] py-[7px] text-[12.5px] font-medium tracking-[-.005em] text-(--ink-3)';
+  'inline-flex items-center rounded-sm border border-(--ink-line) bg-[rgba(31,26,20,.04)] px-[14px] py-[7px] text-[12.5px] font-medium tracking-[-.005em] text-(--ink-3)';
 
 const DEFAULT_TEST_IMAGE = '/kyg/950448a92b6b.jpg';
 
@@ -380,10 +380,10 @@ export default function Tests() {
                     <div
                       key={c.key}
                       style={THEME[c.theme]}
-                      className="flex flex-col rounded-[var(--r-sm)] border border-(--ink-line) bg-(--c-cream) p-[clamp(18px,1.8vw,24px)] transition-[transform,box-shadow,border-color] duration-[450ms] hover:-translate-y-[3px] hover:border-[var(--t-accent-100)] hover:shadow-[0_12px_28px_-12px_rgba(45,32,18,.22)]"
+                      className="flex flex-col rounded-sm border border-(--ink-line) bg-(--c-cream) p-[clamp(18px,1.8vw,24px)] transition-[transform,box-shadow,border-color] duration-[450ms] hover:-translate-y-[3px] hover:border-[var(--t-accent-100)] hover:shadow-[0_12px_28px_-12px_rgba(45,32,18,.22)]"
                     >
                       <div className="mb-[14px] flex items-center gap-[12px]">
-                        <span className="inline-flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[11px] bg-[var(--t-accent-50)] text-[var(--t-accent-500)]">
+                        <span className="inline-flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-sm bg-[var(--t-accent-50)] text-[var(--t-accent-500)]">
                           <svg
                             viewBox="0 0 24 24"
                             fill="none"
@@ -412,7 +412,7 @@ export default function Tests() {
                           </li>
                         ))}
                       </ul>
-                      <p className="mt-[14px] rounded-[10px] bg-[var(--t-accent-50)] px-[14px] py-[10px] text-[13px] font-semibold italic leading-[1.35] text-[var(--t-accent-700)]">
+                      <p className="mt-[14px] rounded-sm bg-[var(--t-accent-50)] px-[14px] py-[10px] text-[13px] font-semibold italic leading-[1.35] text-[var(--t-accent-700)]">
                         {c.tagline}
                       </p>
                     </div>
@@ -425,7 +425,7 @@ export default function Tests() {
                   {['Saliva kit', 'No needles', 'NABL labs', 'WhatsApp counselling'].map((p) => (
                     <span
                       key={p}
-                      className="inline-flex items-center rounded-full border border-(--ink-line) bg-[rgba(31,26,20,.04)] px-[13px] py-[7px] text-[12px] font-medium tracking-[-.005em] text-(--ink-3)"
+                      className="inline-flex items-center rounded-sm border border-(--ink-line) bg-[rgba(31,26,20,.04)] px-[13px] py-[7px] text-[12px] font-medium tracking-[-.005em] text-(--ink-3)"
                     >
                       {p}
                     </span>
@@ -433,7 +433,7 @@ export default function Tests() {
                 </div>
                 <Link
                   href="/categories/wellness/my-wellness"
-                  className="group inline-flex items-center gap-[10px] rounded-full bg-[var(--t-accent-500)] px-[22px] py-[12px] text-[14.5px] font-semibold tracking-[-.005em] text-white transition-[background,transform,box-shadow] duration-[450ms] hover:-translate-y-[2px] hover:bg-[var(--t-accent-700)] hover:shadow-[0_12px_28px_-8px_rgba(31,107,67,.45)] max-[880px]:w-full max-[880px]:justify-center"
+                  className="group inline-flex items-center gap-[10px] rounded-sm bg-[var(--t-accent-500)] px-[22px] py-[12px] text-[14.5px] font-semibold tracking-[-.005em] text-white transition-[background,transform,box-shadow] duration-[450ms] hover:-translate-y-[2px] hover:bg-[var(--t-accent-700)] hover:shadow-[0_12px_28px_-8px_rgba(31,107,67,.45)] max-[880px]:w-full max-[880px]:justify-center"
                 >
                   Know more
                   <CtaArrow />
@@ -454,7 +454,7 @@ export default function Tests() {
                     className={`${cardShell} w-full flex-[0_0_100%] snap-center`}
                   >
                     <Blob />
-                    <div className="relative z-[1] mb-[clamp(18px,1.8vw,26px)] h-[clamp(150px,16vw,200px)] overflow-hidden rounded-[var(--r-md)] bg-(--c-cream-2)">
+                    <div className="relative z-[1] mb-[clamp(18px,1.8vw,26px)] h-[clamp(150px,16vw,200px)] overflow-hidden rounded-sm bg-(--c-cream-2)">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
                     </div>
@@ -481,7 +481,7 @@ export default function Tests() {
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-[clamp(22px,2.4vw,30px)] rounded-[var(--r-sm)] border-l-4 border-l-[var(--t-accent-500)] bg-[var(--t-accent-50)] px-[22px] py-[18px]">
+                      <div className="mt-[clamp(22px,2.4vw,30px)] rounded-sm border-l-4 border-l-[var(--t-accent-500)] bg-[var(--t-accent-50)] px-[22px] py-[18px]">
                         <span className="mb-[6px] block text-[11.5px] font-bold uppercase tracking-[0.16em] text-[var(--t-accent-700)]">
                           Highlight
                         </span>
@@ -502,7 +502,7 @@ export default function Tests() {
                       {c.cta && (
                         <a
                           href={c.cta.href}
-                          className="group inline-flex items-center gap-[10px] rounded-full bg-[var(--t-accent-500)] px-[24px] py-[13px] text-[14.5px] font-semibold tracking-[-.005em] text-white transition-[background,transform,box-shadow] duration-500 hover:-translate-y-[2px] hover:bg-[var(--t-accent-700)] hover:shadow-[0_14px_32px_rgba(45,32,18,.18)] max-[880px]:w-full max-[880px]:justify-center"
+                          className="group inline-flex items-center gap-[10px] rounded-sm bg-[var(--t-accent-500)] px-[24px] py-[13px] text-[14.5px] font-semibold tracking-[-.005em] text-white transition-[background,transform,box-shadow] duration-500 hover:-translate-y-[2px] hover:bg-[var(--t-accent-700)] hover:shadow-[0_14px_32px_rgba(45,32,18,.18)] max-[880px]:w-full max-[880px]:justify-center"
                         >
                           Know more
                           <CtaArrow />
@@ -530,11 +530,11 @@ export default function Tests() {
             <a
               key={b.title}
               href={b.href}
-              className="relative flex flex-col rounded-[var(--r-md)] border-[1.5px] border-(--ink-line) bg-[rgba(255,255,255,.7)] px-[28px] pt-[28px] pb-[26px] backdrop-blur-[8px] transition-[transform,box-shadow,background,border-color] duration-[550ms] hover:-translate-y-[6px] hover:border-[rgba(31,26,20,.16)] hover:bg-white hover:shadow-[0_18px_44px_rgba(45,32,18,.12)] max-[560px]:p-[22px]"
+              className="relative flex flex-col rounded-sm border-[1.5px] border-(--ink-line) bg-[rgba(255,255,255,.7)] px-[28px] pt-[28px] pb-[26px] backdrop-blur-[8px] transition-[transform,box-shadow,background,border-color] duration-[550ms] hover:-translate-y-[6px] hover:border-[rgba(31,26,20,.16)] hover:bg-white hover:shadow-[0_18px_44px_rgba(45,32,18,.12)] max-[560px]:p-[22px]"
             >
               <div className="mb-[14px] flex items-center gap-[12px]">
                 <span
-                  className="inline-flex h-[36px] w-[36px] items-center justify-center rounded-[10px] bg-[rgba(31,26,20,.04)]"
+                  className="inline-flex h-[36px] w-[36px] items-center justify-center rounded-sm bg-[rgba(31,26,20,.04)]"
                   style={{ color: b.color }}
                 >
                   <svg

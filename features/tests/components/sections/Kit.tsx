@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BTN } from '@/components/shared/button-styles';
 import { cn } from '@/lib/utils';
 import { discountPercent, formatPaise } from '@/lib/catalog';
 import type { KitPricing } from '@/features/products/types';
@@ -79,7 +80,8 @@ export default function Kit({
 
   /** Shared with the fallback link so both render identically. */
   const CTA_CLASS =
-    'group inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-eden bg-eden px-6 py-5 font-kyg text-[18px] font-extrabold leading-6.75 tracking-[0.004em] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java sm:px-11';
+    BTN +
+    ' group w-full border border-eden bg-eden font-kyg text-[18px] font-extrabold tracking-[0.004em] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java sm:';
 
   return (
     <Section ground={ground ?? 'ivory'} id="kit" className="border-y border-mine/10">
@@ -89,7 +91,7 @@ export default function Kit({
           {eyebrow ? (
             /* Tinted crimson pill (#c73c70@10 on #c73c70@24), not the white
                eyebrow in ui.tsx: pad 11/22/11/17, gap 10, 0 6 18 crimson@10. */
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-crimson/24 bg-crimson/10 py-2.75 pl-4.25 pr-5.5 shadow-tst-crimson">
+            <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-2.75 pl-4.25 pr-5.5 shadow-tst-crimson">
               {/* 22px slot; the glyph is 22x26 and overhangs 2px either side */}
               <FigmaIcon id="14935-541" className="-my-0.5 block h-6.5 w-5.5 shrink-0" />
               {/* 321 wide at 1440 against ~209 of usable pill at 320: min-w-0 lets
@@ -104,7 +106,7 @@ export default function Kit({
         </div>
 
         {/* ---- the 920 card: 528 contents / 390 order --------------------- */}
-        <div className="grid w-full max-w-230 overflow-hidden rounded-[28px] border border-mine/10 bg-white shadow-tst-card lg:grid-cols-[minmax(0,528fr)_minmax(0,390fr)]">
+        <div className="grid w-full max-w-230 overflow-hidden rounded-sm border border-mine/10 bg-white shadow-tst-card lg:grid-cols-[minmax(0,528fr)_minmax(0,390fr)]">
           {/* ---- contents ------------------------------------------------ */}
           {/* border-r is the frame's seam hairline, and it is what makes the
               inner measure 447: 528 - 1 - 40 - 40. Only once the grid splits. */}
@@ -179,7 +181,7 @@ export default function Kit({
                   </span>
                 )}
                 {off !== null && (
-                  <span className="rounded-full bg-eden/10 px-2.5 py-1 font-kyg text-[12.5px] font-bold text-eden">
+                  <span className="rounded-sm bg-eden/10 px-2.5 py-1 font-kyg text-[12.5px] font-bold text-eden">
                     {off}% off
                   </span>
                 )}

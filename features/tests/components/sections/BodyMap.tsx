@@ -120,7 +120,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
       <div className="mx-auto flex max-w-[680px] flex-col items-center gap-[14px] text-center">
         {eyebrow ? (
           // pill: r999, #c73c70@10 ground, 1px #c73c70@24, 0 6 18 rgba(199,60,112,.1)
-          <span className="inline-flex min-h-[47px] items-center gap-[10px] rounded-full border border-crimson/24 bg-crimson/10 pb-[11px] pl-[17px] pr-[22px] pt-[10px] shadow-tst-crimson">
+          <span className="inline-flex min-h-[47px] items-center gap-[10px] rounded-sm border border-crimson/24 bg-crimson/10 pb-[11px] pl-[17px] pr-[22px] pt-[10px] shadow-tst-crimson">
             {/* The glyph is 22x26, so forcing it square squashed it ~15%. Render
                 it at its true ratio and pull the overhang back to the frame's
                 22px msym slot. `min-h-47` pins the frame's height (1 + 10 + 24 +
@@ -160,7 +160,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
               LAYER_BLUR 14 -> CSS blur(7px) */}
           <span
             aria-hidden
-            className="absolute rounded-[50%] bg-eden blur-[7px]"
+            className="absolute rounded-full bg-eden blur-[7px]"
             style={{ left: 279, top: 457, width: 162, height: 21 }}
           />
 
@@ -225,7 +225,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                       and exists purely to widen the pointer target. */}
                   <span
                     aria-hidden
-                    className="absolute left-1/2 top-1/2 size-[39px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+                    className="absolute left-1/2 top-1/2 size-[39px] -translate-x-1/2 -translate-y-1/2 rounded-sm"
                   />
                   <span aria-hidden className="block size-[18px] rounded-full" style={{ backgroundColor: g.ring }} />
                   <span
@@ -284,7 +284,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
                   transform: below ? 'translate(-50%,0)' : 'translate(-50%,-100%)',
                 }}
               >
-                <div className="rounded-[16px] border border-mine/10 bg-white p-4 shadow-tst-float">
+                <div className="rounded-sm border border-mine/10 bg-white p-4 shadow-tst-float">
                   <div className="mb-1.5 font-kyg text-[12px] font-bold uppercase tracking-[0.07em] text-eden2">
                     {h.tipTitle}
                   </div>
@@ -328,7 +328,7 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
               // stretching its 2-up neighbour to match at sm/md
               <li
                 key={h.key}
-                className="self-start overflow-hidden rounded-[16px] border border-mine/10 bg-white shadow-tst-soft"
+                className="self-start overflow-hidden rounded-sm border border-mine/10 bg-white shadow-tst-soft"
               >
                 <button
                   type="button"

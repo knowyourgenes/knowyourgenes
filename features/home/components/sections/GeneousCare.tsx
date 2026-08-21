@@ -18,7 +18,7 @@ const CARE_PILLS = [
 export default function GeneousCare() {
   return (
     <section className="relative pt-0 pb-[clamp(56px,6.5vw,96px)] max-[560px]:pb-[56px]">
-      <div className="relative mx-auto w-[min(var(--max-w),100%_-_2*var(--gutter))] overflow-hidden rounded-[var(--r-2xl)] bg-(--dark-1) text-(--c-cream) max-[1180px]:mx-0 max-[1180px]:w-full max-[1180px]:rounded-none">
+      <div className="relative mx-auto w-[min(var(--max-w),100%_-_2*var(--gutter))] overflow-hidden rounded-sm bg-(--dark-1) text-(--c-cream) max-[1180px]:mx-0 max-[1180px]:w-full max-[1180px]:rounded-none">
         {/* Static dark warm glow overlay */}
         <div
           aria-hidden="true"
@@ -50,7 +50,7 @@ export default function GeneousCare() {
                 {CARE_ITEMS.map(([num, label]) => (
                   <div
                     key={num}
-                    className="flex items-center gap-[14px] rounded-[var(--r-sm)] border border-white/[0.08] bg-white/[0.05] px-[20px] py-[16px] text-[14.5px] text-(--c-cream) transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:translate-x-[4px] hover:border-[rgba(37,181,171,0.4)] hover:bg-white/[0.09] max-[560px]:px-[14px] max-[560px]:py-[12px] max-[560px]:text-[13.5px]"
+                    className="flex items-center gap-[14px] rounded-sm border border-white/[0.08] bg-white/[0.05] px-[20px] py-[16px] text-[14.5px] text-(--c-cream) transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:translate-x-[4px] hover:border-[rgba(37,181,171,0.4)] hover:bg-white/[0.09] max-[560px]:px-[14px] max-[560px]:py-[12px] max-[560px]:text-[13.5px]"
                   >
                     <span className="min-w-[20px] [font-family:var(--ff)] text-[13px] font-bold tracking-[0.06em] text-(--c-teal-bright)">
                       {num}
@@ -67,21 +67,21 @@ export default function GeneousCare() {
                 {CARE_PILLS.map((pill) => (
                   <span
                     key={pill}
-                    className="rounded-full border border-white/[0.12] bg-white/[0.05] px-[16px] py-[8px] text-[13px] font-medium text-(--c-cream) transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-(--c-peach-2) hover:bg-[rgba(248,228,204,0.15)]"
+                    className="rounded-sm border border-white/[0.12] bg-white/[0.05] px-[16px] py-[8px] text-[13px] font-medium text-(--c-cream) transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-(--c-peach-2) hover:bg-[rgba(248,228,204,0.15)]"
                   >
                     {pill}
                   </span>
                 ))}
               </div>
 
-              <div className="mt-[32px] rounded-[var(--r-sm)] border border-[rgba(37,181,171,0.32)] bg-[linear-gradient(135deg,rgba(37,181,171,0.18),rgba(248,228,204,0.1))] px-[26px] py-[20px] [font-family:var(--ff)] text-[20px] font-semibold leading-[1.3] tracking-[-0.012em] text-white max-[560px]:px-[20px] max-[560px]:py-[16px] max-[560px]:text-[17px]">
+              <div className="mt-[32px] rounded-sm border border-[rgba(37,181,171,0.32)] bg-[linear-gradient(135deg,rgba(37,181,171,0.18),rgba(248,228,204,0.1))] px-[26px] py-[20px] [font-family:var(--ff)] text-[20px] font-semibold leading-[1.3] tracking-[-0.012em] text-white max-[560px]:px-[20px] max-[560px]:py-[16px] max-[560px]:text-[17px]">
                 Human understanding meets genetic intelligence.
               </div>
             </div>
 
             {/* Visual column */}
-            <div className="group relative aspect-[4/4.6] overflow-hidden rounded-[var(--r-lg)] shadow-[0_36px_80px_rgba(0,0,0,0.36)]">
-              <div className="absolute top-[24px] left-[24px] z-[2] inline-flex items-center gap-[10px] rounded-full border border-white/[0.15] bg-[rgba(31,26,20,0.6)] px-[14px] py-[8px] text-[12.5px] font-medium text-white backdrop-blur-[10px]">
+            <div className="group relative aspect-[4/4.6] overflow-hidden rounded-sm shadow-[0_36px_80px_rgba(0,0,0,0.36)]">
+              <div className="absolute top-[24px] left-[24px] z-[2] inline-flex items-center gap-[10px] rounded-sm border border-white/[0.15] bg-[rgba(31,26,20,0.6)] px-[14px] py-[8px] text-[12.5px] font-medium text-white backdrop-blur-[10px]">
                 <span className="h-[8px] w-[8px] rounded-full bg-(--c-teal-bright) shadow-[0_0_0_4px_rgba(42,195,162,0.3)]" />
                 Available 7 days a week
               </div>

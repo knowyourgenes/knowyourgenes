@@ -23,8 +23,8 @@ export default function Hero() {
         <div className="relative flex w-full flex-col items-start pt-[96px] pb-[32px] max-[880px]:pt-[76px] max-[720px]:pt-[68px]">
           <div className="max-w-[min(1100px,100%)]">
             {/* Eyebrow pill */}
-            <div className="mb-[36px] inline-flex items-center gap-[14px] rounded-full border border-[rgba(37,181,171,.32)] bg-(--c-teal) py-[12px] pr-[26px] pl-[12px] text-[16px] font-semibold tracking-[.005em] text-(--c-cream) shadow-[0_14px_32px_-8px_rgba(14,77,75,.42),0_0_0_4px_rgba(14,77,75,.05)] max-[880px]:mb-[22px] max-[880px]:py-[8px] max-[880px]:pr-[18px] max-[880px]:pl-[8px] max-[880px]:text-[13px] max-[720px]:mb-[16px] max-[720px]:text-[11px]">
-              <span className="inline-flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full bg-white/10 text-[14px] text-(--c-cream) shadow-[0_0_0_4px_rgba(248,228,204,.14)] max-[880px]:h-[28px] max-[880px]:w-[28px] max-[720px]:h-[22px] max-[720px]:w-[22px]">
+            <div className="mb-[36px] inline-flex items-center gap-[14px] rounded-sm border border-[rgba(37,181,171,.32)] bg-(--c-teal) py-[12px] pr-[26px] pl-[12px] text-[16px] font-semibold tracking-[.005em] text-(--c-cream) shadow-[0_14px_32px_-8px_rgba(14,77,75,.42),0_0_0_4px_rgba(14,77,75,.05)] max-[880px]:mb-[22px] max-[880px]:py-[8px] max-[880px]:pr-[18px] max-[880px]:pl-[8px] max-[880px]:text-[13px] max-[720px]:mb-[16px] max-[720px]:text-[11px]">
+              <span className="inline-flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-sm bg-white/10 text-[14px] text-(--c-cream) shadow-[0_0_0_4px_rgba(248,228,204,.14)] max-[880px]:h-[28px] max-[880px]:w-[28px] max-[720px]:h-[22px] max-[720px]:w-[22px]">
                 ✦
               </span>
               <span>India&apos;s first wellness-led DNA experience</span>

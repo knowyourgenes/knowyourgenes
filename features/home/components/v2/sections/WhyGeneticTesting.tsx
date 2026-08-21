@@ -152,7 +152,7 @@ export default function WhyGeneticTesting() {
             alt="A woman pausing mid-morning, thinking about a question"
             // 0px below lg so a phone never downloads a plate it cannot see
             sizes="(max-width: 1023px) 0px, 330px"
-            className="mt-[clamp(26px,3vw,42px)] hidden aspect-[4/5] w-full max-w-[330px] rounded-[24px] shadow-[0_1px_2px_0_rgba(45,32,18,0.05),0_4px_14px_0_rgba(45,32,18,0.05)] lg:block"
+            className="mt-[clamp(26px,3vw,42px)] hidden aspect-[4/5] w-full max-w-[330px] rounded-sm shadow-[0_1px_2px_0_rgba(45,32,18,0.05),0_4px_14px_0_rgba(45,32,18,0.05)] lg:block"
           />
         </Reveal>
 
@@ -223,7 +223,7 @@ export default function WhyGeneticTesting() {
         <blockquote className="font-kyg text-[clamp(25px,2.9vw,44px)] font-light leading-[1.16] tracking-[-0.03em] text-balance text-nevada">
           <span
             aria-hidden="true"
-            className="mb-[clamp(20px,2.2vw,30px)] block h-[2px] w-[56px] rounded-[2px] bg-eden opacity-50"
+            className="mb-[clamp(20px,2.2vw,30px)] block h-[2px] w-[56px] rounded-sm bg-eden opacity-50"
           />
           Your DNA may not answer every question.
           {/* Cormorant 600 italic at 1.1em, teal, on its own line. The source

@@ -13,10 +13,10 @@ import { ContactEyebrow, ContactIcon } from './ContactIcon';
 //   input    pad 16, 15.5/18.6  -> 53 tall
 //   select   pad 14/44/14/16, 15.5/23.2 -> 54 tall
 //   textarea pad 14/16, 15.5/23.2, fixed 131 tall
-// Radii are explicit arbitrary values - this project remaps the Tailwind radius
-// scale, so rounded-xl is 14 but rounded-2xl is 18 and rounded-3xl is 22.
+// The frame's field radius is not reproduced: every corner here is rounded-sm
+// (6px), the site's only radius. See DESIGN.md §2.
 const FIELD_BASE =
-  'w-full rounded-[14px] border border-mine/14 bg-white px-4 font-kyg text-[15.5px] text-mine outline-none transition placeholder:text-[#9a968b] focus:border-eden/40 focus:ring-4 focus:ring-java/10 disabled:opacity-60';
+  'w-full rounded-sm border border-mine/14 bg-white px-4 font-kyg text-[15.5px] text-mine outline-none transition placeholder:text-[#9a968b] focus:border-eden/40 focus:ring-4 focus:ring-java/10 disabled:opacity-60';
 const INPUT = `${FIELD_BASE} py-4 leading-[18.6px]`;
 const SELECT = `${FIELD_BASE} appearance-none py-[14px] pr-11 leading-[23.2px]`;
 const TEXTAREA = `${FIELD_BASE} h-[131px] resize-y py-[14px] leading-[23.2px]`;
@@ -82,8 +82,8 @@ export default function ContactForm() {
 
   if (state.status === 'success') {
     return (
-      <div className="flex min-h-[420px] flex-col items-center justify-center gap-4 rounded-[28px] border border-mine/10 bg-white p-6 text-center shadow-tst-card sm:p-10">
-        <span className="grid size-14 place-items-center rounded-[16px] bg-mint">
+      <div className="flex min-h-[420px] flex-col items-center justify-center gap-4 rounded-sm border border-mine/10 bg-white p-6 text-center shadow-tst-card sm:p-10">
+        <span className="grid size-14 place-items-center rounded-sm bg-mint">
           <ContactIcon id={FORM_COPY.eyebrow.icon} className="h-[26px] w-[22px]" />
         </span>
         <h2 className="font-kyg text-[clamp(22px,2.4vw,30px)] font-extrabold leading-[1.15] tracking-[-0.02em] text-mine">
@@ -113,7 +113,7 @@ export default function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="flex flex-col gap-7 rounded-[28px] border border-mine/10 bg-white p-[clamp(24px,3vw,40px)] shadow-tst-card"
+      className="flex flex-col gap-7 rounded-sm border border-mine/10 bg-white p-[clamp(24px,3vw,40px)] shadow-tst-card"
     >
       {/* header - gap 8; the h2 frame carries 7 top / 1 bottom padding */}
       <div className="flex flex-col gap-2">
@@ -253,7 +253,7 @@ export default function ContactForm() {
               name="consent"
               disabled={busy}
               aria-invalid={!!errs.consent}
-              className="mt-0.5 size-[18px] shrink-0 rounded-[2.5px] border border-[#767676] bg-white accent-eden"
+              className="mt-0.5 size-[18px] shrink-0 rounded-sm border border-[#767676] bg-white accent-eden"
             />
             {/* The 31 right inset only exists to hold the frame's line breaks;
                 below sm it would eat 31 of the ~200px the copy has left. */}
@@ -269,7 +269,7 @@ export default function ContactForm() {
         </div>
 
         {state.status === 'error' && !Object.keys(errs).length ? (
-          <p role="alert" className="rounded-[14px] bg-mojo/8 px-4 py-3 font-kyg text-[14px] text-mojo">
+          <p role="alert" className="rounded-sm bg-mojo/8 px-4 py-3 font-kyg text-[14px] text-mojo">
             {state.message}
           </p>
         ) : null}
@@ -279,7 +279,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={busy}
-            className="group inline-flex items-center gap-2.5 rounded-full border border-eden bg-eden px-8 py-4 font-kyg text-[16px] font-extrabold leading-6 tracking-[0.06px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 disabled:translate-y-0 disabled:opacity-70"
+            className="group inline-flex items-center gap-2.5 rounded-sm border border-eden bg-eden px-8 py-4 font-kyg text-[16px] font-extrabold leading-6 tracking-[0.06px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 disabled:translate-y-0 disabled:opacity-70"
           >
             {busy ? 'Sending…' : FORM_COPY.submit}
             <ContactIcon

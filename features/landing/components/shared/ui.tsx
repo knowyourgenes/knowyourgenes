@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
+import { BTN } from '@/components/shared/button-styles';
 import { Container as SiteContainer } from '@/components/shared/Container';
+import { cn } from '@/lib/utils';
 
 /* Shared primitives + scoped stylesheet for the PCOS landing page.
  * Everything lives under the `.kyg-lx` root class so nothing leaks globally. */
@@ -33,7 +35,7 @@ export function Eyebrow({
   const light = tone === 'light';
   return (
     <span
-      className={`inline-flex items-center gap-[9px] rounded-full border py-[7.5px] pl-[13px] pr-[17px] ${
+      className={`inline-flex items-center gap-[9px] rounded-sm border py-[7.5px] pl-[13px] pr-[17px] ${
         light
           ? 'border-[rgba(14,77,75,0.12)] bg-[rgba(14,77,75,0.07)]'
           : 'border-[rgba(248,228,204,0.2)] bg-[rgba(248,228,204,0.12)]'
@@ -90,7 +92,13 @@ export function SheenButton({
   return (
     <a
       href={href}
-      className={`sheen group relative inline-flex items-center justify-center gap-[10px] overflow-hidden rounded-full px-[28px] py-[16px] text-[15px] font-semibold leading-[22.5px] transition-transform duration-200 hover:-translate-y-[2px] ${tones[tone]} ${className}`}
+      // Size is BTN - one button box site-wide (components/shared/button-styles).
+      className={cn(
+        BTN,
+        'sheen group relative overflow-hidden font-semibold transition-transform duration-200 hover:-translate-y-[2px]',
+        tones[tone],
+        className
+      )}
     >
       <span className="relative z-[1] inline-flex items-center gap-[10px]">
         {children}
@@ -103,10 +111,7 @@ export function SheenButton({
 /** Secondary text link CTA (e.g. "What is PCOS, really?"). */
 export function GhostButton({ children, href = '#what' }: { children: ReactNode; href?: string }) {
   return (
-    <a
-      href={href}
-      className="group inline-flex items-center gap-[8px] rounded-full px-[8px] py-[8px] text-[15px] font-semibold text-[#1F1A14] transition-colors hover:text-[#0E4D4B]"
-    >
+    <a href={href} className={cn(BTN, 'group font-semibold text-[#1F1A14] transition-colors hover:text-[#0E4D4B]')}>
       {children}
       <FigIcon
         src="/landing/icons/arrow.svg"

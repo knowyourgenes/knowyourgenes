@@ -91,12 +91,12 @@ export default async function AttributionPage() {
       />
 
       {/* ----------------------------- COOKIE DEBUG PANEL ----------------------------- */}
-      <section className="mb-10 rounded-lg border">
+      <section className="mb-10 rounded-sm border">
         <div className="border-b bg-muted/30 px-4 py-3">
           <h2 className="text-sm font-semibold">Your current attribution cookie</h2>
           <p className="text-xs text-muted-foreground">
-            The signed <code className="rounded bg-muted px-1">kyg_attr</code> cookie your browser is sending right now.
-            Useful for verifying capture before checkout exists.
+            The signed <code className="rounded-sm bg-muted px-1">kyg_attr</code> cookie your browser is sending right
+            now. Useful for verifying capture before checkout exists.
           </p>
         </div>
         <div className="p-4">
@@ -106,10 +106,10 @@ export default async function AttributionPage() {
               body={
                 <>
                   Open a private window and visit{' '}
-                  <code className="rounded bg-muted px-1">
+                  <code className="rounded-sm bg-muted px-1">
                     /?utm_source=test&amp;utm_medium=cpc&amp;utm_campaign=verify
                   </code>{' '}
-                  to set one, or just visit <code className="rounded bg-muted px-1">/</code> to get a direct/none
+                  to set one, or just visit <code className="rounded-sm bg-muted px-1">/</code> to get a direct/none
                   cookie.
                 </>
               }
@@ -146,7 +146,7 @@ export default async function AttributionPage() {
           )}
           <p className="mt-4 text-xs text-muted-foreground">
             Tip - to test a fresh capture, open an <strong>incognito window</strong> (your existing cookie persists 30
-            days) or append <code className="rounded bg-muted px-1">?attr_refresh=1</code> to force a rewrite.
+            days) or append <code className="rounded-sm bg-muted px-1">?attr_refresh=1</code> to force a rewrite.
           </p>
         </div>
       </section>
@@ -166,14 +166,14 @@ export default async function AttributionPage() {
             body={
               <>
                 Visit a UTM-bearing URL while logged out (or in incognito) to write a row. Try:{' '}
-                <code className="rounded bg-muted px-1">
+                <code className="rounded-sm bg-muted px-1">
                   /?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=delhi-lab
                 </code>
               </>
             }
           />
         ) : (
-          <div className="overflow-x-auto rounded-lg border">
+          <div className="overflow-x-auto rounded-sm border">
             <table className="w-full text-sm">
               <thead className="bg-muted/40">
                 <tr>
@@ -218,7 +218,7 @@ export default async function AttributionPage() {
         {recentVisits.length === 0 ? (
           <Empty title="None yet" body="Visit a UTM URL to write a row." />
         ) : (
-          <div className="overflow-x-auto rounded-lg border">
+          <div className="overflow-x-auto rounded-sm border">
             <table className="w-full text-sm">
               <thead className="bg-muted/40">
                 <tr>
@@ -282,7 +282,7 @@ export default async function AttributionPage() {
             }
           />
         ) : (
-          <div className="overflow-x-auto rounded-lg border">
+          <div className="overflow-x-auto rounded-sm border">
             <table className="w-full text-sm">
               <thead className="bg-muted/40">
                 <tr>
@@ -342,7 +342,7 @@ export default async function AttributionPage() {
             body="Once orders carry a captured kyg_attr cookie through checkout, the 10 most recent appear here."
           />
         ) : (
-          <div className="overflow-x-auto rounded-lg border">
+          <div className="overflow-x-auto rounded-sm border">
             <table className="w-full text-sm">
               <thead className="bg-muted/40">
                 <tr>
@@ -402,7 +402,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function Empty({ title, body }: { title: string; body: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-dashed bg-muted/10 p-6 text-center">
+    <div className="rounded-sm border border-dashed bg-muted/10 p-6 text-center">
       <p className="text-sm font-medium">{title}</p>
       <p className="mt-1 text-xs text-muted-foreground">{body}</p>
     </div>

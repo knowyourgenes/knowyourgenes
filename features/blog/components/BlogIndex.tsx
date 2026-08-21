@@ -25,7 +25,7 @@ function MetaLine({ post }: { post: BlogListItem }) {
 
 function CategoryBadge({ category }: { category?: string }) {
   return (
-    <span className="inline-flex w-fit items-center rounded-full bg-(--acc-50) px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-(--teal)">
+    <span className="inline-flex w-fit items-center rounded-sm bg-(--acc-50) px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-(--teal)">
       {categoryLabel(category)}
     </span>
   );
@@ -36,7 +36,7 @@ function PostCard({ post }: { post: BlogListItem }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col overflow-hidden rounded-(--r-md) border border-(--ink-line) bg-white shadow-(--sh-1) transition-[transform,box-shadow] duration-500 ease-(--e-out) hover:-translate-y-1 hover:shadow-(--sh-2)"
+      className="group flex flex-col overflow-hidden rounded-sm border border-(--ink-line) bg-white shadow-(--sh-1) transition-[transform,box-shadow] duration-500 ease-(--e-out) hover:-translate-y-1 hover:shadow-(--sh-2)"
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-(--cream-2)">
         {img ? (
@@ -70,7 +70,7 @@ function FeaturedCard({ post }: { post: BlogListItem }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group grid overflow-hidden rounded-(--r-lg) border border-(--ink-line) bg-white shadow-(--sh-1) transition-[transform,box-shadow] duration-500 ease-(--e-out) hover:shadow-(--sh-2) md:grid-cols-2"
+      className="group grid overflow-hidden rounded-sm border border-(--ink-line) bg-white shadow-(--sh-1) transition-[transform,box-shadow] duration-500 ease-(--e-out) hover:shadow-(--sh-2) md:grid-cols-2"
     >
       <div className="relative aspect-[16/11] overflow-hidden bg-(--cream-2) md:aspect-auto md:min-h-[340px]">
         {img ? (
@@ -107,7 +107,7 @@ export default function BlogIndex({ posts, activeCategory }: { posts: BlogListIt
       key={href}
       href={href}
       className={
-        'rounded-full px-4 py-2 text-[13.5px] font-medium transition-colors ' +
+        'rounded-sm px-4 py-2 text-[13.5px] font-medium transition-colors ' +
         (active
           ? 'bg-(--ink-1) text-(--cream)'
           : 'bg-white text-(--ink-2) border border-(--ink-line) hover:border-(--teal) hover:text-(--teal)')
@@ -136,7 +136,7 @@ export default function BlogIndex({ posts, activeCategory }: { posts: BlogListIt
         </nav>
 
         {filtered.length === 0 ? (
-          <div className="mt-16 rounded-(--r-md) border border-dashed border-(--ink-line) bg-white/60 px-6 py-16 text-center">
+          <div className="mt-16 rounded-sm border border-dashed border-(--ink-line) bg-white/60 px-6 py-16 text-center">
             <p className="text-[18px] font-medium text-(--ink-1)">No articles here yet</p>
             <p className="mt-2 text-[14.5px] text-(--ink-3)">
               {activeCategory

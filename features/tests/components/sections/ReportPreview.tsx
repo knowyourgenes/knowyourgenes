@@ -28,7 +28,7 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
               22x26 but only occupies a 22px optical box (it overflows the text
               band by 2px top and bottom in the frame), hence the -2px margins. */}
           {data.head.eyebrow ? (
-            <span className="inline-flex w-fit items-center gap-[10px] self-start rounded-full border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+            <span className="inline-flex w-fit items-center gap-[10px] self-start rounded-sm border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
               <FigmaIcon id="12798-130" className="my-[-2px] block h-[26px] w-[22px] shrink-0" />
               <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-crimson-deep">
                 {data.head.eyebrow.label}
@@ -60,17 +60,17 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
           </ul>
 
           {/* 211x60 eden pill - the frame's button is 60 tall, not the shared 58. */}
-          <Cta data={data.cta} className="h-[60px] self-start py-0" />
+          <Cta data={data.cta} className="self-start" />
         </div>
 
         {/* ----------------------------------------------- sample report ---- */}
         {/* r26 white card, 1px #222222@10, pad 40/32/32/32, two-layer float. */}
-        <div className="relative rounded-[26px] border border-mine/10 bg-white px-[clamp(20px,2.3vw,32px)] pb-[clamp(20px,2.3vw,32px)] pt-[clamp(28px,2.8vw,40px)] shadow-tst-float">
+        <div className="relative rounded-sm border border-mine/10 bg-white px-[clamp(20px,2.3vw,32px)] pb-[clamp(20px,2.3vw,32px)] pt-[clamp(28px,2.8vw,40px)] shadow-tst-float">
           {/* 80x28 eden tag straddling the card's top edge (y -11 of the frame).
               Its 32px inset is the card's own left padding, so it tracks the same
               clamp - otherwise it drifts away from the rows once the padding
               starts shrinking (below ~1392, where 2.3vw drops under 32). */}
-          <span className="absolute -top-3 left-[clamp(20px,2.3vw,32px)] whitespace-nowrap rounded-full bg-eden px-4 py-1.5 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.12em] text-white">
+          <span className="absolute -top-3 left-[clamp(20px,2.3vw,32px)] whitespace-nowrap rounded-sm bg-eden px-4 py-1.5 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.12em] text-white">
             {data.sample.badge}
           </span>
 
@@ -96,7 +96,7 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
                 </span>
                 <span
                   className={cn(
-                    'shrink-0 rounded-full px-[10px] py-1 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
+                    'shrink-0 rounded-sm px-[10px] py-1 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
                     TONE_PILL[r.tone]
                   )}
                 >

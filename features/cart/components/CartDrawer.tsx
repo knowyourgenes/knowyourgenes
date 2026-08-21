@@ -133,7 +133,7 @@ export function CartDrawer() {
             type="button"
             onClick={closeDrawer}
             aria-label="Close cart"
-            className="grid h-9 w-9 place-items-center rounded-full text-cape transition hover:bg-zeus/[0.06] hover:text-mine"
+            className="grid h-9 w-9 place-items-center rounded-sm text-cape transition hover:bg-zeus/[0.06] hover:text-mine"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" className="h-[18px] w-[18px]">
               <path d="M18 6 6 18M6 6l12 12" strokeLinecap="round" />
@@ -149,7 +149,7 @@ export function CartDrawer() {
             // lie told to someone who has ten thousand rupees of kits in it.
             <div className="space-y-3" aria-busy="true">
               {[0, 1].map((i) => (
-                <div key={i} className="h-[92px] animate-pulse rounded-[18px] bg-white/70" />
+                <div key={i} className="h-[92px] animate-pulse rounded-sm bg-white/70" />
               ))}
             </div>
           ) : lines.length === 0 ? (
@@ -161,7 +161,7 @@ export function CartDrawer() {
               <Link
                 href="/categories"
                 onClick={closeDrawer}
-                className="mt-1 rounded-full bg-eden px-5 py-2.5 text-[13.5px] font-bold text-spring transition hover:bg-eden2"
+                className="mt-1 rounded-sm bg-eden px-5 py-2.5 text-[13.5px] font-bold text-spring transition hover:bg-eden2"
               >
                 Browse all tests
               </Link>
@@ -169,11 +169,11 @@ export function CartDrawer() {
           ) : (
             <ul className="space-y-3">
               {lines.map((line) => (
-                <li key={line.slug} className="flex gap-3 rounded-[18px] border border-zeus/[0.09] bg-white p-3">
+                <li key={line.slug} className="flex gap-3 rounded-sm border border-zeus/[0.09] bg-white p-3">
                   <Link
                     href={line.href}
                     onClick={closeDrawer}
-                    className="relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-[14px] bg-eden/[0.06]"
+                    className="relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-sm bg-eden/[0.06]"
                   >
                     {line.coverImageUrl ? (
                       <Image src={line.coverImageUrl} alt="" fill sizes="72px" className="object-cover" />
@@ -204,12 +204,12 @@ export function CartDrawer() {
                     </div>
 
                     <div className="mt-auto flex items-center justify-between gap-2 pt-1">
-                      <div className="inline-flex items-center rounded-full border border-zeus/[0.12] bg-white">
+                      <div className="inline-flex items-center rounded-sm border border-zeus/[0.12] bg-white">
                         <button
                           type="button"
                           aria-label={'Decrease ' + line.name + ' quantity'}
                           onClick={() => setQuantity(line.slug, line.quantity - 1)}
-                          className="grid h-8 w-8 place-items-center rounded-l-full text-base text-cape transition hover:bg-zeus/[0.05]"
+                          className="grid h-8 w-8 place-items-center rounded-l-sm text-base text-cape transition hover:bg-zeus/[0.05]"
                         >
                           &minus;
                         </button>
@@ -219,7 +219,7 @@ export function CartDrawer() {
                           aria-label={'Increase ' + line.name + ' quantity'}
                           disabled={line.quantity >= line.maxQuantity}
                           onClick={() => setQuantity(line.slug, line.quantity + 1)}
-                          className="grid h-8 w-8 place-items-center rounded-r-full text-base text-cape transition hover:bg-zeus/[0.05] disabled:cursor-not-allowed disabled:opacity-35"
+                          className="grid h-8 w-8 place-items-center rounded-r-sm text-base text-cape transition hover:bg-zeus/[0.05] disabled:cursor-not-allowed disabled:opacity-35"
                         >
                           +
                         </button>
@@ -253,7 +253,7 @@ export function CartDrawer() {
               onClick={closeDrawer}
               aria-disabled={pricing}
               className={
-                'mt-3 flex h-[52px] w-full items-center justify-center rounded-full bg-eden text-[15px] font-bold text-spring transition hover:bg-eden2 ' +
+                'mt-3 flex h-[52px] w-full items-center justify-center rounded-sm bg-eden text-[15px] font-bold text-spring transition hover:bg-eden2 ' +
                 (pricing ? 'pointer-events-none opacity-60' : '')
               }
             >

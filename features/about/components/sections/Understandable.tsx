@@ -10,8 +10,7 @@
 // two width utilities are overridden through cn()/tailwind-merge rather than
 // rebuilding the primitive.
 //
-// RADIUS TRAP: rounded-4xl == 26px (the two big cards) and that is the only
-// value here that maps cleanly. 16 / 10 / 999 are written as arbitrary values.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { AboutIcon } from '../AboutIcon';
@@ -52,7 +51,7 @@ export default function Understandable() {
       id="understandable"
       ground="veil"
       className="border-y border-mine/10 lg:px-5"
-      innerClassName="max-w-[1400px] lg:px-8"
+      innerClassName="max-w-[1600px] lg:px-8"
     >
       {/* ── header block - 740 wide, centred, gap 15 ─────────────────────── */}
       <div className="mx-auto flex w-full max-w-[740px] flex-col items-center gap-[15px] text-center">
@@ -83,7 +82,7 @@ export default function Understandable() {
           one unbreakable word - spills into both gutters. */}
       <div className="mt-[39px] grid grid-cols-1 gap-6 pt-[17px] lg:grid-cols-[621fr_minmax(143px,143fr)_540fr] lg:gap-4">
         {/* ---- complex input -------------------------------------------- */}
-        <div className="relative min-w-0 rounded-4xl border border-mine/10 bg-linenw p-6 lg:p-[29px]">
+        <div className="relative min-w-0 rounded-sm border border-mine/10 bg-linenw p-6 lg:p-[29px]">
           <div className="mb-4 flex items-center gap-2">
             {/* 19x23 artwork: drawn at its true ratio, the 4px of overhang
                 pulled back so the row still measures the frame's 19px box. */}
@@ -97,7 +96,7 @@ export default function Understandable() {
             {INPUT_CHIPS.map((chip) => (
               <span
                 key={chip.label}
-                className="inline-flex max-w-full items-center gap-1.5 rounded-[10px] border border-mine/[0.12] bg-white px-[13px] py-2 shadow-[0_6px_16px_0_rgba(20,27,26,0.05)]"
+                className="inline-flex max-w-full items-center gap-1.5 rounded-sm border border-mine/[0.12] bg-white px-[13px] py-2 shadow-[0_6px_16px_0_rgba(20,27,26,0.05)]"
               >
                 {/* chip glyphs export at 18x22 - same true-ratio + pull-back
                     treatment, so the chip still reads as an 18px square box. */}
@@ -110,10 +109,10 @@ export default function Understandable() {
           </div>
 
           {/* quote card + its 23px rotated notch (a 16px square at 45°) */}
-          <div className="relative rounded-[16px] border border-mine/10 bg-white px-5 py-4 shadow-tst-soft">
+          <div className="relative rounded-sm border border-mine/10 bg-white px-5 py-4 shadow-tst-soft">
             <span
               aria-hidden
-              className="absolute -top-[8px] left-[22px] h-4 w-4 rotate-45 rounded-[2px] border-l border-t border-mine/10 bg-white"
+              className="absolute -top-[8px] left-[22px] h-4 w-4 rotate-45 rounded-sm border-l border-t border-mine/10 bg-white"
             />
             <p className="min-w-0 break-words font-kyg text-[16.5px] font-normal italic leading-[22.7px] text-fusc">
               {'"Okay... but what does this actually mean for me?"'}
@@ -132,7 +131,7 @@ export default function Understandable() {
             a 272px stack). Written as per-child margins rather than one gap. */}
         <div className="flex min-w-0 flex-col items-center justify-center py-2">
           <div className="flex flex-col items-center gap-2">
-            <span className="flex h-16 w-16 items-center justify-center rounded-[16px] bg-eden shadow-tst-card">
+            <span className="flex h-16 w-16 items-center justify-center rounded-sm bg-eden shadow-tst-card">
               <AboutIcon id="4933-746" className="h-[36px] w-[30px]" />
             </span>
             <span className={`${MICRO} tracking-[0.1em] text-eden`}>Filter</span>
@@ -149,7 +148,7 @@ export default function Understandable() {
           <AboutIcon id="5019-741" className="mt-[8px] h-[28px] w-[34px] rotate-90 lg:rotate-0" />
 
           <div className="mt-[15px] flex flex-col items-center gap-2">
-            <span className="flex h-16 w-16 items-center justify-center rounded-[16px] border border-eden/20 bg-mint">
+            <span className="flex h-16 w-16 items-center justify-center rounded-sm border border-eden/20 bg-mint">
               <AboutIcon id="5076-745" className="h-[36px] w-[30px]" />
             </span>
             <span className={`${MICRO} min-w-0 break-words text-center tracking-[0.1em] text-eden`}>
@@ -161,7 +160,7 @@ export default function Understandable() {
         </div>
 
         {/* ---- simple human insight -------------------------------------- */}
-        <div className="relative flex min-w-0 flex-col overflow-hidden rounded-4xl bg-[linear-gradient(180deg,#0e4d4b_0%,#15605d_100%)] p-6 lg:p-7">
+        <div className="relative flex min-w-0 flex-col overflow-hidden rounded-sm bg-[linear-gradient(180deg,#0e4d4b_0%,#15605d_100%)] p-6 lg:p-7">
           {/* blurred java bloom, top-right, bleeding past the card edge */}
           <span
             aria-hidden
@@ -174,7 +173,7 @@ export default function Understandable() {
               <span className={`${MICRO} min-w-0 break-words tracking-[0.12em] text-java2`}>Simple human insight</span>
             </div>
 
-            <div className="flex flex-col gap-3 rounded-[16px] border border-white/15 bg-white/10 p-5">
+            <div className="flex flex-col gap-3 rounded-sm border border-white/15 bg-white/10 p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="min-w-0 break-words font-kyg text-[15.5px] font-bold leading-[23.2px] text-linenw">
                   Vitamin D
@@ -182,7 +181,7 @@ export default function Understandable() {
                 {/* Same MICRO style as every other 13/19.5 tracked label here:
                     the frame measures this string at 137px, which is its
                     uppercase advance width (sentence case is 115px). */}
-                <span className="inline-flex max-w-full items-center rounded-full bg-java2 px-2.5 py-1">
+                <span className="inline-flex max-w-full items-center rounded-sm bg-java2 px-2.5 py-1">
                   <span className={`${MICRO} min-w-0 break-words tracking-[0.06em] text-ink`}>Lower · act early</span>
                 </span>
               </div>

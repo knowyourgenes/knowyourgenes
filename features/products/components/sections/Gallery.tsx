@@ -16,11 +16,11 @@ export default function Gallery({ gallery }: { gallery: ProductKit['gallery'] })
     <div className="flex flex-col gap-3 lg:sticky lg:top-[88px] lg:self-start">
       {/* image slot */}
       <div
-        className="grid place-items-center rounded-[26px] border border-heavy/10 px-4 py-12 shadow-pdp-card sm:px-8 sm:py-[73px]"
+        className="grid place-items-center rounded-sm border border-heavy/10 px-4 py-12 shadow-pdp-card sm:px-8 sm:py-[73px]"
         style={{ background: 'linear-gradient(138deg, rgba(14,77,75,0.05) 0%, rgba(46,125,91,0.08) 100%)' }}
       >
         <div
-          className="flex min-h-[352px] w-full max-w-[320px] flex-col items-center justify-center gap-[10px] rounded-[22px] border border-edge px-8 text-center shadow-pdp-card"
+          className="flex min-h-[352px] w-full max-w-[320px] flex-col items-center justify-center gap-[10px] rounded-sm border border-edge px-8 text-center shadow-pdp-card"
           style={{ background: 'linear-gradient(130deg, #e9f3ec 0%, #faf6ef 100%)' }}
         >
           <div className="text-[11px] font-bold uppercase leading-none tracking-[0.14em] text-greenpea">
@@ -44,7 +44,7 @@ export default function Gallery({ gallery }: { gallery: ProductKit['gallery'] })
               aria-label={`View image ${i + 1}`}
               onClick={() => setActive(i)}
               className={cn(
-                'grid aspect-[130/128] flex-1 place-items-center rounded-[14px] border transition-colors',
+                'grid aspect-[130/128] flex-1 place-items-center rounded-sm border transition-colors',
                 isActive ? 'border-sea shadow-[0_6px_18px_0_rgba(46,125,91,0.16)]' : 'border-heavy/10 opacity-60'
               )}
               style={{ background: 'linear-gradient(135deg, rgba(14,77,75,0.05) 0%, rgba(46,125,91,0.08) 100%)' }}

@@ -42,7 +42,7 @@ export default function Outcomes({ data, ground }: { data: OutcomesSection; grou
           return (
             <article
               key={c.title}
-              className="relative flex flex-col gap-2 overflow-hidden lift rounded-[26px] border border-mine/10 bg-white p-6 shadow-tst-soft xl:p-8"
+              className="relative flex flex-col gap-2 overflow-hidden lift rounded-sm border border-mine/10 bg-white p-6 shadow-tst-soft xl:p-8"
             >
               {/* 387x4 @[113 1043] - sits inside the hairline, so inset-x-0 on
                   the padding box lands it exactly; the radius clips its ends. */}
@@ -50,8 +50,8 @@ export default function Outcomes({ data, ground }: { data: OutcomesSection; grou
 
               {/* 48px mint tile, r16, glyph centred (27x33 in the frame).
                   16 has no token here: this project remaps the radius scale
-                  (--radius 0.625rem), so rounded-2xl would paint 18px. */}
-              <span className="grid size-12 shrink-0 place-items-center rounded-[16px] bg-mint">
+                  (--radius 0.625rem), so rounded-sm would paint 18px. */}
+              <span className="grid size-12 shrink-0 place-items-center rounded-sm bg-mint">
                 {glyph ? (
                   <FigmaIcon id={glyph} className="h-8.25 w-6.75 max-w-none" />
                 ) : (

@@ -1,7 +1,7 @@
 import 'server-only';
 
 // =============================================================================
-// features/products — live pricing for a PDP
+// features/products - live pricing for a PDP
 // -----------------------------------------------------------------------------
 // The PDP's content (features/products/data.ts) carries a placeholder price
 // string; the real number lives on the Package row that shares its slug. This

@@ -51,14 +51,14 @@ export function TestimonialsSection() {
           {TESTIMONIALS.map((t) => (
             <figure
               key={t.name}
-              className="reveal flex flex-col rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/80 p-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
+              className="reveal flex flex-col rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/80 p-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
             >
               <FigIcon src="/landing/icons/quote.svg" className="size-[40px] text-[#0E4D4B]/30" />
               <blockquote className="mt-[16px] grow text-[14.5px] leading-[23.56px] text-[#2D2A24]">
                 {t.quote}
               </blockquote>
               <figcaption className="mt-[24px] flex items-center gap-[14px] border-t border-[rgba(31,26,20,0.08)] pt-[20px]">
-                <span className="relative size-[48px] shrink-0 overflow-hidden rounded-full">
+                <span className="relative size-[48px] shrink-0 overflow-hidden rounded-sm">
                   <Image src={t.avatar} alt={t.name} fill sizes="48px" className="object-cover" />
                 </span>
                 <span>
@@ -80,7 +80,7 @@ export function FomoSection() {
   return (
     <section className="py-[40px] lg:py-[60px]">
       <Container>
-        <div className="reveal relative overflow-hidden rounded-[36px] bg-[#15201E]">
+        <div className="reveal relative overflow-hidden rounded-sm bg-[#15201E]">
           <div className="absolute right-0 top-0 hidden h-full w-[55%] md:block">
             <Image
               src="/landing/peripartum-depression/fomo.png"
@@ -192,7 +192,7 @@ export function HowItWorksSection() {
             {STEPS.map(({ n, icon, dark, title, body }) => (
               <div
                 key={n}
-                className={`reveal relative overflow-hidden rounded-[28px] p-[32px] ${
+                className={`reveal relative overflow-hidden rounded-sm p-[32px] ${
                   dark
                     ? 'bg-[#0E4D4B] shadow-[0_18px_50px_rgba(20,45,40,0.09),0_4px_16px_rgba(20,45,40,0.06)]'
                     : 'border border-[rgba(31,26,20,0.08)] bg-white/75 shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]'
@@ -206,7 +206,7 @@ export function HowItWorksSection() {
                     {n}
                   </span>
                   <span
-                    className={`grid size-[56px] place-items-center rounded-[16px] ${
+                    className={`grid size-[56px] place-items-center rounded-sm ${
                       dark ? 'bg-white/15 text-[#FAF6EF]' : 'bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]'
                     }`}
                   >

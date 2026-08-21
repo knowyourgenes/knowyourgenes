@@ -99,7 +99,7 @@ export default async function OrderDetailPage({ params }: { params: Params }) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="flex items-start justify-between gap-4 rounded-md border border-dashed bg-muted/40 p-3">
+              <div className="flex items-start justify-between gap-4 rounded-sm border border-dashed bg-muted/40 p-3">
                 <div>
                   <p className="text-sm font-medium">Saliva collection kit</p>
                   <p className="text-xs text-muted-foreground">
@@ -158,7 +158,7 @@ export default async function OrderDetailPage({ params }: { params: Params }) {
               </dl>
 
               {!order.paidAt && order.status === 'BOOKED' && (
-                <div className="rounded-md border border-amber-500/40 bg-amber-500/5 p-3 text-sm">
+                <div className="rounded-sm border border-amber-500/40 bg-amber-500/5 p-3 text-sm">
                   <p className="font-medium">Payment not completed</p>
                   <p className="mt-0.5 text-muted-foreground">
                     This order is held but not paid for. Add the tests to your cart again to retry payment.

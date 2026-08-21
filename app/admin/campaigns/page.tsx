@@ -442,7 +442,7 @@ export default function AdminCampaignsPage() {
 
               {/* Live preview of the link about to be generated */}
               {form.slug && (
-                <div className="rounded border bg-muted/40 p-3">
+                <div className="rounded-sm border bg-muted/40 p-3">
                   <p className="mb-1 text-xs font-medium text-muted-foreground">Generated link preview</p>
                   <code className="block break-all text-xs">{buildUrl(form as unknown as CampaignRow)}</code>
                 </div>
@@ -475,7 +475,7 @@ export default function AdminCampaignsPage() {
                     Trackable link
                   </p>
                   <div className="flex items-stretch gap-2">
-                    <code className="flex-1 break-all rounded border bg-muted/40 p-2 text-xs">
+                    <code className="flex-1 break-all rounded-sm border bg-muted/40 p-2 text-xs">
                       {buildUrl(linkTarget)}
                     </code>
                     <Button
@@ -493,7 +493,7 @@ export default function AdminCampaignsPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 rounded border p-3 text-sm">
+                <div className="grid grid-cols-2 gap-3 rounded-sm border p-3 text-sm">
                   <Detail label="Source" value={linkTarget.source} />
                   <Detail label="Medium" value={linkTarget.medium} />
                   <Detail label="Content" value={linkTarget.content ?? '-'} />

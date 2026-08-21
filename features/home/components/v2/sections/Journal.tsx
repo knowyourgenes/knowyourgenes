@@ -26,9 +26,7 @@
 // the rail by tabbing the card links - the browser scrolls each into view and
 // honours the scroll-padding below, so nothing is unreachable without a mouse.
 //
-// RADIUS TRAP: the card figures are var(--r-sm) = 16 and the CTA var(--r-xs) =
-// 10. Neither is one of Tailwind's remapped steps (rounded-2xl is 18 here), so
-// both are written as explicit arbitrary values.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 //
 // PHOTOGRAPHY IS DELIVERED for all six editorial thumbs (PHOTO.jrn1..jrn6), so
 // AssetSlot renders next/image and drops the labelled plate. `title`/`meta`/
@@ -149,7 +147,7 @@ const CARD = 'min-w-0 flex-[0_0_clamp(250px,25vw,330px)] snap-start';
  * part of the same hover target, and the group lives on the wrapping <Link>.
  */
 const FIGURE =
-  'relative aspect-[4/3] w-full overflow-hidden rounded-[16px] ' +
+  'relative aspect-[4/3] w-full overflow-hidden rounded-sm ' +
   'shadow-[0_1px_2px_0_rgba(45,32,18,0.05),0_4px_14px_0_rgba(45,32,18,0.05)] ' +
   'transition-[transform,box-shadow] duration-[770ms] ease-[cubic-bezier(0.22,1,0.36,1)] ' +
   'group-hover:-translate-y-1.5 ' +
@@ -200,7 +198,7 @@ export default function Journal() {
           would make 1313 the border-box (box-sizing:border-box is global),
           leaving only 1187 of content starting 63px right of the card rail. */}
       <div className="px-5 sm:px-8 lg:px-[63px]">
-        <div className="mx-auto w-full max-w-[1313px]">
+        <div className="mx-auto w-full max-w-[1600px]">
           {/* `.shead .shead--split`: two columns at minmax(0,1.35fr) /
               minmax(0,.85fr), BOTTOM-aligned (the aside ends level with the
               headline), collapsing to one top-aligned column.
@@ -261,7 +259,7 @@ export default function Journal() {
           Same shell as the header, so the scroller starts on the headline's x;
           the negative margin then lets it bleed one gutter past that rail. */}
       <div className="px-5 sm:px-8 lg:px-[63px]">
-        <div className="mx-auto w-full max-w-[1313px]">
+        <div className="mx-auto w-full max-w-[1600px]">
           {/* pt/-mt pair: the source only pads the BOTTOM 14px, but `overflow-x:
               auto` makes overflow-y compute to `auto` as well, so the hover
               lift's -6px and the top half of --sh-2 get sheared off. The 14px of
@@ -343,7 +341,7 @@ export default function Journal() {
           - the inverse of the hero's java button, so the `primary` variant's two
           colours are overridden the way section 10 does it. */}
       <div className="px-5 sm:px-8 lg:px-[63px]">
-        <div className="mx-auto mt-[clamp(34px,3.6vw,50px)] w-full max-w-[1313px]">
+        <div className="mx-auto mt-[clamp(34px,3.6vw,50px)] w-full max-w-[1600px]">
           <Reveal>
             <Cta
               href="/blog"

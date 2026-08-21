@@ -62,12 +62,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   --gutter: clamp(20px, 4vw, 56px);
 
   /* Squircle radii (subtle squircle feel via generous radius) */
-  --r-xs: 12px;
-  --r-sm: 18px;
-  --r-md: 26px;
-  --r-lg: 34px;
   --r-xl: 44px;
-  --r-2xl: 56px;
 
   /* Easings */
   --e-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -206,7 +201,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   width: 40px;
   height: 2px;
   background: linear-gradient(90deg, var(--c-teal), var(--c-teal-light));
-  border-radius: 2px;
+  border-radius: 6px;
 }
 .kyg-page .eyebrow--light {
   color: var(--c-peach-2);
@@ -299,7 +294,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   justify-content: center;
   gap: 10px;
   padding: 15px 28px;
-  border-radius: 999px;
+  border-radius: 6px;
   font-weight: 600;
   font-size: 15px;
   line-height: 1;
@@ -427,7 +422,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: var(--r-md);
+  border-radius: 6px;
   box-shadow: 0 18px 50px rgba(45, 32, 18, 0.1);
   transition: transform 0.8s var(--e-out);
 }
@@ -442,7 +437,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .hero__statcard-ico {
   width: 44px;
   height: 44px;
-  border-radius: var(--r-xs);
+  border-radius: 6px;
   background: linear-gradient(135deg, var(--c-peach-2) 0%, var(--c-peach) 100%);
   display: flex;
   align-items: center;
@@ -502,7 +497,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   padding: 12px 16px;
   background: rgba(31, 26, 20, 0.9);
   color: #fff;
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 12.5px;
   font-weight: 500;
   display: flex;
@@ -729,7 +724,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(8px);
   border: 1px solid var(--ink-line);
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
   color: var(--ink-2);
@@ -750,7 +745,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .why__qs {
   margin: 36px 0 28px;
   padding: 32px 36px;
-  border-radius: var(--r-md);
+  border-radius: 6px;
   background: linear-gradient(160deg, var(--c-teal) 0%, #0a3f3d 100%);
   border: 1px solid rgba(37, 181, 171, 0.22);
   color: var(--c-cream);
@@ -824,7 +819,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 /* Big number visual */
 .kyg-page .why__visual {
   position: relative;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
   overflow: hidden;
   min-height: 560px;
   display: flex;
@@ -960,7 +955,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: var(--r-md);
+  border-radius: 6px;
   box-shadow:
     0 18px 48px rgba(45, 32, 18, 0.12),
     0 4px 12px rgba(45, 32, 18, 0.06);
@@ -980,7 +975,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .what__float-ico {
   width: 50px;
   height: 50px;
-  border-radius: 14px;
+  border-radius: 6px;
   background: linear-gradient(135deg, var(--c-peach) 0%, var(--c-peach-2) 100%);
   color: var(--c-teal);
   display: flex;
@@ -1056,7 +1051,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   align-items: center;
   gap: 12px;
   padding: 14px 22px 14px 14px;
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--ink-1);
   color: var(--c-cream);
   font-weight: 600;
@@ -1107,7 +1102,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 }
 .kyg-page .pkg-card {
   position: relative;
-  border-radius: var(--r-md);
+  border-radius: 6px;
   overflow: hidden;
   aspect-ratio: 4 / 5.4;
   display: flex;
@@ -1157,7 +1152,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
+  border-radius: 6px;
 }
 .kyg-page .pkg-card__corner {
   position: absolute;
@@ -1241,7 +1236,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   width: 10px;
   height: 1.5px;
   background: var(--c-teal-light);
-  border-radius: 2px;
+  border-radius: 6px;
 }
 .kyg-page .pkg-card__quote {
   margin-top: 12px;
@@ -1261,7 +1256,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .report__mock {
   position: relative;
   padding: 40px;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
   background:
     radial-gradient(60% 50% at 100% 0%, rgba(248, 228, 204, 0.5), transparent 60%),
     linear-gradient(155deg, var(--c-cream-2) 0%, var(--c-peach) 100%);
@@ -1269,7 +1264,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 }
 .kyg-page .report__doc {
   background: #fff;
-  border-radius: var(--r-md);
+  border-radius: 6px;
   padding: 28px;
   box-shadow: 0 18px 50px rgba(45, 32, 18, 0.1);
   position: relative;
@@ -1326,7 +1321,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .report__metric-bar {
   position: relative;
   height: 7px;
-  border-radius: 7px;
+  border-radius: 6px;
   background: var(--c-cream-2);
   overflow: hidden;
 }
@@ -1336,14 +1331,14 @@ const KYG_PAGE_CSS = `/* =======================================================
   top: 0;
   bottom: 0;
   background: linear-gradient(90deg, var(--c-teal-light), var(--c-teal));
-  border-radius: 7px;
+  border-radius: 6px;
 }
 .kyg-page .report__metric-status {
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.06em;
   padding: 4px 10px;
-  border-radius: 999px;
+  border-radius: 6px;
 }
 .kyg-page .r-stat-1 {
   background: #fde6dc;
@@ -1377,7 +1372,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   bottom: -18px;
   padding: 14px 18px;
   background: #fff;
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   box-shadow: 0 18px 50px rgba(45, 32, 18, 0.16);
   display: flex;
   align-items: center;
@@ -1387,7 +1382,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .report__float-ico {
   width: 36px;
   height: 36px;
-  border-radius: 12px;
+  border-radius: 6px;
   background: var(--ink-1);
   color: #fff;
   display: flex;
@@ -1422,7 +1417,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   align-items: flex-start;
   gap: 14px;
   padding: 18px 20px;
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
   border: 1px solid var(--ink-line);
@@ -1436,7 +1431,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .report__feat-ico {
   width: 38px;
   height: 38px;
-  border-radius: 12px;
+  border-radius: 6px;
   background: linear-gradient(135deg, var(--c-peach) 0%, var(--c-peach-2) 100%);
   color: var(--c-teal);
   display: flex;
@@ -1458,7 +1453,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 /* ========= GENEous Care (dark warm break) ========= */
 .kyg-page .care {
   position: relative;
-  border-radius: var(--r-2xl);
+  border-radius: 6px;
   /* Cap at the site width (1530px) and centre; keep the gutter on narrower
      screens so the card never touches the viewport edge. */
   width: min(var(--max-w), 100% - 2 * var(--gutter));
@@ -1489,7 +1484,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   padding: 16px 20px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   font-size: 14.5px;
   color: var(--c-cream);
   transition: all 0.5s var(--e-out);
@@ -1524,7 +1519,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   padding: 8px 16px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 13px;
   font-weight: 500;
   color: var(--c-cream);
@@ -1537,7 +1532,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .care__hl {
   margin-top: 32px;
   padding: 20px 26px;
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   background: linear-gradient(135deg, rgba(37, 181, 171, 0.18), rgba(248, 228, 204, 0.1));
   border: 1px solid rgba(37, 181, 171, 0.32);
   font-family: var(--ff);
@@ -1549,7 +1544,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 }
 .kyg-page .care__visual {
   position: relative;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
   overflow: hidden;
   aspect-ratio: 4 / 4.6;
   box-shadow: 0 36px 80px rgba(0, 0, 0, 0.36);
@@ -1578,7 +1573,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   background: rgba(31, 26, 20, 0.6);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 12.5px;
   font-weight: 500;
   color: #fff;
@@ -1707,7 +1702,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 }
 .kyg-page .who__visual {
   position: relative;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
   overflow: hidden;
   aspect-ratio: 4 / 4.6;
   box-shadow: var(--sh-2);
@@ -1735,7 +1730,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(8px);
   border: 1px solid var(--ink-line);
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 14.5px;
   font-weight: 500;
   color: var(--ink-1);
@@ -1772,7 +1767,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 }
 .kyg-page .senior__visual {
   position: relative;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
   overflow: hidden;
   aspect-ratio: 4 / 4.4;
   box-shadow: var(--sh-2);
@@ -1800,7 +1795,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
   border: 1px solid var(--ink-line);
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   transition: all 0.5s var(--e-out);
 }
 .kyg-page .senior__pill:hover {
@@ -1812,7 +1807,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 .kyg-page .senior__pill-ico {
   width: 42px;
   height: 42px;
-  border-radius: 12px;
+  border-radius: 6px;
   background: linear-gradient(135deg, var(--c-peach) 0%, var(--c-peach-2) 100%);
   color: var(--c-teal);
   display: flex;
@@ -1851,7 +1846,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: var(--r-md);
+  border-radius: 6px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(8px);
@@ -2015,7 +2010,7 @@ const KYG_PAGE_CSS = `/* =======================================================
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(8px);
   border: 1px solid var(--ink-line);
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
   color: var(--ink-1);
@@ -2036,7 +2031,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 /* ========= The Movement (dark) ========= */
 .kyg-page .movement {
   background: linear-gradient(180deg, var(--dark-1) 0%, var(--dark-2) 100%);
-  border-radius: var(--r-2xl);
+  border-radius: 6px;
   /* Cap at the site width (1530px) and centre; keep the gutter on narrower
      screens. Below 1180px the overrides below take it full-bleed again. */
   width: min(var(--max-w), 100% - 2 * var(--gutter));
@@ -2246,7 +2241,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 }
 .kyg-page .finalcta__photo {
   position: absolute;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
   overflow: hidden;
   background: var(--c-cream);
   border: 2px solid rgba(255, 255, 255, 0.9);
@@ -2508,7 +2503,6 @@ const KYG_PAGE_CSS = `/* =======================================================
 @media (max-width: 1180px) {
   .kyg-page {
     --gutter: clamp(16px, 3vw, 36px);
-    --r-2xl: 44px;
     --r-xl: 36px;
   }
   .kyg-page .hero__h {
@@ -2545,9 +2539,7 @@ const KYG_PAGE_CSS = `/* =======================================================
 @media (max-width: 720px) {
   .kyg-page {
     --gutter: 18px;
-    --r-2xl: 32px;
     --r-xl: 28px;
-    --r-lg: 24px;
   }
   .kyg-page .hero {
     padding-top: 32px;
@@ -2998,7 +2990,7 @@ const KYG_TESTS_CSS = `/* ======================================================
   position: relative;
   background: #fff;
   border: 1px solid var(--ink-line);
-  border-radius: var(--r-lg);
+  border-radius: 6px;
   padding: clamp(26px, 2.8vw, 40px);
   box-shadow: 0 2px 6px rgba(45,32,18,.04), 0 18px 50px -24px rgba(45,32,18,.18);
   display:flex;
@@ -3022,7 +3014,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .wr-panel__tag {
   display:inline-flex; align-items:center;
   padding: 7px 14px;
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--t-accent-50);
   color: var(--t-accent-700);
   font-size: 11.5px; font-weight: 700;
@@ -3056,14 +3048,14 @@ const KYG_TESTS_CSS = `/* ======================================================
 .wr-panel__pills{ display:flex; flex-wrap:wrap; gap:8px; }
 .kyg-page .wr-panel__pill {
   display:inline-flex; align-items:center;
-  padding: 7px 13px; border-radius: 999px;
+  padding: 7px 13px; border-radius: 6px;
   background: rgba(31,26,20,.04);
   border: 1px solid var(--ink-line);
   font-size: 12px; font-weight: 500;
   color: var(--ink-3); letter-spacing: -.005em;
 }
 .kyg-page .wr-panel__cta {
-  display:inline-flex; align-items:center; gap:10px; padding:12px 22px; border-radius:9999px; color:#fff; font-family:var(--ff); font-size:14.5px; font-weight:600; letter-spacing:-.005em; border:0; cursor:pointer;
+  display:inline-flex; align-items:center; gap:10px; padding:12px 22px; border-radius: 6px; color:#fff; font-family:var(--ff); font-size:14.5px; font-weight:600; letter-spacing:-.005em; border:0; cursor:pointer;
   background: var(--t-accent-500);
   transition: background .35s var(--e-out), transform .45s var(--e-out), box-shadow .45s var(--e-out);
 }
@@ -3088,7 +3080,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 }
 .kyg-page .tests__track-wrap {
   position:relative;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
 }
 .kyg-page .tests__track {
   display:flex;
@@ -3099,7 +3091,7 @@ const KYG_TESTS_CSS = `/* ======================================================
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
 }
 .tests__track::-webkit-scrollbar{ display:none; }
 
@@ -3108,7 +3100,7 @@ const KYG_TESTS_CSS = `/* ======================================================
   width: 100%;
   scroll-snap-align: center;
   background: #fff;
-  border-radius: var(--r-lg);
+  border-radius: 6px;
   border: 1px solid var(--ink-line);
   padding: clamp(26px, 2.8vw, 40px);
   box-shadow: 0 2px 6px rgba(45,32,18,.04), 0 18px 50px -24px rgba(45,32,18,.18);
@@ -3147,7 +3139,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .test-card__tag {
   display:inline-flex; align-items:center;
   padding: 7px 14px;
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--t-accent-50);
   color: var(--t-accent-700);
   font-size: 11.5px;
@@ -3217,7 +3209,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .wr-card {
   background: var(--c-cream);
   border: 1px solid var(--ink-line);
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   padding: clamp(18px, 1.8vw, 24px);
   display:flex;
   flex-direction:column;
@@ -3235,7 +3227,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .wr-card__ico {
   flex:0 0 38px;
   width:38px; height:38px;
-  border-radius: 11px;
+  border-radius: 6px;
   background: var(--t-accent-50);
   color: var(--t-accent-500);
   display:inline-flex; align-items:center; justify-content:center;
@@ -3275,7 +3267,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .wr-card__tagline {
   margin-top: 14px;
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: 6px;
   background: var(--t-accent-50);
   color: var(--t-accent-700);
   font-size: 13px;
@@ -3293,7 +3285,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .test-card__hl {
   margin-top: clamp(22px, 2.4vw, 30px);
   padding: 18px 22px;
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   background: var(--t-accent-50);
   border-left: 4px solid var(--t-accent-500);
 }
@@ -3334,7 +3326,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .test-card__pill {
   display:inline-flex; align-items:center;
   padding: 7px 14px;
-  border-radius: 999px;
+  border-radius: 6px;
   background: rgba(31,26,20,.04);
   border: 1px solid var(--ink-line);
   font-size: 12.5px;
@@ -3343,7 +3335,7 @@ const KYG_TESTS_CSS = `/* ======================================================
   letter-spacing: -.005em;
 }
 .kyg-page .test-card__cta {
-  display:inline-flex; align-items:center; gap:10px; padding:13px 24px; border-radius:9999px; color:#fff; font-family:var(--ff); font-size:14.5px; font-weight:600; letter-spacing:-.005em; cursor:pointer; border:0;
+  display:inline-flex; align-items:center; gap:10px; padding:13px 24px; border-radius: 6px; color:#fff; font-family:var(--ff); font-size:14.5px; font-weight:600; letter-spacing:-.005em; cursor:pointer; border:0;
   background: var(--t-accent-500);
   transition: background .35s var(--e-out), transform .5s var(--e-out), box-shadow .5s var(--e-out);
 }
@@ -3406,7 +3398,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .tests__dot.is-active {
   background: var(--ink-1);
   width: 28px;
-  border-radius: 999px;
+  border-radius: 6px;
 }
 .kyg-page .tests__dot:hover:not(.is-active) {
   background: rgba(31,26,20,.4);
@@ -3443,7 +3435,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 .kyg-page .bundle-card {
   background: rgba(255,255,255,.7);
   border: 1.5px solid var(--ink-line);
-  border-radius: var(--r-md);
+  border-radius: 6px;
   padding: 28px 28px 26px;
   transition: transform .55s var(--e-out),
               box-shadow .55s var(--e-out),
@@ -3471,7 +3463,7 @@ const KYG_TESTS_CSS = `/* ======================================================
 }
 .kyg-page .bundle-card__ico {
   width: 36px; height: 36px;
-  border-radius: 10px;
+  border-radius: 6px;
   background: rgba(31,26,20,.04);
   display:inline-flex; align-items:center; justify-content:center;
   color: var(--t-accent-500);
@@ -3723,7 +3715,7 @@ body {
   .kyg-page .what__float-ico {
     width: 40px !important;
     height: 40px !important;
-    border-radius: 12px !important;
+    border-radius: 6px !important;
   }
   .kyg-page .what__float-ico svg {
     width: 20px !important;
@@ -3777,7 +3769,7 @@ body {
   }
 
   /* Care + Movement break sections - no horizontal margin on mobile
-     so the rounded panels sit flush, full-bleed. */
+     so the rounded-sm panels sit flush, full-bleed. */
   .kyg-page .care,
   .kyg-page .movement {
     width: 100% !important;
@@ -4541,12 +4533,12 @@ export default function HomePage() {
         <div className="container container--wide">
           <div className="relative flex w-full flex-col items-start pt-[96px] pb-[32px] max-[1180px]:pt-[84px] max-[1180px]:pb-[28px] max-[880px]:pt-[76px] max-[880px]:pb-[24px] max-[720px]:pt-[68px] max-[720px]:pb-[20px]">
             <div className="reveal max-w-[min(1100px,100%)]">
-              <div className="relative mb-[36px] inline-flex items-center gap-[14px] overflow-hidden rounded-full border border-[rgba(37,181,171,.32)] bg-(--c-teal) py-[12px] pr-[26px] pl-[12px] text-[16px] font-semibold tracking-[.005em] text-(--c-cream) shadow-[0_14px_32px_-8px_rgba(14,77,75,.42),0_0_0_4px_rgba(14,77,75,.05)] max-[1180px]:mb-[22px] max-[880px]:mb-[18px] max-[880px]:py-[8px] max-[880px]:pr-[18px] max-[880px]:pl-[8px] max-[880px]:text-[13px] max-[720px]:mb-[14px] max-[720px]:py-[6px] max-[720px]:pr-[14px] max-[720px]:pl-[6px] max-[720px]:text-[11px]">
+              <div className="relative mb-[36px] inline-flex items-center gap-[14px] overflow-hidden rounded-sm border border-[rgba(37,181,171,.32)] bg-(--c-teal) py-[12px] pr-[26px] pl-[12px] text-[16px] font-semibold tracking-[.005em] text-(--c-cream) shadow-[0_14px_32px_-8px_rgba(14,77,75,.42),0_0_0_4px_rgba(14,77,75,.05)] max-[1180px]:mb-[22px] max-[880px]:mb-[18px] max-[880px]:py-[8px] max-[880px]:pr-[18px] max-[880px]:pl-[8px] max-[880px]:text-[13px] max-[720px]:mb-[14px] max-[720px]:py-[6px] max-[720px]:pr-[14px] max-[720px]:pl-[6px] max-[720px]:text-[11px]">
                 <span
                   aria-hidden
                   className="pointer-events-none absolute inset-y-0 -left-[30%] w-[30%] animate-[pillShine_4.5s_ease-in-out_infinite] bg-[linear-gradient(90deg,transparent,rgba(248,228,204,.28),transparent)]"
                 />
-                <span className="inline-flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--c-peach-2),var(--c-rust))] text-[14px] text-(--c-cream) shadow-[0_0_0_4px_rgba(248,228,204,.14)] max-[880px]:h-[28px] max-[880px]:w-[28px] max-[880px]:text-[13px] max-[720px]:h-[22px] max-[720px]:w-[22px] max-[720px]:text-[13px]">
+                <span className="inline-flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-peach-2),var(--c-rust))] text-[14px] text-(--c-cream) shadow-[0_0_0_4px_rgba(248,228,204,.14)] max-[880px]:h-[28px] max-[880px]:w-[28px] max-[880px]:text-[13px] max-[720px]:h-[22px] max-[720px]:w-[22px] max-[720px]:text-[13px]">
                   ✦
                 </span>
                 <span>India's first wellness-led DNA experience</span>

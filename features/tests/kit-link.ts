@@ -1,5 +1,5 @@
 // =============================================================================
-// features/tests — where a test page's buy CTAs go
+// features/tests - where a test page's buy CTAs go
 // -----------------------------------------------------------------------------
 // Every CTA on a test page is authored as `href: '#kit'` in lib/tests/<slug>.ts
 // - 81 of them across the nine tests. That anchor used to scroll to the page's

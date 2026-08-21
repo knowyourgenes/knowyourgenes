@@ -65,14 +65,14 @@ export default function AgentProfilePage() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-lg border bg-background p-4">
+      <div className="rounded-sm border bg-background p-4">
         <div className="text-lg font-semibold">{p.user.name ?? '-'}</div>
         <div className="text-xs text-muted-foreground">{p.user.email}</div>
         <div className="text-xs text-muted-foreground">{p.user.phone}</div>
         <div className="text-xs text-muted-foreground mt-1">Zone: {p.zone}</div>
       </div>
 
-      <div className="rounded-lg border bg-background p-4 flex items-center justify-between">
+      <div className="rounded-sm border bg-background p-4 flex items-center justify-between">
         <div>
           <div className="text-sm font-medium">Active for assignments</div>
           <div className="text-xs text-muted-foreground">Toggle off when on leave. Admin can also disable you.</div>
@@ -82,7 +82,7 @@ export default function AgentProfilePage() {
 
       <div>
         <h2 className="text-sm font-semibold mb-2">Verification</h2>
-        <div className="rounded-lg border bg-background divide-y">
+        <div className="rounded-sm border bg-background divide-y">
           <Row label="Aadhaar" verified={p.aadhaarVerified} />
           <Row label="Police verification" verified={p.policeVerified} />
           <Row label="DMLT certificate" verified={!!p.dmltCertUrl} />
@@ -125,7 +125,7 @@ function Row({ label, verified }: { label: string; verified: boolean }) {
 
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="rounded-lg border bg-background p-3">
+    <div className="rounded-sm border bg-background p-3">
       <div className="text-xs text-muted-foreground">{label}</div>
       <div className="text-base font-semibold">{value}</div>
     </div>

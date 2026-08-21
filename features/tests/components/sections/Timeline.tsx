@@ -32,9 +32,9 @@ const NODE_MID = 'size-[10px] rounded-full bg-white shadow-[0_0_0_2px_rgba(122,1
 /** The rail: a 22px soft trough with a 3px lit line centred inside it. Both run
  *  from the first node centre to the last - i.e. inset by half a column. */
 const TROUGH =
-  'absolute inset-x-[12.5%] top-1/2 h-[22px] -translate-y-1/2 rounded-full bg-[linear-gradient(90deg,rgba(14,77,75,0.05)_0%,rgba(37,181,171,0.16)_33.33%,rgba(14,77,75,0.1)_66.67%,rgba(37,181,171,0.05)_100%)]';
+  'absolute inset-x-[12.5%] top-1/2 h-[22px] -translate-y-1/2 rounded-sm bg-[linear-gradient(90deg,rgba(14,77,75,0.05)_0%,rgba(37,181,171,0.16)_33.33%,rgba(14,77,75,0.1)_66.67%,rgba(37,181,171,0.05)_100%)]';
 const LINE =
-  'absolute inset-x-[12.5%] top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-[linear-gradient(90deg,rgba(34,34,34,0.05)_0%,rgba(34,34,34,0)_16.67%,#25b5ab_33.33%,#0e4d4b_50%,#25b5ab_66.67%,rgba(37,181,171,0)_83.33%,rgba(34,34,34,0.05)_100%)] shadow-[0_0_12px_0_rgba(37,181,171,0.28)]';
+  'absolute inset-x-[12.5%] top-1/2 h-[3px] -translate-y-1/2 rounded-sm bg-[linear-gradient(90deg,rgba(34,34,34,0.05)_0%,rgba(34,34,34,0)_16.67%,#25b5ab_33.33%,#0e4d4b_50%,#25b5ab_66.67%,rgba(37,181,171,0)_83.33%,rgba(34,34,34,0.05)_100%)] shadow-[0_0_12px_0_rgba(37,181,171,0.28)]';
 
 /** The two end pills. In the frame these are single-line (174 and 183 wide) in a
  *  1102/4 = 275 column, so nowrap is free. Below lg the column is narrower than
@@ -42,7 +42,7 @@ const LINE =
  *  past the card's own padding, so it only turns on once a column can hold it
  *  (>=1024). Under that the label wraps to two lines inside its column. */
 const CALLOUT_PILL =
-  'max-w-full rounded-full px-[14px] py-2 text-center font-kyg text-[11.5px] font-bold leading-[15.6px] sm:text-[12.5px] lg:whitespace-nowrap';
+  'max-w-full rounded-sm px-[14px] py-2 text-center font-kyg text-[11.5px] font-bold leading-[15.6px] sm:text-[12.5px] lg:whitespace-nowrap';
 
 export default function Timeline({ data, ground }: { data: TimelineSection; ground?: Ground }) {
   const { eyebrow, titleHtml, leadHtml } = data.head;
@@ -56,7 +56,7 @@ export default function Timeline({ data, ground }: { data: TimelineSection; grou
           so it is built here rather than borrowing <Eyebrow/>. */}
       <div className="mx-auto flex w-full max-w-[680px] flex-col items-center gap-[14px] text-center">
         {eyebrow ? (
-          <span className="inline-flex items-center gap-2.5 rounded-full border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+          <span className="inline-flex items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
             {/* 22×26 glyph, pulled to a 22px optical box so the pill stays 46 tall */}
             <FigmaIcon id="8722-668" className="my-[-2px] h-[26px] w-[22px] shrink-0" />
             <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-eden">
@@ -76,7 +76,7 @@ export default function Timeline({ data, ground }: { data: TimelineSection; grou
       </div>
 
       {/* ---------------------------------------------------------- card ---- */}
-      <div className="mt-[clamp(32px,3.34vw,48px)] flex flex-col gap-3 rounded-[28px] border border-mine/10 bg-white p-[clamp(20px,3.9vw,56px)] shadow-tst-card">
+      <div className="mt-[clamp(32px,3.34vw,48px)] flex flex-col gap-3 rounded-sm border border-mine/10 bg-white p-[clamp(20px,3.9vw,56px)] shadow-tst-card">
         {/* callouts - aligned above their own nodes (columns 1 and 4) */}
         <div className="grid grid-cols-2 gap-x-2 sm:grid-cols-4 sm:gap-x-0">
           <div className="col-start-1 flex flex-col items-center px-1">
@@ -118,7 +118,7 @@ export default function Timeline({ data, ground }: { data: TimelineSection; grou
 
         {/* the gap, captioned on its own line */}
         <div className="flex justify-center pt-4">
-          <span className="inline-flex items-center gap-2 rounded-full border border-eden/15 bg-mint px-4 py-2">
+          <span className="inline-flex items-center gap-2 rounded-sm border border-eden/15 bg-mint px-4 py-2">
             <FigmaIcon id="9213-590" className="my-[-2px] h-6 w-5 shrink-0" />
             <span
               className="text-center font-tst text-[clamp(17px,1.46vw,21px)] font-bold italic leading-[1.5] text-eden2"

@@ -753,7 +753,7 @@ export default function AdminServiceAreaPage() {
       setExpandedStates(next);
     };
     return (
-      <div className="rounded border bg-card">
+      <div className="rounded-sm border bg-card">
         <div className="flex items-center gap-3 px-3 py-2.5">
           <button
             type="button"
@@ -865,7 +865,7 @@ export default function AdminServiceAreaPage() {
                       {dLoadingAreas && !areas ? (
                         <div className="space-y-1 px-3 py-3 pl-16">
                           {Array.from({ length: 4 }).map((_, i) => (
-                            <div key={i} className="h-5 animate-pulse rounded bg-muted/60" />
+                            <div key={i} className="h-5 animate-pulse rounded-sm bg-muted/60" />
                           ))}
                         </div>
                       ) : !areas || areas.length === 0 ? (
@@ -1058,7 +1058,7 @@ export default function AdminServiceAreaPage() {
           {treeLoading ? (
             <div className="space-y-2">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="h-12 animate-pulse rounded border bg-card" />
+                <div key={i} className="h-12 animate-pulse rounded-sm border bg-card" />
               ))}
             </div>
           ) : noTreeData ? (
@@ -1195,7 +1195,7 @@ export default function AdminServiceAreaPage() {
           {listLoading && items.length === 0 ? (
             <div className="space-y-2">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="h-10 animate-pulse rounded bg-muted/50" />
+                <div key={i} className="h-10 animate-pulse rounded-sm bg-muted/50" />
               ))}
             </div>
           ) : (
@@ -1382,8 +1382,9 @@ export default function AdminServiceAreaPage() {
           <DialogHeader className="shrink-0 border-b p-4 pr-10">
             <DialogTitle>Bulk import pincodes</DialogTitle>
             <DialogDescription>
-              One per line: <code className="rounded bg-muted px-1 font-mono text-xs">pincode,area,district,state</code>
-              . Existing pincodes are upserted and set active.
+              One per line:{' '}
+              <code className="rounded-sm bg-muted px-1 font-mono text-xs">pincode,area,district,state</code>. Existing
+              pincodes are upserted and set active.
             </DialogDescription>
           </DialogHeader>
           <DialogBody>

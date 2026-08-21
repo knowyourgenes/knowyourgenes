@@ -25,7 +25,7 @@ export const EMPTY_ADDRESS: AddressDraft = {
 };
 
 const FIELD =
-  'h-11 w-full rounded-xl border border-zeus/[0.12] bg-white px-3.5 text-[14.5px] text-mine outline-none transition placeholder:text-cord/60 focus:border-eden/40';
+  'h-11 w-full rounded-sm border border-zeus/[0.12] bg-white px-3.5 text-[14.5px] text-mine outline-none transition placeholder:text-cord/60 focus:border-eden/40';
 const LABEL = 'text-[12px] font-bold uppercase tracking-[0.07em] text-cord';
 
 /**
@@ -138,7 +138,7 @@ export function AddressFields({
         />
       </div>
       {serviceWarning && (
-        <p className="rounded-xl border border-amber-500/40 bg-amber-500/[0.07] px-3.5 py-2.5 text-[13px] leading-[1.5] text-cape sm:col-span-2">
+        <p className="rounded-sm border border-amber-500/40 bg-amber-500/[0.07] px-3.5 py-2.5 text-[13px] leading-[1.5] text-cape sm:col-span-2">
           {serviceWarning}
         </p>
       )}

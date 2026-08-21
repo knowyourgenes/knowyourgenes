@@ -100,7 +100,7 @@ export default function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="flex items-center justify-center w-[38px] h-[38px] rounded-full border border-white/[0.12] bg-white/[0.04] text-[rgba(250,246,239,.72)] transition-[background,color,border-color] duration-300 ease-(--e-out) hover:bg-(--peach-2)! hover:text-(--ink-1) hover:border-transparent"
+                  className="flex items-center justify-center w-[38px] h-[38px] rounded-sm border border-white/[0.12] bg-white/[0.04] text-[rgba(250,246,239,.72)] transition-[background,color,border-color] duration-300 ease-(--e-out) hover:bg-(--peach-2)! hover:text-(--ink-1) hover:border-transparent"
                 >
                   {social.icon}
                 </a>
@@ -142,11 +142,11 @@ export default function SiteFooter() {
                 type="email"
                 placeholder="Your email address"
                 aria-label="Email"
-                className="w-full bg-white/[0.04] border border-white/[0.12] rounded-full outline-none text-white py-[11px] px-[18px] text-[13.5px] placeholder:text-[rgba(250,246,239,.5)] transition-colors focus:border-(--peach-2)"
+                className="w-full bg-white/[0.04] border border-white/[0.12] rounded-sm outline-none text-white py-[11px] px-[18px] text-[13.5px] placeholder:text-[rgba(250,246,239,.5)] transition-colors focus:border-(--peach-2)"
               />
               <button
                 type="submit"
-                className="py-[11px] px-[18px] bg-(--peach-2)! text-(--ink-1) rounded-full font-semibold text-[13px] cursor-pointer transition-[background,color] duration-[400ms] ease-(--e-out) hover:bg-(--teal-light)! hover:text-white"
+                className="py-[11px] px-[18px] bg-(--peach-2)! text-(--ink-1) rounded-sm font-semibold text-[13px] cursor-pointer transition-[background,color] duration-[400ms] ease-(--e-out) hover:bg-(--teal-light)! hover:text-white"
               >
                 Subscribe
               </button>

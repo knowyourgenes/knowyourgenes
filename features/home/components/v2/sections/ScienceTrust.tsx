@@ -20,8 +20,7 @@
 // THE GRID HAS NO CARDS, ONLY RULES, and they TAPER - see the long note on
 // CLAIMS below, which is the subtlest thing in this file.
 //
-// RADIUS TRAP: the lab figure is 24, the icon wells are 14, the CTA is 10.
-// None of those are Tailwind's remapped rounded-2xl/3xl, so all are arbitrary.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import Image from 'next/image';
@@ -133,7 +132,7 @@ export default function ScienceTrust() {
           there instead of the frame's #062927. Scoping it here makes the last
           stop fall exactly where the cream band starts. */}
       <div className="bg-[linear-gradient(180deg,#0e4d4b_0%,#0a3b39_55%,#062927_100%)] px-5 pb-[clamp(56px,7vw,101px)] pt-[clamp(64px,10vw,144px)] text-linenw sm:px-8 lg:px-[63px]">
-        <div className="mx-auto w-full max-w-[1313px]">
+        <div className="mx-auto w-full max-w-[1600px]">
           {/* ---- header.shead.shead--split.rv ---------------------------
               A 779 / 491 grid (= the source's 1.35fr / 0.85fr, same ratio)
               with the source's clamp(22,3vw,56) gutter. The two columns are
@@ -212,7 +211,7 @@ export default function ScienceTrust() {
                       java2 fill. Only the lift/rotate/shadow carries over. */}
                   <span
                     className={[
-                      'mb-[22px] grid h-12 w-12 shrink-0 place-items-center rounded-[14px] bg-java2/[0.13]',
+                      'mb-[22px] grid h-12 w-12 shrink-0 place-items-center rounded-sm bg-java2/[0.13]',
                       // translate + rotate, NOT transform: v4 compiles the
                       // motion utilities below to those standalone properties
                       'transition-[translate,rotate,box-shadow] duration-850 ease-[cubic-bezier(0.16,1,0.3,1)]',
@@ -258,7 +257,7 @@ export default function ScienceTrust() {
               alt="A genomics laboratory bench with sequencing equipment and sample tubes"
               // full rail width at every breakpoint, so no 50vw guess
               sizes="(max-width: 1439px) 100vw, 1320px"
-              className="aspect-[21/8] w-full rounded-[24px]"
+              className="aspect-[21/8] w-full rounded-sm"
             />
           </Reveal>
 
@@ -273,7 +272,7 @@ export default function ScienceTrust() {
 
       {/* ---- div.certs : full-bleed cream band, pad 34..52 top and bottom -- */}
       <div className="bg-linenw px-5 py-[clamp(34px,3.6vw,52px)] text-bistre sm:px-8 lg:px-[63px]">
-        <Reveal className="mx-auto flex w-full max-w-[1313px] flex-col items-center">
+        <Reveal className="mx-auto flex w-full max-w-[1600px] flex-col items-center">
           {/* Figtree 800 14 ls .16em, #92a19e = pewter, textCase=UPPER. It is
               `width:100%` in the source's flex row, which is what forces the
               logos onto their own line. */}

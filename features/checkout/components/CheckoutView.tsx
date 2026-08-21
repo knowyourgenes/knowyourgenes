@@ -1,7 +1,7 @@
 'use client';
 
 // =============================================================================
-// features/checkout — the pay screen
+// features/checkout - the pay screen
 // -----------------------------------------------------------------------------
 // One page, three blocks: address, (optional) collection slot, summary + pay.
 // Not a wizard - every field is on screen at once, because a checkout that
@@ -22,7 +22,7 @@ import { useCart } from '@/features/cart/hooks/use-cart';
 import type { PricedCart } from '@/features/cart/types';
 import { AddressFields, EMPTY_ADDRESS, type AddressDraft } from './AddressFields';
 
-const CARD = 'rounded-[20px] border border-zeus/[0.09] bg-white shadow-kyg-card';
+const CARD = 'rounded-sm border border-zeus/[0.09] bg-white shadow-kyg-card';
 const SLOT_WINDOWS = [
   { value: 'MORNING', label: 'Morning · 8AM–12PM' },
   { value: 'AFTERNOON', label: 'Afternoon · 12PM–4PM' },
@@ -115,7 +115,7 @@ export function CheckoutView({
         <p className="max-w-[380px] text-[14.5px] text-cape">Your cart is empty.</p>
         <Link
           href="/categories/wellness"
-          className="mt-1 rounded-full bg-eden px-5 py-2.5 text-[13.5px] font-bold text-spring hover:bg-eden2"
+          className="mt-1 rounded-sm bg-eden px-5 py-2.5 text-[13.5px] font-bold text-spring hover:bg-eden2"
         >
           Browse tests
         </Link>
@@ -316,7 +316,7 @@ export function CheckoutView({
                 disabled={busy}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="mt-2 h-[46px] w-full rounded-[12px] border border-zeus/[0.14] bg-white px-3.5 text-[14.5px] text-mine outline-none transition focus:border-eden focus:ring-2 focus:ring-eden/15 disabled:opacity-60"
+                className="mt-2 h-[46px] w-full rounded-sm border border-zeus/[0.14] bg-white px-3.5 text-[14.5px] text-mine outline-none transition focus:border-eden focus:ring-2 focus:ring-eden/15 disabled:opacity-60"
               />
             </div>
           )}
@@ -329,7 +329,7 @@ export function CheckoutView({
               {addresses.map((a) => (
                 <label
                   key={a.id}
-                  className={`flex cursor-pointer gap-3 rounded-2xl border p-3.5 transition ${
+                  className={`flex cursor-pointer gap-3 rounded-sm border p-3.5 transition ${
                     !showNewAddress && addressId === a.id
                       ? 'border-eden/45 bg-eden/[0.05]'
                       : 'border-zeus/[0.1] hover:border-eden/25'
@@ -389,7 +389,7 @@ export function CheckoutView({
                   min={tomorrowISO()}
                   value={slotDate}
                   onChange={(e) => setSlotDate(e.target.value)}
-                  className="h-11 rounded-xl border border-zeus/[0.12] bg-white px-3.5 text-[14.5px] outline-none focus:border-eden/40"
+                  className="h-11 rounded-sm border border-zeus/[0.12] bg-white px-3.5 text-[14.5px] outline-none focus:border-eden/40"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
@@ -400,7 +400,7 @@ export function CheckoutView({
                   id="slot-window"
                   value={slotWindow}
                   onChange={(e) => setSlotWindow(e.target.value)}
-                  className="h-11 rounded-xl border border-zeus/[0.12] bg-white px-3.5 text-[14.5px] outline-none focus:border-eden/40"
+                  className="h-11 rounded-sm border border-zeus/[0.12] bg-white px-3.5 text-[14.5px] outline-none focus:border-eden/40"
                 >
                   {SLOT_WINDOWS.map((w) => (
                     <option key={w.value} value={w.value}>
@@ -467,7 +467,7 @@ export function CheckoutView({
           type="button"
           onClick={pay}
           disabled={!canPay}
-          className="flex h-[52px] w-full items-center justify-center rounded-full bg-eden text-[15px] font-bold text-spring transition hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-55"
+          className="flex h-[52px] w-full items-center justify-center rounded-sm bg-eden text-[15px] font-bold text-spring transition hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-55"
         >
           {busy ? 'Working…' : `Pay ${formatPaise(priced.total)}`}
         </button>

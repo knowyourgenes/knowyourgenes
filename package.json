@@ -11,6 +11,8 @@
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css}\"",
     "typecheck": "tsc --noEmit",
+    "inventory": "node scripts/inventory-components.mjs",
+    "design:check": "node scripts/check-design.mjs",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",

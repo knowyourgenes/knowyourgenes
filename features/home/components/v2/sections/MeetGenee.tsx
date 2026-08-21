@@ -35,8 +35,7 @@
 // simply happens 124px earlier than in the source. All of it moves together, so
 // there is no width at which the layout is half-collapsed.
 //
-// RADIUS TRAP: the figure is 46, the bubbles 20, the CTA 10; only the italic
-// pill (999) and the 24px promise markers (50%) are true capsules/circles.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { cn } from '@/lib/utils';
@@ -73,7 +72,7 @@ const SH2 = 'shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,1
 
 /** `.bub` - everything the two speech bubbles share. Only ground, ink, corner and phase differ. */
 const BUBBLE = cn(
-  'absolute z-[3] max-w-[min(76%,300px)] rounded-[20px] px-5 py-[15px]',
+  'absolute z-[3] max-w-[min(76%,300px)] rounded-sm px-5 py-[15px]',
   'font-kyg text-[16.5px] font-semibold leading-[1.4] tracking-[-0.01em]',
   SH2,
   'animate-hv2-bob motion-reduce:animate-none'
@@ -93,7 +92,7 @@ export default function MeetGenee() {
           clamp(34px,4.4vw,84px) gap. The minmax(0,…) is the source's own and is
           load-bearing: a bare `fr` floors at min-content, so the 300px bubble
           and the long promise strings would push the columns past the rail. */}
-      <div className="mx-auto grid w-full max-w-[1313px] grid-cols-1 items-center gap-[clamp(34px,4.4vw,84px)] lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 items-center gap-[clamp(34px,4.4vw,84px)] lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
         {/* ---- div.gee__art : the character plate + its two bubbles --------
             This IS the positioning context for both bubbles, so `relative`
             belongs on the Reveal itself rather than on an extra wrapper. `.rv-s`
@@ -126,7 +125,7 @@ export default function MeetGenee() {
             meta="GENEe, the KYG guide character · transparent PNG · 900 × 1000 · 9:10"
             path="assets/genee-character.png"
             className={cn(
-              'aspect-[9/10] w-full rounded-[46px]',
+              'aspect-[9/10] w-full rounded-sm',
               'bg-[radial-gradient(118%_84%_at_18%_12%,rgba(42,195,162,0.34),transparent_58%),radial-gradient(96%_78%_at_88%_88%,rgba(237,221,184,0.34),transparent_60%),linear-gradient(158deg,#20605B_0%,#154744_58%,#0E3634_100%)]',
               SH2
             )}
@@ -260,7 +259,7 @@ export default function MeetGenee() {
             <Reveal delay={0.22}>
               {/* 999 capsule, eden @7%, pad 12/20/12/16, gap 13. The glyph is
                   already stroked eden, so 65% is opacity alone. */}
-              <p className="inline-flex min-w-0 items-center gap-[13px] rounded-full bg-eden/[0.07] py-3 pl-4 pr-5">
+              <p className="inline-flex min-w-0 items-center gap-[13px] rounded-sm bg-eden/[0.07] py-3 pl-4 pr-5">
                 <HomeIcon id="6969-730" className="h-[22px] w-[22px] shrink-0 opacity-65" />
                 {/* nowrap is the source's: this is the brand line, and breaking
                     it across two lines inside a pill reads as an accident. It

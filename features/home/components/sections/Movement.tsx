@@ -20,7 +20,7 @@ const items: { num: string; text: string }[] = [
 export default function Movement() {
   return (
     <section className="relative pb-0 pt-[clamp(56px,6.5vw,96px)] max-[1180px]:pt-[clamp(48px,6vw,80px)] max-[560px]:pt-[56px]">
-      <div className="relative mx-auto w-[min(var(--max-w),100%_-_2_*_var(--gutter))] overflow-hidden rounded-[var(--r-2xl)] bg-[linear-gradient(180deg,var(--dark-1)_0%,var(--dark-2)_100%)] text-(--c-cream) max-[1180px]:mx-0 max-[1180px]:w-full max-[1180px]:rounded-none">
+      <div className="relative mx-auto w-[min(var(--max-w),100%_-_2_*_var(--gutter))] overflow-hidden rounded-sm bg-[linear-gradient(180deg,var(--dark-1)_0%,var(--dark-2)_100%)] text-(--c-cream) max-[1180px]:mx-0 max-[1180px]:w-full max-[1180px]:rounded-none">
         {/* Static radial glow (legacy .movement::before, drift animation dropped) */}
         <div
           aria-hidden="true"

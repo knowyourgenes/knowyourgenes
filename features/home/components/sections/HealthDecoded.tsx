@@ -76,7 +76,7 @@ export default function HealthDecoded() {
           {cards.map((card) => (
             <article
               key={card.title}
-              className="group relative isolate flex aspect-[4/4.4] flex-col overflow-hidden rounded-[var(--r-md)] border border-(--ink-line) bg-white/70 backdrop-blur-[8px] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[6px] hover:border-[rgba(31,26,20,0.16)] hover:shadow-[0_28px_60px_rgba(45,32,18,0.16)]"
+              className="group relative isolate flex aspect-[4/4.4] flex-col overflow-hidden rounded-sm border border-(--ink-line) bg-white/70 backdrop-blur-[8px] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[6px] hover:border-[rgba(31,26,20,0.16)] hover:shadow-[0_28px_60px_rgba(45,32,18,0.16)]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -107,7 +107,7 @@ export default function HealthDecoded() {
             </article>
           ))}
 
-          <article className="group relative isolate flex aspect-[4/4.4] flex-col overflow-hidden rounded-[var(--r-md)] bg-[linear-gradient(160deg,var(--dark-1)_0%,var(--dark-2)_100%)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[6px] hover:shadow-[0_28px_60px_rgba(45,32,18,0.16)]">
+          <article className="group relative isolate flex aspect-[4/4.4] flex-col overflow-hidden rounded-sm bg-[linear-gradient(160deg,var(--dark-1)_0%,var(--dark-2)_100%)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[6px] hover:shadow-[0_28px_60px_rgba(45,32,18,0.16)]">
             <div className="absolute inset-0 z-0 bg-[radial-gradient(60%_70%_at_80%_20%,rgba(37,181,171,0.25),transparent_60%)]" />
             <div className="relative z-[2] mt-auto p-[32px] text-white">
               <div className="inline-flex text-[10.5px] font-semibold uppercase tracking-[0.22em] text-(--c-peach-2)">

@@ -33,11 +33,8 @@ export const CHROME_VARS = {
   '--acc-500': '#15605D',
   '--acc-700': '#0E4D4B',
 
-  '--r-xs': '12px',
-  '--r-sm': '18px',
-  '--r-md': '22px',
-  '--r-lg': '30px',
-
+  // Radius tokens removed: there is ONE radius site-wide now, Tailwind's
+  // `rounded-sm` (6px). See docs/DESIGN.md §2. Do not re-add an --r-* scale.
   '--sh-1': '0 1px 2px rgba(45,32,18,.04), 0 4px 14px rgba(45,32,18,.05)',
   '--sh-2': '0 2px 6px rgba(45,32,18,.05), 0 18px 50px -24px rgba(45,32,18,.20)',
   '--sh-3': '0 6px 18px rgba(45,32,18,.08), 0 30px 70px -30px rgba(45,32,18,.26)',

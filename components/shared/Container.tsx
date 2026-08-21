@@ -2,10 +2,10 @@ import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
 /**
- * Site-wide 1530px content column.
+ * Site-wide 1600px content column - the ONE page shell width (docs/DESIGN.md §1).
  *
  * Centres its children and applies the shared horizontal gutter. Use this
- * instead of repeating `max-w-[1530px] mx-auto px-(--gutter)` in every
+ * instead of repeating `max-w-[1600px] mx-auto px-(--gutter)` in every
  * component - the max-width lives in exactly one place now.
  *
  * The gutter reads the ambient `--gutter` (e.g. the value CHROME_VARS sets on
@@ -23,7 +23,7 @@ type ContainerProps<T extends ElementType> = {
 export function Container<T extends ElementType = 'div'>({ as, className, children, ...props }: ContainerProps<T>) {
   const Tag = (as ?? 'div') as ElementType;
   return (
-    <Tag className={cn('mx-auto w-full max-w-[1530px] px-[var(--gutter,clamp(18px,3vw,40px))]', className)} {...props}>
+    <Tag className={cn('mx-auto w-full max-w-[1600px] px-[var(--gutter,clamp(18px,3vw,40px))]', className)} {...props}>
       {children}
     </Tag>
   );

@@ -69,9 +69,9 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
             Under md they stack, then/now in reading order. */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* ------------------------------------------------------- then ---- */}
-          <div className="flex flex-col gap-2 rounded-[26px] border border-mine/10 bg-linenw p-6 lg:p-9">
-            {/* 56x56, radius 16 - rounded-2xl is 18 in this theme, so spell it. */}
-            <span className="grid size-14 shrink-0 place-items-center rounded-[16px] bg-mine/6">
+          <div className="flex flex-col gap-2 rounded-sm border border-mine/10 bg-linenw p-6 lg:p-9">
+            {/* 56x56. The frame's r16 is rounded-sm (6px), like every other corner. */}
+            <span className="grid size-14 shrink-0 place-items-center rounded-sm bg-mine/6">
               <FigmaIcon id={GLYPH.then} className="h-8.25 w-6.75" />
             </span>
 
@@ -106,7 +106,7 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
           </div>
 
           {/* -------------------------------------------------------- now ---- */}
-          <div className="relative overflow-hidden rounded-[26px] bg-eden p-6 lg:p-9 lg:pb-9.5">
+          <div className="relative overflow-hidden rounded-sm bg-eden p-6 lg:p-9 lg:pb-9.5">
             {/* 208 circle, #2ac3a2@15, hangs 64 past the top and right edges.
                 Figma LAYER_BLUR 40 -> CSS blur(20px): Figma's radius is ~2x the
                 gaussian sigma CSS takes, the same halving used for the body
@@ -119,7 +119,7 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
             <div className="relative flex flex-col gap-2">
               {/* the frame gives this badge a 16 radius but NO fill - the glyph
                   sits straight on the eden ground. */}
-              <span className="grid size-14 shrink-0 place-items-center rounded-[16px]">
+              <span className="grid size-14 shrink-0 place-items-center rounded-sm">
                 <FigmaIcon id={GLYPH.now} className="h-8.25 w-6.75" />
               </span>
 
@@ -161,7 +161,7 @@ export default function ThenNow({ data, ground }: { data: ThenNowSection; ground
             byte-identical. */}
         <div className="flex flex-col items-center">
           <Closing html={data.closingHtml} className="mb-6 max-w-165 text-[#2d2a24] [&_br]:hidden lg:[&_br]:inline" />
-          {data.cta ? <Cta data={data.cta} className="h-15 py-0 tracking-[0.06px]" /> : null}
+          {data.cta ? <Cta data={data.cta} className="tracking-[0.06px]" /> : null}
         </div>
       </div>
     </Section>

@@ -4,6 +4,36 @@
 This version has breaking changes - APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+---
+
+# ⚠ Read before writing any UI
+
+Two files govern everything on screen. They exist because the UI drifted badly
+(30+ corner radii, 12 page-shell widths, 3 parallel colour systems) and
+re-deciding these every time is how it happened.
+
+| File | What it settles |
+| --- | --- |
+| **[docs/DESIGN.md](docs/DESIGN.md)** | Colour, roundness, container width, type scale, shadows, motion. **Rules, not suggestions.** |
+| **[docs/COMPONENTS.md](docs/COMPONENTS.md)** | Every one of the ~180 components in the repo. **Check it before building a new one.** |
+
+The three rules that override everything else:
+
+1. Content maxes at **1600px** and fills the width below that - use `Container`.
+2. The only corner radius is **`rounded-sm` (6px)**; `rounded-full` only on
+   genuine circles (avatars, count badges, status dots, spinners, slider thumbs).
+   Every button is **44px tall** - import `BTN` from
+   `@/components/shared/button-styles`, never retype a height.
+3. **Reuse before you build.** If it is in COMPONENTS.md, use it - do not make a
+   second copy on another page.
+
+`docs/COMPONENTS.md` is generated: run `pnpm inventory` after adding or removing a
+component. Never hand-edit it.
+
+Rules §1 and §2 are machine-checkable: `pnpm design:check --changed` reports
+width and roundness violations in the files you touched. Run it before you call
+UI work done.
+
 
 ---
 

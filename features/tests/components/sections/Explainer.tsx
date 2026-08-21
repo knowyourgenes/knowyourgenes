@@ -56,7 +56,7 @@ export default function Explainer({ data, ground }: { data: ExplainerSection; gr
         {/* ---- head: eyebrow + H2, 680 wide, gap 16 ---------------------- */}
         <div className="flex w-full max-w-[680px] flex-col items-center gap-4 text-center">
           {eyebrow ? (
-            <span className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-eden/15 bg-eden/7 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+            <span className="inline-flex max-w-full items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/7 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
               <span className="flex size-[22px] shrink-0 items-center justify-center">
                 <FigmaIcon id="7892-592" className="h-[26px] w-[22px] max-w-none" />
               </span>
@@ -76,11 +76,11 @@ export default function Explainer({ data, ground }: { data: ExplainerSection; gr
           {data.cards.map((c, i) => (
             <div
               key={i}
-              className="flex flex-col gap-[clamp(16px,1.6vw,23px)] rounded-[26px] border border-mine/10 bg-white p-[clamp(18px,1.95vw,28px)] shadow-tst-soft"
+              className="flex flex-col gap-[clamp(16px,1.6vw,23px)] rounded-sm border border-mine/10 bg-white p-[clamp(18px,1.95vw,28px)] shadow-tst-soft"
             >
               <Media
                 img={c.image}
-                className="aspect-[331/190] w-full rounded-[20px]"
+                className="aspect-[331/190] w-full rounded-sm"
                 sizes="(min-width:1440px) 331px, (min-width:1024px) 24vw, (min-width:640px) 42vw, 88vw"
               />
               <p
@@ -94,7 +94,7 @@ export default function Explainer({ data, ground }: { data: ExplainerSection; gr
         {/* ---- closing serif line ---------------------------------------- */}
         <Closing
           html={data.closingHtml}
-          className="w-full max-w-[1216px] text-[clamp(21px,2.24vw,32px)] leading-[1.5] text-[#2d2a24]"
+          className="w-full max-w-[1600px] text-[clamp(21px,2.24vw,32px)] leading-[1.5] text-[#2d2a24]"
         />
       </div>
     </Section>

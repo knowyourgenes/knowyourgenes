@@ -44,7 +44,7 @@ export default function FinalCta() {
           <div className="mt-[42px] flex justify-center">
             <a
               href="#wellness"
-              className="group inline-flex items-center gap-[10px] rounded-full bg-(--ink-1) px-[28px] py-[15px] text-[15px] font-semibold text-(--c-cream) transition-colors hover:bg-(--c-teal)"
+              className="group inline-flex items-center gap-[10px] rounded-sm bg-(--ink-1) px-[28px] py-[15px] text-[15px] font-semibold text-(--c-cream) transition-colors hover:bg-(--c-teal)"
             >
               Explore DNA tests
               <svg

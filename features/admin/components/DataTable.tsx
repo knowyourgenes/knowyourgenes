@@ -129,7 +129,7 @@ export default function DataTable<T extends { id?: string }>({
   return (
     <div className="space-y-3">
       {selectable && selectedCount > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-2 rounded border border-primary/30 bg-primary/5 px-3 py-2 text-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-sm border border-primary/30 bg-primary/5 px-3 py-2 text-sm">
           <div className="flex items-center gap-2">
             <span className="font-medium">{selectedCount} selected</span>
             <Button variant="ghost" size="sm" onClick={clearSelection}>
@@ -140,7 +140,7 @@ export default function DataTable<T extends { id?: string }>({
         </div>
       )}
 
-      <div className="rounded border bg-card">
+      <div className="rounded-sm border bg-card">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/40 hover:bg-muted/40">

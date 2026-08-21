@@ -45,8 +45,7 @@
 // that starts at brightness(0) - which flattens whatever colour is baked in -
 // and lands on the exact target hex (see TINT_* below).
 //
-// RADIUS TRAP: this project remaps Tailwind's radius scale (--radius .625rem),
-// so rounded-2xl is 18px and rounded-3xl is 22px. The source's 10 / 14 / 999 are
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // written as explicit values.
 // =============================================================================
 
@@ -360,7 +359,7 @@ export default function WhatToKnow() {
               `uppercase` here, which would hide that. */}
           <div
             aria-hidden="true"
-            className="absolute left-1/2 top-1/2 hidden aspect-square w-[31%] -translate-x-1/2 -translate-y-1/2 place-content-center rounded-full bg-[rgba(6,41,39,0.72)] text-center shadow-[inset_0_0_0_1px_rgba(42,195,162,0.42)] lg:grid"
+            className="absolute left-1/2 top-1/2 hidden aspect-square w-[31%] -translate-x-1/2 -translate-y-1/2 place-content-center rounded-sm bg-[rgba(6,41,39,0.72)] text-center shadow-[inset_0_0_0_1px_rgba(42,195,162,0.42)] lg:grid"
           >
             <span className="block font-kyg text-[15px] font-semibold leading-[1.62] tracking-[0.06em] text-linenw/60">
               Your
@@ -401,10 +400,10 @@ export default function WhatToKnow() {
                     'group inline-flex w-full items-center justify-start gap-[10px] whitespace-normal',
                     // 15+15 pad over a 25.1 line box = 55 tall stacked, 47.1 on
                     // the ring - both clear the 44px tap-target floor.
-                    'rounded-[10px] px-[18px] py-[15px] text-left',
+                    'rounded-sm px-[18px] py-[15px] text-left',
                     'font-kyg text-[15.5px] font-bold leading-[1.62] tracking-[-0.008em]',
                     'transition-[background-color,box-shadow,color] duration-580 ease-[cubic-bezier(0.22,1,0.36,1)]',
-                    'lg:absolute lg:left-1/2 lg:top-1/2 lg:w-auto lg:whitespace-nowrap lg:rounded-full lg:px-[17px] lg:py-[11px]',
+                    'lg:absolute lg:left-1/2 lg:top-1/2 lg:w-auto lg:whitespace-nowrap lg:rounded-sm lg:px-[17px] lg:py-[11px]',
                     // rotate out -> push to the radius -> stand the pill back up
                     'lg:[transform:translate(-50%,-50%)_rotate(var(--a))_translateX(var(--R))_rotate(calc(var(--a)*-1))]',
                     on
@@ -469,7 +468,7 @@ export default function WhatToKnow() {
                 <span className="mb-[18px] flex items-center gap-[14px]">
                   <span
                     aria-hidden="true"
-                    className="grid h-12 w-12 shrink-0 place-items-center rounded-[14px] bg-java2/[0.13]"
+                    className="grid h-12 w-12 shrink-0 place-items-center rounded-sm bg-java2/[0.13]"
                   >
                     <HomeIcon id={area.icon} className={cn('h-[23px] w-[23px]', TINT_JAVA2)} />
                   </span>

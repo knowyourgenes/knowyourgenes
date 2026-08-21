@@ -8,9 +8,7 @@
 //   3. the four-principle hub: 2×2 card grid with a cross-hair rule and the
 //      132px "The KYG Approach" medallion pinned dead centre (940 rail)
 //
-// RADIUS TRAP: this project's scale is remapped, so only 22 (rounded-3xl) maps
-// cleanly. The 24px cards and the 16px icon chips are written as arbitrary
-// values on purpose - do not "simplify" them to rounded-2xl/rounded-xl.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { AboutIcon } from '../AboutIcon';
@@ -95,7 +93,7 @@ export default function OurApproach() {
       {/* ── 2. Averages vs you ──────────────────────────────────────────── */}
       <div className="flex w-full flex-col items-center gap-6 pt-4 xl:flex-row xl:justify-center">
         {/* Generic advice */}
-        <div className="flex w-full min-w-0 max-w-[412px] flex-col gap-4 rounded-[24px] border border-mine/10 bg-linenw p-7 xl:w-[412px]">
+        <div className="flex w-full min-w-0 max-w-[412px] flex-col gap-4 rounded-sm border border-mine/10 bg-linenw p-7 xl:w-[412px]">
           <p className={`${LABEL} text-[13px] leading-[19.5px] tracking-[0.12em] text-boulder`}>
             Most health advice starts with averages
           </p>
@@ -122,7 +120,7 @@ export default function OurApproach() {
         <AboutIcon id="8346-706" className="h-9 w-[30px] shrink-0 rotate-90 xl:rotate-0" alt="" />
 
         {/* You */}
-        <div className="relative w-full min-w-0 max-w-[410px] overflow-hidden rounded-[24px] bg-gradient-to-r from-eden to-eden2 p-7 xl:w-[410px]">
+        <div className="relative w-full min-w-0 max-w-[410px] overflow-hidden rounded-sm bg-gradient-to-r from-eden to-eden2 p-7 xl:w-[410px]">
           <span
             aria-hidden
             className="pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full bg-java2/15 blur-[40px]"
@@ -153,7 +151,7 @@ export default function OurApproach() {
 
         {/* Central medallion - pinned to the cross-hair at xl, and simply the
             first thing in the stack below it. */}
-        <div className="relative z-10 mx-auto mb-6 flex h-[132px] w-[132px] shrink-0 flex-col items-center justify-center rounded-full border-[5px] border-linenw bg-eden text-center shadow-tst-float xl:absolute xl:left-1/2 xl:top-1/2 xl:mx-0 xl:mb-0 xl:-translate-x-1/2 xl:-translate-y-1/2">
+        <div className="relative z-10 mx-auto mb-6 flex h-[132px] w-[132px] shrink-0 flex-col items-center justify-center rounded-sm border-[5px] border-linenw bg-eden text-center shadow-tst-float xl:absolute xl:left-1/2 xl:top-1/2 xl:mx-0 xl:mb-0 xl:-translate-x-1/2 xl:-translate-y-1/2">
           <AboutIcon id="8821-707" className="h-8 w-[26px]" alt="" />
           {/* textCase=UPPER in the frame (y=8853, 13/800, 0.06em) - renders
               "THE KYG / APPROACH". The manifest's 79px is the hug width of the
@@ -171,9 +169,9 @@ export default function OurApproach() {
           {PRINCIPLES.map((p) => (
             <article
               key={p.title}
-              className="flex min-w-0 flex-col gap-2 rounded-3xl border border-mine/10 bg-white p-7 shadow-tst-soft"
+              className="flex min-w-0 flex-col gap-2 rounded-sm border border-mine/10 bg-white p-7 shadow-tst-soft"
             >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] bg-mint">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-mint">
                 <AboutIcon id={p.icon} className="h-7 w-6" alt="" />
               </span>
               <h3 className={`${LABEL} pt-2 text-[13.5px] leading-[20.2px] tracking-[0.12em] text-eden`}>{p.title}</h3>

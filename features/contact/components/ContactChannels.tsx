@@ -11,9 +11,9 @@ import { ContactIcon } from './ContactIcon';
  * inverted eden card (r24, no stroke, shadow-tst-card), which additionally
  * carries a blurred 176px java2@15 orb bleeding 56px off its top-right corner.
  *
- * Radii are written as explicit arbitrary values: this project remaps the
- * Tailwind radius scale (--radius: 0.625rem), so rounded-3xl is 22px and
- * rounded-2xl is 18px - neither is the frame's 24 / 16.
+ * The frame's 24 / 16 corners are NOT reproduced. There is one radius on this
+ * site - rounded-sm, 6px (DESIGN.md §2) - and these cards take it like
+ * everything else. The frame values are recorded above as provenance only.
  */
 function ChannelCard({ data }: { data: Channel }) {
   const inverted = data.tone === 'inverted';
@@ -28,8 +28,8 @@ function ChannelCard({ data }: { data: Channel }) {
       ) : null}
 
       <div className="relative flex items-start gap-4">
-        {/* 52x52, r16. The eden card's badge carries no fill in the frame. */}
-        <span className={cn('grid size-13 shrink-0 place-items-center rounded-[16px]', inverted ? null : 'bg-mint')}>
+        {/* 52x52 (frame r16 -> rounded-sm). The eden card's badge has no fill. */}
+        <span className={cn('grid size-13 shrink-0 place-items-center rounded-sm', inverted ? null : 'bg-mint')}>
           <ContactIcon id={data.icon} className="h-8 w-[26px]" />
         </span>
 
@@ -77,7 +77,7 @@ function ChannelCard({ data }: { data: Channel }) {
   // copy only 154px inside a 320 viewport, which sets the 14px body at ~22
   // characters a line. 24 buys it back; >= 640 keeps the frame's 28 exactly.
   const shell = cn(
-    'relative block overflow-hidden rounded-[24px] p-6 transition duration-200 sm:p-7',
+    'relative block overflow-hidden rounded-sm p-6 transition duration-200 sm:p-7',
     inverted
       ? 'bg-eden shadow-tst-card'
       : 'border border-mine/10 bg-white shadow-tst-soft hover:-translate-y-px hover:shadow-tst-card'

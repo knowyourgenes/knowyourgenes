@@ -6,7 +6,7 @@ import { Container, Eyebrow, FigIcon, GhostButton, GradientText, SheenButton, gT
 export function MintCallout({ icon, children }: { icon: ReactNode; children: ReactNode }) {
   return (
     <div
-      className="flex flex-col items-start gap-[20px] rounded-[28px] border border-[rgba(14,77,75,0.15)] px-[32px] py-[32px] sm:flex-row sm:items-center sm:px-[40px]"
+      className="flex flex-col items-start gap-[20px] rounded-sm border border-[rgba(14,77,75,0.15)] px-[32px] py-[32px] sm:flex-row sm:items-center sm:px-[40px]"
       style={{
         background:
           'linear-gradient(90deg, rgba(228,241,236,1) 0%, rgba(210,232,223,0.7) 50%, rgba(228,241,236,0.6) 100%)',
@@ -40,8 +40,8 @@ export function HeroSection() {
       />
       <Container>
         <div className="max-w-[860px]">
-          <span className="inline-flex items-center gap-[10px] rounded-full bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
-            <span className="grid size-[28px] place-items-center rounded-full bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
+          <span className="inline-flex items-center gap-[10px] rounded-sm bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
+            <span className="grid size-[28px] place-items-center rounded-sm bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
               <FigIcon src="/landing/icons/hero-badge.svg" className="size-[18px]" />
             </span>
             <span className="text-[13.5px] font-semibold leading-[20.25px] text-[#FAF6EF]">
@@ -85,7 +85,7 @@ export function HeroSection() {
         </div>
 
         {/* wide calm image band */}
-        <div className="relative mt-[40px] min-h-[340px] overflow-hidden rounded-[34px] bg-[#E4F1EC] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)] sm:min-h-0 sm:aspect-[1200/472]">
+        <div className="relative mt-[40px] min-h-[340px] overflow-hidden rounded-sm bg-[#E4F1EC] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)] sm:min-h-0 sm:aspect-[1200/472]">
           <Image
             src="/landing/peripartum-depression/hero.png"
             alt="A woman sitting calmly at sunrise, looking toward the horizon"
@@ -107,8 +107,8 @@ export function HeroSection() {
             <span className="text-[#F3D5B2]">You may have a COMT variant.</span>
           </p>
           {/* stat chip */}
-          <div className="absolute right-6 top-6 hidden items-center gap-[12px] rounded-[16px] bg-white px-[16px] py-[12px] shadow-[0_14px_34px_rgba(20,45,40,0.2)] sm:flex">
-            <span className="grid size-[40px] place-items-center rounded-[12px] bg-[#0E4D4B] text-[#FAF6EF]">
+          <div className="absolute right-6 top-6 hidden items-center gap-[12px] rounded-sm bg-white px-[16px] py-[12px] shadow-[0_14px_34px_rgba(20,45,40,0.2)] sm:flex">
+            <span className="grid size-[40px] place-items-center rounded-sm bg-[#0E4D4B] text-[#FAF6EF]">
               <FigIcon src="/landing/icons/hero-stat-activity.svg" className="size-[21px]" />
             </span>
             <div className="leading-tight">
@@ -119,7 +119,7 @@ export function HeroSection() {
         </div>
 
         {/* social-proof line */}
-        <div className="reveal mt-[24px] flex flex-col items-start gap-[16px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
+        <div className="reveal mt-[24px] flex flex-col items-start gap-[16px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
           <span className="inline-flex shrink-0 items-center gap-[8px]">
             <FigIcon src="/landing/icons/shield-check.svg" className="size-[19px] text-[#0E4D4B]" />
             <span className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-[#0E4D4B]">
@@ -168,7 +168,7 @@ export function WhatNobodySection() {
 
           {/* dark teal 50% stat card */}
           <div
-            className="reveal relative overflow-hidden rounded-[32px] px-[32px] pb-[48px] pt-[44px] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)] sm:px-[48px]"
+            className="reveal relative overflow-hidden rounded-sm px-[32px] pb-[48px] pt-[44px] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)] sm:px-[48px]"
             style={{ background: 'linear-gradient(178deg, #0E4D4B 0%, #0A3B39 100%)' }}
           >
             <div className="pointer-events-none absolute -right-10 -top-12 size-[224px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[64px]" />
@@ -250,15 +250,15 @@ export function ComtGeneSection() {
           </div>
 
           {/* right mechanism chain */}
-          <div className="reveal-r flex flex-col gap-[20px] rounded-[30px] border border-[rgba(31,26,20,0.08)] bg-white/75 px-[32px] pb-[32px] pt-[31px] shadow-[0_18px_50px_rgba(20,45,40,0.09),0_4px_16px_rgba(20,45,40,0.06)]">
+          <div className="reveal-r flex flex-col gap-[20px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 px-[32px] pb-[32px] pt-[31px] shadow-[0_18px_50px_rgba(20,45,40,0.09),0_4px_16px_rgba(20,45,40,0.06)]">
             <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0E4D4B]">
               What a COMT variant means, in plain language
             </div>
             <div className="flex flex-col gap-[6px]">
               {CHAIN.map(({ icon, title, sub }, i) => (
                 <div key={title}>
-                  <div className="flex items-center gap-[16px] rounded-[16px] bg-[#E4F1EC] p-[16px]">
-                    <span className="grid size-[44px] shrink-0 place-items-center rounded-[12px] bg-[#0E4D4B] text-[#FAF6EF]">
+                  <div className="flex items-center gap-[16px] rounded-sm bg-[#E4F1EC] p-[16px]">
+                    <span className="grid size-[44px] shrink-0 place-items-center rounded-sm bg-[#0E4D4B] text-[#FAF6EF]">
                       <FigIcon src={`/landing/icons/${icon}.svg`} className="size-[22px]" />
                     </span>
                     <div>
@@ -274,8 +274,8 @@ export function ComtGeneSection() {
                 </div>
               ))}
               {/* inverted final row */}
-              <div className="flex items-center gap-[16px] rounded-[16px] bg-[#0E4D4B] p-[16px]">
-                <span className="grid size-[44px] shrink-0 place-items-center rounded-[12px] bg-white/15 text-[#FAF6EF]">
+              <div className="flex items-center gap-[16px] rounded-sm bg-[#0E4D4B] p-[16px]">
+                <span className="grid size-[44px] shrink-0 place-items-center rounded-sm bg-white/15 text-[#FAF6EF]">
                   <FigIcon src="/landing/icons/meditation.svg" className="size-[22px]" />
                 </span>
                 <div>
@@ -333,7 +333,7 @@ export function IndiaProblemSection() {
           </div>
 
           {/* stat highlight */}
-          <div className="reveal mt-[24px] flex flex-col items-start gap-[16px] rounded-[26px] border border-[rgba(31,26,20,0.08)] bg-white/70 px-[32px] py-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)] sm:flex-row sm:items-center sm:gap-[28px]">
+          <div className="reveal mt-[24px] flex flex-col items-start gap-[16px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/70 px-[32px] py-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)] sm:flex-row sm:items-center sm:gap-[28px]">
             <div className="shrink-0 whitespace-nowrap font-hind text-[56px] font-semibold leading-none text-[#0E4D4B] sm:text-[64px]">
               3 to 6%
             </div>
@@ -417,7 +417,7 @@ export function NotAloneSection() {
           {VOICES.map((v) => (
             <article
               key={v.name}
-              className="reveal relative overflow-hidden rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
+              className="reveal relative overflow-hidden rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 p-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
             >
               <div
                 className="pointer-events-none absolute -right-5 -top-5 size-[112px] rounded-full blur-[40px]"
@@ -425,7 +425,7 @@ export function NotAloneSection() {
               />
               <div className="relative flex items-center gap-[14px]">
                 <span
-                  className="grid size-[56px] shrink-0 place-items-center rounded-[16px] text-[15px] font-semibold text-[#FAF6EF]"
+                  className="grid size-[56px] shrink-0 place-items-center rounded-sm text-[15px] font-semibold text-[#FAF6EF]"
                   style={{ background: v.badge }}
                 >
                   {v.initials}

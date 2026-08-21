@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 // Last crumb is the current page (Heavy Metal, medium); the rest are muted.
 export default function Breadcrumb({ items }: { items: string[] }) {
   return (
-    <nav aria-label="Breadcrumb" className="mx-auto w-full max-w-[1180px] px-6 pt-4 md:px-8">
+    <nav aria-label="Breadcrumb" className="mx-auto w-full max-w-[1600px] px-6 pt-4 md:px-8">
       <ol className="flex flex-wrap items-center gap-1 text-[12.5px] leading-[1.5]">
         {items.map((item, i) => {
           const last = i === items.length - 1;

@@ -24,7 +24,7 @@ export default function StatCard({ data, accent }: { data: Stat; accent: string 
   return (
     <div
       ref={ref}
-      className="flex min-w-0 flex-col gap-[11px] rounded-[22px] border border-linenw bg-white/[0.04] p-7 text-center"
+      className="flex min-w-0 flex-col gap-[11px] rounded-sm border border-linenw bg-white/[0.04] p-7 text-center"
     >
       {/* Figtree 700 10.5/15.8 ls 0.12em #faf6ef@80 */}
       <div className="break-words font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.12em] text-linenw/80">
@@ -58,9 +58,9 @@ export default function StatCard({ data, accent }: { data: Stat; accent: string 
 
       {/* 172x4 rail, r9999, #ffffff@10 track. `.bar` starts at width 0 and
           transitions once the inline width lands (globals.css). */}
-      <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
+      <div className="h-1 w-full overflow-hidden rounded-sm bg-white/10">
         <div
-          className="bar h-full rounded-full"
+          className="bar h-full rounded-sm"
           style={{ width: entered ? `${data.barPercent}%` : 0, backgroundColor: accent }}
         />
       </div>

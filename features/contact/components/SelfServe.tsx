@@ -20,7 +20,7 @@ import { ContactEyebrow, ContactIcon } from './ContactIcon';
 export default function SelfServe() {
   return (
     <section className="border-y border-mine/10 bg-white/70 px-5 sm:px-10 lg:px-20">
-      <div className="mx-auto w-full max-w-[1180px] py-[clamp(48px,5vw,70px)] lg:px-8">
+      <div className="mx-auto w-full max-w-[1600px] py-[clamp(48px,5vw,70px)] lg:px-8">
         <div className="mx-auto flex max-w-[640px] flex-col items-center gap-[15px] text-center">
           <ContactEyebrow label={SELF_SERVE.eyebrow.label} icon={SELF_SERVE.eyebrow.icon} className="max-w-full" />
           {/* Figtree 800 38/41 ls -0.76 (-0.02em) #222222 */}
@@ -38,7 +38,7 @@ export default function SelfServe() {
             <li key={c.title}>
               <Link
                 href={c.href}
-                className="flex h-full flex-col rounded-[22px] border border-mine/10 bg-linenw p-7 transition duration-200 hover:-translate-y-px hover:shadow-tst-soft"
+                className="flex h-full flex-col rounded-sm border border-mine/10 bg-linenw p-7 transition duration-200 hover:-translate-y-px hover:shadow-tst-soft"
               >
                 {/* 30x30 layout box; the 30x36 glyph bleeds 3px above and below it. */}
                 <span className="relative block h-[30px] w-[30px] shrink-0">

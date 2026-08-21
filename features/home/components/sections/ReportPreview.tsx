@@ -24,7 +24,7 @@ export default function ReportPreview() {
       <Container>
         <div className={`grid grid-cols-[1.05fr_1fr] items-center ${CONTENT_GAP} max-[1180px]:grid-cols-1`}>
           {/* ---------- Left: mock report card ---------- */}
-          <div className="relative rounded-[var(--r-lg)] bg-[radial-gradient(60%_50%_at_100%_0%,rgba(248,228,204,0.5),transparent_60%),linear-gradient(155deg,var(--c-cream-2)_0%,var(--c-peach)_100%)] p-[40px] shadow-[var(--sh-2)] max-[880px]:p-[28px] max-[560px]:p-[22px]">
+          <div className="relative rounded-sm bg-[radial-gradient(60%_50%_at_100%_0%,rgba(248,228,204,0.5),transparent_60%),linear-gradient(155deg,var(--c-cream-2)_0%,var(--c-peach)_100%)] p-[40px] shadow-[var(--sh-2)] max-[880px]:p-[28px] max-[560px]:p-[22px]">
             {/* Browser chrome */}
             <div className="mb-[18px] flex items-center gap-[8px]">
               <span className="h-[10px] w-[10px] rounded-full bg-[#E07258] opacity-[.65]" />
@@ -36,7 +36,7 @@ export default function ReportPreview() {
             </div>
 
             {/* Document */}
-            <div className="relative rounded-[var(--r-md)] bg-white p-[28px] shadow-[0_18px_50px_rgba(45,32,18,0.1)] max-[560px]:p-[22px]">
+            <div className="relative rounded-sm bg-white p-[28px] shadow-[0_18px_50px_rgba(45,32,18,0.1)] max-[560px]:p-[22px]">
               <div className="flex items-center justify-between border-b border-(--ink-line) pb-[18px]">
                 <div>
                   <div className="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-(--ink-3)">
@@ -46,7 +46,7 @@ export default function ReportPreview() {
                     Nutrition &amp; Sensitivity Profile
                   </div>
                 </div>
-                <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--c-teal-light),var(--c-teal))] text-[14px] font-bold text-white">
+                <div className="flex h-[42px] w-[42px] items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-teal-light),var(--c-teal))] text-[14px] font-bold text-white">
                   KYG
                 </div>
               </div>
@@ -57,13 +57,13 @@ export default function ReportPreview() {
                   className="grid grid-cols-[auto_1fr_auto] items-center gap-[16px] border-b border-(--ink-line) py-[14px] last:border-b-0"
                 >
                   <div className="text-[13.5px] font-medium text-(--ink-2)">{m.name}</div>
-                  <div className="relative h-[7px] overflow-hidden rounded-[7px] bg-(--c-cream-2)">
+                  <div className="relative h-[7px] overflow-hidden rounded-sm bg-(--c-cream-2)">
                     <div
-                      className={`absolute bottom-0 left-0 top-0 rounded-[7px] bg-[linear-gradient(90deg,var(--c-teal-light),var(--c-teal))] ${m.bar}`}
+                      className={`absolute bottom-0 left-0 top-0 rounded-sm bg-[linear-gradient(90deg,var(--c-teal-light),var(--c-teal))] ${m.bar}`}
                     />
                   </div>
                   <div
-                    className={`whitespace-nowrap rounded-full px-[10px] py-[4px] text-[10.5px] font-semibold tracking-[0.06em] ${m.pill}`}
+                    className={`whitespace-nowrap rounded-sm px-[10px] py-[4px] text-[10.5px] font-semibold tracking-[0.06em] ${m.pill}`}
                   >
                     {m.status}
                   </div>
@@ -77,8 +77,8 @@ export default function ReportPreview() {
             </div>
 
             {/* Floating info card (static placement, no parallax) */}
-            <div className="absolute bottom-[-18px] right-[-18px] flex max-w-[240px] items-center gap-[12px] rounded-[var(--r-sm)] bg-white px-[18px] py-[14px] shadow-[0_18px_50px_rgba(45,32,18,0.16)] max-[880px]:bottom-[-12px] max-[880px]:right-[8px] max-[880px]:max-w-[calc(100%-16px)] max-[560px]:static max-[560px]:bottom-auto max-[560px]:right-auto max-[560px]:mt-[14px] max-[560px]:max-w-full">
-              <div className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-[12px] bg-(--ink-1) text-white">
+            <div className="absolute bottom-[-18px] right-[-18px] flex max-w-[240px] items-center gap-[12px] rounded-sm bg-white px-[18px] py-[14px] shadow-[0_18px_50px_rgba(45,32,18,0.16)] max-[880px]:bottom-[-12px] max-[880px]:right-[8px] max-[880px]:max-w-[calc(100%-16px)] max-[560px]:static max-[560px]:bottom-auto max-[560px]:right-auto max-[560px]:mt-[14px] max-[560px]:max-w-full">
+              <div className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-sm bg-(--ink-1) text-white">
                 <svg
                   className="h-[18px] w-[18px]"
                   viewBox="0 0 24 24"
@@ -119,8 +119,8 @@ export default function ReportPreview() {
             </p>
 
             <div className="mt-[36px] grid grid-cols-2 gap-[14px] max-[720px]:grid-cols-1 max-[720px]:gap-[12px]">
-              <div className="flex items-start gap-[14px] rounded-[var(--r-sm)] border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px]">
-                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[12px] bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
+              <div className="flex items-start gap-[14px] rounded-sm border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px]">
+                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
                   <svg
                     className="h-[18px] w-[18px]"
                     viewBox="0 0 24 24"
@@ -137,8 +137,8 @@ export default function ReportPreview() {
                 <div className="text-[14px] font-medium leading-[1.4] text-(--ink-1)">Easy-to-understand summaries</div>
               </div>
 
-              <div className="flex items-start gap-[14px] rounded-[var(--r-sm)] border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px]">
-                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[12px] bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
+              <div className="flex items-start gap-[14px] rounded-sm border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px]">
+                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
                   <svg
                     className="h-[18px] w-[18px]"
                     viewBox="0 0 24 24"
@@ -157,8 +157,8 @@ export default function ReportPreview() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-[14px] rounded-[var(--r-sm)] border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px]">
-                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[12px] bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
+              <div className="flex items-start gap-[14px] rounded-sm border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px]">
+                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
                   <svg
                     className="h-[18px] w-[18px]"
                     viewBox="0 0 24 24"
@@ -174,8 +174,8 @@ export default function ReportPreview() {
                 <div className="text-[14px] font-medium leading-[1.4] text-(--ink-1)">Personalized recommendations</div>
               </div>
 
-              <div className="flex items-start gap-[14px] rounded-[var(--r-sm)] border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px]">
-                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[12px] bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
+              <div className="flex items-start gap-[14px] rounded-sm border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px]">
+                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
                   <svg
                     className="h-[18px] w-[18px]"
                     viewBox="0 0 24 24"
@@ -193,8 +193,8 @@ export default function ReportPreview() {
                 </div>
               </div>
 
-              <div className="col-span-2 flex items-start gap-[14px] rounded-[var(--r-sm)] border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[880px]:col-auto max-[720px]:px-[16px] max-[720px]:py-[14px]">
-                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[12px] bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
+              <div className="col-span-2 flex items-start gap-[14px] rounded-sm border border-(--ink-line) bg-white/60 px-[20px] py-[18px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.16)] hover:bg-white max-[880px]:col-auto max-[720px]:px-[16px] max-[720px]:py-[14px]">
+                <div className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
                   <svg
                     className="h-[18px] w-[18px]"
                     viewBox="0 0 24 24"

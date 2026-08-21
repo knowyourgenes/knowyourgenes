@@ -29,7 +29,7 @@ const BADGE: Record<'crimson' | 'teal', string> = {
   teal: 'bg-mint text-eden',
 };
 
-const CARD = 'lift rounded-[24px] border border-mine/10 bg-white shadow-tst-soft';
+const CARD = 'lift rounded-sm border border-mine/10 bg-white shadow-tst-soft';
 /** Figtree 700 11/16.5 ls 0.08em #7a7a7a - the marker under a title. */
 const META = 'font-kyg text-[11px] font-bold uppercase leading-[16.5px] tracking-[0.08em] text-boulder';
 
@@ -38,7 +38,7 @@ function TonePill({ tone, label }: { tone: RiskTone; label: string }) {
   return (
     <span
       className={cn(
-        'inline-block shrink-0 rounded-full px-2.5 py-1 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
+        'inline-block shrink-0 rounded-sm px-2.5 py-1 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
         TONE_PILL[tone]
       )}
     >
@@ -49,7 +49,7 @@ function TonePill({ tone, label }: { tone: RiskTone; label: string }) {
 
 function IconBadge({ icon, accent }: { icon: string; accent?: 'crimson' | 'teal' }) {
   return (
-    <span className={cn('grid size-11 shrink-0 place-items-center rounded-[16px]', BADGE[accent ?? 'teal'])}>
+    <span className={cn('grid size-11 shrink-0 place-items-center rounded-sm', BADGE[accent ?? 'teal'])}>
       <Icon name={icon} className="size-[22px]" />
     </span>
   );
@@ -75,7 +75,7 @@ export default function MarkerGrid({ data, ground }: { data: MarkerGridSection; 
                 {group.items.map((item, i) => (
                   <li
                     key={item.title ?? i}
-                    className={cn(CARD, 'flex flex-col items-center gap-1 rounded-[22px] p-5 text-center')}
+                    className={cn(CARD, 'flex flex-col items-center gap-1 rounded-sm p-5 text-center')}
                   >
                     {item.icon ? (
                       <span className="mb-2">

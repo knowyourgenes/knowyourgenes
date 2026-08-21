@@ -101,7 +101,7 @@ export default function AgentCollectionDetailPage() {
         </div>
       </div>
 
-      <div className="rounded-lg border bg-background p-3">
+      <div className="rounded-sm border bg-background p-3">
         <div className="text-xs text-muted-foreground mb-1">Customer</div>
         <div className="font-medium">{order.user.name ?? '-'}</div>
         <div className="flex gap-2 mt-2">
@@ -124,7 +124,7 @@ export default function AgentCollectionDetailPage() {
         </div>
       </div>
 
-      <div className="rounded-lg border bg-background p-3">
+      <div className="rounded-sm border bg-background p-3">
         <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
           <MapPin className="h-3 w-3" /> Address
         </div>
@@ -142,7 +142,7 @@ export default function AgentCollectionDetailPage() {
         </Button>
       </div>
 
-      <div className="rounded-lg border bg-background p-3">
+      <div className="rounded-sm border bg-background p-3">
         <div className="text-xs text-muted-foreground mb-1">Slot</div>
         <div className="text-sm">
           {new Date(order.slotDate).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'short' })} ·{' '}
@@ -151,7 +151,7 @@ export default function AgentCollectionDetailPage() {
       </div>
 
       {order.events.length > 0 && (
-        <div className="rounded-lg border bg-background p-3">
+        <div className="rounded-sm border bg-background p-3">
           <div className="text-xs text-muted-foreground mb-2">Timeline</div>
           <ul className="space-y-1">
             {order.events.map((e) => (

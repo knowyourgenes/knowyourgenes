@@ -1,7 +1,7 @@
 import 'server-only';
 
 // =============================================================================
-// features/cart — the single pricing calculation
+// features/cart - the single pricing calculation
 // -----------------------------------------------------------------------------
 // Every rupee the customer is shown or charged comes out of priceCart(). The
 // cart page, the checkout summary and POST /api/checkout all call it with the

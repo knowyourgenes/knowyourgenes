@@ -8,12 +8,12 @@
 // Two decorative layers sit behind the copy: a 620px eden circle bleeding off the
 // top edge under a 90-radius layer blur, and a full-bleed white radial wash at 5%.
 //
-// RADIUS TRAP: this project remaps Tailwind's radius scale, so every non-22/26
-// radius here is written as an explicit arbitrary value (999 -> rounded-full,
-// 2 -> rounded-[2px], 3.5 -> rounded-full on a 7px dot).
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import Link from 'next/link';
+import { BTN } from '@/components/shared/button-styles';
+import { cn } from '@/lib/utils';
 
 import { AboutIcon } from '../AboutIcon';
 import { Body, Eyebrow, Heading, Section } from '../ui';
@@ -21,7 +21,7 @@ import { Body, Eyebrow, Heading, Section } from '../ui';
 /** One capsule in the "full-circle" flow strip. Frame: h 49, pad 21, gap 8. */
 function ChainNode({ icon, label }: { icon: string; label: string }) {
   return (
-    <span className="inline-flex h-[49px] shrink-0 items-center gap-2 rounded-full border border-eden bg-eden px-[21px] shadow-[0_12px_30px_0_rgba(14,77,75,0.28)]">
+    <span className="inline-flex h-[49px] shrink-0 items-center gap-2 rounded-sm border border-eden bg-eden px-[21px] shadow-[0_12px_30px_0_rgba(14,77,75,0.28)]">
       <AboutIcon id={icon} className="h-[25px] w-[21px] shrink-0" />
       <span className="font-kyg text-[15px] font-extrabold leading-[17px] tracking-[0.3px] text-linenw">{label}</span>
     </span>
@@ -42,7 +42,7 @@ function ChainLink() {
   return (
     <span
       aria-hidden
-      className="relative hidden h-[2px] w-[52px] rounded-[2px] bg-[linear-gradient(90deg,rgba(255,255,255,0.08),rgba(42,195,162,0.6),rgba(255,255,255,0.08))] lg:block"
+      className="relative hidden h-[2px] w-[52px] rounded-sm bg-[linear-gradient(90deg,rgba(255,255,255,0.08),rgba(42,195,162,0.6),rgba(255,255,255,0.08))] lg:block"
     >
       <span className="absolute left-[-3px] top-1/2 h-[7px] w-[7px] -translate-y-1/2 rounded-full bg-java shadow-[0_0_10px_0_rgba(37,181,171,0.85)]" />
     </span>
@@ -116,7 +116,10 @@ export default function FinalCta() {
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/categories/wellness"
-            className="inline-flex min-h-[56px] items-center justify-center gap-[9px] rounded-full border border-white bg-white px-7 py-[15px] shadow-[0_10px_26px_0_rgba(14,77,75,0.22)] transition-transform duration-200 hover:-translate-y-0.5"
+            className={cn(
+              BTN,
+              'border border-white bg-white shadow-[0_10px_26px_0_rgba(14,77,75,0.22)] transition-transform duration-200 hover:-translate-y-0.5'
+            )}
           >
             <span className="font-kyg text-[15.5px] font-bold leading-[23px] text-eden">Explore Genetic Testing</span>
             <AboutIcon id="13453-688" className="h-[23px] w-[19px] shrink-0" />
@@ -124,7 +127,10 @@ export default function FinalCta() {
 
           <Link
             href="/categories/wellness/womens-health#how-it-works-steps"
-            className="inline-flex min-h-[56px] items-center justify-center gap-[9px] rounded-full border border-[rgba(234,246,243,0.28)] px-7 py-[15px] transition-colors duration-200 hover:border-[rgba(234,246,243,0.55)] hover:bg-white/5"
+            className={cn(
+              BTN,
+              'border border-[rgba(234,246,243,0.28)] transition-colors duration-200 hover:border-[rgba(234,246,243,0.55)] hover:bg-white/5'
+            )}
           >
             <span className="font-kyg text-[15.5px] font-bold leading-[23px] text-[#eaf6f3]">See How It Works</span>
             <AboutIcon id="13453-913" className="h-[23px] w-[19px] shrink-0" />

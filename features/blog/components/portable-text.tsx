@@ -27,7 +27,7 @@ export function buildPortableComponents(headingIds?: Map<string, string>) {
               src={url}
               alt={value.alt ?? ''}
               loading="lazy"
-              className="w-full rounded-(--r-md) border border-(--ink-line)"
+              className="w-full rounded-sm border border-(--ink-line)"
             />
             {value.alt ? (
               <figcaption className="mt-3 text-center text-[13.5px] text-(--ink-3)">{value.alt}</figcaption>
@@ -57,7 +57,7 @@ export function buildPortableComponents(headingIds?: Map<string, string>) {
         </h3>
       ),
       blockquote: ({ children }: BlockProps) => (
-        <blockquote className="my-7 border-l-[3px] border-(--teal) bg-(--cream-2) py-3 pl-6 pr-4 text-[18px] italic leading-[1.7] text-(--ink-1) rounded-r-(--r-sm)">
+        <blockquote className="my-7 border-l-[3px] border-(--teal) bg-(--cream-2) py-3 pl-6 pr-4 text-[18px] italic leading-[1.7] text-(--ink-1) rounded-r-sm">
           {children}
         </blockquote>
       ),

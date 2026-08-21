@@ -61,7 +61,7 @@ export default async function CheckoutSuccessPage({ searchParams }: { searchPara
   return (
     <div className="kyg-tests min-h-[70vh] bg-spring font-kyg text-mine antialiased">
       <div className="mx-auto max-w-[760px] px-[clamp(20px,4vw,40px)] pt-[clamp(40px,6vw,72px)] pb-[clamp(60px,8vw,100px)]">
-        <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-eden text-spring">
+        <span className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-eden text-spring">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -85,7 +85,7 @@ export default async function CheckoutSuccessPage({ searchParams }: { searchPara
           email.
         </p>
 
-        <div className="mt-8 rounded-[20px] border border-zeus/[0.09] bg-white p-6 shadow-kyg-card">
+        <div className="mt-8 rounded-sm border border-zeus/[0.09] bg-white p-6 shadow-kyg-card">
           <h2 className="text-[16px] font-semibold tracking-[-0.015em]">What you ordered</h2>
           <p className="mt-1 text-[13.5px] text-cord">
             One saliva kit · {order.items.length} report{order.items.length === 1 ? '' : 's'} read from the same sample
@@ -107,7 +107,7 @@ export default async function CheckoutSuccessPage({ searchParams }: { searchPara
           </p>
         </div>
 
-        <div className="mt-6 rounded-[20px] border border-zeus/[0.09] bg-white p-6 shadow-kyg-card">
+        <div className="mt-6 rounded-sm border border-zeus/[0.09] bg-white p-6 shadow-kyg-card">
           <h2 className="text-[16px] font-semibold tracking-[-0.015em]">What happens next</h2>
           <ol className="mt-3 space-y-3">
             {steps.map((step, i) => (
@@ -124,13 +124,13 @@ export default async function CheckoutSuccessPage({ searchParams }: { searchPara
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
             href={`/dashboard/orders/${order.orderNumber}`}
-            className="rounded-full bg-eden px-5 py-3 text-[14px] font-bold text-spring transition hover:bg-eden2"
+            className="rounded-sm bg-eden px-5 py-3 text-[14px] font-bold text-spring transition hover:bg-eden2"
           >
             Track this order
           </Link>
           <Link
             href="/categories/wellness"
-            className="rounded-full border border-eden/30 px-5 py-3 text-[14px] font-bold text-eden transition hover:bg-eden/[0.06]"
+            className="rounded-sm border border-eden/30 px-5 py-3 text-[14px] font-bold text-eden transition hover:bg-eden/[0.06]"
           >
             Browse more tests
           </Link>

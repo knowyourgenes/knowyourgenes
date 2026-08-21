@@ -18,7 +18,7 @@
 //     (the frame's 0 18 50 .08 + 0 4 16 .06 exactly), holding a 5-step flow of
 //     44x44 chips + 24px gradient connectors (44*5 + 24*4 = 316 ✓)
 //
-// RADIUS TRAP: 28 -> rounded-[28px], 16 -> rounded-[16px], 12 -> rounded-[12px].
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // None of those map onto the remapped Tailwind scale, so all are arbitrary.
 // =============================================================================
 
@@ -26,7 +26,7 @@ import { cn } from '@/lib/utils';
 import { AboutIcon } from '../AboutIcon';
 import { Body, Eyebrow, Heading, Section } from '../ui';
 
-/** The frame's 3px x 24px connector: a 5-stop vertical gradient, fully rounded. */
+/** The frame's 3px x 24px connector: a 5-stop vertical gradient, fully rounded-sm. */
 const CONNECTOR =
   'bg-[linear-gradient(to_bottom,rgba(34,34,34,0.05)_0%,#25b5ab_25%,#0e4d4b_50%,#25b5ab_75%,rgba(34,34,34,0.05)_100%)]';
 
@@ -117,7 +117,7 @@ export default function WhyGenetics() {
           {/* Frame pad 9 top, gap 10. */}
           <ul className="flex flex-col gap-[10px] pt-[9px]">
             {CONTRAST.map((row) => (
-              <li key={row.text} className={cn('flex items-start gap-3 rounded-[12px] px-4 py-3', row.row)}>
+              <li key={row.text} className={cn('flex items-start gap-3 rounded-sm px-4 py-3', row.row)}>
                 <AboutIcon id={row.icon} className="h-6 w-5 shrink-0" />
                 <span
                   className={cn(
@@ -145,7 +145,7 @@ export default function WhyGenetics() {
               - p-8 would leave 318px of content box at 1440 but just 302px at
               1024, wrapping the kicker in a band the frame keeps on one line.
               p-6 through that band clears it with 12px to spare. */}
-          <div className="rounded-[28px] border border-mine/10 bg-white p-6 shadow-tst-card xl:p-8">
+          <div className="rounded-sm border border-mine/10 bg-white p-6 shadow-tst-card xl:p-8">
             <div className="flex flex-col gap-6">
               {/* Figtree 700 13/19.5, ls 1.82 (0.14em), #7a7a7a, centred.
 
@@ -162,14 +162,12 @@ export default function WhyGenetics() {
                   <li key={step.label} className="flex flex-col">
                     {i > 0 ? (
                       <div aria-hidden="true" className="flex h-6 w-11 shrink-0 items-center justify-center">
-                        <span className={cn('h-6 w-[3px] rounded-full', CONNECTOR)} />
+                        <span className={cn('h-6 w-[3px] rounded-sm', CONNECTOR)} />
                       </div>
                     ) : null}
 
                     <div className="flex min-h-11 items-center gap-4">
-                      <span
-                        className={cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-[16px]', step.chip)}
-                      >
+                      <span className={cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-sm', step.chip)}>
                         <AboutIcon id={step.icon} className="h-[26px] w-[22px]" />
                       </span>
                       <span

@@ -60,7 +60,7 @@ function BrandMark({ brand }: { brand: string }) {
 export default function Footer({ data }: { data: FooterSection; ground?: Ground }) {
   return (
     <footer className="bg-ink px-5 pb-8 pt-12 font-kyg text-linenw sm:px-10 lg:px-20 lg:pb-9 lg:pt-16">
-      <div className="mx-auto w-full max-w-[1280px] lg:px-8">
+      <div className="mx-auto w-full max-w-[1600px] lg:px-8">
         {/* GRID pad-bottom 44, +1 to make up for Figma's text boxes rounding up:
             the tallest column is 16.5 + 15 + 118 = 149.5 there (printed 150)
             and 148.5 here, so the divider still lands on the frame's line. */}

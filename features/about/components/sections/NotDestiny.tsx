@@ -9,8 +9,7 @@
 //      … then the result card centred on the row below (row gap 16, item gap 16)
 //   3. supporting copy: two 472 columns, 56 gap, vertically centred
 //
-// RADIUS TRAP: rounded-3xl is 22px in this project, so the 16px and 12px radii
-// here are written as explicit arbitrary values.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { AboutIcon } from '../AboutIcon';
@@ -63,7 +62,7 @@ function TermCard({ label, icon, tone }: { label: string; icon: string; tone: 'd
   return (
     <div
       className={[
-        'flex max-w-full flex-col items-center gap-[5px] rounded-[16px] pb-[21px] pt-[18px]',
+        'flex max-w-full flex-col items-center gap-[5px] rounded-sm pb-[21px] pt-[18px]',
         tone === 'result' ? 'px-7' : 'px-6 min-w-[128px]',
         tone === 'dark' ? 'bg-eden shadow-tst-card' : '',
         tone === 'result' ? 'bg-gradient-to-br from-eden to-eden2 shadow-tst-card' : '',
@@ -109,7 +108,7 @@ export default function NotDestiny() {
       </div>
 
       {/* ── 2. visual equation ─────────────────────────────────────────── */}
-      <div className="flex w-full max-w-[1000px] flex-col items-center gap-4">
+      <div className="flex w-full max-w-[1600px] flex-col items-center gap-4">
         {/* Each term after the first carries its own leading "+" so an operator
             can never be orphaned at the end of a wrapped row. */}
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-4">
@@ -138,7 +137,7 @@ export default function NotDestiny() {
       </div>
 
       {/* ── 3. supporting copy ─────────────────────────────────────────── */}
-      <div className="flex w-full max-w-[1000px] flex-col items-center gap-10 pb-px pt-4 lg:flex-row lg:items-center lg:gap-14">
+      <div className="flex w-full max-w-[1600px] flex-col items-center gap-10 pb-px pt-4 lg:flex-row lg:items-center lg:gap-14">
         {/* left: "matters" list + intent line */}
         <div className="flex w-full min-w-0 flex-col gap-4 lg:max-w-[472px] lg:flex-1">
           <p className="break-words font-kyg text-[clamp(16px,1.25vw,18px)] font-bold leading-[1.62] text-mine">
@@ -174,7 +173,7 @@ export default function NotDestiny() {
             {INTENT.map((item) => (
               <div
                 key={item.label}
-                className="flex min-w-0 items-center gap-3 rounded-[12px] border border-mine bg-mint/60 px-4 py-3"
+                className="flex min-w-0 items-center gap-3 rounded-sm border border-mine bg-mint/60 px-4 py-3"
               >
                 <AboutIcon id={item.icon} className="h-6 w-5 shrink-0" />
                 <span className="min-w-0 break-words font-kyg text-[clamp(15px,1.15vw,16.5px)] font-semibold leading-[1.5] text-[#2d2a24]">

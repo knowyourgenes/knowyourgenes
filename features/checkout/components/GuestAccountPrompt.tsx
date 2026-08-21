@@ -49,7 +49,7 @@ export function GuestAccountPrompt({ email, orderNumber }: { email: string; orde
         aria-modal="true"
         aria-labelledby="guest-prompt-title"
         tabIndex={-1}
-        className="relative w-full max-w-[440px] rounded-[22px] border border-zeus/[0.09] bg-white p-6 shadow-[0_30px_80px_rgba(0,0,0,0.25)] outline-none"
+        className="relative w-full max-w-[440px] rounded-sm border border-zeus/[0.09] bg-white p-6 shadow-[0_30px_80px_rgba(0,0,0,0.25)] outline-none"
       >
         <h2 id="guest-prompt-title" className="text-[20px] font-semibold tracking-[-0.02em] text-mine">
           Order {orderNumber} is confirmed
@@ -67,14 +67,14 @@ export function GuestAccountPrompt({ email, orderNumber }: { email: string; orde
         <div className="mt-5 flex flex-col gap-2 sm:flex-row-reverse">
           <Link
             href={`/login?from=${encodeURIComponent('/dashboard/orders')}`}
-            className="flex h-[46px] flex-1 items-center justify-center rounded-full bg-eden text-[14px] font-bold text-spring transition hover:bg-eden2"
+            className="flex h-[46px] flex-1 items-center justify-center rounded-sm bg-eden text-[14px] font-bold text-spring transition hover:bg-eden2"
           >
             Sign in to track it
           </Link>
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="flex h-[46px] items-center justify-center rounded-full px-5 text-[14px] font-semibold text-cape transition hover:bg-zeus/[0.05] hover:text-mine"
+            className="flex h-[46px] items-center justify-center rounded-sm px-5 text-[14px] font-semibold text-cape transition hover:bg-zeus/[0.05] hover:text-mine"
           >
             Not now
           </button>

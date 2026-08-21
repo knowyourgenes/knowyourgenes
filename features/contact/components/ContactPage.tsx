@@ -23,7 +23,7 @@ export default function ContactPage() {
       <ContactHero />
 
       <section className="bg-linenw px-5 pb-[clamp(48px,6vw,80px)] sm:px-10 lg:px-20">
-        <div className="mx-auto grid w-full max-w-[1180px] items-start gap-8 lg:grid-cols-[minmax(0,499fr)_minmax(0,585fr)] lg:px-8">
+        <div className="mx-auto grid w-full max-w-[1600px] items-start gap-8 lg:grid-cols-[minmax(0,499fr)_minmax(0,585fr)] lg:px-8">
           <ContactChannels />
           <ContactForm />
         </div>

@@ -23,8 +23,7 @@
 // corroborating tell is the tracking - .03em, a quarter of the .13em the real
 // UPPER kickers carry. Hence `upper={false}` on <Kicker>.
 //
-// RADIUS TRAP: this project remaps Tailwind's radius scale (--radius .625rem),
-// so rounded-2xl is 18px and rounded-3xl is 22px. The card and its photo are
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // --r-md (24), the icon badge 14, the CTA --r-xs (10); only the flow pills are
 // 999. All written as explicit arbitrary values.
 // =============================================================================
@@ -130,7 +129,7 @@ const CARDS: {
  * tall; min-h-[54px] pins that so a wrapped row stays on one baseline grid.
  */
 const FLOW_PILL =
-  'min-h-[54px] rounded-full border-0 px-[22px] py-[13px] text-[17px] font-bold leading-[1.62] tracking-[-0.01em] ring-1 ring-inset ' +
+  'min-h-[54px] rounded-sm border-0 px-[22px] py-[13px] text-[17px] font-bold leading-[1.62] tracking-[-0.01em] ring-1 ring-inset ' +
   'transition-transform duration-640 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] motion-reduce:transition-none';
 
 export default function GeneousCare() {
@@ -239,7 +238,7 @@ export default function GeneousCare() {
               // compiles -translate-y-* to the standalone `translate` property,
               // so a transition-property list containing only `transform` never
               // fires and the card would snap up instead of easing.
-              className={`group relative flex h-full min-w-0 flex-col rounded-[24px] bg-linenw shadow-[0_1px_2px_0_rgba(45,32,18,0.05),0_4px_14px_0_rgba(45,32,18,0.05)] transition-[translate,box-shadow] duration-850 ${E_SOFT} hover:-translate-y-[7px] hover:shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)] motion-reduce:transition-none`}
+              className={`group relative flex h-full min-w-0 flex-col rounded-sm bg-linenw shadow-[0_1px_2px_0_rgba(45,32,18,0.05),0_4px_14px_0_rgba(45,32,18,0.05)] transition-[translate,box-shadow] duration-850 ${E_SOFT} hover:-translate-y-[7px] hover:shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)] motion-reduce:transition-none`}
             >
               {/* THE BADGE IS A SIBLING OF THE FIGURE, NOT A CHILD. The source
                   nests it inside `.care__f`, which is `overflow:hidden` - so its
@@ -252,7 +251,7 @@ export default function GeneousCare() {
                 {/* `.care__f` - 16:10, top corners only (the card body supplies
                     the bottom two). overflow-hidden here is load-bearing: it is
                     what crops the 1.06 hover zoom of the photo inside it. */}
-                <figure className="relative aspect-[16/10] overflow-hidden rounded-t-[24px]">
+                <figure className="relative aspect-[16/10] overflow-hidden rounded-t-sm">
                   <AssetSlot
                     title="Care Card"
                     meta={card.meta}
@@ -271,7 +270,7 @@ export default function GeneousCare() {
                     keeps this class readable. */}
                 <span
                   aria-hidden="true"
-                  className={`absolute bottom-[-25px] left-[22px] z-[3] grid h-12 w-12 place-items-center rounded-[14px] bg-linenw shadow-[0_8px_22px_0_rgba(45,32,18,0.14)] transition-[background-color,translate,rotate,box-shadow] duration-850 ${E_SOFT} group-hover:-translate-y-1 group-hover:-rotate-[5deg] group-hover:bg-eden group-hover:shadow-[0_12px_26px_0_rgba(14,77,75,0.26)] motion-reduce:transition-none`}
+                  className={`absolute bottom-[-25px] left-[22px] z-[3] grid h-12 w-12 place-items-center rounded-sm bg-linenw shadow-[0_8px_22px_0_rgba(45,32,18,0.14)] transition-[background-color,translate,rotate,box-shadow] duration-850 ${E_SOFT} group-hover:-translate-y-1 group-hover:-rotate-[5deg] group-hover:bg-eden group-hover:shadow-[0_12px_26px_0_rgba(14,77,75,0.26)] motion-reduce:transition-none`}
                 >
                   {/* HomeIcon serves a static <img> with #0e4d4b baked into the
                       stroke, so the source's glyph recolour (teal → cream on the

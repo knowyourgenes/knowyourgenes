@@ -22,6 +22,7 @@ import type {
   RiskTone,
   SectionHead,
 } from '../types';
+import { BTN } from '@/components/shared/button-styles';
 import { FigmaIcon } from './FigmaIcon';
 import { Icon } from './icons';
 
@@ -56,7 +57,7 @@ export function Section({
     // SiteHeader is sticky at 64px, so without it every in-page jump lands
     // with the heading hidden behind the bar.
     <section id={id} className={cn(GROUND[ground], 'px-5 sm:px-10 lg:px-20', id && 'scroll-mt-[80px]', className)}>
-      <div className={cn('reveal mx-auto w-full max-w-[1280px] py-[clamp(56px,7vw,92px)] lg:px-8', innerClassName)}>
+      <div className={cn('reveal mx-auto w-full max-w-[1600px] py-[clamp(56px,7vw,92px)] lg:px-8', innerClassName)}>
         {children}
       </div>
     </section>
@@ -127,7 +128,7 @@ export function Eyebrow({ data, className }: { data: EyebrowT; className?: strin
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-2 rounded-full border border-mine/10 bg-white py-2 pl-3 pr-4 shadow-tst-soft',
+        'inline-flex items-center gap-2 rounded-sm border border-mine/10 bg-white py-2 pl-3 pr-4 shadow-tst-soft',
         className
       )}
     >
@@ -163,8 +164,13 @@ export function Head({ data, className }: { data: SectionHead; className?: strin
 // Hover behaviour is the reference build's, not a guess: -3px + 1.02 scale on
 // the primary, -3px on the ghost, and the trailing glyph slides 4px. The
 // `btn-sheen` class adds the perpetual 4.6s highlight sweep (globals.css).
+// The frame drew these at 60-69px. There is one button height site-wide now -
+// 38px, from BTN (components/shared/button-styles). `btn-sheen` keeps the 4.6s
+// highlight sweep defined in globals.css.
 const BTN_BASE =
-  'group btn-sheen inline-flex max-w-full items-center justify-center gap-2.5 whitespace-normal text-center sm:whitespace-nowrap rounded-full font-kyg text-[16px] font-extrabold leading-6 tracking-[0.06px] transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java';
+  BTN +
+  ' group btn-sheen max-w-full text-center font-kyg font-extrabold tracking-[0.06px]' +
+  ' transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java';
 
 const BTN_VARIANT = {
   primary:
@@ -188,7 +194,7 @@ const CTA_ARROW: Record<keyof typeof BTN_VARIANT, string> = {
 export function Cta({ data, className }: { data: CtaT; className?: string }) {
   const variant = data.variant ?? 'primary';
   return (
-    <Link href={data.href} className={cn(BTN_BASE, BTN_VARIANT[variant], 'px-[34px] pb-[18px] pt-4', className)}>
+    <Link href={data.href} className={cn(BTN_BASE, BTN_VARIANT[variant], className)}>
       <span className="relative z-[1]">{data.label}</span>
       {/* A data-supplied `icon` means the design uses something other than the
           arrow here (e.g. the hero's "How does it work? ↓"), so honour it via the
@@ -228,14 +234,14 @@ export function Chip({ data, accent = 'teal', className }: { data: ChipT; accent
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-2 rounded-full border border-mine/10 bg-white py-2 pl-2 pr-4 shadow-tst-soft',
+        'inline-flex items-center gap-2 rounded-sm border border-mine/10 bg-white py-2 pl-2 pr-4 shadow-tst-soft',
         className
       )}
     >
       {data.icon ? (
         <span
           className={cn(
-            'grid size-8 shrink-0 place-items-center rounded-full',
+            'grid size-8 shrink-0 place-items-center rounded-sm',
             accent === 'crimson' ? 'bg-blush text-crimson' : 'bg-mint text-eden'
           )}
         >
@@ -288,9 +294,9 @@ export const TONE_PILL: Record<RiskTone, string> = {
 /** Thin progress rail under a sample result. */
 export function ResultBar({ tone, percent }: { tone: RiskTone; percent: number }) {
   return (
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-mine/10">
+    <div className="h-1.5 w-full overflow-hidden rounded-sm bg-mine/10">
       <div
-        className={cn('h-full rounded-full', TONE_DOT[tone])}
+        className={cn('h-full rounded-sm', TONE_DOT[tone])}
         style={{ width: `${Math.max(0, Math.min(100, percent))}%` }}
       />
     </div>
@@ -301,7 +307,7 @@ export function ResultBar({ tone, percent }: { tone: RiskTone; percent: number }
 
 /** Standard card: 16px radius, white, the frame's soft two-layer shadow. */
 export function Card({ className, children }: { className?: string; children: React.ReactNode }) {
-  return <div className={cn('rounded-[16px] bg-white shadow-tst-soft', className)}>{children}</div>;
+  return <div className={cn('rounded-sm bg-white shadow-tst-soft', className)}>{children}</div>;
 }
 
 export function Media({

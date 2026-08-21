@@ -1,7 +1,7 @@
 import 'server-only';
 
 // =============================================================================
-// features/orders — payment capture, exactly once
+// features/orders - payment capture, exactly once
 // -----------------------------------------------------------------------------
 // Two independent callers can capture the same payment:
 //

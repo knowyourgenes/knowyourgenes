@@ -23,7 +23,7 @@ export function TrustSection() {
       />
       <Container>
         <div className="grid items-center gap-[48px] lg:grid-cols-2">
-          <div className="reveal relative overflow-hidden rounded-[30px] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)]">
+          <div className="reveal relative overflow-hidden rounded-sm shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)]">
             <div className="relative aspect-[568/483] w-full">
               <Image
                 src="/landing/pregnancy-loss/trust.png"
@@ -37,8 +37,8 @@ export function TrustSection() {
                 style={{ background: 'linear-gradient(180deg, rgba(14,77,75,0) 40%, rgba(14,77,75,0.6) 100%)' }}
               />
             </div>
-            <div className="absolute inset-x-5 bottom-5 flex items-center gap-[14px] rounded-[16px] bg-white px-[20px] py-[16px] shadow-[0_14px_34px_rgba(20,45,40,0.22)]">
-              <span className="grid size-[40px] shrink-0 place-items-center rounded-[12px] bg-[#0E4D4B] text-[#FAF6EF]">
+            <div className="absolute inset-x-5 bottom-5 flex items-center gap-[14px] rounded-sm bg-white px-[20px] py-[16px] shadow-[0_14px_34px_rgba(20,45,40,0.22)]">
+              <span className="grid size-[40px] shrink-0 place-items-center rounded-sm bg-[#0E4D4B] text-[#FAF6EF]">
                 <FigIcon src="/landing/icons/pl-expert-review.svg" className="size-[22px]" />
               </span>
               <div>
@@ -68,7 +68,7 @@ export function TrustSection() {
               {CERTS.map(({ icon, label }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-[8px] rounded-full border border-[rgba(31,26,20,0.08)] bg-white/70 px-[16px] py-[8px] text-[13px] font-medium text-[#2D2A24]"
+                  className="inline-flex items-center gap-[8px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/70 px-[16px] py-[8px] text-[13px] font-medium text-[#2D2A24]"
                 >
                   <FigIcon src={`/landing/icons/${icon}.svg`} className="size-[16px] text-[#0E4D4B]" />
                   {label}
@@ -148,7 +148,7 @@ export function FaqsSection() {
                   <span className="text-[18px] font-semibold leading-[27px] tracking-[-0.025em] text-[#1F1A14]">
                     {item.q}
                   </span>
-                  <span className="faq-plus grid size-[36px] shrink-0 place-items-center rounded-full bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
+                  <span className="faq-plus grid size-[36px] shrink-0 place-items-center rounded-sm bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
                     <FigIcon src="/landing/icons/plus.svg" className="size-[18px]" />
                   </span>
                 </summary>
@@ -214,9 +214,9 @@ export function AlsoPartSection() {
             <a
               key={title}
               href="#"
-              className="reveal group flex flex-col rounded-[24px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[28px] transition-colors hover:border-[rgba(14,77,75,0.25)] hover:bg-white"
+              className="reveal group flex flex-col rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 p-[28px] transition-colors hover:border-[rgba(14,77,75,0.25)] hover:bg-white"
             >
-              <span className="grid size-[48px] place-items-center rounded-[14px] bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
+              <span className="grid size-[48px] place-items-center rounded-sm bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
                 <FigIcon src={`/landing/icons/${icon}.svg`} className="size-[24px]" />
               </span>
               <div className="mt-[18px] text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6B6358]">
@@ -239,7 +239,7 @@ export function AlsoPartSection() {
 
         <a
           href="#check"
-          className="reveal group mt-[20px] flex items-center justify-between gap-[20px] rounded-[24px] bg-[#1F1A14] px-[28px] py-[24px] sm:px-[36px]"
+          className="reveal group mt-[20px] flex items-center justify-between gap-[20px] rounded-sm bg-[#1F1A14] px-[28px] py-[24px] sm:px-[36px]"
         >
           <div>
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(243,213,178,0.8)]">
@@ -252,7 +252,7 @@ export function AlsoPartSection() {
               All 5 panels · who this test is for · at every age
             </p>
           </div>
-          <span className="grid size-[48px] shrink-0 place-items-center rounded-full bg-white/15 text-[#FAF6EF] transition-colors group-hover:bg-white/25">
+          <span className="grid size-[48px] shrink-0 place-items-center rounded-sm bg-white/15 text-[#FAF6EF] transition-colors group-hover:bg-white/25">
             <FigIcon src="/landing/icons/arrow-ur.svg" className="size-[24px]" />
           </span>
         </a>
@@ -270,7 +270,7 @@ export function FinalCtaSection() {
     <section id="check" className="py-[40px] lg:py-[64px]">
       <Container>
         <div
-          className="reveal relative overflow-hidden rounded-[40px] px-6 py-[64px] text-center sm:px-12 lg:px-[120px] lg:py-[80px]"
+          className="reveal relative overflow-hidden rounded-sm px-6 py-[64px] text-center sm:px-12 lg:px-[120px] lg:py-[80px]"
           style={{ background: 'linear-gradient(141deg, #0E4D4B 0%, #082F2D 100%)' }}
         >
           <FigIcon
@@ -311,8 +311,8 @@ export function FinalCtaSection() {
             </div>
 
             {/* couples bundle nudge */}
-            <div className="mt-[36px] flex w-full flex-col items-start gap-[20px] rounded-[24px] border border-[#E5E7EB]/15 bg-white/[0.07] px-[24px] py-[24px] text-left sm:flex-row sm:items-center sm:px-[32px]">
-              <span className="grid size-[56px] shrink-0 place-items-center rounded-[16px] bg-[rgba(243,213,178,0.2)] text-[#F3D5B2]">
+            <div className="mt-[36px] flex w-full flex-col items-start gap-[20px] rounded-sm border border-[#E5E7EB]/15 bg-white/[0.07] px-[24px] py-[24px] text-left sm:flex-row sm:items-center sm:px-[32px]">
+              <span className="grid size-[56px] shrink-0 place-items-center rounded-sm bg-[rgba(243,213,178,0.2)] text-[#F3D5B2]">
                 <FigIcon src="/landing/icons/users.svg" className="size-[28px]" />
               </span>
               <div className="flex-1">
@@ -327,7 +327,7 @@ export function FinalCtaSection() {
               </div>
               <a
                 href="#"
-                className="inline-flex shrink-0 items-center gap-[8px] rounded-full border border-[rgba(243,213,178,0.4)] py-[9.5px] pl-[20px] pr-[16px] text-[13.5px] font-semibold text-[#F3D5B2] transition-colors hover:bg-[rgba(243,213,178,0.1)]"
+                className="inline-flex shrink-0 items-center gap-[8px] rounded-sm border border-[rgba(243,213,178,0.4)] py-[9.5px] pl-[20px] pr-[16px] text-[13.5px] font-semibold text-[#F3D5B2] transition-colors hover:bg-[rgba(243,213,178,0.1)]"
               >
                 Explore bundle
                 <FigIcon src="/landing/icons/arrow.svg" className="size-[18px]" />

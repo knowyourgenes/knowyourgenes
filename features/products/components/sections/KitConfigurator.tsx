@@ -1,7 +1,7 @@
 'use client';
 
 // =============================================================================
-// features/products — pick the reports that go on one kit
+// features/products - pick the reports that go on one kit
 // -----------------------------------------------------------------------------
 // The whole shop funnels through here. A visitor arrives from a test page with
 // ?select=<slug>, that report is already ticked, and they add whatever else they
@@ -115,7 +115,7 @@ export function KitConfigurator({
         onClick={() => setListOpen((o) => !o)}
         aria-expanded={listOpen}
         aria-controls={listId}
-        className="flex w-full items-center justify-between gap-3 rounded-[14px] border border-heavy/12 bg-white px-4 py-3 text-left transition hover:border-sea/45"
+        className="flex w-full items-center justify-between gap-3 rounded-sm border border-heavy/12 bg-white px-4 py-3 text-left transition hover:border-sea/45"
       >
         <span className="min-w-0">
           <span className="block text-[14px] font-extrabold text-heavy">
@@ -131,7 +131,7 @@ export function KitConfigurator({
         </span>
         <span
           aria-hidden="true"
-          className={`grid h-7 w-7 shrink-0 place-items-center rounded-full bg-heavy/[0.06] text-heavy transition-transform duration-300 ${
+          className={`grid h-7 w-7 shrink-0 place-items-center rounded-sm bg-heavy/[0.06] text-heavy transition-transform duration-300 ${
             listOpen ? 'rotate-180' : ''
           }`}
         >
@@ -150,7 +150,7 @@ export function KitConfigurator({
           return (
             <li key={r.slug}>
               <label
-                className={`flex cursor-pointer gap-3 rounded-[14px] border p-[14px] transition ${
+                className={`flex cursor-pointer gap-3 rounded-sm border p-[14px] transition ${
                   isOn ? 'border-sea bg-gin' : 'border-heavy/12 bg-white hover:border-sea/45'
                 } ${r.inStock ? '' : 'cursor-not-allowed opacity-50'}`}
               >
@@ -193,7 +193,7 @@ export function KitConfigurator({
       </ul>
 
       {/* ---- running total ---- */}
-      <div className="mt-1 rounded-[14px] border border-heavy/12 bg-white p-4">
+      <div className="mt-1 rounded-sm border border-heavy/12 bg-white p-4">
         {chosen.length === 0 ? (
           <p className="text-[13.5px] leading-[1.55] text-fusc">
             Tick at least one report to see your total. The kit itself costs nothing extra - you pay for the answers.
@@ -234,7 +234,7 @@ export function KitConfigurator({
           type="button"
           onClick={buyNow}
           disabled={chosen.length === 0 || busy}
-          className="flex h-[57.75px] flex-1 items-center justify-center gap-[9px] rounded-full bg-eden text-[14.5px] font-bold text-white shadow-pdp-cta transition-[transform,background] duration-200 hover:-translate-y-px hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+          className="flex h-[57.75px] flex-1 items-center justify-center gap-[9px] rounded-sm bg-eden text-[14.5px] font-bold text-white shadow-pdp-cta transition-[transform,background] duration-200 hover:-translate-y-px hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
         >
           {chosen.length === 0
             ? 'Select a report to continue'
@@ -245,7 +245,7 @@ export function KitConfigurator({
           type="button"
           onClick={addToCart}
           disabled={chosen.length === 0 || busy}
-          className="flex h-[57.75px] items-center justify-center gap-[9px] rounded-full border-[1.5px] border-eden/30 bg-white px-6 text-[14.5px] font-bold text-eden transition-[transform,background,border-color] duration-200 hover:-translate-y-px hover:border-eden/60 hover:bg-gin disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+          className="flex h-[57.75px] items-center justify-center gap-[9px] rounded-sm border-[1.5px] border-eden/30 bg-white px-6 text-[14.5px] font-bold text-eden transition-[transform,background,border-color] duration-200 hover:-translate-y-px hover:border-eden/60 hover:bg-gin disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
         >
           <Icon name="cart" className="h-[19px] w-[16px] text-eden" />
           Add to cart

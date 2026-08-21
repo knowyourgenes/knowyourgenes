@@ -15,7 +15,7 @@ export default function ProductsError({ error, reset }: { error: Error & { diges
       <h2 className="text-xl font-medium text-heavy">This kit page could not be loaded</h2>
       <p className="text-sm text-fusc">{error.message || 'Please try again in a moment.'}</p>
       <div className="flex items-center gap-3">
-        <button onClick={reset} className="rounded-full bg-heavy px-5 py-2 text-sm font-medium text-white">
+        <button onClick={reset} className="rounded-sm bg-heavy px-5 py-2 text-sm font-medium text-white">
           Try again
         </button>
         <Link href="/" className="text-sm font-medium text-fusc underline underline-offset-4">

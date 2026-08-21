@@ -18,6 +18,8 @@
 // =============================================================================
 
 import Link from 'next/link';
+import { BTN } from '@/components/shared/button-styles';
+import { cn } from '@/lib/utils';
 import type { Ground, StatsSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
 import StatCard from './StatCard';
@@ -44,7 +46,7 @@ export default function Stats({ data, ground }: { data: StatsSection; ground?: G
         <div className="flex w-full max-w-[680px] flex-col items-center gap-[14px] text-center">
           {eyebrow ? (
             // 182x46 r999, #25b5ab@14 fill, #25b5ab@28 hairline, crimson glow.
-            <span className="inline-flex h-[46px] shrink-0 items-center gap-2.5 rounded-full border border-java/28 bg-java/14 pl-[17px] pr-[22px] shadow-tst-crimson">
+            <span className="inline-flex h-[46px] shrink-0 items-center gap-2.5 rounded-sm border border-java/28 bg-java/14 pl-[17px] pr-[22px] shadow-tst-crimson">
               <FigmaIcon id="7007-647" className="h-[26px] w-[22px] shrink-0" />
               <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-ice">
                 {eyebrow.label}
@@ -85,7 +87,10 @@ export default function Stats({ data, ground }: { data: StatsSection; ground?: G
           <div className="flex w-full justify-center">
             <Link
               href={data.cta.href}
-              className="group inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full border border-white bg-white px-8 py-5 font-kyg text-[18px] font-extrabold leading-[27px] tracking-[0.004em] text-eden shadow-[0_0_0_4px_rgba(255,255,255,0.16),0_14px_32px_0_rgba(0,0,0,0.22)] transition duration-200 hover:-translate-y-px sm:px-[44px]"
+              className={cn(
+                BTN,
+                'group border border-white bg-white font-kyg text-[18px] font-extrabold leading-[27px] tracking-[0.004em] text-eden shadow-[0_0_0_4px_rgba(255,255,255,0.16),0_14px_32px_0_rgba(0,0,0,0.22)] transition duration-200 hover:-translate-y-px sm:px-[44px]'
+              )}
             >
               {data.cta.label}
               <FigmaIcon

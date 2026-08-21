@@ -38,7 +38,7 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
       {/* ---- head: 680 column, 14px gaps ---------------------------------- */}
       <div className="mx-auto flex max-w-[680px] flex-col items-center gap-3.5 text-center">
         {eyebrow ? (
-          <span className="inline-flex items-center gap-2.5 rounded-full border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+          <span className="inline-flex items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
             {/* 22x22 slot; the glyph itself is 22x26 and overhangs by 2px, as in the frame */}
             <FigmaIcon id="13372-642" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
             <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-eden">
@@ -72,7 +72,7 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
             to the five-across layout rather than to lg. */}
         <span
           aria-hidden
-          className="pointer-events-none absolute left-[10%] right-[10%] top-[72px] hidden h-[3px] rounded-full xl:block"
+          className="pointer-events-none absolute left-[10%] right-[10%] top-[72px] hidden h-[3px] rounded-sm xl:block"
           style={{
             backgroundImage: RAIL_GRADIENT,
             boxShadow: '0 0 12px 0 rgba(37,181,171,0.28)',
@@ -84,11 +84,11 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
           return (
             <div
               key={s.title}
-              className="relative flex flex-col items-center rounded-[26px] border border-mine/10 bg-linenw p-7 text-center"
+              className="relative flex flex-col items-center rounded-sm border border-mine/10 bg-linenw p-7 text-center"
             >
               <span
                 className={cn(
-                  'grid size-9 shrink-0 place-items-center rounded-full font-kyg text-[13.5px] font-bold leading-[20.2px] text-white',
+                  'grid size-9 shrink-0 place-items-center rounded-sm font-kyg text-[13.5px] font-bold leading-[20.2px] text-white',
                   crimson ? 'bg-crimson' : 'bg-eden'
                 )}
               >
@@ -119,7 +119,7 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
       {/* ---- closing CTA --------------------------------------------------- */}
       {data.cta ? (
         <div className="mt-[clamp(28px,3.4vw,48px)] flex flex-col items-center text-center">
-          <Cta data={data.cta} className="gap-2.5 px-11 py-5 text-[18px] leading-[27px] tracking-[0.004em]" />
+          <Cta data={data.cta} className="text-[18px] leading-[27px] tracking-[0.004em]" />
           {data.ctaNoteHtml ? (
             <p
               className="mt-4 font-kyg text-[16px] leading-6 text-fusc"

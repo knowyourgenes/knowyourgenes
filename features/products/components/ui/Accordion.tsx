@@ -29,9 +29,7 @@ export default function Accordion({
   return (
     <div
       className={cn(
-        variant === 'card'
-          ? 'rounded-[16px] border border-heavy/10 bg-white'
-          : 'border-b border-heavy/10 first:border-t'
+        variant === 'card' ? 'rounded-sm border border-heavy/10 bg-white' : 'border-b border-heavy/10 first:border-t'
       )}
     >
       <button
@@ -55,7 +53,7 @@ export default function Accordion({
         </span>
         <span
           className={cn(
-            'grid shrink-0 place-items-center rounded-[13px] pb-[2px] font-extrabold leading-none',
+            'grid shrink-0 place-items-center rounded-sm pb-[2px] font-extrabold leading-none',
             emphasis ? 'size-[37px] bg-sea text-[18px] text-white' : 'size-[26px] bg-gin text-[18px] text-greenpea'
           )}
         >

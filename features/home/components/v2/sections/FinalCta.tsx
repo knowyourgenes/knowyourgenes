@@ -33,8 +33,7 @@
 // line read as a wordmark; at 320px the 0.18em would push it to three lines,
 // which is why the source lets the tracking shrink with the type.
 //
-// RADIUS TRAP: both CTAs are radius 10, not capsules - that comes free from
-// <Cta> (`--r-xs:10px` in the source). Nothing here is 999.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { Body, Cta, Heading, Section } from '../ui';

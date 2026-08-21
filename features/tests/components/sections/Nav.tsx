@@ -52,7 +52,7 @@ export default function Nav({ data }: { data: NavSection; ground?: Ground }) {
     <header className="sticky top-0 z-50 w-full border-b border-mine/10 bg-linenw/85 px-5 backdrop-blur-md sm:px-10 lg:px-20">
       <nav
         aria-label="Test page"
-        className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-6 py-3.5 max-[359px]:gap-3 lg:px-8"
+        className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-6 py-3.5 max-[359px]:gap-3 lg:px-8"
       >
         <Link
           href={data.brandHref}
@@ -79,7 +79,7 @@ export default function Nav({ data }: { data: NavSection; ground?: Ground }) {
 
         <Link
           href={data.cta.href}
-          className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-eden bg-eden px-[22px] py-[11px] font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.056px] text-white shadow-[0_10px_24px_0_rgba(14,77,75,0.28)] transition duration-200 hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java max-[359px]:px-4"
+          className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-sm border border-eden bg-eden px-[22px] py-[11px] font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.056px] text-white shadow-[0_10px_24px_0_rgba(14,77,75,0.28)] transition duration-200 hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java max-[359px]:px-4"
         >
           {data.cta.label}
         </Link>

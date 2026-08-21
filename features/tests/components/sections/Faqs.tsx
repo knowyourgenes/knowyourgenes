@@ -54,7 +54,7 @@ export default function Faqs({ data, ground }: { data: FaqsSection; ground?: Gro
             built here rather than borrowing <Eyebrow/>. */}
         <div className="flex flex-col items-center gap-4 text-center">
           {eyebrow ? (
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+            <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
               {/* 22x22 slot; the glyph is 22x26 and overhangs 2px, as in the frame */}
               <FigmaIcon id="16377-622" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
               <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-crimson-deep">
@@ -77,9 +77,7 @@ export default function Faqs({ data, ground }: { data: FaqsSection; ground?: Gro
             const panelId = `${uid}-a${i}`;
 
             return (
-              // rounded-[16px], not rounded-2xl: this project's @theme remaps
-              // --radius-2xl to 18px, and the frame's row radius is 16.
-              <li key={i} className="overflow-hidden rounded-[16px] border border-mine/10 bg-white">
+              <li key={i} className="overflow-hidden rounded-sm border border-mine/10 bg-white">
                 <button
                   type="button"
                   id={btnId}

@@ -15,12 +15,12 @@ const stepClass =
   'group relative z-[1] flex flex-col max-[560px]:flex-row max-[560px]:items-center max-[560px]:gap-[16px]';
 
 const circleClass =
-  'relative mb-[24px] flex h-[88px] w-[88px] items-center justify-center self-start rounded-full border-[1.5px] border-(--ink-line) bg-(--c-cream) text-(--ink-1) transition-all duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[4px] group-hover:rotate-[-3deg] group-hover:border-(--ink-1) group-hover:bg-(--ink-1) group-hover:text-(--c-cream) max-[560px]:mb-0 max-[560px]:h-[64px] max-[560px]:w-[64px] max-[560px]:shrink-0';
+  'relative mb-[24px] flex h-[88px] w-[88px] items-center justify-center self-start rounded-sm border-[1.5px] border-(--ink-line) bg-(--c-cream) text-(--ink-1) transition-all duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[4px] group-hover:rotate-[-3deg] group-hover:border-(--ink-1) group-hover:bg-(--ink-1) group-hover:text-(--c-cream) max-[560px]:mb-0 max-[560px]:h-[64px] max-[560px]:w-[64px] max-[560px]:shrink-0';
 
 const svgClass = 'h-[34px] w-[34px] max-[560px]:h-[26px] max-[560px]:w-[26px]';
 
 const numClass =
-  'absolute right-[-4px] bottom-[-4px] flex h-[30px] w-[30px] items-center justify-center rounded-full border-[3px] border-(--c-cream) bg-(--c-peach-2) text-[12.5px] font-bold text-(--ink-1) transition-all duration-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-(--c-teal-light) group-hover:text-white';
+  'absolute right-[-4px] bottom-[-4px] flex h-[30px] w-[30px] items-center justify-center rounded-sm border-[3px] border-(--c-cream) bg-(--c-peach-2) text-[12.5px] font-bold text-(--ink-1) transition-all duration-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-(--c-teal-light) group-hover:text-white';
 
 const titleClass = 'mb-[8px] text-[16.5px] font-semibold leading-[1.25] tracking-[-0.012em] text-(--ink-1)';
 

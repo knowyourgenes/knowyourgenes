@@ -72,7 +72,7 @@ export default function BornInIndia() {
           variant would be emitted BEFORE the named ones and always lose, so the
           switch is lg. The minmax(0,…) is not decoration - without it a long
           unbroken word in the copy column can blow the track past its share. */}
-      <div className="mx-auto grid w-full max-w-[1313px] grid-cols-1 items-center gap-[clamp(30px,4.4vw,84px)] lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)]">
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 items-center gap-[clamp(30px,4.4vw,84px)] lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)]">
         {/* ---- figure.ind__map -----------------------------------------------
             The map is real artwork, not a placeholder: public/home/brand/
             map-india-teal.png, a 1000 x 1000 export. The source sets
@@ -106,10 +106,10 @@ export default function BornInIndia() {
           {/* '::after' - 120% x 120%, centred, radius 50%, a 9%-opacity teal
               circle fading out at 66%. It is the ground shadow the artwork sits
               on; the radius is 50% (an ellipse of the box) and NOT 999, so it
-              stays rounded-[50%] even though the box is square today. */}
+              stays rounded-sm even though the box is square today. */}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-1/2 z-[-1] h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(circle,rgba(14,77,75,0.09),transparent_66%)]"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-[-1] h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-[radial-gradient(circle,rgba(14,77,75,0.09),transparent_66%)]"
           />
         </Reveal>
 

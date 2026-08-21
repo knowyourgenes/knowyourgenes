@@ -10,14 +10,14 @@ function Card({ card }: { card: UpgradeCard }) {
   return (
     <div
       className={cn(
-        'relative flex flex-col rounded-[24px] p-6 sm:p-8',
+        'relative flex flex-col rounded-sm p-6 sm:p-8',
         card.highlighted
           ? 'border-2 border-sea bg-gin/60 shadow-pdp-card'
           : 'border border-heavy/10 bg-white shadow-pdp-soft'
       )}
     >
       {card.badge && (
-        <span className="absolute -top-[10px] left-[34px] rounded-full bg-sea px-4 py-[6px] text-[10.5px] font-bold uppercase tracking-[0.08em] text-white">
+        <span className="absolute -top-[10px] left-[34px] rounded-sm bg-sea px-4 py-[6px] text-[10.5px] font-bold uppercase tracking-[0.08em] text-white">
           {card.badge}
         </span>
       )}
@@ -34,7 +34,7 @@ function Card({ card }: { card: UpgradeCard }) {
       <button
         type="button"
         onClick={() => toast.success('Order upgraded', { description: card.kicker })}
-        className="mt-auto w-full rounded-full bg-heavy px-[26px] py-[15px] text-[14.5px] font-bold text-white shadow-[0_10px_26px_0_rgba(29,35,30,0.22)] transition-[transform,opacity] duration-200 hover:-translate-y-px hover:opacity-95"
+        className="mt-auto w-full rounded-sm bg-heavy px-[26px] py-[15px] text-[14.5px] font-bold text-white shadow-[0_10px_26px_0_rgba(29,35,30,0.22)] transition-[transform,opacity] duration-200 hover:-translate-y-px hover:opacity-95"
       >
         {card.ctaLabel}
       </button>
@@ -46,7 +46,7 @@ function Card({ card }: { card: UpgradeCard }) {
 export default function UpgradeSection({ upgrade }: { upgrade: ProductKit['upgrade'] }) {
   return (
     <section id="upgrade" className="scroll-mt-24 border-t border-heavy/10 py-14 md:py-[72px]">
-      <div className="mx-auto flex w-full max-w-[1180px] flex-col items-center gap-11 px-6 md:px-8">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col items-center gap-11 px-6 md:px-8">
         <SectionHeader
           eyebrow={upgrade.eyebrow}
           eyebrowIcon="eyebrow-upgrade"

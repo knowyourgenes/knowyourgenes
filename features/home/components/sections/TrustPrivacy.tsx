@@ -34,7 +34,7 @@ export default function TrustPrivacy() {
             </p>
 
             <div className="mt-[32px] grid grid-cols-2 gap-[12px] max-[720px]:grid-cols-1">
-              <div className="flex items-center gap-[12px] rounded-[18px] border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
+              <div className="flex items-center gap-[12px] rounded-sm border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -49,7 +49,7 @@ export default function TrustPrivacy() {
                 </svg>
                 Trusted Certified Lab Partners
               </div>
-              <div className="flex items-center gap-[12px] rounded-[18px] border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
+              <div className="flex items-center gap-[12px] rounded-sm border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -64,7 +64,7 @@ export default function TrustPrivacy() {
                 </svg>
                 Secure Data Handling
               </div>
-              <div className="flex items-center gap-[12px] rounded-[18px] border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
+              <div className="flex items-center gap-[12px] rounded-sm border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -78,7 +78,7 @@ export default function TrustPrivacy() {
                 </svg>
                 Privacy-Focused Systems
               </div>
-              <div className="flex items-center gap-[12px] rounded-[18px] border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
+              <div className="flex items-center gap-[12px] rounded-sm border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -93,7 +93,7 @@ export default function TrustPrivacy() {
                 </svg>
                 Scientific &amp; Expert-Backed
               </div>
-              <div className="col-span-2 flex items-center gap-[12px] rounded-[18px] border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[880px]:col-auto max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
+              <div className="col-span-2 flex items-center gap-[12px] rounded-sm border border-(--ink-line) bg-white/70 px-[20px] py-[16px] text-[14px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-(--c-teal-light) hover:bg-white max-[880px]:col-auto max-[720px]:px-[16px] max-[720px]:py-[14px] max-[720px]:leading-[1.4]">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"

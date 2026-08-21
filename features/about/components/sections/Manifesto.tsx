@@ -9,7 +9,7 @@
 // #faf6ef stroke; contiguous stroked rows read as horizontal rules, so they are
 // built as border-t per row plus a closing border-b on the list.
 //
-// RADIUS TRAP: no radii here except the eyebrow's 999 -> rounded-full.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { Body, Eyebrow, Heading, Section } from '../ui';

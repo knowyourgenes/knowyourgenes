@@ -18,8 +18,7 @@
 //   • shelf grid 1262 = 738 + 48 + 476; the right column is centred in the row
 //     (frame: left col 861->988, right col 878->971 - 17 of slack either side)
 //
-// RADIUS TRAP: the frame uses 26 (shelf) and 999/9999 (pills). 26 would be
-// rounded-4xl under this project's remap, but it is written explicitly here so
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // the value survives any future scale change.
 //
 // The band now carries the designer's photography (frame 2084:4145 filled every
@@ -30,13 +29,14 @@
 // =============================================================================
 
 import Link from 'next/link';
+import { BTN } from '@/components/shared/button-styles';
 import { cn } from '@/lib/utils';
 
 import { AboutIcon } from '../AboutIcon';
 import { Eyebrow, Heading, Photo, Section } from '../ui';
 
 /** The frame's 1336 rail: 1440 - 52 either side. Collapses to page gutters. */
-const RAIL = 'mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[52px]';
+const RAIL = 'mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[52px]';
 
 /**
  * Figtree 700 13/19.5, ls 1.82 (0.14em), uppercase - the bookend motif.
@@ -52,8 +52,9 @@ const RAIL = 'mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-[52px]';
 const MOTIF_WORD = 'font-kyg text-[13px] font-bold uppercase leading-[19.5px] tracking-[0.14em]';
 
 /** Both CTA capsules: 56 tall, pad 15/28, gap 9, radius 999. */
-const CTA_BASE =
-  'inline-flex min-h-[56px] min-w-0 items-center justify-center gap-[9px] rounded-full px-7 py-[15px] font-kyg text-[15.5px] font-bold leading-[23.2px] transition-colors';
+// The frame drew these at 56px. There is one button height site-wide now - 38px,
+// from BTN (components/shared/button-styles). Face and weight stay the frame's.
+const CTA_BASE = BTN + ' min-w-0 font-kyg font-bold transition-colors';
 
 export default function Hero() {
   return (
@@ -96,7 +97,7 @@ export default function Hero() {
             html={
               'Healthcare shouldn&#39;t start only <br class="hidden lg:inline" />when <em class="abt-grad">something goes wrong.</em>'
             }
-            className="max-w-[1060px] tracking-[-0.022em]"
+            className="max-w-[1600px] tracking-[-0.022em]"
           />
         </div>
 
@@ -149,8 +150,8 @@ export default function Hero() {
                 No content is lost: the h1 above already says "Healthcare
                 shouldn't start only when something goes wrong", which is the
                 same point this pill restates. */}
-            <div className="absolute right-4 top-4 hidden max-w-[calc(100%-2rem)] items-center gap-3 rounded-full border border-white/60 bg-white/85 py-2 pl-2 pr-4 shadow-[0_18px_50px_0_rgba(20,27,26,0.08),0_4px_16px_0_rgba(20,27,26,0.06)] backdrop-blur-[12px] sm:flex md:right-9 md:top-9">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white bg-gradient-to-br from-eden/[0.05] to-java/[0.06]">
+            <div className="absolute right-4 top-4 hidden max-w-[calc(100%-2rem)] items-center gap-3 rounded-sm border border-white/60 bg-white/85 py-2 pl-2 pr-4 shadow-[0_18px_50px_0_rgba(20,27,26,0.08),0_4px_16px_0_rgba(20,27,26,0.06)] backdrop-blur-[12px] sm:flex md:right-9 md:top-9">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border border-white bg-gradient-to-br from-eden/[0.05] to-java/[0.06]">
                 <AboutIcon id="456-1180" className="h-[22px] w-[18px]" />
               </span>
               {/* The frame breaks this label after "earlier"; the explicit space
@@ -165,7 +166,7 @@ export default function Hero() {
 
           {/* Frame gap is -96: the shelf climbs back over the band. */}
           <div className={cn(RAIL, 'relative z-10 mt-[calc(-1*clamp(40px,6.67vw,96px))]')}>
-            <div className="rounded-[26px] border border-mine/10 bg-linenw/90 p-[clamp(20px,2.5vw,36px)] shadow-[0_40px_100px_0_rgba(20,27,26,0.14),0_12px_36px_0_rgba(20,27,26,0.1)] backdrop-blur-[12px]">
+            <div className="rounded-sm border border-mine/10 bg-linenw/90 p-[clamp(20px,2.5vw,36px)] shadow-[0_40px_100px_0_rgba(20,27,26,0.14),0_12px_36px_0_rgba(20,27,26,0.1)] backdrop-blur-[12px]">
               {/* 1262 grid: 738 + 48 + 476, right column centred on the row. */}
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-[738fr_476fr] lg:items-center lg:gap-x-12">
                 {/* left: supporting copy */}

@@ -5,10 +5,7 @@
 // The artboard is 1440: section gutter 80, inner rail 1280 with its own 32, so
 // the content column is 1216 - the same system as the tests and contact pages.
 //
-// RADIUS TRAP: this project remaps Tailwind's radius scale (--radius 0.625rem),
-// so rounded-2xl is 18px and rounded-3xl is 22px. The frame uses 12/16/22/24/26/
-// 28/30. Only 22 (rounded-3xl) and 26 (rounded-4xl) map cleanly; write every
-// other radius as an explicit arbitrary value.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import Image from 'next/image';
@@ -90,7 +87,7 @@ export function Section({
       // scroll-mt clears the 64px sticky SiteHeader on in-page jumps.
       className={cn(GROUND[ground], 'px-5 sm:px-10 lg:px-20', id && 'scroll-mt-[80px]', className)}
     >
-      <div className={cn('reveal mx-auto w-full max-w-[1280px] py-[clamp(56px,7vw,92px)] lg:px-8', innerClassName)}>
+      <div className={cn('reveal mx-auto w-full max-w-[1600px] py-[clamp(56px,7vw,92px)] lg:px-8', innerClassName)}>
         {children}
       </div>
     </section>
@@ -128,7 +125,7 @@ export function Eyebrow({
     // tracking, which is the giveaway.
     <span
       className={cn(
-        'inline-flex max-w-full items-center gap-[9px] rounded-full py-2 pl-[13px] pr-[17px]',
+        'inline-flex max-w-full items-center gap-[9px] rounded-sm py-2 pl-[13px] pr-[17px]',
         tone === 'ink'
           ? 'border border-java/28 bg-java/14 text-ice'
           : 'border border-eden/[0.15] bg-eden/[0.07] text-eden',
@@ -182,7 +179,7 @@ export function Pill({ label, icon, className }: { label: string; icon?: string;
   return (
     <span
       className={cn(
-        'inline-flex max-w-full items-center gap-2 rounded-full border border-mine/10 bg-white py-2.5 pl-3 pr-4 shadow-tst-soft',
+        'inline-flex max-w-full items-center gap-2 rounded-sm border border-mine/10 bg-white py-2.5 pl-3 pr-4 shadow-tst-soft',
         className
       )}
     >

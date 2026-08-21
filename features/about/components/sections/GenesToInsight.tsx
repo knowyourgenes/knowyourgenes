@@ -8,9 +8,7 @@
 //      rail holding the 54px node medallions, cards 756 wide, 24px apart
 //   3. the "Genes -> Data -> Insight -> Awareness" chip row (900 wide)
 //
-// RADIUS TRAP: the project remaps Tailwind's radius scale, so every radius here
-// is written as an explicit arbitrary value (24 -> rounded-[24px], 2 ->
-// rounded-[2px]); only the full-round pills use rounded-full.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { Fragment } from 'react';
@@ -119,7 +117,7 @@ function SpineNode({ icon, accent = false }: { icon: string; accent?: boolean })
     <span
       aria-hidden
       className={cn(
-        'mb-3 flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-full',
+        'mb-3 flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-sm',
         'md:absolute md:left-[-86px] md:top-[4px] md:mb-0',
         accent
           ? 'bg-gradient-to-br from-eden to-java shadow-tst-card'
@@ -186,7 +184,7 @@ function CardSlot({
 /** Static capsule inside the dark GENEous Lab card (white/10 on ink). */
 function LabPill({ icon, label }: { icon: string; label: string }) {
   return (
-    <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-[8px]">
+    <span className="inline-flex max-w-full items-center gap-2 rounded-sm border border-white/15 bg-white/10 px-4 py-[8px]">
       <AboutIcon id={icon} className="h-[21px] w-[17px] shrink-0" />
       <span className="min-w-0 break-words font-kyg text-[13.5px] font-semibold leading-[20px] text-linenw">
         {label}
@@ -200,7 +198,7 @@ function FlowChip({ icon, label, solid }: { icon: string; label: string; solid: 
   return (
     <span
       className={cn(
-        'inline-flex h-[49px] shrink-0 items-center gap-2 rounded-full px-[21px]',
+        'inline-flex h-[49px] shrink-0 items-center gap-2 rounded-sm px-[21px]',
         solid
           ? 'border border-eden bg-eden shadow-[0_12px_30px_0_rgba(14,77,75,0.28)]'
           : 'border border-mine/12 bg-white shadow-tst-soft'
@@ -224,9 +222,9 @@ function FlowLink() {
   return (
     <span
       aria-hidden
-      className="relative hidden h-[2px] min-w-[24px] max-w-[118px] flex-1 rounded-[2px] bg-[linear-gradient(90deg,rgba(14,77,75,0.14),rgba(37,181,171,0.55),rgba(14,77,75,0.14))] md:block"
+      className="relative hidden h-[2px] min-w-[24px] max-w-[118px] flex-1 rounded-sm bg-[linear-gradient(90deg,rgba(14,77,75,0.14),rgba(37,181,171,0.55),rgba(14,77,75,0.14))] md:block"
     >
-      <span className="absolute left-[-3px] top-1/2 h-[7px] w-[7px] -translate-y-1/2 rounded-[3.5px] bg-java shadow-[0_0_10px_0_rgba(37,181,171,0.85)]" />
+      <span className="absolute left-[-3px] top-1/2 h-[7px] w-[7px] -translate-y-1/2 rounded-sm bg-java shadow-[0_0_10px_0_rgba(37,181,171,0.85)]" />
     </span>
   );
 }
@@ -255,14 +253,14 @@ export default function GenesToInsight() {
         {/* the spine itself - hidden once the 104px rail collapses */}
         <span
           aria-hidden
-          className="absolute inset-y-3 left-[44px] hidden w-[3px] rounded-full bg-[linear-gradient(180deg,rgba(34,34,34,0.05),#25b5ab,#0e4d4b,#25b5ab,rgba(34,34,34,0.05))] md:block"
+          className="absolute inset-y-3 left-[44px] hidden w-[3px] rounded-sm bg-[linear-gradient(180deg,rgba(34,34,34,0.05),#25b5ab,#0e4d4b,#25b5ab,rgba(34,34,34,0.05))] md:block"
         />
 
         <ol className="flex list-none flex-col gap-6">
           {STEPS.map((step) => (
             <li key={step.index} className="relative flex flex-col items-center md:block">
               <SpineNode icon={step.nodeIcon} />
-              <div className="flex w-full flex-col overflow-hidden rounded-[24px] border border-mine/10 bg-white shadow-tst-soft sm:flex-row">
+              <div className="flex w-full flex-col overflow-hidden rounded-sm border border-mine/10 bg-white shadow-tst-soft sm:flex-row">
                 <CardSlot icon={step.slotIcon} label={step.slotLabel} img={step.slotImg} alt={step.slotAlt} />
                 <div className="flex min-w-0 flex-1 flex-col gap-1.5 p-5 sm:p-[28px]">
                   <div className="flex items-baseline gap-[11px]">
@@ -279,7 +277,7 @@ export default function GenesToInsight() {
           {/* 04 - GENEous Lab: trust & science, not an ad */}
           <li className="relative flex flex-col items-center md:block">
             <SpineNode icon="6412-322" accent />
-            <div className="flex w-full flex-col overflow-hidden rounded-[24px] bg-[linear-gradient(135deg,#141b1a,#1e2b29)] sm:flex-row">
+            <div className="flex w-full flex-col overflow-hidden rounded-sm bg-[linear-gradient(135deg,#141b1a,#1e2b29)] sm:flex-row">
               {/* normal-case: the BRAND EXCEPTION described at the kicker below. */}
               <CardSlot
                 icon="6529-536"

@@ -20,7 +20,7 @@
 //     the same vw ramp as the type (32/1440 = 2.222vw) and bottoms out at 11.7px
 //     - 0.308em of the 38px clamp floor, the frame's exact gap-to-type ratio.
 //
-// RADIUS TRAP: nothing in this section is rounded, so nothing to remap.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { Section } from '../ui';

@@ -6,8 +6,7 @@
 // Section stack gap is 40; the cards grid and the flow row each carry the
 // frame's extra 8px top pad.
 //
-// RADIUS: the project's scale is remapped - rounded-3xl IS the frame's 22px.
-// Everything else here (12, 28, 2) is written as an arbitrary value.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { Fragment } from 'react';
@@ -61,7 +60,7 @@ export default function WhatYouDo() {
           {QUESTIONS.map((q) => (
             <li
               key={q.icon}
-              className="relative min-w-0 overflow-hidden rounded-3xl border border-mine/10 bg-white p-7 shadow-tst-soft"
+              className="relative min-w-0 overflow-hidden rounded-sm border border-mine/10 bg-white p-7 shadow-tst-soft"
             >
               {/* qglow - mint blob bleeding out of the top-right corner */}
               <span
@@ -69,7 +68,7 @@ export default function WhatYouDo() {
                 className="pointer-events-none absolute -right-[55px] -top-[55px] h-40 w-40 rounded-full bg-mint blur-[20px]"
               />
               <div className="relative flex items-start gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-mint">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-sm bg-mint">
                   <AboutIcon id={q.icon} className="h-[26px] w-[22px]" />
                 </span>
                 <div className="flex min-h-[44px] min-w-0 flex-1 items-center">
@@ -85,7 +84,7 @@ export default function WhatYouDo() {
         {/* ---------------------------------------------------------------- */}
         {/* Conversation-starter callout - tinted panel + copy                */}
         {/* ---------------------------------------------------------------- */}
-        <div className="mx-auto grid w-full max-w-[980px] grid-cols-1 overflow-hidden rounded-[28px] border border-eden/20 bg-white shadow-tst-soft md:grid-cols-[477fr_501fr]">
+        <div className="mx-auto grid w-full max-w-[980px] grid-cols-1 overflow-hidden rounded-sm border border-eden/20 bg-white shadow-tst-soft md:grid-cols-[477fr_501fr]">
           {/* The designer's photograph (frame 2084:4145). Filling this slot sets
               its placeholder overlay - glyph 7594-453 and the caption "A real
               conversation" - to HIDDEN in the frame, so the photo replaces the
@@ -131,7 +130,7 @@ export default function WhatYouDo() {
               {i > 0 ? (
                 <span
                   aria-hidden="true"
-                  className="relative hidden h-[2px] min-w-0 max-w-[87px] flex-1 rounded-[2px] bg-gradient-to-r from-eden/[0.14] via-java/[0.55] to-eden/[0.14] lg:block"
+                  className="relative hidden h-[2px] min-w-0 max-w-[87px] flex-1 rounded-sm bg-gradient-to-r from-eden/[0.14] via-java/[0.55] to-eden/[0.14] lg:block"
                 >
                   <span className="absolute -left-[3px] top-1/2 h-[7px] w-[7px] -translate-y-1/2 rounded-full bg-java shadow-[0_0_10px_0_rgba(37,181,171,0.85)]" />
                 </span>
@@ -139,8 +138,8 @@ export default function WhatYouDo() {
               <span
                 className={
                   step.accent
-                    ? 'inline-flex h-[49px] shrink-0 items-center gap-2 rounded-full border border-eden bg-eden px-[21px] shadow-[0_12px_30px_0_rgba(14,77,75,0.28)]'
-                    : 'inline-flex h-[49px] shrink-0 items-center gap-2 rounded-full border border-mine/[0.12] bg-white px-[21px] shadow-tst-soft'
+                    ? 'inline-flex h-[49px] shrink-0 items-center gap-2 rounded-sm border border-eden bg-eden px-[21px] shadow-[0_12px_30px_0_rgba(14,77,75,0.28)]'
+                    : 'inline-flex h-[49px] shrink-0 items-center gap-2 rounded-sm border border-mine/[0.12] bg-white px-[21px] shadow-tst-soft'
                 }
               >
                 <AboutIcon id={step.icon} className="h-[25px] w-[21px] shrink-0" />

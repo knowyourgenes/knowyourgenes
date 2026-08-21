@@ -130,12 +130,12 @@ export default function BuildingFor() {
               slot on every side, hence -inset-4 */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -inset-4 rounded-[36px] bg-gradient-to-br from-eden/[0.06] to-java/[0.08] blur-[28px]"
+            className="pointer-events-none absolute -inset-4 rounded-sm bg-gradient-to-br from-eden/[0.06] to-java/[0.08] blur-[28px]"
           />
           <Photo
             src="/about/img/building-for-portrait.jpg"
             alt="Someone at home, considering what they might want to understand about their health."
-            className="relative min-h-[260px] w-full rounded-[28px] border border-mine/10 shadow-tst-float sm:min-h-[360px] lg:min-h-[clamp(420px,50.28vw,724px)]"
+            className="relative min-h-[260px] w-full rounded-sm border border-mine/10 shadow-tst-float sm:min-h-[360px] lg:min-h-[clamp(420px,50.28vw,724px)]"
             sizes="(min-width: 1024px) 44vw, (min-width: 640px) 90vw, 100vw"
           />
         </div>
@@ -144,7 +144,7 @@ export default function BuildingFor() {
           {STATEMENTS.map((statement) => (
             <li
               key={statement.icon}
-              className="flex items-start gap-[14px] rounded-[16px] border border-mine/10 bg-white px-5 py-4 shadow-tst-soft"
+              className="flex items-start gap-[14px] rounded-sm border border-mine/10 bg-white px-5 py-4 shadow-tst-soft"
             >
               <AboutIcon id={statement.icon} className="mt-px h-[25px] w-[21px] shrink-0" />
               <Body html={statement.text} className="min-w-0 text-[17px] leading-[23.4px] text-[#2d2a24]" />
@@ -179,7 +179,7 @@ export default function BuildingFor() {
         {PROFILES.map((profile) => (
           <li
             key={profile.num}
-            className="flex h-full min-w-0 flex-col rounded-[24px] border border-mine/10 bg-white p-7 shadow-tst-soft"
+            className="flex h-full min-w-0 flex-col rounded-sm border border-mine/10 bg-white p-7 shadow-tst-soft"
           >
             <div className="flex items-center justify-between gap-4">
               {/* Photo where the frame supplied one (it hides the glyph in that
@@ -189,11 +189,11 @@ export default function BuildingFor() {
                 <Photo
                   src={profile.img}
                   alt={profile.alt ?? ''}
-                  className="h-14 w-14 shrink-0 rounded-full border border-mine/10"
+                  className="h-14 w-14 shrink-0 rounded-sm border border-mine/10"
                   sizes="56px"
                 />
               ) : (
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-mine/10 bg-gradient-to-br from-eden/[0.05] to-java/[0.06]">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-sm border border-mine/10 bg-gradient-to-br from-eden/[0.05] to-java/[0.06]">
                   <AboutIcon id={profile.icon} className="h-6 w-5" />
                 </span>
               )}

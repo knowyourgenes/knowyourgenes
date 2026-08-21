@@ -6,16 +6,16 @@ import { useState } from 'react';
 import { formatPaise } from '@/lib/catalog';
 import { useCart } from '../hooks/use-cart';
 
-const CARD = 'rounded-[20px] border border-zeus/[0.09] bg-white shadow-kyg-card';
+const CARD = 'rounded-sm border border-zeus/[0.09] bg-white shadow-kyg-card';
 
 function QtyStepper({ value, max, onChange }: { value: number; max: number; onChange: (next: number) => void }) {
   return (
-    <div className="inline-flex items-center rounded-full border border-zeus/[0.12] bg-white">
+    <div className="inline-flex items-center rounded-sm border border-zeus/[0.12] bg-white">
       <button
         type="button"
         aria-label="Decrease quantity"
         onClick={() => onChange(value - 1)}
-        className="grid h-9 w-9 place-items-center rounded-l-full text-lg text-cape transition hover:bg-zeus/[0.05]"
+        className="grid h-9 w-9 place-items-center rounded-l-sm text-lg text-cape transition hover:bg-zeus/[0.05]"
       >
         −
       </button>
@@ -25,7 +25,7 @@ function QtyStepper({ value, max, onChange }: { value: number; max: number; onCh
         aria-label="Increase quantity"
         disabled={value >= max}
         onClick={() => onChange(value + 1)}
-        className="grid h-9 w-9 place-items-center rounded-r-full text-lg text-cape transition hover:bg-zeus/[0.05] disabled:cursor-not-allowed disabled:opacity-35"
+        className="grid h-9 w-9 place-items-center rounded-r-sm text-lg text-cape transition hover:bg-zeus/[0.05] disabled:cursor-not-allowed disabled:opacity-35"
       >
         +
       </button>
@@ -61,7 +61,7 @@ export function CartView() {
         </p>
         <Link
           href="/categories/wellness"
-          className="mt-1 rounded-full bg-eden px-5 py-2.5 text-[13.5px] font-bold text-spring transition hover:bg-eden2"
+          className="mt-1 rounded-sm bg-eden px-5 py-2.5 text-[13.5px] font-bold text-spring transition hover:bg-eden2"
         >
           Browse all tests
         </Link>
@@ -77,7 +77,7 @@ export function CartView() {
           <li key={line.slug} className={`${CARD} flex gap-4 p-4 sm:p-5`}>
             <Link
               href={line.href}
-              className="relative h-[88px] w-[88px] shrink-0 overflow-hidden rounded-2xl bg-eden/[0.06]"
+              className="relative h-[88px] w-[88px] shrink-0 overflow-hidden rounded-sm bg-eden/[0.06]"
             >
               {line.coverImageUrl ? (
                 <Image src={line.coverImageUrl} alt="" fill sizes="88px" className="object-cover" />
@@ -162,7 +162,7 @@ export function CartView() {
         {/* ---- coupon ---- */}
         <div className="border-t border-zeus/[0.09] pt-4">
           {couponCode && priced?.coupon?.applied ? (
-            <div className="flex items-center justify-between rounded-xl bg-eden/[0.07] px-3.5 py-2.5">
+            <div className="flex items-center justify-between rounded-sm bg-eden/[0.07] px-3.5 py-2.5">
               <span className="text-[13.5px] font-bold text-eden">{couponCode} applied</span>
               <button
                 type="button"
@@ -191,11 +191,11 @@ export function CartView() {
                 value={couponDraft}
                 onChange={(e) => setCouponDraft(e.target.value.toUpperCase())}
                 placeholder="Coupon code"
-                className="h-11 min-w-0 flex-1 rounded-full border border-zeus/[0.12] bg-white px-4 text-[14px] uppercase tracking-[0.04em] outline-none placeholder:normal-case placeholder:tracking-normal placeholder:text-cord/70 focus:border-eden/40"
+                className="h-11 min-w-0 flex-1 rounded-sm border border-zeus/[0.12] bg-white px-4 text-[14px] uppercase tracking-[0.04em] outline-none placeholder:normal-case placeholder:tracking-normal placeholder:text-cord/70 focus:border-eden/40"
               />
               <button
                 type="submit"
-                className="shrink-0 rounded-full border border-eden/30 px-4 text-[13.5px] font-bold text-eden transition hover:bg-eden/[0.06]"
+                className="shrink-0 rounded-sm border border-eden/30 px-4 text-[13.5px] font-bold text-eden transition hover:bg-eden/[0.06]"
               >
                 Apply
               </button>
@@ -207,7 +207,7 @@ export function CartView() {
         <Link
           href="/checkout"
           aria-disabled={pricing}
-          className="flex h-[52px] items-center justify-center rounded-full bg-eden text-[15px] font-bold text-spring transition hover:bg-eden2 aria-disabled:pointer-events-none aria-disabled:opacity-60"
+          className="flex h-[52px] items-center justify-center rounded-sm bg-eden text-[15px] font-bold text-spring transition hover:bg-eden2 aria-disabled:pointer-events-none aria-disabled:opacity-60"
         >
           {pricing ? 'Updating…' : 'Proceed to checkout'}
         </Link>

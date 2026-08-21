@@ -1,7 +1,7 @@
 'use client';
 
 // =============================================================================
-// features/tests — the product grid on /categories/[category_slug], with search
+// features/tests - the product grid on /categories/[category_slug], with search
 // -----------------------------------------------------------------------------
 // Split out of Categories.tsx as the one client island on the page: the header
 // above it stays a server component.
@@ -55,16 +55,16 @@ export function CategoryTestGrid({ products }: { products: CategoryProduct[] }) 
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search a concern — hair fall, PCOS, sleep…"
+              placeholder="Search a concern - hair fall, PCOS, sleep…"
               autoComplete="off"
-              className="h-12 w-full rounded-full border border-zeus/[0.12] bg-white pl-11 pr-11 text-[15px] text-mine shadow-kyg-card outline-none placeholder:text-cord/80 focus:border-eden/40 focus:ring-2 focus:ring-eden/15 [&::-webkit-search-cancel-button]:appearance-none"
+              className="h-12 w-full rounded-sm border border-zeus/[0.12] bg-white pl-11 pr-11 text-[15px] text-mine shadow-kyg-card outline-none placeholder:text-cord/80 focus:border-eden/40 focus:ring-2 focus:ring-eden/15 [&::-webkit-search-cancel-button]:appearance-none"
             />
             {filtering && (
               <button
                 type="button"
                 onClick={() => setQuery('')}
                 aria-label="Clear search"
-                className="absolute right-3 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-cord transition hover:bg-zeus/[0.06] hover:text-mine"
+                className="absolute right-3 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-sm text-cord transition hover:bg-zeus/[0.06] hover:text-mine"
               >
                 <Icon name="x" className="h-4 w-4" />
               </button>
@@ -79,7 +79,7 @@ export function CategoryTestGrid({ products }: { products: CategoryProduct[] }) 
                 type="button"
                 onClick={() => setQuery(s)}
                 aria-pressed={trimmed.toLowerCase() === s.toLowerCase()}
-                className="rounded-full border border-zeus/[0.1] bg-white/70 px-3 py-1 text-[12.5px] text-cape transition hover:border-eden/35 hover:text-eden aria-pressed:border-eden/45 aria-pressed:bg-eden/[0.07] aria-pressed:font-semibold aria-pressed:text-eden"
+                className="rounded-sm border border-zeus/[0.1] bg-white/70 px-3 py-1 text-[12.5px] text-cape transition hover:border-eden/35 hover:text-eden aria-pressed:border-eden/45 aria-pressed:bg-eden/[0.07] aria-pressed:font-semibold aria-pressed:text-eden"
               >
                 {s}
               </button>
@@ -103,7 +103,7 @@ export function CategoryTestGrid({ products }: { products: CategoryProduct[] }) 
               // where the customer sees what they are actually buying.
               <article
                 key={p.slug}
-                className={`group relative flex flex-col overflow-hidden rounded-[20px] border border-zeus/[0.09] bg-white shadow-kyg-card ${cardHover}`}
+                className={`group relative flex flex-col overflow-hidden rounded-sm border border-zeus/[0.09] bg-white shadow-kyg-card ${cardHover}`}
               >
                 <CardArt
                   image={p.image}
@@ -120,7 +120,7 @@ export function CategoryTestGrid({ products }: { products: CategoryProduct[] }) 
                       </Link>
                     </h3>
                     {p.meta && (
-                      <span className="mt-0.5 whitespace-nowrap rounded-full bg-eden/[0.07] px-2.5 py-1 text-[11.5px] font-bold text-eden">
+                      <span className="mt-0.5 whitespace-nowrap rounded-sm bg-eden/[0.07] px-2.5 py-1 text-[11.5px] font-bold text-eden">
                         {p.meta}
                       </span>
                     )}
@@ -136,19 +136,19 @@ export function CategoryTestGrid({ products }: { products: CategoryProduct[] }) 
           })}
         </div>
       ) : (
-        <div className="mt-3 flex flex-col items-center gap-3 rounded-[20px] border border-dashed border-zeus/[0.14] bg-white/60 px-6 py-14 text-center">
-          <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-eden/[0.07] text-eden">
+        <div className="mt-3 flex flex-col items-center gap-3 rounded-sm border border-dashed border-zeus/[0.14] bg-white/60 px-6 py-14 text-center">
+          <span className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-eden/[0.07] text-eden">
             <Icon name="search" className="h-[22px] w-[22px]" />
           </span>
           <p className="text-[17px] font-semibold tracking-[-0.01em]">No reports match &ldquo;{trimmed}&rdquo;</p>
           <p className="max-w-[380px] text-[14.5px] leading-[1.55] text-cape">
-            Try the symptom rather than the test — &ldquo;hair fall&rdquo;, &ldquo;snoring&rdquo; or &ldquo;kidney
+            Try the symptom rather than the test - &ldquo;hair fall&rdquo;, &ldquo;snoring&rdquo; or &ldquo;kidney
             stones&rdquo; all find their report.
           </p>
           <button
             type="button"
             onClick={() => setQuery('')}
-            className="mt-1 rounded-full bg-eden px-5 py-2.5 text-[13.5px] font-bold text-spring transition hover:bg-eden2"
+            className="mt-1 rounded-sm bg-eden px-5 py-2.5 text-[13.5px] font-bold text-spring transition hover:bg-eden2"
           >
             Show all {products.length} reports
           </button>

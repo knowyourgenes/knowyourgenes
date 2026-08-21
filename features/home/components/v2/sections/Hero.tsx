@@ -64,12 +64,21 @@ export default function Hero() {
             of it, leaving 1187 of content - the frame wants 1313 from x=63.
 
             TOP PADDING MUST CLEAR THE FIXED HEADER. SiteHeader is `overlay`
-            here - fixed, 64px - so it sits ON the hero; the source's header is
+            here - it is fixed, so it sits ON the hero; the source's header is
             sticky and takes its own space. Reproducing the source's 88px pad
             literally put the kicker 17px behind the bar at every width up to
-            768. So the pad is 64 + 78, floored at 84 on phones. */}
-        <div className="relative z-[3] flex flex-col justify-end px-5 pb-[clamp(40px,4.4vw,72px)] pt-[clamp(72px,6.6vw,100px)] sm:px-8 lg:min-h-[100svh] lg:px-[63px]">
-          <div className="mx-auto flex w-full max-w-[1313px] flex-col">
+            768.
+
+            The clearance is `--site-header-h` + breathing room, NOT a literal.
+            The bar used to be a flat 64px; it is now two rows (search over nav
+            links) and it is TALLER on mobile than on desktop, because the search
+            takes its own full-width row there. SiteHeader measures itself and
+            publishes the real height on <html>; app/globals.css carries the
+            fallback this is laid out against on the server-rendered first frame.
+            Hardcoding a number here would be wrong at one breakpoint or the
+            other by construction. */}
+        <div className="relative z-[3] flex flex-col justify-end px-5 pb-[clamp(40px,4.4vw,72px)] pt-[calc(var(--site-header-h)+clamp(24px,2.4vw,40px))] sm:px-8 lg:min-h-[100svh] lg:px-[63px]">
+          <div className="mx-auto flex w-full max-w-[1600px] flex-col">
             <div className="flex w-full max-w-full flex-col gap-[10px] lg:max-w-[min(760px,calc(100vw-min(47vw,760px)-max(63px,(100vw-1313px)/2)-48px))]">
               <HeroReveal delay={0.05}>
                 <Kicker>Genetics for a lifetime</Kicker>
@@ -181,11 +190,11 @@ export default function Hero() {
             At lg it lifts out of flow to bleed off the right edge, where the
             diagonal mask and the bottom fade both switch on. Below lg the
             source explicitly turns both off (`mask-image:none`,
-            `::after{display:none}`) because a rounded card needs neither. */}
+            `::after{display:none}`) because a rounded-sm card needs neither. */}
         <div className="px-5 pt-[clamp(28px,4vw,44px)] sm:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:z-[1] lg:w-[min(47vw,760px)] lg:p-0">
           <div
             className={[
-              'relative mx-auto h-[min(88vw,440px)] w-full max-w-[1313px] overflow-hidden rounded-[34px]',
+              'relative mx-auto h-[min(88vw,440px)] w-full max-w-[1600px] overflow-hidden rounded-sm',
               'lg:pointer-events-none lg:h-full lg:max-w-none lg:rounded-none',
               'lg:[-webkit-mask-image:linear-gradient(97deg,transparent_0%,rgba(0,0,0,0.6)_13%,#000_34%)]',
               'lg:[mask-image:linear-gradient(97deg,transparent_0%,rgba(0,0,0,0.6)_13%,#000_34%)]',
@@ -226,7 +235,7 @@ export default function Hero() {
       <HeroReveal delay={0.86} className="relative z-[3] mt-[clamp(34px,6vw,52px)] lg:mt-0">
         <div className="border-t border-linenw/[0.17] bg-[#062927]/[0.42]">
           <div className="px-5 sm:px-8 lg:px-[63px]">
-            <div className="mx-auto grid w-full max-w-[1313px] grid-cols-1 gap-y-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-y-0">
+            <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-y-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-y-0">
               <div className="flex flex-col gap-[7px] py-[clamp(24px,2.6vw,36px)]">
                 {/* Figtree 700 14/22.7 ls 2.1 - textCase=UPPER in the frame */}
                 <p className="font-kyg text-[14px] font-bold uppercase leading-[1.62] tracking-[0.15em] text-linenw/50">
@@ -251,7 +260,7 @@ export default function Hero() {
                   {LEDGER_CHIPS.map((c) => (
                     <li
                       key={c}
-                      className="inline-flex min-h-10 items-center rounded-full px-[15px] py-[7px] font-kyg text-[clamp(14px,1.08vw,15.5px)] font-semibold leading-[1.62] tracking-[-0.005em] text-linenw/86 ring-1 ring-inset ring-linenw/[0.17] transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-java2/[0.12] hover:ring-java2/50"
+                      className="inline-flex min-h-10 items-center rounded-sm px-[15px] py-[7px] font-kyg text-[clamp(14px,1.08vw,15.5px)] font-semibold leading-[1.62] tracking-[-0.005em] text-linenw/86 ring-1 ring-inset ring-linenw/[0.17] transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-java2/[0.12] hover:ring-java2/50"
                     >
                       {c}
                     </li>

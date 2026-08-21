@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { BTN } from '@/components/shared/button-styles';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { Ground, PanelKey, RiskCardsSection } from '../../types';
@@ -38,8 +39,8 @@ import { Body, Heading, Lead, Media, ResultBar, Section, TONE_TEXT } from '../ui
 //             the pixel and the row still measures 1215.
 // Img slot    387 x 180 (aspect 387/180). Badge 44x44 r16 #ffffff at 12/12 with
 //             INNER 0 -10 22 rgba(0,0,0,.05) + INNER 0 1 0 rgba(255,255,255,.60).
-//             r16 must be spelt rounded-[16px]: this project remaps the radius
-//             scale (--radius: .625rem), so rounded-2xl paints 18px, not 16.
+//             The frame's r16 is painted rounded-sm (6px). Every radius on the
+//             page is that one; the frame's is recorded here, not honoured.
 //             Caption Figtree 700 10/15 ls 1.0 accent@80 (@70 on pregnancy), 12
 //             from the left, 10 up from the slot's bottom edge.
 //             The frame also parks a centred 34x40 glyph + "<Panel> visual"
@@ -174,7 +175,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
         {/* ---- head: 720 wide, gap 14 -------------------------------------- */}
         <div className="flex w-full max-w-[720px] flex-col items-center gap-[14px] text-center">
           {eyebrow ? (
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+            <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
               <Glyph id="5137-634" box="size-[22px]" w="w-[22px]" h="h-[26px]" />
               <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-crimson-deep">
                 {eyebrow.label}
@@ -204,7 +205,8 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
             onClick={() => setFilter('all')}
             aria-pressed={filter === 'all'}
             className={cn(
-              'inline-flex items-center justify-center rounded-full border px-5 py-[10px] font-kyg text-[13.5px] font-bold leading-[20.2px] transition duration-200',
+              BTN,
+              'border font-kyg font-bold transition duration-200',
               filter === 'all'
                 ? '-translate-y-px border-eden bg-eden text-white shadow-[0_8px_20px_0_rgba(14,77,75,0.24)]'
                 : 'border-mine/10 bg-white text-fusc hover:bg-spring'
@@ -220,7 +222,8 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
               onClick={() => setFilter(c.key)}
               aria-pressed={filter === c.key}
               className={cn(
-                'inline-flex items-center gap-2 rounded-full border px-5 py-[10px] font-kyg text-[13.5px] font-bold leading-[20.2px] transition duration-200',
+                BTN,
+                'border font-kyg font-bold transition duration-200',
                 filter === c.key
                   ? '-translate-y-px border-eden bg-eden text-white shadow-[0_8px_20px_0_rgba(14,77,75,0.24)]'
                   : 'border-mine/10 bg-white text-fusc hover:bg-spring'
@@ -244,7 +247,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                 key={c.key}
                 aria-hidden={dim || undefined}
                 className={cn(
-                  'tcard zoomcard lift flex flex-col overflow-hidden rounded-[26px] border border-mine/10 bg-white shadow-tst-soft',
+                  'tcard zoomcard lift flex flex-col overflow-hidden rounded-sm border border-mine/10 bg-white shadow-tst-soft',
                   // 1 up -> 2 up (md) -> 3 up (xl). The 25/49 subtrahends are the
                   // 24/48 of gap plus 1px of slack, so a fractional rail can never
                   // round the last card onto its own line. At the 1216 rail the
@@ -262,11 +265,10 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                  *  768 tablet that only ever paints 332. */}
                 <div className="relative w-full">
                   <Media img={c.image} className="aspect-[387/180] w-full" sizes="(min-width:430px) 389px, 92vw" />
-                  {/* r16 - NOT rounded-2xl, which is 18px on this project's scale. */}
                   {/* The frame's badge artwork exists for the Women's Health
                       panels only, so any other page names a registry icon and
                       gets it in that card's accent instead. */}
-                  <span className="absolute right-3 top-3 flex size-[44px] items-center justify-center rounded-[16px] bg-white shadow-[inset_0_-10px_22px_0_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.6)]">
+                  <span className="absolute right-3 top-3 flex size-[44px] items-center justify-center rounded-sm bg-white shadow-[inset_0_-10px_22px_0_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,0.6)]">
                     {c.icon ? (
                       <Icon name={c.icon} className={cn('size-[23px]', a.badgeText)} />
                     ) : (
@@ -320,7 +322,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                       {c.chips.map((chip) => (
                         <span
                           key={chip}
-                          className="rounded-full border border-mine/10 px-2.5 py-1 font-kyg text-[11.5px] font-semibold leading-tight text-fusc"
+                          className="rounded-sm border border-mine/10 px-2.5 py-1 font-kyg text-[11.5px] font-semibold leading-tight text-fusc"
                         >
                           {chip}
                         </span>
@@ -367,7 +369,10 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
              *  arrow glyph. */}
             <Link
               href={data.cta.href}
-              className="group inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full border border-eden bg-eden px-[44px] py-5 font-kyg text-[18px] font-extrabold leading-[27px] tracking-[0.07px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java"
+              className={cn(
+                BTN,
+                'group border border-eden bg-eden px-[44px] font-kyg text-[18px] font-extrabold leading-[27px] tracking-[0.07px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java'
+              )}
             >
               {data.cta.label}
               <span className="flex size-5 shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5">

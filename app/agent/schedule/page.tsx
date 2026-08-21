@@ -90,7 +90,7 @@ export default function AgentSchedulePage() {
             return (
               <div
                 key={i}
-                className={`rounded-lg border p-2 text-center ${n > 0 ? 'bg-primary/5 border-primary/30' : 'bg-background'}`}
+                className={`rounded-sm border p-2 text-center ${n > 0 ? 'bg-primary/5 border-primary/30' : 'bg-background'}`}
               >
                 <div className="text-[10px] text-muted-foreground">
                   {d.toLocaleDateString('en-IN', { weekday: 'short' })}
@@ -110,7 +110,7 @@ export default function AgentSchedulePage() {
         <p className="text-xs text-muted-foreground mb-3">
           Toggle off a window to stop receiving new assignments in that slot. Existing jobs are unaffected.
         </p>
-        <div className="rounded-lg border bg-background divide-y">
+        <div className="rounded-sm border bg-background divide-y">
           {WINDOWS.map((w) => {
             const a = availability.find((x) => x.window === w);
             const active = a?.active ?? false;

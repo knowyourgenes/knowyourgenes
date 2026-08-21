@@ -71,7 +71,7 @@ export default function WhoIsThisFor() {
     <section id="who" className={`relative ${SECTION_PY}`}>
       <Container>
         <div className={`grid grid-cols-[1fr_1.1fr] items-center ${CONTENT_GAP} max-[1180px]:grid-cols-1`}>
-          <div className="relative aspect-[4/4.6] overflow-hidden rounded-[var(--r-lg)] shadow-[var(--sh-2)]">
+          <div className="relative aspect-[4/4.6] overflow-hidden rounded-sm shadow-[var(--sh-2)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="absolute inset-0 h-full w-full object-cover"
@@ -98,7 +98,7 @@ export default function WhoIsThisFor() {
               {AUDIENCE_CHIPS.map((chip) => (
                 <span
                   key={chip.label}
-                  className="group inline-flex cursor-default items-center gap-[10px] rounded-full border border-(--ink-line) bg-white/70 px-[22px] py-[12px] text-[14.5px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:border-(--ink-1) hover:bg-(--ink-1) hover:text-(--c-cream)"
+                  className="group inline-flex cursor-default items-center gap-[10px] rounded-sm border border-(--ink-line) bg-white/70 px-[22px] py-[12px] text-[14.5px] font-medium text-(--ink-1) backdrop-blur-[8px] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:border-(--ink-1) hover:bg-(--ink-1) hover:text-(--c-cream)"
                 >
                   <svg
                     className="h-[16px] w-[16px] text-(--c-teal) transition-colors duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-(--c-teal-bright)"

@@ -26,8 +26,8 @@ export function HeroSection() {
         <div className="grid items-center gap-[56px] lg:grid-cols-[minmax(0,1fr)_480px] lg:gap-[40px]">
           {/* -- copy -- */}
           <div className="max-w-[600px]">
-            <span className="inline-flex items-center gap-[10px] rounded-full bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
-              <span className="grid size-[28px] place-items-center rounded-full bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
+            <span className="inline-flex items-center gap-[10px] rounded-sm bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
+              <span className="grid size-[28px] place-items-center rounded-sm bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
                 <FigIcon src="/landing/icons/hero-badge.svg" className="size-[18px]" />
               </span>
               <span className="text-[13.5px] font-semibold leading-[20.25px] text-[#FAF6EF]">
@@ -80,7 +80,7 @@ export function HeroSection() {
           <div className="relative mx-auto w-full max-w-[460px]">
             {/* soft cream halo to lift the card off the teal */}
             <div
-              className="pointer-events-none absolute -inset-6 -z-10 rounded-[80px] blur-[44px]"
+              className="pointer-events-none absolute -inset-6 -z-10 rounded-sm blur-[44px]"
               style={{
                 background: 'radial-gradient(60% 60% at 50% 45%, rgba(250,246,239,0.55) 0%, rgba(250,246,239,0) 72%)',
               }}
@@ -92,7 +92,7 @@ export function HeroSection() {
             />
 
             {/* photo card */}
-            <div className="relative aspect-[460/575] w-full overflow-hidden rounded-t-[150px] rounded-b-[38px] bg-[#F5EDDF] shadow-[0_40px_100px_rgba(45,32,18,0.14),0_12px_36px_rgba(45,32,18,0.1)]">
+            <div className="relative aspect-[460/575] w-full overflow-hidden rounded-t-sm rounded-b-sm bg-[#F5EDDF] shadow-[0_40px_100px_rgba(45,32,18,0.14),0_12px_36px_rgba(45,32,18,0.1)]">
               <Image
                 src="/landing/womens-health/hero.png"
                 alt="A young woman sitting calmly at home"
@@ -108,7 +108,7 @@ export function HeroSection() {
             </div>
 
             {/* 1 in 5 badge */}
-            <div className="float-slow absolute -top-4 right-3 grid size-[88px] place-items-center rounded-full bg-[#0E4D4B] text-center shadow-[0_16px_40px_-8px_rgba(14,77,75,0.5)]">
+            <div className="float-slow absolute -top-4 right-3 grid size-[88px] place-items-center rounded-sm bg-[#0E4D4B] text-center shadow-[0_16px_40px_-8px_rgba(14,77,75,0.5)]">
               <div>
                 <div className="font-hind text-[26px] font-semibold leading-none text-[#FAF6EF]">1 in 5</div>
                 <div className="mt-[4px] text-[9.5px] font-normal uppercase leading-none tracking-[0.12em] text-[rgba(243,213,178,0.9)]">
@@ -118,8 +118,8 @@ export function HeroSection() {
             </div>
 
             {/* gene chip */}
-            <div className="absolute -top-5 left-6 flex items-center gap-[10px] rounded-[16px] border border-white/60 bg-white/85 py-[10px] pl-[12px] pr-[14px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)] backdrop-blur-[12px]">
-              <span className="grid size-[36px] place-items-center rounded-[12px] bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
+            <div className="absolute -top-5 left-6 flex items-center gap-[10px] rounded-sm border border-white/60 bg-white/85 py-[10px] pl-[12px] pr-[14px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)] backdrop-blur-[12px]">
+              <span className="grid size-[36px] place-items-center rounded-sm bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
                 <FigIcon src="/landing/icons/hero-gene.svg" className="size-[20px]" />
               </span>
               <div className="leading-tight">
@@ -129,9 +129,9 @@ export function HeroSection() {
             </div>
 
             {/* 7-day chip */}
-            <div className="absolute -bottom-5 left-12 flex items-center gap-[12px] rounded-[16px] border border-white/60 bg-white/90 py-[12px] pl-[14px] pr-[16px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)] backdrop-blur-[12px]">
+            <div className="absolute -bottom-5 left-12 flex items-center gap-[12px] rounded-sm border border-white/60 bg-white/90 py-[12px] pl-[14px] pr-[16px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)] backdrop-blur-[12px]">
               <span
-                className="grid size-[40px] place-items-center rounded-[12px] text-[#1F1A14]"
+                className="grid size-[40px] place-items-center rounded-sm text-[#1F1A14]"
                 style={{ background: 'linear-gradient(135deg, #F3D5B2 0%, #F8E4CC 100%)' }}
               >
                 <FigIcon src="/landing/icons/hero-clock.svg" className="size-[21px]" />
@@ -147,7 +147,7 @@ export function HeroSection() {
         </div>
 
         {/* social-proof line */}
-        <div className="reveal mt-[64px] flex flex-col items-start gap-[16px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
+        <div className="reveal mt-[64px] flex flex-col items-start gap-[16px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
           <span className="inline-flex shrink-0 items-center gap-[8px]">
             <FigIcon src="/landing/icons/shield-check.svg" className="size-[19px] text-[#0E4D4B]" />
             <span className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-[#0E4D4B]">
@@ -213,9 +213,9 @@ export function TrustBand() {
           {TRUST_BADGES.map(({ icon, title, sub }) => (
             <div
               key={title}
-              className="flex flex-col items-center gap-[12px] rounded-[24px] border border-white/10 bg-white/5 p-[20px] text-center"
+              className="flex flex-col items-center gap-[12px] rounded-sm border border-white/10 bg-white/5 p-[20px] text-center"
             >
-              <span className="grid size-[48px] place-items-center rounded-[16px] bg-[rgba(37,181,171,0.15)] text-[#25B5AB]">
+              <span className="grid size-[48px] place-items-center rounded-sm bg-[rgba(37,181,171,0.15)] text-[#25B5AB]">
                 <FigIcon src={icon} className="size-[26px]" />
               </span>
               <div>
@@ -250,14 +250,14 @@ function CelebCard({
   glow: string;
 }) {
   return (
-    <article className="reveal relative overflow-hidden rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/70 p-[36px] shadow-[0_4px_14px_rgba(45,32,18,0.04),0_1px_2px_rgba(45,32,18,0.04)]">
+    <article className="reveal relative overflow-hidden rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/70 p-[36px] shadow-[0_4px_14px_rgba(45,32,18,0.04),0_1px_2px_rgba(45,32,18,0.04)]">
       <div
         className="pointer-events-none absolute -right-6 -top-6 size-[128px] rounded-full blur-[40px]"
         style={{ background: glow }}
       />
       <div className="relative flex items-center gap-[16px]">
         <div
-          className="grid size-[56px] shrink-0 place-items-center rounded-[16px] text-[18px] font-semibold tracking-[-0.025em] text-[#FAF6EF]"
+          className="grid size-[56px] shrink-0 place-items-center rounded-sm text-[18px] font-semibold tracking-[-0.025em] text-[#FAF6EF]"
           style={{ background: initialsBg }}
         >
           {initials}
@@ -325,7 +325,7 @@ export function NotAloneSection() {
         </div>
 
         <div
-          className="reveal mt-[24px] flex flex-col items-start gap-[20px] rounded-[28px] border border-[rgba(199,104,66,0.2)] px-[40px] py-[36px] sm:flex-row sm:items-center"
+          className="reveal mt-[24px] flex flex-col items-start gap-[20px] rounded-sm border border-[rgba(199,104,66,0.2)] px-[40px] py-[36px] sm:flex-row sm:items-center"
           style={{
             background:
               'linear-gradient(90deg, rgba(240,213,192,0.6) 0%, rgba(248,228,204,0.5) 50%, rgba(243,213,178,0.4) 100%)',
@@ -393,7 +393,7 @@ function SymptomChecklist() {
         : `${count} of ${total} - your genes can tell you if PCOS is the cause.`;
 
   return (
-    <div className="flex flex-col gap-[20px] rounded-[30px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[28px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)] sm:p-[32px]">
+    <div className="flex flex-col gap-[20px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 p-[28px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)] sm:p-[32px]">
       <div className="flex items-center justify-between gap-[12px]">
         <h3 className="text-[19px] font-semibold leading-[28.5px] tracking-[-0.025em] text-[#1F1A14]">
           Symptoms most women recognise
@@ -416,7 +416,7 @@ function SymptomChecklist() {
               }`}
             >
               <span className="mt-[1px] grid size-[24px] shrink-0 place-items-center">
-                <span className="sx-box grid size-[24px] place-items-center rounded-[8px] border-2 border-[rgba(14,77,75,0.3)]">
+                <span className="sx-box grid size-[24px] place-items-center rounded-sm border-2 border-[rgba(14,77,75,0.3)]">
                   <FigIcon src="/landing/icons/check.svg" className="sx-tick size-[14px] text-[#FAF6EF]" />
                 </span>
               </span>
@@ -428,7 +428,7 @@ function SymptomChecklist() {
 
       {/* dynamic CTA panel */}
       <div
-        className="relative overflow-hidden rounded-[22px] px-[24px] pb-[24px] pt-[28px]"
+        className="relative overflow-hidden rounded-sm px-[24px] pb-[24px] pt-[28px]"
         style={{ background: 'linear-gradient(173deg, #0E4D4B 0%, #0B3D3B 100%)' }}
       >
         <div className="pointer-events-none absolute -top-9 right-0 size-[144px] rounded-full bg-[rgba(37,181,171,0.15)] blur-[40px]" />
@@ -463,7 +463,7 @@ function SymptomChecklist() {
         </div>
         <a
           href="#check"
-          className="sheen group relative mt-[20px] flex items-center justify-center gap-[8px] overflow-hidden rounded-full bg-[#FAF6EF] px-[24px] py-[14px] text-[15px] font-semibold text-[#1F1A14]"
+          className="sheen group relative mt-[20px] flex items-center justify-center gap-[8px] overflow-hidden rounded-sm bg-[#FAF6EF] px-[24px] py-[14px] text-[15px] font-semibold text-[#1F1A14]"
         >
           <span className="relative z-[1] inline-flex items-center gap-[8px]">
             Check my PCOS genetic risk
@@ -518,7 +518,7 @@ export function WhatIsPCOSSection() {
               </p>
             </div>
 
-            <div className="mt-[24px] rounded-[22px] border-l-[3px] border-[#0E4D4B] bg-[rgba(245,237,223,0.6)] px-[24px] py-[20px] backdrop-blur-[8px]">
+            <div className="mt-[24px] rounded-sm border-l-[3px] border-[#0E4D4B] bg-[rgba(245,237,223,0.6)] px-[24px] py-[20px] backdrop-blur-[8px]">
               <p className="text-[15.5px] leading-[25.19px] text-[#2D2A24]">
                 This doesn’t mean you <strong className="font-semibold text-[#1F1A14]">will</strong> have PCOS. It means
                 your doctor has something specific to monitor and act on, rather than waiting for your symptoms to get

@@ -1,7 +1,7 @@
 import 'server-only';
 
 // =============================================================================
-// features/products — the reports a customer can put on one kit
+// features/products - the reports a customer can put on one kit
 // -----------------------------------------------------------------------------
 // KYG sells ONE physical product: a saliva kit. What varies is which reports are
 // read from the sample it brings back. So the kit page is a configurator, not a

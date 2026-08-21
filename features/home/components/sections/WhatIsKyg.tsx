@@ -74,12 +74,12 @@ const leftCards = CARDS.slice(0, 3);
 const rightCards = CARDS.slice(3);
 
 const cardClass =
-  'flex items-center gap-[14px] rounded-[var(--r-md)] border border-white/60 bg-white/[0.82] py-[16px] pr-[26px] pl-[16px] shadow-[0_18px_48px_rgba(45,32,18,0.12),0_4px_12px_rgba(45,32,18,0.06)] backdrop-blur-[14px] transition-[box-shadow,border-color] duration-500 hover:border-[rgba(37,181,171,0.4)] hover:shadow-[0_28px_64px_rgba(45,32,18,0.18),0_6px_16px_rgba(45,32,18,0.08)] max-[880px]:gap-[10px] max-[880px]:py-[12px] max-[880px]:pr-[14px] max-[880px]:pl-[12px]';
+  'flex items-center gap-[14px] rounded-sm border border-white/60 bg-white/[0.82] py-[16px] pr-[26px] pl-[16px] shadow-[0_18px_48px_rgba(45,32,18,0.12),0_4px_12px_rgba(45,32,18,0.06)] backdrop-blur-[14px] transition-[box-shadow,border-color] duration-500 hover:border-[rgba(37,181,171,0.4)] hover:shadow-[0_28px_64px_rgba(45,32,18,0.18),0_6px_16px_rgba(45,32,18,0.08)] max-[880px]:gap-[10px] max-[880px]:py-[12px] max-[880px]:pr-[14px] max-[880px]:pl-[12px]';
 
 function CardItem({ card }: { card: Card }) {
   return (
     <div className={cardClass}>
-      <span className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-[14px] bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal) max-[880px]:h-[40px] max-[880px]:w-[40px] max-[880px]:rounded-[12px]">
+      <span className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal) max-[880px]:h-[40px] max-[880px]:w-[40px] max-[880px]:rounded-sm">
         {card.icon}
       </span>
       <span className="text-[17px] font-semibold tracking-[-0.008em] text-(--ink-1) max-[880px]:text-[14px] max-[880px]:leading-[1.2]">
@@ -109,7 +109,7 @@ export default function WhatIsKyg() {
         </div>
 
         {/* Stage: cards | silhouette (centre) | cards */}
-        <div className="mx-auto grid max-w-[1080px] grid-cols-[1fr_auto_1fr] items-center gap-[clamp(24px,3vw,48px)] max-[880px]:grid-cols-2 max-[880px]:gap-[16px] max-[560px]:grid-cols-1">
+        <div className="mx-auto grid max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center gap-[clamp(24px,3vw,48px)] max-[880px]:grid-cols-2 max-[880px]:gap-[16px] max-[560px]:grid-cols-1">
           {/* Left cards */}
           <div className="flex flex-col gap-[16px] max-[880px]:order-2 max-[880px]:gap-[10px]">
             {leftCards.map((card) => (
@@ -135,7 +135,7 @@ export default function WhatIsKyg() {
 
         {/* Bottom tag */}
         <div className="mt-[clamp(28px,3vw,40px)] text-center">
-          <div className="inline-flex items-center gap-[12px] rounded-full bg-(--ink-1) py-[14px] pr-[22px] pl-[14px] text-[15px] font-semibold tracking-[-0.005em] text-(--c-cream) max-[360px]:text-[13px]">
+          <div className="inline-flex items-center gap-[12px] rounded-sm bg-(--ink-1) py-[14px] pr-[22px] pl-[14px] text-[15px] font-semibold tracking-[-0.005em] text-(--c-cream) max-[360px]:text-[13px]">
             <span className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-(--c-teal-light) text-[12px] text-white">
               <svg
                 width="13"

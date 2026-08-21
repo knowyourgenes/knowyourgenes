@@ -1,7 +1,7 @@
 'use client';
 
 // =============================================================================
-// features/cart — the browser-side basket
+// features/cart - the browser-side basket
 // -----------------------------------------------------------------------------
 // Holds slugs + quantities in localStorage and asks the server what they cost.
 // It never computes money itself: every total on screen comes back from

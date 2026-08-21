@@ -62,7 +62,7 @@ export default function Testimonial({ data, ground }: { data: TestimonialSection
         {/* 30/45 Cormorant 700 italic #2d2a24 - 700 wide, so it breaks in two */}
         <Closing html={data.closingHtml} className="mb-6 max-w-175 text-[#2d2a24]" />
 
-        {data.cta ? <Cta data={data.cta} className="h-15 py-0 tracking-[0.06px]" /> : null}
+        {data.cta ? <Cta data={data.cta} className="tracking-[0.06px]" /> : null}
       </div>
     </Section>
   );

@@ -41,7 +41,7 @@ export default function Worth({ data, ground }: { data: WorthSection; ground?: G
           // 283 is 3px MORE than the 280 a 320px phone leaves, so below sm the
           // pill trims its padding and lets the label wrap inside a min-h rather
           // than clip against a fixed 46px box. sm+ restores the frame exactly.
-          <span className="inline-flex min-h-11.5 max-w-full items-center gap-2.5 rounded-full border border-eden/15 bg-eden/[0.07] py-2 pl-3 pr-3.5 shadow-tst-crimson sm:h-11.5 sm:py-0 sm:pl-4.25 sm:pr-5.5">
+          <span className="inline-flex min-h-11.5 max-w-full items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] py-2 pl-3 pr-3.5 shadow-tst-crimson sm:h-11.5 sm:py-0 sm:pl-4.25 sm:pr-5.5">
             <FigmaIcon id="10685-596" className="h-6.5 w-5.5 shrink-0" />
             <span className="font-kyg text-[14px] font-extrabold uppercase leading-5.25 tracking-[0.08em] text-eden">
               {eyebrow.label}
@@ -76,7 +76,7 @@ export default function Worth({ data, ground }: { data: WorthSection; ground?: G
           GRID, pad 4/0/0/0 (a 4px transparent band above both panels), r28,
           transparent fill on a 1px #0e4d4b@40 stroke, 0 24 60 rgba(14,77,75,.14).
           Columns 656 / 558 of the 1214 inner width.                        */}
-      <div className="mt-11 grid overflow-hidden rounded-[28px] border border-eden/40 pt-1 shadow-[0_24px_60px_0_rgba(14,77,75,0.14)] lg:grid-cols-[656fr_558fr]">
+      <div className="mt-11 grid overflow-hidden rounded-sm border border-eden/40 pt-1 shadow-[0_24px_60px_0_rgba(14,77,75,0.14)] lg:grid-cols-[656fr_558fr]">
         {/* left panel 656x583, pad 48, #0e4d4b@10 -> #ffffff, content centred.
             48 would eat 96 of a 280px phone column, so the pad only reaches the
             frame's value at xl. It dips back to 24 at lg on purpose: that is
@@ -88,7 +88,7 @@ export default function Worth({ data, ground }: { data: WorthSection; ground?: G
               370 cannot fit a narrow column, so below sm the label wraps inside
               a min-h rather than clipping out of a fixed 42px box. */}
           <div className="mb-6">
-            <span className="inline-flex min-h-[42px] max-w-full items-center gap-2 rounded-full bg-eden px-5 py-2 shadow-tst-soft sm:h-[42px] sm:py-0">
+            <span className="inline-flex min-h-[42px] max-w-full items-center gap-2 rounded-sm bg-eden px-5 py-2 shadow-tst-soft sm:h-[42px] sm:py-0">
               <FigmaIcon id="11146-181" className="h-[23px] w-[19px] shrink-0" />
               <span
                 className="font-kyg text-[14.5px] font-extrabold uppercase leading-[21.8px] tracking-[0.06em] text-linenw"
@@ -119,7 +119,7 @@ export default function Worth({ data, ground }: { data: WorthSection; ground?: G
               return (
                 <span
                   key={i}
-                  className="inline-flex min-h-[42px] max-w-full items-center gap-2 rounded-full border border-mine/10 bg-white px-4 py-2 sm:h-[42px] sm:py-0"
+                  className="inline-flex min-h-[42px] max-w-full items-center gap-2 rounded-sm border border-mine/10 bg-white px-4 py-2 sm:h-[42px] sm:py-0"
                 >
                   {glyph ? <FigmaIcon id={glyph} className="h-[22px] w-[18px] shrink-0" /> : null}
                   <span

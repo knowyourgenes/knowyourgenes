@@ -47,6 +47,18 @@
 
   --radius: 0.625rem;
 
+  /* Height of the shared SiteHeader, as a token so nothing has to guess it.
+     Anything that must clear the bar reads this: the mobile drawer's `top`,
+     and the home hero's top padding (SiteHeader is `overlay` there, so it
+     floats ON the hero and reserves no row of its own).
+
+     The value here is the SSR/first-paint fallback. SiteHeader measures
+     itself with a ResizeObserver and overwrites this on <html>, so the two
+     cannot drift apart when the bar's contents change or it wraps at a
+     narrow width. Keep this in the ballpark of the real thing anyway - it
+     is what the first frame is laid out against. */
+  --site-header-h: 104px;
+
   --sidebar: oklch(0.99 0 0);
   --sidebar-foreground: oklch(0.21 0 0);
   --sidebar-primary: oklch(0.31 0.052 184);
@@ -134,13 +146,48 @@
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-geist-sans);
 
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  /* THE site radius: 6px, and it is the ONLY one (docs/DESIGN.md §2).
+     A literal, not derived from --radius, so it does not move when someone
+     tunes the shadcn --radius base for the admin area. */
+  --radius-sm: 6px;
+
+  /* The rest of Tailwind's radius scale is COLLAPSED ONTO THE SAME 6px rather
+     than left deriving from --radius (which would paint 8 / 10 / 14 / 18 / 22 /
+     26px). Nothing in app/, components/ or features/ writes rounded-md and up -
+     design:check would fail it - so these tokens only exist as a trapdoor: if a
+     stray rounded-lg lands in a shadcn primitive or a copy-pasted snippet, it
+     paints the site radius instead of quietly re-opening the drift. Do not
+     restore the calc() ladder to "get a bigger corner"; there isn't one. */
+  --radius-md: 6px;
+  --radius-lg: 6px;
+  --radius-xl: 6px;
+  --radius-2xl: 6px;
+  --radius-3xl: 6px;
+  --radius-4xl: 6px;
+}
+
+/* =============================================================================
+   Hidden scrollbars
+   -----------------------------------------------------------------------------
+   The scroll BAR is hidden; scrolling itself is untouched - wheel, trackpad,
+   touch, keyboard, and the scrollbar's own drag-to-scroll on the rare platform
+   that still overlays one. Applied to every scroll container, not just the page,
+   so an inner overflow pane does not reintroduce one.
+
+   Worth knowing: this removes the only persistent visual cue that a region
+   scrolls at all, which matters most for inner panes (the search overlay, the
+   cart drawer). Those all have another affordance - a visible edge or partially
+   cut-off content - so the cue is not the only one. If a future pane does not,
+   give it one rather than reverting this.
+   ============================================================================= */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge */
+}
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* Chrome, Safari */
 }
 
 body {
@@ -438,7 +485,7 @@ body {
   background: var(--color-bottle);
   color: var(--color-spring);
   padding: 7px 11px;
-  border-radius: 9px;
+  border-radius: 6px;
   font-size: 12px;
   white-space: nowrap;
   opacity: 0;

@@ -47,7 +47,7 @@ export function WhyTestSection() {
 
         <div className="mt-[40px] grid gap-[24px] lg:grid-cols-2">
           {/* dark card */}
-          <div className="reveal rounded-[28px] bg-[#1A2220] p-[40px]">
+          <div className="reveal rounded-sm bg-[#1A2220] p-[40px]">
             <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.16em] text-[rgba(243,213,178,0.8)]">
               <FigIcon src="/landing/icons/alert-triangle.svg" className="size-[18px]" />
               The current PCOS journey in India
@@ -72,15 +72,15 @@ export function WhyTestSection() {
           </div>
 
           {/* light card */}
-          <div className="reveal-r rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[40px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)]">
+          <div className="reveal-r rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 p-[40px] shadow-[0_18px_50px_rgba(45,32,18,0.08),0_4px_16px_rgba(45,32,18,0.06)]">
             <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0E4D4B]">
               <FigIcon src="/landing/icons/wh-dna-strand.svg" className="size-[18px]" />
               What knowing your THADA variant changes
             </span>
             <div className="mt-[20px] flex flex-col gap-[12px]">
               {OUTCOMES.map(({ icon: Icon, box, lead, body }) => (
-                <div key={lead} className="flex items-start gap-[16px] rounded-[16px] p-[12px]">
-                  <span className={`grid size-[40px] shrink-0 place-items-center rounded-[12px] ${box}`}>
+                <div key={lead} className="flex items-start gap-[16px] rounded-sm p-[12px]">
+                  <span className={`grid size-[40px] shrink-0 place-items-center rounded-sm ${box}`}>
                     <FigIcon src={Icon} className="size-[20px]" />
                   </span>
                   <p className="text-[15.5px] leading-[25.19px]">
@@ -94,7 +94,7 @@ export function WhyTestSection() {
         </div>
 
         {/* reactive / preventive split */}
-        <div className="reveal mt-[24px] grid overflow-hidden rounded-[28px] border border-[rgba(31,26,20,0.08)] sm:grid-cols-2">
+        <div className="reveal mt-[24px] grid overflow-hidden rounded-sm border border-[rgba(31,26,20,0.08)] sm:grid-cols-2">
           <div className="flex flex-col gap-[11px] bg-[rgba(245,237,223,0.7)] p-[36px]">
             <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.16em] text-[#6B6358]">
               <FigIcon src="/landing/icons/droplet.svg" className="size-[18px]" />A blood test
@@ -142,7 +142,7 @@ const GET_BULLETS: React.ReactNode[] = [
 
 function MockReport() {
   return (
-    <div className="reveal-r overflow-hidden rounded-[30px] border border-[rgba(31,26,20,0.08)] bg-white shadow-[0_40px_100px_rgba(45,32,18,0.14),0_12px_36px_rgba(45,32,18,0.1)]">
+    <div className="reveal-r overflow-hidden rounded-sm border border-[rgba(31,26,20,0.08)] bg-white shadow-[0_40px_100px_rgba(45,32,18,0.14),0_12px_36px_rgba(45,32,18,0.1)]">
       {/* dark header */}
       <div
         className="relative overflow-hidden px-[32px] pb-[32px] pt-[28px]"
@@ -151,7 +151,7 @@ function MockReport() {
         <div className="pointer-events-none absolute -right-6 -top-8 size-[176px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[40px]" />
         <div className="relative flex items-center justify-between">
           <ReportLogo />
-          <span className="rounded-full bg-white/15 px-[12px] py-[6px] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-[8px]">
+          <span className="rounded-sm bg-white/15 px-[12px] py-[6px] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-[8px]">
             Panel 01 / 05
           </span>
         </div>
@@ -169,13 +169,13 @@ function MockReport() {
       {/* body */}
       <div className="flex flex-col gap-[18px] px-[32px] py-[28px]">
         <div className="grid grid-cols-2 gap-[16px]">
-          <div className="rounded-[16px] bg-[rgba(245,237,223,0.7)] p-[20px]">
+          <div className="rounded-sm bg-[rgba(245,237,223,0.7)] p-[20px]">
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Your genotype</div>
             <div className="mt-[6px] font-hind text-[34px] font-semibold leading-none tracking-[-0.025em] text-[#1F1A14]">
               AA
             </div>
           </div>
-          <div className="rounded-[16px] bg-[rgba(14,77,75,0.08)] p-[20px]">
+          <div className="rounded-sm bg-[rgba(14,77,75,0.08)] p-[20px]">
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(14,77,75,0.8)]">
               Your response
             </div>
@@ -200,7 +200,7 @@ function MockReport() {
             ))}
           </div>
           <div
-            className="relative mt-[8px] h-[8px] rounded-full"
+            className="relative mt-[8px] h-[8px] rounded-sm"
             style={{ background: 'linear-gradient(90deg, #2AC3A2 0%, #F3D5B2 50%, #C76842 100%)' }}
           >
             <span className="absolute left-[6%] top-1/2 size-[14px] -translate-y-1/2 rounded-full border-[3px] border-white bg-[#2AC3A2] shadow-[0_2px_6px_rgba(0,0,0,0.2)]" />
@@ -253,7 +253,7 @@ export function WhatYouGetSection() {
               ))}
             </ul>
 
-            <div className="mt-[32px] flex flex-col gap-[8px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/60 px-[24px] pb-[32px] pt-[36px]">
+            <div className="mt-[32px] flex flex-col gap-[8px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/60 px-[24px] pb-[32px] pt-[36px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
                 <FigIcon src="/landing/icons/layers.svg" className="size-[17px]" />
                 And this is just Panel 01 of 5
@@ -303,7 +303,7 @@ export function DataStatsSection() {
           </h2>
         </div>
 
-        <div className="mt-[48px] grid grid-cols-2 gap-px overflow-hidden rounded-[28px] bg-white/10 lg:grid-cols-4">
+        <div className="mt-[48px] grid grid-cols-2 gap-px overflow-hidden rounded-sm bg-white/10 lg:grid-cols-4">
           {STATS.map((s) => (
             <div key={s.label} className="flex flex-col gap-[12px] bg-[#1A2220] p-[28px] sm:p-[32px]">
               <div
@@ -390,11 +390,11 @@ export function BeforeAfterSection() {
           {BEFORE_AFTER.map((row, i) => (
             <div
               key={i}
-              className="reveal grid overflow-hidden rounded-[24px] border border-[rgba(31,26,20,0.08)] bg-[rgba(31,26,20,0.08)] sm:grid-cols-2"
+              className="reveal grid overflow-hidden rounded-sm border border-[rgba(31,26,20,0.08)] bg-[rgba(31,26,20,0.08)] sm:grid-cols-2"
             >
               <div className="flex flex-col gap-[12px] bg-[rgba(245,237,223,0.6)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
-                  <span className="grid size-[28px] place-items-center rounded-[8px] bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
+                  <span className="grid size-[28px] place-items-center rounded-sm bg-[rgba(31,26,20,0.06)] text-[#6B6358]">
                     <FigIcon src="/landing/icons/wh-clock-rewind.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Before</span>
@@ -403,7 +403,7 @@ export function BeforeAfterSection() {
               </div>
               <div className="flex flex-col gap-[12px] bg-[rgba(14,77,75,0.06)] p-[32px]">
                 <span className="inline-flex items-center gap-[8px]">
-                  <span className="grid size-[28px] place-items-center rounded-[8px] text-[#0E4D4B]">
+                  <span className="grid size-[28px] place-items-center rounded-sm text-[#0E4D4B]">
                     <FigIcon src="/landing/icons/check.svg" className="size-[16px]" />
                   </span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">After</span>

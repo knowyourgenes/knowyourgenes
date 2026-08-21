@@ -45,9 +45,7 @@
 // this section worth splitting out - the header and the CTA are three elements -
 // so the whole section opts in rather than being cut into two files.
 //
-// RADIUS TRAP: this project remaps Tailwind's radius scale (--radius 0.625rem),
-// so rounded-2xl is 18px. The disc is a true circle (border-radius:50%) and the
-// CTA is radius 10, written explicitly.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { cn } from '@/lib/utils';
@@ -198,7 +196,7 @@ export default function HowItWorks() {
                     crossfade in place rather than displacing each other. */}
                 <span
                   className={cn(
-                    'relative z-[2] grid h-[66px] w-[66px] rounded-full bg-linenw',
+                    'relative z-[2] grid h-[66px] w-[66px] rounded-sm bg-linenw',
                     // tabular-nums keeps 01…05 the same optical width, so the
                     // digits do not shuffle inside the circle
                     'font-kyg text-[19px] font-extrabold leading-[1.62] tracking-[-0.02em] tabular-nums text-pewter',

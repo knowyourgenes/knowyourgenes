@@ -28,7 +28,7 @@
 //   numeral warms to java, the heading goes eden, the icon chip flips solid and
 //   tilts, and the parked arrow slides in and fills.
 //
-// RADIUS TRAP: the icon tile is 11 and the hover circle is 17 (a 34px box, so
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // it reads as a circle without being a 999 capsule). Both explicit.
 //
 // ICON NOTE: the row hover circle's own ids (2613-1324 …) all dedupe to a
@@ -262,7 +262,7 @@ export default function Discover() {
                         `transform`: Tailwind v4 compiles the movement utilities
                         to the individual CSS properties, so a hand-written
                         transition-[transform] list animates nothing here. */}
-                    <span className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[11px] bg-eden/[0.08] transition-[background-color,translate,rotate,box-shadow] duration-850 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1 group-hover:rotate-[-5deg] group-hover:bg-eden group-hover:shadow-[0_12px_26px_rgba(14,77,75,0.26)] group-focus-within:-translate-y-1 group-focus-within:rotate-[-5deg] group-focus-within:bg-eden group-focus-within:shadow-[0_12px_26px_rgba(14,77,75,0.26)] motion-reduce:transition-none">
+                    <span className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-sm bg-eden/[0.08] transition-[background-color,translate,rotate,box-shadow] duration-850 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1 group-hover:rotate-[-5deg] group-hover:bg-eden group-hover:shadow-[0_12px_26px_rgba(14,77,75,0.26)] group-focus-within:-translate-y-1 group-focus-within:rotate-[-5deg] group-focus-within:bg-eden group-focus-within:shadow-[0_12px_26px_rgba(14,77,75,0.26)] motion-reduce:transition-none">
                       {/* HomeIcon serves a static <img>, so the source's
                           `color:var(--c-cream)` on the hovered chip cannot be
                           inherited - the eden stroke is baked into the file.
@@ -319,7 +319,7 @@ export default function Discover() {
                     text link already in the row. */}
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none hidden h-[34px] w-[34px] -translate-x-2 place-items-center rounded-[17px] opacity-0 shadow-[inset_0_0_0_1px_rgba(27,23,18,0.11)] transition-[opacity,translate,background-color,box-shadow] duration-640 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0 group-hover:bg-eden group-hover:opacity-100 group-hover:shadow-none group-focus-within:translate-x-0 group-focus-within:bg-eden group-focus-within:opacity-100 group-focus-within:shadow-none motion-reduce:transition-none lg:grid lg:self-center lg:justify-self-end"
+                  className="pointer-events-none hidden h-[34px] w-[34px] -translate-x-2 place-items-center rounded-sm opacity-0 shadow-[inset_0_0_0_1px_rgba(27,23,18,0.11)] transition-[opacity,translate,background-color,box-shadow] duration-640 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0 group-hover:bg-eden group-hover:opacity-100 group-hover:shadow-none group-focus-within:translate-x-0 group-focus-within:bg-eden group-focus-within:opacity-100 group-focus-within:shadow-none motion-reduce:transition-none lg:grid lg:self-center lg:justify-self-end"
                 >
                   {/* same <img> recolour as the chip: eden stroke → cream once
                       the circle behind it fills */}

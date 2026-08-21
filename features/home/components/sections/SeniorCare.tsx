@@ -75,9 +75,9 @@ export default function SeniorCare() {
               {pills.map((pill) => (
                 <div
                   key={pill.text}
-                  className="flex items-center gap-[14px] rounded-[var(--r-sm)] border border-(--ink-line) bg-white/80 p-[16px_20px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[3px] hover:border-(--c-teal-light) hover:bg-white hover:shadow-[var(--sh-1)] max-[560px]:p-[14px_16px]"
+                  className="flex items-center gap-[14px] rounded-sm border border-(--ink-line) bg-white/80 p-[16px_20px] backdrop-blur-[8px] transition-all duration-500 ease-[var(--e-out)] hover:-translate-y-[3px] hover:border-(--c-teal-light) hover:bg-white hover:shadow-[var(--sh-1)] max-[560px]:p-[14px_16px]"
                 >
-                  <div className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-[12px] bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
+                  <div className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-sm bg-[linear-gradient(135deg,var(--c-peach)_0%,var(--c-peach-2)_100%)] text-(--c-teal)">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -101,7 +101,7 @@ export default function SeniorCare() {
           </div>
 
           {/* Photo column */}
-          <div className="relative aspect-[4/4.4] overflow-hidden rounded-[var(--r-lg)] shadow-[var(--sh-2)]">
+          <div className="relative aspect-[4/4.4] overflow-hidden rounded-sm shadow-[var(--sh-2)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="absolute left-0 top-[-12%] h-[124%] w-full object-cover"

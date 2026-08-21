@@ -22,9 +22,9 @@ export function HeroSection() {
       <Container>
         <div className="lg:grid lg:grid-cols-[minmax(0,600px)_minmax(0,1fr)] lg:items-center">
           {/* glass copy card */}
-          <div className="relative z-10 rounded-[34px] border border-white/70 bg-[rgba(250,246,239,0.85)] p-7 shadow-[0_24px_70px_-30px_rgba(20,45,40,0.4)] backdrop-blur-[24px] sm:p-10 lg:py-[44px] lg:pl-[40px] lg:pr-[64px] lg:mr-[-72px]">
-            <span className="inline-flex items-center gap-[10px] rounded-full bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
-              <span className="grid size-[28px] place-items-center rounded-full bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
+          <div className="relative z-10 rounded-sm border border-white/70 bg-[rgba(250,246,239,0.85)] p-7 shadow-[0_24px_70px_-30px_rgba(20,45,40,0.4)] backdrop-blur-[24px] sm:p-10 lg:py-[44px] lg:pl-[40px] lg:pr-[64px] lg:mr-[-72px]">
+            <span className="inline-flex items-center gap-[10px] rounded-sm bg-[#0E4D4B] py-[8px] pl-[12px] pr-[20px] shadow-[0_14px_32px_-8px_rgba(14,77,75,0.42)]">
+              <span className="grid size-[28px] place-items-center rounded-sm bg-[rgba(37,181,171,0.25)] text-[#FAF6EF]">
                 <FigIcon src="/landing/icons/hero-badge.svg" className="size-[18px]" />
               </span>
               <span className="text-[13.5px] font-semibold leading-[20.25px] text-[#FAF6EF]">
@@ -39,11 +39,11 @@ export function HeroSection() {
             </h1>
 
             <div className="mt-[20px] flex flex-wrap gap-[8px]">
-              <span className="inline-flex items-center gap-[6px] rounded-full border border-[rgba(14,77,75,0.15)] bg-white/80 px-[14px] py-[8px] text-[13px] font-medium text-[#2D2A24]">
+              <span className="inline-flex items-center gap-[6px] rounded-sm border border-[rgba(14,77,75,0.15)] bg-white/80 px-[14px] py-[8px] text-[13px] font-medium text-[#2D2A24]">
                 <FigIcon src="/landing/icons/calendar.svg" className="size-[15px] text-[#0E4D4B]" />
                 Planning a pregnancy
               </span>
-              <span className="inline-flex items-center gap-[6px] rounded-full border border-[rgba(14,77,75,0.15)] bg-white/80 px-[14px] py-[8px] text-[13px] font-medium text-[#2D2A24]">
+              <span className="inline-flex items-center gap-[6px] rounded-sm border border-[rgba(14,77,75,0.15)] bg-white/80 px-[14px] py-[8px] text-[13px] font-medium text-[#2D2A24]">
                 <FigIcon src="/landing/icons/pl-hand-heart.svg" className="size-[15px] text-[#0E4D4B]" />
                 After a loss
               </span>
@@ -76,7 +76,7 @@ export function HeroSection() {
 
           {/* image block */}
           <div className="mt-10 lg:mt-0 z-10">
-            <div className="relative mx-auto aspect-[589/600] w-full max-w-[589px] overflow-hidden rounded-[36px] bg-[#E4F1EC] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)]">
+            <div className="relative mx-auto aspect-[589/600] w-full max-w-[589px] overflow-hidden rounded-sm bg-[#E4F1EC] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)]">
               <Image
                 src="/landing/pregnancy-loss/hero.png"
                 alt="Two people holding hands in support across a table"
@@ -93,7 +93,7 @@ export function HeroSection() {
                 }}
               />
               {/* stat chip */}
-              <div className="absolute right-4 top-4 flex items-center gap-[12px] rounded-[16px] bg-[rgba(14,77,75,0.95)] px-[16px] py-[12px] backdrop-blur-[8px]">
+              <div className="absolute right-4 top-4 flex items-center gap-[12px] rounded-sm bg-[rgba(14,77,75,0.95)] px-[16px] py-[12px] backdrop-blur-[8px]">
                 <FigIcon src="/landing/icons/pl-activity-monitor.svg" className="size-[22px] text-[#F3D5B2]" />
                 <div className="leading-tight">
                   <div className="font-hind text-[18px] font-semibold leading-[22.5px] text-[#FAF6EF]">10 to 20%</div>
@@ -103,8 +103,8 @@ export function HeroSection() {
                 </div>
               </div>
               {/* caption card */}
-              <div className="absolute inset-x-4 bottom-4 flex items-center gap-[14px] rounded-[16px] bg-white px-[16px] py-[14px] shadow-[0_12px_30px_rgba(20,45,40,0.18)]">
-                <span className="grid size-[40px] shrink-0 place-items-center rounded-[12px] bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
+              <div className="absolute inset-x-4 bottom-4 flex items-center gap-[14px] rounded-sm bg-white px-[16px] py-[14px] shadow-[0_12px_30px_rgba(20,45,40,0.18)]">
+                <span className="grid size-[40px] shrink-0 place-items-center rounded-sm bg-[rgba(14,77,75,0.1)] text-[#0E4D4B]">
                   <FigIcon src="/landing/icons/users.svg" className="size-[21px]" />
                 </span>
                 <p className="text-[13.5px] leading-[18.56px]">
@@ -117,7 +117,7 @@ export function HeroSection() {
         </div>
 
         {/* trust bar */}
-        <div className="reveal mt-[40px] flex flex-col items-start gap-[16px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
+        <div className="reveal mt-[40px] flex flex-col items-start gap-[16px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/55 px-[28px] py-[16px] backdrop-blur-[8px] sm:flex-row sm:items-center sm:gap-[20px]">
           <span className="inline-flex shrink-0 items-center gap-[8px]">
             <FigIcon src="/landing/icons/pl-flower.svg" className="size-[19px] text-[#0E4D4B]" />
             <span className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-[#0E4D4B]">
@@ -199,7 +199,7 @@ export function NotAloneSection() {
           {VOICES.map((v) => (
             <article
               key={v.name}
-              className="reveal relative overflow-hidden rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
+              className="reveal relative overflow-hidden rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 p-[32px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
             >
               <div
                 className="pointer-events-none absolute -right-5 -top-5 size-[112px] rounded-full blur-[40px]"
@@ -207,7 +207,7 @@ export function NotAloneSection() {
               />
               <div className="relative flex items-center gap-[14px]">
                 <span
-                  className="grid size-[56px] shrink-0 place-items-center rounded-[16px] text-[15px] font-semibold text-[#FAF6EF]"
+                  className="grid size-[56px] shrink-0 place-items-center rounded-sm text-[15px] font-semibold text-[#FAF6EF]"
                   style={{ background: v.badge }}
                 >
                   {v.initials}
@@ -227,13 +227,13 @@ export function NotAloneSection() {
 
         {/* thesis callout */}
         <div
-          className="reveal relative mt-[24px] overflow-hidden rounded-[32px] px-[40px] py-[48px] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)] sm:px-[48px] sm:py-[56px]"
+          className="reveal relative mt-[24px] overflow-hidden rounded-sm px-[40px] py-[48px] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)] sm:px-[48px] sm:py-[56px]"
           style={{ background: 'linear-gradient(178deg, #0E4D4B 0%, #0A3B39 100%)' }}
         >
           <div className="pointer-events-none absolute -right-10 -top-16 size-[224px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[64px]" />
           <div className="pointer-events-none absolute -bottom-16 left-1/3 size-[192px] rounded-full bg-[rgba(243,213,178,0.1)] blur-[64px]" />
           <div className="relative flex flex-col items-start gap-[20px]">
-            <span className="grid size-[56px] place-items-center rounded-[18px] bg-white/10 text-[#F3D5B2] backdrop-blur-[8px]">
+            <span className="grid size-[56px] place-items-center rounded-sm bg-white/10 text-[#F3D5B2] backdrop-blur-[8px]">
               <FigIcon src="/landing/icons/quote.svg" className="size-[28px]" />
             </span>
             <p className="max-w-[900px] text-[24px] font-semibold leading-[1.28] tracking-[-0.018em] sm:text-[28px] lg:text-[30px] lg:leading-[38.4px]">
@@ -296,10 +296,10 @@ export function WhatTheTestCoversSection() {
           {GENES.map((g) => (
             <div
               key={g.gene}
-              className="reveal flex flex-col rounded-[28px] border border-[rgba(31,26,20,0.08)] bg-white/75 p-[36px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
+              className="reveal flex flex-col rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/75 p-[36px] shadow-[0_4px_14px_rgba(20,45,40,0.05),0_1px_2px_rgba(20,45,40,0.04)]"
             >
               <div className="flex items-center gap-[16px]">
-                <span className="grid size-[56px] shrink-0 place-items-center rounded-[16px] bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
+                <span className="grid size-[56px] shrink-0 place-items-center rounded-sm bg-[rgba(14,77,75,0.08)] text-[#0E4D4B]">
                   <FigIcon src={`/landing/icons/${g.icon}.svg`} className="size-[28px]" />
                 </span>
                 <div>
@@ -323,7 +323,7 @@ export function WhatTheTestCoversSection() {
 
         {/* takeaway banner */}
         <div
-          className="reveal mt-[16px] flex flex-col items-start gap-[20px] rounded-[28px] border border-[rgba(14,77,75,0.15)] px-[40px] py-[32px] sm:flex-row sm:items-center"
+          className="reveal mt-[16px] flex flex-col items-start gap-[20px] rounded-sm border border-[rgba(14,77,75,0.15)] px-[40px] py-[32px] sm:flex-row sm:items-center"
           style={{
             background:
               'linear-gradient(90deg, rgba(228,241,236,1) 0%, rgba(210,232,223,0.7) 50%, rgba(228,241,236,0.6) 100%)',
@@ -382,7 +382,7 @@ export function PreventiveCaseSection() {
                 rather than reacting to it.
               </p>
             </div>
-            <div className="mt-[24px] rounded-[22px] border border-[rgba(31,26,20,0.08)] bg-white/70 px-[24px] pb-[24px] pt-[28px]">
+            <div className="mt-[24px] rounded-sm border border-[rgba(31,26,20,0.08)] bg-white/70 px-[24px] pb-[24px] pt-[28px]">
               <span className="inline-flex items-center gap-[8px] text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0E4D4B]">
                 <FigIcon src="/landing/icons/pl-hand-heart.svg" className="size-[18px]" />
                 For women who have already experienced loss
@@ -396,7 +396,7 @@ export function PreventiveCaseSection() {
 
           {/* image + floating quote column */}
           <div className="reveal-r flex flex-col gap-[20px] lg:pt-[40px]">
-            <div className="relative aspect-[539/486] w-full overflow-hidden rounded-[34px] bg-[#E4F1EC] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)]">
+            <div className="relative aspect-[539/486] w-full overflow-hidden rounded-sm bg-[#E4F1EC] shadow-[0_40px_100px_rgba(20,45,40,0.15),0_12px_36px_rgba(20,45,40,0.1)]">
               <Image
                 src="/landing/pregnancy-loss/preventive.png"
                 alt="A mother holding her newborn tenderly"
@@ -409,7 +409,7 @@ export function PreventiveCaseSection() {
                 style={{ background: 'linear-gradient(180deg, rgba(14,77,75,0) 40%, rgba(14,77,75,0.55) 100%)' }}
               />
             </div>
-            <div className="relative overflow-hidden rounded-[24px] bg-[#0E4D4B] p-[28px]">
+            <div className="relative overflow-hidden rounded-sm bg-[#0E4D4B] p-[28px]">
               <div className="pointer-events-none absolute -right-8 -top-8 size-[144px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[40px]" />
               <p className="relative text-[20px] font-semibold leading-[28px] text-[#FAF6EF]">
                 Pre-conception genetic testing is not paranoia. It is the most rational, loving thing you can do for a

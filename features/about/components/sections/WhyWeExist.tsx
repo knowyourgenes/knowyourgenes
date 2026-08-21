@@ -6,8 +6,7 @@
 // 1400 with its own 32 → a 1336 content column (not the usual 1216), so the
 // shared <Section> is nudged via className/innerClassName rather than rebuilt.
 //
-// RADIUS TRAP: rounded-4xl = 26px (image card). Everything else in this frame
-// (24, 16, 2, 999) is written as an explicit arbitrary value.
+// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
 // =============================================================================
 
 import { Fragment } from 'react';
@@ -59,7 +58,7 @@ function ChainLink() {
   return (
     <span
       aria-hidden="true"
-      className="relative hidden h-[2px] w-[22px] shrink-0 rounded-[2px] bg-[linear-gradient(90deg,rgba(34,34,34,0.08),rgba(122,122,122,0.35),rgba(34,34,34,0.08))] xl:block"
+      className="relative hidden h-[2px] w-[22px] shrink-0 rounded-sm bg-[linear-gradient(90deg,rgba(34,34,34,0.08),rgba(122,122,122,0.35),rgba(34,34,34,0.08))] xl:block"
     >
       <span className="absolute left-[-4px] top-1/2 h-[7px] w-[7px] -translate-y-1/2 rounded-full bg-[#b8b3aa]" />
     </span>
@@ -72,7 +71,7 @@ export default function WhyWeExist() {
       id="why-we-exist"
       ground="veil"
       className="border-y border-mine/10 lg:px-5"
-      innerClassName="max-w-[1400px] py-[clamp(56px,6.2vw,88px)] lg:px-8"
+      innerClassName="max-w-[1600px] py-[clamp(56px,6.2vw,88px)] lg:px-8"
     >
       <div className="flex flex-col items-center gap-9 lg:gap-[47px]">
         {/* ---------- header ---------------------------------------------- */}
@@ -98,7 +97,7 @@ export default function WhyWeExist() {
             to the 960 label rail - the label is centred text, so it is unmoved -
             with enough headroom above 1026 to absorb font-metric drift before
             anything wraps. */}
-        <div className="flex w-full max-w-[1120px] flex-col gap-5">
+        <div className="flex w-full max-w-[1600px] flex-col gap-5">
           <p className="text-center font-kyg text-[13px] font-bold uppercase leading-[19.5px] tracking-[0.16em] text-boulder">
             The reactive loop
           </p>
@@ -106,7 +105,7 @@ export default function WhyWeExist() {
             {REACTIVE_CHAIN.map((step, i) => (
               <Fragment key={step.icon}>
                 {i > 0 ? <ChainLink /> : null}
-                <span className="inline-flex min-h-[49px] max-w-full items-center gap-2 rounded-full border border-mine/10 bg-[#f3f1ea] py-[11px] pl-[21px] pr-5">
+                <span className="inline-flex min-h-[49px] max-w-full items-center gap-2 rounded-sm border border-mine/10 bg-[#f3f1ea] py-[11px] pl-[21px] pr-5">
                   <AboutIcon id={step.icon} className="h-[25px] w-[21px] shrink-0" />
                   <span className="min-w-0 break-words font-kyg text-[15px] font-extrabold leading-[17.2px] tracking-[0.02em] text-[#6b665d]">
                     {step.label}
@@ -131,7 +130,7 @@ export default function WhyWeExist() {
               deleted - same net result, and the eden wash still sits on top.
               The source is portrait (1122x1402) in a 1.65:1 landscape slot, so
               object-cover crops hard; held at 42% to keep the face in frame. */}
-          <div className="relative min-h-[240px] overflow-hidden rounded-4xl border border-mine/10 shadow-tst-card sm:min-h-[300px] lg:min-h-[365px]">
+          <div className="relative min-h-[240px] overflow-hidden rounded-sm border border-mine/10 shadow-tst-card sm:min-h-[300px] lg:min-h-[365px]">
             <Photo
               src="/about/img/why-we-exist-panel.jpg"
               alt="A woman sitting quietly at home in the afternoon light."
@@ -149,9 +148,9 @@ export default function WhyWeExist() {
             {NARRATIVE_POINTS.map((point) => (
               <div
                 key={point.icon}
-                className="flex items-center gap-4 rounded-[24px] border border-mine/10 bg-linenw p-6 sm:p-7"
+                className="flex items-center gap-4 rounded-sm border border-mine/10 bg-linenw p-6 sm:p-7"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] bg-mint">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-mint">
                   <AboutIcon id={point.icon} className="h-[28px] w-[24px]" />
                 </span>
                 <p className="min-w-0 break-words font-kyg text-[clamp(15.5px,1.25vw,17.5px)] leading-[1.62] text-[#2d2a24]">
@@ -160,12 +159,12 @@ export default function WhyWeExist() {
               </div>
             ))}
 
-            <div className="relative flex items-center gap-4 overflow-hidden rounded-[24px] bg-eden p-6 sm:p-7">
+            <div className="relative flex items-center gap-4 overflow-hidden rounded-sm bg-eden p-6 sm:p-7">
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-[56px] -top-[56px] h-[176px] w-[176px] rounded-full bg-java2/15 blur-[20px]"
               />
-              <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px]">
+              <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-sm">
                 <AboutIcon id="2087-724" className="h-[28px] w-[24px]" />
               </span>
               <p className="relative min-w-0 break-words font-kyg text-[clamp(19px,1.65vw,23px)] font-semibold leading-[1.37] text-linenw">
@@ -183,7 +182,7 @@ export default function WhyWeExist() {
             the whole row becomes a column (arrow turned down, still in the
             middle) instead of wrapping the arrow onto the first line. */}
         <div className="flex w-full flex-col items-center justify-center gap-4 min-[560px]:flex-row">
-          <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-mine/10 bg-linenw px-5 py-[10px]">
+          <span className="inline-flex max-w-full items-center gap-2 rounded-sm border border-mine/10 bg-linenw px-5 py-[10px]">
             <AboutIcon id="2211-503" className="h-[22px] w-[18px] shrink-0" />
             <span className="min-w-0 break-words font-kyg text-[14px] font-bold uppercase leading-[21px] tracking-[0.1em] text-boulder">
               Reactive
@@ -192,7 +191,7 @@ export default function WhyWeExist() {
           {/* Rotation is keyed off the SAME query as the direction switch above,
               so the arrow can never point down beside a pill or across a stack. */}
           <AboutIcon id="2208-644" className="h-[28px] w-[24px] shrink-0 rotate-90 min-[560px]:rotate-0" />
-          <span className="inline-flex max-w-full items-center gap-2 rounded-full bg-eden px-5 py-[10px]">
+          <span className="inline-flex max-w-full items-center gap-2 rounded-sm bg-eden px-5 py-[10px]">
             <AboutIcon id="2211-705" className="h-[22px] w-[18px] shrink-0" />
             <span className="min-w-0 break-words font-kyg text-[14px] font-bold uppercase leading-[21px] tracking-[0.1em] text-linenw">
               Understanding earlier

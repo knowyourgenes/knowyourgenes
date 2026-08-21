@@ -41,7 +41,7 @@ export default function BuyBox({
         {kit.pills.map((p) => (
           <span
             key={p.label}
-            className="inline-flex items-center rounded-full border border-sea/20 bg-gin px-[13px] py-[6px] text-[12px] font-bold text-greenpea"
+            className="inline-flex items-center rounded-sm border border-sea/20 bg-gin px-[13px] py-[6px] text-[12px] font-bold text-greenpea"
           >
             {p.label}
           </span>
@@ -80,7 +80,7 @@ export default function BuyBox({
         {kit.trustChips.map((c) => (
           <div
             key={c.line1}
-            className="flex h-[41px] items-center gap-[10px] rounded-[12px] border border-heavy/10 bg-white/70 px-[14px]"
+            className="flex h-[41px] items-center gap-[10px] rounded-sm border border-heavy/10 bg-white/70 px-[14px]"
           >
             <Icon name={TRUST_ICON[c.icon]} className="h-[19px] w-[16px] text-sea" />
             <span className="text-[12.5px] font-semibold leading-tight text-[#2a2e28]">
@@ -101,10 +101,10 @@ export default function BuyBox({
         <Accordion title={kit.included.title} defaultOpen emphasis>
           <div className="flex flex-col gap-[10px] pt-0.5">
             {kit.included.items.map((it) => (
-              <div key={it.name} className="rounded-[14px] border border-heavy/10 bg-white px-4 py-[14px]">
+              <div key={it.name} className="rounded-sm border border-heavy/10 bg-white px-4 py-[14px]">
                 <div className="mb-1 flex items-start justify-between gap-3">
                   <span className="text-[14.5px] font-extrabold text-heavy">{it.name}</span>
-                  <span className="mt-0.5 shrink-0 rounded-full border border-sea/20 bg-gin px-[10px] py-[3px] text-[11px] font-bold text-greenpea">
+                  <span className="mt-0.5 shrink-0 rounded-sm border border-sea/20 bg-gin px-[10px] py-[3px] text-[11px] font-bold text-greenpea">
                     {it.traits}
                   </span>
                 </div>

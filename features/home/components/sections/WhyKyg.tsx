@@ -84,7 +84,7 @@ export default function WhyKyg() {
               {trackChips.map((chip) => (
                 <div
                   key={chip.label}
-                  className="inline-flex items-center gap-[10px] rounded-full border border-(--ink-line) bg-white/70 px-[16px] py-[9px] text-[13.5px] font-medium text-(--ink-2) backdrop-blur-[8px] transition-[transform,background,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.18)] hover:bg-white hover:shadow-[var(--sh-1)] max-[360px]:gap-[7px] max-[360px]:px-[12px] max-[360px]:py-[8px] max-[360px]:text-[12px]"
+                  className="inline-flex items-center gap-[10px] rounded-sm border border-(--ink-line) bg-white/70 px-[16px] py-[9px] text-[13.5px] font-medium text-(--ink-2) backdrop-blur-[8px] transition-[transform,background,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-[rgba(31,26,20,0.18)] hover:bg-white hover:shadow-[var(--sh-1)] max-[360px]:gap-[7px] max-[360px]:px-[12px] max-[360px]:py-[8px] max-[360px]:text-[12px]"
                 >
                   <svg {...svgProps} className="h-[16px] w-[16px] shrink-0 text-(--c-teal)">
                     {chip.icon}
@@ -99,7 +99,7 @@ export default function WhyKyg() {
             </p>
 
             {/* Quote box */}
-            <div className="relative mt-[18px] mb-[18px] overflow-hidden rounded-[var(--r-md)] border border-[rgba(37,181,171,0.22)] bg-[linear-gradient(160deg,var(--c-teal)_0%,#0a3f3d_100%)] px-[28px] py-[24px] text-(--c-cream) shadow-[0_24px_50px_-22px_rgba(14,77,75,0.42),0_0_0_1px_rgba(37,181,171,0.08)] max-[880px]:px-[20px] max-[880px]:py-[20px] max-[360px]:px-[16px]">
+            <div className="relative mt-[18px] mb-[18px] overflow-hidden rounded-sm border border-[rgba(37,181,171,0.22)] bg-[linear-gradient(160deg,var(--c-teal)_0%,#0a3f3d_100%)] px-[28px] py-[24px] text-(--c-cream) shadow-[0_24px_50px_-22px_rgba(14,77,75,0.42),0_0_0_1px_rgba(37,181,171,0.08)] max-[880px]:px-[20px] max-[880px]:py-[20px] max-[360px]:px-[16px]">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_12%_12%,rgba(37,181,171,0.22),transparent_60%),radial-gradient(50%_60%_at_90%_90%,rgba(248,228,204,0.06),transparent_60%)]" />
               <div className="relative z-[1]">
                 <div className="mb-[14px] inline-flex items-center gap-[10px] text-[12px] font-bold tracking-[0.2em] text-(--c-peach-2) uppercase">
@@ -127,7 +127,7 @@ export default function WhyKyg() {
           </div>
 
           {/* Right column - big-number photo panel */}
-          <div className="relative flex min-h-[520px] flex-col overflow-hidden rounded-[var(--r-lg)] bg-(--c-cream-2) max-[880px]:min-h-[340px] max-[360px]:min-h-[280px]">
+          <div className="relative flex min-h-[520px] flex-col overflow-hidden rounded-sm bg-(--c-cream-2) max-[880px]:min-h-[340px] max-[360px]:min-h-[280px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="absolute inset-0 z-0 h-full w-full object-cover"

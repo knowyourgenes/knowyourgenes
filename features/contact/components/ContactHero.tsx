@@ -36,9 +36,9 @@ export default function ContactHero() {
           {HERO_CHIPS.map((c) => (
             <li
               key={c.label}
-              className="inline-flex items-center gap-2 rounded-full border border-mine/10 bg-white py-2 pl-2 pr-4 shadow-tst-soft"
+              className="inline-flex items-center gap-2 rounded-sm border border-mine/10 bg-white py-2 pl-2 pr-4 shadow-tst-soft"
             >
-              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-mint">
+              <span className="grid size-8 shrink-0 place-items-center rounded-sm bg-mint">
                 <ContactIcon id={c.icon} className="h-[23px] w-[19px]" />
               </span>
               <span className="font-kyg text-[13.5px] font-bold leading-[20.2px] text-[#2d2a24]">{c.label}</span>

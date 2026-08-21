@@ -63,7 +63,7 @@ export interface TestCategory {
   accent: 'wellness' | 'mens' | 'womens';
   /** Lead image for the category card on /categories. */
   image?: Img;
-  /** Fallback tile mark + tint — same contract as `CategoryProduct`. */
+  /** Fallback tile mark + tint - same contract as `CategoryProduct`. */
   icon: IconKey;
   tone: CardTone;
   products: CategoryProduct[];
@@ -383,8 +383,13 @@ export function visibleProducts(category: TestCategory): CategoryProduct[] {
 /**
  * Lowercase and drop apostrophes, so "Women's" / "womens" / "women" and
  * "can't sleep" / "cant sleep" all collapse onto the same text.
+ *
+ * Exported because the header's search overlay matches PAGES and keyword
+ * suggestions too, not just products, and those must collapse text exactly the
+ * way `searchProducts` does - otherwise "women's health" would find the product
+ * but not the page, from the same box, in the same keystroke.
  */
-function normalize(s: string): string {
+export function normalizeSearchText(s: string): string {
   return s.toLowerCase().replace(/['‘’]/g, '');
 }
 
@@ -394,7 +399,7 @@ function normalize(s: string): string {
  * be exhaustive.
  */
 function haystack(p: CategoryProduct): string {
-  return normalize([p.name, p.meta ?? '', p.blurb, ...p.keywords].join(' '));
+  return normalizeSearchText([p.name, p.meta ?? '', p.blurb, ...p.keywords].join(' '));
 }
 
 /**
@@ -406,7 +411,7 @@ function haystack(p: CategoryProduct): string {
  * the list untouched.
  */
 export function searchProducts(products: CategoryProduct[], query: string): CategoryProduct[] {
-  const tokens = normalize(query)
+  const tokens = normalizeSearchText(query)
     .split(/[^a-z0-9]+/)
     .filter(Boolean);
   if (tokens.length === 0) return products;

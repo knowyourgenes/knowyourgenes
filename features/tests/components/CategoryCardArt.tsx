@@ -1,5 +1,5 @@
 // =============================================================================
-// features/tests — card artwork for the category + product cards
+// features/tests - card artwork for the category + product cards
 // -----------------------------------------------------------------------------
 // One component so a card never has to know whether its test has a photograph.
 // Pass the product's `image`, `icon` and `tone`:
@@ -46,7 +46,7 @@ export function CardArt({
   image?: Img;
   icon: string;
   tone: CardTone;
-  /** Required when `image` is set — these are 9–11 MB source PNGs. */
+  /** Required when `image` is set - these are 9–11 MB source PNGs. */
   sizes: string;
   /** Caller owns aspect ratio + corner radius. */
   className?: string;
@@ -82,8 +82,8 @@ export function CardArt({
       <span
         className={
           image
-            ? 'absolute left-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/25 bg-white/20 backdrop-blur-[3px]'
-            : 'absolute left-1/2 top-1/2 inline-flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl border border-white/25 bg-white/[0.14]'
+            ? 'absolute left-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-sm border border-white/25 bg-white/20 backdrop-blur-[3px]'
+            : 'absolute left-1/2 top-1/2 inline-flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-sm border border-white/25 bg-white/[0.14]'
         }
       >
         <Icon name={icon} className={image ? 'h-[18px] w-[18px] text-white' : 'h-7 w-7 text-white'} />

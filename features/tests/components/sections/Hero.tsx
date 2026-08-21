@@ -17,6 +17,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import type { Ground, HeroSection } from '../../types';
+import { BTN as BTN_SIZE } from '@/components/shared/button-styles';
 import { FigmaIcon } from '../FigmaIcon';
 import { Icon } from '../icons';
 import { Eyebrow, Heading, Lead, Section, TONE_DOT, TONE_TEXT } from '../ui';
@@ -57,8 +58,13 @@ const RESULT_GLYPH: Record<string, string> = { flask: '670-749' };
 // `max-w-full` + the max-sm wrap escape hatch are the only additions to the
 // frame's spec: below 640 a long data-supplied label would otherwise push the
 // nowrap pill past the 280 px content column. At >=640 nothing changes.
+// The frame drew these at 60px. There is one button height site-wide now - 38px,
+// from BTN (components/shared/button-styles). Face, weight and motion stay the
+// frame's; only the box is standardised.
 const BTN =
-  'group inline-flex max-w-full items-center justify-center gap-2.5 whitespace-nowrap rounded-full border px-[34px] pb-[18px] pt-4 font-kyg text-[16px] font-extrabold leading-6 tracking-[0.06px] transition duration-200 hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java max-sm:whitespace-normal max-sm:text-center';
+  BTN_SIZE +
+  ' group max-w-full border font-kyg font-extrabold tracking-[0.06px] transition duration-200' +
+  ' hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java';
 
 const BTN_VARIANT: Record<'primary' | 'ghost' | 'light', string> = {
   primary: 'border-eden bg-eden text-white shadow-tst-cta hover:bg-eden2',
@@ -104,7 +110,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
               `crimson-deep` is the frame's #9a2855 (globals.css). */}
           <p className="pb-px pt-[13px]">
             <span
-              className="inline-block rounded-[2px] bg-[linear-gradient(180deg,rgba(199,60,112,0)_60%,rgba(199,60,112,0.22)_60%)] px-[2px] font-kyg text-[clamp(21px,2vw,28px)] font-extrabold leading-[1.25] text-crimson-deep"
+              className="inline-block rounded-sm bg-[linear-gradient(180deg,rgba(199,60,112,0)_60%,rgba(199,60,112,0.22)_60%)] px-[2px] font-kyg text-[clamp(21px,2vw,28px)] font-extrabold leading-[1.25] text-crimson-deep"
               dangerouslySetInnerHTML={{ __html: data.kickerHtml }}
             />
           </p>
@@ -159,11 +165,9 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
               return (
                 <span
                   key={c.label}
-                  className="inline-flex max-w-full items-center gap-2 rounded-full border border-mine/10 bg-white py-2 pl-2 pr-4 shadow-tst-soft"
+                  className="inline-flex max-w-full items-center gap-2 rounded-sm border border-mine/10 bg-white py-2 pl-2 pr-4 shadow-tst-soft"
                 >
-                  <span
-                    className={cn('grid size-8 shrink-0 place-items-center rounded-full', glyph?.badge ?? 'bg-mint')}
-                  >
+                  <span className={cn('grid size-8 shrink-0 place-items-center rounded-sm', glyph?.badge ?? 'bg-mint')}>
                     {glyph ? (
                       <FigmaIcon id={glyph.id} className="h-6 w-5" />
                     ) : c.icon ? (
@@ -198,11 +202,11 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
               640 up, where the gutter is 40. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -inset-3 rounded-[220px] bg-[linear-gradient(135deg,#e6f4f3_0%,rgba(245,237,223,0.6)_55%,rgba(251,238,243,0.6)_100%)] blur-[20px] sm:-inset-6"
+            className="pointer-events-none absolute -inset-3 rounded-sm bg-[linear-gradient(135deg,#e6f4f3_0%,rgba(245,237,223,0.6)_55%,rgba(251,238,243,0.6)_100%)] blur-[20px] sm:-inset-6"
           />
 
           <div className="relative">
-            <div className="relative aspect-[576/720] w-full overflow-hidden rounded-t-[200px] rounded-b-[26px] shadow-tst-float">
+            <div className="relative aspect-[576/720] w-full overflow-hidden rounded-t-sm rounded-b-sm shadow-tst-float">
               <Image
                 src={data.image.src}
                 alt={data.image.alt}
@@ -220,7 +224,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
                 drops out of the overlay and into normal flow under the arch,
                 keeping the frame's 24 px overlap as a negative margin; from 640
                 up it is the frame's absolute -24/-24 float again. */}
-            <div className="floaty relative mx-auto -mt-6 w-full max-w-[248px] rounded-[22px] border border-mine/10 bg-white/95 p-5 shadow-tst-float backdrop-blur-[4px] sm:absolute sm:-bottom-6 sm:-left-6 sm:mx-0 sm:mt-0 sm:w-[248px]">
+            <div className="floaty relative mx-auto -mt-6 w-full max-w-[248px] rounded-sm border border-mine/10 bg-white/95 p-5 shadow-tst-float backdrop-blur-[4px] sm:absolute sm:-bottom-6 sm:-left-6 sm:mx-0 sm:mt-0 sm:w-[248px]">
               {/* `titleRight` splits the header into a labelled pair (the
                   Men's deck runs "File No. …" against "KYG Lab"); without it
                   the title sits alone beside the glyph, as the frame draws it. */}
