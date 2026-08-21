@@ -73,7 +73,7 @@ const FIELD_SHELL =
   'transition-shadow focus-within:shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(14,77,75,0.55)]';
 
 const INPUT =
-  'h-[62.8px] w-full rounded-[10px] bg-transparent pl-[48px] pr-[18px] ' +
+  'h-[clamp(48px,7vh,62.8px)] w-full rounded-[10px] bg-transparent pl-[48px] pr-[18px] ' +
   'font-kyg text-[18px] tracking-[-0.008em] text-bistre outline-none placeholder:text-pewter';
 
 function LoginForm() {
@@ -104,7 +104,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="relative isolate min-h-screen bg-linenw">
+    <div className="relative isolate min-h-screen bg-linenw lg:h-screen lg:overflow-hidden">
       {/* The homepage's paper grain: the frame carries it as a full-bleed
           `::after` at 42% over a 180x180 noise tile. Fixed rather than
           scrolled - it is texture on the screen, not printed on the page. */}
@@ -113,9 +113,9 @@ function LoginForm() {
         className="pointer-events-none fixed inset-0 z-[60] opacity-[0.42] mix-blend-soft-light [background-image:url(&quot;data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='.82'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='180'%20height='180'%20filter='url(%23n)'/%3E%3C/svg%3E&quot;)]"
       />
 
-      <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[44fr_56fr]">
+      <div className="grid min-h-screen grid-cols-1 lg:h-full lg:min-h-0 lg:grid-cols-[44fr_56fr]">
         {/* ================= brand ground ================= */}
-        <aside className="relative isolate hidden flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_12%_0%,rgba(42,195,162,0.16)_0%,rgba(42,195,162,0)_58%),linear-gradient(163deg,#0E4D4B_0%,#0A3B39_57%,#062927_100%)] px-[clamp(32px,3.4vw,49px)] py-[clamp(28px,2.2vw,31px)] lg:flex">
+        <aside className="relative isolate hidden min-h-0 flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_12%_0%,rgba(42,195,162,0.16)_0%,rgba(42,195,162,0)_58%),linear-gradient(163deg,#0E4D4B_0%,#0A3B39_57%,#062927_100%)] px-[clamp(32px,3.4vw,49px)] py-[clamp(28px,2.2vw,31px)] lg:flex">
           {/* The live strand, same component and same preset as the hero. It
               sits at z-0 under the copy, and is pointer-events-none inside the
               component, so it never intercepts a click on the logo. */}
@@ -125,7 +125,7 @@ function LoginForm() {
             <KygLogo tone="light" className="h-16 w-auto" />
           </Link>
 
-          <div className="relative flex flex-col gap-[19.2px] py-[27px]">
+          <div className="relative flex flex-col gap-[clamp(12px,2.1vh,19.2px)] py-[clamp(12px,3vh,27px)]">
             {/* Figtree 800 16.5/20.46 ls 0.15em, textCase=UPPER in the frame */}
             <p className="font-kyg text-[16.5px] font-extrabold uppercase leading-[1.24] tracking-[0.15em] text-java2">
               Your KYG account
@@ -134,18 +134,18 @@ function LoginForm() {
             {/* Two voices in one heading: Figtree 400 46/52.44 states it,
                 Cormorant Garamond 500 italic 50.6/57.68 turns it. The frame
                 sets a -1.12 gap between the lines, so they very nearly touch. */}
-            <h2 className="max-w-[340px] font-kyg text-[clamp(34px,3.2vw,46px)] font-normal leading-[1.14] tracking-[-0.03em] text-linenw">
+            <h2 className="max-w-[340px] font-kyg text-[clamp(28px,min(3.2vw,5.1vh),46px)] font-normal leading-[1.12] tracking-[-0.03em] text-linenw">
               Everything you
               <br />
               have learned
               <br />
               about yourself,
-              <span className="-mt-[2px] block font-tst text-[clamp(37px,3.5vw,50.6px)] font-medium italic leading-[1.14] tracking-normal">
+              <span className="-mt-[2px] block font-tst text-[clamp(30px,min(3.5vw,5.6vh),50.6px)] font-medium italic leading-[1.14] tracking-normal">
                 in one place.
               </span>
             </h2>
 
-            <p className="max-w-[455px] font-kyg text-[clamp(17px,1.45vw,20.9px)] font-normal leading-[1.52] tracking-[-0.014em] text-linenw/72">
+            <p className="max-w-[455px] font-kyg text-[clamp(15px,min(1.45vw,2.3vh),20.9px)] font-normal leading-[1.45] tracking-[-0.014em] text-linenw/72">
               Your reports, insights and next steps. Private to you, for as long as you want them.
             </p>
 
@@ -165,7 +165,7 @@ function LoginForm() {
             </ul>
           </div>
 
-          <div className="relative border-t border-linenw/50 pt-[31px]">
+          <div className="relative border-t border-linenw/50 pt-[clamp(16px,3.4vh,31px)]">
             <div className="flex flex-wrap items-center gap-x-[18px] gap-y-2">
               <span className="inline-flex items-center gap-[9px]">
                 <ShieldCheck className="h-4 w-4 shrink-0 text-linenw/85" aria-hidden="true" />
@@ -197,7 +197,7 @@ function LoginForm() {
         </aside>
 
         {/* ================= form ================= */}
-        <main className="relative flex flex-col justify-center overflow-hidden px-[clamp(20px,5vw,177px)] py-[clamp(40px,4vw,60px)]">
+        <main className="relative flex flex-col justify-center overflow-y-auto px-5 py-[clamp(12px,2.4vh,60px)] sm:px-8 lg:min-h-0 lg:px-[clamp(24px,4.4vw,64px)]">
           {/* the frame's cool bloom, mint at 55% off the top-right */}
           <div
             aria-hidden="true"
@@ -206,26 +206,28 @@ function LoginForm() {
 
           {/* Only below lg, where the brand panel is gone and the page would
               otherwise open with no mark on it at all. */}
-          <Link href="/" aria-label="Know Your Genes, home" className="mb-8 w-fit lg:hidden">
-            <KygLogo tone="dark" className="h-12 w-auto" />
-          </Link>
+          <div className="mx-auto mb-4 w-full max-w-[452px] sm:mb-6 lg:hidden">
+            <Link href="/" aria-label="Know Your Genes, home" className="block w-fit">
+              <KygLogo tone="dark" className="h-11 w-auto" />
+            </Link>
+          </div>
 
-          <div className="flex w-full flex-col gap-[19.8px]">
-            <header className="flex flex-col gap-[12px]">
-              <h1 className="font-kyg text-[clamp(32px,3.2vw,46px)] font-normal leading-[1.14] tracking-[-0.03em] text-bistre">
+          <div className="mx-auto flex w-full max-w-[452px] flex-col gap-[clamp(12px,2.2vh,19.8px)]">
+            <header className="flex flex-col gap-[clamp(6px,1.4vh,12px)]">
+              <h1 className="font-kyg text-[clamp(27px,min(3.2vw,5.1vh),46px)] font-normal leading-[1.12] tracking-[-0.03em] text-bistre">
                 Good to see you{' '}
-                <em className="font-tst text-[clamp(35px,3.5vw,50.6px)] font-medium italic tracking-normal">
+                <em className="font-tst text-[clamp(29px,min(3.5vw,5.6vh),50.6px)] font-medium italic tracking-normal">
                   again.
                 </em>
               </h1>
-              <p className="max-w-[430px] font-kyg text-[clamp(17px,1.45vw,20.9px)] leading-[1.5] tracking-[-0.014em] text-nevada">
+              <p className="max-w-[430px] font-kyg text-[clamp(15px,min(1.45vw,2.3vh),20.9px)] leading-[1.45] tracking-[-0.014em] text-nevada">
                 Sign in to reach your reports, insights and GENEous Care.
               </p>
             </header>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-[18px] pt-[2.7px]">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-[clamp(10px,1.9vh,18px)] pt-[2.7px]">
               {/* ---- email ---- */}
-              <div className="flex flex-col gap-[9px]">
+              <div className="flex flex-col gap-[clamp(5px,1vh,9px)]">
                 <label
                   htmlFor="identifier"
                   className="font-kyg text-[16px] font-bold leading-[1.6] tracking-[-0.006em] text-bistre"
@@ -250,7 +252,7 @@ function LoginForm() {
               </div>
 
               {/* ---- password ---- */}
-              <div className="flex flex-col gap-[9px]">
+              <div className="flex flex-col gap-[clamp(5px,1vh,9px)]">
                 <div className="flex items-baseline justify-between gap-3">
                   <label
                     htmlFor="password"
@@ -288,7 +290,7 @@ function LoginForm() {
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                     aria-pressed={showPassword}
                     tabIndex={-1}
-                    className="absolute right-[10px] grid h-[42px] w-[42px] place-items-center rounded-[9px] text-nevada transition hover:bg-eden/[0.06] hover:text-eden"
+                    className="absolute right-[10px] grid h-[clamp(36px,4.6vh,42px)] w-[clamp(36px,4.6vh,42px)] place-items-center rounded-[9px] text-nevada transition hover:bg-eden/[0.06] hover:text-eden"
                   >
                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
@@ -338,7 +340,7 @@ function LoginForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="group flex h-[58px] w-full items-center justify-center gap-[13px] rounded-[10px] bg-eden font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-linenw shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] transition-[transform,background,box-shadow] duration-300 hover:-translate-y-[2px] hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                className="group flex h-[clamp(48px,6.6vh,58px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-eden font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-linenw shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] transition-[transform,background,box-shadow] duration-300 hover:-translate-y-[2px] hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
               >
                 {loading ? 'Signing in…' : 'Sign in'}
                 {!loading && (
@@ -371,7 +373,7 @@ function LoginForm() {
             <button
               type="button"
               onClick={() => signIn('google', { callbackUrl: from })}
-              className="flex h-[59px] w-full items-center justify-center gap-[13px] rounded-[10px] bg-white font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-bistre shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_0_rgba(45,32,18,0.08),inset_0_0_0_1.5px_rgba(27,23,18,0.18)]"
+              className="flex h-[clamp(48px,6.6vh,59px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-white font-kyg text-[17px] font-bold leading-none tracking-[-0.008em] text-bistre shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_0_rgba(45,32,18,0.08),inset_0_0_0_1.5px_rgba(27,23,18,0.18)]"
             >
               <GoogleIcon className="h-[21px] w-[21px]" />
               Continue with Google
