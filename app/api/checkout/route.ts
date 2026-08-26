@@ -6,6 +6,7 @@ import { ApiError, fail, handle, ok } from '@/server/api';
 import { auth } from '@/features/auth';
 import { checkoutCreate, checkoutGuest } from '@/lib/validators';
 import { normalisePhone } from '@/lib/utils';
+import { clientIp, rateLimited } from '@/lib/rate-limit';
 import { readAttributionCookie, attributionToOrderFields } from '@/features/attribution/server/attribution';
 import { nextOrderNumber, resolveCampaignId } from '@/features/orders';
 import { priceCart } from '@/features/cart';
@@ -60,6 +61,14 @@ export async function POST(req: Request) {
     // accumulating litter until someone reads the table.
     if (RAZORPAY_MISCONFIGURED) {
       return fail('Payments are temporarily unavailable. Please try again shortly.', 503);
+    }
+
+    // Unauthenticated on the guest path, and it both reads the Coupon table and
+    // CREATES rows. Registration is throttled one directory over for exactly
+    // this reason; checkout, which can mint a User for any email you name, was
+    // not throttled at all.
+    if (rateLimited('checkout', clientIp(req), { windowMs: 10 * 60_000, max: 20 })) {
+      return fail('Too many checkout attempts from this address. Please try again shortly.', 429);
     }
 
     const session = await auth();

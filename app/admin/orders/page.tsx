@@ -16,8 +16,20 @@ type Order = {
   orderNumber: string;
   status: string;
   total: number;
-  slotDate: string;
-  slotWindow: string;
+  /**
+   * NULLABLE, and the types used to say otherwise.
+   *
+   * A kit-by-post order carries no slot at all - the schema says so - but this
+   * declared `slotDate: string` over an `any`-typed JSON response, so strict
+   * mode never forced the null branch and `new Date(null)` rendered as
+   * 1 January 1970 on every single row. A confident wrong date is worse than a
+   * blank one, because it gets believed.
+   */
+  slotDate: string | null;
+  slotWindow: string | null;
+  /** When the money actually arrived. Null means it never did. */
+  paidAt: string | null;
+  fulfillmentMode: 'KIT_BY_POST' | 'AT_HOME_PHLEBOTOMIST' | 'EITHER';
   createdAt: string;
   user: { name: string | null; email: string | null; phone: string | null };
   package: { name: string };
@@ -112,6 +124,15 @@ export default function AdminOrdersPage() {
   }, []);
 
   async function updateStatus(id: string, newStatus: string) {
+    // CANCELLED and REFUNDED end an order, and this dropdown fires on selection -
+    // one mis-click used to be enough. They are the only two the server will not
+    // let you walk back, so they are the two worth stopping for.
+    if (newStatus === 'CANCELLED' || newStatus === 'REFUNDED') {
+      if (!window.confirm(`Mark this order ${newStatus}? This cannot be undone from here.`)) {
+        load(); // put the dropdown back where it was
+        return;
+      }
+    }
     const res = await fetch(`/api/admin/orders/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -217,12 +238,17 @@ export default function AdminOrdersPage() {
             {
               key: 'slot',
               header: 'Slot',
-              render: (o) => (
-                <div className="text-sm">
-                  <div>{new Date(o.slotDate).toLocaleDateString('en-IN')}</div>
-                  <div className="text-xs text-muted-foreground">{o.slotWindow}</div>
-                </div>
-              ),
+              render: (o) =>
+                o.slotDate ? (
+                  <div className="text-sm">
+                    <div>{new Date(o.slotDate).toLocaleDateString('en-IN')}</div>
+                    <div className="text-xs text-muted-foreground">{o.slotWindow}</div>
+                  </div>
+                ) : (
+                  // A posted kit has no collection slot, which is correct rather
+                  // than missing - so it reads as a dash, not as a date.
+                  <span className="text-sm text-muted-foreground">&mdash;</span>
+                ),
             },
             {
               key: 'status',
@@ -279,7 +305,16 @@ export default function AdminOrdersPage() {
             {
               key: 'agent',
               header: 'Agent',
-              render: (o) => (
+              render: (o) =>
+                // A collection agent only makes sense where someone has to turn
+                // up. Every package in the catalogue is currently KIT_BY_POST,
+                // so this picker was offered on every row of an order type that
+                // can never need it - and the server accepted it, forcing the
+                // order onto the at-home status leg. The server refuses now;
+                // this stops the operator being asked the question at all.
+                o.fulfillmentMode !== 'AT_HOME_PHLEBOTOMIST' ? (
+                  <span className="text-sm text-muted-foreground">By post</span>
+                ) : (
                 <Select value="" onValueChange={(v) => v && assignAgent(o.id, v)}>
                   <SelectTrigger className="h-8 w-[180px]">
                     <span className="text-sm">{o.agent?.user.name ?? '- Assign -'}</span>
@@ -292,12 +327,35 @@ export default function AdminOrdersPage() {
                     ))}
                   </SelectContent>
                 </Select>
-              ),
+                ),
             },
             {
               key: 'amt',
               header: 'Amount',
-              render: (o) => <span className="font-medium">₹{Math.floor(o.total / 100).toLocaleString('en-IN')}</span>,
+              render: (o) => (
+                <div className="text-right tabular-nums">
+                  <div className={o.paidAt ? 'font-medium' : 'font-medium text-muted-foreground'}>
+                    ₹{Math.floor(o.total / 100).toLocaleString('en-IN')}
+                  </div>
+                  {/*
+                    THE COLUMN THAT WAS MISSING. Payment lives in `paidAt` and
+                    never in `status` - capture deliberately leaves status alone,
+                    so a paid order and an abandoned one both read BOOKED. With
+                    no payment column an operator had no way at all to tell them
+                    apart, and routed unpaid orders to labs believing they were
+                    live work. Four of the first eight orders were exactly that.
+                  */}
+                  {o.paidAt ? (
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                      Paid {new Date(o.paidAt).toLocaleDateString('en-IN')}
+                    </span>
+                  ) : (
+                    <Badge variant="destructive" className="text-[10px]">
+                      UNPAID
+                    </Badge>
+                  )}
+                </div>
+              ),
             },
           ]}
           empty="No orders match these filters."

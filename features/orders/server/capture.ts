@@ -70,6 +70,15 @@ export async function captureOrderPayment(opts: {
         where: { id: existing.id },
         data: {
           status: 'CAPTURED',
+          // The amount the gateway actually reported, when it told us. This
+          // branch is the one that runs in practice, and it used not to write
+          // `amount` at all - the value was read from the webhook, passed all
+          // the way in, and then only used by the create branch below, which
+          // checkout makes unreachable. So nothing in the system compared money
+          // received against money owed, and the refund handler's
+          // full-versus-partial test was measuring against a figure no payment
+          // path had ever written.
+          amount: opts.amount ?? existing.amount,
           razorpayPaymentId: opts.razorpayPaymentId,
           razorpaySignature: opts.razorpaySignature,
           method: opts.method,
@@ -89,6 +98,27 @@ export async function captureOrderPayment(opts: {
           capturedAt: new Date(),
         },
       });
+    }
+
+    // Money received must equal money owed. Nothing can currently produce a
+    // mismatch - the Razorpay order is minted server-side at the computed total
+    // with no partial payment allowed - but "cannot happen" is exactly the class
+    // of assumption that stops holding when a second capture path is added, and
+    // an underpayment that nobody notices is a refund nobody can reconcile.
+    if (typeof opts.amount === 'number' && opts.amount !== order.total) {
+      await tx.orderEvent.create({
+        data: {
+          orderId: order.id,
+          label:
+            opts.amount < order.total
+              ? 'UNDERPAID - captured less than the order total'
+              : 'Overpaid - captured more than the order total',
+          meta: { captured: opts.amount, expected: order.total, razorpayPaymentId: opts.razorpayPaymentId },
+        },
+      });
+      console.error(
+        `[capture] amount mismatch on ${order.orderNumber}: captured ${opts.amount}, expected ${order.total}`
+      );
     }
 
     // Stock comes off at capture, never at booking - an abandoned cart must not
@@ -116,10 +146,36 @@ export async function captureOrderPayment(opts: {
     // Coupons are consumed at payment, not at booking, so abandoned carts don't
     // burn redemptions. Inside the claim, so it can only ever run once.
     if (order.couponCode) {
-      await tx.coupon.updateMany({
-        where: { code: order.couponCode },
+      // The predicate is the enforcement. The increment used to be keyed on the
+      // code alone, so it could not refuse to push usageCount past usageLimit -
+      // the admin coupons screen renders "{usageCount} / {usageLimit}" and could
+      // show 2001/2000, a state that should be unreachable.
+      //
+      // This does not make the limit airtight on its own: the check at booking
+      // reads a counter that only moves here, so a backlog of booked-but-unpaid
+      // orders is still a pool of pending redemptions. It does guarantee the
+      // counter never lies about how many were actually spent, and that the
+      // limit is honoured at the moment money changes hands.
+      const { count: redeemed } = await tx.coupon.updateMany({
+        where: {
+          code: order.couponCode,
+          OR: [{ usageLimit: null }, { usageCount: { lt: prisma.coupon.fields.usageLimit } }],
+        },
         data: { usageCount: { increment: 1 } },
       });
+
+      if (redeemed === 0) {
+        // The discount stands - it was quoted, and the Razorpay order was minted
+        // at the discounted total - but the overspend is recorded rather than
+        // absorbed silently.
+        await tx.orderEvent.create({
+          data: {
+            orderId: order.id,
+            label: `Coupon ${order.couponCode} was already at its usage limit`,
+            meta: { couponCode: order.couponCode, discount: order.discount },
+          },
+        });
+      }
     }
 
     return true;

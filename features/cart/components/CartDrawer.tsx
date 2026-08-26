@@ -36,7 +36,7 @@ const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function CartDrawer() {
-  const { priced, hydrated, pricing, itemCount, setQuantity, remove, drawerOpen, closeDrawer } = useCart();
+  const { priced, hydrated, pricing, itemCount, remove, drawerOpen, closeDrawer } = useCart();
 
   const panelRef = useRef<HTMLDivElement | null>(null);
   // Whatever had focus when the drawer opened, so it can be given back. Losing
@@ -143,10 +143,14 @@ export function CartDrawer() {
 
         {/* ---- body ---- */}
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
-          {!hydrated ? (
+          {!hydrated || pricing ? (
             // localStorage cannot be read during SSR, so until it has been we do
             // not know whether this basket is empty. Rendering "empty" here is a
             // lie told to someone who has ten thousand rupees of kits in it.
+            //
+            // `pricing` extends that to the window after hydration but before the
+            // first price arrives - which is every mount, for at least a debounce
+            // plus a round trip. The lie was being told there too.
             <div className="space-y-3" aria-busy="true">
               {[0, 1].map((i) => (
                 <div key={i} className="h-[92px] animate-pulse rounded-sm bg-white/70" />
@@ -203,27 +207,12 @@ export function CartDrawer() {
                       </button>
                     </div>
 
-                    <div className="mt-auto flex items-center justify-between gap-2 pt-1">
-                      <div className="inline-flex items-center rounded-sm border border-zeus/[0.12] bg-white">
-                        <button
-                          type="button"
-                          aria-label={'Decrease ' + line.name + ' quantity'}
-                          onClick={() => setQuantity(line.slug, line.quantity - 1)}
-                          className="grid h-8 w-8 place-items-center rounded-l-sm text-base text-cape transition hover:bg-zeus/[0.05]"
-                        >
-                          &minus;
-                        </button>
-                        <span className="w-7 text-center text-[13px] font-bold tabular-nums">{line.quantity}</span>
-                        <button
-                          type="button"
-                          aria-label={'Increase ' + line.name + ' quantity'}
-                          disabled={line.quantity >= line.maxQuantity}
-                          onClick={() => setQuantity(line.slug, line.quantity + 1)}
-                          className="grid h-8 w-8 place-items-center rounded-r-sm text-base text-cape transition hover:bg-zeus/[0.05] disabled:cursor-not-allowed disabled:opacity-35"
-                        >
-                          +
-                        </button>
-                      </div>
+                    {/*
+                      NO QUANTITY CONTROL, deliberately - see CartView for the
+                      full reasoning. One kit reads every report on the order, so
+                      a quantity above one billed N times for a single deliverable.
+                    */}
+                    <div className="mt-auto flex items-center justify-end gap-2 pt-1">
                       <span className="text-[14.5px] font-bold tabular-nums text-mine">
                         {formatPaise(line.lineTotal)}
                       </span>

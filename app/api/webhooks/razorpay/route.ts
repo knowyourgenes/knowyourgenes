@@ -62,8 +62,17 @@ export async function POST(req: Request) {
     await handlePaymentCaptured(payment);
   } else if (event === 'payment.failed' && payment?.order_id && payment.id) {
     await handlePaymentFailed(payment);
-  } else if (event.startsWith('refund.') && refund?.payment_id) {
+  } else if (event === 'refund.processed' && refund?.payment_id) {
+    // ONLY `refund.processed`. This used to match the whole `refund.` family,
+    // and `refund.created` fires the moment a refund is INITIATED - before any
+    // money moves - so it marked the payment and the order REFUNDED and posted
+    // "Refund processed" to the customer-visible timeline. `refund.failed` did
+    // the same. The refund's own `status` field was destructured and never read.
     await handleRefund(refund);
+  } else if (event.startsWith('refund.')) {
+    // Recorded, not acted on. Worth a timeline entry so support can see a refund
+    // was attempted, but it changes no money-bearing column.
+    await noteRefundEvent(event, refund);
   }
 
   // Always 200 - Razorpay retries on non-2xx and we don't want to thrash on
@@ -112,19 +121,37 @@ async function handlePaymentFailed(p: {
   const order = await prisma.order.findFirst({ where: { razorpayOrderId: p.order_id } });
   if (!order) return;
 
-  const existing = await prisma.payment.findFirst({
-    where: { orderId: order.id, razorpayOrderId: p.order_id },
+  // A failed ATTEMPT must never overwrite a captured payment. Razorpay redelivers
+  // for hours, so a `payment.failed` for an earlier attempt can land after the
+  // successful capture - and this used to write FAILED plus the failed attempt's
+  // razorpayPaymentId straight over the row, with no guard on current status.
+  // Money and Order.paidAt stayed correct, but refunds resolve by
+  // razorpayPaymentId: once the row carried the wrong id, a refund against the
+  // payment that actually took the money matched nothing and silently no-opped.
+  //
+  // updateMany with the status in the WHERE clause, matching how capture claims
+  // its own write.
+  const { count } = await prisma.payment.updateMany({
+    where: { orderId: order.id, razorpayOrderId: p.order_id, status: 'PENDING' },
+    data: {
+      status: 'FAILED',
+      razorpayPaymentId: p.id,
+      errorCode: p.error_code,
+      errorDescription: p.error_description,
+    },
   });
-  if (existing) {
-    await prisma.payment.update({
-      where: { id: existing.id },
+
+  if (count === 0) {
+    // Either there was no pending row, or it had already been captured. Say so
+    // in the timeline rather than silently dropping the event.
+    await prisma.orderEvent.create({
       data: {
-        status: 'FAILED',
-        razorpayPaymentId: p.id,
-        errorCode: p.error_code,
-        errorDescription: p.error_description,
+        orderId: order.id,
+        label: `Ignored a late payment failure (${p.error_code ?? 'unknown'})`,
+        meta: { reason: 'payment is not pending', razorpayPaymentId: p.id ?? null },
       },
     });
+    return;
   }
   await prisma.orderEvent.create({
     data: {
@@ -142,20 +169,84 @@ async function handleRefund(r: { id?: string; payment_id?: string; amount?: numb
   });
   if (!payment) return;
 
-  const fullRefund = r.amount && r.amount >= payment.amount;
-  await prisma.$transaction([
-    prisma.payment.update({
-      where: { id: payment.id },
+  const fullRefund = Boolean(r.amount && r.amount >= payment.amount);
+
+  await prisma.$transaction(async (tx) => {
+    // Claim the refund so a redelivery of the same event cannot apply it twice.
+    // Without this one refund could render as three "Refund processed" rows and
+    // oscillate the payment status depending on which event arrived last.
+    const { count } = await tx.payment.updateMany({
+      where: { id: payment.id, status: { in: ['CAPTURED', 'PARTIALLY_REFUNDED'] } },
       data: { status: fullRefund ? 'REFUNDED' : 'PARTIALLY_REFUNDED' },
-    }),
-    prisma.order.update({
+    });
+    if (count === 0) return;
+
+    await tx.order.update({
       where: { id: payment.orderId },
       data: {
         status: fullRefund ? 'REFUNDED' : payment.order.status,
         events: {
-          create: { label: `Refund processed: ₹${((r.amount ?? 0) / 100).toFixed(2)}` },
+          create: {
+            label: `Refund processed: ₹${((r.amount ?? 0) / 100).toFixed(2)}`,
+            meta: { refundId: r.id ?? null, full: fullRefund },
+          },
         },
       },
-    }),
-  ]);
+    });
+
+    // REVERSE WHAT CAPTURE DID. Nothing used to: stock stayed decremented, the
+    // coupon redemption stayed burnt, and a refunded order kept its full total
+    // in every revenue report forever because paidAt was never cleared. Only a
+    // FULL refund reverses - a partial one is still a completed sale.
+    if (!fullRefund) return;
+
+    const order = await tx.order.findUnique({
+      where: { id: payment.orderId },
+      select: { couponCode: true, items: { select: { packageId: true, quantity: true } } },
+    });
+    if (!order) return;
+
+    for (const item of order.items) {
+      await tx.package.update({
+        where: { id: item.packageId },
+        data: { stockQuantity: { increment: item.quantity } },
+      });
+    }
+
+    if (order.couponCode) {
+      // Guarded so a double-reversal cannot drive the counter below zero.
+      await tx.coupon.updateMany({
+        where: { code: order.couponCode, usageCount: { gt: 0 } },
+        data: { usageCount: { decrement: 1 } },
+      });
+    }
+
+    // paidAt is left in place deliberately: it records that money did arrive,
+    // and clearing it would make a refunded order look abandoned and re-open it
+    // to fulfilment. Revenue reporting excludes REFUNDED by status instead -
+    // see app/admin/attribution and the campaign API.
+  });
+}
+
+/**
+ * Records a non-terminal refund event without touching money-bearing columns.
+ */
+async function noteRefundEvent(
+  event: string,
+  r: { id?: string; payment_id?: string; amount?: number; status?: string } | undefined
+) {
+  if (!r?.payment_id) return;
+  const payment = await prisma.payment.findFirst({
+    where: { razorpayPaymentId: r.payment_id },
+    select: { orderId: true },
+  });
+  if (!payment) return;
+
+  await prisma.orderEvent.create({
+    data: {
+      orderId: payment.orderId,
+      label: `Refund ${event.replace('refund.', '')}: ₹${((r.amount ?? 0) / 100).toFixed(2)}`,
+      meta: { refundId: r.id ?? null, refundStatus: r.status ?? null, applied: false },
+    },
+  });
 }

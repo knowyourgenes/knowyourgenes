@@ -1,5 +1,5 @@
 import { prisma } from '@/server/prisma';
-import { handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { handle, isResponse, ok, requireActiveAgent } from '@/server/api';
 import { z } from 'zod';
 
 const updateSchema = z.object({
@@ -9,7 +9,7 @@ const updateSchema = z.object({
 
 export async function GET() {
   return handle(async () => {
-    const guard = await requireApiRole(['AGENT']);
+    const guard = await requireActiveAgent();
     if (isResponse(guard)) return guard;
     const items = await prisma.agentAvailability.findMany({ where: { agentId: guard.id! } });
     return ok(items);
@@ -25,7 +25,7 @@ export async function GET() {
  */
 export async function PATCH(req: Request) {
   return handle(async () => {
-    const guard = await requireApiRole(['AGENT']);
+    const guard = await requireActiveAgent();
     if (isResponse(guard)) return guard;
     const body = await req.json();
     const { window, active } = updateSchema.parse(body);

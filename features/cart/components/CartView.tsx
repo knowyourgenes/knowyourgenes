@@ -8,33 +8,9 @@ import { useCart } from '../hooks/use-cart';
 
 const CARD = 'rounded-sm border border-zeus/[0.09] bg-white shadow-kyg-card';
 
-function QtyStepper({ value, max, onChange }: { value: number; max: number; onChange: (next: number) => void }) {
-  return (
-    <div className="inline-flex items-center rounded-sm border border-zeus/[0.12] bg-white">
-      <button
-        type="button"
-        aria-label="Decrease quantity"
-        onClick={() => onChange(value - 1)}
-        className="grid h-9 w-9 place-items-center rounded-l-sm text-lg text-cape transition hover:bg-zeus/[0.05]"
-      >
-        −
-      </button>
-      <span className="w-8 text-center text-sm font-bold tabular-nums">{value}</span>
-      <button
-        type="button"
-        aria-label="Increase quantity"
-        disabled={value >= max}
-        onClick={() => onChange(value + 1)}
-        className="grid h-9 w-9 place-items-center rounded-r-sm text-lg text-cape transition hover:bg-zeus/[0.05] disabled:cursor-not-allowed disabled:opacity-35"
-      >
-        +
-      </button>
-    </div>
-  );
-}
 
 export function CartView() {
-  const { priced, hydrated, pricing, itemCount, setQuantity, remove, applyCoupon, couponCode } = useCart();
+  const { priced, hydrated, pricing, itemCount, remove, applyCoupon, couponCode } = useCart();
   const [couponDraft, setCouponDraft] = useState('');
 
   const lines = priced?.lines ?? [];
@@ -42,7 +18,11 @@ export function CartView() {
   // Before localStorage is read we genuinely do not know if the cart is empty,
   // so show a skeleton rather than flashing "your cart is empty" at someone who
   // has ten thousand rupees of kits in it.
-  if (!hydrated) {
+  // `pricing` now covers both "a reprice is in flight" and "we have lines but no
+  // price has ever arrived" - the latter being true on every mount for at least
+  // a debounce plus a round trip. Without it this fell through to the empty
+  // state below and told someone with a full basket that it was empty.
+  if (!hydrated || pricing) {
     return (
       <div className="mt-10 space-y-3" aria-busy="true">
         {[0, 1].map((i) => (
@@ -105,17 +85,18 @@ export function CartView() {
                 </button>
               </div>
 
-              <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-1.5">
-                <QtyStepper
-                  value={line.quantity}
-                  max={line.maxQuantity}
-                  onChange={(next) => setQuantity(line.slug, next)}
-                />
+              {/*
+                NO QUANTITY CONTROL, deliberately. One saliva kit reads every
+                report on the order - the line three below this says exactly
+                that - so a quantity above one was never something the system
+                could deliver: pricing, stock and the lab email multiplied by N
+                while the courier payload, the parcel weight and the generated
+                report all stayed at one. The customer paid N times for a single
+                result. Two people needing tests is two orders.
+              */}
+              <div className="mt-auto flex flex-wrap items-center justify-end gap-3 pt-1.5">
                 <div className="text-right">
                   <span className="text-[16px] font-bold tabular-nums">{formatPaise(line.lineTotal)}</span>
-                  {line.quantity > 1 && (
-                    <span className="ml-2 text-[12.5px] text-cord">{formatPaise(line.unitPrice)} each</span>
-                  )}
                 </div>
               </div>
             </div>

@@ -239,6 +239,23 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // synchronous setState inside the effect above.
   const priced = lines.length === 0 ? null : pricedRaw;
 
+  /**
+   * True while a price is in flight OR has never arrived for a non-empty cart.
+   *
+   * The second half is the fix. `priced === null` meant two different things and
+   * every cart surface read it as the wrong one: it is null when the cart is
+   * genuinely empty, and ALSO on every provider mount before the first reprice
+   * returns - at minimum a debounce plus a round trip away. So a direct load or
+   * refresh of /cart or /checkout with a full basket rendered "Your cart is
+   * empty" beside a header badge showing the real count, deterministically,
+   * every time. The `pricing` state alone did not cover it, because it starts
+   * false and only flips once the debounce fires.
+   *
+   * `lines` is read from storage synchronously at hydration, so it knows the
+   * cart is not empty well before any price does.
+   */
+  const awaitingPrice = pricing || (hydrated && lines.length > 0 && pricedRaw === null);
+
   const add = useCallback((slug: string, quantity = 1) => {
     const current = getSnapshot();
     const existing = current.lines.find((l) => l.slug === slug);
@@ -305,8 +322,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       value={{
         lines,
         priced,
+        pricing: awaitingPrice,
         hydrated,
-        pricing,
         couponCode,
         itemCount,
         add,

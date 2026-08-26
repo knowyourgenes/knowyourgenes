@@ -1,5 +1,5 @@
 import { prisma } from '@/server/prisma';
-import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { fail, handle, isResponse, ok, requireActiveAgent } from '@/server/api';
 import { z } from 'zod';
 
 type Params = Promise<{ id: string }>;
@@ -22,7 +22,7 @@ const bodySchema = z.object({
 
 export async function POST(req: Request, { params }: { params: Params }) {
   return handle(async () => {
-    const guard = await requireApiRole(['AGENT']);
+    const guard = await requireActiveAgent();
     if (isResponse(guard)) return guard;
     const { id } = await params;
 

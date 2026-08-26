@@ -99,3 +99,31 @@ function isPrismaError(err: unknown): err is Error & { code: string } {
   const code = (err as unknown as { code?: unknown }).code;
   return typeof code === 'string' && /^P\d{4}$/.test(code);
 }
+
+/**
+ * An AGENT whose profile is still active.
+ *
+ * `requireApiRole(['AGENT'])` reads the JWT and nothing else, so deactivating an
+ * agent stopped nothing: the role stays AGENT, the session survives (Auth.js
+ * defaults to 30 days and no maxAge is configured), and every agent endpoint
+ * kept serving them - including the customer name, phone and full address of
+ * every order they still held. Deactivation has to be checked against the
+ * database on each request, because that is where it is recorded.
+ */
+export async function requireActiveAgent(): Promise<(SessionUser & { id: string }) | NextResponse> {
+  const guard = await requireApiRole(['AGENT']);
+  if (isResponse(guard)) return guard;
+
+  const { prisma } = await import('@/server/prisma');
+  const profile = await prisma.agentProfile.findUnique({
+    where: { userId: guard.id! },
+    select: { status: true },
+  });
+
+  if (!profile) return fail('No agent profile for this account', 403);
+  if (profile.status === 'INACTIVE') {
+    return fail('Your agent account has been deactivated. Please contact your KYG coordinator.', 403);
+  }
+
+  return guard as SessionUser & { id: string };
+}

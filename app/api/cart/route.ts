@@ -1,4 +1,5 @@
-import { handle } from '@/server/api';
+import { fail, handle } from '@/server/api';
+import { clientIp, rateLimited } from '@/lib/rate-limit';
 import { cartPrice } from '@/lib/validators';
 import { priceCart } from '@/features/cart';
 
@@ -19,6 +20,13 @@ import { priceCart } from '@/features/cart';
  * same priceCart() at payment time.
  */
 export async function POST(req: Request) {
+  // Unauthenticated, and it reads the Coupon table. Without a throttle a
+  // dictionary walk over plausible codes is free - the errors no longer say
+  // which codes exist, but timing and repetition still would.
+  if (rateLimited('cart-price', clientIp(req), { windowMs: 60_000, max: 60 })) {
+    return fail('Too many requests. Please slow down.', 429);
+  }
+
   return handle(async () => {
     const body = await req.json();
     const input = cartPrice.parse(body);

@@ -76,17 +76,38 @@ export async function applyCoupon(opts: {
   subtotalPaise: number;
 }): Promise<{ discount: number; couponCode: string | null; error?: string }> {
   if (!opts.code) return { discount: 0, couponCode: null };
+
+  /**
+   * ONE MESSAGE FOR EVERY WAY A CODE CAN FAIL, except the minimum.
+   *
+   * These used to be five distinguishable strings - not found, inactive,
+   * expired, limit reached, below minimum - returned verbatim to an
+   * unauthenticated caller on an unthrottled endpoint. That separates "no such
+   * code" from "real code, wrong conditions", which is a coupon-existence
+   * oracle: enough to walk a dictionary of plausible codes and learn which ones
+   * are real. Checkout reasons carefully about not being an account-existence
+   * oracle one route away from this.
+   *
+   * The order minimum stays specific because it is the one failure the shopper
+   * can actually act on, and it reveals nothing they did not already type.
+   */
+  const UNUSABLE = 'That code is not valid for this order';
+
   const coupon = await prisma.coupon.findUnique({ where: { code: opts.code } });
-  if (!coupon) return { discount: 0, couponCode: null, error: 'Coupon not found' };
-  if (!coupon.active) return { discount: 0, couponCode: null, error: 'Coupon inactive' };
+  if (!coupon) return { discount: 0, couponCode: null, error: UNUSABLE };
+  if (!coupon.active) return { discount: 0, couponCode: null, error: UNUSABLE };
   if (coupon.expiresAt && coupon.expiresAt < new Date()) {
-    return { discount: 0, couponCode: null, error: 'Coupon expired' };
+    return { discount: 0, couponCode: null, error: UNUSABLE };
   }
   if (coupon.usageLimit && coupon.usageCount >= coupon.usageLimit) {
-    return { discount: 0, couponCode: null, error: 'Coupon usage limit reached' };
+    return { discount: 0, couponCode: null, error: UNUSABLE };
   }
   if (coupon.minOrder && opts.subtotalPaise < coupon.minOrder) {
-    return { discount: 0, couponCode: null, error: 'Order below coupon minimum' };
+    return {
+      discount: 0,
+      couponCode: null,
+      error: `This code needs an order of at least ₹${Math.floor(coupon.minOrder / 100).toLocaleString('en-IN')}`,
+    };
   }
   let discount = 0;
   if (coupon.type === 'FLAT') {
