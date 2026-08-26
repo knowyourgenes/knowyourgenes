@@ -23,7 +23,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // Block deactivated users from signing in via any provider (Google included).
     // Credentials provider already checks deletedAt inside authorize(); this
     // covers OAuth sign-ins where authorize isn't called.
-    async signIn({ user }) {
+    async signIn({ user, account, profile }) {
+      // Google is auto-linked to an existing account by email address (see
+      // allowDangerousEmailAccountLinking in auth.config.ts), which is only
+      // sound while Google is actually vouching for the address. An unverified
+      // profile is exactly the case that flag's name warns about, so it is
+      // refused here rather than trusted - checked, not presumed.
+      if (
+        account?.provider === 'google' &&
+        (profile as { email_verified?: boolean } | undefined)?.email_verified === false
+      ) {
+        return false;
+      }
+
       if (!user?.id) return true; // new OAuth user being created - let adapter proceed
       const dbUser = await prisma.user.findUnique({
         where: { id: user.id },

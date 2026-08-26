@@ -1,0 +1,107 @@
+[
+  {
+    "slug": "ancestry",
+    "name": "Ancestry DNA",
+    "price": 599900,
+    "compareAtPrice": 799900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "comprehensive-wellness",
+    "name": "Comprehensive Wellness",
+    "price": 1499900,
+    "compareAtPrice": 1899900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "eye-health",
+    "name": "Eye Health DNA",
+    "price": 649900,
+    "compareAtPrice": 849900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "fitness-performance",
+    "name": "Fitness & Performance",
+    "price": 749900,
+    "compareAtPrice": 999900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "genetic-testing-kit",
+    "name": "Genetic Testing Kit",
+    "price": 999900,
+    "compareAtPrice": 1299900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "immunity-health",
+    "name": "Immunity DNA",
+    "price": 699900,
+    "compareAtPrice": 899900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "kidney-health",
+    "name": "Kidney Health DNA",
+    "price": 649900,
+    "compareAtPrice": 849900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "mens-health",
+    "name": "Men's Wellness DNA",
+    "price": 699900,
+    "compareAtPrice": 899900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "my-wellness",
+    "name": "My Wellness DNA",
+    "price": 999900,
+    "compareAtPrice": 1299900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "nutrition-deep-dive",
+    "name": "Nutrition Deep Dive",
+    "price": 699900,
+    "compareAtPrice": 899900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "skin-and-hair",
+    "name": "Skin & Hair Wellness",
+    "price": 649900,
+    "compareAtPrice": 849900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "skin-health",
+    "name": "Skin Health DNA",
+    "price": 649900,
+    "compareAtPrice": 849900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "sleep",
+    "name": "Sleep DNA",
+    "price": 599900,
+    "compareAtPrice": 799900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "wellness-starter",
+    "name": "Wellness Starter",
+    "price": 899900,
+    "compareAtPrice": 1199900,
+    "kitShippingFee": 19900
+  },
+  {
+    "slug": "womens-health",
+    "name": "Women's Health DNA",
+    "price": 799900,
+    "compareAtPrice": 999900,
+    "kitShippingFee": 19900
+  }
+]

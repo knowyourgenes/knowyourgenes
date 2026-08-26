@@ -1,0 +1,15 @@
+UPDATE "Package" SET price=599900, "compareAtPrice"=799900, "kitShippingFee"=19900 WHERE slug='ancestry';
+UPDATE "Package" SET price=1499900, "compareAtPrice"=1899900, "kitShippingFee"=19900 WHERE slug='comprehensive-wellness';
+UPDATE "Package" SET price=649900, "compareAtPrice"=849900, "kitShippingFee"=19900 WHERE slug='eye-health';
+UPDATE "Package" SET price=749900, "compareAtPrice"=999900, "kitShippingFee"=19900 WHERE slug='fitness-performance';
+UPDATE "Package" SET price=999900, "compareAtPrice"=1299900, "kitShippingFee"=19900 WHERE slug='genetic-testing-kit';
+UPDATE "Package" SET price=699900, "compareAtPrice"=899900, "kitShippingFee"=19900 WHERE slug='immunity-health';
+UPDATE "Package" SET price=649900, "compareAtPrice"=849900, "kitShippingFee"=19900 WHERE slug='kidney-health';
+UPDATE "Package" SET price=699900, "compareAtPrice"=899900, "kitShippingFee"=19900 WHERE slug='mens-health';
+UPDATE "Package" SET price=999900, "compareAtPrice"=1299900, "kitShippingFee"=19900 WHERE slug='my-wellness';
+UPDATE "Package" SET price=699900, "compareAtPrice"=899900, "kitShippingFee"=19900 WHERE slug='nutrition-deep-dive';
+UPDATE "Package" SET price=649900, "compareAtPrice"=849900, "kitShippingFee"=19900 WHERE slug='skin-and-hair';
+UPDATE "Package" SET price=649900, "compareAtPrice"=849900, "kitShippingFee"=19900 WHERE slug='skin-health';
+UPDATE "Package" SET price=599900, "compareAtPrice"=799900, "kitShippingFee"=19900 WHERE slug='sleep';
+UPDATE "Package" SET price=899900, "compareAtPrice"=1199900, "kitShippingFee"=19900 WHERE slug='wellness-starter';
+UPDATE "Package" SET price=799900, "compareAtPrice"=999900, "kitShippingFee"=19900 WHERE slug='womens-health';
