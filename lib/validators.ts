@@ -187,6 +187,17 @@ export const orderAssignAgent = z.object({
   agentId: z.string().min(1),
 });
 
+/**
+ * Which lab an admin is routing an order to.
+ *
+ * Only the id: the route re-reads the lab to check it exists and is active,
+ * because a client-supplied name or partnerId would be a second source of
+ * truth for something the database already knows.
+ */
+export const orderAssignLab = z.object({
+  labId: z.string().min(1, 'Choose a lab'),
+});
+
 export const orderQuery = z.object({
   status: OrderStatusEnum.optional(),
   agentId: z.string().optional(),

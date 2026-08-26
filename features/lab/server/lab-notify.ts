@@ -34,7 +34,22 @@ export interface LabNotifyResult {
 
 export const LAB_NOTIFY_TEMPLATE = 'LAB_ORDER_ASSIGNED';
 
-export async function linkLabAndNotify(orderId: string): Promise<LabNotifyResult> {
+/**
+ * Links a processing lab onto an order and emails it.
+ *
+ * `opts.labId` names the lab explicitly. Without it the function picks one -
+ * the default active lab, else the oldest active - which is what the automatic
+ * capture path wanted. Manual assignment from the admin panel MUST pass a
+ * labId, because the whole point of routing by hand is that the operator, not
+ * this function, chooses.
+ *
+ * Either way the link is claimed atomically on `labId: null`, so two callers
+ * racing (verify and the webhook, say) produce exactly one email.
+ */
+export async function linkLabAndNotify(
+  orderId: string,
+  opts: { labId?: string } = {}
+): Promise<LabNotifyResult> {
   try {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
@@ -48,16 +63,23 @@ export async function linkLabAndNotify(orderId: string): Promise<LabNotifyResult
     // Idempotent: a lab is already linked (the other capture path ran first).
     if (order.labId) return { status: 'skipped', labId: order.labId };
 
-    const lab =
-      (await prisma.lab.findFirst({
-        where: { isDefault: true, active: true },
-        include: { partner: true },
-      })) ??
-      (await prisma.lab.findFirst({
-        where: { active: true },
-        orderBy: { createdAt: 'asc' },
-        include: { partner: true },
-      }));
+    // An explicitly chosen lab wins outright. `active: true` is still required:
+    // an admin should not be able to route work to a lab that has been switched
+    // off, and the caller checks this too - this is the backstop.
+    const lab = opts.labId
+      ? await prisma.lab.findFirst({
+          where: { id: opts.labId, active: true },
+          include: { partner: true },
+        })
+      : ((await prisma.lab.findFirst({
+          where: { isDefault: true, active: true },
+          include: { partner: true },
+        })) ??
+        (await prisma.lab.findFirst({
+          where: { active: true },
+          orderBy: { createdAt: 'asc' },
+          include: { partner: true },
+        })));
 
     if (!lab) {
       // No lab configured. Record it so ops can see the miss, but don't fail.

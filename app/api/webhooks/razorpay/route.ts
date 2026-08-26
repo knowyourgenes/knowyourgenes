@@ -89,7 +89,18 @@ async function handlePaymentCaptured(p: { id?: string; order_id?: string; amount
   // Always (re)run lab notification, claimed or not: it is independently
   // idempotent via its labId:null claim, so this covers the case where verify
   // captured the payment but its lab-notify step hadn't completed yet.
-  await linkLabAndNotify(order.id);
+  // LAB ROUTING IS MANUAL. Assignment used to happen right here, the instant a
+  // payment captured: default active lab, else the first one, then an email.
+  // With more than one lab that is a routing decision nobody made, so it now
+  // waits for an admin - POST /api/admin/orders/[id]/assign-lab - and the lab
+  // is emailed at the moment someone decides the work is theirs.
+  //
+  // The old behaviour is kept behind LAB_AUTO_ASSIGN=true so a single-lab
+  // deployment can opt back in without a code change. Left off, an order
+  // simply carries no lab until assigned, which the admin orders list shows.
+  if (process.env.LAB_AUTO_ASSIGN === 'true') {
+    await linkLabAndNotify(order.id);
+  }
 }
 
 async function handlePaymentFailed(p: {

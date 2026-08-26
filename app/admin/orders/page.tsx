@@ -22,9 +22,11 @@ type Order = {
   user: { name: string | null; email: string | null; phone: string | null };
   package: { name: string };
   agent: { user: { name: string | null } } | null;
+  lab: { id: string; name: string } | null;
 };
 
 type Agent = { id: string; name: string | null; agentProfile: { zone: string } | null };
+type Lab = { id: string; name: string; active: boolean };
 
 const STATUSES = [
   'BOOKED',
@@ -62,6 +64,7 @@ const statusVariant: Record<string, 'default' | 'secondary' | 'outline' | 'destr
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [agents, setAgents] = useState<Agent[]>([]);
+  const [labs, setLabs] = useState<Lab[]>([]);
   const [q, setQ] = useState('');
   const [status, setStatus] = useState('ALL');
   const [loading, setLoading] = useState(true);
@@ -72,15 +75,24 @@ export default function AdminOrdersPage() {
     if (q) p.set('q', q);
     if (status && status !== 'ALL') p.set('status', status);
     p.set('take', '50');
-    const [ordersRes, agentsRes] = await Promise.all([
+    const [ordersRes, agentsRes, labsRes] = await Promise.all([
       fetch(`/api/admin/orders?${p.toString()}`),
       fetch(`/api/admin/agents`),
+      fetch(`/api/admin/labs`),
     ]);
-    const [ordersJson, agentsJson] = await Promise.all([ordersRes.json(), agentsRes.json()]);
+    const [ordersJson, agentsJson, labsJson] = await Promise.all([
+      ordersRes.json(),
+      agentsRes.json(),
+      labsRes.json(),
+    ]);
     if (ordersJson.ok) setOrders(ordersJson.data.items);
     else toast.error(ordersJson.error ?? 'Failed to load orders');
     if (agentsJson.ok) setAgents(agentsJson.data);
     else toast.error(agentsJson.error ?? 'Failed to load agents');
+    // Only active labs can take work, so an inactive one must never appear in
+    // the picker - the API would reject it anyway, but offering it is a trap.
+    if (labsJson.ok) setLabs((labsJson.data.items ?? labsJson.data ?? []).filter((l: Lab) => l.active));
+    else toast.error(labsJson.error ?? 'Failed to load labs');
     setLoading(false);
   }, [q, status]);
 
@@ -108,6 +120,32 @@ export default function AdminOrdersPage() {
     const json = await res.json();
     if (!json.ok) return toast.error(json.error ?? 'Update failed');
     toast.success(`Status → ${newStatus}`);
+    load();
+  }
+
+  async function assignLab(id: string, labId: string, current: string | null) {
+    if (!labId || labId === current) return;
+    // Re-routing an order that already has a lab is a different act from
+    // assigning an unrouted one: the first lab may already have been emailed,
+    // and a sample may already be travelling to it. So it is confirmed, never
+    // silent.
+    if (current) {
+      const to = labs.find((l) => l.id === labId)?.name ?? 'another lab';
+      if (!window.confirm(`This order is already routed. Re-route it to ${to}?`)) return;
+    }
+    const res = await fetch(`/api/admin/orders/${id}/assign-lab`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ labId }),
+    });
+    const json = await res.json();
+    if (!json.ok) return toast.error(json.error ?? 'Could not assign the lab');
+    toast.success(`Lab → ${json.data?.lab?.name ?? 'assigned'}`, {
+      description:
+        json.data?.notified?.status === 'notified'
+          ? 'The lab has been emailed.'
+          : 'Assigned. The lab was not emailed - it had already been notified.',
+    });
     load();
   }
 
@@ -202,6 +240,38 @@ export default function AdminOrdersPage() {
                         {s}
                       </SelectItem>
                     ))}
+                  </SelectContent>
+                </Select>
+              ),
+            },
+            {
+              key: 'lab',
+              header: 'Lab',
+              render: (o) => (
+                <Select value="" onValueChange={(v) => v && assignLab(o.id, v, o.lab?.id ?? null)}>
+                  <SelectTrigger className="h-8 w-[180px]">
+                    {o.lab ? (
+                      <span className="text-sm">{o.lab.name}</span>
+                    ) : (
+                      // Unrouted orders are the queue. Marking them rather than
+                      // showing an empty cell is the whole point of the column.
+                      <Badge variant="destructive" className="font-mono text-[10px]">
+                        UNASSIGNED
+                      </Badge>
+                    )}
+                  </SelectTrigger>
+                  <SelectContent>
+                    {labs.length === 0 ? (
+                      <SelectItem value="__none" disabled>
+                        No active labs
+                      </SelectItem>
+                    ) : (
+                      labs.map((l) => (
+                        <SelectItem key={l.id} value={l.id}>
+                          {l.name}
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectContent>
                 </Select>
               ),
