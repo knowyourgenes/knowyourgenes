@@ -1,40 +1,36 @@
 import type { Metadata } from 'next';
 import SiteFooter from '@/components/shared/SiteFooter';
 import SiteHeader from '@/components/shared/SiteHeader';
-import HomeV3 from '@/features/home/components/v3/HomeV3';
+import HomeV2 from '@/features/home/components/v2/HomeV2';
 
 /**
- * /homepage - the hero experiment.
+ * /homepage - the previous homepage, kept reachable after v3 took over `/`.
  *
- * This is `/` with ONE section swapped. HomeV3 renders its own hero and then
- * the v2 stack - the same components `/` renders, imported rather than copied.
- * Holding everything below the fold constant is the point: whatever the two
- * routes measure differently is the hero, and nothing else.
+ * The two routes were swapped: `/` now renders HomeV3, and this route holds
+ * HomeV2, which `/` shipped with. Holding it here keeps the comparison alive -
+ * eleven of v3's thirteen sections ARE these components, so whatever the two
+ * routes differ on is the hero and WhyGeneticTesting, and nothing else.
  *
- * Promote it by pointing `app/page.tsx` at HomeV3. (`/home-redesign` is v1, the
- * pre-v2 homepage, still parked on its own route.)
+ * `overlay` travels with v2 and must not be dropped: its hero is a dark,
+ * full-bleed gradient the bar is meant to float on, and the hero's top padding
+ * is sized to clear those 64 fixed pixels. Switch to sticky and a cream row
+ * appears above a hero that has already paid for the space.
  *
- * SiteHeader is left in its default `sticky` mode: it reserves its own row and
- * the hero begins BELOW it. It used to run `overlay` (fixed, reserving nothing),
- * which floated the bar on top of the hero card - and because the bar's ground is
- * a translucent cream, that read as a grey band washed over the footage rather
- * than as chrome. Sticky also lets the card be inset on all four sides.
- *
- * The card sizes itself against `--site-header-h`, so it fills exactly the
- * viewport the bar leaves behind. See the note in v3/sections/Hero.
+ * NOINDEX IS NOT OPTIONAL. This is a near-complete duplicate of `/` - same
+ * eleven sections, same copy. Left indexable the two would compete for the
+ * site's own brand terms, which is the textbook way to cannibalise a homepage.
  */
 export const metadata: Metadata = {
-  title: 'DNA tests at home, read in plain language',
-  description:
-    'One at-home saliva kit, NABL-certified labs, and a report written in plain language. At-home collection across Delhi NCR.',
+  title: 'Homepage (previous version)',
+  robots: { index: false, follow: false },
 };
 
 export default function HomepageRoute() {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader overlay />
       <main className="flex-1">
-        <HomeV3 />
+        <HomeV2 />
       </main>
       <SiteFooter />
     </div>
