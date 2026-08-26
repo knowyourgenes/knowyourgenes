@@ -37,6 +37,25 @@ export default {
           prompt: 'select_account',
         },
       },
+      // Attach Google to an EXISTING user that already has this email instead
+      // of refusing with OAuthAccountNotLinked.
+      //
+      // Without this, guest checkout builds accounts nobody can ever open. It
+      // creates a User row carrying the buyer's orders but no passwordHash and
+      // no Account row, so afterwards Credentials login fails the
+      // `!user.passwordHash` check and Google login fails the linking check -
+      // and the confirmation screen has already promised "sign in with that
+      // address whenever you like to track this order and read your report".
+      // The reports are genetic; being locked out of them is not a small thing.
+      //
+      // The "dangerous" in the name is about providers that let you claim an
+      // address you do not own - link on one of those and anyone can walk into
+      // a stranger's account by signing up under their email. Google is not one
+      // of those: it proves ownership before it will hand out an id_token for
+      // an address. The signIn callback in auth.ts additionally refuses any
+      // Google profile that comes back email_verified:false, so the assumption
+      // this relies on is checked rather than presumed.
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   pages: {

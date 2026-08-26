@@ -71,6 +71,40 @@ function mockPaymentId(): string {
   return `pay_MOCK${Date.now().toString().slice(-10)}`;
 }
 
+/** Human labels for the address fields, so a 422 can name what is wrong. */
+const FIELD_LABELS: Record<string, string> = {
+  email: 'Email',
+  fullName: 'Full name',
+  phone: 'Phone',
+  line1: 'Flat / house / building',
+  area: 'Area',
+  city: 'City',
+  pincode: 'PIN code',
+  slotDate: 'Collection date',
+  slotWindow: 'Collection time',
+};
+
+/**
+ * Turns a Zod issue list into "City, PIN code".
+ *
+ * The API already returns `issues` on a 422 (see zodFail in server/api.ts); the
+ * checkout screen used to drop them and show the bare word "Validation failed",
+ * which tells the buyer nothing about which box to go and fill in. Only the last
+ * path segment matters - guest payloads nest as ['guest','address','city'].
+ */
+function describeIssues(issues: { path?: (string | number)[]; message?: string }[] | undefined): string | null {
+  if (!issues?.length) return null;
+  const names = [
+    ...new Set(
+      issues.map((i) => {
+        const key = String(i.path?.[i.path.length - 1] ?? '');
+        return FIELD_LABELS[key] ?? key;
+      })
+    ),
+  ].filter(Boolean);
+  return names.length ? `Please check: ${names.join(', ')}` : null;
+}
+
 /** Tomorrow, as YYYY-MM-DD - the earliest slot we offer. */
 function tomorrowISO(): string {
   const d = new Date();
@@ -144,9 +178,16 @@ export function CheckoutView({
         isDefault: addresses.length === 0,
       }),
     });
-    const json = (await res.json()) as { ok: boolean; data?: { id: string }; error?: string; issues?: unknown[] };
+    const json = (await res.json()) as {
+      ok: boolean;
+      data?: { id: string };
+      error?: string;
+      issues?: { path?: (string | number)[]; message?: string }[];
+    };
     if (!json.ok || !json.data) {
-      toast.error(json.error ?? 'Please check the address fields');
+      toast.error(json.error ?? 'Please check the address fields', {
+        description: describeIssues(json.issues) ?? undefined,
+      });
       return null;
     }
     return json.data.id;
@@ -188,6 +229,7 @@ export function CheckoutView({
         data?: CheckoutResponse;
         error?: string;
         cart?: PricedCart;
+        issues?: { path?: (string | number)[]; message?: string }[];
       };
 
       if (!json.ok || !json.data) {
@@ -197,7 +239,9 @@ export function CheckoutView({
           router.push('/cart');
           return;
         }
-        toast.error(json.error ?? 'Could not start checkout');
+        toast.error(json.error ?? 'Could not start checkout', {
+          description: describeIssues(json.issues) ?? undefined,
+        });
         return;
       }
 
@@ -290,7 +334,13 @@ export function CheckoutView({
     // A guest with no email would place an order nobody can be reached about,
     // and which they could never find again once the tab closes.
     (!guest || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) &&
-    (showNewAddress ? draft.fullName && draft.phone && draft.line1 && draft.area && draft.pincode : addressId);
+    // Every field addressCreate marks required must appear here. `city` was
+    // missing, so the button enabled with it blank, the request went out, and
+    // the server answered 422 - a dead end the buyer could not act on because
+    // nothing on screen said which field was wrong.
+    (showNewAddress
+      ? draft.fullName && draft.phone && draft.line1 && draft.area && draft.city && draft.pincode
+      : addressId);
 
   return (
     <div className="mt-9 grid items-start gap-6 lg:grid-cols-[1.5fr_1fr]">
