@@ -398,7 +398,16 @@ export const cartLine = z.object({
     .min(1)
     .max(64)
     .regex(/^[a-z0-9-]+$/, 'Slugs are lowercase kebab-case'),
-  quantity: z.coerce.number().int().min(1).max(10),
+  /**
+   * Always 1. One saliva kit reads every report on the order, so a quantity of
+   * N was never a thing the system could deliver: pricing, stock and the lab
+   * email multiplied by N while the courier payload, the parcel weight and the
+   * generated report stayed at one. The customer paid N times for one result.
+   *
+   * Coerced rather than rejected so an older client or a stale localStorage
+   * cart still checks out - at the honest price - instead of erroring.
+   */
+  quantity: z.coerce.number().int().min(1).max(10).transform(() => 1),
 });
 
 /** Body of POST /api/cart - re-price a cart. Empty carts are legal (total ₹0). */
@@ -429,7 +438,16 @@ export const checkoutCreate = z.object({
     .optional()
     .nullable(),
   slotWindow: SlotWindowEnum.optional().nullable(),
-  fulfillmentMode: FulfillmentTypeEnum.optional(), // defaults from Package.fulfillmentType
+  fulfillmentMode: FulfillmentTypeEnum.optional(), // only honoured where the package says EITHER
+  /**
+   * The total the customer was actually shown, in paise.
+   *
+   * Not an input to pricing - the server still computes the real total from
+   * live Package rows. This is the client stating what it displayed so the
+   * route can refuse to bill anything else. Optional so an older client still
+   * checks out; a mismatch is always resolved by refusing, never by charging.
+   */
+  expectedTotal: z.number().int().nonnegative().optional(),
   couponCode: couponCodeField,
 });
 

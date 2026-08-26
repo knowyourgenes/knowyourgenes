@@ -2,24 +2,54 @@
  * Order helpers - number generation, pricing calc, attribution → campaign FK
  * resolution.
  */
+import type { Order, OrderStatus } from '@prisma/client';
 import { prisma } from '@/server/prisma';
+import { ApiError } from '@/server/api';
 import type { AttributionPayload } from '@/features/attribution/server/attribution';
 
 /**
  * Generates the human-facing order number: KYG-<YYYY>-<6-digit sequence>.
- * The sequence is per-year and derived from a count of existing orders in
- * that year, padded to 6. Collision-safe enough for current launch volume;
- * if we hit concurrent inserts > 10/sec we'll need a Postgres sequence.
+ *
+ * DERIVED FROM THE HIGHEST NUMBER ISSUED, NOT FROM A COUNT. It used to be
+ * `count(orders this year) + 1`, and a count is not a sequence: delete any order
+ * below the maximum and the next number collides with one that still exists.
+ * Because the insert then fails, no row is created, so the count does not move -
+ * and every subsequent checkout mints the same colliding number. That is not a
+ * degraded checkout, it is a stopped one, and it needed no concurrency at all;
+ * one tidy-up in Prisma Studio was enough.
+ *
+ * Taking max+1 makes holes irrelevant: a deleted row simply leaves a gap in the
+ * series, which is what an order number is allowed to do.
+ *
+ * The scan is keyed on the number's own `KYG-<year>-` prefix rather than on a
+ * createdAt window. That is also what fixes the year-boundary bug the window
+ * had: the year came from server-local time while the bounds were UTC instants,
+ * so under IST every order placed between midnight and 05:30 on 1 January fell
+ * outside its own year's window. The prefix cannot disagree with itself.
+ *
+ * Sorting lexicographically is sound only because the suffix is zero-padded to a
+ * fixed width - "000010" > "000009" as strings. It stops being sound at
+ * 1,000,000 orders in one year, which is also where the 6-digit format runs out.
+ *
+ * STILL NOT ATOMIC. Two overlapping checkouts can read the same maximum. That
+ * race is handled where it belongs, at the insert: the caller retries on a
+ * unique-constraint violation (see app/api/checkout/route.ts). Unlike the count
+ * bug, that failure is self-healing - one insert wins and the maximum advances.
  */
 export async function nextOrderNumber(): Promise<string> {
   const year = new Date().getFullYear();
-  const start = new Date(`${year}-01-01T00:00:00.000Z`);
-  const end = new Date(`${year + 1}-01-01T00:00:00.000Z`);
-  const countThisYear = await prisma.order.count({
-    where: { createdAt: { gte: start, lt: end } },
+  const prefix = `KYG-${year}-`;
+
+  const highest = await prisma.order.findFirst({
+    where: { orderNumber: { startsWith: prefix } },
+    orderBy: { orderNumber: 'desc' },
+    select: { orderNumber: true },
   });
-  const seq = String(countThisYear + 1).padStart(6, '0');
-  return `KYG-${year}-${seq}`;
+
+  const lastSeq = highest ? Number.parseInt(highest.orderNumber.slice(prefix.length), 10) : 0;
+  // A malformed legacy number would make this NaN; fall back rather than emit "KYG-2026-NaN".
+  const next = Number.isFinite(lastSeq) ? lastSeq + 1 : 1;
+  return `${prefix}${String(next).padStart(6, '0')}`;
 }
 
 /**
@@ -68,4 +98,50 @@ export async function applyCoupon(opts: {
   // Never let discount exceed subtotal.
   if (discount > opts.subtotalPaise) discount = opts.subtotalPaise;
   return { discount, couponCode: coupon.code };
+}
+
+/**
+ * Loads an order and refuses to hand it back unless the money arrived.
+ *
+ * THE ONE PRECONDITION EVERY FULFILMENT ACTION SHARES, and until now the only
+ * one none of them checked. Routing to a lab, dispatching a kit, assigning a
+ * collector and advancing the pipeline each commit real cost - a courier leg,
+ * lab capacity, a contractor's time - and each used to run on an order it had
+ * never asked about. Four of the first eight orders on this system were never
+ * paid for; all four were routed to a lab, and the lab was emailed a message
+ * that says in plain words "A new sample has been booked and paid for."
+ *
+ * `paidAt` is the only truth here. `status` cannot stand in for it: capture
+ * writes `paidAt` and deliberately leaves `status` alone, so a fully paid order
+ * still reads BOOKED and an unpaid one reads BOOKED too. Anything that branches
+ * on status to infer payment is reading a field that does not carry it.
+ *
+ * Throws rather than returning a union so call sites stay one line, and 409
+ * rather than 403 because nothing is forbidden - the order is simply not ready.
+ */
+export async function requirePaidOrder(orderId: string): Promise<Order> {
+  const order = await prisma.order.findUnique({ where: { id: orderId } });
+
+  if (!order) throw new ApiError('Order not found', 404);
+  if (!order.paidAt) {
+    throw new ApiError(
+      `${order.orderNumber} has not been paid for yet. It cannot be routed or dispatched until payment is captured.`,
+      409
+    );
+  }
+
+  return order;
+}
+
+/**
+ * Statuses from which an order is finished, one way or another.
+ *
+ * Kept beside the payment guard because they answer the same question - is it
+ * legitimate to do more work on this order - and separating them is how a
+ * cancelled order stayed dispatchable.
+ */
+export const TERMINAL_STATUSES = ['CANCELLED', 'REFUNDED'] as const;
+
+export function isTerminal(status: OrderStatus): boolean {
+  return (TERMINAL_STATUSES as readonly string[]).includes(status);
 }

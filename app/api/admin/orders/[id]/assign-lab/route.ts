@@ -1,6 +1,7 @@
 import { prisma } from '@/server/prisma';
-import { handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { ApiError, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { orderAssignLab } from '@/lib/validators';
+import { isTerminal, requirePaidOrder } from '@/features/orders';
 import { linkLabAndNotify } from '@/features/lab';
 
 type Params = Promise<{ id: string }>;
@@ -35,14 +36,18 @@ export async function POST(req: Request, { params }: { params: Params }) {
       where: { id: labId },
       select: { id: true, name: true, partnerId: true, active: true },
     });
-    if (!lab) throw new Error('Lab not found');
-    if (!lab.active) throw new Error('That lab is not active');
+    if (!lab) throw new ApiError('Lab not found', 404);
+    if (!lab.active) throw new ApiError('That lab is not active', 409);
 
-    const order = await prisma.order.findUnique({
-      where: { id },
-      select: { id: true, labId: true, orderNumber: true },
-    });
-    if (!order) throw new Error('Order not found');
+    // Routing commits a lab's capacity and sends them an email that states, in
+    // words, that the sample has been paid for. It used to select three columns
+    // and payment was not among them, so it said that about orders nobody had
+    // paid for.
+    const order = await requirePaidOrder(id);
+
+    if (isTerminal(order.status)) {
+      throw new ApiError(`${order.orderNumber} is ${order.status} and cannot be routed`, 409);
+    }
 
     const isReassignment = order.labId !== null && order.labId !== lab.id;
 
@@ -71,6 +76,29 @@ export async function POST(req: Request, { params }: { params: Params }) {
       // 'skipped' - the lab would be assigned and never told. That is exactly
       // what happened before this branch existed, and the smoke test caught it.
       notified = await linkLabAndNotify(id, { labId: lab.id });
+
+      // BRANCH ON THE RESULT. This used to be a bare `await` followed
+      // unconditionally by a "Lab assigned" event and HTTP 200 - so when
+      // linkLabAndNotify returned 'error' or 'no-lab', the order kept labId
+      // null, the sample was routed nowhere, and the operator was shown positive
+      // confirmation that it had been routed. A failure that reports success is
+      // worse than a failure, because nobody goes looking.
+      if (notified.status === 'error' || notified.status === 'no-lab') {
+        await prisma.orderEvent.create({
+          data: {
+            orderId: id,
+            label: `Lab routing FAILED: ${lab.name}`,
+            meta: { labId: lab.id, notify: notified.status, detail: notified.detail ?? null },
+            actorId: guard.id,
+          },
+        });
+        throw new ApiError(
+          `Could not route ${order.orderNumber} to ${lab.name}. The order is unchanged - please try again.`,
+          502,
+          { notified }
+        );
+      }
+
       await prisma.orderEvent.create({
         data: {
           orderId: id,

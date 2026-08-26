@@ -32,6 +32,13 @@ export async function POST(req: Request, { params }: { params: Params }) {
     const order = await prisma.order.findFirst({ where: { id, agentId: guard.id! } });
     if (!order) return fail('Order not found or not assigned to you', 404);
 
+    // An agent must not be able to walk an unpaid order to SAMPLE_COLLECTED -
+    // which also stamps collectedAt and increments their collection counters for
+    // a sample taken against no payment.
+    if (!order.paidAt) {
+      return fail('This order has not been paid for yet', 409);
+    }
+
     const allowed = ALLOWED_FROM_TO[order.status] ?? [];
     if (!allowed.includes(to)) {
       return fail(`Cannot move from ${order.status} to ${to}`, 400);

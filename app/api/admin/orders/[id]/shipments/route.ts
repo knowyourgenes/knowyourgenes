@@ -1,5 +1,6 @@
 import { prisma } from '@/server/prisma';
-import { created, fail, handle, isResponse, requireApiRole } from '@/server/api';
+import { ApiError, created, fail, handle, isResponse, requireApiRole } from '@/server/api';
+import { isTerminal } from '@/features/orders';
 import { courier } from '@/features/shipments/server/courier';
 import { shipmentCreate } from '@/lib/validators';
 import { resolveLab } from '@/features/shipments';
@@ -10,7 +11,8 @@ type Params = Promise<{ id: string }>;
  * POST /api/admin/orders/[id]/shipments
  *
  * Creates a Delhivery shipment for a kit-by-post order.
- * - leg=FORWARD  → dispatch kit from warehouse to user. Call after order is paid.
+ * - leg=FORWARD  → dispatch kit from warehouse to user. Only after the order is
+ *                  PAID - and that is now enforced, not just documented here.
  * - leg=REVERSE  → schedule reverse pickup from user to lab. Call when admin
  *                  marks "user has collected sample, kit ready for pickup".
  */
@@ -23,6 +25,13 @@ export async function POST(req: Request, { params }: { params: Params }) {
     const body = await req.json();
     const input = shipmentCreate.parse(body);
 
+    // Never book against a courier we cannot actually reach. Without this the
+    // client downgrades to mock, returns a fabricated AWB, and the order
+    // advances - a failure that presents to the operator as a success.
+    if (courier.isMisconfigured()) {
+      return fail('The courier integration is not configured. No shipment was created.', 503);
+    }
+
     const order = await prisma.order.findUnique({
       where: { id: orderId },
       include: {
@@ -30,7 +39,22 @@ export async function POST(req: Request, { params }: { params: Params }) {
         user: { select: { name: true, phone: true } },
       },
     });
-    if (!order) throw new Error('Order not found');
+    if (!order) throw new ApiError('Order not found', 404);
+
+    // The docblock above has said "call after order is paid" since this route was
+    // written; nothing checked. Booking a courier leg spends real money, and an
+    // unpaid order could be dispatched with one click.
+    if (!order.paidAt) {
+      return fail(`${order.orderNumber} has not been paid for yet - no kit can be dispatched`, 409);
+    }
+
+    // A cancelled or refunded order is finished. Because a dead order usually has
+    // no forward Shipment row, the duplicate-leg check below did not fire, so one
+    // POST could resurrect it into a real courier booking.
+    if (isTerminal(order.status)) {
+      return fail(`${order.orderNumber} is ${order.status} - no shipment can be created`, 409);
+    }
+
     if (order.fulfillmentMode === 'AT_HOME_PHLEBOTOMIST') {
       return fail('This order uses at-home collection - no kit shipment needed', 400);
     }
