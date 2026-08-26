@@ -5,6 +5,23 @@ import { z } from 'zod';
 // ---------------------------------------------------------------------------
 
 export const RoleEnum = z.enum(['USER', 'AGENT', 'COUNSELLOR', 'PARTNER', 'ADMIN']);
+
+/**
+ * The roles /admin lets in.
+ *
+ * One list, because two lists drift: if the site header offers a link to a role
+ * the layout's guard turns away, the link is a redirect back to the homepage
+ * with no explanation. Both now read this.
+ *
+ * NOT the same question as what a given page inside the panel may show - the
+ * sidebar still filters its own items per role.
+ */
+export const PANEL_ROLES = ['ADMIN', 'COUNSELLOR', 'PARTNER'] as const;
+
+/** Whether a role may open /admin at all. */
+export function canOpenPanel(role: string | null | undefined): boolean {
+  return !!role && (PANEL_ROLES as readonly string[]).includes(role);
+}
 export const PackageCategoryEnum = z.enum(['WELLNESS', 'CANCER_RISK', 'REPRODUCTIVE', 'CARDIAC', 'DRUG_SENSITIVITY']);
 export const SampleTypeEnum = z.enum(['BLOOD', 'SALIVA', 'SWAB']);
 export const SlotWindowEnum = z.enum(['MORNING', 'AFTERNOON', 'EVENING']);

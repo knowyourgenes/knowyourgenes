@@ -10,6 +10,7 @@ import UserNav from '@/features/admin/components/UserNav';
 import { CartLink } from '@/features/cart/components/CartLink';
 import { CHROME_VARS } from '@/features/auth/server/tokens';
 import { NAV_LEAD_LINKS, NAV_LINKS, NAV_MENUS } from '@/lib/nav-data';
+import { canOpenPanel } from '@/lib/validators';
 import { BTN, BTN_ICON } from './button-styles';
 import { Container } from './Container';
 import { KygLogo } from './Logo';
@@ -425,27 +426,36 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
             {/* Always rendered now - only the badge is conditional. */}
             <CartLink />
 
-            {/* The parked "Order Kit" marketing CTA, plus the admin shortcut.
-                Sign-in is NOT in this block any more - it is the account icon
-                above, which is present whether or not the CTAs are. */}
+            {/* Staff shortcut into /admin. Deliberately NOT inside
+                SHOW_NAV_CTA: it used to be, and since that flag is false the
+                only route into the admin panel was typing the URL. An operator
+                would instead land on /dashboard - which they are allowed into
+                as a customer - see an empty order list, and conclude the orders
+                were missing rather than that they were on the wrong page.
+
+                A shortcut, not a marketing CTA, so it has no business sharing a
+                switch with one. */}
+            {canOpenPanel(user?.role) && (
+              <Link
+                href="/admin/dashboard"
+                title="Admin panel"
+                className={cn(BTN_BASE, 'bg-white text-(--ink-1) border-(--ink-line) max-[980px]:hidden')}
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                Admin
+              </Link>
+            )}
+
+            {/* The parked "Order Kit" marketing CTA. Sign-in is NOT in this
+                block any more - it is the account icon above, which is present
+                whether or not the CTAs are. */}
             {SHOW_NAV_CTA && (
-              <>
-                {user?.role === 'ADMIN' && (
-                  <Link
-                    href="/admin/dashboard"
-                    className={cn(BTN_BASE, 'bg-white text-(--ink-1) border-(--ink-line) max-[980px]:hidden')}
-                  >
-                    <LayoutDashboard className="w-4 h-4" />
-                    Dashboard
-                  </Link>
-                )}
-                <Link
-                  href="/#wellness"
-                  className={cn(BTN_BASE, 'bg-(--ink-1) text-(--cream) hover:bg-(--teal) hover:-translate-y-[3px]')}
-                >
-                  Order Kit <ArrowRight />
-                </Link>
-              </>
+              <Link
+                href="/#wellness"
+                className={cn(BTN_BASE, 'bg-(--ink-1) text-(--cream) hover:bg-(--teal) hover:-translate-y-[3px]')}
+              >
+                Order Kit <ArrowRight />
+              </Link>
             )}
 
             <button
@@ -492,6 +502,20 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
                 {link.label}
               </Link>
             ))}
+
+            {/* The desktop shortcut is hidden under 980px, which is exactly
+                where the drawer takes over - without this, staff on a phone
+                would still have no way in. */}
+            {canOpenPanel(user?.role) && (
+              <Link
+                href="/admin/dashboard"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 py-[9px] text-[15px] font-semibold text-(--teal) hover:opacity-80"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                Admin panel
+              </Link>
+            )}
 
             {NAV_MENUS.map((menu) => (
               <div key={menu.key}>
