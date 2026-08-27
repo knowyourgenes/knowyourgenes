@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, AlertTriangle, FileText } from 'lucide-react';
+import { ArrowLeft, AlertTriangle } from 'lucide-react';
 
 import { prisma } from '@/server/prisma';
 import { auth } from '@/features/auth';
+import { presignDownload } from '@/features/reports';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
@@ -14,16 +15,27 @@ export const dynamic = 'force-dynamic';
 type Params = Promise<{ id: string }>;
 
 /**
- * /dashboard/reports/[id] - one report.
+ * /dashboard/reports/[id] - reading one report.
  *
- * THE REPORTS LIST HAS LINKED HERE SINCE IT WAS WRITTEN and the route did not
- * exist, so every "View" button on every delivered report was a 404 - the last
- * step of the whole chain, broken for the person who paid for it. The list's
- * second button was worse: `href="#"`.
+ * THE PAGE READS THE REPORT, it does not describe it. An earlier version showed
+ * a title, an id, a date and a line saying the real thing was in the PDF - which
+ * made it a signpost, and a signpost between someone and their own results is
+ * just a click. `summary` and `markers` are empty on every report today because
+ * a lab uploads a PDF and nothing else, so there was never going to be anything
+ * else to show.
+ *
+ * So the PDF is embedded. Storage serves it as `Content-Disposition: inline`,
+ * which means the browser's own viewer renders it here - scroll, search, zoom,
+ * print - with no PDF library and nothing added to the bundle.
+ *
+ * THE URL IS SIGNED ON THE SERVER, in this render, and lives ten minutes. It is
+ * never in the page source at build time and never in browser history, because
+ * the page is dynamic and the iframe src is generated per request. Open PDF
+ * stays for saving a copy or reading full-screen.
  *
  * Ownership is checked here rather than trusted from the URL, and an unowned or
- * unreleased report answers notFound() - the same answer as a report that does
- * not exist. Anything else lets someone walk cuids and learn which ones are real.
+ * unreleased report answers notFound() - the same answer as one that does not
+ * exist, so walking ids reveals nothing.
  */
 export default async function ReportPage({ params }: { params: Params }) {
   const { id } = await params;
@@ -37,6 +49,7 @@ export default async function ReportPage({ params }: { params: Params }) {
       id: true,
       reportNumber: true,
       packageName: true,
+      pdfKey: true,
       summary: true,
       criticalFinding: true,
       deliveredAt: true,
@@ -49,13 +62,22 @@ export default async function ReportPage({ params }: { params: Params }) {
     },
   });
 
-  // Not yours, or not released yet, reads exactly like not there.
   if (!report || report.userId !== userId || !report.deliveredAt) notFound();
+
+  // Signed per request. If storage is unreachable the page still renders - the
+  // reader gets the download button and the counsellor link rather than an error
+  // page for something that is only the viewer being unavailable.
+  let pdfUrl: string | null = null;
+  try {
+    pdfUrl = await presignDownload(report.pdfKey, 600);
+  } catch (err) {
+    console.error(`[report ${report.reportNumber}] could not presign for inline view:`, err);
+  }
 
   const bullets = Array.isArray(report.summary) ? (report.summary as string[]) : [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <Link
         href="/dashboard/reports"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition hover:text-foreground"
@@ -72,7 +94,7 @@ export default async function ReportPage({ params }: { params: Params }) {
             {new Date(report.deliveredAt).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
           </p>
         </div>
-        <ReportDownloadButton reportId={report.id} label="Open PDF" />
+        <ReportDownloadButton reportId={report.id} label="Open full screen" variant="outline" />
       </div>
 
       {report.criticalFinding && (
@@ -82,13 +104,10 @@ export default async function ReportPage({ params }: { params: Params }) {
             <div className="text-sm">
               <p className="font-medium text-destructive">This report contains a finding worth discussing</p>
               <p className="mt-1 text-muted-foreground">
-                A genetic counsellor can walk you through what it does and does not mean. Booking a call is free and
+                A genetic counsellor can walk you through what it does and does not mean. The first call is free and
                 there is no obligation.
               </p>
-              <Link
-                href="/dashboard"
-                className={buttonVariants({ variant: 'outline', size: 'sm', className: 'mt-3' })}
-              >
+              <Link href="/dashboard" className={buttonVariants({ variant: 'outline', size: 'sm', className: 'mt-3' })}>
                 Talk to a counsellor
               </Link>
             </div>
@@ -100,7 +119,7 @@ export default async function ReportPage({ params }: { params: Params }) {
         <Card>
           <CardHeader>
             <CardTitle className="text-base">In plain language</CardTitle>
-            <CardDescription>The short version. The full detail is in the PDF.</CardDescription>
+            <CardDescription>The short version. The full detail is below.</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 text-sm">
@@ -111,6 +130,27 @@ export default async function ReportPage({ params }: { params: Params }) {
                 </li>
               ))}
             </ul>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* The report itself. Tall enough to actually read a page at a time rather
+          than peer through a letterbox. */}
+      {pdfUrl ? (
+        <div className="overflow-hidden rounded-sm border bg-muted">
+          <iframe
+            src={pdfUrl}
+            title={`Report ${report.reportNumber}`}
+            className="h-[min(78vh,900px)] w-full border-0"
+          />
+        </div>
+      ) : (
+        <Card>
+          <CardContent className="flex flex-col items-center justify-center py-14 text-center">
+            <p className="font-medium">The viewer could not load just now</p>
+            <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+              Your report is safe. Use Open full screen above, or try again in a moment.
+            </p>
           </CardContent>
         </Card>
       )}
@@ -138,19 +178,10 @@ export default async function ReportPage({ params }: { params: Params }) {
         </Card>
       )}
 
-      {bullets.length === 0 && report.markers.length === 0 && (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-14 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-primary/10 text-primary">
-              <FileText className="h-5 w-5" />
-            </div>
-            <p className="mt-4 font-medium">Your report is ready to read</p>
-            <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-              The full report is in the PDF. Open it above, or save it to share with your doctor.
-            </p>
-          </CardContent>
-        </Card>
-      )}
+      <p className="text-xs leading-relaxed text-muted-foreground">
+        This report is yours to keep and to share with any doctor you choose. If anything in it worries you, our genetic
+        counsellors do this all day and the first call is free.
+      </p>
     </div>
   );
 }

@@ -8,17 +8,20 @@ import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 
 /**
- * Fetches a short-lived signed URL and opens the PDF.
+ * Fetches a short-lived signed URL and opens the PDF in a new tab.
  *
  * A BUTTON, NOT AN ANCHOR, because there is no URL to put in an href until the
  * server has signed one - they expire in ten minutes, so a link rendered at page
- * load would be stale by the time most people clicked it. This is also why the
- * list page used to carry `href="#"`: nobody had built the exchange.
+ * load would be stale by the time most people clicked it.
  *
- * `window.open` on the signed URL rather than a download attribute: object
- * storage serves the PDF with `Content-Disposition: inline`, so the browser's
- * own viewer opens it and the reader can scroll a genetic report rather than
- * being handed a file to find later.
+ * OPENED BY CLICKING A SYNTHETIC ANCHOR, not by window.open. That is not
+ * fussiness: `window.open(url, '_blank', 'noopener')` returns NULL even when it
+ * succeeds, because the browser must not hand the opener a reference to a
+ * no-opener window. Testing that return value for a popup blocker therefore
+ * reports "blocked" every single time - which is how this ended up opening the
+ * report in a new tab AND navigating the current one to it. An anchor click
+ * needs no return value, carries the same rel protections, and behaves the way
+ * a link does.
  */
 export function ReportDownloadButton({
   reportId,
@@ -47,11 +50,14 @@ export function ReportDownloadButton({
         toast.error(json.error ?? 'Could not open the report');
         return;
       }
-      // Opened after the await, so this is not a user-gesture-initiated open and
-      // a popup blocker can stop it. Fall back to navigating this tab rather
-      // than leaving the reader with a button that appears to do nothing.
-      const win = window.open(json.data.url, '_blank', 'noopener,noreferrer');
-      if (!win) window.location.href = json.data.url;
+
+      const a = document.createElement('a');
+      a.href = json.data.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
     } catch {
       toast.error('Could not reach the server');
     } finally {
@@ -60,12 +66,7 @@ export function ReportDownloadButton({
   }
 
   return (
-    <button
-      type="button"
-      onClick={open}
-      disabled={busy}
-      className={cn(buttonVariants({ variant, size }), className)}
-    >
+    <button type="button" onClick={open} disabled={busy} className={cn(buttonVariants({ variant, size }), className)}>
       {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
       {label}
     </button>
