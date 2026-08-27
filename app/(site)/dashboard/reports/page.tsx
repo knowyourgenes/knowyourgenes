@@ -111,10 +111,28 @@ export default async function UserReportsPage() {
                   </p>
                 </div>
 
-                {/* z-10 lifts these above the stretched link so they win the click. */}
-                <div className="relative z-10 flex items-center gap-2">
-                  <ReportDownloadButton reportId={r.id} label="PDF" variant="outline" />
-                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary transition group-hover:gap-1.5">
+                <div className="flex items-center gap-2">
+                  {/*
+                    ONLY THE PDF BUTTON IS LIFTED. It is the one control that must
+                    beat the card-wide link, so it alone gets `relative z-10`.
+                  */}
+                  <div className="relative z-10">
+                    <ReportDownloadButton reportId={r.id} label="PDF" variant="outline" />
+                  </div>
+
+                  {/*
+                    "Read" is deliberately NOT lifted, so the stretched link
+                    underneath receives the click. It used to sit inside the same
+                    z-10 wrapper as the PDF button, which made the thing that
+                    looks like the primary action the one part of the row that
+                    did nothing - and left a dead strip with live link on either
+                    side of it, which is what made the hover read as arbitrary.
+                    Decoration for an affordance that lives underneath it.
+                  */}
+                  <span
+                    aria-hidden="true"
+                    className="inline-flex items-center gap-1 text-sm font-medium text-primary transition group-hover:gap-1.5"
+                  >
                     Read
                     <ArrowRight className="h-4 w-4" />
                   </span>
