@@ -26,8 +26,75 @@ import type { CartLineInput, PricedCart } from '../types';
 
 const STORAGE_KEY = 'kyg_cart_v1';
 
+/**
+ * The last server-priced cart, kept so the basket can paint before the network
+ * answers. Separate key from the cart itself: the cart is what we ASK for and
+ * must survive anything, while this is a disposable convenience that can be
+ * dropped whenever it stops matching.
+ */
+const PRICED_CACHE_KEY = 'kyg_cart_priced_v1';
+
+/**
+ * How long a cached price may be shown before it is treated as too old to paint.
+ *
+ * Twenty minutes is well inside the window where a catalogue price is unlikely
+ * to have moved, and it is only ever DISPLAYED - the server reprices every time
+ * and checkout refuses to submit a cached total, so the cost of being wrong here
+ * is a number that corrects itself a second later, not a wrong charge.
+ */
+const PRICED_CACHE_TTL_MS = 20 * 60 * 1000;
+
 /** Wait this long after the last edit before re-pricing, so holding "+" is one call. */
 const REPRICE_DEBOUNCE_MS = 250;
+
+interface CachedPrice {
+  at: number;
+  /** The exact request this was the answer to. */
+  lines: CartLineInput[];
+  couponCode: string | null;
+  cart: PricedCart;
+}
+
+/**
+ * Reads the cache, and returns it only if it still answers the question being
+ * asked. A cached price for a different basket is worse than no price - it would
+ * show someone the cost of a cart they no longer have.
+ */
+function readPricedCache(lines: CartLineInput[], couponCode: string | null): PricedCart | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(PRICED_CACHE_KEY);
+    if (!raw) return null;
+    const c = JSON.parse(raw) as Partial<CachedPrice>;
+    if (!c?.cart || !Array.isArray(c.lines) || typeof c.at !== 'number') return null;
+    if (Date.now() - c.at > PRICED_CACHE_TTL_MS) return null;
+    if ((c.couponCode ?? null) !== couponCode) return null;
+    if (!sameLines(c.lines, lines)) return null;
+    return c.cart;
+  } catch {
+    return null;
+  }
+}
+
+function writePricedCache(lines: CartLineInput[], couponCode: string | null, cart: PricedCart): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const payload: CachedPrice = { at: Date.now(), lines, couponCode, cart };
+    window.localStorage.setItem(PRICED_CACHE_KEY, JSON.stringify(payload));
+  } catch {
+    // A full or blocked storage must never break the basket. The cache is an
+    // optimisation; losing it costs a spinner, not a sale.
+  }
+}
+
+function clearPricedCache(): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.removeItem(PRICED_CACHE_KEY);
+  } catch {
+    /* see above */
+  }
+}
 
 interface StoredCart {
   lines: CartLineInput[];
@@ -122,6 +189,12 @@ interface CartContextValue {
   /** False during SSR and hydration - render skeletons, not "empty". */
   hydrated: boolean;
   pricing: boolean;
+  /**
+   * True when `priced` came from the local cache and the server has not yet
+   * confirmed it. Fine to render; NOT fine to charge. Checkout must wait for
+   * this to clear before it will submit.
+   */
+  stale: boolean;
   couponCode: string | null;
 
   itemCount: number;
@@ -182,7 +255,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [pricedRaw, setPricedRaw] = useState<PricedCart | null>(null);
-  const [pricing, setPricing] = useState(false);
 
   const abortRef = useRef<AbortController | null>(null);
   // Warnings are toasted once per pricing round, not once per render.
@@ -198,7 +270,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       abortRef.current?.abort();
       const controller = new AbortController();
       abortRef.current = controller;
-      setPricing(true);
       try {
         const res = await fetch('/api/cart', {
           method: 'POST',
@@ -211,6 +282,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
         const cart = json.data;
         setPricedRaw(cart);
+        writePricedCache(lines, couponCode, cart);
 
         // Tell the user once about anything the server changed, then reconcile
         // local state so the next round does not re-ask for it.
@@ -227,34 +299,68 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       } catch (err) {
         if (err instanceof DOMException && err.name === 'AbortError') return;
         toast.error(err instanceof Error ? err.message : 'Could not price your cart');
-      } finally {
-        setPricing(false);
       }
     }, REPRICE_DEBOUNCE_MS);
 
     return () => clearTimeout(timer);
   }, [lines, couponCode, hydrated]);
 
+  /**
+   * The last priced answer for THIS basket, if the browser still has one.
+   *
+   * Derived during render rather than loaded in an effect: an effect that seeds
+   * state is a second render before paint - which is both what
+   * react-hooks/set-state-in-effect exists to stop and, here, exactly the
+   * flicker the cache is meant to remove. Reading localStorage is a pure read,
+   * and `hydrated` guarantees there is a window to read from.
+   */
+  const cachedFallback =
+    hydrated && lines.length > 0 && pricedRaw === null ? readPricedCache(lines, couponCode) : null;
+
+  /** A cached price is on screen and the server has not confirmed it yet. */
+  const stale = pricedRaw === null && cachedFallback !== null;
+
+  const effectivePriced = pricedRaw ?? cachedFallback;
+
+  const pricedDescribesLines =
+    effectivePriced !== null &&
+    sameLines(
+      lines,
+      effectivePriced.lines.map((l) => ({ slug: l.slug, quantity: l.quantity }))
+    );
+
+
   // Derived, not stored: an emptied cart has no prices, and deriving avoids a
   // synchronous setState inside the effect above.
-  const priced = lines.length === 0 ? null : pricedRaw;
+  const priced = lines.length === 0 ? null : effectivePriced;
 
   /**
-   * True while a price is in flight OR has never arrived for a non-empty cart.
+   * Show a skeleton only when there is nothing that describes this basket.
    *
-   * The second half is the fix. `priced === null` meant two different things and
-   * every cart surface read it as the wrong one: it is null when the cart is
-   * genuinely empty, and ALSO on every provider mount before the first reprice
-   * returns - at minimum a debounce plus a round trip away. So a direct load or
-   * refresh of /cart or /checkout with a full basket rendered "Your cart is
-   * empty" beside a header badge showing the real count, deterministically,
-   * every time. The `pricing` state alone did not cover it, because it starts
-   * false and only flips once the debounce fires.
+   * `priced === null` used to mean two different things and every cart surface
+   * read it as the wrong one: null for a genuinely empty cart, and null again on
+   * every mount before the first price returned - so a full basket rendered
+   * "Your cart is empty" beside a header badge showing the real count.
    *
    * `lines` is read from storage synchronously at hydration, so it knows the
    * cart is not empty well before any price does.
    */
-  const awaitingPrice = pricing || (hydrated && lines.length > 0 && pricedRaw === null);
+  // WHAT WE HOLD DESCRIBES THE BASKET WE HAVE. That is the only question a
+  // skeleton should answer, and it is not the same as "a request is in flight".
+  //
+  // Keying on `pricing` was fine when the only price we could ever have was a
+  // fresh one. With a cache, a background refresh of a basket we can already
+  // draw would flip `pricing` true and snap the skeleton back over content the
+  // customer was mid-read of - a worse flicker than the wait it replaced.
+  //
+  // Comparing the lines instead gets both cases right: a cache hit matches and
+  // renders immediately, and an added item does not match, so it waits rather
+  // than showing a total for a basket that no longer exists.
+  // There is deliberately no separate in-flight flag any more. One existed and
+  // fed this, which meant a background refresh of a basket already on screen
+  // snapped the skeleton back over content mid-read. Whether a request is open
+  // is not the question; whether we can draw the basket is.
+  const awaitingPrice = hydrated && lines.length > 0 && !pricedDescribesLines;
 
   const add = useCallback((slug: string, quantity = 1) => {
     const current = getSnapshot();
@@ -286,6 +392,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clear = useCallback(() => {
     write({ lines: [], couponCode: null });
     setPricedRaw(null);
+    // The cache outlives the cart unless it is told not to. Leaving it would let
+    // a paid-for basket reappear, priced, the next time this browser opened one.
+    clearPricedCache();
   }, []);
 
   const setSelection = useCallback((slugs: string[]) => {
@@ -323,6 +432,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         lines,
         priced,
         pricing: awaitingPrice,
+        stale,
         hydrated,
         couponCode,
         itemCount,

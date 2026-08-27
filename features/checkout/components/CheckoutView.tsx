@@ -126,7 +126,7 @@ export function CheckoutView({
   knownEmail?: string;
 }) {
   const router = useRouter();
-  const { lines, priced, hydrated, pricing, couponCode, clear, openDrawer } = useCart();
+  const { lines, priced, hydrated, pricing, stale, couponCode, clear, openDrawer } = useCart();
   // True from the moment payment succeeds until this page is gone. Never reset -
   // there is nowhere to go back to.
   const [leaving, setLeaving] = useState(false);
@@ -381,6 +381,12 @@ export function CheckoutView({
 
   const canPay =
     !busy &&
+    // DISPLAY OPTIMISTICALLY, NEVER TRANSACT OPTIMISTICALLY. `stale` means the
+    // total on screen came from the local cache and the server has not confirmed
+    // it. Good enough to read, not good enough to charge - and submitting it
+    // would trip the expectedTotal guard for a 409 the buyer cannot act on. The
+    // wait is under a second and only ever happens on a first paint.
+    !stale &&
     // A guest with no email would place an order nobody can be reached about,
     // and which they could never find again once the tab closes.
     (!guest || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) &&
@@ -569,7 +575,7 @@ export function CheckoutView({
           disabled={!canPay}
           className="flex h-[52px] w-full items-center justify-center rounded-sm bg-eden text-[15px] font-bold text-spring transition hover:bg-eden2 disabled:cursor-not-allowed disabled:opacity-55"
         >
-          {busy ? 'Working…' : `Pay ${formatPaise(priced.total)}`}
+          {busy ? 'Working…' : stale ? 'Checking your total…' : `Pay ${formatPaise(priced.total)}`}
         </button>
 
         <p className="text-center text-[12px] leading-[1.5] text-cord">
