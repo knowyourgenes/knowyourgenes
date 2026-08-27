@@ -32,7 +32,14 @@ export default async function AttributionPage() {
     // 1. Order-attribution aggregate - the actual attribution report.
     prisma.order.groupBy({
       by: ['attrSource', 'attrMedium'],
-      where: { status: { notIn: ['CANCELLED', 'REFUNDED'] } },
+      // REVENUE IS MONEY THAT ARRIVED. Filtering on status alone counted every
+      // booked-but-never-paid order as revenue - and an unpaid backlog is this
+      // system's normal state, because the order row is written before the
+      // Razorpay modal even opens. Worse, those abandoned checkouts carry the
+      // UTM tags of whatever campaign brought them, so marketing spend was being
+      // judged against money nobody ever sent. The admin dashboard already gets
+      // this right; these two surfaces did not.
+      where: { paidAt: { not: null }, status: { notIn: ['CANCELLED', 'REFUNDED'] } },
       _count: { _all: true },
       _sum: { total: true },
       orderBy: { _sum: { total: 'desc' } },

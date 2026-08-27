@@ -17,7 +17,17 @@ import type { ShipmentStatus } from '@prisma/client';
 export async function POST(req: Request) {
   const expected = process.env.DELHIVERY_WEBHOOK_SECRET;
   const got = req.headers.get('x-delhivery-token');
-  if (expected && got !== expected) {
+  // FAIL CLOSED. This used to read `if (expected && got !== expected)`, so an
+  // unset secret disabled the check entirely and every request was accepted -
+  // the guard only existed once it was already configured. That is the opposite
+  // of what the payments webhook does one directory over, and it was wired to
+  // the endpoint that writes Order.status. The only input an attacker needed was
+  // an AWB, which the customer's own order page prints.
+  if (!expected) {
+    console.error('[webhook] DELHIVERY_WEBHOOK_SECRET is not set - refusing tracking callbacks');
+    return new Response('webhook not configured', { status: 503 });
+  }
+  if (got !== expected) {
     return new Response('forbidden', { status: 403 });
   }
 
@@ -86,15 +96,24 @@ function extractLabel(b: Record<string, unknown>): string | undefined {
   return (b.instructions as string | undefined) ?? (b.remarks as string | undefined);
 }
 
+/**
+ * ORDER MATTERS HERE, and it is not the order a reader expects.
+ *
+ * 'delivered' is a substring of 'undelivered', and 'rto delivered' contains
+ * both. Every negative case must therefore be tested BEFORE the positive one,
+ * or a failed delivery is recorded as a successful one. This file already
+ * guarded RTO that way; 'undelivered' slipped through and reached the
+ * `v.includes('fail')` line that could never see it.
+ */
 function mapStatus(s: string): ShipmentStatus {
   const v = s.toLowerCase();
-  if (v.includes('delivered') && !v.includes('rto')) return 'DELIVERED';
-  if (v.includes('out for delivery')) return 'OUT_FOR_DELIVERY';
+  if (v.includes('undelivered') || v.includes('not delivered') || v.includes('fail')) return 'FAILED';
   if (v.includes('rto')) return 'RTO';
+  if (v.includes('delivered')) return 'DELIVERED';
+  if (v.includes('out for delivery')) return 'OUT_FOR_DELIVERY';
   if (v.includes('pickup scheduled')) return 'PICKUP_SCHEDULED';
   if (v.includes('manifested')) return 'MANIFESTED';
   if (v.includes('cancel')) return 'CANCELLED';
-  if (v.includes('fail')) return 'FAILED';
   if (v.includes('in transit') || (v.includes('pickup') && v.includes('done'))) return 'IN_TRANSIT';
   return 'CREATED';
 }

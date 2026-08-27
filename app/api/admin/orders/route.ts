@@ -42,6 +42,10 @@ export async function GET(req: Request) {
           user: { select: { name: true, email: true, phone: true } },
           package: { select: { name: true } },
           agent: { select: { user: { select: { name: true } } } },
+          // Lab routing is manual now, so the list has to show which orders
+          // still have nobody processing them - that is the queue an operator
+          // works from.
+          lab: { select: { id: true, name: true } },
         },
       }),
       prisma.order.count({ where }),

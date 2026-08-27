@@ -5,6 +5,23 @@ import { z } from 'zod';
 // ---------------------------------------------------------------------------
 
 export const RoleEnum = z.enum(['USER', 'AGENT', 'COUNSELLOR', 'PARTNER', 'ADMIN']);
+
+/**
+ * The roles /admin lets in.
+ *
+ * One list, because two lists drift: if the site header offers a link to a role
+ * the layout's guard turns away, the link is a redirect back to the homepage
+ * with no explanation. Both now read this.
+ *
+ * NOT the same question as what a given page inside the panel may show - the
+ * sidebar still filters its own items per role.
+ */
+export const PANEL_ROLES = ['ADMIN', 'COUNSELLOR', 'PARTNER'] as const;
+
+/** Whether a role may open /admin at all. */
+export function canOpenPanel(role: string | null | undefined): boolean {
+  return !!role && (PANEL_ROLES as readonly string[]).includes(role);
+}
 export const PackageCategoryEnum = z.enum(['WELLNESS', 'CANCER_RISK', 'REPRODUCTIVE', 'CARDIAC', 'DRUG_SENSITIVITY']);
 export const SampleTypeEnum = z.enum(['BLOOD', 'SALIVA', 'SWAB']);
 export const SlotWindowEnum = z.enum(['MORNING', 'AFTERNOON', 'EVENING']);
@@ -185,6 +202,17 @@ export const orderStatusUpdate = z.object({
 
 export const orderAssignAgent = z.object({
   agentId: z.string().min(1),
+});
+
+/**
+ * Which lab an admin is routing an order to.
+ *
+ * Only the id: the route re-reads the lab to check it exists and is active,
+ * because a client-supplied name or partnerId would be a second source of
+ * truth for something the database already knows.
+ */
+export const orderAssignLab = z.object({
+  labId: z.string().min(1, 'Choose a lab'),
 });
 
 export const orderQuery = z.object({
@@ -370,7 +398,16 @@ export const cartLine = z.object({
     .min(1)
     .max(64)
     .regex(/^[a-z0-9-]+$/, 'Slugs are lowercase kebab-case'),
-  quantity: z.coerce.number().int().min(1).max(10),
+  /**
+   * Always 1. One saliva kit reads every report on the order, so a quantity of
+   * N was never a thing the system could deliver: pricing, stock and the lab
+   * email multiplied by N while the courier payload, the parcel weight and the
+   * generated report stayed at one. The customer paid N times for one result.
+   *
+   * Coerced rather than rejected so an older client or a stale localStorage
+   * cart still checks out - at the honest price - instead of erroring.
+   */
+  quantity: z.coerce.number().int().min(1).max(10).transform(() => 1),
 });
 
 /** Body of POST /api/cart - re-price a cart. Empty carts are legal (total ₹0). */
@@ -401,7 +438,16 @@ export const checkoutCreate = z.object({
     .optional()
     .nullable(),
   slotWindow: SlotWindowEnum.optional().nullable(),
-  fulfillmentMode: FulfillmentTypeEnum.optional(), // defaults from Package.fulfillmentType
+  fulfillmentMode: FulfillmentTypeEnum.optional(), // only honoured where the package says EITHER
+  /**
+   * The total the customer was actually shown, in paise.
+   *
+   * Not an input to pricing - the server still computes the real total from
+   * live Package rows. This is the client stating what it displayed so the
+   * route can refuse to bill anything else. Optional so an older client still
+   * checks out; a mismatch is always resolved by refusing, never by charging.
+   */
+  expectedTotal: z.number().int().nonnegative().optional(),
   couponCode: couponCodeField,
 });
 

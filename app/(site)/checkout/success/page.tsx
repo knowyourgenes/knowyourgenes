@@ -46,7 +46,7 @@ export default async function CheckoutSuccessPage({ searchParams }: { searchPara
 
   const steps = order.slotDate
     ? [
-        'Our team confirms your slot on WhatsApp.',
+        'Our team confirms your slot with you.',
         'A trained phlebotomist collects your sample at home.',
         'The lab processes it and your report lands in your dashboard.',
       ]

@@ -126,7 +126,7 @@ export function CheckoutView({
   knownEmail?: string;
 }) {
   const router = useRouter();
-  const { lines, priced, hydrated, couponCode, clear } = useCart();
+  const { lines, priced, hydrated, pricing, couponCode, clear, openDrawer } = useCart();
 
   const [addressId, setAddressId] = useState<string | null>(addresses.find((a) => a.isDefault)?.id ?? null);
   // A guest has nothing saved, so the form is the only option and cannot be
@@ -138,7 +138,9 @@ export function CheckoutView({
   const [slotWindow, setSlotWindow] = useState<string>('MORNING');
   const [busy, setBusy] = useState(false);
 
-  if (!hydrated) {
+  // Same as the cart: "not priced yet" is not "empty". Telling someone their
+  // cart is empty on the checkout page is the worst place to say it.
+  if (!hydrated || pricing) {
     return <div className={`${CARD} mt-9 h-64 animate-pulse bg-white/60`} aria-busy="true" />;
   }
 
@@ -221,6 +223,12 @@ export function CheckoutView({
           lines,
           ...identity,
           couponCode,
+          // The total this screen actually displayed. The server still computes
+          // the real one - this is only so it can REFUSE if the two differ,
+          // rather than quietly booking an order at a price nobody was shown.
+          // The commonest cause needs no concurrency at all: a coupon crossing
+          // its expiry while the address form is open.
+          expectedTotal: priced!.total,
           ...(priced!.requiresSlot ? { slotDate, slotWindow } : {}),
         }),
       });
@@ -235,8 +243,11 @@ export function CheckoutView({
       if (!json.ok || !json.data) {
         // 409: the re-price disagreed with what was on screen.
         if (json.cart) {
+          // Open the basket over the checkout rather than navigating away. The
+          // customer has an address typed in; sending them to another page to
+          // review a price change would throw that away.
           toast.error(json.error ?? 'Your cart changed', { description: 'Please review your cart and try again.' });
-          router.push('/cart');
+          openDrawer();
           return;
         }
         toast.error(json.error ?? 'Could not start checkout', {
@@ -283,7 +294,23 @@ export function CheckoutView({
           ...(draft.phone ? { contact: draft.phone } : {}),
         },
         handler: (r: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
-          void verify(orderId, orderNumber, r);
+          // CATCH IT. This used to be a bare `void verify(...)`, called from a
+          // Razorpay callback that runs outside pay()'s try/catch - so if the
+          // network dropped between the card being charged and our confirming
+          // it, the rejection was unhandled: no toast, no redirect, no order
+          // number, cart still full. The buyer sat on this page with a charged
+          // card and nothing at all to go on.
+          //
+          // The payment is not lost when this happens - the webhook captures it
+          // server-side regardless - so the message says exactly that instead of
+          // implying they should pay again.
+          void verify(orderId, orderNumber, r).catch(() => {
+            setBusy(false);
+            toast.error('We could not confirm your payment on screen', {
+              description: `Your payment went through and order ${orderNumber} is safe. Open your orders page in a moment to see it - do not pay again.`,
+              duration: 15000,
+            });
+          });
         },
         modal: {
           ondismiss: () => {
@@ -525,9 +552,13 @@ export function CheckoutView({
         <p className="text-center text-[12px] leading-[1.5] text-cord">
           Payments are handled by Razorpay. We never see your card details.
         </p>
-        <Link href="/cart" className="block text-center text-[13px] font-semibold text-cord hover:text-eden">
-          ← Back to cart
-        </Link>
+        <button
+          type="button"
+          onClick={openDrawer}
+          className="block w-full text-center text-[13px] font-semibold text-cord transition hover:text-eden"
+        >
+          ← Review your cart
+        </button>
       </aside>
     </div>
   );

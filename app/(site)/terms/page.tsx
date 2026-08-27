@@ -35,7 +35,7 @@ export default function TermsOfServicePage() {
       </ul>
       <p>
         You must be located in the Republic of India to use the Services. We ship kits to pincodes serviced by our
-        courier partners; see <Link href="/shipping">Shipping &amp; Delivery</Link> for the live serviceability check.
+        courier partners; see <Link href="/shipping">Shipping &amp; Delivery</Link> for how we check coverage.
       </p>
 
       <h2>2. What we provide</h2>
@@ -110,9 +110,9 @@ export default function TermsOfServicePage() {
       </p>
       <h3>B. Booking</h3>
       <p>
-        Bookings are confirmed only after successful payment and pincode serviceability check. We may decline or
-        reschedule a booking if the address falls outside our current service area, if the requested slot is
-        unavailable, or if we are otherwise unable to fulfil the order.
+        Bookings are confirmed only after successful payment. We may decline, reschedule or refund a booking if the
+        address falls outside our current service area, if the requested slot is unavailable, or if we are otherwise
+        unable to fulfil the order. Where we decline for any of these reasons, you are refunded in full.
       </p>
       <h3>C. Payments</h3>
       <p>

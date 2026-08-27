@@ -1,4 +1,5 @@
 import { prisma } from '@/server/prisma';
+import { notifyCustomer } from '@/features/notifications';
 import { created, fail, handle, isResponse, requireApiRole } from '@/server/api';
 import { putObject, reportKey, R2_CONFIGURED } from '@/features/reports';
 
@@ -45,7 +46,12 @@ export async function POST(req: Request) {
 
     const order = await prisma.order.findUnique({
       where: { id: orderId },
-      include: { package: { select: { name: true } }, items: { select: { nameSnapshot: true } } },
+      include: {
+        package: { select: { name: true } },
+        items: { select: { nameSnapshot: true } },
+        // For the report-ready email.
+        user: { select: { name: true, email: true } },
+      },
     });
     if (!order) return fail('Order not found', 404);
 
@@ -91,7 +97,29 @@ export async function POST(req: Request) {
       },
     });
 
-    return created(report);
+    // Tell the customer their report exists - WITHOUT saying what is in it. The
+    // template carries no finding and no package name, because subject lines
+    // show on lock screens; results are read signed in.
+    //
+    // `emailSentAt` is only stamped when a message actually left the building.
+    // The column existed and nothing ever wrote it, so the admin reports screen
+    // has been rendering "not sent" for every report ever uploaded.
+    const notified = await notifyCustomer({
+      template: 'REPORT_READY',
+      to: order.user?.email ?? null,
+      userId: order.userId,
+      data: {
+        orderNumber: order.orderNumber,
+        customerName: order.user?.name ?? null,
+        reportNumber,
+      },
+    });
+
+    if (notified.status === 'sent') {
+      await prisma.report.update({ where: { id: report.id }, data: { emailSentAt: new Date() } });
+    }
+
+    return created({ ...report, notified: notified.status });
   });
 }
 

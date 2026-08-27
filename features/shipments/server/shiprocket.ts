@@ -38,7 +38,23 @@ const EMAIL = process.env.SHIPROCKET_EMAIL ?? '';
 const PASSWORD = process.env.SHIPROCKET_PASSWORD ?? '';
 const DEFAULT_PICKUP_LOCATION = process.env.SHIPROCKET_PICKUP_LOCATION ?? 'KYG-LAB-DELHI';
 const CHANNEL_ID = process.env.SHIPROCKET_CHANNEL_ID ?? '';
-export const MOCK = process.env.SHIPROCKET_MOCK === 'true' || !EMAIL || !PASSWORD;
+/**
+ * Mock mode.
+ *
+ * `!EMAIL || !PASSWORD` is deliberate for local work - the shipping client should
+ * not need credentials to run the app. It must never apply in production: a
+ * missing or expired token would silently downgrade to fabricated AWBs, stored
+ * as real Shipment rows, advancing the order and shown to the buyer as their
+ * tracking number. The failure would present as success.
+ *
+ * The payments module already refuses to do this ("absent keys are a HARD
+ * FAILURE at the point of use rather than a quiet downgrade"); shipping simply
+ * never got the same treatment.
+ */
+const MOCK_PERMITTED = process.env.NODE_ENV !== 'production';
+export const MOCK = MOCK_PERMITTED && (process.env.SHIPROCKET_MOCK === 'true' || !EMAIL || !PASSWORD);
+/** True when the courier cannot work at all - real credentials required, none present. */
+export const MISCONFIGURED = !MOCK_PERMITTED && (!EMAIL || !PASSWORD);
 
 // ---------------------------------------------------------------------------
 // Token cache (module-scoped - fine because Node single-threads per worker)
@@ -93,6 +109,7 @@ async function authedFetch(path: string, init: RequestInit = {}): Promise<Respon
 
 export const shiprocket = {
   isMock: () => MOCK,
+  isMisconfigured: () => MISCONFIGURED,
 
   /**
    * Shiprocket serviceability. POST /v1/external/courier/serviceability/

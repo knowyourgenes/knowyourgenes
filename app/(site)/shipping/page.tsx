@@ -24,10 +24,14 @@ export default function ShippingPolicyPage() {
 
       <h2>1. Service area</h2>
       <p>
-        We ship kits across India to pincodes serviced by our courier partner. The serviceability of your pincode is
-        checked at checkout - if your pincode is not currently serviceable, the order will not be permitted and your
-        card will not be charged. You may join the waitlist for your pincode from the same screen and we will notify you
-        when we expand.
+        We ship kits across India to pincodes serviced by our courier partner. We check your pincode against our
+        courier at checkout and warn you there if it looks like we cannot reach you - but the check is advisory and
+        does not block your order, because courier coverage data is not always current and we would rather look into
+        an edge case than refuse a customer we can actually serve.
+      </p>
+      <p>
+        If it turns out we genuinely cannot ship to your address after you have paid, we will contact you and refund
+        you in full. See <Link href="/refunds">Refunds &amp; Cancellations</Link>.
       </p>
       <p>
         Every test today uses a self-collected saliva or buccal swab sample. We do not offer at-home phlebotomist
@@ -37,13 +41,13 @@ export default function ShippingPolicyPage() {
       <h2>2. What happens after you book</h2>
       <h3>Step 1 - Order confirmation</h3>
       <p>
-        Within 5 minutes of successful payment you receive an email and WhatsApp confirmation containing your order ID,
-        the contents of your order, and the expected kit-delivery window.
+        As soon as your payment is captured we email you a confirmation containing your order ID and the contents of
+        your order. You can also see it any time in your account under Orders.
       </p>
       <h3>Step 2 - Kit dispatch</h3>
       <p>
-        We hand the kit to our courier partner within 1 to 2 business days of order confirmation. You receive a tracking
-        link by email and WhatsApp as soon as the AWB is generated.
+        We hand the kit to our courier partner within 1 to 2 business days of order confirmation. We email you the
+        courier and tracking number as soon as the AWB is generated.
       </p>
       <h3>Step 3 - Kit delivery</h3>
       <p>

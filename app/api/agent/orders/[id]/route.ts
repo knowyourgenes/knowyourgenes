@@ -1,11 +1,11 @@
 import { prisma } from '@/server/prisma';
-import { handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { handle, isResponse, ok, requireActiveAgent } from '@/server/api';
 
 type Params = Promise<{ id: string }>;
 
 export async function GET(_req: Request, { params }: { params: Params }) {
   return handle(async () => {
-    const guard = await requireApiRole(['AGENT']);
+    const guard = await requireActiveAgent();
     if (isResponse(guard)) return guard;
     const { id } = await params;
 

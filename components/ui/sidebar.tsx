@@ -279,12 +279,29 @@ function SidebarRail({ className, ...props }: React.ComponentProps<'button'>) {
   );
 }
 
+/**
+ * The panel beside the sidebar.
+ *
+ * `min-w-0` is load-bearing, not tidying. This is a flex item, and a flex item
+ * defaults to `min-width: auto`, which means it will not shrink below the
+ * min-content width of what it contains. Put a wide table inside and the item
+ * grows past the space available instead of letting the table scroll: the
+ * sidebar (256px) plus an inset that insists on 1306px overflows a 1400px
+ * viewport by 162px, so the BODY gains the horizontal scrollbar. The topbar
+ * below is `sticky top-0`, and sticky pins on one axis only - it therefore
+ * slid sideways with the content every time an admin scrolled to reach a
+ * right-hand column.
+ *
+ * With `min-w-0` the inset shrinks to the width it actually has, the
+ * `overflow-x-auto` on the inner <main> finally has something to clip, and wide
+ * content scrolls inside its own box while the chrome stays where it belongs.
+ */
 function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
   return (
     <main
       data-slot="sidebar-inset"
       className={cn(
-        'relative flex w-full flex-1 flex-col bg-background md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-sm md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
+        'relative flex w-full min-w-0 flex-1 flex-col bg-background md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-sm md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
         className
       )}
       {...props}

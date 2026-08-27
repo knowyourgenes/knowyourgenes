@@ -1,15 +1,11 @@
 import { prisma } from '@/server/prisma';
 import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { addressUpdate } from '@/lib/validators';
+import { normalisePhone } from '@/lib/utils';
 
 const CUSTOMER_ROLES = ['USER', 'ADMIN', 'AGENT', 'COUNSELLOR', 'PARTNER'] as const;
 
 type Ctx = { params: Promise<{ id: string }> };
-
-function normalisePhone(raw: string): string {
-  const digits = raw.replace(/\D/g, '');
-  return digits.length > 10 ? digits.slice(-10) : digits;
-}
 
 /** PATCH /api/addresses/:id - edit one of your own addresses. */
 export async function PATCH(req: Request, { params }: Ctx) {
@@ -24,6 +20,34 @@ export async function PATCH(req: Request, { params }: Ctx) {
     if (!existing || existing.userId !== guard.id) return fail('Address not found', 404);
 
     const input = addressUpdate.parse(await req.json());
+
+    // An order's delivery address is part of its record - which is exactly why
+    // DELETE below refuses once an order points here. Editing was the same act
+    // with none of the protection: Order carries no address snapshot, so a PATCH
+    // rewrote where every past order pointing at this row was sent, delivered
+    // ones included, and the receipt reprinted the new address as though it were
+    // what was ordered. Because a default address is reused, one edit could
+    // rewrite years of history.
+    //
+    // Editing is still allowed while nothing has shipped - that is the case
+    // where a customer is fixing a typo before it matters - and `isDefault` is
+    // always allowed, since which address is preselected is not part of any
+    // order's record.
+    const touchesTheRecord = Object.keys(input).some((k) => k !== 'isDefault');
+    if (touchesTheRecord) {
+      const committed = await prisma.order.count({
+        where: {
+          addressId: id,
+          OR: [{ paidAt: { not: null } }, { shipments: { some: {} } }],
+        },
+      });
+      if (committed > 0) {
+        return fail(
+          'This address is on a paid order and cannot be edited. Add a new address instead.',
+          409
+        );
+      }
+    }
 
     const address = await prisma.$transaction(async (tx) => {
       if (input.isDefault) {

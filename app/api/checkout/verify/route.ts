@@ -91,7 +91,18 @@ export async function POST(req: Request) {
     // outside the transaction (it sends email) and never throws - a lab/email
     // failure must not undo a captured payment. Idempotent + race-safe with
     // the razorpay webhook, which calls the same helper.
-    await linkLabAndNotify(order.id);
+    // LAB ROUTING IS MANUAL. Assignment used to happen right here, the instant a
+    // payment captured: default active lab, else the first one, then an email.
+    // With more than one lab that is a routing decision nobody made, so it now
+    // waits for an admin - POST /api/admin/orders/[id]/assign-lab - and the lab
+    // is emailed at the moment someone decides the work is theirs.
+    //
+    // The old behaviour is kept behind LAB_AUTO_ASSIGN=true so a single-lab
+    // deployment can opt back in without a code change. Left off, an order
+    // simply carries no lab until assigned, which the admin orders list shows.
+    if (process.env.LAB_AUTO_ASSIGN === 'true') {
+      await linkLabAndNotify(order.id);
+    }
 
     return ok({
       orderId: order.id,

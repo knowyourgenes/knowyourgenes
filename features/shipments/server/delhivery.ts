@@ -25,7 +25,23 @@ const TOKEN = process.env.DELHIVERY_TOKEN ?? '';
 // this env var is the legacy/global fallback used only when a Lab row hasn't
 // been resolved (shouldn't happen in normal flow).
 const DEFAULT_PICKUP_LOCATION = process.env.DELHIVERY_PICKUP_LOCATION ?? 'KYG-LAB-DELHI';
-export const MOCK = process.env.DELHIVERY_MOCK === 'true' || !TOKEN;
+/**
+ * Mock mode.
+ *
+ * `!TOKEN` is deliberate for local work - the shipping client should
+ * not need credentials to run the app. It must never apply in production: a
+ * missing or expired token would silently downgrade to fabricated AWBs, stored
+ * as real Shipment rows, advancing the order and shown to the buyer as their
+ * tracking number. The failure would present as success.
+ *
+ * The payments module already refuses to do this ("absent keys are a HARD
+ * FAILURE at the point of use rather than a quiet downgrade"); shipping simply
+ * never got the same treatment.
+ */
+const MOCK_PERMITTED = process.env.NODE_ENV !== 'production';
+export const MOCK = MOCK_PERMITTED && (process.env.DELHIVERY_MOCK === 'true' || !TOKEN);
+/** True when the courier cannot work at all - real credentials required, none present. */
+export const MISCONFIGURED = !MOCK_PERMITTED && !TOKEN;
 
 function authHeaders(): HeadersInit {
   return {
@@ -105,6 +121,7 @@ export interface TrackingResult {
 
 export const delhivery = {
   isMock: () => MOCK,
+  isMisconfigured: () => MISCONFIGURED,
 
   /**
    * Pincode serviceability. Endpoint: /c/api/pin-codes/json/?filter_codes=<pin>

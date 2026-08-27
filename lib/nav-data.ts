@@ -162,5 +162,4 @@ export const SITE_PAGES: SitePage[] = [
   { label: 'Privacy Policy', href: '/privacy', keywords: ['data', 'personal information', 'confidential'] },
   { label: 'Terms', href: '/terms', keywords: ['terms and conditions', 'legal', 'agreement'] },
   { label: 'Consent', href: '/consent', keywords: ['consent form', 'permission', 'sample consent'] },
-  { label: 'Your cart', href: '/cart', keywords: ['basket', 'bag', 'checkout', 'order'] },
 ];

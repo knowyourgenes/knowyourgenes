@@ -1,0 +1,72 @@
+{
+  "orderNo": "OR-26070926149",
+  "orderDate": "09/07/2026",
+  "patient": {
+    "patientId": "KYG260709001",
+    "patientFName": "John",
+    "patientMName": "",
+    "patientLName": "Doe",
+    "gender": "M",
+    "dob": "12/03/1985",
+    "age": 41,
+    "height": 175,
+    "unit": "1",
+    "weight": 72,
+    "mrno": "",
+    "address": "",
+    "city": "",
+    "country": "India",
+    "phoneNo": "",
+    "mobileNo": "",
+    "email": "",
+    "nationality": "Indian",
+    "ethinicity": "North Indian",
+    "lifestyle": "Moderate Activity",
+    "isPatientConsent": "Yes",
+    "history": {
+      "patientHistory": "",
+      "smoking": "No",
+      "alcoholic": "Occasional",
+      "medicalHistory": "",
+      "medication": "",
+      "familyHistory": [{ "condition": "Diabetes", "relationship": "Father" }]
+    }
+  },
+  "specialist": {
+    "doctorFName": "",
+    "doctorLName": "",
+    "hospital": "N/A",
+    "clinic": "N/A",
+    "docMobileNo": "",
+    "docEmail": ""
+  },
+  "samples": [
+    {
+      "sampleId": "dxt01",
+      "sampleType": "SALIVA",
+      "testDate": "09/07/2026",
+      "testTime": "",
+      "tests": [
+        {
+          "testName": "Cardiometabolic Test",
+          "testIds": "NMC-CT01",
+          "expectedTAT": "06/08/2026",
+          "status": "Genotyping"
+        },
+        {
+          "testName": "My Wellness",
+          "testIds": "NMC-WL01.04,NMC-WL01.01,NMC-WL01.02,NMC-WL01.03",
+          "expectedTAT": "06/08/2026",
+          "status": "Genotyping"
+        }
+      ]
+    }
+  ],
+  "shipment": {
+    "shipmentNo": "SHKYG2607091174",
+    "courierNo": "batch1",
+    "courierDate": "09/07/2026",
+    "courierService": "b1",
+    "status": "Delivered"
+  }
+}

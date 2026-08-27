@@ -84,8 +84,11 @@ export default async function UserProfilePage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           {[
-            { label: 'Order updates on WhatsApp', enabled: true },
+            // WhatsApp is not wired up. Showing it as an enabled channel told
+            // people they were getting messages that were never sent.
+            { label: 'Order updates by email', enabled: true },
             { label: 'Email receipts', enabled: true },
+            { label: 'Order updates on WhatsApp', enabled: false },
             { label: 'Monthly newsletter', enabled: false },
             { label: 'Research opt-in (anonymous)', enabled: false },
           ].map((p) => (

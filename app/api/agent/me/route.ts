@@ -1,5 +1,5 @@
 import { prisma } from '@/server/prisma';
-import { handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { handle, isResponse, ok, requireActiveAgent } from '@/server/api';
 
 /**
  * GET /api/agent/me
@@ -9,7 +9,7 @@ import { handle, isResponse, ok, requireApiRole } from '@/server/api';
  */
 export async function GET() {
   return handle(async () => {
-    const guard = await requireApiRole(['AGENT']);
+    const guard = await requireActiveAgent();
     if (isResponse(guard)) return guard;
 
     const userId = guard.id!;

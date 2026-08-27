@@ -1,5 +1,5 @@
 import { prisma } from '@/server/prisma';
-import { fail, handle, isResponse, ok, requireApiRole } from '@/server/api';
+import { fail, handle, isResponse, ok, requireActiveAgent } from '@/server/api';
 import { z } from 'zod';
 
 type Params = Promise<{ id: string }>;
@@ -22,7 +22,7 @@ const bodySchema = z.object({
 
 export async function POST(req: Request, { params }: { params: Params }) {
   return handle(async () => {
-    const guard = await requireApiRole(['AGENT']);
+    const guard = await requireActiveAgent();
     if (isResponse(guard)) return guard;
     const { id } = await params;
 
@@ -31,6 +31,13 @@ export async function POST(req: Request, { params }: { params: Params }) {
 
     const order = await prisma.order.findFirst({ where: { id, agentId: guard.id! } });
     if (!order) return fail('Order not found or not assigned to you', 404);
+
+    // An agent must not be able to walk an unpaid order to SAMPLE_COLLECTED -
+    // which also stamps collectedAt and increments their collection counters for
+    // a sample taken against no payment.
+    if (!order.paidAt) {
+      return fail('This order has not been paid for yet', 409);
+    }
 
     const allowed = ALLOWED_FROM_TO[order.status] ?? [];
     if (!allowed.includes(to)) {

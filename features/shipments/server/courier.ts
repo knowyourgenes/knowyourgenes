@@ -55,6 +55,16 @@ export const courier = {
     return clientFor(c).isMock();
   },
 
+  /**
+   * True when the courier has no usable credentials and mocking is not allowed -
+   * i.e. production with the token missing or expired. Call sites should refuse
+   * rather than book, because the alternative is a fabricated AWB stored as a
+   * real shipment and shown to the buyer as their tracking number.
+   */
+  isMisconfigured(c?: ShipmentCourier | null): boolean {
+    return clientFor(c).isMisconfigured();
+  },
+
   serviceability(pincode: string, pickupPincode?: string): Promise<ServiceabilityResult> {
     const c = clientFor();
     // Delhivery's serviceability ignores pickupPincode (takes a single pin).

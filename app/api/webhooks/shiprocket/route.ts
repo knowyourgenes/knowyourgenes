@@ -26,7 +26,17 @@ import type { ShipmentStatus } from '@prisma/client';
 export async function POST(req: Request) {
   const expected = process.env.SHIPROCKET_WEBHOOK_TOKEN;
   const got = req.headers.get('x-api-key') ?? req.headers.get('x-shiprocket-token');
-  if (expected && got !== expected) {
+  // FAIL CLOSED. This used to read `if (expected && got !== expected)`, so an
+  // unset secret disabled the check entirely and every request was accepted -
+  // the guard only existed once it was already configured. That is the opposite
+  // of what the payments webhook does one directory over, and it was wired to
+  // the endpoint that writes Order.status. The only input an attacker needed was
+  // an AWB, which the customer's own order page prints.
+  if (!expected) {
+    console.error('[webhook] SHIPROCKET_WEBHOOK_TOKEN is not set - refusing tracking callbacks');
+    return new Response('webhook not configured', { status: 503 });
+  }
+  if (got !== expected) {
     return new Response('forbidden', { status: 403 });
   }
 
@@ -59,18 +69,30 @@ export async function POST(req: Request) {
   return Response.json({ ok: true });
 }
 
+/**
+ * ORDER MATTERS HERE, and it is not the order a reader expects.
+ *
+ * 'delivered' is a substring of 'undelivered', and 'rto delivered' contains
+ * both. The positive test used to come first, so Shiprocket's own
+ * 'Undelivered' and 'RTO Delivered' both returned DELIVERED and the two
+ * branches written to catch them - four and eight lines below - could never
+ * run. A failed reverse pickup was recorded as the sample arriving at the lab.
+ *
+ * Every negative case is therefore tested before the positive one. The dead
+ * branches are gone rather than left in place looking like they still work.
+ */
 function mapStatus(s: string): ShipmentStatus {
   const v = s.toLowerCase();
   if (!v) return 'CREATED';
+  if (v.includes('undelivered') || v.includes('not delivered') || v.includes('failed')) return 'FAILED';
+  if (v.includes('rto')) return 'RTO';
   if (v.includes('delivered')) return 'DELIVERED';
   if (v.includes('out for delivery')) return 'OUT_FOR_DELIVERY';
-  if (v.includes('rto')) return 'RTO';
   if (v.includes('pickup scheduled') || v.includes('pickup generated') || v.includes('pickup queued'))
     return 'PICKUP_SCHEDULED';
   if (v.includes('picked up') || (v.includes('pickup') && v.includes('done'))) return 'IN_TRANSIT';
   if (v.includes('manifested') || v.includes('shipment booked') || v.includes('awb assigned')) return 'MANIFESTED';
   if (v.includes('cancel')) return 'CANCELLED';
-  if (v.includes('undelivered') || v.includes('failed')) return 'FAILED';
   if (v.includes('in transit')) return 'IN_TRANSIT';
   return 'CREATED';
 }

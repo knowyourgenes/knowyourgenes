@@ -16,15 +16,29 @@ type Order = {
   orderNumber: string;
   status: string;
   total: number;
-  slotDate: string;
-  slotWindow: string;
+  /**
+   * NULLABLE, and the types used to say otherwise.
+   *
+   * A kit-by-post order carries no slot at all - the schema says so - but this
+   * declared `slotDate: string` over an `any`-typed JSON response, so strict
+   * mode never forced the null branch and `new Date(null)` rendered as
+   * 1 January 1970 on every single row. A confident wrong date is worse than a
+   * blank one, because it gets believed.
+   */
+  slotDate: string | null;
+  slotWindow: string | null;
+  /** When the money actually arrived. Null means it never did. */
+  paidAt: string | null;
+  fulfillmentMode: 'KIT_BY_POST' | 'AT_HOME_PHLEBOTOMIST' | 'EITHER';
   createdAt: string;
   user: { name: string | null; email: string | null; phone: string | null };
   package: { name: string };
   agent: { user: { name: string | null } } | null;
+  lab: { id: string; name: string } | null;
 };
 
 type Agent = { id: string; name: string | null; agentProfile: { zone: string } | null };
+type Lab = { id: string; name: string; active: boolean };
 
 const STATUSES = [
   'BOOKED',
@@ -62,6 +76,7 @@ const statusVariant: Record<string, 'default' | 'secondary' | 'outline' | 'destr
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [agents, setAgents] = useState<Agent[]>([]);
+  const [labs, setLabs] = useState<Lab[]>([]);
   const [q, setQ] = useState('');
   const [status, setStatus] = useState('ALL');
   const [loading, setLoading] = useState(true);
@@ -72,15 +87,24 @@ export default function AdminOrdersPage() {
     if (q) p.set('q', q);
     if (status && status !== 'ALL') p.set('status', status);
     p.set('take', '50');
-    const [ordersRes, agentsRes] = await Promise.all([
+    const [ordersRes, agentsRes, labsRes] = await Promise.all([
       fetch(`/api/admin/orders?${p.toString()}`),
       fetch(`/api/admin/agents`),
+      fetch(`/api/admin/labs`),
     ]);
-    const [ordersJson, agentsJson] = await Promise.all([ordersRes.json(), agentsRes.json()]);
+    const [ordersJson, agentsJson, labsJson] = await Promise.all([
+      ordersRes.json(),
+      agentsRes.json(),
+      labsRes.json(),
+    ]);
     if (ordersJson.ok) setOrders(ordersJson.data.items);
     else toast.error(ordersJson.error ?? 'Failed to load orders');
     if (agentsJson.ok) setAgents(agentsJson.data);
     else toast.error(agentsJson.error ?? 'Failed to load agents');
+    // Only active labs can take work, so an inactive one must never appear in
+    // the picker - the API would reject it anyway, but offering it is a trap.
+    if (labsJson.ok) setLabs((labsJson.data.items ?? labsJson.data ?? []).filter((l: Lab) => l.active));
+    else toast.error(labsJson.error ?? 'Failed to load labs');
     setLoading(false);
   }, [q, status]);
 
@@ -100,6 +124,15 @@ export default function AdminOrdersPage() {
   }, []);
 
   async function updateStatus(id: string, newStatus: string) {
+    // CANCELLED and REFUNDED end an order, and this dropdown fires on selection -
+    // one mis-click used to be enough. They are the only two the server will not
+    // let you walk back, so they are the two worth stopping for.
+    if (newStatus === 'CANCELLED' || newStatus === 'REFUNDED') {
+      if (!window.confirm(`Mark this order ${newStatus}? This cannot be undone from here.`)) {
+        load(); // put the dropdown back where it was
+        return;
+      }
+    }
     const res = await fetch(`/api/admin/orders/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -108,6 +141,32 @@ export default function AdminOrdersPage() {
     const json = await res.json();
     if (!json.ok) return toast.error(json.error ?? 'Update failed');
     toast.success(`Status → ${newStatus}`);
+    load();
+  }
+
+  async function assignLab(id: string, labId: string, current: string | null) {
+    if (!labId || labId === current) return;
+    // Re-routing an order that already has a lab is a different act from
+    // assigning an unrouted one: the first lab may already have been emailed,
+    // and a sample may already be travelling to it. So it is confirmed, never
+    // silent.
+    if (current) {
+      const to = labs.find((l) => l.id === labId)?.name ?? 'another lab';
+      if (!window.confirm(`This order is already routed. Re-route it to ${to}?`)) return;
+    }
+    const res = await fetch(`/api/admin/orders/${id}/assign-lab`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ labId }),
+    });
+    const json = await res.json();
+    if (!json.ok) return toast.error(json.error ?? 'Could not assign the lab');
+    toast.success(`Lab → ${json.data?.lab?.name ?? 'assigned'}`, {
+      description:
+        json.data?.notified?.status === 'notified'
+          ? 'The lab has been emailed.'
+          : 'Assigned. The lab was not emailed - it had already been notified.',
+    });
     load();
   }
 
@@ -179,12 +238,17 @@ export default function AdminOrdersPage() {
             {
               key: 'slot',
               header: 'Slot',
-              render: (o) => (
-                <div className="text-sm">
-                  <div>{new Date(o.slotDate).toLocaleDateString('en-IN')}</div>
-                  <div className="text-xs text-muted-foreground">{o.slotWindow}</div>
-                </div>
-              ),
+              render: (o) =>
+                o.slotDate ? (
+                  <div className="text-sm">
+                    <div>{new Date(o.slotDate).toLocaleDateString('en-IN')}</div>
+                    <div className="text-xs text-muted-foreground">{o.slotWindow}</div>
+                  </div>
+                ) : (
+                  // A posted kit has no collection slot, which is correct rather
+                  // than missing - so it reads as a dash, not as a date.
+                  <span className="text-sm text-muted-foreground">&mdash;</span>
+                ),
             },
             {
               key: 'status',
@@ -207,9 +271,50 @@ export default function AdminOrdersPage() {
               ),
             },
             {
+              key: 'lab',
+              header: 'Lab',
+              render: (o) => (
+                <Select value="" onValueChange={(v) => v && assignLab(o.id, v, o.lab?.id ?? null)}>
+                  <SelectTrigger className="h-8 w-[180px]">
+                    {o.lab ? (
+                      <span className="text-sm">{o.lab.name}</span>
+                    ) : (
+                      // Unrouted orders are the queue. Marking them rather than
+                      // showing an empty cell is the whole point of the column.
+                      <Badge variant="destructive" className="font-mono text-[10px]">
+                        UNASSIGNED
+                      </Badge>
+                    )}
+                  </SelectTrigger>
+                  <SelectContent>
+                    {labs.length === 0 ? (
+                      <SelectItem value="__none" disabled>
+                        No active labs
+                      </SelectItem>
+                    ) : (
+                      labs.map((l) => (
+                        <SelectItem key={l.id} value={l.id}>
+                          {l.name}
+                        </SelectItem>
+                      ))
+                    )}
+                  </SelectContent>
+                </Select>
+              ),
+            },
+            {
               key: 'agent',
               header: 'Agent',
-              render: (o) => (
+              render: (o) =>
+                // A collection agent only makes sense where someone has to turn
+                // up. Every package in the catalogue is currently KIT_BY_POST,
+                // so this picker was offered on every row of an order type that
+                // can never need it - and the server accepted it, forcing the
+                // order onto the at-home status leg. The server refuses now;
+                // this stops the operator being asked the question at all.
+                o.fulfillmentMode !== 'AT_HOME_PHLEBOTOMIST' ? (
+                  <span className="text-sm text-muted-foreground">By post</span>
+                ) : (
                 <Select value="" onValueChange={(v) => v && assignAgent(o.id, v)}>
                   <SelectTrigger className="h-8 w-[180px]">
                     <span className="text-sm">{o.agent?.user.name ?? '- Assign -'}</span>
@@ -222,12 +327,35 @@ export default function AdminOrdersPage() {
                     ))}
                   </SelectContent>
                 </Select>
-              ),
+                ),
             },
             {
               key: 'amt',
               header: 'Amount',
-              render: (o) => <span className="font-medium">₹{Math.floor(o.total / 100).toLocaleString('en-IN')}</span>,
+              render: (o) => (
+                <div className="text-right tabular-nums">
+                  <div className={o.paidAt ? 'font-medium' : 'font-medium text-muted-foreground'}>
+                    ₹{Math.floor(o.total / 100).toLocaleString('en-IN')}
+                  </div>
+                  {/*
+                    THE COLUMN THAT WAS MISSING. Payment lives in `paidAt` and
+                    never in `status` - capture deliberately leaves status alone,
+                    so a paid order and an abandoned one both read BOOKED. With
+                    no payment column an operator had no way at all to tell them
+                    apart, and routed unpaid orders to labs believing they were
+                    live work. Four of the first eight orders were exactly that.
+                  */}
+                  {o.paidAt ? (
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                      Paid {new Date(o.paidAt).toLocaleDateString('en-IN')}
+                    </span>
+                  ) : (
+                    <Badge variant="destructive" className="text-[10px]">
+                      UNPAID
+                    </Badge>
+                  )}
+                </div>
+              ),
             },
           ]}
           empty="No orders match these filters."

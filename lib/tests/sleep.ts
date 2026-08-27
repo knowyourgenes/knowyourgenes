@@ -142,7 +142,12 @@ export const sleep: TestPage = {
         leadHtml:
           'One in three people deal with a sleep disorder. Sleep advice is written for everyone, which means it is written for nobody. Your genes narrow it down.',
       },
-      image: { src: `${IMG}/why.png`, alt: 'A bedroom at 3am, ceiling lit by a phone' },
+      // Alt rewritten to match the picture that was actually supplied. The brief
+      // asked for a 3am ceiling lit by a phone; what arrived is morning
+      // exhaustion in daylight. It carries the section either way, but alt text
+      // describes what is on screen or it is worse than none - a screen reader
+      // would otherwise announce a room nobody can see.
+      image: { src: `${IMG}/why.webp`, alt: 'Someone sitting on the edge of a bed, rubbing their eyes, still tired' },
       badgeTop: { label: 'Same advice for everyone', icon: 'clock' },
       badgeBottom: { label: '28 answers for you', icon: 'dna' },
       rows: [

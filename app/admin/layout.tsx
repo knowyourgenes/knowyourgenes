@@ -4,6 +4,7 @@ import AppSidebar from '@/features/admin/components/AppSidebar';
 import UserNav from '@/features/admin/components/UserNav';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
+import { canOpenPanel } from '@/lib/validators';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,7 +14,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if (!session?.user) redirect('/login?from=/admin');
 
   const role = session.user.role;
-  if (!['ADMIN', 'COUNSELLOR', 'PARTNER'].includes(role)) redirect('/');
+  if (!canOpenPanel(role)) redirect('/');
 
   const name = session.user.name ?? session.user.email ?? 'User';
   const email = session.user.email ?? '';
