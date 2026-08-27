@@ -3,7 +3,8 @@ import { prisma } from '@/server/prisma';
 import { auth } from '@/features/auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { buttonVariants } from '@/components/ui/button';
-import { FileText, Download } from 'lucide-react';
+import { FileText } from 'lucide-react';
+import { ReportDownloadButton } from '@/features/reports/components/ReportDownloadButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -62,9 +63,10 @@ export default async function UserReportsPage() {
                   >
                     View
                   </Link>
-                  <Link href="#" className={buttonVariants({ size: 'sm' })}>
-                    <Download className="h-4 w-4" /> PDF
-                  </Link>
+                  {/* Was href="#". A signed URL cannot be rendered at page
+                      load - they expire in ten minutes - so the button asks for
+                      one when it is actually clicked. */}
+                  <ReportDownloadButton reportId={r.id} label="PDF" />
                 </div>
               </CardHeader>
             </Card>

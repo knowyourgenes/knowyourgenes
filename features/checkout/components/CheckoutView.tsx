@@ -127,6 +127,9 @@ export function CheckoutView({
 }) {
   const router = useRouter();
   const { lines, priced, hydrated, pricing, couponCode, clear, openDrawer } = useCart();
+  // True from the moment payment succeeds until this page is gone. Never reset -
+  // there is nowhere to go back to.
+  const [leaving, setLeaving] = useState(false);
 
   const [addressId, setAddressId] = useState<string | null>(addresses.find((a) => a.isDefault)?.id ?? null);
   // A guest has nothing saved, so the form is the only option and cannot be
@@ -140,6 +143,15 @@ export function CheckoutView({
 
   // Same as the cart: "not priced yet" is not "empty". Telling someone their
   // cart is empty on the checkout page is the worst place to say it.
+  if (leaving) {
+    return (
+      <div className={`${CARD} mt-9 flex flex-col items-center gap-3 px-6 py-16 text-center`} aria-busy="true">
+        <p className="text-[17px] font-semibold text-mine">Payment received</p>
+        <p className="text-[14.5px] text-cape">Taking you to your order…</p>
+      </div>
+    );
+  }
+
   if (!hydrated || pricing) {
     return <div className={`${CARD} mt-9 h-64 animate-pulse bg-white/60`} aria-busy="true" />;
   }
@@ -349,9 +361,20 @@ export function CheckoutView({
       toast.warning('We are still confirming your payment', {
         description: `Order ${orderNumber} - check your orders in a minute.`,
       });
+      setLeaving(true);
       router.push(`/dashboard/orders/${orderNumber}`);
       return;
     }
+    // ORDER MATTERS. `clear()` empties the cart, which re-renders this very
+    // component - and with no lines left it falls straight into the "Nothing to
+    // check out" branch below. That empty state was what flashed on screen for
+    // the second or two before the receipt page finished loading, telling
+    // someone who had just paid that their cart was empty.
+    //
+    // `leaving` pins the page on a neutral "taking you to your order" state for
+    // the rest of its life, so the empty branch can never be reached on the way
+    // out. It is set BEFORE clear() for the same reason.
+    setLeaving(true);
     clear();
     router.push(`/checkout/success?order=${encodeURIComponent(orderNumber)}`);
   }
