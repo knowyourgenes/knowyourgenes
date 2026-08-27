@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { prisma } from '@/server/prisma';
-import { sendMail } from '@/lib/mailer';
+import { sendMail, type MailAttachment } from '@/lib/mailer';
 
 import {
   renderKitDispatched,
@@ -55,7 +55,12 @@ function render(p: Payload) {
 }
 
 export async function notifyCustomer(
-  opts: Payload & { to: string | null | undefined; userId?: string | null }
+  opts: Payload & {
+    to: string | null | undefined;
+    userId?: string | null;
+    /** Files to send with the message. See MailInput.attachments on size. */
+    attachments?: MailAttachment[];
+  }
 ): Promise<NotifyResult> {
   if (!opts.to) {
     console.warn(`[notify] ${opts.template}: no recipient address`);
@@ -73,7 +78,13 @@ export async function notifyCustomer(
     return { status: 'failed', detail };
   }
 
-  const result = await sendMail({ to: opts.to, subject: email.subject, text: email.text, html: email.html });
+  const result = await sendMail({
+    to: opts.to,
+    subject: email.subject,
+    text: email.text,
+    html: email.html,
+    attachments: opts.attachments,
+  });
 
   // The Notification row is bookkeeping, not the send. If writing it fails the
   // customer has still had their email, so this is caught too.
@@ -85,7 +96,13 @@ export async function notifyCustomer(
         template: opts.template satisfies TemplateKey,
         to: opts.to,
         status: result.delivered ? 'SENT' : result.ok ? 'QUEUED' : 'FAILED',
-        payload: { subject: email.subject },
+        payload: {
+          subject: email.subject,
+          // Recorded because "we emailed them the report" and "we emailed them a
+          // link to the report" are different facts, and support will be asked
+          // which one happened.
+          attachments: (opts.attachments ?? []).map((a) => ({ filename: a.filename, bytes: a.content.length })),
+        },
         providerId: result.providerId ?? null,
         sentAt: result.delivered ? new Date() : null,
         errorMessage: result.error ?? null,

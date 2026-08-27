@@ -2,8 +2,19 @@ import { prisma } from '@/server/prisma';
 import { ApiError, handle, isResponse, ok, requireApiRole } from '@/server/api';
 import { notifyCustomer } from '@/features/notifications';
 import { isTerminal } from '@/features/orders';
+import { getObjectBytes, objectSize } from '@/features/reports';
 
 type Params = Promise<{ id: string }>;
+
+/**
+ * Largest PDF we will put in an email.
+ *
+ * Gmail refuses over 25MB and most relays cap lower; base64 encoding adds
+ * roughly a third on top of the raw size, so 8MB of PDF is about 11MB on the
+ * wire. Anything bigger goes out as a link, which is a worse experience and a
+ * far better outcome than a bounce nobody sees.
+ */
+const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
 
 /**
  * POST /api/admin/reports/[id]/approve
@@ -42,6 +53,7 @@ export async function POST(_req: Request, { params }: { params: Params }) {
         deliveredAt: true,
         orderId: true,
         userId: true,
+        pdfKey: true,
         order: { select: { orderNumber: true, status: true, paidAt: true } },
         user: { select: { name: true, email: true } },
       },
@@ -101,6 +113,45 @@ export async function POST(_req: Request, { params }: { params: Params }) {
       return ok({ id, reportNumber: fresh?.reportNumber, deliveredAt: fresh?.deliveredAt, alreadyDelivered: true });
     }
 
+    // THE PDF TRAVELS WITH THE EMAIL.
+    //
+    // Fetched here rather than in the transaction: pulling several megabytes out
+    // of object storage is a network call, and holding a database transaction
+    // open across one is how a slow bucket becomes a database problem.
+    //
+    // Size is checked BEFORE reading. Relays reject an oversized message with an
+    // SMTP error that arrives long after anyone is looking, and the failure mode
+    // - the customer is never told their report exists - is far worse than the
+    // inconvenience of one extra click. Over the limit, the same email goes out
+    // without the file and still carries the link.
+    let attachments: { filename: string; content: Buffer; contentType: string }[] | undefined;
+    let attachmentNote: 'attached' | 'too-large' | 'unavailable' = 'unavailable';
+
+    try {
+      const size = await objectSize(report.pdfKey);
+      if (size !== null && size <= MAX_ATTACHMENT_BYTES) {
+        const file = await getObjectBytes(report.pdfKey);
+        attachments = [
+          {
+            // Named for the customer's own record, not for our object key.
+            filename: `${report.reportNumber}-${report.order.orderNumber}.pdf`,
+            content: file.body,
+            contentType: 'application/pdf',
+          },
+        ];
+        attachmentNote = 'attached';
+      } else if (size !== null) {
+        attachmentNote = 'too-large';
+        console.warn(
+          `[approve] ${report.reportNumber} is ${size} bytes, over the ${MAX_ATTACHMENT_BYTES} attachment limit - sending link only`
+        );
+      }
+    } catch (err) {
+      // Storage having a bad moment must not stop the customer being told their
+      // report is ready. The link in the email still works.
+      console.error(`[approve] could not read ${report.pdfKey} to attach:`, err);
+    }
+
     // Sent AFTER the transaction commits. A mail server is a network call with
     // someone else's latency, and notifyCustomer cannot throw - so a bad
     // afternoon at an SMTP host can never roll back a release that happened.
@@ -108,10 +159,12 @@ export async function POST(_req: Request, { params }: { params: Params }) {
       template: 'REPORT_READY',
       to: report.user?.email ?? null,
       userId: report.userId,
+      attachments,
       data: {
         orderNumber: report.order.orderNumber,
         customerName: report.user?.name ?? null,
         reportNumber: report.reportNumber,
+        attached: attachmentNote === 'attached',
       },
     });
 
@@ -126,6 +179,7 @@ export async function POST(_req: Request, { params }: { params: Params }) {
       reportNumber: report.reportNumber,
       delivered: true,
       notified: notified.status,
+      attachment: attachmentNote,
     });
   });
 }

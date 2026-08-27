@@ -14,6 +14,12 @@
  *     send mail don't pull it in.
  */
 
+export interface MailAttachment {
+  filename: string;
+  content: Buffer;
+  contentType: string;
+}
+
 export interface MailInput {
   to: string;
   subject: string;
@@ -22,6 +28,16 @@ export interface MailInput {
   /** Optional Reply-To. Used by the contact form so replying reaches the sender
    *  rather than the no-reply From address. */
   replyTo?: string;
+  /**
+   * Files to attach.
+   *
+   * SIZE IS THE CALLER'S PROBLEM, not this module's. Providers differ - Gmail
+   * refuses over 25MB, most relays cap lower, and a rejection arrives as an SMTP
+   * error long after the caller has moved on. A caller attaching something it
+   * did not create should check the size and decide what to do instead, rather
+   * than discovering the limit in a log.
+   */
+  attachments?: MailAttachment[];
 }
 
 export interface MailResult {
@@ -42,7 +58,10 @@ export function isMailConfigured(): boolean {
 export async function sendMail(input: MailInput): Promise<MailResult> {
   if (!isMailConfigured()) {
     // SMTP not wired up yet. Don't fail the caller - record intent upstream.
-    console.warn(`[mailer] SMTP not configured; skipped email to "${input.to}" (subject: "${input.subject}")`);
+    console.warn(
+      `[mailer] SMTP not configured; skipped email to "${input.to}" (subject: "${input.subject}"` +
+        `${input.attachments?.length ? `, ${input.attachments.length} attachment(s)` : ''})`
+    );
     return { ok: true, delivered: false, skipped: true };
   }
 
@@ -61,6 +80,11 @@ export async function sendMail(input: MailInput): Promise<MailResult> {
       text: input.text,
       html: input.html,
       replyTo: input.replyTo,
+      attachments: input.attachments?.map((a) => ({
+        filename: a.filename,
+        content: a.content,
+        contentType: a.contentType,
+      })),
     });
     return { ok: true, delivered: true, providerId: info.messageId ?? null };
   } catch (err) {

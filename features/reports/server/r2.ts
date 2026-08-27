@@ -149,3 +149,34 @@ export async function objectExists(key: string): Promise<boolean> {
 export function reportKey(orderNumber: string, reportNumber: string): string {
   return `reports/${orderNumber}/${reportNumber}.pdf`;
 }
+
+/**
+ * Reads an object into memory.
+ *
+ * FOR ATTACHING, NOT FOR SERVING. Every download path hands out a presigned URL
+ * so the bytes go straight from storage to the reader and never occupy this
+ * process. This exists for the one case where we genuinely need the content
+ * server-side - putting a report PDF into an email - and it buffers the whole
+ * object, so the caller must know the size is sane before calling.
+ */
+export async function getObjectBytes(key: string): Promise<{ body: Buffer; contentType: string; size: number }> {
+  const res = await client().send(new GetObjectCommand({ Bucket: BUCKET, Key: key }));
+  if (!res.Body) throw new Error(`Object has no body: ${key}`);
+
+  const bytes = await res.Body.transformToByteArray();
+  return {
+    body: Buffer.from(bytes),
+    contentType: res.ContentType ?? 'application/octet-stream',
+    size: bytes.length,
+  };
+}
+
+/** Size in bytes without fetching the object. */
+export async function objectSize(key: string): Promise<number | null> {
+  try {
+    const res = await client().send(new HeadObjectCommand({ Bucket: BUCKET, Key: key }));
+    return res.ContentLength ?? null;
+  } catch {
+    return null;
+  }
+}
