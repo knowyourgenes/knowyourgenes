@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Loader2, Upload, Download, Trash2, FileText, Search, AlertTriangle } from 'lucide-react';
+import { Loader2, Upload, Download, Trash2, FileText, Search, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 import PageHeader from '@/features/admin/components/PageHeader';
 import DataTable from '@/features/admin/components/DataTable';
@@ -13,6 +13,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import {
   Dialog,
   DialogBody,
@@ -42,6 +52,8 @@ export default function AdminReportsPage() {
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState('');
   const [uploadOpen, setUploadOpen] = useState(false);
+  const [approveTarget, setApproveTarget] = useState<Report | null>(null);
+  const [approvingId, setApprovingId] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [file, setFile] = useState<File | null>(null);
@@ -77,6 +89,7 @@ export default function AdminReportsPage() {
       else toast.error(json.error ?? 'Failed to load reports');
       setLoading(false);
     })();
+
     return () => {
       cancelled = true;
     };
@@ -140,6 +153,37 @@ export default function AdminReportsPage() {
     toast.success('Report deleted');
     setDeleteTarget(null);
     load();
+  }
+
+  async function approveReport(r: Report) {
+    setApprovingId(r.id);
+    setApproveTarget(null);
+    try {
+      const res = await fetch(`/api/admin/reports/${r.id}/approve`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+      const json = await res.json();
+      if (!json.ok) {
+        toast.error(json.error ?? 'Could not approve the report');
+        return;
+      }
+      if (json.data.alreadyDelivered) {
+        toast.info(`${r.reportNumber} was already released`);
+      } else {
+        toast.success(`${r.reportNumber} released to the customer`, {
+          description:
+            json.data.notified === 'sent'
+              ? 'They have been emailed.'
+              : 'Email is queued - it will send once SMTP is configured.',
+        });
+      }
+      await load();
+    } catch {
+      toast.error('Could not reach the server');
+    } finally {
+      setApprovingId(null);
+    }
   }
 
   return (
@@ -232,7 +276,30 @@ export default function AdminReportsPage() {
             },
           ]}
           rowAction={(r) => (
-            <div className="flex justify-end gap-1">
+            <div className="flex items-center justify-end gap-1">
+              {/*
+                THE REVIEW STEP. A lab uploads; nothing reaches the customer
+                until someone here approves. Rendered as a real button rather
+                than a ghost icon because it is the one irreversible action on
+                this screen - it emails a genetic report to a person.
+              */}
+              {!r.deliveredAt && (
+                <Button
+                  size="sm"
+                  variant="default"
+                  className="h-7 px-2 text-[11px]"
+                  disabled={approvingId === r.id}
+                  onClick={() => setApproveTarget(r)}
+                  title="Review complete - release this report to the customer"
+                >
+                  {approvingId === r.id ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <CheckCircle2 className="h-3.5 w-3.5" />
+                  )}
+                  Approve
+                </Button>
+              )}
               <Button
                 size="icon-sm"
                 variant="ghost"
@@ -260,6 +327,32 @@ export default function AdminReportsPage() {
           empty="No reports uploaded yet."
         />
       )}
+
+      <AlertDialog open={!!approveTarget} onOpenChange={(o: boolean) => !o && setApproveTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Release {approveTarget?.reportNumber} to the customer?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This emails {approveTarget?.user.name ?? approveTarget?.user.email ?? 'the customer'} and makes the report
+              readable in their account. It cannot be taken back.
+              {approveTarget?.criticalFinding ? (
+                <>
+                  {' '}
+                  <strong className="text-destructive">
+                    This report is flagged as a critical finding - make sure a counsellor is ready to take the call.
+                  </strong>
+                </>
+              ) : null}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => approveTarget && approveReport(approveTarget)}>
+              Approve and send
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <Dialog open={uploadOpen} onOpenChange={setUploadOpen}>
         <DialogContent className="sm:max-w-xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
