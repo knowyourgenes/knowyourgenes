@@ -27,7 +27,7 @@
 // =============================================================================
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { AlertCircle, Eye, EyeOff, FileText, Lock, Mail, MessagesSquare, ShieldCheck, User } from 'lucide-react';
@@ -96,8 +96,25 @@ function scorePassword(pw: string): { score: number; hint: string } {
   return { score, hint: pw.length >= 12 ? 'Strong password' : 'Good — 12 characters is stronger' };
 }
 
+
+/**
+ * Only relative paths may flow through `?from`. An absolute URL, a
+ * protocol-relative `//evil.com`, or backslash trickery falls back to home -
+ * otherwise this page is an open redirect that arrives with a fresh session.
+ *
+ * Defaults to `/` rather than `/dashboard`: a brand-new account has an empty
+ * dashboard, and the homepage is what they were actually looking at.
+ */
+function safeFrom(raw: string | null): string {
+  if (!raw) return '/';
+  if (!raw.startsWith('/') || raw.startsWith('//')) return '/';
+  if (raw.includes('\\')) return '/';
+  return raw;
+}
+
 export default function RegisterPage() {
   const router = useRouter();
+  const params = useSearchParams();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -139,7 +156,15 @@ export default function RegisterPage() {
         return;
       }
       toast.success('Welcome to KYG');
-      router.push('/dashboard');
+      // HOME, NOT THE DASHBOARD. Someone who has just made an account has
+      // nothing in a dashboard - no orders, no reports - so landing there is an
+      // empty room, and it hides the catalogue they came to look at. The
+      // dashboard is where you go once you have something in it.
+      //
+      // `?from` still wins when it is set, because someone who was sent to
+      // register from the middle of a checkout should be put back where they
+      // were rather than at the top of the site.
+      router.push(safeFrom(params.get('from')));
       router.refresh();
     } catch {
       setError('Could not reach the server. Please try again.');
@@ -451,7 +476,7 @@ export default function RegisterPage() {
 
             <button
               type="button"
-              onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+              onClick={() => signIn('google', { callbackUrl: safeFrom(params.get('from')) })}
               className="flex h-[clamp(44px,5.9vh,52px)] w-full items-center justify-center gap-[13px] rounded-[10px] bg-white font-kyg text-[15.5px] font-bold leading-none tracking-[-0.008em] text-bistre shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05),inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_0_rgba(45,32,18,0.08),inset_0_0_0_1.5px_rgba(27,23,18,0.18)]"
             >
               <GoogleIcon className="h-[21px] w-[21px]" />

@@ -77,6 +77,8 @@ export interface ReportReadyData {
   orderNumber: string;
   customerName: string | null;
   reportNumber: string;
+  /** Whether the PDF is attached to this message, or only linked from it. */
+  attached?: boolean;
 }
 
 export interface SetPasswordData {
@@ -155,28 +157,43 @@ Follow your order: ${appUrl('/dashboard/orders')}
 }
 
 export function renderReportReady(d: ReportReadyData): RenderedEmail {
-  // Deliberately says nothing about what the report contains. Findings are read
-  // signed in, not in an inbox someone else might be looking at.
+  // THE SUBJECT STILL CARRIES NOTHING about the findings. It shows on a lock
+  // screen, so it says a report is ready and never what is in it - and that
+  // holds whether or not the PDF itself rides along.
+  const bodyLine = d.attached
+    ? 'Your report is attached to this email as a PDF. It is also in your account, whenever you need it again.'
+    : 'Sign in to read it.';
+
+  const privacyNote = d.attached
+    ? 'A note on privacy: the attachment contains your genetic results. Anyone who can open this mailbox can read them, so treat it the way you would any medical record.'
+    : '';
+
   return {
     subject: `Your report for ${d.orderNumber} is ready`,
     text: `${hello(d.customerName)}
 
 Your report (${d.reportNumber}) for order ${d.orderNumber} is ready.
 
-For your privacy we do not put results in email. Sign in to read it:
+${bodyLine}
+
 ${appUrl('/dashboard/reports')}
 
 If anything in it raises a question, our genetic counsellors are there to talk
 it through - there is a link to book a call on the report page.
-
+${privacyNote ? `\n${privacyNote}\n` : ''}
 - ${BRAND}`,
     html: shell(
       'Your report is ready',
       `<p style="margin:0 0 14px;">${hello(d.customerName)}</p>
        <p style="margin:0 0 14px;">Your report (<strong style="color:${INK};">${d.reportNumber}</strong>) for order ${d.orderNumber} is ready.</p>
-       <p style="margin:0 0 14px;">For your privacy we do not put results in email — sign in to read it.</p>
-       <p style="margin:0;">If anything in it raises a question, our genetic counsellors are there to talk it through. There is a link to book a call on the report page.</p>`,
-      { label: 'Read your report', href: appUrl('/dashboard/reports') }
+       <p style="margin:0 0 14px;">${bodyLine}</p>
+       <p style="margin:0 0 14px;">If anything in it raises a question, our genetic counsellors are there to talk it through. There is a link to book a call on the report page.</p>
+       ${
+         privacyNote
+           ? `<p style="margin:0;padding:12px 14px;background:#F2F3F5;border-radius:6px;font-size:13px;line-height:1.55;color:#4A545E;">${privacyNote}</p>`
+           : ''
+       }`,
+      { label: 'Open in your account', href: appUrl('/dashboard/reports') }
     ),
   };
 }
