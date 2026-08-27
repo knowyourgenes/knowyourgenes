@@ -19,10 +19,9 @@ export function CartLink({ className = '' }: { className?: string }) {
   const { itemCount, hydrated, openDrawer } = useCart();
   const count = hydrated ? itemCount : 0;
 
-  // A BUTTON, not a link to /cart: this opens the slide-over so the customer
-  // keeps the page they were reading. /cart is still a real page and is still
-  // reachable - from inside the drawer, and by anyone who types or shares the
-  // URL - it just is not where the header sends you any more.
+  // A BUTTON, not a link: this opens the slide-over so the customer keeps the
+  // page they were reading. There is no /cart page to link to any more - the
+  // drawer is the whole basket, which is why this is the only way in.
   return (
     <button
       type="button"

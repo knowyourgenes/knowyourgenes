@@ -126,7 +126,7 @@ export function CheckoutView({
   knownEmail?: string;
 }) {
   const router = useRouter();
-  const { lines, priced, hydrated, pricing, couponCode, clear } = useCart();
+  const { lines, priced, hydrated, pricing, couponCode, clear, openDrawer } = useCart();
 
   const [addressId, setAddressId] = useState<string | null>(addresses.find((a) => a.isDefault)?.id ?? null);
   // A guest has nothing saved, so the form is the only option and cannot be
@@ -243,8 +243,11 @@ export function CheckoutView({
       if (!json.ok || !json.data) {
         // 409: the re-price disagreed with what was on screen.
         if (json.cart) {
+          // Open the basket over the checkout rather than navigating away. The
+          // customer has an address typed in; sending them to another page to
+          // review a price change would throw that away.
           toast.error(json.error ?? 'Your cart changed', { description: 'Please review your cart and try again.' });
-          router.push('/cart');
+          openDrawer();
           return;
         }
         toast.error(json.error ?? 'Could not start checkout', {
@@ -549,9 +552,13 @@ export function CheckoutView({
         <p className="text-center text-[12px] leading-[1.5] text-cord">
           Payments are handled by Razorpay. We never see your card details.
         </p>
-        <Link href="/cart" className="block text-center text-[13px] font-semibold text-cord hover:text-eden">
-          ← Back to cart
-        </Link>
+        <button
+          type="button"
+          onClick={openDrawer}
+          className="block w-full text-center text-[13px] font-semibold text-cord transition hover:text-eden"
+        >
+          ← Review your cart
+        </button>
       </aside>
     </div>
   );

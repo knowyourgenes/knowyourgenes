@@ -7,9 +7,15 @@
 // "Add to cart" on the kit configurator, so the customer never loses the page
 // they were reading in order to check what they have picked.
 //
-// /cart IS KEPT, and not as a fallback nobody sees: it is where a shared link, a
-// bookmark, a no-JS visitor and this drawer's own "View full cart" all land. The
-// drawer is an accelerator for the common case, not a replacement for the page.
+// THIS IS THE ONLY CART SURFACE. There was a /cart page; it is gone, along with
+// the "View full cart" link that led to it, and every other route into it now
+// opens this panel instead. One basket in one place beats two that can disagree.
+//
+// What that costs, stated plainly: a shared or bookmarked cart link no longer
+// resolves, and a visitor with JavaScript off has no basket at all. Both were
+// already close to theoretical - the cart lives in localStorage, so a shared
+// link never carried anyone else's items and a no-JS visitor could not have
+// added anything to begin with.
 //
 // DIALOG SEMANTICS ARE HAND-ROLLED rather than using <dialog>, because the
 // native element's ::backdrop cannot be transitioned in step with a transform on
@@ -247,14 +253,6 @@ export function CartDrawer() {
               }
             >
               {pricing ? 'Updating…' : 'Checkout'}
-            </Link>
-
-            <Link
-              href="/cart"
-              onClick={closeDrawer}
-              className="mt-2 flex h-10 w-full items-center justify-center text-[13.5px] font-semibold text-cape underline-offset-2 transition hover:text-eden hover:underline"
-            >
-              View full cart
             </Link>
           </div>
         )}
