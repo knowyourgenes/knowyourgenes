@@ -56,20 +56,29 @@ export function GuestAccountPrompt({ email, orderNumber }: { email: string; orde
         </h2>
 
         <p className="mt-2 text-[14.5px] leading-[1.6] text-cape">
-          We have saved it against <span className="font-semibold text-mine">{email}</span>. Sign in with that address
-          whenever you like to track this order and read your report - your history is already waiting there.
+          We have saved it against <span className="font-semibold text-mine">{email}</span>. Set a password for that
+          address and you can track this order and read your report whenever you like - your history is already waiting
+          there.
         </p>
 
+        {/*
+          THE CTA IS "SET A PASSWORD", NOT "SIGN IN". A guest checkout creates an
+          account with no password - correct, since minting a session from an
+          email typed into a form would hand a stranger someone else's reports -
+          so sending them to /login would send them to a form that cannot admit
+          them. This used to promise they could "sign in whenever you like",
+          which was simply not true for the account we had just made them.
+        */}
         <p className="mt-2 text-[13px] leading-[1.55] text-cord">
           Nothing else is needed now. Your confirmation is on its way by email.
         </p>
 
         <div className="mt-5 flex flex-col gap-2 sm:flex-row-reverse">
           <Link
-            href={`/login?from=${encodeURIComponent('/dashboard/orders')}`}
+            href={`/set-password?email=${encodeURIComponent(email)}`}
             className="flex h-[46px] flex-1 items-center justify-center rounded-sm bg-eden text-[14px] font-bold text-spring transition hover:bg-eden2"
           >
-            Sign in to track it
+            Set a password
           </Link>
           <button
             type="button"

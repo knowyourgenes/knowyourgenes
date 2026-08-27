@@ -38,8 +38,8 @@ export default async function UserReportsPage() {
             </div>
             <p className="mt-4 font-medium">No reports yet</p>
             <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-              Reports are delivered 7–14 days after sample collection. We&apos;ll notify you on WhatsApp + email the
-              moment it&apos;s ready.
+              Reports are delivered 7–14 days after sample collection. We&apos;ll email you the moment yours is
+              ready.
             </p>
           </CardContent>
         </Card>

@@ -41,13 +41,13 @@ export default function ShippingPolicyPage() {
       <h2>2. What happens after you book</h2>
       <h3>Step 1 - Order confirmation</h3>
       <p>
-        Within 5 minutes of successful payment you receive an email and WhatsApp confirmation containing your order ID,
-        the contents of your order, and the expected kit-delivery window.
+        As soon as your payment is captured we email you a confirmation containing your order ID and the contents of
+        your order. You can also see it any time in your account under Orders.
       </p>
       <h3>Step 2 - Kit dispatch</h3>
       <p>
-        We hand the kit to our courier partner within 1 to 2 business days of order confirmation. You receive a tracking
-        link by email and WhatsApp as soon as the AWB is generated.
+        We hand the kit to our courier partner within 1 to 2 business days of order confirmation. We email you the
+        courier and tracking number as soon as the AWB is generated.
       </p>
       <h3>Step 3 - Kit delivery</h3>
       <p>

@@ -265,9 +265,9 @@ function LoginForm() {
                       Rather than ship a link into a 404, this opens a mail to the
                       same care address the frame already prints below as the
                       "locked out" contact, so the two agree. */}
-                  <a href="mailto:care@knowyourgenes.in?subject=Password%20reset" className={TLINK}>
+                  <Link href="/set-password" className={TLINK}>
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
                 <div className={FIELD_SHELL}>
                   <Lock

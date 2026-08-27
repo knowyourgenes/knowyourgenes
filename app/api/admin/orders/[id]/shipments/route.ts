@@ -1,6 +1,7 @@
 import { prisma } from '@/server/prisma';
 import { ApiError, created, fail, handle, isResponse, requireApiRole } from '@/server/api';
 import { isTerminal } from '@/features/orders';
+import { notifyCustomer } from '@/features/notifications';
 import { courier } from '@/features/shipments/server/courier';
 import { shipmentCreate } from '@/lib/validators';
 import { resolveLab } from '@/features/shipments';
@@ -36,7 +37,8 @@ export async function POST(req: Request, { params }: { params: Params }) {
       where: { id: orderId },
       include: {
         address: true,
-        user: { select: { name: true, phone: true } },
+        // `email` is here for the dispatch notification below.
+        user: { select: { name: true, phone: true, email: true } },
       },
     });
     if (!order) throw new ApiError('Order not found', 404);
@@ -138,6 +140,24 @@ export async function POST(req: Request, { params }: { params: Params }) {
         },
       },
     });
+
+    // Only the FORWARD leg is news to the customer. The reverse pickup is
+    // scheduled from their own doorstep at a time they already know about, and
+    // an email saying "your sample is on its way to the lab" the moment we book
+    // a courier - before anyone has collected anything - would be a lie.
+    if (input.leg === 'FORWARD') {
+      await notifyCustomer({
+        template: 'KIT_DISPATCHED',
+        to: order.user?.email ?? null,
+        userId: order.userId,
+        data: {
+          orderNumber: order.orderNumber,
+          customerName: order.address.fullName ?? order.user?.name ?? null,
+          courier: courier.activeCourier() === 'DELHIVERY' ? 'Delhivery' : 'Shiprocket',
+          awb: result.awb ?? null,
+        },
+      });
+    }
 
     return created(shipment);
   });

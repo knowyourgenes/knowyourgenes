@@ -18,6 +18,7 @@ import 'server-only';
 // =============================================================================
 
 import { prisma } from '@/server/prisma';
+import { notifyCustomer } from '@/features/notifications';
 
 export interface CaptureResult {
   /** True if THIS call transitioned the order to paid. */
@@ -180,6 +181,42 @@ export async function captureOrderPayment(opts: {
 
     return true;
   });
+
+  // AFTER the transaction, never inside it. A mail server is a network call
+  // with someone else's latency; holding a payment transaction open across one
+  // is how a busy inbox becomes a database problem. And notifyCustomer cannot
+  // throw, so a failed send can never roll back a capture that really happened.
+  //
+  // Only on the claim. Verify and the webhook both reach here for the same
+  // payment, and exactly one of them wins the paidAt claim - which is what stops
+  // the customer being emailed twice.
+  if (claimed) {
+    const order = await prisma.order.findUnique({
+      where: { id: opts.orderId },
+      select: {
+        orderNumber: true,
+        total: true,
+        fulfillmentMode: true,
+        user: { select: { id: true, name: true, email: true } },
+        items: { select: { nameSnapshot: true, quantity: true } },
+      },
+    });
+
+    if (order) {
+      await notifyCustomer({
+        template: 'ORDER_CONFIRMED',
+        to: order.user.email,
+        userId: order.user.id,
+        data: {
+          orderNumber: order.orderNumber,
+          customerName: order.user.name,
+          items: order.items.map((i) => ({ name: i.nameSnapshot, quantity: i.quantity })),
+          total: order.total,
+          byPost: order.fulfillmentMode === 'KIT_BY_POST',
+        },
+      });
+    }
+  }
 
   return { claimed, oversold };
 }
