@@ -1,220 +1,161 @@
 ===============================================================================
 TEST PAGE IMAGES - WHAT WENT IN, WHAT IS STILL PENDING
-Generated 2026-08-14
+Updated 2026-08-27  (supersedes the 2026-08-14 pass)
 ===============================================================================
 
-## SUMMARY
+## SUMMARY - the five pages in testpagesimages/
 
-Images supplied in testPages/ ................ 50
-Image slots across the 4 test pages .......... 48
-Placed (exact name match) .................... 26
-Slots still on placeholder ................... 22
-Supplied images with nowhere to go ........... 24
+                        slots   filled   pending
+  Eye                      10       10         0   COMPLETE
+  Immunity                 21       20         1
+  Skin                     13       13         0   COMPLETE
+  Kidney                   10        8         2
+  Sleep                     4        3         1
+                        -----   ------   -------
+                            58       54         4
 
-Everything not placed is listed below, in two parts:
-PART A - slots that are still empty, per page ("we need an image for this")
-PART B - supplied images that matched nothing ("this image has no home")
+This pass placed 28 images from testpagesimages/, converted to WebP:
+49.3 MB of PNG became 2.01 MB of WebP, longest edge capped at 1600px,
+quality 82. Verified in a real browser: all five pages paint every image,
+zero 404s.
 
-===============================================================================
-PART A - EMPTY SLOTS, BY PAGE
-These sections exist on the page and are rendering a grey 64x64 placeholder.
-===============================================================================
-
----
-
-## EYE TEST PAGE (/tests/eye-health) ..................... 10 of 10 slots FILLED
-
-COMPLETE. No pending images. This is the only finished page.
-
----
-
-## IMMUNITY TEST PAGE (/tests/immunity-health) ....... 8 of 21 filled, 13 PENDING
-
-In the immunity test page, these section images have no matched image to
-upload, so they are pending:
-
-1.  why-reactive "Why testing beats reacting" section
-    needs: a shield holding, and a shield with a gap
-2.  bodymap-figure Body map section
-    needs: anatomical figure marking the six immune sites
-
-RISK / CONDITION CARDS (9 pending) - the tabbed risk section: 3. risk-bacterial Bacterial infection card 4. risk-gramneg Gram-negative recognition card 5. risk-parasitic Parasitic / malaria card 6. risk-hiv HIV viral-load card 7. risk-sars SARS-CoV family card 8. risk-fungal Fungal recognition card 9. risk-ibd Inflammatory bowel card 10. risk-asthma Asthma / allergic airway card 11. risk-covid COVID-19 severity card
-
-CONTRAST PAIR (2 pending) - the "two futures" section: 12. contrast-never Someone unwell again, still guessing 13. contrast-tested Someone healthy years later, having acted early
-
-NOTE: nothing in the supplied Immunity set covers the 9 pathogen-specific
-risk cards. These need a fresh batch from the designer.
-
----
-
-## SKIN TEST PAGE (/tests/skin-health) ................ 6 of 13 filled, 7 PENDING
-
-In the skin test page, these section images have no matched image to upload,
-so they are pending:
-
-1.  why-reactive "Why testing beats reacting" section
-    needs: skin in daylight beside skin under a UV light
-    ** see PART C - "Skin - Regret" may fit here **
-
-RISK / CONDITION CARDS (6 pending) - the tabbed risk section: 2. risk-glycation Glycation card (sugar stiffening collagen) 3. risk-age Biological age card (cell age vs birthday age) 4. risk-cellulite Cellulite card (uneven, dimpled texture) 5. risk-stretch Stretch marks card (skin tearing under rapid stretch) 6. risk-acne Acne card (oil production and immune signalling) 7. risk-pollution Pollution card (city air settling on skin)
-
----
-
-## SLEEP TEST PAGE (/tests/sleep) ..................... 2 of 4 filled, 2 PENDING
-
-In the sleep test page, these section images have no matched image to upload,
-so they are pending:
-
-1.  why "Why this matters" section
-    needs: a bedroom at 3am, ceiling lit by a phone
-    ** see PART C - "Sleep - Who" may fit here **
-2.  bodymap-figure Body map section
-    needs: anatomical figure marking the four sleep sites
+Skin is now complete. Immunity went from 8/21 to 20/21.
 
 ===============================================================================
-PART B - SUPPLIED IMAGES THAT MATCHED NOTHING
-From the provided set, these do not match any section on their page.
+PART A - THE FOUR SLOTS STILL EMPTY
+These sections render a grey 137-byte placeholder. Nothing in the supplied
+set matches them, so they were deliberately left rather than approximated.
 ===============================================================================
 
----
+1.  IMMUNITY  bodymap-figure
+    needs: an anatomical figure marking the six immune sites
 
-## THE GENE TRIO - 9 images, 3 pages
+2.  SLEEP     bodymap-figure
+    needs: an anatomical figure marking the four sleep sites
 
-From the provided ones, these are not matching with the EYE page:
-Eye - Gene 1 (Born With).png
-Eye - Gene 2 (Later In Life).png
-Eye - Gene 3 (Caught Early).png
+    Both body maps want a labelled anatomical illustration. No page in the
+    supplied set has one - "Kidney - Anatomy" and "Skin - Anatomy" are organ
+    close-ups, not whole-body figures with markers.
 
-From the provided ones, these are not matching with the SKIN page:
-Skin - Gene 1 (Born With).png
-Skin - Gene 2 (Later In Life).png
-Skin - Gene 3 (Caught Early).png
+3.  KIDNEY    why-reactive
+    needs: unfiltered water beside filtered water
 
-From the provided ones, these are not matching with the SLEEP page:
-Sleep - Gene 1 (Born With).png
-Sleep - Gene 2 (Later In Life).png
-Sleep - Gene 3 (Caught Early).png
+    "Kidney - Worth" was the only candidate and was opened to check: it is a
+    lifestyle portrait of a man on a sofa, not a before/after of water. It
+    would read as decoration in a section whose whole job is the contrast.
 
-REASON: the Eye, Skin and Sleep pages have no "explainer" section. The
-Immunity page does have one, and its three Gene images WERE placed
-(explainer-1/2/3). To use these nine, the same three-card explainer section
-has to be added to the other three pages.
+4.  KIDNEY    risk-nephrotic
+    needs: protein leaking through damaged filtering units
 
----
+    "Kidney - Immune" was the only candidate and went to risk-membranous
+    instead, which it fits precisely - it shows immune deposits thickening a
+    membrane, which is membranous nephropathy. Nephrotic syndrome needs its
+    own image.
+
+===============================================================================
+PART B - WHAT WENT WHERE
+Matched by MEANING, not by filename: the supplied names describe the subject
+("Malaria Resistance") while the slots are named after the card they fill
+("risk-parasitic"). Every pair was read against the slot's own alt text.
+===============================================================================
+
+## IMMUNITY - 12 placed, all from Immunity/More/
+
+  contrast-never      <- Before.png
+  contrast-tested     <- After.png
+  why-reactive        <- Reactive vs Preventive.png
+  risk-asthma         <- Asthma.png
+  risk-bacterial      <- Bacterial Infection.png
+  risk-covid          <- COVID Severity.png
+  risk-fungal         <- Fungal.png
+  risk-gramneg        <- Gram-Negative.png
+  risk-hiv            <- Viral Load.png
+  risk-ibd            <- Gut Inflammation.png
+  risk-parasitic      <- Malaria Resistance.png
+  risk-sars           <- SARS Susceptibility.png
+
+  The More/ folder covered the nine pathogen cards the last pass called out
+  as needing a fresh batch from the designer. That batch is what arrived.
+
+## SKIN - 7 placed, all from Skin/More/ - page now COMPLETE
+
+  why-reactive        <- Reactive vs Preventive.png
+  risk-acne           <- Acne.png
+  risk-age            <- Biological Age.png
+  risk-cellulite      <- Cellulite.png
+  risk-glycation      <- Glycation.png
+  risk-pollution      <- Pollution.png
+  risk-stretch        <- Stretch Marks.png
+
+  A clean 7-for-7. The Skin More/ folder was built to exactly this list.
+
+## KIDNEY - 8 placed, from Kidney/ (no More/ folder was supplied)
+
+  hero-filter         <- Kidney - Hero.png
+  counsellor          <- Kidney - Expert.png
+  risk-ckd            <- Kidney - CKD.png
+  risk-hyperuricemia  <- Kidney - Hyperuricemia.png
+  risk-magnesium      <- Kidney - Magnesium.png
+  risk-membranous     <- Kidney - Immune.png      (opened and checked)
+  risk-polycystic     <- Kidney - PKD.png         (PKD = polycystic kidney disease)
+  risk-stones         <- Kidney - Stones.png
+
+  Kidney had NOTHING placed before this pass - all ten slots were grey.
+
+## SLEEP - 1 placed
+
+  why                 <- Sleep - Who.png          (opened and checked)
+
+  ALT TEXT WAS REWRITTEN for this one. The slot was briefed for "a bedroom at
+  3am, ceiling lit by a phone"; the supplied image is morning exhaustion in
+  daylight. It carries the section either way, but alt text has to describe
+  what is on screen, so it now reads "Someone sitting on the edge of a bed,
+  rubbing their eyes, still tired".
+
+===============================================================================
+PART C - SUPPLIED IMAGES WITH NOWHERE TO GO
+Unchanged from the last pass unless noted. These are not mistakes - they are
+sections that do not exist yet.
+===============================================================================
+
+## THE GENE TRIO - 12 images across 4 pages
+
+  Eye / Skin / Sleep / Kidney - Gene 1 (Born With), Gene 2 (Later In Life),
+  Gene 3 (Caught Early)
+
+  Only the Immunity page has the three-card explainer section these fill.
+  Adding that same section to the other four pages would use all twelve.
 
 ## MARKER-GROUP SUBJECTS - 11 images
 
-From the provided ones, these are not matching with the IMMUNITY page:
-Immunity - Detox.png
-Immunity - Infection Defense.png
-Immunity - Nutrients.png
-Immunity - Oxidative Stress.png
+  Immunity - Detox, Infection Defense, Nutrients, Oxidative Stress
+  Sleep    - Body Clock, Disorders, Nutrients, Restless Legs, Sleep Quality, Rested
+  Skin     - Nutrients
 
-From the provided ones, these are not matching with the SLEEP page:
-Sleep - Body Clock.png
-Sleep - Disorders.png
-Sleep - Nutrients.png
-Sleep - Restless Legs.png
-Sleep - Sleep Quality.png
-Sleep - Rested.png
+  Named after MARKER GROUPS, not risk cards. The marker grids on those pages
+  are icon-and-text only and have no image field at all.
 
-From the provided ones, this is not matching with the SKIN page:
-Skin - Nutrients.png
+## ONE-OFFS - 4 images
 
-REASON: these are named after MARKER GROUPS, not after risk cards. The marker
-grid sections on those pages are icon-and-text only - they have no image
-field at all. Adding an image to each marker group would give all 11 a home.
+  Skin - Anatomy      no body-map section on the skin page
+  Skin - Thriving     pairs with Skin - Regret as a before/after; the skin page
+                      has no contrast section (Immunity does)
+  Kidney - Anatomy    no body-map section on the kidney page
+  Kidney - Worth      no aspiration section on the kidney page
 
----
-
-## SKIN ONE-OFFS - 2 images
-
-From the provided ones, these are not matching with the SKIN page:
-Skin - Anatomy.png (no body-map section exists on the skin page)
-Skin - Thriving.png (no contrast/two-futures section exists on skin)
-
-REASON: "Regret" and "Thriving" are clearly a matched BEFORE/AFTER pair. The
-Immunity page has exactly this section (contrast-never / contrast-tested) but
-the Skin page does not. Adding it would use both images as intended.
-
----
-
-## DUPLICATE FILENAME COLLISION
-
-"Nutrients" appears three times across the set - Immunity, Skin and Sleep all
-supply one. None of the three has a matching section. They are different
-photographs, so no data was lost; all three are simply unplaced.
+  "Regret" and "Thriving" are clearly a matched pair. Adding the Immunity
+  page's contrast section to Skin would use both as intended.
 
 ===============================================================================
-PART C - TWO NEAR-FITS, NOT PLACED, AWAITING YOUR CALL
-These are not name matches, so per the brief they were left out. Each is a
-single command away from being dropped in if you approve.
+NOTES FOR NEXT TIME
 ===============================================================================
 
-1. Skin - Regret.png -> skin-health / why-reactive
-   The slot wants "skin in daylight beside skin under a UV light". The image
-   is the regret half of the Regret/Thriving pair. Using it here works, but
-   it splits the pair and half-wastes the idea. Better: add the contrast
-   section to Skin and use Regret + Thriving together as designed.
+* Placement is keyed on what is actually on disk, not on a list. A reference
+  is only repointed to .webp once that .webp really exists - a blanket
+  png -> webp rewrite would point empty slots at files that are not there, and
+  Next serves those as a 404 rather than falling back, so a visible grey box
+  becomes an invisible broken image.
 
-2. Sleep - Who.png -> sleep / why
-   The slot's description is "a bedroom at 3am, ceiling lit by a phone" - a
-   room. The image is a person (the who-is-this-for portrait). The portrait
-   aspect ratio fits the slot, the subject does not.
-
-===============================================================================
-PART D - WHAT WAS PLACED (26)
-===============================================================================
-
-EYE (10 of 10 - page complete)
-Eye - Hero.png -> hero-eye.png
-Eye - Reactive.png -> why-reactive.png
-Eye - Retinopathy.png -> risk-retinopathy.png
-Eye - Glaucoma.png -> risk-glaucoma.png
-Eye - Cataract.png -> risk-cataract.png
-Eye - Myopia.png -> risk-myopia.png
-Eye - Ocular Hypertension.png -> risk-pressure.png
-Eye - Macular Degeneration.png -> risk-macular.png
-Eye - Retinal Occlusion.png -> risk-occlusion.png
-Eye - Expert.png -> counsellor.png
-
-IMMUNITY (8 of 21)
-Immunity - Hero.png -> hero.png
-Immunity - Who.png -> who.png
-Immunity - Respiratory.png -> risk-respiratory.png
-Immunity - Inflammation.png -> risk-inflammation.png
-Immunity - Gene 1 (Born With).png -> explainer-1.png
-Immunity - Gene 2 (Later In Life).png -> explainer-2.png
-Immunity - Gene 3 (Caught Early).png -> explainer-3.png
-Immunity - Expert.png -> counsellor.png
-
-SKIN (6 of 13)
-Skin - Hero.png -> hero-skin.png
-Skin - Oxidative Aging.png -> risk-oxidative.png
-Skin - Inflammation.png -> risk-inflammation.png
-Skin - Collagen Texture.png -> risk-texture.png
-Skin - Sun Photoaging.png -> risk-sun.png
-Skin - Expert.png -> counsellor.png
-
-SLEEP (2 of 4)
-Sleep - Hero.png -> hero.png
-Sleep - Expert.png -> counsellor.png
-
-===============================================================================
-PART E - TWO THINGS TO FLAG
-===============================================================================
-
-1. FILE WEIGHT. The supplied PNGs are 1.4-2.3 MB each; the 26 placed add
-   roughly 46 MB to the repo. They should be converted to WebP/AVIF (or at
-   minimum compressed) before this is committed, or every page load will
-   pull multi-megabyte images.
-
-2. WHAT TO ASK THE DESIGNER FOR NEXT, in priority order:
-   a) Immunity's 9 pathogen risk cards - biggest single gap
-   b) Skin's 6 remaining risk cards
-   c) Immunity why-reactive + the 2 contrast images
-   d) 2 body-map figures (immunity, sleep)
-   e) Sleep's "why" - a room at 3am, not a person
-   That is 20 images, and it would take all four pages to complete.
-
-===============================================================================
+* scripts used, in scratchpad: place_test_images.py (convert + place),
+  repoint_refs.py (update the .ts references), verify_refs.py (every reference
+  resolves), verify_images_render.py (the browser actually paints them).
