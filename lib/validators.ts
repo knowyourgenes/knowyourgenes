@@ -407,7 +407,12 @@ export const cartLine = z.object({
    * Coerced rather than rejected so an older client or a stale localStorage
    * cart still checks out - at the honest price - instead of erroring.
    */
-  quantity: z.coerce.number().int().min(1).max(10).transform(() => 1),
+  quantity: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(10)
+    .transform(() => 1),
 });
 
 /** Body of POST /api/cart - re-price a cart. Empty carts are legal (total ₹0). */

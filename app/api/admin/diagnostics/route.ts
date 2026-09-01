@@ -59,11 +59,7 @@ export async function GET() {
         // the webhook is what captures a payment when the browser drops between
         // the card being charged and the confirmation landing.
         RAZORPAY_WEBHOOK_SECRET: inspect('RAZORPAY_WEBHOOK_SECRET'),
-        mode: razorpayKeyId.startsWith('rzp_live')
-          ? 'LIVE'
-          : razorpayKeyId.startsWith('rzp_test')
-            ? 'TEST'
-            : 'UNKNOWN',
+        mode: razorpayKeyId.startsWith('rzp_live') ? 'LIVE' : razorpayKeyId.startsWith('rzp_test') ? 'TEST' : 'UNKNOWN',
       },
       email: {
         SMTP_HOST: inspect('SMTP_HOST'),

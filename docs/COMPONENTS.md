@@ -3,7 +3,7 @@
 
 # Component inventory
 
-**185 components.** Read this before you build a new one.
+**167 components.** Read this before you build a new one.
 
 The rule this file exists to enforce: **if a component already exists, use it - do
 not build a second one on another page.** A "Button" that exists three times is
@@ -66,7 +66,7 @@ Used by 2+ features. Anything here is the canonical version.
 | --- | --- | --- | --- |
 | `Container` | [components/shared/Container.tsx](../components/shared/Container.tsx) | server | Site-wide 1600px content column - the ONE page shell width (docs/DESIGN.md §1). |
 | `KygLogo` | [components/shared/Logo.tsx](../components/shared/Logo.tsx) | server |  |
-| `SearchOverlay` | [components/shared/SearchOverlay.tsx](../components/shared/SearchOverlay.tsx) | client | Opened by the search icon in SiteHeader's right-hand cluster. Replaces the |
+| `SearchOverlay` | [components/shared/SearchOverlay.tsx](../components/shared/SearchOverlay.tsx) | client | components/shared - the full-width search overlay |
 | `SiteFooter` | [components/shared/SiteFooter.tsx](../components/shared/SiteFooter.tsx) | client | Shared KYG dark footer. Self-contained (tokens applied inline on <footer>). |
 | `SiteHeader` | [components/shared/SiteHeader.tsx](../components/shared/SiteHeader.tsx) | client | Shared KYG warm-modern site header. Self-contained: design tokens are applied |
 
@@ -146,17 +146,16 @@ Owned by one feature. Needed by a second feature? Promote it to
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `AddToCart` | [features/cart/components/AddToCart.tsx](../features/cart/components/AddToCart.tsx) | client | The buy control. Once a kit is in the basket the button becomes a link to the |
+| `AddToCart` | [features/cart/components/AddToCart.tsx](../features/cart/components/AddToCart.tsx) | client | The buy control. Once a kit is in the basket the button stops being an "Add" |
 | `CartDrawer` | [features/cart/components/CartDrawer.tsx](../features/cart/components/CartDrawer.tsx) | client | features/cart - the slide-over basket |
 | `CartLink` | [features/cart/components/CartLink.tsx](../features/cart/components/CartLink.tsx) | client | Header cart icon with a live count. |
-| `CartView` | [features/cart/components/CartView.tsx](../features/cart/components/CartView.tsx) | client | Before localStorage is read we genuinely do not know if the cart is empty, |
 
 ### `features/checkout`
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
 | `AddressFields, EMPTY_ADDRESS` | [features/checkout/components/AddressFields.tsx](../features/checkout/components/AddressFields.tsx) | client | The new-address form. Serviceability is checked on the PIN code but only ever |
-| `CheckoutView` | [features/checkout/components/CheckoutView.tsx](../features/checkout/components/CheckoutView.tsx) | client | One page, three blocks: address, (optional) collection slot, summary + pay. |
+| `CheckoutView` | [features/checkout/components/CheckoutView.tsx](../features/checkout/components/CheckoutView.tsx) | client | features/checkout - the pay screen |
 | `GuestAccountPrompt` | [features/checkout/components/GuestAccountPrompt.tsx](../features/checkout/components/GuestAccountPrompt.tsx) | client | features/checkout - "your order is saved, sign in to follow it" |
 
 ### `features/contact`
@@ -180,49 +179,31 @@ Owned by one feature. Needed by a second feature? Promote it to
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `DummyHomepage` | [features/home/components/DummyHomepage.tsx](../features/home/components/DummyHomepage.tsx) | client | DummyHomepage - a draft homepage built from KYG_Homepage.docx. |
-| `HomePage` | [features/home/components/Homepage.tsx](../features/home/components/Homepage.tsx) | client | Scoped page styles - inlined from the original kyg.html <style> |
-| `NewHomepage` | [features/home/components/NewHomepage.tsx](../features/home/components/NewHomepage.tsx) | server | Rebuilt homepage - one pure-Tailwind component per section, no scoped |
-| `Carousel` | [features/home/components/sections/Carousel.tsx](../features/home/components/sections/Carousel.tsx) | client | Position of the target card relative to the scroll container's current |
-| `FinalCta` | [features/home/components/sections/FinalCta.tsx](../features/home/components/sections/FinalCta.tsx) | server | FinalCta - centered closing call-to-action. |
-| `GeneousCare` | [features/home/components/sections/GeneousCare.tsx](../features/home/components/sections/GeneousCare.tsx) | server |  |
-| `HealthDecoded` | [features/home/components/sections/HealthDecoded.tsx](../features/home/components/sections/HealthDecoded.tsx) | server |  |
-| `Hero` | [features/home/components/sections/Hero.tsx](../features/home/components/sections/Hero.tsx) | server | Hero - full-bleed photographic hero with editorial copy. |
-| `HowItWorks` | [features/home/components/sections/HowItWorks.tsx](../features/home/components/sections/HowItWorks.tsx) | server | HowItWorks - five numbered step cards laid out in a row. |
-| `Movement` | [features/home/components/sections/Movement.tsx](../features/home/components/sections/Movement.tsx) | server | Movement - "The Movement" dark, warm break card. |
-| `ReportPreview` | [features/home/components/sections/ReportPreview.tsx](../features/home/components/sections/ReportPreview.tsx) | server | ReportPreview - "Your Report" section: a mock report card (browser chrome + |
-| `SeniorCare` | [features/home/components/sections/SeniorCare.tsx](../features/home/components/sections/SeniorCare.tsx) | server | SeniorCare - KYG Senior Care split section (copy + feature pills + photo). |
-| `Tests` | [features/home/components/sections/Tests.tsx](../features/home/components/sections/Tests.tsx) | server | NOTE: bundles are NOT sellable yet. Each one is a set of reports that would |
-| `TrustMarquee` | [features/home/components/sections/TrustMarquee.tsx](../features/home/components/sections/TrustMarquee.tsx) | server | Trust marquee - a continuous, seamless CSS scroll (no JS). |
-| `TrustPrivacy` | [features/home/components/sections/TrustPrivacy.tsx](../features/home/components/sections/TrustPrivacy.tsx) | server | TrustPrivacy - "Your data stays yours." Two-column trust section: copy + |
-| `WellnessPackages` | [features/home/components/sections/WellnessPackages.tsx](../features/home/components/sections/WellnessPackages.tsx) | server |  |
-| `WhatIsKyg` | [features/home/components/sections/WhatIsKyg.tsx](../features/home/components/sections/WhatIsKyg.tsx) | server | WhatIsKyg - "Think of it as your body's instruction manual." |
-| `WhoIsThisFor` | [features/home/components/sections/WhoIsThisFor.tsx](../features/home/components/sections/WhoIsThisFor.tsx) | server |  |
-| `WhyKyg` | [features/home/components/sections/WhyKyg.tsx](../features/home/components/sections/WhyKyg.tsx) | server | WhyKyg - "Why KYG exists": editorial copy + big-number photo panel. |
-| `HelixCanvas, HERO_HELIX, FINAL_HELIX` | [features/home/components/v2/HelixCanvas.tsx](../features/home/components/v2/HelixCanvas.tsx) | client | Hero strand - tall, tight, bright. |
-| `HelixGround` | [features/home/components/v2/HelixGround.tsx](../features/home/components/v2/HelixGround.tsx) | server | The brand helix artwork, laid in behind four sections as a ground texture. |
-| `HomeIcon, HOME_ICON_IDS` | [features/home/components/v2/HomeIcon.tsx](../features/home/components/v2/HomeIcon.tsx) | server | features/home/v2 - the homepage design's own icons |
-| `HomeV2` | [features/home/components/v2/HomeV2.tsx](../features/home/components/v2/HomeV2.tsx) | server | Homepage - the redesign assembled |
-| `Reveal, HeroReveal, LifeStrand` | [features/home/components/v2/motion.tsx](../features/home/components/v2/motion.tsx) | client | The source's `.rv` / `.rv-l` / `.rv-s` classes plus its single shared |
-| `BornInIndia` | [features/home/components/v2/sections/BornInIndia.tsx](../features/home/components/v2/sections/BornInIndia.tsx) | server | Homepage - SECTION 13 · BORN IN INDIA |
-| `Discover` | [features/home/components/v2/sections/Discover.tsx](../features/home/components/v2/sections/Discover.tsx) | server | Homepage - SECTION 05 · DISCOVER WHAT'S RIGHT FOR YOU |
-| `FinalCta` | [features/home/components/v2/sections/FinalCta.tsx](../features/home/components/v2/sections/FinalCta.tsx) | server | Homepage - SECTION 15 · FINAL CTA |
-| `GeneousCare` | [features/home/components/v2/sections/GeneousCare.tsx](../features/home/components/v2/sections/GeneousCare.tsx) | server | Homepage - SECTION 10 · GENEous CARE |
-| `Hero` | [features/home/components/v2/sections/Hero.tsx](../features/home/components/v2/sections/Hero.tsx) | server | Rebuilt against the designer's own build ("New Homepage Build/index.html", |
-| `HowItWorks` | [features/home/components/v2/sections/HowItWorks.tsx](../features/home/components/v2/sections/HowItWorks.tsx) | client | Homepage - SECTION 09 · HOW IT WORKS |
-| `Journal` | [features/home/components/v2/sections/Journal.tsx](../features/home/components/v2/sections/Journal.tsx) | server | Homepage - SECTION 14 · THE JOURNAL |
-| `MeetGenee` | [features/home/components/v2/sections/MeetGenee.tsx](../features/home/components/v2/sections/MeetGenee.tsx) | server | Homepage - SECTION 07 · MEET GENEe |
-| `OneLifetime` | [features/home/components/v2/sections/OneLifetime.tsx](../features/home/components/v2/sections/OneLifetime.tsx) | server | Homepage - SECTION 06 · ONE LIFETIME. ONE DNA |
-| `Privacy` | [features/home/components/v2/sections/Privacy.tsx](../features/home/components/v2/sections/Privacy.tsx) | server | Homepage - SECTION 12 · PRIVACY & CONFIDENTIALITY |
-| `ScienceTrust` | [features/home/components/v2/sections/ScienceTrust.tsx](../features/home/components/v2/sections/ScienceTrust.tsx) | server | Homepage - SECTION 11 · SCIENCE & TRUST |
-| `WhatToKnow` | [features/home/components/v2/sections/WhatToKnow.tsx](../features/home/components/v2/sections/WhatToKnow.tsx) | client | Homepage - SECTION 08 · WHAT WOULD YOU LIKE TO KNOW (`.exp` / `.orb`) |
-| `WhyGeneticTesting` | [features/home/components/v2/sections/WhyGeneticTesting.tsx](../features/home/components/v2/sections/WhyGeneticTesting.tsx) | server | Homepage - SECTION 04 · WHY GENETIC TESTING · the ladder |
-| `Section, Kicker, Heading, Body, Cta, AssetSlot, DotRow, Chip, PHOTO` | [features/home/components/v2/ui.tsx](../features/home/components/v2/ui.tsx) | server | The 15 photographs delivered with the designer's build, keyed by the slot id |
-| `HomeV3` | [features/home/components/v3/HomeV3.tsx](../features/home/components/v3/HomeV3.tsx) | server | Composition only. Every section is a server component: nothing on this page |
-| `Hero` | [features/home/components/v3/sections/Hero.tsx](../features/home/components/v3/sections/Hero.tsx) | server | The circledna.com shape: one photograph carrying an oversized centred |
-| `HeroVideo` | [features/home/components/v3/sections/HeroVideo.tsx](../features/home/components/v3/sections/HeroVideo.tsx) | client | A decorative, silent, looping background layer that sits ON TOP of the hero's |
-| `Trust, ShopByGoal, Reports, HowItWorks, FinalCta` | [features/home/components/v3/sections/Sections.tsx](../features/home/components/v3/sections/Sections.tsx) | server | Kept in one file because each is short and they share the same primitives; |
-| `Section, Kicker, Heading, Lead, TraitCard` | [features/home/components/v3/ui.tsx](../features/home/components/v3/ui.tsx) | server | Section shell. Ground runs full-bleed; content stays on the 1600px rail. |
+| `Homepage` | [features/home/components/Homepage.tsx](../features/home/components/Homepage.tsx) | server | Composition only. Every decision that could vary between sections has been |
+| `HelixCanvas, HERO_HELIX, FINAL_HELIX` | [features/home/components/lib/HelixCanvas.tsx](../features/home/components/lib/HelixCanvas.tsx) | client | Hero strand - tall, tight, bright. |
+| `HelixGround` | [features/home/components/lib/HelixGround.tsx](../features/home/components/lib/HelixGround.tsx) | server | The brand helix artwork, laid in behind four sections as a ground texture. |
+| `HomeIcon, HOME_ICON_IDS` | [features/home/components/lib/HomeIcon.tsx](../features/home/components/lib/HomeIcon.tsx) | server | features/home/v2 - the homepage design's own icons |
+| `Reveal, HeroReveal, LifeStrand` | [features/home/components/lib/motion.tsx](../features/home/components/lib/motion.tsx) | client | The source's `.rv` / `.rv-l` / `.rv-s` classes plus its single shared |
+| `BornInIndia` | [features/home/components/sections/BornInIndia.tsx](../features/home/components/sections/BornInIndia.tsx) | server | The four "this is for…" lines, in source order. |
+| `Certifications` | [features/home/components/sections/Certifications.tsx](../features/home/components/sections/Certifications.tsx) | server | The accreditation strip. |
+| `Discover` | [features/home/components/sections/Discover.tsx](../features/home/components/sections/Discover.tsx) | server | The six directions, each phrased as the reader's own sentence rather than as |
+| `ExploreKyg` | [features/home/components/sections/ExploreKyg.tsx](../features/home/components/sections/ExploreKyg.tsx) | client | The six directions, as a selector. |
+| `FinalCta` | [features/home/components/sections/FinalCta.tsx](../features/home/components/sections/FinalCta.tsx) | server | The closing panel. |
+| `GeneousCare` | [features/home/components/sections/GeneousCare.tsx](../features/home/components/sections/GeneousCare.tsx) | server | Result → Context → Understanding → Next step. |
+| `Hero` | [features/home/components/sections/Hero.tsx](../features/home/components/sections/Hero.tsx) | server | The hero is an inset CARD, not a full-bleed band. It sits BELOW the navbar, |
+| `HeroVideo` | [features/home/components/sections/HeroVideo.tsx](../features/home/components/sections/HeroVideo.tsx) | client | features/home/v3 - the hero's background video |
+| `HowItWorks` | [features/home/components/sections/HowItWorks.tsx](../features/home/components/sections/HowItWorks.tsx) | client | A stepper, not five columns. |
+| `Journal` | [features/home/components/sections/Journal.tsx](../features/home/components/sections/Journal.tsx) | client | The rail is a carousel, at every width - it is never a grid that happens to |
+| `MeetGenee` | [features/home/components/sections/MeetGenee.tsx](../features/home/components/sections/MeetGenee.tsx) | server | The three promises, in the source's order. The last one is the payoff. |
+| `OneLifetime` | [features/home/components/sections/OneLifetime.tsx](../features/home/components/sections/OneLifetime.tsx) | server | Five moments, in the order a life reaches them. |
+| `Privacy` | [features/home/components/sections/Privacy.tsx](../features/home/components/sections/Privacy.tsx) | server | The quietest section on the page - no card, no panel, no photography. |
+| `ScienceTrust` | [features/home/components/sections/ScienceTrust.tsx](../features/home/components/sections/ScienceTrust.tsx) | server | The four trust claims, in reading order. |
+| `WhyGeneticTesting` | [features/home/components/sections/WhyGeneticTesting.tsx](../features/home/components/sections/WhyGeneticTesting.tsx) | server | The six questions, in the order the section asks them. |
+| `Button` | [features/home/components/ui/Button.tsx](../features/home/components/ui/Button.tsx) | server | THE homepage button. Four skins, one box. |
+| `Icon, IconWell` | [features/home/components/ui/Icon.tsx](../features/home/components/ui/Icon.tsx) | server | The 48px tinted well the icons sit in throughout the page - claims, care |
+| `Rule` | [features/home/components/ui/Rule.tsx](../features/home/components/ui/Rule.tsx) | server | The page's hairline. It TAPERS - solid to 34% of the width, gone by 92% - |
+| `Section` | [features/home/components/ui/Section.tsx](../features/home/components/ui/Section.tsx) | server | THE section shell. Every band on the homepage is one of these - there is no |
+| `Eyebrow, Heading, Lead, SectionTitle` | [features/home/components/ui/SectionTitle.tsx](../features/home/components/ui/SectionTitle.tsx) | server | The boxed eyebrow. A PILL, not bare text - the box is what makes a 13.5px |
 
 ### `features/landing`
 
@@ -255,7 +236,7 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `FaqSection` | [features/products/components/sections/FaqSection.tsx](../features/products/components/sections/FaqSection.tsx) | server | "Before you order" - six card accordions in a narrower centered column. |
 | `FeaturesSection` | [features/products/components/sections/FeaturesSection.tsx](../features/products/components/sections/FeaturesSection.tsx) | server | "Why KYG" - centered header + a row of four feature cards. |
 | `Gallery` | [features/products/components/sections/Gallery.tsx](../features/products/components/sections/Gallery.tsx) | client | Left column of the PDP: a large on-brand kit render inside a gradient slot, |
-| `KitConfigurator` | [features/products/components/sections/KitConfigurator.tsx](../features/products/components/sections/KitConfigurator.tsx) | client | The whole shop funnels through here. A visitor arrives from a test page with |
+| `KitConfigurator` | [features/products/components/sections/KitConfigurator.tsx](../features/products/components/sections/KitConfigurator.tsx) | client | features/products - pick the reports that go on one kit |
 | `ProductPdp` | [features/products/components/sections/ProductPdp.tsx](../features/products/components/sections/ProductPdp.tsx) | server | The product block: sticky gallery (1.05fr) + buy box (0.95fr), 56px gap. |
 | `ReviewsSection` | [features/products/components/sections/ReviewsSection.tsx](../features/products/components/sections/ReviewsSection.tsx) | server | "Reviews" - disclaimer + five placeholder review cards. |
 | `UpgradeSection` | [features/products/components/sections/UpgradeSection.tsx](../features/products/components/sections/UpgradeSection.tsx) | client | "One sample, more answers" - upsell to Complete / Total pack, above the FAQ. |
@@ -266,19 +247,25 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `SectionHeader` | [features/products/components/ui/SectionHeader.tsx](../features/products/components/ui/SectionHeader.tsx) | server | Centered section header: eyebrow pill + H2 (+ optional Cormorant-italic |
 | `Stars` | [features/products/components/ui/Stars.tsx](../features/products/components/ui/Stars.tsx) | server | Rating stars - the Figma renders these as the ★ text glyph in Hokey Pokey gold |
 
+### `features/reports`
+
+| Export | File | Env | What it is |
+| --- | --- | --- | --- |
+| `ReportDownloadButton` | [features/reports/components/ReportDownloadButton.tsx](../features/reports/components/ReportDownloadButton.tsx) | client | Fetches a short-lived signed URL and opens the PDF in a new tab. |
+
 ### `features/search`
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `SearchResultsView` | [features/search/components/SearchResultsView.tsx](../features/search/components/SearchResultsView.tsx) | client | One client island over a server-supplied catalogue. Every product and every |
+| `SearchResultsView` | [features/search/components/SearchResultsView.tsx](../features/search/components/SearchResultsView.tsx) | client | features/search - /search, the results page |
 
 ### `features/tests`
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `CategoriesView, CategoryDetailView` | [features/tests/components/Categories.tsx](../features/tests/components/Categories.tsx) | server | Both views are server components. The only client code on either page is the |
-| `CardArt` | [features/tests/components/CategoryCardArt.tsx](../features/tests/components/CategoryCardArt.tsx) | server | One component so a card never has to know whether its test has a photograph. |
-| `CategoryTestGrid` | [features/tests/components/CategoryTestGrid.tsx](../features/tests/components/CategoryTestGrid.tsx) | client | Split out of Categories.tsx as the one client island on the page: the header |
+| `CategoriesView, CategoryDetailView` | [features/tests/components/Categories.tsx](../features/tests/components/Categories.tsx) | server | features/tests - the /categories listing and one category's page |
+| `CardArt` | [features/tests/components/CategoryCardArt.tsx](../features/tests/components/CategoryCardArt.tsx) | server | features/tests - card artwork for the category + product cards |
+| `CategoryTestGrid` | [features/tests/components/CategoryTestGrid.tsx](../features/tests/components/CategoryTestGrid.tsx) | client | features/tests - the product grid on /categories/[category_slug], with search |
 | `FigmaIcon, FIGMA_ICON_IDS` | [features/tests/components/FigmaIcon.tsx](../features/tests/components/FigmaIcon.tsx) | server | Every id present on disk - exported so a data file can be validated. |
 | `RevealRoot` | [features/tests/components/RevealRoot.tsx](../features/tests/components/RevealRoot.tsx) | client | threshold 0, NOT the reference build's 0.12: its `.reveal` targets are small |
 | `ScrollProgress` | [features/tests/components/ScrollProgress.tsx](../features/tests/components/ScrollProgress.tsx) | client | Fixed reading-progress bar across the top of a test page. |

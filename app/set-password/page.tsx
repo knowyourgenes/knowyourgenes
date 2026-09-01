@@ -108,7 +108,10 @@ function RequestForm({ initialEmail }: { initialEmail?: string }) {
           If <strong className="text-bistre">{email}</strong> has an account, we have sent it a link to set a password.
           It expires in two hours. Check your spam folder if it has not arrived in a few minutes.
         </p>
-        <Link href="/login" className="mt-5 inline-block font-kyg text-[14.5px] font-bold text-eden underline-offset-4 hover:underline">
+        <Link
+          href="/login"
+          className="mt-5 inline-block font-kyg text-[14.5px] font-bold text-eden underline-offset-4 hover:underline"
+        >
           Back to sign in
         </Link>
       </Card>

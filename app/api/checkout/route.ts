@@ -181,59 +181,59 @@ export async function POST(req: Request) {
     // "Argument `user` is missing".
     const buildOrder = (orderNumber: string) =>
       prisma.order.create({
-      data: {
-        orderNumber,
-        user: { connect: { id: userId } },
-        // Denormalised primary line - see the comment on Order.packageId.
-        package: { connect: { id: primary.packageId } },
-        address: { connect: { id: addressId } },
-        couponCode: cart.coupon?.applied ? cart.coupon.code : null,
-        subtotal: cart.subtotal,
-        discount: cart.discount,
-        collectionFee: cart.shipping,
-        total: cart.total,
-        slotDate,
-        slotWindow,
-        status: 'BOOKED',
-        fulfillmentMode,
-        ...(campaignId ? { campaign: { connect: { id: campaignId } } } : {}),
-        attrSource: attr.attrSource,
-        attrMedium: attr.attrMedium,
-        attrCampaign: attr.attrCampaign,
-        attrTerm: attr.attrTerm,
-        attrContent: attr.attrContent,
-        attrReferrer: attr.attrReferrer,
-        attrLandingPath: attr.attrLandingPath,
-        attrFirstSeenAt: attr.attrFirstSeenAt,
-        attrPayload: (attr.attrPayload ?? undefined) as object | undefined,
-        items: {
-          create: cart.lines.map((line) => ({
-            package: { connect: { id: line.packageId } },
-            nameSnapshot: line.name,
-            slugSnapshot: line.slug,
-            unitPrice: line.unitPrice,
-            quantity: line.quantity,
-            lineTotal: line.lineTotal,
-            kitShippingFee: line.kitShippingFee,
-            fulfillmentMode: line.fulfillmentType,
-          })),
-        },
-        events: {
-          create: {
-            label:
-              cart.lines.length === 1
-                ? 'Order booked, awaiting payment'
-                : `Order booked (${cart.itemCount} reports), awaiting payment`,
-            actorId: userId,
-            meta: attr.attrSource ? { attribution: { source: attr.attrSource, medium: attr.attrMedium } } : undefined,
+        data: {
+          orderNumber,
+          user: { connect: { id: userId } },
+          // Denormalised primary line - see the comment on Order.packageId.
+          package: { connect: { id: primary.packageId } },
+          address: { connect: { id: addressId } },
+          couponCode: cart.coupon?.applied ? cart.coupon.code : null,
+          subtotal: cart.subtotal,
+          discount: cart.discount,
+          collectionFee: cart.shipping,
+          total: cart.total,
+          slotDate,
+          slotWindow,
+          status: 'BOOKED',
+          fulfillmentMode,
+          ...(campaignId ? { campaign: { connect: { id: campaignId } } } : {}),
+          attrSource: attr.attrSource,
+          attrMedium: attr.attrMedium,
+          attrCampaign: attr.attrCampaign,
+          attrTerm: attr.attrTerm,
+          attrContent: attr.attrContent,
+          attrReferrer: attr.attrReferrer,
+          attrLandingPath: attr.attrLandingPath,
+          attrFirstSeenAt: attr.attrFirstSeenAt,
+          attrPayload: (attr.attrPayload ?? undefined) as object | undefined,
+          items: {
+            create: cart.lines.map((line) => ({
+              package: { connect: { id: line.packageId } },
+              nameSnapshot: line.name,
+              slugSnapshot: line.slug,
+              unitPrice: line.unitPrice,
+              quantity: line.quantity,
+              lineTotal: line.lineTotal,
+              kitShippingFee: line.kitShippingFee,
+              fulfillmentMode: line.fulfillmentType,
+            })),
+          },
+          events: {
+            create: {
+              label:
+                cart.lines.length === 1
+                  ? 'Order booked, awaiting payment'
+                  : `Order booked (${cart.itemCount} reports), awaiting payment`,
+              actorId: userId,
+              meta: attr.attrSource ? { attribution: { source: attr.attrSource, medium: attr.attrMedium } } : undefined,
+            },
+          },
+          payments: {
+            create: { amount: cart.total, currency: 'INR', status: 'PENDING' },
           },
         },
-        payments: {
-          create: { amount: cart.total, currency: 'INR', status: 'PENDING' },
-        },
-      },
-      include: { payments: true, items: true },
-    });
+        include: { payments: true, items: true },
+      });
 
     // Mint the number and insert together, retrying the PAIR on collision.
     // `nextOrderNumber` reads the current maximum and is not atomic, so two
@@ -326,9 +326,7 @@ export async function POST(req: Request) {
  * EITHER is not a disagreement: it means that line accepts whatever the rest of
  * the cart settles on.
  */
-function primaryFulfillment(cart: {
-  lines: { fulfillmentType: FulfillmentType }[];
-}): FulfillmentType | null {
+function primaryFulfillment(cart: { lines: { fulfillmentType: FulfillmentType }[] }): FulfillmentType | null {
   const decided = new Set(cart.lines.map((l) => l.fulfillmentType).filter((t) => t !== 'EITHER'));
   if (decided.size > 1) return null;
   return (decided.values().next().value as FulfillmentType | undefined) ?? 'EITHER';

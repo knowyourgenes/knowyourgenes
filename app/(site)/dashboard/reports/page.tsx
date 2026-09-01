@@ -72,7 +72,10 @@ export default async function UserReportsPage() {
               Reports are delivered 7&ndash;14 days after your sample reaches the lab. We&apos;ll email you the moment
               yours is ready.
             </p>
-            <Link href="/dashboard/orders" className={buttonVariants({ variant: 'outline', size: 'sm', className: 'mt-5' })}>
+            <Link
+              href="/dashboard/orders"
+              className={buttonVariants({ variant: 'outline', size: 'sm', className: 'mt-5' })}
+            >
               Track your orders
             </Link>
           </CardContent>

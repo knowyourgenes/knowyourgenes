@@ -36,10 +36,7 @@ export async function POST(req: Request, { params }: { params: Params }) {
     //    existed one route over, in shipments, refusing a kit leg on an at-home
     //    order; it was simply never written in the other direction.
     if (existing.fulfillmentMode !== 'AT_HOME_PHLEBOTOMIST') {
-      throw new ApiError(
-        `${existing.orderNumber} is fulfilled by post, so it needs no collection agent`,
-        409
-      );
+      throw new ApiError(`${existing.orderNumber} is fulfilled by post, so it needs no collection agent`, 409);
     }
 
     // 3. Re-assigning must not rewind physical work. Writing AGENT_ASSIGNED over

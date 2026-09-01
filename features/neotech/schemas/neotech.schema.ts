@@ -38,7 +38,10 @@ export const neotechDate = z
   }, 'Not a real calendar date');
 
 /** HH:mm, or empty - their own records frequently leave collection time blank. */
-export const neotechTime = z.union([z.literal(''), z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Time must be HH:mm')]);
+export const neotechTime = z.union([
+  z.literal(''),
+  z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Time must be HH:mm'),
+]);
 
 /**
  * Comma-separated test ids with NO spaces, even when there is only one.
@@ -223,56 +226,55 @@ export const amiSchema = z.object({
 
 function buildOrderSchema(specialist: typeof specialistSchema | typeof specialistSchemaLenient) {
   return z
-  .object({
-    orderNo: z
-      .string()
-      .regex(/^OR-\d{6}\d{5}$/, 'orderNo is OR- + YYMMDD + 5 digits, and is issued by Neotech')
-      .optional(),
-    orderDate: neotechDate,
-    patient: patientSchema,
-    specialist,
-    samples: z.array(sampleSchema).min(1, 'An order must carry at least one sample'),
-    externalRef: z.string().optional(),
-    shipment: shipmentSchema.optional(),
-    ami: amiSchema.optional(),
-  })
-  .superRefine((order, ctx) => {
-    // Rule 6 says one sampleId may span several TEST blocks, which it does -
-    // within a sample. Two SAMPLE entries sharing an id is a different thing:
-    // it means we split one physical tube into two records, and their panel
-    // would treat the second as a duplicate barcode.
-    const seen = new Set<string>();
-    order.samples.forEach((s, i) => {
-      if (seen.has(s.sampleId)) {
-        ctx.addIssue({
-          code: 'custom',
-          message: `sampleId "${s.sampleId}" appears on more than one sample - put its tests in one sample block`,
-          path: ['samples', i, 'sampleId'],
-        });
-      }
-      seen.add(s.sampleId);
+    .object({
+      orderNo: z
+        .string()
+        .regex(/^OR-\d{6}\d{5}$/, 'orderNo is OR- + YYMMDD + 5 digits, and is issued by Neotech')
+        .optional(),
+      orderDate: neotechDate,
+      patient: patientSchema,
+      specialist,
+      samples: z.array(sampleSchema).min(1, 'An order must carry at least one sample'),
+      externalRef: z.string().optional(),
+      shipment: shipmentSchema.optional(),
+      ami: amiSchema.optional(),
+    })
+    .superRefine((order, ctx) => {
+      // Rule 6 says one sampleId may span several TEST blocks, which it does -
+      // within a sample. Two SAMPLE entries sharing an id is a different thing:
+      // it means we split one physical tube into two records, and their panel
+      // would treat the second as a duplicate barcode.
+      const seen = new Set<string>();
+      order.samples.forEach((s, i) => {
+        if (seen.has(s.sampleId)) {
+          ctx.addIssue({
+            code: 'custom',
+            message: `sampleId "${s.sampleId}" appears on more than one sample - put its tests in one sample block`,
+            path: ['samples', i, 'sampleId'],
+          });
+        }
+        seen.add(s.sampleId);
+      });
+
+      // A panel is one test with several ids. The same id turning up under two
+      // test names means the mapping table has a collision.
+      const idOwner = new Map<string, string>();
+      order.samples.forEach((s, si) =>
+        s.tests.forEach((t, ti) =>
+          t.testIds.split(',').forEach((id) => {
+            const prev = idOwner.get(id);
+            if (prev && prev !== t.testName) {
+              ctx.addIssue({
+                code: 'custom',
+                message: `test id ${id} is claimed by both "${prev}" and "${t.testName}"`,
+                path: ['samples', si, 'tests', ti, 'testIds'],
+              });
+            }
+            idOwner.set(id, t.testName);
+          })
+        )
+      );
     });
-
-    // A panel is one test with several ids. The same id turning up under two
-    // test names means the mapping table has a collision.
-    const idOwner = new Map<string, string>();
-    order.samples.forEach((s, si) =>
-      s.tests.forEach((t, ti) =>
-        t.testIds.split(',').forEach((id) => {
-          const prev = idOwner.get(id);
-          if (prev && prev !== t.testName) {
-            ctx.addIssue({
-              code: 'custom',
-              message: `test id ${id} is claimed by both "${prev}" and "${t.testName}"`,
-              path: ['samples', si, 'tests', ti, 'testIds'],
-            });
-          }
-          idOwner.set(id, t.testName);
-        })
-      )
-    );
-  });
-
 }
 
 export const orderSchema = buildOrderSchema(specialistSchema);

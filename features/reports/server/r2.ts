@@ -46,8 +46,7 @@ const ACCESS_KEY = process.env.STORAGE_ACCESS_KEY_ID || process.env.R2_ACCESS_KE
 const SECRET_KEY = process.env.STORAGE_SECRET_KEY || process.env.R2_SECRET_ACCESS_KEY || '';
 const BUCKET = process.env.STORAGE_BUCKET || process.env.R2_BUCKET || '';
 const ENDPOINT =
-  process.env.STORAGE_ENDPOINT ||
-  (R2_ACCOUNT_ID ? `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com` : '');
+  process.env.STORAGE_ENDPOINT || (R2_ACCOUNT_ID ? `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com` : '');
 
 /**
  * B2 rejects a mismatched region, so it must be stated. R2 accepts only

@@ -42,10 +42,7 @@ export async function PATCH(req: Request, { params }: Ctx) {
         },
       });
       if (committed > 0) {
-        return fail(
-          'This address is on a paid order and cannot be edited. Add a new address instead.',
-          409
-        );
+        return fail('This address is on a paid order and cannot be edited. Add a new address instead.', 409);
       }
     }
 

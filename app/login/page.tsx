@@ -34,8 +34,8 @@ import { AlertCircle, Eye, EyeOff, Lock, Mail, ShieldCheck } from 'lucide-react'
 import { toast } from 'sonner';
 
 import { KygLogo } from '@/components/shared/Logo';
-import { HelixCanvas, HERO_HELIX } from '@/features/home/components/v2/HelixCanvas';
-import { HomeIcon } from '@/features/home/components/v2/HomeIcon';
+import { HelixCanvas, HERO_HELIX } from '@/features/home/components/lib/HelixCanvas';
+import { HomeIcon } from '@/features/home/components/lib/HomeIcon';
 
 /**
  * Only allow relative paths to flow through `?from`. Anything else (absolute

@@ -92,11 +92,7 @@ export default function AdminOrdersPage() {
       fetch(`/api/admin/agents`),
       fetch(`/api/admin/labs`),
     ]);
-    const [ordersJson, agentsJson, labsJson] = await Promise.all([
-      ordersRes.json(),
-      agentsRes.json(),
-      labsRes.json(),
-    ]);
+    const [ordersJson, agentsJson, labsJson] = await Promise.all([ordersRes.json(), agentsRes.json(), labsRes.json()]);
     if (ordersJson.ok) setOrders(ordersJson.data.items);
     else toast.error(ordersJson.error ?? 'Failed to load orders');
     if (agentsJson.ok) setAgents(agentsJson.data);
@@ -315,18 +311,18 @@ export default function AdminOrdersPage() {
                 o.fulfillmentMode !== 'AT_HOME_PHLEBOTOMIST' ? (
                   <span className="text-sm text-muted-foreground">By post</span>
                 ) : (
-                <Select value="" onValueChange={(v) => v && assignAgent(o.id, v)}>
-                  <SelectTrigger className="h-8 w-[180px]">
-                    <span className="text-sm">{o.agent?.user.name ?? '- Assign -'}</span>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {agents.map((a) => (
-                      <SelectItem key={a.id} value={a.id}>
-                        {a.name} ({a.agentProfile?.zone})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  <Select value="" onValueChange={(v) => v && assignAgent(o.id, v)}>
+                    <SelectTrigger className="h-8 w-[180px]">
+                      <span className="text-sm">{o.agent?.user.name ?? '- Assign -'}</span>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {agents.map((a) => (
+                        <SelectItem key={a.id} value={a.id}>
+                          {a.name} ({a.agentProfile?.zone})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 ),
             },
             {

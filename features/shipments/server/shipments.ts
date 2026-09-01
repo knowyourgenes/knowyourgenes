@@ -84,9 +84,7 @@ export async function applyTrackingToShipment(shipmentId: string, tracking: Trac
     // A routine follow-up scan with unfamiliar wording therefore overwrote
     // DELIVERED with CREATED, leaving a row that had been delivered and not yet
     // created, whose write-once deliveredAt no later scan could re-stamp.
-    status: shipmentMovesForward(shipment.status, tracking.currentStatus)
-      ? tracking.currentStatus
-      : shipment.status,
+    status: shipmentMovesForward(shipment.status, tracking.currentStatus) ? tracking.currentStatus : shipment.status,
     trackingPayload: tracking.rawResponse as object,
   };
 
@@ -193,11 +191,12 @@ function shouldAdvance(current: OrderStatus, next: OrderStatus): boolean {
   // Both statuses must live on the SAME leg to be comparable. A courier scan
   // that would move an order onto the other leg is not progress, it is a
   // category error - so it is dropped rather than applied.
-  const leg = KIT_RANK[current] !== undefined && KIT_RANK[next] !== undefined
-    ? KIT_RANK
-    : AT_HOME_RANK[current] !== undefined && AT_HOME_RANK[next] !== undefined
-      ? AT_HOME_RANK
-      : null;
+  const leg =
+    KIT_RANK[current] !== undefined && KIT_RANK[next] !== undefined
+      ? KIT_RANK
+      : AT_HOME_RANK[current] !== undefined && AT_HOME_RANK[next] !== undefined
+        ? AT_HOME_RANK
+        : null;
 
   if (!leg) {
     console.warn(

@@ -98,7 +98,10 @@ export default async function UserOrdersPage() {
             const atHome = Boolean(o.slotDate);
 
             return (
-              <Card key={o.id} className="group relative overflow-hidden transition hover:border-primary/40 hover:shadow-sm">
+              <Card
+                key={o.id}
+                className="group relative overflow-hidden transition hover:border-primary/40 hover:shadow-sm"
+              >
                 <CardContent className="space-y-3 py-4">
                   {/* ---- title row ---- */}
                   <div className="flex flex-wrap items-start justify-between gap-3">
@@ -171,9 +174,7 @@ export default async function UserOrdersPage() {
                         This order is held but not paid for. Add the tests to your cart again to retry payment.
                       </p>
                     ) : (
-                      <p className="text-xs text-muted-foreground">
-                        We&apos;ll email you the moment there is news.
-                      </p>
+                      <p className="text-xs text-muted-foreground">We&apos;ll email you the moment there is news.</p>
                     )}
 
                     {/* Not lifted, so the stretched link underneath takes the click. */}

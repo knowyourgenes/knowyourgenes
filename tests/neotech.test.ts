@@ -1,12 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import canonical from '@/features/neotech/fixtures/canonical-order.json';
-import {
-  buildPatientFormData,
-  formDataToObject,
-  validateNeotechOrder,
-  type Order,
-} from '@/features/neotech';
+import { buildPatientFormData, formDataToObject, validateNeotechOrder, type Order } from '@/features/neotech';
 import {
   MissingClinicalDataError,
   ageFrom,
@@ -262,9 +257,7 @@ describe('mapping our order to theirs', () => {
     expect(mapped.samples[0]!.sampleId).toBe('dxt01');
     expect(mapped.samples[0]!.sampleType).toBe('SALIVA');
     expect(mapped.samples[0]!.testDate).toBe('09/07/2026');
-    expect(mapped.samples[0]!.tests.map((t) => t.testIds)).toEqual(
-      FIXTURE.samples[0]!.tests.map((t) => t.testIds)
-    );
+    expect(mapped.samples[0]!.tests.map((t) => t.testIds)).toEqual(FIXTURE.samples[0]!.tests.map((t) => t.testIds));
   });
 
   it('puts several packages in ONE sample, sharing one barcode', () => {
@@ -343,7 +336,9 @@ describe('savePatientDetails form', () => {
 
   it('omits an unticked checkbox entirely', () => {
     // Presence is the signal - sending "off" would read as ticked.
-    const on = formDataToObject(buildPatientFormData(FIXTURE.patient, FIXTURE.specialist, { ami: { chestPain: true } }));
+    const on = formDataToObject(
+      buildPatientFormData(FIXTURE.patient, FIXTURE.specialist, { ami: { chestPain: true } })
+    );
     const off = formDataToObject(
       buildPatientFormData(FIXTURE.patient, FIXTURE.specialist, { ami: { chestPain: false } })
     );

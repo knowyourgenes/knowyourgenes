@@ -414,9 +414,7 @@ export default function AdminReportsPage() {
               without hunting for the row again. */}
           {viewTarget && !viewTarget.deliveredAt && (
             <div className="flex items-center justify-between gap-3 border-t px-5 py-3">
-              <p className="text-xs text-muted-foreground">
-                Releasing emails the customer and cannot be undone.
-              </p>
+              <p className="text-xs text-muted-foreground">Releasing emails the customer and cannot be undone.</p>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={() => setViewTarget(null)}>
                   Close

@@ -46,10 +46,7 @@ export const LAB_NOTIFY_TEMPLATE = 'LAB_ORDER_ASSIGNED';
  * Either way the link is claimed atomically on `labId: null`, so two callers
  * racing (verify and the webhook, say) produce exactly one email.
  */
-export async function linkLabAndNotify(
-  orderId: string,
-  opts: { labId?: string } = {}
-): Promise<LabNotifyResult> {
+export async function linkLabAndNotify(orderId: string, opts: { labId?: string } = {}): Promise<LabNotifyResult> {
   try {
     const order = await prisma.order.findUnique({
       where: { id: orderId },

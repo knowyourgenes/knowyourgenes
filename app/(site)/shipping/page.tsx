@@ -24,14 +24,14 @@ export default function ShippingPolicyPage() {
 
       <h2>1. Service area</h2>
       <p>
-        We ship kits across India to pincodes serviced by our courier partner. We check your pincode against our
-        courier at checkout and warn you there if it looks like we cannot reach you - but the check is advisory and
-        does not block your order, because courier coverage data is not always current and we would rather look into
-        an edge case than refuse a customer we can actually serve.
+        We ship kits across India to pincodes serviced by our courier partner. We check your pincode against our courier
+        at checkout and warn you there if it looks like we cannot reach you - but the check is advisory and does not
+        block your order, because courier coverage data is not always current and we would rather look into an edge case
+        than refuse a customer we can actually serve.
       </p>
       <p>
-        If it turns out we genuinely cannot ship to your address after you have paid, we will contact you and refund
-        you in full. See <Link href="/refunds">Refunds &amp; Cancellations</Link>.
+        If it turns out we genuinely cannot ship to your address after you have paid, we will contact you and refund you
+        in full. See <Link href="/refunds">Refunds &amp; Cancellations</Link>.
       </p>
       <p>
         Every test today uses a self-collected saliva or buccal swab sample. We do not offer at-home phlebotomist

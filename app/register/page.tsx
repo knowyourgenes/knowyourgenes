@@ -34,7 +34,7 @@ import { AlertCircle, Eye, EyeOff, FileText, Lock, Mail, MessagesSquare, ShieldC
 import { toast } from 'sonner';
 
 import { KygLogo } from '@/components/shared/Logo';
-import { HelixCanvas, HERO_HELIX } from '@/features/home/components/v2/HelixCanvas';
+import { HelixCanvas, HERO_HELIX } from '@/features/home/components/lib/HelixCanvas';
 
 /** The three promises on the brand side, in frame order. */
 const BENEFITS: { icon: typeof FileText; title: string; body: string }[] = [
@@ -95,7 +95,6 @@ function scorePassword(pw: string): { score: number; hint: string } {
   if (missing.length > 0) return { score, hint: 'Still needs ' + missing.join(', ') };
   return { score, hint: pw.length >= 12 ? 'Strong password' : 'Good — 12 characters is stronger' };
 }
-
 
 /**
  * Only relative paths may flow through `?from`. An absolute URL, a
@@ -293,7 +292,9 @@ export default function RegisterPage() {
             <header className="flex flex-col gap-[clamp(6px,1.4vh,12px)]">
               <h1 className="font-kyg text-[clamp(25px,min(2.7vw,4.4vh),40px)] font-normal leading-[1.12] tracking-[-0.03em] text-bistre">
                 Good to meet{' '}
-                <em className="font-tst text-[clamp(27px,min(3vw,4.8vh),44px)] font-medium italic tracking-normal">you.</em>
+                <em className="font-tst text-[clamp(27px,min(3vw,4.8vh),44px)] font-medium italic tracking-normal">
+                  you.
+                </em>
               </h1>
               <p className="max-w-[460px] font-kyg text-[clamp(14.5px,min(1.25vw,2vh),18px)] leading-[1.45] tracking-[-0.014em] text-nevada">
                 Follow your results and what comes next.
@@ -307,7 +308,10 @@ export default function RegisterPage() {
                   Full name
                 </label>
                 <div className={FIELD_SHELL}>
-                  <User aria-hidden="true" className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter" />
+                  <User
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter"
+                  />
                   <input
                     id="name"
                     value={name}
@@ -326,7 +330,10 @@ export default function RegisterPage() {
                   Email address
                 </label>
                 <div className={FIELD_SHELL}>
-                  <Mail aria-hidden="true" className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter" />
+                  <Mail
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter"
+                  />
                   <input
                     id="email"
                     type="email"
@@ -346,7 +353,10 @@ export default function RegisterPage() {
                   Password
                 </label>
                 <div className={FIELD_SHELL}>
-                  <Lock aria-hidden="true" className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter" />
+                  <Lock
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-[14px] h-[18px] w-[18px] text-pewter"
+                  />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
