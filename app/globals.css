@@ -875,3 +875,65 @@ body {
       0 0 0 13px rgba(42, 195, 162, 0);
   }
 }
+
+/* ============================================================================
+   Appear animations - scoped to .kyg-reveals
+   ----------------------------------------------------------------------------
+   Opt-in by wrapper class, so only the page that asks for it moves. The markers
+   (`data-rise` on every eyebrow / heading / lead, `data-rise-load` on the hero)
+   are written unconditionally by the shared components and are inert without
+   this scope.
+
+   NO JAVASCRIPT, deliberately. An observer that hides an element and then
+   reveals it can leave content invisible if it never fires; a scroll-driven
+   animation that a browser does not support simply does not run, and the text
+   was never hidden to begin with.
+   ========================================================================== */
+@keyframes kyg-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The hero, on load. It is above the fold at first paint, so it has no
+     approach to animate on - it gets a plain timed run, staggered down the
+     stack in the order you read it. */
+  .kyg-reveals [data-rise-load] {
+    animation: kyg-rise 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .kyg-reveals [data-rise-load='2'] {
+    animation-delay: 0.1s;
+  }
+  .kyg-reveals [data-rise-load='3'] {
+    animation-delay: 0.2s;
+  }
+  .kyg-reveals [data-rise-load='4'] {
+    animation-delay: 0.3s;
+  }
+
+  /* Every section below it, on approach. */
+  @supports (animation-timeline: view()) {
+    .kyg-reveals [data-rise]:not([data-rise-load]) {
+      animation: kyg-rise linear both;
+      animation-timeline: view();
+      /* THE RANGE ENDS EARLY, AND THAT IS THE POINT. Three sections pin
+         themselves and stop moving through the scrollport; a range that ran to
+         `cover` would freeze half-finished and leave a heading stuck at half
+         opacity. Ending inside `entry` means the run is over before anything
+         can pin. */
+      animation-range: entry 4% entry 70%;
+    }
+    .kyg-reveals [data-rise='2']:not([data-rise-load]) {
+      animation-range: entry 8% entry 78%;
+    }
+    .kyg-reveals [data-rise='3']:not([data-rise-load]) {
+      animation-range: entry 12% entry 86%;
+    }
+  }
+}

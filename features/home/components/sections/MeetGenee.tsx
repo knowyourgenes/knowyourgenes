@@ -11,10 +11,34 @@ const PROMISES = [
 const BUBBLE =
   'absolute z-[3] max-w-[min(76%,300px)] rounded-sm px-5 py-[15px] font-kyg text-[15.5px] font-semibold leading-[1.4] tracking-[-0.01em] shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)]';
 
-export default function MeetGenee() {
+/**
+ * `plate` is the shape of the character slot.
+ *
+ *   portrait  9:10, the transparent PNG's own ratio - what a delivered render
+ *             will need, and what the slot has always claimed
+ *   wide      455.111 x 396.089, which is what the design actually DRAWS: the
+ *             plate is wider than tall and the two columns hang off a shared
+ *             bottom edge rather than a shared centre line
+ *
+ * They differ because the artwork does not exist yet. Once it does, the plate
+ * stops being a placeholder and this prop stops being interesting.
+ */
+export default function MeetGenee({
+  plate = 'portrait',
+  /** Same java2 hover as the other light-ground lists. */
+  hoverTint = false,
+}: { plate?: 'portrait' | 'wide'; hoverTint?: boolean } = {}) {
+  const wide = plate === 'wide';
   return (
     <Section id="meet-genee" ground="cream" labelledBy="genee-heading">
-      <div className="grid items-center gap-[clamp(28px,3.6vw,64px)] lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
+      <div
+        className={cn(
+          'grid gap-[clamp(28px,3.6vw,64px)]',
+          wide
+            ? 'items-end lg:grid-cols-[minmax(0,1.0509fr)_minmax(0,1fr)]'
+            : 'items-center lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]'
+        )}
+      >
         {/* The character plate. Still a plate rather than a render: GENEe is the
             one slot on this page whose artwork has not been delivered, and a
             labelled placeholder is honest where a stock illustration would not
@@ -23,7 +47,8 @@ export default function MeetGenee() {
         <div className="relative w-full min-w-0 max-w-[460px] lg:max-w-none">
           <div
             className={cn(
-              'grid aspect-[9/10] w-full place-items-center rounded-sm p-[28px] text-center',
+              'grid w-full place-items-center rounded-sm p-[28px] text-center',
+              wide ? 'aspect-[455/396]' : 'aspect-[9/10]',
               'bg-[radial-gradient(118%_84%_at_18%_12%,rgba(42,195,162,0.34),transparent_58%),radial-gradient(96%_78%_at_88%_88%,rgba(237,221,184,0.34),transparent_60%),linear-gradient(158deg,#20605B_0%,#154744_58%,#0E3634_100%)]',
               'shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)]'
             )}
@@ -67,9 +92,12 @@ export default function MeetGenee() {
             {PROMISES.map((p) => (
               <li
                 key={p}
-                className="flex items-center gap-[13px] rounded-sm bg-eden/[0.07] py-3 pl-4 pr-5 font-kyg text-[15.5px] leading-[1.45] text-zeus"
+                className={cn(
+                  'group/promise flex items-center gap-[13px] rounded-sm bg-eden/[0.07] py-3 pl-4 pr-5 font-kyg text-[15.5px] leading-[1.45] text-zeus',
+                  hoverTint && 'transition-colors duration-300 hover:bg-mist'
+                )}
               >
-                <Icon name="check" className="h-[19px] w-[19px] shrink-0 text-eden" />
+                <Icon name="check" className={'h-[19px] w-[19px] shrink-0 text-eden'} />
                 {p}
               </li>
             ))}

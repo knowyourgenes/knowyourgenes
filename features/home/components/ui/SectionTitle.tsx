@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -44,14 +44,32 @@ export function Eyebrow({
   tone = 'light',
   caps = true,
   className,
+  ...rest
 }: {
   children: ReactNode;
-  tone?: 'light' | 'dark';
+  /**
+   * The three skins the design draws, and they are the design system's own -
+   * the Figma file ships `Eyebrow / Teal` and `Eyebrow / Ink` as components.
+   *
+   *   light  eden on a cream ground        - the storefront default
+   *   dark   java2 on a linen wash         - "Eyebrow / Ink", used on 09 and 11
+   *   teal   ice on a java wash            - "Eyebrow / Teal", used on 04 and 06
+   *
+   * `dark` and `teal` are BOTH for dark grounds and are not interchangeable:
+   * teal is the louder of the two and marks the sections that open a movement
+   * (the life curve, the six directions) rather than a quiet claim.
+   */
+  tone?: 'light' | 'dark' | 'teal';
   caps?: boolean;
   className?: string;
-}) {
+} & ComponentPropsWithoutRef<'span'>) {
   return (
     <span
+      // The page's appear animation reads these three markers - see the
+      // `.kyg-reveals` block in globals.css. They are inert everywhere else:
+      // nothing styles them outside that scope.
+      data-rise="1"
+      {...rest}
       className={cn(
         // the design's 8 / 17 / 8 / 13 and gap 9, as shares of the 1440 rail so
         // they land on its 1024 values too
@@ -59,9 +77,9 @@ export function Eyebrow({
         'gap-[clamp(6.4px,0.625vw,10px)] py-[clamp(5.7px,0.556vw,8.9px)] pl-[clamp(9.2px,0.903vw,14.4px)] pr-[clamp(12.1px,1.181vw,18.9px)]',
         'font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-bold leading-[1.46]',
         caps ? 'uppercase tracking-[0.11em]' : 'tracking-[0.03em]',
-        tone === 'dark'
-          ? 'bg-linenw/[0.07] text-java2 ring-1 ring-inset ring-linenw/[0.18]'
-          : 'bg-eden/[0.07] text-eden ring-1 ring-inset ring-eden/[0.15]',
+        tone === 'dark' ? 'bg-linenw/[0.07] text-java2 ring-1 ring-inset ring-linenw/[0.18]' : null,
+        tone === 'teal' ? 'bg-java2/[0.14] text-ice ring-1 ring-inset ring-java2/[0.3]' : null,
+        tone === 'light' ? 'bg-eden/[0.07] text-eden ring-1 ring-inset ring-eden/[0.15]' : null,
         className
       )}
     >
@@ -98,6 +116,7 @@ export function Heading({
   return (
     <As
       id={id}
+      data-rise="2"
       className={cn(
         // -0.03em and 1.315 leading are the design's, not a house default
         'font-kyg font-bold tracking-[-0.03em] text-balance',
@@ -140,6 +159,7 @@ export function Lead({
 }) {
   return (
     <p
+      data-rise="3"
       className={cn(
         'font-kyg text-[18px] font-normal leading-[1.64]',
         tone === 'dark' ? 'text-linenw/70' : 'text-fusc',
@@ -160,6 +180,7 @@ export function Lead({
 export function SectionTitle({
   eyebrow,
   eyebrowCaps = true,
+  eyebrowTone,
   children,
   aside,
   asideAlign = 'end',
@@ -171,6 +192,12 @@ export function SectionTitle({
 }: {
   eyebrow: ReactNode;
   eyebrowCaps?: boolean;
+  /**
+   * Overrides the pill's skin without touching the heading's. Only needed on a
+   * dark ground, where the design draws two pills - see `Eyebrow` above. The
+   * heading keeps `tone`, because its ink does not change between the two.
+   */
+  eyebrowTone?: 'light' | 'dark' | 'teal';
   /** The heading. Wrap the cursive turn in <em>. */
   children: ReactNode;
   /** Copy or a CTA opposite the headline. Omit for a full-width header. */
@@ -205,7 +232,7 @@ export function SectionTitle({
       )}
     >
       <div className="min-w-0">
-        <Eyebrow tone={tone} caps={eyebrowCaps}>
+        <Eyebrow tone={eyebrowTone ?? tone} caps={eyebrowCaps}>
           {eyebrow}
         </Eyebrow>
         {/* 16 under the pill at 1440, 11.4 at 1024 */}

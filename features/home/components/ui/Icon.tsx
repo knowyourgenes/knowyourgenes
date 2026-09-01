@@ -45,6 +45,19 @@ const PATHS = {
   file: 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v5h6M9 13h6M9 17h6',
   chevron: 'm9 18 6-6-6-6',
   arrow: 'M5 12h14m-6-6 6 6-6 6',
+
+  // The three station glyphs on the life curve (OneLifetimeCurve). Traced from
+  // the design's own exports rather than approximated from the set above: the
+  // node is a 33px circle, and at that size `crosshair` (a near-full-bleed ring
+  // with notches) and `focus` (a small ring with four rays) do NOT read as the
+  // same mark. Coordinates are the exported 14.222 grid scaled by 24/14.222.
+  focus:
+    'M12 16.2C14.32 16.2 16.2 14.32 16.2 12C16.2 9.68 14.32 7.8 12 7.8C9.68 7.8 7.8 9.68 7.8 12C7.8 14.32 9.68 16.2 12 16.2ZM12 3V6M12 18V21M3 12H6M18 12H21',
+  /** One person - `users` is two, and station 02 is deliberately one. */
+  user: 'M5 20C5 16 8.2 13.6 12 13.6C15.8 13.6 19 16 19 20M12 11.4C13.88 11.4 15.4 9.88 15.4 8C15.4 6.12 13.88 4.6 12 4.6C10.12 4.6 8.6 6.12 8.6 8C8.6 9.88 10.12 11.4 12 11.4Z',
+  /** A head over a wide open arc - station 05, "as your body changes". */
+  figure:
+    'M4 17C7 11 9 9 12 9C15 9 17 11 20 17M12 8.4C13.33 8.4 14.4 7.33 14.4 6C14.4 4.67 13.33 3.6 12 3.6C10.67 3.6 9.6 4.67 9.6 6C9.6 7.33 10.67 8.4 12 8.4Z',
 } as const;
 
 export type IconName = keyof typeof PATHS;

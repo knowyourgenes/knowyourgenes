@@ -100,23 +100,30 @@ export default function Hero() {
 
         <div className="relative flex h-full w-full flex-col items-center justify-center px-[clamp(18px,3vw,40px)] py-[clamp(56px,8vh,96px)]">
           <div className="flex max-w-[980px] flex-col items-center gap-[18px] text-center">
-            <Eyebrow tone="dark" className="bg-white/[0.12] text-white ring-white/25">
+            <Eyebrow tone="dark" data-rise-load="1" className="bg-white/[0.12] text-white ring-white/25">
               At-home DNA testing · Delhi NCR
             </Eyebrow>
 
             <h1
+              data-rise-load="2"
               id="hero-heading"
               className="font-kyg text-[clamp(34px,4.6vw,62px)] font-bold leading-[1.1] tracking-[-0.025em] text-white text-balance"
             >
               The answers are already in you.
             </h1>
 
-            <p className="max-w-[680px] font-kyg text-[clamp(15px,1.35vw,19px)] leading-[1.5] text-white/85">
+            <p
+              data-rise-load="3"
+              className="max-w-[680px] font-kyg text-[clamp(15px,1.35vw,19px)] leading-[1.5] text-white/85"
+            >
               One at-home saliva kit, read by NABL-certified labs - and a report written in plain language, not genetics
               jargon.
             </p>
 
-            <div className="mt-[10px] flex w-full flex-col items-center gap-[12px] sm:w-auto sm:flex-row">
+            <div
+              data-rise-load="4"
+              className="mt-[10px] flex w-full flex-col items-center gap-[12px] sm:w-auto sm:flex-row"
+            >
               <Button href="/categories" variant="onDark" block>
                 Find My Test
               </Button>
