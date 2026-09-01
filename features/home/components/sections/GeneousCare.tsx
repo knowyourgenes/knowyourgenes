@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button, Icon, Lead, PHOTO, Rule, Section, SectionTitle, type IconName } from '../ui';
@@ -42,7 +43,7 @@ const CARDS: { icon: IconName; title: string; body: string; photo: string; alt: 
   },
 ];
 
-export default function GeneousCare() {
+export default function GeneousCare({ flowArrows = false }: { flowArrows?: boolean } = {}) {
   return (
     <Section id="geneous-care" ground="sand" labelledBy="care-heading">
       {/* CASE TRAP: "GENEous" is a GENE + genius lockup whose lowercase middle
@@ -59,18 +60,32 @@ export default function GeneousCare() {
       <ol
         role="group"
         aria-label="From result to next step"
-        className="mt-[clamp(16px,min(3.2vw,3vh),44px)] grid list-none gap-[12px] sm:grid-cols-2 lg:grid-cols-4"
+        // The gap is a variable because the arrow between two chips is centred
+        // in it: half the gap is exactly where the arrow's midpoint has to sit,
+        // and hard-coding that twice is how the two drift apart.
+        style={flowArrows ? ({ '--flow-gap': 'clamp(28.4px,2.778vw,44.4px)' } as CSSProperties) : undefined}
+        className={cn(
+          'mt-[clamp(16px,min(3.2vw,3vh),44px)] grid list-none gap-[12px] sm:grid-cols-2 lg:grid-cols-4',
+          flowArrows && 'lg:gap-x-(--flow-gap)'
+        )}
       >
-        {FLOW.map((s) => (
+        {FLOW.map((s, i) => (
           <li
             key={s.label}
             className={cn(
               'grid min-h-[62px] place-items-center rounded-sm px-[22px] py-[13px] text-center',
               'font-kyg text-[16px] font-bold leading-[1.4] tracking-[-0.01em] ring-1 ring-inset',
+              flowArrows && 'relative',
               s.skin
             )}
           >
             {s.label}
+            {flowArrows && i < FLOW.length - 1 ? (
+              <Icon
+                name="arrow"
+                className="absolute right-[calc(var(--flow-gap)/-2)] top-1/2 hidden h-[clamp(14.2px,1.389vw,22.2px)] w-[clamp(14.2px,1.389vw,22.2px)] -translate-y-1/2 translate-x-1/2 text-eden/50 lg:block"
+              />
+            ) : null}
           </li>
         ))}
       </ol>

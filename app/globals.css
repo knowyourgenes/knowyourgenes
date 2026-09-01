@@ -875,3 +875,124 @@ body {
       0 0 0 13px rgba(42, 195, 162, 0);
   }
 }
+
+/* ============================================================================
+   Appear animations - scoped to .kyg-reveals
+   ----------------------------------------------------------------------------
+   Opt-in by wrapper class, so only the page that asks for it moves. The markers
+   (`data-rise` on every eyebrow / heading / lead, `data-rise-load` on the hero)
+   are written unconditionally by the shared components and are inert without
+   this scope.
+
+   NO JAVASCRIPT, deliberately. An observer that hides an element and then
+   reveals it can leave content invisible if it never fires; a scroll-driven
+   animation that a browser does not support simply does not run, and the text
+   was never hidden to begin with.
+   ========================================================================== */
+@keyframes kyg-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--kyg-rise-from, 16px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* A 16px rise is a small gesture on a 900px desktop heading and a lurch on a
+   phone, where the same element is a third of the screen. 10px there. */
+@media (max-width: 767px) {
+  .kyg-reveals {
+    --kyg-rise-from: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The hero, on load. It is above the fold at first paint, so it has no
+     approach to animate on - it gets a plain timed run, staggered down the
+     stack in the order you read it. */
+  .kyg-reveals [data-rise-load] {
+    animation: kyg-rise 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .kyg-reveals [data-rise-load='2'] {
+    animation-delay: 0.1s;
+  }
+  .kyg-reveals [data-rise-load='3'] {
+    animation-delay: 0.2s;
+  }
+  .kyg-reveals [data-rise-load='4'] {
+    animation-delay: 0.3s;
+  }
+
+  /* Every section below it, on approach. */
+  @supports (animation-timeline: view()) {
+    .kyg-reveals [data-rise]:not([data-rise-load]) {
+      animation: kyg-rise linear both;
+      animation-timeline: view();
+      /* THE RANGE ENDS EARLY, AND THAT IS THE POINT. Three sections pin
+         themselves and stop moving through the scrollport; a range that ran to
+         `cover` would freeze half-finished and leave a heading stuck at half
+         opacity. Ending inside `entry` means the run is over before anything
+         can pin. */
+      animation-range: entry 4% entry 70%;
+    }
+    .kyg-reveals [data-rise='2']:not([data-rise-load]) {
+      animation-range: entry 8% entry 78%;
+    }
+    .kyg-reveals [data-rise='3']:not([data-rise-load]) {
+      animation-range: entry 12% entry 86%;
+    }
+  }
+}
+
+/* The map's 28 points, in section 11.
+   ----------------------------------------------------------------------------
+   NOTHING DARK. The first pass pulsed the dot from eden (#0E4D4B) up to java2,
+   which meant every point spent half its cycle as a dark blot on a bright teal
+   landmass - and 28 dark blots on a body read as a diagnosis, not as reach.
+   The mark now lives entirely in the light half of the palette: ice at rest,
+   rising to the near-white the design's own node glyphs are stroked in
+   (#EAFBF6), with the glow arriving at the top of the swell.
+
+   Two animations, because the mark is two elements: the AURA is the ring the
+   design already draws around its four largest points, and it breathes; the
+   DOT inside it brightens and picks up its halo at the peak. Explicit hexes
+   because a keyframe cannot read a Tailwind class.
+
+   Staggered by an index prime to the count, so no pulse ever sweeps across the
+   map in a wave. */
+@keyframes kyg-aura-pulse {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(0.86);
+  }
+  50% {
+    opacity: 0.72;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes kyg-dot-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    background-color: #7fe3d6;
+    box-shadow: 0 0 0 0 rgba(127, 227, 214, 0);
+  }
+  50% {
+    opacity: 1;
+    background-color: #eafbf6;
+    box-shadow: 0 0 10px 2px rgba(127, 227, 214, 0.75);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .kyg-aura {
+    animation: kyg-aura-pulse 3.2s ease-in-out infinite both;
+  }
+  .kyg-dot {
+    animation: kyg-dot-pulse 3.2s ease-in-out infinite both;
+  }
+}

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { cn } from '@/lib/utils';
 import { Button, Icon, IconWell, PHOTO, RULE_DARK, Section, SectionTitle, type IconName } from '../ui';
 
 /** The four trust claims, in reading order. */
@@ -26,7 +27,17 @@ const CLAIMS: { icon: IconName; title: string; body: string }[] = [
   },
 ];
 
-export default function ScienceTrust() {
+/**
+ * `hoverTint` on an INK ground is a java2 wash, not the pale `mist` the
+ * cream-ground lists take.
+ *
+ * mist is a LIGHT tint - #E2F1ED. Flooding a claim with it on near-black would
+ * not read as a highlight, it would read as a hole cut in the section. The
+ * claims take java2 at 12% instead: attention, in the accent this ground
+ * already uses, without borrowing the solid java2 that section 06 uses on this
+ * same ground to mean "the direction you have chosen".
+ */
+export default function ScienceTrust({ hoverTint = false }: { hoverTint?: boolean } = {}) {
   return (
     <Section id="science-and-trust" ground="ink" labelledBy="science-heading">
       <SectionTitle
@@ -53,7 +64,17 @@ export default function ScienceTrust() {
         {CLAIMS.map((c, i) => (
           <li
             key={c.title}
-            className="flex min-w-0 flex-col border-t border-transparent py-[clamp(28px,3vw,40px)] pr-[clamp(0px,3vw,50px)] lg:odd:pr-[clamp(24px,3vw,50px)] lg:even:border-l lg:even:pl-[clamp(24px,3vw,50px)]"
+            className={cn(
+              'flex min-w-0 flex-col border-t border-transparent py-[clamp(28px,3vw,40px)] pr-[clamp(0px,3vw,50px)] lg:odd:pr-[clamp(24px,3vw,50px)] lg:even:border-l lg:even:pl-[clamp(24px,3vw,50px)]',
+              hoverTint && [
+                'group/claim rounded-sm transition-colors duration-300 hover:bg-java2/[0.12] active:bg-java2/[0.12]',
+                // The claims are inset off the rail so the wash has a margin to
+                // the left of the icon and the title rather than starting hard
+                // against them. The right column already carries its own 24-50
+                // seam inset and keeps it.
+                'pl-[clamp(14px,1.6vw,26px)]',
+              ]
+            )}
             style={{
               borderImage:
                 i % 2 === 1
@@ -61,8 +82,17 @@ export default function ScienceTrust() {
                   : `${RULE_DARK} 1`,
             }}
           >
-            <IconWell name={c.icon} tone="dark" />
-            <h3 className="mt-[22px] font-kyg text-[clamp(20px,1.75vw,27px)] font-bold leading-[1.16] tracking-[-0.022em] text-linenw">
+            <IconWell
+              name={c.icon}
+              tone="dark"
+              className={cn(hoverTint && 'transition-colors duration-300 group-hover/claim:bg-java2/30')}
+            />
+            <h3
+              className={cn(
+                'mt-[22px] font-kyg text-[clamp(20px,1.75vw,27px)] font-bold leading-[1.16] tracking-[-0.022em] text-linenw',
+                hoverTint && 'transition-colors duration-300 group-hover/claim:text-ice'
+              )}
+            >
               {c.title}
             </h3>
             <p className="mt-[12px] font-kyg text-[16.5px] leading-[1.64] text-linenw/[0.68]">{c.body}</p>

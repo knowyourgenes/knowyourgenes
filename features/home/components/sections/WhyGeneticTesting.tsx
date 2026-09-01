@@ -34,7 +34,12 @@ const QUESTIONS = [
  * The ceilings are the same ratios taken to 1600, since that is where the rail
  * stops growing.
  */
-export default function WhyGeneticTesting() {
+/**
+ * `hoverTint` lights the cell under the cursor in `mint` (#e6f4f3) - the pale
+ * teal the site already uses as its eyebrow-pill ground on the About pages, so
+ * the board answers in a colour the palette owns rather than a new one.
+ */
+export default function WhyGeneticTesting({ hoverTint = false }: { hoverTint?: boolean } = {}) {
   return (
     <Section id="why-genetic-testing" ground="cream" labelledBy="why-heading">
       <SectionTitle
@@ -95,15 +100,24 @@ export default function WhyGeneticTesting() {
                 // board's own border already draws the line above row one, and
                 // which cells start a row changes with the column count
                 i > 0 ? 'border-t' : null,
-                i === 1 ? 'sm:border-t-0' : null
+                i === 1 ? 'sm:border-t-0' : null,
+                hoverTint && 'transition-colors duration-300 hover:bg-mist active:bg-mist'
               )}
             >
               {/* Figtree 500 at 0.16em on boulder - NOT bold, and not pewter */}
-              <span className="font-kyg text-[clamp(8.2px,0.799vw,12.8px)] font-medium uppercase leading-[1.48] tracking-[0.16em] text-boulder">
+              <span
+                className={
+                  'font-kyg text-[clamp(8.2px,0.799vw,12.8px)] font-medium uppercase leading-[1.48] tracking-[0.16em] text-boulder'
+                }
+              >
                 {item.n}
               </span>
               {/* Figtree 400 - the questions are read, not shouted */}
-              <p className="font-kyg text-[clamp(13.5px,1.319vw,21.1px)] font-normal leading-[1.405] tracking-[-0.005em] text-heavy">
+              <p
+                className={
+                  'font-kyg text-[clamp(13.5px,1.319vw,21.1px)] font-normal leading-[1.405] tracking-[-0.005em] text-heavy'
+                }
+              >
                 {item.q}
               </p>
             </li>

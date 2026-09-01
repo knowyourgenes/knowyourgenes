@@ -3,7 +3,7 @@
 
 # Component inventory
 
-**167 components.** Read this before you build a new one.
+**169 components.** Read this before you build a new one.
 
 The rule this file exists to enforce: **if a component already exists, use it - do
 not build a second one on another page.** A "Button" that exists three times is
@@ -180,25 +180,27 @@ Owned by one feature. Needed by a second feature? Promote it to
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
 | `Homepage` | [features/home/components/Homepage.tsx](../features/home/components/Homepage.tsx) | server | Composition only. Every decision that could vary between sections has been |
+| `NewHomepage` | [features/home/components/NewHomepage.tsx](../features/home/components/NewHomepage.tsx) | server | features/home - the homepage, as the design currently draws it |
 | `HelixCanvas, HERO_HELIX, FINAL_HELIX` | [features/home/components/lib/HelixCanvas.tsx](../features/home/components/lib/HelixCanvas.tsx) | client | Hero strand - tall, tight, bright. |
 | `HelixGround` | [features/home/components/lib/HelixGround.tsx](../features/home/components/lib/HelixGround.tsx) | server | The brand helix artwork, laid in behind four sections as a ground texture. |
 | `HomeIcon, HOME_ICON_IDS` | [features/home/components/lib/HomeIcon.tsx](../features/home/components/lib/HomeIcon.tsx) | server | features/home/v2 - the homepage design's own icons |
 | `Reveal, HeroReveal, LifeStrand` | [features/home/components/lib/motion.tsx](../features/home/components/lib/motion.tsx) | client | The source's `.rv` / `.rv-l` / `.rv-s` classes plus its single shared |
 | `BornInIndia` | [features/home/components/sections/BornInIndia.tsx](../features/home/components/sections/BornInIndia.tsx) | server | The four "this is for…" lines, in source order. |
 | `Certifications` | [features/home/components/sections/Certifications.tsx](../features/home/components/sections/Certifications.tsx) | server | The accreditation strip. |
-| `Discover` | [features/home/components/sections/Discover.tsx](../features/home/components/sections/Discover.tsx) | server | The six directions, each phrased as the reader's own sentence rather than as |
-| `ExploreKyg` | [features/home/components/sections/ExploreKyg.tsx](../features/home/components/sections/ExploreKyg.tsx) | client | The six directions, as a selector. |
+| `Discover` | [features/home/components/sections/Discover.tsx](../features/home/components/sections/Discover.tsx) | server | Measured off the design and written as shares of the rail, the same way |
+| `ExploreKyg` | [features/home/components/sections/ExploreKyg.tsx](../features/home/components/sections/ExploreKyg.tsx) | client | `eyebrowTone` picks which of the design's two dark pills opens the section - |
 | `FinalCta` | [features/home/components/sections/FinalCta.tsx](../features/home/components/sections/FinalCta.tsx) | server | The closing panel. |
-| `GeneousCare` | [features/home/components/sections/GeneousCare.tsx](../features/home/components/sections/GeneousCare.tsx) | server | Result → Context → Understanding → Next step. |
+| `GeneousCare` | [features/home/components/sections/GeneousCare.tsx](../features/home/components/sections/GeneousCare.tsx) | server | The gap is a variable because the arrow between two chips is centred |
 | `Hero` | [features/home/components/sections/Hero.tsx](../features/home/components/sections/Hero.tsx) | server | The hero is an inset CARD, not a full-bleed band. It sits BELOW the navbar, |
 | `HeroVideo` | [features/home/components/sections/HeroVideo.tsx](../features/home/components/sections/HeroVideo.tsx) | client | features/home/v3 - the hero's background video |
 | `HowItWorks` | [features/home/components/sections/HowItWorks.tsx](../features/home/components/sections/HowItWorks.tsx) | client | A stepper, not five columns. |
 | `Journal` | [features/home/components/sections/Journal.tsx](../features/home/components/sections/Journal.tsx) | client | The rail is a carousel, at every width - it is never a grid that happens to |
-| `MeetGenee` | [features/home/components/sections/MeetGenee.tsx](../features/home/components/sections/MeetGenee.tsx) | server | The three promises, in the source's order. The last one is the payoff. |
+| `MeetGenee` | [features/home/components/sections/MeetGenee.tsx](../features/home/components/sections/MeetGenee.tsx) | server | `plate` is the shape of the character slot. |
 | `OneLifetime` | [features/home/components/sections/OneLifetime.tsx](../features/home/components/sections/OneLifetime.tsx) | server | Five moments, in the order a life reaches them. |
+| `OneLifetimeCurve` | [features/home/components/sections/OneLifetimeCurve.tsx](../features/home/components/sections/OneLifetimeCurve.tsx) | server | 15.644 under the pill here, against the 11.378 the rest of the |
 | `Privacy` | [features/home/components/sections/Privacy.tsx](../features/home/components/sections/Privacy.tsx) | server | The quietest section on the page - no card, no panel, no photography. |
 | `ScienceTrust` | [features/home/components/sections/ScienceTrust.tsx](../features/home/components/sections/ScienceTrust.tsx) | server | The four trust claims, in reading order. |
-| `WhyGeneticTesting` | [features/home/components/sections/WhyGeneticTesting.tsx](../features/home/components/sections/WhyGeneticTesting.tsx) | server | The six questions, in the order the section asks them. |
+| `WhyGeneticTesting` | [features/home/components/sections/WhyGeneticTesting.tsx](../features/home/components/sections/WhyGeneticTesting.tsx) | server | EVERY MEASUREMENT HERE IS READ OFF THE DESIGN AND WRITTEN AS A SHARE OF THE |
 | `Button` | [features/home/components/ui/Button.tsx](../features/home/components/ui/Button.tsx) | server | THE homepage button. Four skins, one box. |
 | `Icon, IconWell` | [features/home/components/ui/Icon.tsx](../features/home/components/ui/Icon.tsx) | server | The 48px tinted well the icons sit in throughout the page - claims, care |
 | `Rule` | [features/home/components/ui/Rule.tsx](../features/home/components/ui/Rule.tsx) | server | The page's hairline. It TAPERS - solid to 34% of the width, gone by 92% - |

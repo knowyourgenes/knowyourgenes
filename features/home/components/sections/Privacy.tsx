@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { Button, Icon, Lead, Rule, Section, SectionTitle, type IconName } from '../ui';
 
 /** The three assurances, in source order. */
@@ -14,7 +15,7 @@ const ASSURANCES: { icon: IconName; label: string }[] = [
  * border: a border grows the box it is on and knocks it off the baseline its
  * neighbours share.
  */
-export default function Privacy() {
+export default function Privacy({ hoverTint = false }: { hoverTint?: boolean } = {}) {
   return (
     <Section id="privacy-confidentiality" ground="sand" labelledBy="privacy-heading">
       <SectionTitle
@@ -43,7 +44,18 @@ export default function Privacy() {
         {ASSURANCES.map((a, i) => (
           <li
             key={a.label}
-            className="flex min-w-0 items-center gap-[18px] py-[clamp(24px,2.8vw,34px)] md:pr-[clamp(20px,2.4vw,44px)]"
+            className={cn(
+              'flex min-w-0 items-center gap-[18px] py-[clamp(24px,2.8vw,34px)] md:pr-[clamp(20px,2.4vw,44px)]',
+              // The seams between the thirds are drawn with `border-image` on
+              // the li itself, so the tint sits inside the padding box and
+              // cannot paint over them. The first cell is the only one without
+              // an inset of its own, so it takes one - otherwise the wash
+              // starts hard against its icon.
+              hoverTint && [
+                'rounded-sm transition-colors duration-300 hover:bg-mist active:bg-mist',
+                i === 0 && 'pl-[clamp(14px,1.6vw,26px)]',
+              ]
+            )}
             style={
               i > 0
                 ? {
