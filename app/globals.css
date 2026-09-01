@@ -892,11 +892,19 @@ body {
 @keyframes kyg-rise {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(var(--kyg-rise-from, 16px));
   }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* A 16px rise is a small gesture on a 900px desktop heading and a lurch on a
+   phone, where the same element is a third of the screen. 10px there. */
+@media (max-width: 767px) {
+  .kyg-reveals {
+    --kyg-rise-from: 10px;
   }
 }
 
@@ -935,5 +943,56 @@ body {
     .kyg-reveals [data-rise='3']:not([data-rise-load]) {
       animation-range: entry 12% entry 86%;
     }
+  }
+}
+
+/* The map's 28 points, in section 11.
+   ----------------------------------------------------------------------------
+   NOTHING DARK. The first pass pulsed the dot from eden (#0E4D4B) up to java2,
+   which meant every point spent half its cycle as a dark blot on a bright teal
+   landmass - and 28 dark blots on a body read as a diagnosis, not as reach.
+   The mark now lives entirely in the light half of the palette: ice at rest,
+   rising to the near-white the design's own node glyphs are stroked in
+   (#EAFBF6), with the glow arriving at the top of the swell.
+
+   Two animations, because the mark is two elements: the AURA is the ring the
+   design already draws around its four largest points, and it breathes; the
+   DOT inside it brightens and picks up its halo at the peak. Explicit hexes
+   because a keyframe cannot read a Tailwind class.
+
+   Staggered by an index prime to the count, so no pulse ever sweeps across the
+   map in a wave. */
+@keyframes kyg-aura-pulse {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(0.86);
+  }
+  50% {
+    opacity: 0.72;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes kyg-dot-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    background-color: #7fe3d6;
+    box-shadow: 0 0 0 0 rgba(127, 227, 214, 0);
+  }
+  50% {
+    opacity: 1;
+    background-color: #eafbf6;
+    box-shadow: 0 0 10px 2px rgba(127, 227, 214, 0.75);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .kyg-aura {
+    animation: kyg-aura-pulse 3.2s ease-in-out infinite both;
+  }
+  .kyg-dot {
+    animation: kyg-dot-pulse 3.2s ease-in-out infinite both;
   }
 }

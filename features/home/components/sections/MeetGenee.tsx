@@ -94,7 +94,7 @@ export default function MeetGenee({
                 key={p}
                 className={cn(
                   'group/promise flex items-center gap-[13px] rounded-sm bg-eden/[0.07] py-3 pl-4 pr-5 font-kyg text-[15.5px] leading-[1.45] text-zeus',
-                  hoverTint && 'transition-colors duration-300 hover:bg-mist'
+                  hoverTint && 'transition-colors duration-300 hover:bg-mist active:bg-mist'
                 )}
               >
                 <Icon name="check" className={'h-[19px] w-[19px] shrink-0 text-eden'} />

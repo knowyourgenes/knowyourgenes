@@ -1,10 +1,7 @@
-'use client';
-
 import Image from 'next/image';
-import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
-import { Icon, Lead, Rule, Section, SectionTitle } from '../ui';
+import { Lead, Rule, Section, SectionTitle } from '../ui';
 
 /** The four "this is for…" lines, in source order. */
 const AUDIENCE = [
@@ -38,29 +35,42 @@ const POINTS: [number, number, number][] = [
 ];
 
 /**
- * The four points the four lines speak to.
+ * Thirteen more points, in the style of the four the design already rings.
  *
- * NOT AN ARBITRARY PAIRING, and not a new one: the map already draws exactly
- * four points with rings around them - the r >= 4.5 entries above - against
- * eleven plain dots, and there are exactly four lines. The ringed four were
- * always the emphasised ones; hovering a line just says which is which.
+ * NOT SCATTERED BY HAND, and not clustered around the existing ones - the first
+ * pass put four satellites around each anchor, which read as fifteen smudges
+ * rather than as more places. These are sampled from the map artwork's OWN
+ * ALPHA CHANNEL: only pixels at least 14px inside the coastline qualified, so
+ * every one of them is on land rather than trusting an eye on a silhouette.
  *
- * Derived rather than written out, so moving a point in POINTS cannot leave a
- * hand-copied index behind pointing at the wrong place on the map.
+ * They were then chosen by farthest-point sampling, seeded with the design's
+ * fifteen, so each new point sits as far from every existing point as the
+ * landmass allows. The closest pair anywhere is 0.107 apart - roughly 36px on
+ * the rendered map, which is wider than the aura they carry.
+ *
+ * `r` matches the four the design rings (5 and 4.5), so they are the same mark
+ * at the same size, not an approximation of it.
  */
-const RINGED = POINTS.reduce<number[]>((acc, [, , r], i) => (r >= 4.5 ? [...acc, i] : acc), []);
+const ADDED: [number, number, number][] = [
+  [0.199, 0.038, 5],
+  [0.396, 0.068, 4.5],
+  [0.202, 0.652, 5],
+  [0.062, 0.47, 4.5],
+  [0.818, 0.489, 5],
+  [0.944, 0.316, 4.5],
+  [0.112, 0.341, 5],
+  [0.685, 0.519, 4.5],
+  [0.322, 0.97, 5],
+  [0.288, 0.126, 4.5],
+  [0.259, 0.822, 5],
+  [0.19, 0.539, 4.5],
+  [0.354, 0.393, 4.5],
+];
+
+/** The design's fifteen, then the thirteen. Twenty-eight in all. */
+const DOTS: [number, number, number][] = [...POINTS, ...ADDED];
 
 export default function BornInIndia({
-  chevrons = false,
-  /**
-   * Light the paired map point when a line is hovered.
-   *
-   * Decoration, deliberately: the points carry no labels and the map is
-   * aria-hidden, so nothing here is information a pointer is required to reach.
-   * The lines are not controls and are not focusable - if they ever become
-   * links, this wants to answer to focus as well as hover.
-   */
-  linkedMap = false,
   /**
    * Place the section the way the design draws it rather than the way it was
    * built. Four differences, all measured off node 142:2583 at 1024:
@@ -68,17 +78,12 @@ export default function BornInIndia({
    *   - "Genetics belongs to everyone." sits OPPOSITE the headline, not under
    *     it. That one line is why the head row is a row at all.
    *   - the map takes 369.778 of the 967.111 rail against the audience column's
-   *     554.666, a 0.667 : 1 split. It was a flat 520px, which is the right
-   *     width at exactly one viewport and too wide at every other.
-   *   - the chips are 12.444px type in a 14.2 / 12.8 / 15.6 box. They were
-   *     17px in a 20 / 22 box - half again too big, which is what pushed the
-   *     ambition line off the bottom of the section.
+   *     554.666, a 0.667 : 1 split.
+   *   - the chips are 12.444px type in a 14.2 / 12.8 / 15.6 box.
    *   - the closing couplet and its rule take the design's 32.7 / 21.3.
    */
   designPlacement = false,
-}: { chevrons?: boolean; linkedMap?: boolean; designPlacement?: boolean } = {}) {
-  const [hovered, setHovered] = useState<number | null>(null);
-
+}: { designPlacement?: boolean } = {}) {
   return (
     <Section id="born-in-india" ground="ink" labelledBy="india-heading">
       <SectionTitle
@@ -117,7 +122,9 @@ export default function BornInIndia({
         {/* The map panel. `map-india-teal.png` is the fully opaque export - the
             pale `map-india.png` beside it in that folder is low-alpha artwork for
             LIGHT grounds and is invisible here whatever opacity it is given. */}
-        <div className="relative grid min-h-[300px] place-items-center overflow-hidden rounded-sm bg-linenw/[0.035] ring-1 ring-inset ring-linenw/[0.11]">
+        {/* No panel around the map. It was a bordered box holding a shape that
+            is already a shape; the glow alone gives it its ground. */}
+        <div className="relative grid min-h-[300px] place-items-center">
           <span
             aria-hidden="true"
             className="pointer-events-none absolute left-1/2 top-1/2 h-[86%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(42,195,162,0.16),transparent_68%)]"
@@ -130,34 +137,36 @@ export default function BornInIndia({
               sizes="340px"
               className="object-contain [filter:brightness(1.6)_saturate(1.35)]"
             />
-            {POINTS.map(([x, y, r], i) => {
-              // Which line this point answers to, or -1 for the eleven that
-              // answer to none.
-              const paired = RINGED.indexOf(i);
-              const lit = linkedMap && paired !== -1 && paired === hovered;
-              return (
-                <span key={i} className="absolute" style={{ left: `${x * 100}%`, top: `${y * 100}%` }}>
-                  {r >= 4.5 ? (
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        'absolute rounded-full ring-1 transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
-                        lit ? 'scale-[1.7] ring-java2' : 'scale-100 ring-eden/55'
-                      )}
-                      style={{ width: r * 5, height: r * 5, left: -r * 2.5, top: -r * 2.5 }}
-                    />
-                  ) : null}
+            {DOTS.map(([x, y, r], i) => (
+              <span key={i} className="absolute" style={{ left: `${x * 100}%`, top: `${y * 100}%` }}>
+                {r >= 4.5 ? (
                   <span
                     aria-hidden="true"
-                    className={cn(
-                      'absolute rounded-full transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
-                      lit ? 'scale-[1.5] bg-java2 shadow-[0_0_14px_2px_rgba(42,195,162,0.75)]' : 'scale-100 bg-eden'
-                    )}
-                    style={{ width: r * 2, height: r * 2, left: -r, top: -r, opacity: r >= 4.5 ? 1 : 0.66 }}
+                    className="kyg-aura absolute rounded-full ring-1 ring-ice/60"
+                    style={{
+                      width: r * 5,
+                      height: r * 5,
+                      left: -r * 2.5,
+                      top: -r * 2.5,
+                      animationDelay: `${(i % 7) * 0.37}s`,
+                    }}
                   />
-                </span>
-              );
-            })}
+                ) : null}
+                <span
+                  aria-hidden="true"
+                  className="kyg-dot absolute rounded-full bg-ice"
+                  style={{
+                    width: r * 2,
+                    height: r * 2,
+                    left: -r,
+                    top: -r,
+                    // 7 is prime against 28, so the stagger never lines the
+                    // dots up into a pulse sweeping across the map
+                    animationDelay: `${(i % 7) * 0.37}s`,
+                  }}
+                />
+              </span>
+            ))}
           </div>
         </div>
 
@@ -168,27 +177,16 @@ export default function BornInIndia({
             {AUDIENCE.map((line, i) => (
               <li
                 key={line}
-                onMouseEnter={linkedMap ? () => setHovered(i) : undefined}
-                onMouseLeave={linkedMap ? () => setHovered(null) : undefined}
                 className={cn(
-                  'group/line flex items-center rounded-sm ring-1 ring-inset',
+                  'flex items-center rounded-sm ring-1 ring-inset',
                   // the design's 14.222 / 12.8 / 15.644 box and its 9.956 gap
                   designPlacement
                     ? 'gap-[clamp(9.9px,0.972vw,15.6px)] py-[clamp(15.6px,1.527vw,24.4px)] pl-[clamp(14.2px,1.389vw,22.2px)] pr-[clamp(12.8px,1.25vw,20px)]'
                     : 'gap-[14px] px-[20px] py-[22px]',
-                  // NOTHING IS SELECTED AT REST once the map is linked. The
-                  // design shows line 01 highlighted, which reads as a choice
-                  // already made on your behalf - and with the map answering to
-                  // hover it also lit a point nobody was pointing at. All four
-                  // start equal and the highlight follows the cursor.
-                  linkedMap || i !== 0 ? 'bg-linenw/[0.045] ring-linenw/[0.1]' : 'bg-java2/[0.14] ring-java2/[0.42]',
-                  // The lift is the page's own card hover (DESIGN.md §5), one
-                  // step quieter: these are lines you read, not cards you open,
-                  // so they rise 2px rather than the 3 a real card takes.
-                  linkedMap && [
-                    'transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
-                    'hover:-translate-y-[2px] hover:bg-java2/[0.14] hover:ring-java2/[0.42]',
-                  ]
+                  // Line 01 is highlighted at rest, which is what the design
+                  // draws. Nothing here answers a pointer: the section states
+                  // who it is for, it does not ask you to pick one.
+                  i === 0 ? 'bg-java2/[0.14] ring-java2/[0.42]' : 'bg-linenw/[0.045] ring-linenw/[0.1]'
                 )}
               >
                 <span
@@ -197,46 +195,20 @@ export default function BornInIndia({
                     'shrink-0 rounded-full',
                     // 5.689 square, against the 8 it was drawn at
                     designPlacement ? 'h-[clamp(5.7px,0.556vw,8.9px)] w-[clamp(5.7px,0.556vw,8.9px)]' : 'h-2 w-2',
-                    linkedMap || i !== 0 ? 'bg-linenw/30' : 'bg-java2',
-                    // The bullet answers with the map: same java2, same moment.
-                    linkedMap &&
-                      'transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/line:scale-[1.4] group-hover/line:bg-java2 group-hover/line:shadow-[0_0_10px_1px_rgba(42,195,162,0.7)] motion-reduce:transition-none'
+                    i === 0 ? 'bg-java2' : 'bg-linenw/30'
                   )}
                 />
                 <span
                   className={cn(
-                    // The weight does NOT change on hover - going medium to
-                    // semibold reflows the line under the cursor.
                     'min-w-0 font-kyg leading-[1.486]',
                     // 12.444, not 17 - the single biggest reason this column
                     // outgrew the map beside it
                     designPlacement ? 'text-[clamp(12.4px,1.215vw,19.4px)]' : 'text-[17px] leading-[1.5]',
-                    linkedMap || i !== 0 ? 'font-medium text-linenw/80' : 'font-semibold text-linenw',
-                    linkedMap &&
-                      'transition-colors duration-500 group-hover/line:text-linenw motion-reduce:transition-none'
+                    i === 0 ? 'font-semibold text-linenw' : 'font-medium text-linenw/80'
                   )}
                 >
                   {line}
                 </span>
-                {/* Trailing chevron. Decorative - these four are a set you read,
-                    not links, so the glyph must not suggest four destinations
-                    to a screen reader. `Icon` is aria-hidden by construction. */}
-                {chevrons ? (
-                  <Icon
-                    name="chevron"
-                    strokeWidth={2}
-                    className={cn(
-                      'shrink-0',
-                      designPlacement
-                        ? 'h-[clamp(12.1px,1.181vw,18.9px)] w-[clamp(12.1px,1.181vw,18.9px)]'
-                        : 'h-[17px] w-[17px]',
-                      linkedMap || i !== 0 ? 'text-linenw/40' : 'text-java2',
-                      // 3px, the same nudge every arrow on the page takes.
-                      linkedMap &&
-                        'transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/line:translate-x-[3px] group-hover/line:text-java2 motion-reduce:transition-none'
-                    )}
-                  />
-                ) : null}
               </li>
             ))}
           </ul>

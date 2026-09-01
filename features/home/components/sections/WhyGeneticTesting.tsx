@@ -101,7 +101,7 @@ export default function WhyGeneticTesting({ hoverTint = false }: { hoverTint?: b
                 // which cells start a row changes with the column count
                 i > 0 ? 'border-t' : null,
                 i === 1 ? 'sm:border-t-0' : null,
-                hoverTint && 'transition-colors duration-300 hover:bg-mist'
+                hoverTint && 'transition-colors duration-300 hover:bg-mist active:bg-mist'
               )}
             >
               {/* Figtree 500 at 0.16em on boulder - NOT bold, and not pewter */}

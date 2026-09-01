@@ -45,18 +45,39 @@ export function useScrollPin({
 
   const measure = useCallback(() => {
     const t = track.current;
+    if (!t) return;
     const p = pane.current;
-    if (!t || !p) return;
     const tr = t.getBoundingClientRect();
-    const pr = p.getBoundingClientRect();
-    const travel = tr.height - pr.height;
-    if (travel <= 0) {
-      setPinning(false);
+    // A caller that never attaches `pane` is asking for the unpinned reading -
+    // there is nothing to stick, so there is no pin to measure progress from.
+    const travel = p ? tr.height - p.getBoundingClientRect().height : 0;
+    const pr = p?.getBoundingClientRect();
+
+    if (travel > 0 && pr) {
+      setPinning(true);
+      const progress = (pr.top - tr.top) / travel;
+      setWalked(Math.min(1, Math.max(0, progress) / span));
       return;
     }
-    setPinning(true);
-    const progress = (pr.top - tr.top) / travel;
-    setWalked(Math.min(1, Math.max(0, progress) / span));
+
+    // NO PIN - below the pinning breakpoint, or a screen tall enough to hold
+    // the whole track. Progress then comes from the section's OWN travel
+    // through the viewport, so a phone still gets a line that fills as it is
+    // read; it just fills downward instead of across.
+    //
+    // THE WALK STARTS WHEN THE SECTION IS BEING READ, NOT WHEN IT APPEARS.
+    //
+    // It used to run from the top edge reaching 90% of the viewport - the
+    // moment the section first peeked in from the bottom - so by the time you
+    // had it on screen the walk was already a third spent and there was no
+    // time to read anything. It now begins when the top edge passes 60% (the
+    // section is properly in view) and finishes when the bottom edge passes
+    // 40%, which is the span over which it is actually in front of you.
+    setPinning(false);
+    const vh = window.innerHeight || 1;
+    const span_ = 0.2 * vh + tr.height;
+    const seen = (0.6 * vh - tr.top) / span_;
+    setWalked(Math.min(1, Math.max(0, seen) / span));
   }, [span]);
 
   useEffect(() => {

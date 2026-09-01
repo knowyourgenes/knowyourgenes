@@ -67,7 +67,7 @@ export default function ScienceTrust({ hoverTint = false }: { hoverTint?: boolea
             className={cn(
               'flex min-w-0 flex-col border-t border-transparent py-[clamp(28px,3vw,40px)] pr-[clamp(0px,3vw,50px)] lg:odd:pr-[clamp(24px,3vw,50px)] lg:even:border-l lg:even:pl-[clamp(24px,3vw,50px)]',
               hoverTint && [
-                'group/claim rounded-sm transition-colors duration-300 hover:bg-java2/[0.12]',
+                'group/claim rounded-sm transition-colors duration-300 hover:bg-java2/[0.12] active:bg-java2/[0.12]',
                 // The claims are inset off the rail so the wash has a margin to
                 // the left of the icon and the title rather than starting hard
                 // against them. The right column already carries its own 24-50

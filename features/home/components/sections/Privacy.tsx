@@ -52,7 +52,7 @@ export default function Privacy({ hoverTint = false }: { hoverTint?: boolean } =
               // an inset of its own, so it takes one - otherwise the wash
               // starts hard against its icon.
               hoverTint && [
-                'rounded-sm transition-colors duration-300 hover:bg-mist',
+                'rounded-sm transition-colors duration-300 hover:bg-mist active:bg-mist',
                 i === 0 && 'pl-[clamp(14px,1.6vw,26px)]',
               ]
             )}

@@ -95,7 +95,12 @@ const STATIONS: {
 const OFFSET = { numeral: 14.67, node: 29.5, title: 39.67, line: 44.67 } as const;
 
 /** The caption column and the watermark, as shares of the stage width. */
-const TEXT_W = 17.353;
+/**
+ * The caption column is a CSS variable rather than a constant, because it is the
+ * one station measurement that changes with the breakpoint: the design's 17.353%
+ * of a 722px rail is 125px, which is not enough to hold "When you thought of
+ * family" at its 12.8px floor. Below 1024 it is 23%; see the band below.
+ */
 const NUMERAL_W = 10.294;
 
 /**
@@ -197,7 +202,12 @@ function Node({
 
 export default function OneLifetimeCurve() {
   const { track, pane, walked } = useScrollPin({ span: FILL_SPAN });
-  const fill = FILL_AT_REST + (1 - FILL_AT_REST) * walked;
+  // The small-screen spine has no pane to pin, so it measures its own travel.
+  // Two hooks rather than one because the two layouts are different boxes in
+  // different places - a single progress value would be wrong for one of them.
+  const { track: smallTrack, walked: smallWalked } = useScrollPin({ span: FILL_SPAN });
+  const pinnedFill = FILL_AT_REST + (1 - FILL_AT_REST) * walked;
+  const smallFill = FILL_AT_REST + (1 - FILL_AT_REST) * smallWalked;
 
   return (
     <Section id="one-lifetime-one-dna" ground="ink" labelledBy="one-life-heading">
@@ -212,14 +222,21 @@ export default function OneLifetimeCurve() {
           scrollbar keeps its meaning, and a flick past the section still gets
           you past it. lg and up only - below 1024 five stations across a 2.27:1
           box puts the captions at ~6px, so the same five run as a list. ──── */}
-      <div ref={track} className="relative hidden h-[200vh] lg:block">
+      <div ref={track} className="relative hidden h-[200vh] md:block">
         <div
           ref={pane}
           className="sticky top-[var(--site-header-h,104px)] flex h-[calc(100svh-var(--site-header-h,104px))] flex-col justify-center"
         >
           {/* max-h-full is the short-screen valve: the band gives height back
               rather than growing past the pane and clipping station 05. */}
-          <div className="relative aspect-[967/427] max-h-full w-full">
+          {/* THE BAND IS TALLER BELOW 1024, and it has to be. At 768 the rail
+              is ~722px, so the design's 2.27:1 band is only 318px tall while
+              the captions hold their 12.8px floor - a two-line title would
+              land on the line beneath it. Giving the band 967:560 there buys
+              the rows their vertical room back. The curve is drawn with
+              `preserveAspectRatio="none"`, so it simply rises more steeply;
+              nothing is cropped and nothing has to be re-measured. */}
+          <div className="relative aspect-[967/560] max-h-full w-full [--station-text:23%] lg:aspect-[967/427] lg:[--station-text:17.353%]">
             <svg
               aria-hidden="true"
               viewBox="0 0 967.111 426.667"
@@ -234,7 +251,7 @@ export default function OneLifetimeCurve() {
               dash of `length x fill`, then a gap longer than everything left. */}
               <path
                 d={CURVE}
-                strokeDasharray={`${CURVE_LEN * fill} ${CURVE_LEN}`}
+                strokeDasharray={`${CURVE_LEN * pinnedFill} ${CURVE_LEN}`}
                 stroke="rgba(42,195,162,0.45)"
                 strokeWidth={6.4}
                 strokeLinecap="round"
@@ -242,7 +259,7 @@ export default function OneLifetimeCurve() {
               />
               <path
                 d={CURVE}
-                strokeDasharray={`${CURVE_LEN * fill} ${CURVE_LEN}`}
+                strokeDasharray={`${CURVE_LEN * pinnedFill} ${CURVE_LEN}`}
                 stroke="#7FE3D6"
                 strokeWidth={1.6}
                 strokeLinecap="round"
@@ -269,7 +286,7 @@ export default function OneLifetimeCurve() {
             </div>
 
             {STATIONS.map((s) => {
-              const lit = s.cx / 100 <= fill;
+              const lit = s.cx / 100 <= pinnedFill;
               return (
                 <div key={s.n}>
                   {/* A watermark, not a label: centred on the station rather than on
@@ -323,7 +340,7 @@ export default function OneLifetimeCurve() {
                       lit ? 'text-white' : 'text-white/70',
                       SIZE.title
                     )}
-                    style={{ left: `${s.cx}%`, top: `${s.top + OFFSET.title}%`, width: `${TEXT_W}%` }}
+                    style={{ left: `${s.cx}%`, top: `${s.top + OFFSET.title}%`, width: `var(--station-text)` }}
                   >
                     {s.title}
                   </p>
@@ -332,7 +349,7 @@ export default function OneLifetimeCurve() {
                       'absolute -translate-x-1/2 text-center font-kyg font-normal leading-[1.448] text-white/[0.58]',
                       SIZE.line
                     )}
-                    style={{ left: `${s.cx}%`, top: `${s.top + OFFSET.line}%`, width: `${TEXT_W}%` }}
+                    style={{ left: `${s.cx}%`, top: `${s.top + OFFSET.line}%`, width: `var(--station-text)` }}
                   >
                     {s.line}
                   </p>
@@ -351,28 +368,72 @@ export default function OneLifetimeCurve() {
         </div>
       </div>
 
-      {/* ── Below lg: the same five stations as a vertical list. ──────────── */}
-      <div className="lg:hidden">
+      {/* ── Below 768: the same walk, turned on its side. ──────────────────
+          No pin here. A phone browser resizes its own viewport as the address
+          bar hides, which makes `svh` pin arithmetic jitter mid-scroll, and
+          holding a 700px screen still for two viewport-heights costs far more
+          than it does on a desktop. The line fills from the section's own
+          travel through the viewport instead - see the unpinned branch of
+          useScrollPin - and it fills DOWNWARD, which is the direction a phone
+          is read in anyway. Stations light exactly as they do on the band. */}
+      <div ref={smallTrack} className="md:hidden">
         <SectionTitle id="one-life-heading-sm" eyebrow="One life. One DNA." tone="dark" eyebrowTone="teal">
           Before you knew yourself, <em>your genes were already there.</em>
         </SectionTitle>
 
-        <ol className="mt-[clamp(20px,4vw,40px)] grid list-none gap-[18px] sm:grid-cols-2">
-          {STATIONS.map((s) => (
-            <li
-              key={s.n}
-              className="flex min-w-0 flex-col rounded-sm bg-linenw/[0.045] p-[16px] ring-1 ring-inset ring-linenw/[0.1]"
-            >
-              <div className="relative mb-[14px] aspect-[135/94] w-full overflow-hidden rounded-sm">
-                <Image src={s.photo} alt={s.alt} fill sizes="(max-width: 639px) 100vw, 50vw" className="object-cover" />
-              </div>
-              <Node icon={s.icon} className="h-[38px] w-[38px] [&>svg]:h-[17px] [&>svg]:w-[17px]" />
-              <h3 className="mt-[12px] font-kyg text-[16px] font-bold leading-[1.3] tracking-[-0.015em] text-white">
-                {s.title}
-              </h3>
-              <p className="mt-[5px] font-kyg text-[14px] leading-[1.5] text-white/[0.58]">{s.line}</p>
-            </li>
-          ))}
+        <ol className="relative mt-[clamp(20px,4vw,40px)] grid list-none gap-[26px]">
+          {/* The spine, behind the nodes: an unlit track with the lit length
+              drawn over it. Left edge sits on the node's centre. */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-[19px] left-[19px] top-[19px] w-[2px] -translate-x-1/2 rounded-sm bg-linenw/[0.12]"
+          >
+            <span
+              className="block w-full origin-top rounded-sm bg-java2 shadow-[0_0_12px_1px_rgba(42,195,162,0.55)] motion-safe:transition-[height] motion-safe:duration-300 motion-safe:ease-out"
+              style={{ height: `${smallFill * 100}%` }}
+            />
+          </span>
+
+          {STATIONS.map((s, i) => {
+            // The five sit at 0, 0.25, 0.5, 0.75, 1 of the walk, so a station
+            // lights as the spine reaches it rather than all at once.
+            const lit = smallFill >= i / (STATIONS.length - 1);
+            return (
+              <li key={s.n} className="relative flex min-w-0 items-start gap-[16px]">
+                <Node icon={s.icon} lit={lit} className="z-[1] h-[38px] w-[38px] [&>svg]:h-[17px] [&>svg]:w-[17px]" />
+
+                <div className="min-w-0 flex-1">
+                  <div
+                    className={cn(
+                      'relative aspect-[135/94] w-full overflow-hidden rounded-sm',
+                      'transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+                      lit
+                        ? 'opacity-100 shadow-[0_14px_34px_-14px_rgba(42,195,162,0.5)] ring-1 ring-inset ring-java2/[0.45]'
+                        : 'opacity-[0.72] ring-1 ring-inset ring-white/[0.14]'
+                    )}
+                  >
+                    <Image
+                      src={s.photo}
+                      alt={s.alt}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 50vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <h3
+                    className={cn(
+                      'mt-[12px] font-kyg text-[16px] font-bold leading-[1.3] tracking-[-0.015em]',
+                      'transition-colors duration-500 motion-reduce:transition-none',
+                      lit ? 'text-white' : 'text-white/70'
+                    )}
+                  >
+                    {s.title}
+                  </h3>
+                  <p className="mt-[5px] font-kyg text-[14px] leading-[1.5] text-white/[0.58]">{s.line}</p>
+                </div>
+              </li>
+            );
+          })}
         </ol>
 
         <div className="mt-[clamp(18px,3vw,32px)] flex">

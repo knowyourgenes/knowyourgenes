@@ -120,23 +120,75 @@ export default function ExploreKyg({
   const { track, pane, walked, pinning, scrollToWalked } = useScrollPin();
   const [clicked, setClicked] = useState(0);
 
-  // Scroll owns the choice while the pin is live, clicks own it otherwise -
-  // they must never both own it, or the next scroll frame overwrites the click.
-  const driven = pinned && pinning;
+  // SCROLL OWNS THE CHOICE AT EVERY WIDTH: above md it is the walk through the
+  // pin, below md the section's own travel through the viewport.
+  //
+  // What made this jump before was not the scroll - it was MOVING one panel
+  // between the rows. A tall block re-ordered past a list item teleports every
+  // item it crosses. Below md each row now owns its own panel and they open and
+  // close by animating height, so one shrinks exactly as the next grows: the
+  // rows slide instead of hopping, and the section's total height never
+  // changes, which is also why the scroll maths cannot oscillate.
+  const driven = pinned;
   const active = driven ? Math.min(AREAS.length - 1, Math.floor(walked * AREAS.length)) : clicked;
   const area = AREAS[active]!;
 
+  /**
+   * One card's contents. Rendered once per row below md (each row owns its own,
+   * so both the closing and the opening panel exist during the transition) and
+   * once beside the list from md up.
+   */
+  const panel = (a: Area) => (
+    <>
+      <div className="relative aspect-[24/7] max-h-[min(22vh,240px)] w-full">
+        <Image src={a.photo} alt={a.alt} fill sizes="(max-width: 1023px) 100vw, 60vw" className="object-cover" />
+      </div>
+
+      <div className="px-[clamp(20px,2.4vw,32px)] pb-[clamp(24px,2.6vw,30px)] pt-[clamp(22px,2.4vw,28px)]">
+        <span className="inline-flex items-center gap-[10px] font-kyg text-[11.5px] font-bold uppercase tracking-[0.16em] text-java2">
+          <span className="grid h-[26px] w-[26px] place-items-center rounded-sm bg-java2/[0.14]">
+            <Icon name={a.icon} className="h-[14px] w-[14px]" />
+          </span>
+          {a.label}
+        </span>
+
+        <h3 className="mt-[16px] font-kyg text-[clamp(21px,2.2vw,30px)] font-bold leading-[1.2] tracking-[-0.025em] text-linenw">
+          {a.question}
+        </h3>
+
+        <p className="mt-[12px] font-kyg text-[16.5px] leading-[1.6] text-linenw/70">{a.detail}</p>
+
+        <ul className="mt-[20px] flex list-none flex-wrap gap-[8px]">
+          {a.markers.map((m) => (
+            <li
+              key={m}
+              className="rounded-sm bg-linenw/[0.06] px-[11px] py-[6px] font-kyg text-[13px] text-linenw/[0.78] ring-1 ring-inset ring-linenw/[0.1]"
+            >
+              {m}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-[24px] flex">
+          <Button href={a.href} variant="onDark">
+            {a.cta}
+          </Button>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <Section id="what-would-you-like-to-know" ground="ink" labelledBy="explore-kyg-heading">
-      {/* The pin. Only from lg up and only when asked for: below that the track
-          is auto-height and the pane is static, and this is an ordinary section
-          carrying two unused refs. */}
-      <div ref={track} className={cn('relative', pinned && 'lg:h-[240vh]')}>
+      {/* The pin, from md up and only when asked for. Below that the track is
+          auto-height, the pane is static, and progress comes from the section's
+          own travel through the viewport instead. */}
+      <div ref={track} className={cn('relative', pinned && 'md:h-[240vh]')}>
         <div
           ref={pane}
           className={cn(
             pinned &&
-              'lg:sticky lg:top-[var(--site-header-h,104px)] lg:flex lg:h-[calc(100svh-var(--site-header-h,104px))] lg:flex-col lg:justify-center'
+              'md:sticky md:top-[var(--site-header-h,104px)] md:flex md:h-[calc(100svh-var(--site-header-h,104px))] md:flex-col md:justify-center'
           )}
         >
           <SectionTitle
@@ -153,18 +205,27 @@ export default function ExploreKyg({
             What would you like to know <em>about yourself?</em>
           </SectionTitle>
 
-          <div className="mt-[clamp(18px,min(3.7vw,3.6vh),52px)] grid gap-[clamp(20px,2.2vw,32px)] lg:grid-cols-[minmax(0,404px)_minmax(0,1fr)]">
+          <div className="mt-[clamp(18px,min(3.7vw,3.6vh),52px)] grid gap-[8px] md:gap-[clamp(20px,2.2vw,32px)] md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] lg:grid-cols-[minmax(0,404px)_minmax(0,1fr)]">
             {/* The picker. Buttons, not links: choosing a direction changes what is
             shown here, it does not navigate - the CTA inside the panel does. */}
             <ul className="grid list-none gap-[8px]">
               {AREAS.map((a, i) => {
                 const on = i === active;
                 return (
-                  <li key={a.label}>
+                  <li key={a.label} className="scroll-mt-[calc(var(--site-header-h,104px)+12px)]">
                     <button
                       type="button"
                       aria-pressed={on}
-                      onClick={() => (driven ? scrollToWalked(i / AREAS.length + 0.5 / AREAS.length) : setClicked(i))}
+                      onClick={(e) => {
+                        if (!driven) {
+                          setClicked(i);
+                          // Bring the row to the top so the panel that just
+                          // opened under it is on screen, not below the fold.
+                          e.currentTarget.closest('li')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          return;
+                        }
+                        scrollToWalked(i / AREAS.length + 0.5 / AREAS.length);
+                      }}
                       className={cn(
                         'flex w-full items-center gap-[14px] rounded-sm py-[14px] pl-[14px] pr-[18px] text-left',
                         'transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
@@ -190,55 +251,35 @@ export default function ExploreKyg({
                         className={cn('h-[18px] w-[18px]', on ? null : 'opacity-40')}
                       />
                     </button>
+
+                    {/* Below md the card opens under its own row.
+                        `grid-template-rows: 0fr -> 1fr` is what makes that
+                        animatable at all - height cannot transition to `auto`,
+                        and a max-height guess either clips the tallest card or
+                        makes the short ones drift open. Every row keeps its
+                        panel, so the one closing and the one opening are both
+                        present and move together. */}
+                    <div
+                      className={cn(
+                        'grid md:hidden',
+                        'motion-safe:transition-[grid-template-rows] motion-safe:duration-500 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]',
+                        on ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                      )}
+                    >
+                      <div className="min-h-0 overflow-hidden">
+                        <div className="mt-[8px] min-w-0 overflow-hidden rounded-sm bg-linenw/[0.04] ring-1 ring-inset ring-linenw/[0.12]">
+                          {panel(a)}
+                        </div>
+                      </div>
+                    </div>
                   </li>
                 );
               })}
             </ul>
 
-            {/* The panel. One card, so the six uneven descriptions never have to
-            line up with each other. */}
-            <div className="min-w-0 overflow-hidden rounded-sm bg-linenw/[0.04] ring-1 ring-inset ring-linenw/[0.12]">
-              <div className="relative aspect-[24/7] max-h-[min(22vh,240px)] w-full">
-                <Image
-                  src={area.photo}
-                  alt={area.alt}
-                  fill
-                  sizes="(max-width: 1023px) 100vw, 60vw"
-                  className="object-cover"
-                />
-              </div>
-
-              <div className="px-[clamp(20px,2.4vw,32px)] pb-[clamp(24px,2.6vw,30px)] pt-[clamp(22px,2.4vw,28px)]">
-                <span className="inline-flex items-center gap-[10px] font-kyg text-[11.5px] font-bold uppercase tracking-[0.16em] text-java2">
-                  <span className="grid h-[26px] w-[26px] place-items-center rounded-sm bg-java2/[0.14]">
-                    <Icon name={area.icon} className="h-[14px] w-[14px]" />
-                  </span>
-                  {area.label}
-                </span>
-
-                <h3 className="mt-[16px] font-kyg text-[clamp(21px,2.2vw,30px)] font-bold leading-[1.2] tracking-[-0.025em] text-linenw">
-                  {area.question}
-                </h3>
-
-                <p className="mt-[12px] font-kyg text-[16.5px] leading-[1.6] text-linenw/70">{area.detail}</p>
-
-                <ul className="mt-[20px] flex list-none flex-wrap gap-[8px]">
-                  {area.markers.map((m) => (
-                    <li
-                      key={m}
-                      className="rounded-sm bg-linenw/[0.06] px-[11px] py-[6px] font-kyg text-[13px] text-linenw/[0.78] ring-1 ring-inset ring-linenw/[0.1]"
-                    >
-                      {m}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-[24px] flex">
-                  <Button href={area.href} variant="onDark">
-                    {area.cta}
-                  </Button>
-                </div>
-              </div>
+            {/* From md up: the one panel, beside the list. */}
+            <div className="hidden min-w-0 overflow-hidden rounded-sm bg-linenw/[0.04] ring-1 ring-inset ring-linenw/[0.12] md:block">
+              {panel(area)}
             </div>
           </div>
 

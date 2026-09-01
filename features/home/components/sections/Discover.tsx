@@ -134,7 +134,7 @@ export default function Discover({ hoverTint = false }: { hoverTint?: boolean } 
                   // it is a 156px band, and a hover that lit only the copy would
                   // leave most of what you are pointing at unlit. `mint`, the
                   // palette's existing pale teal.
-                  hoverTint && 'rounded-sm transition-colors duration-300 hover:bg-mist'
+                  hoverTint && 'rounded-sm transition-colors duration-300 hover:bg-mist active:bg-mist'
                 )}
               >
                 {/* Figtree 300 at -0.04em on pewter, in its own 55.47 track */}

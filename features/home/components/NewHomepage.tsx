@@ -16,8 +16,10 @@
 //   06  eyebrowTone        the teal pill, not the ink one
 //   07  pinned             the step track fills and glows as you scroll it
 //   08  flowArrows         arrows between Result / Context / … / Next step
-//   11  chevrons+linkedMap trailing chevron, and hovering a line lights its
-//                          own point on the map; nothing selected at rest
+//   11  designPlacement    the design's own head row, columns and chip box.
+//                          No chevrons and no hover pairing: the map is
+//                          atmosphere, its 75 points blink on their own, and
+//                          line 01 is highlighted as the design draws it
 //   02/03/05/10  hoverTint the cell under the cursor takes `mist` (#E2F1ED)
 //   09  hoverTint        a java2 wash - see the note in ScienceTrust for why the
 //                          dark grounds do not take the pale one
@@ -69,7 +71,7 @@ export default function NewHomepage() {
       <ScienceTrust hoverTint /> {/* ink   */}
       <Certifications /> {/* cream */}
       <Privacy hoverTint /> {/* sand  */}
-      <BornInIndia chevrons linkedMap designPlacement /> {/* ink   */}
+      <BornInIndia designPlacement /> {/* ink   */}
       <Journal /> {/* cream */}
       <FinalCta /> {/* sand  */}
     </div>
