@@ -1,19 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { useId, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { BTN } from '@/components/shared/button-styles';
-import { Icon, Rule } from '@/components/shared/kyg';
+import { Icon, Rule, Toolbar } from '@/components/shared/kyg';
 import { cn } from '@/lib/utils';
 import { categoryLabel, type BlogListItem } from '@/features/blog';
 import { FEED, PAGE_SIZE, SORTS, type SortValue } from '../constants';
 import FeaturedPost from './FeaturedPost';
 import PostCard from './PostCard';
-
-/** The frame's control box: 31.29 tall at 1024, white, hairline, one radius. */
-const CONTROL =
-  'h-[clamp(31.3px,3.056vw,48.9px)] rounded-sm bg-white ring-1 ring-inset ring-zeus/[0.13] font-kyg leading-none';
 
 /**
  * 02 · Latest - Figma 343:657.
@@ -29,7 +25,6 @@ const CONTROL =
  * unreachable and, worse, inescapable once set - hence the removable chip.
  */
 export default function BlogFeed({ posts, initialCategory }: { posts: BlogListItem[]; initialCategory?: string }) {
-  const uid = useId();
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<SortValue>('newest');
   const [shown, setShown] = useState(PAGE_SIZE);
@@ -66,12 +61,20 @@ export default function BlogFeed({ posts, initialCategory }: { posts: BlogListIt
 
   return (
     <>
-      {/* ---- filter bar ------------------------------------------------- */}
-      <div className="flex flex-wrap items-center gap-[clamp(12px,1.667vw,26.7px)]">
-        <p className="font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold uppercase leading-[1.462] tracking-[0.2em] text-boulder">
-          {FEED.label}
-        </p>
-
+      <Toolbar
+        label={FEED.label}
+        query={query}
+        onQuery={(v) => {
+          setQuery(v);
+          setShown(PAGE_SIZE);
+        }}
+        searchPlaceholder={FEED.searchPlaceholder}
+        searchLabel="Search articles"
+        sort={sort}
+        onSort={(v) => setSort(v as SortValue)}
+        sorts={SORTS}
+        sortLabel={FEED.sortLabel}
+      >
         {initialCategory ? (
           <span className="inline-flex items-center gap-2 rounded-sm bg-mint px-[10px] py-[5px] font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold uppercase tracking-[0.14em] text-eden">
             {categoryLabel(initialCategory)}
@@ -80,69 +83,7 @@ export default function BlogFeed({ posts, initialCategory }: { posts: BlogListIt
             </Link>
           </span>
         ) : null}
-
-        {/* 426.67 of the 967.11 rail, and it gives that up first when the row
-            runs out of room - the sort control has a fixed intrinsic width. */}
-        <label htmlFor={`${uid}-q`} className="sr-only">
-          Search articles
-        </label>
-        <div
-          className={cn(
-            CONTROL,
-            'flex min-w-[200px] flex-1 items-center gap-[clamp(7.1px,0.694vw,11.1px)] px-[clamp(11.4px,1.111vw,17.8px)] focus-within:ring-eden/40 lg:max-w-[clamp(426.7px,41.667vw,666.7px)]'
-          )}
-        >
-          <Icon
-            name="search"
-            className="h-[clamp(12.8px,1.25vw,20px)] w-[clamp(12.8px,1.25vw,20px)] shrink-0 text-boulder"
-          />
-          <input
-            id={`${uid}-q`}
-            type="search"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setShown(PAGE_SIZE);
-            }}
-            placeholder={FEED.searchPlaceholder}
-            className="min-w-0 flex-1 bg-transparent font-kyg text-[clamp(11px,1.076vw,17.2px)] text-heavy outline-none placeholder:text-boulder"
-          />
-        </div>
-
-        {/* the frame's `push` */}
-        <div className="hidden flex-1 lg:block" />
-
-        <label htmlFor={`${uid}-sort`} className="sr-only">
-          Sort articles
-        </label>
-        <div
-          className={cn(
-            CONTROL,
-            'relative flex shrink-0 items-center gap-[clamp(5.7px,0.556vw,8.9px)] pl-[clamp(11.4px,1.111vw,17.8px)] pr-[clamp(9.2px,0.903vw,14.4px)] focus-within:ring-eden/40'
-          )}
-        >
-          <span className="shrink-0 font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-medium text-boulder">
-            {FEED.sortLabel}
-          </span>
-          <select
-            id={`${uid}-sort`}
-            value={sort}
-            onChange={(e) => setSort(e.target.value as SortValue)}
-            className="cursor-pointer appearance-none bg-transparent pr-[16px] font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-bold text-fusc outline-none"
-          >
-            {SORTS.map((s) => (
-              <option key={s.value} value={s.value}>
-                {s.label}
-              </option>
-            ))}
-          </select>
-          <Icon
-            name="chevron"
-            strokeWidth={2}
-            className="pointer-events-none absolute right-[clamp(9.2px,0.903vw,14.4px)] h-[9px] w-[9px] rotate-90 text-boulder"
-          />
-        </div>
-      </div>
+      </Toolbar>
 
       <Rule className="mt-[clamp(12px,1.389vw,22.2px)]" />
 
