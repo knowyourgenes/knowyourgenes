@@ -1,34 +1,13 @@
-/** Glyph id - the "<y>-<x>" position of the icon in the Figma contact frame. */
-export type ContactIconId = string;
-
-export interface HeroChip {
-  label: string;
-  icon: ContactIconId;
-  /** `sea` tints the glyph green, matching the "Reviewed by…" chip in the frame. */
-  tone?: 'eden' | 'sea';
-}
-
-export interface Channel {
-  kicker: string;
-  title: string;
-  body: string;
-  icon: ContactIconId;
-  /** Wraps the whole card in a link when present. */
-  href?: string;
-  /** `inverted` = the eden card at the bottom of the column. */
-  tone?: 'default' | 'inverted';
-  /** The lab and response cards run a smaller title than the first two. */
-  titleSize?: 'md' | 'sm';
-}
-
-export interface SelfServeCard {
-  title: string;
-  body: string;
-  icon: ContactIconId;
-  href: string;
-}
-
-/** Discriminated result returned by the contact API to the form. */
+/**
+ * Discriminated result the contact API hands back to the form.
+ *
+ * The three shape types that used to live here - HeroChip, Channel,
+ * SelfServeCard - went with the sections that used them. They described a
+ * layout the frame no longer draws, and each carried a `ContactIconId`: a
+ * glyph keyed by its "<y>-<x>" position on the OLD artboard. Position-keyed
+ * ids cannot survive a redraw, which is exactly what happened; the icons are
+ * inline paths in the shared `Icon` set now, addressed by name.
+ */
 export type ContactSubmitState =
   | { status: 'idle' }
   | { status: 'submitting' }

@@ -1,29 +1,39 @@
 'use client';
 
-import Link from 'next/link';
 import { useId, useState } from 'react';
+
+import { BTN } from '@/components/shared/button-styles';
+import { Icon } from '@/components/shared/kyg';
 import { cn } from '@/lib/utils';
 import { FORM_COPY } from '../constants';
 import { CONTACT_TOPICS, contactSchema } from '../schemas/contact.schema';
 import type { ContactSubmitState } from '../types';
-import { ContactEyebrow, ContactIcon } from './ContactIcon';
 
-// Figma: card r28, 1px #222222@10, pad 40, gap 28 (header / form stack).
-// Fields r14, 1px #222222@14, white ground, placeholder #9a968b.
-//   input    pad 16, 15.5/18.6  -> 53 tall
-//   select   pad 14/44/14/16, 15.5/23.2 -> 54 tall
-//   textarea pad 14/16, 15.5/23.2, fixed 131 tall
-// The frame's field radius is not reproduced: every corner here is rounded-sm
-// (6px), the site's only radius. See DESIGN.md §2.
-const FIELD_BASE =
-  'w-full rounded-sm border border-mine/14 bg-white px-4 font-kyg text-[15.5px] text-mine outline-none transition placeholder:text-[#9a968b] focus:border-eden/40 focus:ring-4 focus:ring-java/10 disabled:opacity-60';
-const INPUT = `${FIELD_BASE} py-4 leading-[18.6px]`;
-const SELECT = `${FIELD_BASE} appearance-none py-[14px] pr-11 leading-[23.2px]`;
-const TEXTAREA = `${FIELD_BASE} h-[131px] resize-y py-[14px] leading-[23.2px]`;
-// Figtree 700 13/19.5 ls 0.13 (0.01em) #2d2a24 - a single run, so the "*" and
-// the "(optional)" qualifier carry the same weight and colour as the label.
-const LABEL = 'font-kyg text-[13px] font-bold leading-[19.5px] tracking-[0.01em] text-[#2d2a24]';
-const ERR = 'font-kyg text-[12.5px] leading-[18.8px] text-mojo';
+/**
+ * The form card - Figma 346:1169.
+ *
+ * Card: spring ground, 1px zeus@10, pad 22.756.
+ * Field: 34.13 tall, white, 1px zeus@14, pad-x 11.378, placeholder boulder.
+ * Label: Figtree 700 9.244/13.51 on heavy, 5.689 above its field.
+ *
+ * SUBJECT IS A SELECT, and that is the one place this departs from the frame.
+ * The design draws a free-text box reading "What is this about?", but the API
+ * and `model ContactMessage` both take `topic` from a seven-value enum
+ * (contact.schema.ts), and a free string fails that validation. Rather than
+ * change the server contract for a visual, the control is a select wearing the
+ * design's field: same box, same placeholder as its empty option. Widening
+ * `topic` to a string is a schema + Prisma change and belongs on its own.
+ *
+ * `phone` is simply not drawn here. It is optional in the schema, so omitting
+ * the field sends nothing and validates fine.
+ */
+const FIELD =
+  'w-full rounded-sm border border-zeus/[0.14] bg-white px-[clamp(11.4px,1.111vw,17.8px)] font-kyg text-[clamp(11px,1.076vw,17.2px)] leading-[1.549] text-heavy outline-none transition placeholder:text-boulder focus:border-eden/40 focus:ring-4 focus:ring-java/10 disabled:opacity-60';
+const INPUT = `${FIELD} h-[clamp(34.1px,3.333vw,53.3px)]`;
+const LABEL = 'font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold leading-[1.462] text-heavy';
+const ERR = 'mt-[4px] block font-kyg text-[clamp(9.6px,0.9375vw,15px)] leading-[1.5] text-mojo';
+/** 5.689 label -> field, 12.8 between one field group and the next. */
+const GROUP = 'flex min-w-0 flex-col gap-[clamp(5.7px,0.556vw,8.9px)]';
 
 export default function ContactForm() {
   const uid = useId();
@@ -82,15 +92,15 @@ export default function ContactForm() {
 
   if (state.status === 'success') {
     return (
-      <div className="flex min-h-[420px] flex-col items-center justify-center gap-4 rounded-sm border border-mine/10 bg-white p-6 text-center shadow-tst-card sm:p-10">
-        <span className="grid size-14 place-items-center rounded-sm bg-mint">
-          <ContactIcon id={FORM_COPY.eyebrow.icon} className="h-[26px] w-[22px]" />
+      <div className="flex min-h-[clamp(280px,26vw,416px)] flex-col items-center justify-center gap-4 rounded-sm border border-zeus/10 bg-spring p-[clamp(20px,2.222vw,35.6px)] text-center">
+        <span className="grid h-14 w-14 place-items-center rounded-sm bg-mint text-eden">
+          <Icon name="check" className="h-7 w-7" />
         </span>
-        <h2 className="font-kyg text-[clamp(22px,2.4vw,30px)] font-extrabold leading-[1.15] tracking-[-0.02em] text-mine">
+        <h3 className="font-kyg text-[clamp(20px,2.2vw,28px)] font-bold leading-[1.15] tracking-[-0.02em] text-heavy">
           Message sent.
-        </h2>
-        <p className="max-w-[380px] break-words font-kyg text-[15.5px] leading-[23.2px] text-fusc">
-          Thanks - a real person from the team will get back to you. If it is urgent, email{' '}
+        </h3>
+        <p className="max-w-[380px] font-kyg text-[clamp(11px,1.076vw,17.2px)] leading-[1.6] text-fusc">
+          Thanks — a real person from the team will get back to you. If it is urgent, email{' '}
           <a className="font-bold text-eden underline" href="mailto:hello@kyg.in">
             hello@kyg.in
           </a>
@@ -113,189 +123,142 @@ export default function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="flex flex-col gap-7 rounded-sm border border-mine/10 bg-white p-[clamp(24px,3vw,40px)] shadow-tst-card"
+      className="flex flex-col gap-[clamp(12.8px,1.25vw,20px)] rounded-sm border border-zeus/10 bg-spring p-[clamp(16px,2.222vw,35.6px)]"
     >
-      {/* header - gap 8; the h2 frame carries 7 top / 1 bottom padding */}
-      <div className="flex flex-col gap-2">
-        <ContactEyebrow
-          label={FORM_COPY.eyebrow.label}
-          icon={FORM_COPY.eyebrow.icon}
-          className="max-w-full self-start"
-        />
-        <h2 className="pb-px pt-[7px] font-kyg text-[clamp(24px,2.6vw,34px)] font-extrabold leading-[1.08] tracking-[-0.02em] text-mine">
-          {FORM_COPY.title}
-        </h2>
-        <p className="font-kyg text-[15.5px] leading-[23.2px] text-fusc">{FORM_COPY.lead}</p>
-      </div>
-
       {/* honeypot - hidden from humans, catches naive bots */}
       <div aria-hidden className="hidden">
         <label htmlFor={`${uid}-website`}>Website</label>
         <input id={`${uid}-website`} name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
-      {/* form#contactForm - vertical stack, gap 20 */}
-      <div className="flex flex-col gap-5">
-        {/* Two-up from sm, but back to ONE column through lg: the page grid
-            hands this card only ~414px at 1024, i.e. 165px tracks - narrower
-            than the select's widest option ("Which test is right for me") plus
-            its 16/44 padding, so the chosen topic would render clipped. It
-            widens again at xl, and >= 1440 is the frame's 242px pair.
-            min-w-0 on each field: an <input>/<select> keeps an intrinsic
-            min-content width from `size`/its longest option, and a grid item's
-            automatic minimum size would let that push past minmax(0,1fr). */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-          <div className="flex min-w-0 flex-col gap-[7px]">
-            <label className={LABEL} htmlFor={`${uid}-name`}>
-              Full name *
-            </label>
-            <input
-              id={`${uid}-name`}
-              name="name"
-              autoComplete="name"
-              placeholder="Your name"
-              disabled={busy}
-              aria-invalid={!!errs.name}
-              className={cn(INPUT, errs.name && 'border-mojo/60')}
-            />
-            {errs.name ? <span className={ERR}>{errs.name}</span> : null}
-          </div>
-
-          <div className="flex min-w-0 flex-col gap-[7px]">
-            <label className={LABEL} htmlFor={`${uid}-email`}>
-              Email *
-            </label>
-            <input
-              id={`${uid}-email`}
-              name="email"
-              type="email"
-              autoComplete="email"
-              placeholder="you@email.com"
-              disabled={busy}
-              aria-invalid={!!errs.email}
-              className={cn(INPUT, errs.email && 'border-mojo/60')}
-            />
-            {errs.email ? <span className={ERR}>{errs.email}</span> : null}
-          </div>
-
-          <div className="flex min-w-0 flex-col gap-[7px]">
-            <label className={LABEL} htmlFor={`${uid}-phone`}>
-              Phone (optional)
-            </label>
-            <input
-              id={`${uid}-phone`}
-              name="phone"
-              type="tel"
-              autoComplete="tel"
-              placeholder="+91"
-              disabled={busy}
-              aria-invalid={!!errs.phone}
-              className={cn(INPUT, errs.phone && 'border-mojo/60')}
-            />
-            {errs.phone ? <span className={ERR}>{errs.phone}</span> : null}
-          </div>
-
-          <div className="flex min-w-0 flex-col gap-[7px]">
-            <label className={LABEL} htmlFor={`${uid}-topic`}>
-              What&apos;s it about? *
-            </label>
-            {/* The chevron is the frame's own 24x24 glyph (12x6 stroke-2 #0e4d4b),
-                inset 15 from the right edge - not a lucide substitute. */}
-            <div className="relative">
-              <select
-                id={`${uid}-topic`}
-                name="topic"
-                defaultValue=""
-                disabled={busy}
-                aria-invalid={!!errs.topic}
-                className={cn(SELECT, errs.topic && 'border-mojo/60')}
-              >
-                <option value="" disabled>
-                  Choose a topic
-                </option>
-                {CONTACT_TOPICS.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-              <ContactIcon
-                id="901-1198"
-                className="pointer-events-none absolute right-[15px] top-1/2 size-6 -translate-y-1/2"
-              />
-            </div>
-            {errs.topic ? <span className={ERR}>{errs.topic}</span> : null}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-[7px] pb-[7px]">
-          <label className={LABEL} htmlFor={`${uid}-message`}>
-            Message *
+      {/* 11.378 between the two, and one column until there is room for two */}
+      <div className="grid gap-[clamp(11.4px,1.111vw,17.8px)] sm:grid-cols-2">
+        <div className={GROUP}>
+          <label className={LABEL} htmlFor={`${uid}-name`}>
+            Your name *
           </label>
-          <textarea
-            id={`${uid}-message`}
-            name="message"
-            rows={4}
-            placeholder="How can we help?"
+          <input
+            id={`${uid}-name`}
+            name="name"
+            autoComplete="name"
+            placeholder="Priya Sharma"
             disabled={busy}
-            aria-invalid={!!errs.message}
-            className={cn(TEXTAREA, errs.message && 'border-mojo/60')}
+            aria-invalid={!!errs.name}
+            className={cn(INPUT, errs.name && 'border-mojo/60')}
           />
-          {errs.message ? <span className={ERR}>{errs.message}</span> : null}
+          {errs.name ? <span className={ERR}>{errs.name}</span> : null}
         </div>
 
-        <div className="flex flex-col gap-2">
-          {/* 18x18 r2.5 #767676 checkbox, 2px top offset, gap 12; copy is one
-              uniform Figtree 400 13.5/18.6 #5b564e run, right inset 31. */}
-          <label className="flex items-start gap-3">
-            <input
-              type="checkbox"
-              name="consent"
-              disabled={busy}
-              aria-invalid={!!errs.consent}
-              className="mt-0.5 size-[18px] shrink-0 rounded-sm border border-[#767676] bg-white accent-eden"
-            />
-            {/* The 31 right inset only exists to hold the frame's line breaks;
-                below sm it would eat 31 of the ~200px the copy has left. */}
-            <span className="font-kyg text-[13.5px] leading-[18.6px] text-fusc sm:pr-[31px]">
-              {FORM_COPY.consentPrefix}{' '}
-              <Link href={FORM_COPY.consentLinkHref} className="underline">
-                {FORM_COPY.consentLinkLabel}
-              </Link>
-              {FORM_COPY.consentSuffix}
-            </span>
+        <div className={GROUP}>
+          <label className={LABEL} htmlFor={`${uid}-email`}>
+            Email *
           </label>
-          {errs.consent ? <span className={ERR}>{errs.consent}</span> : null}
-        </div>
-
-        {state.status === 'error' && !Object.keys(errs).length ? (
-          <p role="alert" className="rounded-sm bg-mojo/8 px-4 py-3 font-kyg text-[14px] text-mojo">
-            {state.message}
-          </p>
-        ) : null}
-
-        {/* button row - 4 top padding, gap 16, centred */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-1">
-          <button
-            type="submit"
+          <input
+            id={`${uid}-email`}
+            name="email"
+            type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
             disabled={busy}
-            className="group inline-flex items-center gap-2.5 rounded-sm border border-eden bg-eden px-8 py-4 font-kyg text-[16px] font-extrabold leading-6 tracking-[0.06px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 disabled:translate-y-0 disabled:opacity-70"
-          >
-            {busy ? 'Sending…' : FORM_COPY.submit}
-            <ContactIcon
-              id="1242-885"
-              className="h-6 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5"
-            />
-          </button>
-
-          <span className="break-words font-kyg text-[13px] leading-[19.5px] text-boulder">
-            {FORM_COPY.fallbackPrefix}{' '}
-            <a href={`mailto:${FORM_COPY.fallbackEmail}`} className="underline">
-              {FORM_COPY.fallbackEmail}
-            </a>{' '}
-            {FORM_COPY.fallbackSuffix}
-          </span>
+            aria-invalid={!!errs.email}
+            className={cn(INPUT, errs.email && 'border-mojo/60')}
+          />
+          {errs.email ? <span className={ERR}>{errs.email}</span> : null}
         </div>
+      </div>
+
+      <div className={GROUP}>
+        <label className={LABEL} htmlFor={`${uid}-topic`}>
+          Subject
+        </label>
+        <div className="relative">
+          <select
+            id={`${uid}-topic`}
+            name="topic"
+            defaultValue=""
+            disabled={busy}
+            aria-invalid={!!errs.topic}
+            className={cn(INPUT, 'appearance-none pr-10', errs.topic && 'border-mojo/60')}
+          >
+            <option value="" disabled>
+              What is this about?
+            </option>
+            {CONTACT_TOPICS.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+          <Icon
+            name="chevron"
+            strokeWidth={2}
+            className="pointer-events-none absolute right-[clamp(11.4px,1.111vw,17.8px)] top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-boulder"
+          />
+        </div>
+        {errs.topic ? <span className={ERR}>{errs.topic}</span> : null}
+      </div>
+
+      <div className={GROUP}>
+        <label className={LABEL} htmlFor={`${uid}-message`}>
+          Message *
+        </label>
+        <textarea
+          id={`${uid}-message`}
+          name="message"
+          rows={4}
+          placeholder="Tell us what you need…"
+          disabled={busy}
+          aria-invalid={!!errs.message}
+          className={cn(
+            FIELD,
+            'h-[clamp(82.5px,8.056vw,128.9px)] resize-y py-[clamp(9.9px,0.972vw,15.6px)]',
+            errs.message && 'border-mojo/60'
+          )}
+        />
+        {errs.message ? <span className={ERR}>{errs.message}</span> : null}
+      </div>
+
+      <div className="flex items-start gap-[clamp(8.5px,0.833vw,13.3px)]">
+        <input
+          id={`${uid}-consent`}
+          name="consent"
+          type="checkbox"
+          disabled={busy}
+          aria-invalid={!!errs.consent}
+          className="mt-[3px] h-[clamp(12.8px,1.25vw,20px)] w-[clamp(12.8px,1.25vw,20px)] shrink-0 rounded-sm border border-eden/30 bg-white accent-eden"
+        />
+        <label
+          htmlFor={`${uid}-consent`}
+          className="font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-normal leading-[1.555] text-fusc"
+        >
+          {FORM_COPY.consent}
+        </label>
+      </div>
+      {errs.consent ? <span className={ERR}>{errs.consent}</span> : null}
+
+      {state.status === 'error' && state.message ? (
+        <p role="alert" className="font-kyg text-[clamp(9.6px,0.9375vw,15px)] leading-[1.5] text-mojo">
+          {state.message}
+        </p>
+      ) : null}
+
+      <div className="mt-[clamp(2.8px,0.278vw,4.4px)] flex">
+        <button
+          type="submit"
+          disabled={busy}
+          className={cn(
+            BTN,
+            'group/btn bg-eden font-bold text-linenw shadow-[0_4.3px_12.8px_0_rgba(14,77,75,0.18)]',
+            'transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-eden2 disabled:opacity-60 motion-reduce:transition-none'
+          )}
+        >
+          {busy ? 'Sending…' : FORM_COPY.submit}
+          <Icon
+            name="arrow"
+            strokeWidth={2}
+            className="h-[15px] w-[15px] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/btn:translate-x-[3px] motion-reduce:transition-none"
+          />
+        </button>
       </div>
     </form>
   );

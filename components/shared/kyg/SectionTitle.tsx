@@ -2,6 +2,8 @@ import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 import { cn } from '@/lib/utils';
 
+import { Icon, type IconName } from './Icon';
+
 /**
  * The DNA glyph inside every eyebrow pill. Inline rather than an <img> so it
  * takes currentColor and flips with the ground like the label beside it.
@@ -43,6 +45,7 @@ export function Eyebrow({
   children,
   tone = 'light',
   caps = true,
+  icon,
   className,
   ...rest
 }: {
@@ -61,6 +64,16 @@ export function Eyebrow({
    */
   tone?: 'light' | 'dark' | 'teal';
   caps?: boolean;
+  /**
+   * Swaps the pill's glyph for one from the shared set.
+   *
+   * The Figma library ships TWO helices and they are not the same drawing: the
+   * homepage and /contact frames use the tall 19x23 one below, while the /about
+   * frame uses a square one with flat stems - which is the `dna` glyph in
+   * Icon.tsx, to the decimal. Defaulting to `Helix` keeps both existing pages
+   * byte-identical; /about passes `icon="dna"`.
+   */
+  icon?: IconName;
   className?: string;
 } & ComponentPropsWithoutRef<'span'>) {
   return (
@@ -83,7 +96,11 @@ export function Eyebrow({
         className
       )}
     >
-      <Helix className="h-[clamp(16.4px,1.597vw,25.5px)]" />
+      {icon ? (
+        <Icon name={icon} className="h-[clamp(16.4px,1.597vw,25.5px)] w-[clamp(16.4px,1.597vw,25.5px)]" />
+      ) : (
+        <Helix className="h-[clamp(16.4px,1.597vw,25.5px)]" />
+      )}
       {children}
     </span>
   );
@@ -106,17 +123,22 @@ export function Heading({
   as: As = 'h2',
   tone = 'light',
   className,
+  ...rest
 }: {
   children: ReactNode;
   id?: string;
   as?: 'h1' | 'h2';
   tone?: 'light' | 'dark';
   className?: string;
-}) {
+} & ComponentPropsWithoutRef<'h2'>) {
   return (
     <As
       id={id}
+      // `data-rise` first so a caller above the fold can replace it with
+      // `data-rise-load` and get the timed stagger instead of the scroll-driven
+      // one - see the .kyg-reveals block in globals.css.
       data-rise="2"
+      {...rest}
       className={cn(
         // -0.03em and 1.315 leading are the design's, not a house default
         'font-kyg font-bold tracking-[-0.03em] text-balance',
@@ -181,6 +203,7 @@ export function SectionTitle({
   eyebrow,
   eyebrowCaps = true,
   eyebrowTone,
+  eyebrowIcon,
   children,
   aside,
   asideAlign = 'end',
@@ -198,6 +221,8 @@ export function SectionTitle({
    * heading keeps `tone`, because its ink does not change between the two.
    */
   eyebrowTone?: 'light' | 'dark' | 'teal';
+  /** Overrides the pill's glyph - see `Eyebrow`'s `icon`. */
+  eyebrowIcon?: IconName;
   /** The heading. Wrap the cursive turn in <em>. */
   children: ReactNode;
   /** Copy or a CTA opposite the headline. Omit for a full-width header. */
@@ -232,7 +257,7 @@ export function SectionTitle({
       )}
     >
       <div className="min-w-0">
-        <Eyebrow tone={eyebrowTone ?? tone} caps={eyebrowCaps}>
+        <Eyebrow tone={eyebrowTone ?? tone} caps={eyebrowCaps} icon={eyebrowIcon}>
           {eyebrow}
         </Eyebrow>
         {/* 16 under the pill at 1440, 11.4 at 1024 */}
