@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
-import { useScrollPin } from '../lib/use-scroll-pin';
+import { useScrollPin } from '@/hooks/use-scroll-pin';
 import { Button, Icon, Lead, PHOTO, Rule, Section, SectionTitle, type IconName } from '../ui';
 
 /**
