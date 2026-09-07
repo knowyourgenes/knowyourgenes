@@ -1,165 +1,66 @@
-import Link from 'next/link';
 import { Container } from '@/components/shared/Container';
-import { CHROME_VARS } from '@/features/auth/server/tokens';
-import { BLOG_CATEGORIES, categoryLabel, formatPostDate, imageUrl, type BlogListItem } from '@/features/blog';
+import { Eyebrow, Heading, SECTION_Y } from '@/components/shared/kyg';
+import { cn } from '@/lib/utils';
+import type { BlogListItem } from '@/features/blog';
+import { HERO } from '../constants';
+import BlogFeed from './BlogFeed';
 
-function MetaLine({ post }: { post: BlogListItem }) {
-  const bits = [post.author?.name, formatPostDate(post.publishedAt)].filter(Boolean);
-  return (
-    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-(--ink-3)">
-      {bits.map((b, i) => (
-        <span key={i} className="inline-flex items-center gap-2">
-          {i > 0 && <span className="text-(--ink-line)">•</span>}
-          {b}
-        </span>
-      ))}
-      {post.readMinutes ? (
-        <span className="inline-flex items-center gap-2">
-          <span className="text-(--ink-line)">•</span>
-          {post.readMinutes} min read
-        </span>
-      ) : null}
-    </div>
-  );
-}
-
-function CategoryBadge({ category }: { category?: string }) {
-  return (
-    <span className="inline-flex w-fit items-center rounded-sm bg-(--acc-50) px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-(--teal)">
-      {categoryLabel(category)}
-    </span>
-  );
-}
-
-function PostCard({ post }: { post: BlogListItem }) {
-  const img = imageUrl(post.heroImage, { width: 720, height: 460 });
-  return (
-    <Link
-      href={`/blog/${post.slug}`}
-      className="group flex flex-col overflow-hidden rounded-sm border border-(--ink-line) bg-white shadow-(--sh-1) transition-[transform,box-shadow] duration-500 ease-(--e-out) hover:-translate-y-1 hover:shadow-(--sh-2)"
-    >
-      <div className="relative aspect-[16/10] overflow-hidden bg-(--cream-2)">
-        {img ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={img}
-            alt={post.heroImage?.alt ?? post.title}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-(--e-out) group-hover:scale-[1.05]"
-          />
-        ) : null}
-      </div>
-      <div className="flex flex-1 flex-col gap-3 p-6">
-        <CategoryBadge category={post.category} />
-        <h3 className="text-[19px] font-semibold leading-[1.3] tracking-[-0.015em] text-(--ink-1) transition-colors group-hover:text-(--teal)">
-          {post.title}
-        </h3>
-        {post.excerpt ? (
-          <p className="line-clamp-3 text-[14.5px] leading-[1.6] text-(--ink-3)">{post.excerpt}</p>
-        ) : null}
-        <div className="mt-auto pt-2">
-          <MetaLine post={post} />
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function FeaturedCard({ post }: { post: BlogListItem }) {
-  const img = imageUrl(post.heroImage, { width: 1100, height: 760 });
-  return (
-    <Link
-      href={`/blog/${post.slug}`}
-      className="group grid overflow-hidden rounded-sm border border-(--ink-line) bg-white shadow-(--sh-1) transition-[transform,box-shadow] duration-500 ease-(--e-out) hover:shadow-(--sh-2) md:grid-cols-2"
-    >
-      <div className="relative aspect-[16/11] overflow-hidden bg-(--cream-2) md:aspect-auto md:min-h-[340px]">
-        {img ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={img}
-            alt={post.heroImage?.alt ?? post.title}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-(--e-out) group-hover:scale-[1.04]"
-          />
-        ) : null}
-      </div>
-      <div className="flex flex-col justify-center gap-4 p-8 md:p-10">
-        <div className="flex items-center gap-3">
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-(--ink-3)">Featured</span>
-          <CategoryBadge category={post.category} />
-        </div>
-        <h2 className="text-[28px] font-semibold leading-[1.18] tracking-[-0.02em] text-(--ink-1) transition-colors group-hover:text-(--teal) md:text-[32px]">
-          {post.title}
-        </h2>
-        {post.excerpt ? <p className="max-w-[46ch] text-[16px] leading-[1.7] text-(--ink-3)">{post.excerpt}</p> : null}
-        <MetaLine post={post} />
-      </div>
-    </Link>
-  );
-}
-
+/**
+ * /blog - Figma 343:647.
+ *
+ * Two bands: a journal masthead over a photograph, and the feed.
+ *
+ * THE HERO IS A WASH, NOT A PICTURE. The frame lays a 90deg cream gradient over
+ * the photo - 0.96 opaque at the left, 0.86 at 52%, 0.42 at the right - so the
+ * image only ever surfaces behind the empty right-hand third and the headline
+ * sits on near-solid ground. Reproduced in that order (gradient FIRST, image
+ * second) because CSS paints the first background layer on top.
+ *
+ * The page is Sanity-driven, so nothing below the masthead is hardcoded: the
+ * frame's specimen articles stand in for real documents, and its tags happen to
+ * be exactly the four values in the blogPost schema.
+ */
 export default function BlogIndex({ posts, activeCategory }: { posts: BlogListItem[]; activeCategory?: string }) {
-  const filtered = activeCategory ? posts.filter((p) => p.category === activeCategory) : posts;
-  const featured = !activeCategory ? (filtered.find((p) => p.featured) ?? null) : null;
-  const rest = featured ? filtered.filter((p) => p._id !== featured._id) : filtered;
-
-  const pill = (label: string, href: string, active: boolean) => (
-    <Link
-      key={href}
-      href={href}
-      className={
-        'rounded-sm px-4 py-2 text-[13.5px] font-medium transition-colors ' +
-        (active
-          ? 'bg-(--ink-1) text-(--cream)'
-          : 'bg-white text-(--ink-2) border border-(--ink-line) hover:border-(--teal) hover:text-(--teal)')
-      }
-    >
-      {label}
-    </Link>
-  );
-
   return (
-    <div style={CHROME_VARS} className="min-h-screen bg-(--cream) text-(--ink-1)">
-      <Container className="py-[clamp(40px,6vw,80px)]">
-        <header className="max-w-[640px]">
-          <p className="text-[12px] font-bold uppercase tracking-[0.24em] text-(--teal)">The KYG Journal</p>
-          <h1 className="mt-3 text-[clamp(34px,5vw,52px)] font-semibold leading-[1.08] tracking-[-0.03em]">
-            Genetics, decoded for real life.
-          </h1>
-          <p className="mt-4 text-[17px] leading-[1.6] text-(--ink-3)">
-            Short, science-grounded reads on wellness, genetic literacy, research and the people behind your reports.
+    <div className="kyg-reveals bg-linenw">
+      <section
+        aria-labelledby="journal-heading"
+        className="w-full bg-linenw bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage:
+            'linear-gradient(90deg,rgba(250,246,239,0.96) 0%,rgba(250,246,239,0.86) 52%,rgba(250,246,239,0.42) 100%),url(/blog/journal-hero.jpg)',
+        }}
+      >
+        <Container className={SECTION_Y}>
+          <Eyebrow data-rise-load="1">{HERO.eyebrow}</Eyebrow>
+
+          {/* The frame sets this at 32.711 - the page's h2 size, not a hero
+              size - because the journal masthead is quieter than a landing
+              hero. `Heading`'s own h1 clamp is 4.3vw, so this carries the h2
+              clamp explicitly rather than shouting. */}
+          <Heading
+            as="h1"
+            id="journal-heading"
+            data-rise-load="2"
+            className="mt-[clamp(11.4px,1.111vw,17.8px)] text-[clamp(24px,min(3.194vw,6.2vh),51px)] leading-[1.315]"
+          >
+            {HERO.headline} <em>{HERO.turn}</em>
+          </Heading>
+
+          <p
+            data-rise-load="3"
+            className="mt-[clamp(12.8px,1.25vw,20px)] max-w-[clamp(440.9px,43.056vw,688.9px)] font-kyg text-[clamp(13.5px,1.319vw,21.1px)] font-normal leading-[1.5] text-fusc"
+          >
+            {HERO.lede}
           </p>
-        </header>
+        </Container>
+      </section>
 
-        <nav className="mt-9 flex flex-wrap gap-2" aria-label="Filter by category">
-          {pill('All', '/blog', !activeCategory)}
-          {BLOG_CATEGORIES.map((c) => pill(c.label, `/blog?category=${c.value}`, activeCategory === c.value))}
-        </nav>
-
-        {filtered.length === 0 ? (
-          <div className="mt-16 rounded-sm border border-dashed border-(--ink-line) bg-white/60 px-6 py-16 text-center">
-            <p className="text-[18px] font-medium text-(--ink-1)">No articles here yet</p>
-            <p className="mt-2 text-[14.5px] text-(--ink-3)">
-              {activeCategory
-                ? 'Nothing in this category yet - check back soon.'
-                : 'New reads are on the way. Check back soon.'}
-            </p>
-          </div>
-        ) : (
-          <>
-            {featured ? (
-              <div className="mt-10">
-                <FeaturedCard post={featured} />
-              </div>
-            ) : null}
-
-            <div className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-              {rest.map((post) => (
-                <PostCard key={post._id} post={post} />
-              ))}
-            </div>
-          </>
-        )}
-      </Container>
+      <section aria-label="Articles" className="w-full bg-linenw">
+        <Container className={cn(SECTION_Y)}>
+          <BlogFeed posts={posts} initialCategory={activeCategory} />
+        </Container>
+      </section>
     </div>
   );
 }

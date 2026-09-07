@@ -78,6 +78,17 @@ const PATHS = {
   /** Bare cross, the tick's opposite number. Lucide `x`. */
   cross: 'M18 6 6 18M6 6l12 12',
 
+  // The /blog frame's three. Traced from its own exports and scaled onto this
+  // 24 grid (from 10 and 12), so they are the design's geometry rather than a
+  // lookalike. `search`, `chevron` and `arrow` were already an exact match and
+  // are reused as they are.
+  /** Five-point star - the EDITOR'S PICK badge. */
+  star: 'M12 2.4 14.93 8.35 21.5 9.31 16.75 13.94 17.86 20.49 12 17.38 6.14 20.47 7.25 13.92 2.5 9.29 9.07 8.33Z',
+  /** Calendar - the publish date beside each post. */
+  calendar: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+  /** Clock - the read time beside it. */
+  clock: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 7.2V12l3.3 2.4',
+
   /** A head over a wide open arc - station 05, "as your body changes". */
   figure:
     'M4 17C7 11 9 9 12 9C15 9 17 11 20 17M12 8.4C13.33 8.4 14.4 7.33 14.4 6C14.4 4.67 13.33 3.6 12 3.6C10.67 3.6 9.6 4.67 9.6 6C9.6 7.33 10.67 8.4 12 8.4Z',
