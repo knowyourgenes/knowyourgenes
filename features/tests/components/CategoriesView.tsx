@@ -186,9 +186,7 @@ export function CategoriesView({ categories }: { categories: TestCategory[] }) {
               onQuery={setQuery}
               searchPlaceholder={TOOLBAR.searchPlaceholder}
               searchLabel="Search categories"
-              sort={sort}
-              onSort={setSort}
-              sorts={SORTS}
+              selects={[{ label: 'Sort', value: sort, onChange: setSort, options: SORTS }]}
             />
           ) : (
             <p className="font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold uppercase leading-[1.462] tracking-[0.2em] text-boulder">

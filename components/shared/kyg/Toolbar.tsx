@@ -16,6 +16,19 @@ export interface SortOption {
 }
 
 /**
+ * One labelled dropdown in the bar. The frame's category page draws TWO of
+ * these ("Sort · Most popular" and "Price · Any") where /blog draws one, so the
+ * bar takes a list rather than a single hard-wired sort.
+ */
+export interface ToolbarSelect {
+  /** The quiet prefix - "Sort", "Price". */
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: readonly SortOption[];
+}
+
+/**
  * The listing toolbar: a section label, a search field, and a sort control
  * pushed to the far end.
  *
@@ -37,10 +50,7 @@ export function Toolbar({
   onQuery,
   searchPlaceholder,
   searchLabel = 'Search',
-  sort,
-  onSort,
-  sorts,
-  sortLabel = 'Sort',
+  selects = [],
   children,
   className,
 }: {
@@ -50,10 +60,8 @@ export function Toolbar({
   searchPlaceholder: string;
   /** Accessible name for the field - it has no visible label in the design. */
   searchLabel?: string;
-  sort: string;
-  onSort: (value: string) => void;
-  sorts: readonly SortOption[];
-  sortLabel?: string;
+  /** Zero or more dropdowns, rendered after the push in the order given. */
+  selects?: readonly ToolbarSelect[];
   /** Anything that belongs beside the label - a removable filter chip, say. */
   children?: React.ReactNode;
   className?: string;
@@ -94,36 +102,40 @@ export function Toolbar({
       {/* the frame's `push` */}
       <div className="hidden flex-1 lg:block" />
 
-      <label htmlFor={`${uid}-sort`} className="sr-only">
-        Sort
-      </label>
-      <div
-        className={cn(
-          CONTROL,
-          'relative flex shrink-0 items-center gap-[clamp(5.7px,0.556vw,8.9px)] pl-[clamp(11.4px,1.111vw,17.8px)] pr-[clamp(9.2px,0.903vw,14.4px)] focus-within:ring-eden/40'
-        )}
-      >
-        <span className="shrink-0 font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-medium text-boulder">
-          {sortLabel}
-        </span>
-        <select
-          id={`${uid}-sort`}
-          value={sort}
-          onChange={(e) => onSort(e.target.value)}
-          className="cursor-pointer appearance-none bg-transparent pr-[16px] font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-bold text-fusc outline-none"
-        >
-          {sorts.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
-        </select>
-        <Icon
-          name="chevron"
-          strokeWidth={2}
-          className="pointer-events-none absolute right-[clamp(9.2px,0.903vw,14.4px)] h-[9px] w-[9px] rotate-90 text-boulder"
-        />
-      </div>
+      {selects.map((sel, i) => (
+        <div key={sel.label} className="contents">
+          <label htmlFor={`${uid}-sel-${i}`} className="sr-only">
+            {sel.label}
+          </label>
+          <div
+            className={cn(
+              CONTROL,
+              'relative flex shrink-0 items-center gap-[clamp(5.7px,0.556vw,8.9px)] pl-[clamp(11.4px,1.111vw,17.8px)] pr-[clamp(9.2px,0.903vw,14.4px)] focus-within:ring-eden/40'
+            )}
+          >
+            <span className="shrink-0 font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-medium text-boulder">
+              {sel.label}
+            </span>
+            <select
+              id={`${uid}-sel-${i}`}
+              value={sel.value}
+              onChange={(e) => sel.onChange(e.target.value)}
+              className="cursor-pointer appearance-none bg-transparent pr-[16px] font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-bold text-fusc outline-none"
+            >
+              {sel.options.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+            <Icon
+              name="chevron"
+              strokeWidth={2}
+              className="pointer-events-none absolute right-[clamp(9.2px,0.903vw,14.4px)] h-[9px] w-[9px] rotate-90 text-boulder"
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

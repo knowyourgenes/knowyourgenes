@@ -21,7 +21,7 @@ export { Button, type ButtonVariant } from './Button';
 export { Rule } from './Rule';
 export { Note } from './Note';
 export { PageMasthead } from './PageMasthead';
-export { Toolbar, type SortOption } from './Toolbar';
+export { Toolbar, type SortOption, type ToolbarSelect } from './Toolbar';
 export { SectionTitle, Eyebrow, Heading, Lead } from './SectionTitle';
 export { Icon, IconWell, type IconName } from './Icon';
 export { GROUND, RULE_DARK, RULE_LIGHT, SECTION_Y, isDark, type Ground } from './tokens';

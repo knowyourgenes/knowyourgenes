@@ -3,7 +3,7 @@
 
 # Component inventory
 
-**169 components.** Read this before you build a new one.
+**175 components.** Read this before you build a new one.
 
 The rule this file exists to enforce: **if a component already exists, use it - do
 not build a second one on another page.** A "Button" that exists three times is
@@ -69,6 +69,14 @@ Used by 2+ features. Anything here is the canonical version.
 | `SearchOverlay` | [components/shared/SearchOverlay.tsx](../components/shared/SearchOverlay.tsx) | client | components/shared - the full-width search overlay |
 | `SiteFooter` | [components/shared/SiteFooter.tsx](../components/shared/SiteFooter.tsx) | client | Shared KYG dark footer. Self-contained (tokens applied inline on <footer>). |
 | `SiteHeader` | [components/shared/SiteHeader.tsx](../components/shared/SiteHeader.tsx) | client | Shared KYG warm-modern site header. Self-contained: design tokens are applied |
+| `Button` | [components/shared/kyg/Button.tsx](../components/shared/kyg/Button.tsx) | server | THE homepage button. Four skins, one box. |
+| `Icon, IconWell` | [components/shared/kyg/Icon.tsx](../components/shared/kyg/Icon.tsx) | server | The 48px tinted well the icons sit in throughout the page - claims, care |
+| `Note` | [components/shared/kyg/Note.tsx](../components/shared/kyg/Note.tsx) | server | The two-voice note: a short rule, a line of light Figtree, and a cursive turn |
+| `PageMasthead` | [components/shared/kyg/PageMasthead.tsx](../components/shared/kyg/PageMasthead.tsx) | server | The listing-page masthead: an eyebrow, a two-voice headline and a lede, laid |
+| `Rule` | [components/shared/kyg/Rule.tsx](../components/shared/kyg/Rule.tsx) | server | The page's hairline. It TAPERS - solid to 34% of the width, gone by 92% - |
+| `Section` | [components/shared/kyg/Section.tsx](../components/shared/kyg/Section.tsx) | server | THE section shell. Every band on the homepage is one of these - there is no |
+| `Eyebrow, Heading, Lead, SectionTitle` | [components/shared/kyg/SectionTitle.tsx](../components/shared/kyg/SectionTitle.tsx) | server | The boxed eyebrow. A PILL, not bare text - the box is what makes a 13.5px |
+| `Toolbar` | [components/shared/kyg/Toolbar.tsx](../components/shared/kyg/Toolbar.tsx) | client | The listing toolbar: a section label, a search field, and a sort control |
 
 ## Site scaffolding (`components/site`)
 
@@ -137,8 +145,11 @@ Owned by one feature. Needed by a second feature? Promote it to
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
 | `BlogArticle` | [features/blog/components/BlogArticle.tsx](../features/blog/components/BlogArticle.tsx) | server | Headings power the sticky quick-nav; ids (keyed by block _key) are stamped |
-| `BlogIndex` | [features/blog/components/BlogIndex.tsx](../features/blog/components/BlogIndex.tsx) | server |  |
+| `BlogFeed` | [features/blog/components/BlogFeed.tsx](../features/blog/components/BlogFeed.tsx) | client | 02 · Latest - Figma 343:657. |
+| `BlogIndex` | [features/blog/components/BlogIndex.tsx](../features/blog/components/BlogIndex.tsx) | server | /blog - Figma 343:647. |
 | `BlogToc` | [features/blog/components/BlogToc.tsx](../features/blog/components/BlogToc.tsx) | client | Sticky "quick navigation" for an article. Lists the h2/h3 headings, scroll- |
+| `FeaturedPost` | [features/blog/components/FeaturedPost.tsx](../features/blog/components/FeaturedPost.tsx) | server | The editor's pick - Figma 343:675. |
+| `PostCard, PostMeta, Tag` | [features/blog/components/PostCard.tsx](../features/blog/components/PostCard.tsx) | server | author · date · read time, the row the frame repeats in every card. |
 | `Studio` | [features/blog/components/Studio.tsx](../features/blog/components/Studio.tsx) | client |  |
 | `—` | [features/blog/components/portable-text.tsx](../features/blog/components/portable-text.tsx) | server | Render map for the Portable Text `body`. Styled with the chrome design tokens |
 
@@ -162,12 +173,12 @@ Owned by one feature. Needed by a second feature? Promote it to
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `ContactChannels` | [features/contact/components/ContactChannels.tsx](../features/contact/components/ContactChannels.tsx) | server | p-6 below sm: the frame's 28 padding + the 52 badge + the 16 gap leaves the |
-| `ContactForm` | [features/contact/components/ContactForm.tsx](../features/contact/components/ContactForm.tsx) | client | Figma: card r28, 1px #222222@10, pad 40, gap 28 (header / form stack). |
-| `ContactHero` | [features/contact/components/ContactHero.tsx](../features/contact/components/ContactHero.tsx) | server | HERO - 1440 x 485, pad 80/342/56/342, so the copy column is exactly 756 wide |
-| `ContactIcon, ContactEyebrow, CONTACT_ICON_IDS` | [features/contact/components/ContactIcon.tsx](../features/contact/components/ContactIcon.tsx) | server | The contact page's eyebrow pill - a teal-tinted capsule, NOT the white |
-| `ContactPage` | [features/contact/components/ContactPage.tsx](../features/contact/components/ContactPage.tsx) | server | The /contact page body. |
-| `SelfServe` | [features/contact/components/SelfServe.tsx](../features/contact/components/SelfServe.tsx) | server | SELF-SERVE STRIP - 1440 x 478 on a white@70 ground, hairline #222222@10 on the |
+| `ContactForm` | [features/contact/components/ContactForm.tsx](../features/contact/components/ContactForm.tsx) | client | Validate with the SAME schema the API uses, so the user sees field errors |
+| `ContactHero` | [features/contact/components/ContactHero.tsx](../features/contact/components/ContactHero.tsx) | server | /contact hero - Figma 346:1114. |
+| `ContactPage` | [features/contact/components/ContactPage.tsx](../features/contact/components/ContactPage.tsx) | server | /contact - Figma 346:1112 ("06 · Contact — 1024"). |
+| `HowToReachUs` | [features/contact/components/HowToReachUs.tsx](../features/contact/components/HowToReachUs.tsx) | server | 04 · How to reach us - Figma 346:1201. |
+| `MightBeQuicker` | [features/contact/components/MightBeQuicker.tsx](../features/contact/components/MightBeQuicker.tsx) | server | 05 · Might be quicker - Figma 346:1266. |
+| `SendMessage` | [features/contact/components/SendMessage.tsx](../features/contact/components/SendMessage.tsx) | server | 03 · Send a message - Figma 346:1155. |
 
 ### `features/dashboard`
 
@@ -185,7 +196,7 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `HelixGround` | [features/home/components/lib/HelixGround.tsx](../features/home/components/lib/HelixGround.tsx) | server | The brand helix artwork, laid in behind four sections as a ground texture. |
 | `HomeIcon, HOME_ICON_IDS` | [features/home/components/lib/HomeIcon.tsx](../features/home/components/lib/HomeIcon.tsx) | server | features/home/v2 - the homepage design's own icons |
 | `Reveal, HeroReveal, LifeStrand` | [features/home/components/lib/motion.tsx](../features/home/components/lib/motion.tsx) | client | The source's `.rv` / `.rv-l` / `.rv-s` classes plus its single shared |
-| `BornInIndia` | [features/home/components/sections/BornInIndia.tsx](../features/home/components/sections/BornInIndia.tsx) | server | The four "this is for…" lines, in source order. |
+| `BornInIndia` | [features/home/components/sections/BornInIndia.tsx](../features/home/components/sections/BornInIndia.tsx) | server | 17.067 / 24.889 on linenw at 78%, and it does not wrap: the design |
 | `Certifications` | [features/home/components/sections/Certifications.tsx](../features/home/components/sections/Certifications.tsx) | server | The accreditation strip. |
 | `Discover` | [features/home/components/sections/Discover.tsx](../features/home/components/sections/Discover.tsx) | server | Measured off the design and written as shares of the rail, the same way |
 | `ExploreKyg` | [features/home/components/sections/ExploreKyg.tsx](../features/home/components/sections/ExploreKyg.tsx) | client | `eyebrowTone` picks which of the design's two dark pills opens the section - |
@@ -197,15 +208,10 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `Journal` | [features/home/components/sections/Journal.tsx](../features/home/components/sections/Journal.tsx) | client | The rail is a carousel, at every width - it is never a grid that happens to |
 | `MeetGenee` | [features/home/components/sections/MeetGenee.tsx](../features/home/components/sections/MeetGenee.tsx) | server | `plate` is the shape of the character slot. |
 | `OneLifetime` | [features/home/components/sections/OneLifetime.tsx](../features/home/components/sections/OneLifetime.tsx) | server | Five moments, in the order a life reaches them. |
-| `OneLifetimeCurve` | [features/home/components/sections/OneLifetimeCurve.tsx](../features/home/components/sections/OneLifetimeCurve.tsx) | server | 15.644 under the pill here, against the 11.378 the rest of the |
+| `OneLifetimeCurve` | [features/home/components/sections/OneLifetimeCurve.tsx](../features/home/components/sections/OneLifetimeCurve.tsx) | client | The small-screen spine has no pane to pin, so it measures its own travel. |
 | `Privacy` | [features/home/components/sections/Privacy.tsx](../features/home/components/sections/Privacy.tsx) | server | The quietest section on the page - no card, no panel, no photography. |
-| `ScienceTrust` | [features/home/components/sections/ScienceTrust.tsx](../features/home/components/sections/ScienceTrust.tsx) | server | The four trust claims, in reading order. |
-| `WhyGeneticTesting` | [features/home/components/sections/WhyGeneticTesting.tsx](../features/home/components/sections/WhyGeneticTesting.tsx) | server | EVERY MEASUREMENT HERE IS READ OFF THE DESIGN AND WRITTEN AS A SHARE OF THE |
-| `Button` | [features/home/components/ui/Button.tsx](../features/home/components/ui/Button.tsx) | server | THE homepage button. Four skins, one box. |
-| `Icon, IconWell` | [features/home/components/ui/Icon.tsx](../features/home/components/ui/Icon.tsx) | server | The 48px tinted well the icons sit in throughout the page - claims, care |
-| `Rule` | [features/home/components/ui/Rule.tsx](../features/home/components/ui/Rule.tsx) | server | The page's hairline. It TAPERS - solid to 34% of the width, gone by 92% - |
-| `Section` | [features/home/components/ui/Section.tsx](../features/home/components/ui/Section.tsx) | server | THE section shell. Every band on the homepage is one of these - there is no |
-| `Eyebrow, Heading, Lead, SectionTitle` | [features/home/components/ui/SectionTitle.tsx](../features/home/components/ui/SectionTitle.tsx) | server | The boxed eyebrow. A PILL, not bare text - the box is what makes a 13.5px |
+| `ScienceTrust` | [features/home/components/sections/ScienceTrust.tsx](../features/home/components/sections/ScienceTrust.tsx) | server | `hoverTint` on an INK ground is a java2 wash, not the pale `mist` the |
+| `WhyGeneticTesting` | [features/home/components/sections/WhyGeneticTesting.tsx](../features/home/components/sections/WhyGeneticTesting.tsx) | server | `hoverTint` lights the cell under the cursor in `mint` (#e6f4f3) - the pale |
 
 ### `features/landing`
 
@@ -265,9 +271,9 @@ Owned by one feature. Needed by a second feature? Promote it to
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `CategoriesView, CategoryDetailView` | [features/tests/components/Categories.tsx](../features/tests/components/Categories.tsx) | server | features/tests - the /categories listing and one category's page |
+| `CategoriesView, HERO` | [features/tests/components/CategoriesView.tsx](../features/tests/components/CategoriesView.tsx) | client | The frame draws ONE category card in full ("Wellness · 9 TESTS"), which is |
 | `CardArt` | [features/tests/components/CategoryCardArt.tsx](../features/tests/components/CategoryCardArt.tsx) | server | features/tests - card artwork for the category + product cards |
-| `CategoryTestGrid` | [features/tests/components/CategoryTestGrid.tsx](../features/tests/components/CategoryTestGrid.tsx) | client | features/tests - the product grid on /categories/[category_slug], with search |
+| `CategoryTestsView` | [features/tests/components/CategoryTestsView.tsx](../features/tests/components/CategoryTestsView.tsx) | client | /categories/[category_slug] - Figma 343:3047 ("03 · Tests") |
 | `FigmaIcon, FIGMA_ICON_IDS` | [features/tests/components/FigmaIcon.tsx](../features/tests/components/FigmaIcon.tsx) | server | Every id present on disk - exported so a data file can be validated. |
 | `RevealRoot` | [features/tests/components/RevealRoot.tsx](../features/tests/components/RevealRoot.tsx) | client | threshold 0, NOT the reference build's 0.12: its `.reveal` targets are small |
 | `ScrollProgress` | [features/tests/components/ScrollProgress.tsx](../features/tests/components/ScrollProgress.tsx) | client | Fixed reading-progress bar across the top of a test page. |
