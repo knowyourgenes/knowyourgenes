@@ -1,35 +1,36 @@
-import ContactChannels from './ContactChannels';
-import ContactForm from './ContactForm';
+import FinalCta from '@/features/home/components/sections/FinalCta';
+import Journal from '@/features/home/components/sections/Journal';
+
 import ContactHero from './ContactHero';
-import SelfServe from './SelfServe';
+import HowToReachUs from './HowToReachUs';
+import MightBeQuicker from './MightBeQuicker';
+import SendMessage from './SendMessage';
 
 /**
- * The /contact page body.
+ * /contact - Figma 346:1112 ("06 · Contact — 1024").
  *
- * The route lives under app/(site)/, so the global SiteHeader/SiteFooter wrap
- * this. The Figma frame draws its own header and footer, but those are ordinary
- * SITE chrome (brand, nav, CTA / dark 3-column footer) rather than anything
- * page-specific - forking a third bespoke copy per page is exactly what caused
- * the duplication already flagged across this repo. Aligning SiteHeader and
- * SiteFooter with the frame is a separate, site-wide change.
+ * The route lives under app/(site)/, so SiteHeader and SiteFooter come from
+ * that layout. The frame draws both, but they are ordinary site chrome rather
+ * than anything this page owns.
  *
- * MAIN section geometry: 1180 rail with 32 side padding, left column 499,
- * right column 585, 32 gap - reproduced here as a 499/585 fractional grid so it
- * holds its proportions at every width and stacks below `lg`.
+ * THE LAST TWO SECTIONS ARE THE HOMEPAGE'S, not copies of them. The frame
+ * draws The Journal and the Final CTA identically to the homepage's 12 and 13 -
+ * same seven-card rail at the same 224.71 pitch, same couplet, same two CTAs -
+ * so this renders those components rather than a second implementation that
+ * would have to be kept in step by hand.
+ *
+ * GROUNDS ALTERNATE, as they do on the homepage: cream, sand, ink, cream,
+ * sand. If a section is added, it takes the ground its neighbours leave free.
  */
 export default function ContactPage() {
   return (
     <>
       <ContactHero />
-
-      <section className="bg-linenw px-5 pb-[clamp(48px,6vw,80px)] sm:px-10 lg:px-20">
-        <div className="mx-auto grid w-full max-w-[1600px] items-start gap-8 lg:grid-cols-[minmax(0,499fr)_minmax(0,585fr)] lg:px-8">
-          <ContactChannels />
-          <ContactForm />
-        </div>
-      </section>
-
-      <SelfServe />
+      <SendMessage /> {/* cream */}
+      <HowToReachUs /> {/* sand  */}
+      <MightBeQuicker /> {/* ink   */}
+      <Journal /> {/* cream */}
+      <FinalCta /> {/* sand  */}
     </>
   );
 }

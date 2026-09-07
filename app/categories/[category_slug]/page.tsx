@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import SiteHeader from '@/components/shared/SiteHeader';
 import SiteFooter from '@/components/shared/SiteFooter';
-import { CATEGORIES, getCategory } from '@/lib/categoriesdata';
-import { CategoryDetailView } from '@/features/tests';
+import { CATEGORIES, getCategory, visibleProducts } from '@/lib/categoriesdata';
+import { CategoryTestsView } from '@/features/tests';
+import { getCatalogPrices } from '@/features/products/server/kit-pricing';
 
 type Params = Promise<{ category_slug: string }>;
 
@@ -31,11 +32,18 @@ export default async function CategoryDetailPage({ params }: { params: Params })
   const { category_slug } = await params;
   const category = getCategory(category_slug);
   if (!category) notFound();
+
+  // ONE query for the whole grid - getCatalogPrices exists for exactly this and
+  // swallows its own DB errors, so an outage renders unpriced cards rather than
+  // a 500. Slugs with no active Package are simply absent from the record and
+  // the card falls back to "Price on request".
+  const pricing = await getCatalogPrices(visibleProducts(category).map((p) => p.slug));
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <CategoryDetailView category={category} />
+        <CategoryTestsView category={category} pricing={pricing} />
       </main>
       <SiteFooter />
     </div>

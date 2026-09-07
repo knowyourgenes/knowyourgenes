@@ -25,6 +25,22 @@ export interface CategoryProduct {
   name: string;
   /** short trait/panel count shown as a chip, e.g. "3 health checks" */
   meta?: string;
+  /**
+   * The concerns this report actually answers, for the chip row on the category
+   * card (Figma 343:3047).
+   *
+   * AUTHORED, NOT DERIVED, and deliberately so. `keywords` below is lowercase,
+   * generic-first and documented never-rendered; the `tabLabel`s on the detail
+   * page match this list for only three of nine products and `sleep` has none
+   * at all. Deriving would have printed "Women / Female / Pcos" on card one and
+   * nothing on card seven. Each label is Title Case as it should read on screen,
+   * and each `icon` is a key from features/tests/components/icons.tsx.
+   *
+   * The count here is the number of CONCERNS, which is not always `meta`'s
+   * number: my-wellness is 52 traits delivered as 4 reports, so it carries 52
+   * in `meta` and 4 concerns. That is the honest reading of both.
+   */
+  concerns?: { label: string; icon: IconKey }[];
   blurb: string;
   href: string;
   /** hidden products are declared but not rendered on the category page yet */
@@ -58,6 +74,17 @@ export interface TestCategory {
   slug: string;
   name: string;
   tagline: string;
+  /**
+   * The trailing clause of `tagline` that the category hero sets in cursive
+   * (Figma 343:3047 renders "Genetic health reports / from one saliva kit." with
+   * the second line in Cormorant italic).
+   *
+   * Authored rather than parsed. Splitting a tagline on a heuristic works for
+   * this one string and breaks on the next category someone adds; if this is
+   * absent the hero simply renders the tagline whole, which is a correct-looking
+   * fallback rather than a wrong-looking guess.
+   */
+  heroTurn?: string;
   blurb: string;
   /** accent family used for the card + detail header */
   accent: 'wellness' | 'mens' | 'womens';
@@ -74,6 +101,7 @@ export const CATEGORIES: TestCategory[] = [
     slug: 'wellness',
     name: 'Wellness',
     tagline: 'Genetic health reports from one saliva kit',
+    heroTurn: 'from one saliva kit.',
     blurb:
       'Understand how your body is genetically wired, from everyday wellness to the health checks most people never think to make. One at-home saliva kit per report.',
     accent: 'wellness',
@@ -92,6 +120,13 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'womens-health',
         name: "Women's Health DNA",
         meta: '5 health checks',
+        concerns: [
+          { label: 'PCOS', icon: 'scan-heart' },
+          { label: 'Pregnancy Loss', icon: 'pregnancy-loss' },
+          { label: 'Peripartum Mood', icon: 'baby' },
+          { label: 'Bone Density', icon: 'bone' },
+          { label: 'Joint Risk', icon: 'activity' },
+        ],
         blurb:
           'PCOS, pregnancy loss, peripartum mood, bone density and joint risk - five answers from one at-home saliva sample.',
         href: '/categories/wellness/womens-health',
@@ -124,6 +159,11 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'mens-health',
         name: "Men's Wellness DNA",
         meta: '3 health checks',
+        concerns: [
+          { label: 'Hair Fall', icon: 'scissors' },
+          { label: 'Testosterone', icon: 'flask' },
+          { label: 'Male Fertility', icon: 'baby' },
+        ],
         blurb: 'Hair fall, testosterone and male fertility - three answers from one at-home saliva sample, in 7 days.',
         href: '/categories/wellness/mens-health',
         // No `image` on purpose. The only asset for this test is
@@ -158,6 +198,12 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'my-wellness',
         name: 'My Wellness DNA',
         meta: '52 traits · 4 reports',
+        concerns: [
+          { label: 'Diet', icon: 'salad' },
+          { label: 'Weight', icon: 'scale' },
+          { label: 'Fitness', icon: 'dumbbell' },
+          { label: 'Detox', icon: 'droplet' },
+        ],
         blurb: 'Diet, weight, fitness and detox - 52 traits from one saliva kit, delivered as four reports in 7 days.',
         href: '/categories/wellness/my-wellness',
         image: { src: '/tests/my-wellness/hero-wellness.png', alt: 'A person mid-stride on a morning walk' },
@@ -188,6 +234,11 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'immunity-health',
         name: 'Immunity DNA',
         meta: '24 markers',
+        concerns: [
+          { label: 'Infection', icon: 'virus' },
+          { label: 'Micronutrients', icon: 'pill' },
+          { label: 'Detox', icon: 'droplet' },
+        ],
         blurb:
           'Eleven infection results, eleven micronutrients and three detox readings - why you catch it first, and why it keeps you down longer.',
         href: '/categories/wellness/immunity-health',
@@ -221,6 +272,11 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'skin-health',
         name: 'Skin Health DNA',
         meta: '20 markers',
+        concerns: [
+          { label: 'Skin Conditions', icon: 'acne' },
+          { label: 'Food Sensitivities', icon: 'gluten' },
+          { label: 'Nutrients', icon: 'pill' },
+        ],
         blurb:
           'Ten skin conditions, six food sensitivities and four nutrients - what your skin is doing years before the mirror shows it.',
         href: '/categories/wellness/skin-health',
@@ -255,6 +311,15 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'eye-health',
         name: 'Eye Health DNA',
         meta: '7 health checks',
+        concerns: [
+          { label: 'Glaucoma', icon: 'eye' },
+          { label: 'Retinopathy', icon: 'eye-off' },
+          { label: 'Cataract', icon: 'cataract' },
+          { label: 'Myopia', icon: 'glasses' },
+          { label: 'Eye Pressure', icon: 'pressure' },
+          { label: 'Macular Degeneration', icon: 'target' },
+          { label: 'Retinal Occlusion', icon: 'alert' },
+        ],
         blurb:
           'Glaucoma, retinopathy, cataract, myopia, eye pressure, macular degeneration and retinal occlusion - seven findings from one saliva sample.',
         href: '/categories/wellness/eye-health',
@@ -287,6 +352,16 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'sleep',
         name: 'Sleep DNA',
         meta: '28 readings',
+        concerns: [
+          { label: 'Sleep Apnea', icon: 'air' },
+          { label: 'Insomnia', icon: 'moon' },
+          { label: 'Duration', icon: 'clock' },
+          { label: 'Teeth Grinding', icon: 'stretch' },
+          { label: 'Restless Legs', icon: 'footprints' },
+          { label: 'Narcolepsy', icon: 'armchair' },
+          { label: 'Airway', icon: 'stethoscope' },
+          { label: 'Nutrients', icon: 'pill' },
+        ],
         blurb:
           'Apnea, insomnia, duration, teeth grinding, restless legs, narcolepsy, your airway and the eight nutrients sleep runs on.',
         href: '/categories/wellness/sleep',
@@ -320,6 +395,11 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'ancestry',
         name: 'Ancestry DNA',
         meta: '10 global regions',
+        concerns: [
+          { label: 'Global Regions', icon: 'globe' },
+          { label: '42,000+ Markers', icon: 'dna' },
+          { label: 'Gene Journey', icon: 'compass' },
+        ],
         blurb:
           'Ancestors In Me - where you come from, mapped across up to 10 global regions from 42,000+ markers, written up as a Gene Journey.',
         href: '/categories/wellness/ancestry',
@@ -347,6 +427,14 @@ export const CATEGORIES: TestCategory[] = [
         slug: 'kidney-health',
         name: 'Kidney Health DNA',
         meta: '7 health checks',
+        concerns: [
+          { label: 'Uric Acid', icon: 'droplet' },
+          { label: 'Cysts', icon: 'cyst' },
+          { label: 'Magnesium', icon: 'pill' },
+          { label: 'Chronic Kidney Disease', icon: 'alert' },
+          { label: 'Protein Loss', icon: 'flask' },
+          { label: 'Stones', icon: 'gem' },
+        ],
         blurb:
           'Uric acid, cysts, magnesium, chronic kidney disease, protein loss and stones - twelve genetic markers for an organ with no pain nerves.',
         href: '/categories/wellness/kidney-health',

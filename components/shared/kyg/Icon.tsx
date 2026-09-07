@@ -55,6 +55,40 @@ const PATHS = {
     'M12 16.2C14.32 16.2 16.2 14.32 16.2 12C16.2 9.68 14.32 7.8 12 7.8C9.68 7.8 7.8 9.68 7.8 12C7.8 14.32 9.68 16.2 12 16.2ZM12 3V6M12 18V21M3 12H6M18 12H21',
   /** One person - `users` is two, and station 02 is deliberately one. */
   user: 'M5 20C5 16 8.2 13.6 12 13.6C15.8 13.6 19 16 19 20M12 11.4C13.88 11.4 15.4 9.88 15.4 8C15.4 6.12 13.88 4.6 12 4.6C10.12 4.6 8.6 6.12 8.6 8C8.6 9.88 10.12 11.4 12 11.4Z',
+  // The contact page's five. Traced from that frame's own exports and scaled
+  // onto this 24 grid (from 16, 10 and 10 respectively), so they are the
+  // design's geometry rather than a lookalike picked out of the set above.
+  /** Speech bubble with two lines - the hero's floating pill. */
+  message: 'M4 4H20V16H5.2L4 18V4Z M8 9H16M8 12H13',
+  /** Envelope - the email route. */
+  mail: 'M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4Z M2 7L12 13L22 7',
+  /** Two stacked sheets - "Copy address". */
+  copy: 'M19 9H11C9.9 9 9 9.89 9 11V19C9 20.1 9.9 21 11 21H19C20.1 21 21 20.1 21 19V11C21 9.89 20.1 9 19 9Z M5 15H4C3.47 15 2.96 14.79 2.59 14.41C2.21 14.04 2 13.53 2 13V4C2 3.47 2.21 2.96 2.59 2.59C2.96 2.21 3.47 2 4 2H13C13.53 2 14.04 2.21 14.42 2.59C14.79 2.96 15 3.47 15 4V5',
+  /** Map pin - "Get directions". */
+  pin: 'M12 21C12 21 5 15.5 5 10C5 9.08 5.18 8.17 5.53 7.32C5.89 6.47 6.4 5.7 7.05 5.05C7.7 4.4 8.47 3.88 9.32 3.53C10.17 3.18 11.08 3 12 3C12.92 3 13.83 3.18 14.68 3.53C15.53 3.88 16.3 4.4 16.95 5.05C17.6 5.7 18.12 6.47 18.47 7.32C18.82 8.17 19 9.08 19 10C19 15.5 12 21 12 21Z M12 12.6C13.44 12.6 14.6 11.44 14.6 10C14.6 8.56 13.44 7.4 12 7.4C10.56 7.4 9.4 8.56 9.4 10C9.4 11.44 10.56 12.6 12 12.6Z',
+  /** Question mark in a circle - "Read the FAQ". */
+  help: 'M9.1 9C9.35 8.35 9.81 7.81 10.42 7.47C11.02 7.12 11.73 7 12.41 7.12C13.09 7.24 13.72 7.59 14.17 8.11C14.63 8.64 14.88 9.31 14.9 10C14.9 12 11.9 13 11.9 13M12 17H12.01M12 22C14.65 22 17.2 20.95 19.07 19.07C20.95 17.2 22 14.65 22 12C22 9.35 20.95 6.8 19.07 4.93C17.2 3.05 14.65 2 12 2C9.35 2 6.8 3.05 4.93 4.93C3.05 6.8 2 9.35 2 12C2 14.65 3.05 17.2 4.93 19.07C6.8 20.95 9.35 22 12 22Z',
+
+  // The /about frame's two bare marks. It draws a bare tick and a bare cross,
+  // NOT the circled `check` above - the rows in "What also matters / What we
+  // intend" and "Not this / But this" are a two-column contrast, and a circled
+  // glyph reads as a status badge rather than as a bullet.
+  /** Bare tick. Lucide `check`, and the frame's geometry to the decimal. */
+  tick: 'M20 6 9 17l-5-5',
+  /** Bare cross, the tick's opposite number. Lucide `x`. */
+  cross: 'M18 6 6 18M6 6l12 12',
+
+  // The /blog frame's three. Traced from its own exports and scaled onto this
+  // 24 grid (from 10 and 12), so they are the design's geometry rather than a
+  // lookalike. `search`, `chevron` and `arrow` were already an exact match and
+  // are reused as they are.
+  /** Five-point star - the EDITOR'S PICK badge. */
+  star: 'M12 2.4 14.93 8.35 21.5 9.31 16.75 13.94 17.86 20.49 12 17.38 6.14 20.47 7.25 13.92 2.5 9.29 9.07 8.33Z',
+  /** Calendar - the publish date beside each post. */
+  calendar: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+  /** Clock - the read time beside it. */
+  clock: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 7.2V12l3.3 2.4',
+
   /** A head over a wide open arc - station 05, "as your body changes". */
   figure:
     'M4 17C7 11 9 9 12 9C15 9 17 11 20 17M12 8.4C13.33 8.4 14.4 7.33 14.4 6C14.4 4.67 13.33 3.6 12 3.6C10.67 3.6 9.6 4.67 9.6 6C9.6 7.33 10.67 8.4 12 8.4Z',

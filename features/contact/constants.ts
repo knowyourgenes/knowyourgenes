@@ -1,102 +1,111 @@
+import type { IconName } from '@/components/shared/kyg';
+
 // =============================================================================
-// features/contact - page content
+// features/contact - every word on the page, verbatim from Figma 346:1112
 // -----------------------------------------------------------------------------
-// Copy and icon ids transcribed from the Figma "Contact Us" frame (node
-// 2066:1568). Icon ids are the glyph's "<y>-<x>" position in that frame, which
-// is exactly what the extracted specs report - see components/ContactIcon.tsx.
+// Copy lives here rather than inline so the components stay layout-only and a
+// wording change is one edit in one file.
 // =============================================================================
 
-import type { Channel, HeroChip, SelfServeCard } from './types';
-
-export const CONTACT_HERO = {
-  eyebrow: { label: "We're here to help", icon: '164-620' },
-  /** Roman line + the teal-gradient Cormorant italic line beneath it. */
-  titleTop: 'DNA Can Be Complex.',
-  titleAccent: "Understanding It Shouldn't Be.",
-  lead: 'Got a question about your report, test, or booking? Just reach out. A real person from the Know Your Genes team is here to help.',
+export const HERO = {
+  eyebrow: 'We’re here to help',
+  /** Sits after the pill, past a hairline. */
+  aside: 'A REAL PERSON REPLIES',
+  headline: 'DNA can be complex.',
+  turn: 'Understanding it shouldn’t be.',
+  /** The pill floating over the photograph. */
+  pill: 'A real person reads every message and replies, usually the same day',
+  shelf: {
+    lead: 'Got a question about your report, test, or booking? Just reach out.',
+    note: 'A real person from the Know Your Genes team is here to help, not a bot, and not an automated queue.',
+  },
 } as const;
 
-export const HERO_CHIPS: HeroChip[] = [
-  { label: 'hello@kyg.in', icon: '466-430' },
-  { label: 'WhatsApp support', icon: '466-586' },
-  { label: 'Reviewed by our genetics team', icon: '466-780', tone: 'sea' },
-];
+export const FORM_COPY = {
+  eyebrow: 'Send a message',
+  headline: 'Tell us what you need.',
+  turn: 'We’ll pick it up from there.',
+  lead: 'Fields marked * are required. Or email hello@kyg.in directly, either reaches the same team.',
+  consent:
+    'I agree that Know Your Genes may use these details to respond to my message, in line with the Privacy Policy. Your genetic data is never sold or shared.',
+  submit: 'Send message',
+} as const;
 
-/** Left column. The last entry is the inverted eden card in the design. */
-export const CHANNELS: Channel[] = [
+export const REACH = {
+  eyebrow: 'How to reach us',
+  headline: 'Three ways in.',
+  turn: 'Every one of them lands with a person.',
+  aside: { lead: 'A real person replies.', turn: 'Usually the same day.' },
+  whatsapp: {
+    kicker: 'WHATSAPP & CALL',
+    number: '+91 __ ____ ____',
+    body: 'Quick questions and free counselling sessions happen here. Send a message and someone picks it up, usually the same day.',
+    cta: 'Open WhatsApp',
+    note: 'or call the same number',
+  },
+} as const;
+
+/** The two cards beside the WhatsApp panel. */
+export const ROUTES: {
+  icon: IconName;
+  kicker: string;
+  title: string;
+  body: string;
+  cta: string;
+  ctaIcon: IconName;
+  href: string;
+}[] = [
   {
-    kicker: 'Email us',
+    icon: 'mail',
+    kicker: 'EMAIL US',
     title: 'hello@kyg.in',
     body: 'Best for report questions and anything detailed. We read every one.',
-    icon: '598-204',
+    cta: 'Copy address',
+    ctaIcon: 'copy',
     href: 'mailto:hello@kyg.in',
   },
   {
-    kicker: 'WhatsApp & call',
-    title: '+91 __ ____ ____',
-    body: 'Quick questions and free counselling sessions happen on WhatsApp.',
-    icon: '769-204',
-  },
-  {
-    kicker: 'Our accredited lab',
-    title: 'Neotech World Lab Pvt. Ltd',
-    body: 'MG Road, Gurugram · NABL-accredited (ISO 15189). Where every sample is processed and reviewed.',
-    icon: '941-204',
-    titleSize: 'sm',
-  },
-  {
-    kicker: 'Response',
-    title: 'A real person replies',
-    body: 'Not a bot, and not an automated queue. Someone from the team will get back to you.',
-    icon: '1106-203',
-    tone: 'inverted',
-    titleSize: 'sm',
+    icon: 'flask',
+    kicker: 'OUR ACCREDITED LAB',
+    title: 'Neotech World Lab',
+    body: 'MG Road, Gurugram · NABL-accredited (ISO 15189).',
+    cta: 'Get directions',
+    ctaIcon: 'pin',
+    href: 'https://maps.google.com/?q=Neotech+World+Lab+MG+Road+Gurugram',
   },
 ];
 
-export const FORM_COPY = {
-  eyebrow: { label: 'Send a message', icon: '610-752' },
-  title: 'Tell us what you need.',
-  lead: "Fill this in and we'll pick it up from there. Fields marked * are required.",
-  submit: 'Send message',
-  /** Rendered to the right of the submit button. */
-  fallbackPrefix: 'or email',
-  fallbackEmail: 'hello@kyg.in',
-  fallbackSuffix: 'directly',
-  consentPrefix: 'I agree that Know Your Genes may use these details to respond to my message, in line with the',
-  consentLinkLabel: 'Privacy Policy',
-  consentLinkHref: '/privacy',
-  consentSuffix: '. Your genetic data is never sold or shared.',
+export const QUICKER = {
+  eyebrow: 'Might be quicker',
+  headline: 'Looking for something specific?',
+  turn: 'Start here.',
+  aside: { lead: 'Four quick routes.', turn: 'No form required.' },
 } as const;
 
-export const SELF_SERVE = {
-  eyebrow: { label: 'Might be quicker', icon: '1477-628' },
-  title: 'Looking for something specific?',
-} as const;
-
-export const SELF_SERVE_CARDS: SelfServeCard[] = [
+/** Two columns of two. The design splits them 1-2 / 3-4. */
+export const SHORTCUTS: { icon: IconName; title: string; body: string; href: string }[] = [
   {
+    icon: 'help',
     title: 'Read the FAQ',
     body: 'Most questions about testing, results and privacy are answered here.',
-    icon: '1635-191',
-    href: '/categories/wellness/womens-health#faq',
+    href: '/about#faq',
   },
   {
+    icon: 'route',
     title: 'How it works',
     body: 'From ordering a kit to your findings, in a few simple steps.',
-    icon: '1635-475',
-    href: '/categories/wellness/womens-health#how-it-works-steps',
+    href: '/#how-it-works',
   },
   {
+    icon: 'dna',
     title: 'Explore the tests',
-    body: "Women's Health, Eye Health, Wellness and more, built for Indian bodies.",
-    icon: '1635-759',
+    body: 'Women’s Health, Eye Health, Wellness and more, built for Indian bodies.',
     href: '/categories',
   },
   {
+    icon: 'messages',
     title: 'Talk to an expert',
     body: 'Book a free counselling session to walk through your report.',
-    icon: '1635-1043',
-    href: 'mailto:hello@kyg.in?subject=Free%20counselling%20session',
+    href: '/contact#send-a-message',
   },
 ];
