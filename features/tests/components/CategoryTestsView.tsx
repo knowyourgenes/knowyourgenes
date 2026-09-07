@@ -84,7 +84,7 @@ function Chip({ label, icon, overflow = false }: { label: string; icon?: string;
       {icon ? (
         <Icon name={icon} className="h-[clamp(11.4px,1.111vw,17.8px)] w-[clamp(11.4px,1.111vw,17.8px)] shrink-0" />
       ) : null}
-      <span className="whitespace-nowrap font-kyg text-[clamp(8.9px,0.868vw,13.9px)] font-semibold leading-[1.36]">
+      <span className="whitespace-nowrap font-kyg text-[clamp(11px,0.868vw,13.9px)] font-semibold leading-[1.36]">
         {label}
       </span>
     </span>
@@ -152,7 +152,7 @@ function TestCard({ product, pricing }: { product: CategoryProduct; pricing?: Ki
           </Link>
         </h3>
 
-        <p className="font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-normal leading-[1.481] text-fusc">
+        <p className="font-kyg text-[clamp(13px,0.9375vw,15px)] font-normal leading-[1.481] text-fusc">
           {product.blurb}
         </p>
       </div>
@@ -184,7 +184,7 @@ function TestCard({ product, pricing }: { product: CategoryProduct; pricing?: Ki
               {formatPaise(pricing.price)}
             </span>
             {reduced ? (
-              <span className="font-kyg text-[clamp(10px,0.972vw,15.6px)] font-normal leading-[1.428] text-boulder line-through">
+              <span className="font-kyg text-[clamp(12px,0.972vw,15.6px)] font-normal leading-[1.428] text-boulder line-through">
                 {formatPaise(pricing.compareAtPrice as number)}
               </span>
             ) : null}
@@ -192,9 +192,7 @@ function TestCard({ product, pricing }: { product: CategoryProduct; pricing?: Ki
         ) : (
           /* No active Package row. Never render a zero, and never offer a buy
              button for something with no price. */
-          <span className="font-kyg text-[clamp(10.3px,1.007vw,16.1px)] font-medium text-boulder">
-            Price on request
-          </span>
+          <span className="font-kyg text-[clamp(12px,1.007vw,16.1px)] font-medium text-boulder">Price on request</span>
         )}
 
         {pricing && pricing.inStock ? (

@@ -1,192 +1,185 @@
-// =============================================================================
-// features/about - shared presentational primitives
-// -----------------------------------------------------------------------------
-// Values read from the Figma "About Us" frame (node 2076:2376) via the REST API.
-// The artboard is 1440: section gutter 80, inner rail 1280 with its own 32, so
-// the content column is 1216 - the same system as the tests and contact pages.
-//
-// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
-// =============================================================================
+import type { ReactNode } from 'react';
 
-import Image from 'next/image';
-
+import { Icon } from '@/components/shared/kyg';
 import { cn } from '@/lib/utils';
-import { AboutIcon } from './AboutIcon';
+
+// =============================================================================
+// features/about - the shapes THIS page repeats
+// -----------------------------------------------------------------------------
+// Everything shared with the homepage, /contact, /blog and /categories comes
+// from @/components/shared/kyg - Section, Eyebrow, Heading, Note, Button, Icon,
+// Rule, PageMasthead. Nothing here duplicates any of those.
+//
+// All measurements are the frame's own at its 1024 artboard, written as vw so
+// they hold proportion up to the 1600 rail Container caps at. Each clamp's floor
+// is the 1024 value: below a laptop the page stops shrinking type and reflows.
+// =============================================================================
 
 /**
- * The designer's placeholder photography, dropped into the frame's `div.imgslot`
- * nodes (Figma node 2084:4145 - same layout as 2076:2376, artwork added).
- *
- * In the frame, filling a slot sets its glyph + caption overlay to HIDDEN, so
- * these REPLACE the stand-in rather than layering over it. Every source is
- * larger than its slot and cropped by object-cover, so `position` exists to keep
- * the subject in frame where the source and slot aspect ratios disagree.
- *
- * next/image handles srcset and WebP/AVIF negotiation; the files on disk are
- * plain JPEG at roughly 2x the slot, matching the tests page's convention.
+ * The bare uppercase label. NOT the eyebrow pill - this frame uses both, and the
+ * difference is deliberate: a pill opens a section, a kicker labels a block
+ * inside one.
  */
-export function Photo({
-  src,
-  alt,
+export function Kicker({
+  children,
+  size = 'lg',
+  tone = 'eden',
   className,
-  imgClassName,
-  sizes = '(min-width: 1024px) 50vw, 100vw',
-  position,
-  priority,
 }: {
-  src: string;
-  alt: string;
+  children: ReactNode;
+  /**
+   * lg = the section-internal label (0.2em), sm = a flag (0.16em).
+   *
+   * The clamp FLOORS are raised above the frame's 8.2 and 7.6: those are the
+   * values at a 1024 artboard, and a clamp floor is what a 360px phone actually
+   * renders - 8px uppercase with 0.2em tracking is not readable. Only the floor
+   * moves, so every width from 1024 up is still the frame's exact size.
+   */
+  size?: 'sm' | 'lg';
+  tone?: 'eden' | 'java' | 'ice' | 'muted' | 'dim';
   className?: string;
-  imgClassName?: string;
-  sizes?: string;
-  position?: string;
-  priority?: boolean;
 }) {
   return (
-    <div className={cn('relative overflow-hidden', className)}>
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes={sizes}
-        priority={priority}
-        style={position ? { objectPosition: position } : undefined}
-        className={cn('object-cover', imgClassName)}
-      />
+    <p
+      className={cn(
+        'font-kyg font-bold uppercase',
+        size === 'lg'
+          ? 'text-[clamp(10px,0.801vw,12.8px)] leading-[1.5] tracking-[0.2em]'
+          : 'text-[clamp(9.5px,0.742vw,11.9px)] leading-[1.5] tracking-[0.16em]',
+        tone === 'eden' ? 'text-eden' : null,
+        tone === 'java' ? 'text-java2' : null,
+        tone === 'ice' ? 'text-ice' : null,
+        tone === 'muted' ? 'text-boulder' : null,
+        tone === 'dim' ? 'text-linenw/45' : null,
+        className
+      )}
+    >
+      {children}
+    </p>
+  );
+}
+
+/**
+ * chip -> arrow -> chip, ending on a filled one. Drawn in 03, 06 and 12.
+ *
+ * IT WRAPS rather than scrolls. A sequence whose whole point is where it ends up
+ * must not have its end hidden off the side of a phone.
+ */
+export function Chain({
+  items,
+  tone = 'light',
+  className,
+}: {
+  items: readonly string[];
+  /** `dark` is the ink-ground variant used on 12's sand card and 09. */
+  tone?: 'light' | 'dark';
+  className?: string;
+}) {
+  const dark = tone === 'dark';
+  return (
+    <div className={cn('flex flex-wrap items-center gap-[clamp(5.7px,0.557vw,8.9px)]', className)}>
+      {items.map((label, i) => {
+        const last = i === items.length - 1;
+        return (
+          <div key={label} className="contents">
+            {i > 0 ? (
+              <Icon
+                name="arrow"
+                strokeWidth={2}
+                className={cn(
+                  'h-[clamp(9px,0.879vw,14.1px)] w-[clamp(9px,0.879vw,14.1px)] shrink-0',
+                  dark ? 'text-linenw/40' : 'text-eden/45'
+                )}
+              />
+            ) : null}
+            <span
+              className={cn(
+                'inline-flex shrink-0 items-center rounded-sm px-[clamp(8.5px,0.83vw,13.3px)] py-[clamp(5px,0.488vw,7.8px)]',
+                'font-kyg text-[clamp(9.6px,0.9375vw,15px)] leading-[1.48]',
+                last
+                  ? 'bg-eden font-bold text-white'
+                  : dark
+                    ? 'bg-white/[0.06] font-medium text-linenw ring-1 ring-inset ring-white/[0.14]'
+                    : 'bg-eden/[0.05] font-medium text-eden ring-1 ring-inset ring-eden/[0.15]'
+              )}
+            >
+              {label}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-/** Section grounds used by this page. */
-export type AboutGround = 'cream' | 'veil' | 'mintFade' | 'sageFade' | 'ink';
-
-export const GROUND: Record<AboutGround, string> = {
-  cream: 'bg-linenw text-mine',
-  veil: 'bg-white/70 text-mine',
-  mintFade: 'bg-gradient-to-b from-linenw to-sage3 text-mine',
-  sageFade: 'bg-gradient-to-b from-sage3 to-linenw text-mine',
-  ink: 'bg-ink text-linenw',
-};
-
-export function Section({
-  ground = 'cream',
-  id,
-  className,
-  innerClassName,
-  children,
-}: {
-  ground?: AboutGround;
-  id?: string;
-  className?: string;
-  innerClassName?: string;
-  children: React.ReactNode;
-}) {
+/**
+ * The hint line the frame puts under an interactive block - "Click any point on
+ * the timeline", "Hover a belief to read why".
+ *
+ * `aria-hidden`, deliberately. It describes a POINTER affordance that keyboard
+ * and screen-reader users reach a different way, and every one of these blocks
+ * is built from real buttons that announce themselves. Reading "hover this" to
+ * someone who cannot hover is worse than silence.
+ */
+export function Hint({ children, tone = 'eden' }: { children: ReactNode; tone?: 'eden' | 'ice' }) {
   return (
-    <section
-      id={id}
-      // scroll-mt clears the 64px sticky SiteHeader on in-page jumps.
-      className={cn(GROUND[ground], 'px-5 sm:px-10 lg:px-20', id && 'scroll-mt-[80px]', className)}
+    <span
+      aria-hidden="true"
+      className={cn(
+        'inline-flex items-center gap-[clamp(6px,0.586vw,9.4px)] font-tst text-[clamp(14px,1.367vw,21.9px)] font-semibold italic',
+        tone === 'ice' ? 'text-ice' : 'text-eden'
+      )}
     >
-      <div className={cn('reveal mx-auto w-full max-w-[1600px] py-[clamp(56px,7vw,92px)] lg:px-8', innerClassName)}>
-        {children}
-      </div>
-    </section>
+      <Icon name="arrow" strokeWidth={2} className="h-[clamp(11px,1.074vw,17.2px)] w-[clamp(11px,1.074vw,17.2px)]" />
+      {children}
+    </span>
+  );
+}
+
+/** The frame's plain 1px divider (not the page's tapered `Rule`). */
+export function Hr({ tone = 'light', className }: { tone?: 'light' | 'dark'; className?: string }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={cn('h-px w-full', tone === 'dark' ? 'bg-white/10' : 'bg-zeus/[0.12]', className)}
+    />
   );
 }
 
 /**
- * Eyebrow pill. The frame uses a mint-tinted capsule with the design's own glyph
- * and an uppercase, letter-spaced label.
+ * The two-voice closing line several sections end on: a light Figtree phrase
+ * and a cursive turn beside it.
  */
-export function Eyebrow({
-  label,
-  icon,
-  tone = 'teal',
+export function Coda({
+  lead,
+  turn,
+  tone = 'light',
   className,
 }: {
-  label: string;
-  icon?: string;
-  tone?: 'teal' | 'ink';
+  lead: string;
+  turn: string;
+  tone?: 'light' | 'dark';
   className?: string;
 }) {
+  const dark = tone === 'dark';
   return (
-    // The frame's own metrics: h 38 = 1 + 8 + 20.2 + 8 + 1, pad 8/17/8/13, gap 9,
-    // glyph 19x23 (NOT square - forcing it squashes the artwork ~17%), label
-    // Figtree 700 13.5/20.2 ls 1.49 (0.11em).
-    //
-    // DO NOT override this `uppercase` with `[&>span]:normal-case`. Figma stores
-    // TEXT in `characters` exactly as the designer typed it and applies case
-    // separately via `style.textCase`, so a spec dump that prints only
-    // `characters` shows "Start with knowing" for a pill the frame renders as
-    // "START WITH KNOWING". Every eyebrow on this page - all 61 uppercase runs
-    // in the About frame - is textCase=UPPER; the frame contains no LOWER or
-    // TITLE node at all. Three sections had acquired that override on exactly
-    // this misreading and were reverted; the 0.11em tracking is uppercase
-    // tracking, which is the giveaway.
-    <span
-      className={cn(
-        'inline-flex max-w-full items-center gap-[9px] rounded-sm py-2 pl-[13px] pr-[17px]',
-        tone === 'ink'
-          ? 'border border-java/28 bg-java/14 text-ice'
-          : 'border border-eden/[0.15] bg-eden/[0.07] text-eden',
-        className
-      )}
-    >
-      {icon ? <AboutIcon id={icon} className="h-[23px] w-[19px] shrink-0" /> : null}
-      <span className="min-w-0 break-words font-kyg text-[13.5px] font-bold uppercase leading-[20.2px] tracking-[0.11em]">
-        {label}
+    <p className={cn('flex flex-wrap items-baseline gap-x-[0.35em] gap-y-1', className)}>
+      <span
+        className={cn(
+          'font-kyg text-[clamp(20px,2.539vw,40.6px)] font-light leading-[1.2] tracking-[-0.02em]',
+          dark ? 'text-linenw' : 'text-heavy'
+        )}
+      >
+        {lead}
       </span>
-    </span>
-  );
-}
-
-/** H2 - Figtree 700, clamped from the frame's desktop size. */
-export function Heading({
-  html,
-  className,
-  as: As = 'h2',
-}: {
-  html: string;
-  className?: string;
-  as?: 'h1' | 'h2' | 'h3';
-}) {
-  return (
-    <As
-      className={cn(
-        'font-kyg tracking-[-0.02em] text-mine [&_em]:not-italic',
-        As === 'h1'
-          ? 'text-[clamp(34px,6.4vw,76px)] font-extrabold leading-[1.02]'
-          : 'text-[clamp(26px,3.4vw,46px)] font-bold leading-[1.04]',
-        className
-      )}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
-}
-
-/** Body copy - Figtree 400, #5b564e. */
-export function Body({ html, className }: { html: string; className?: string }) {
-  return (
-    <p
-      className={cn('break-words font-kyg text-[clamp(15px,1.3vw,18px)] leading-[1.6] text-fusc', className)}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
-}
-
-/** The small pill used throughout for supporting statements. */
-export function Pill({ label, icon, className }: { label: string; icon?: string; className?: string }) {
-  return (
-    <span
-      className={cn(
-        'inline-flex max-w-full items-center gap-2 rounded-sm border border-mine/10 bg-white py-2.5 pl-3 pr-4 shadow-tst-soft',
-        className
-      )}
-    >
-      {icon ? <AboutIcon id={icon} className="h-[22px] w-[18px] shrink-0" /> : null}
-      <span className="min-w-0 break-words font-kyg text-[14.5px] font-semibold leading-[21px] text-[#2d2a24]">
-        {label}
+      <span
+        className={cn(
+          'font-tst text-[clamp(20px,1.855vw,29.7px)] font-semibold italic leading-[1.25]',
+          dark ? 'text-java2' : 'text-eden'
+        )}
+      >
+        {turn}
       </span>
-    </span>
+    </p>
   );
 }

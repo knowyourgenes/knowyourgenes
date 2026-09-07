@@ -104,7 +104,7 @@ function CategoryCard({ category }: { category: TestCategory }) {
         />
 
         <div className="flex flex-col p-[clamp(20px,3.333vw,53.3px)]">
-          <span className="inline-flex w-fit items-center rounded-sm bg-mint px-[clamp(7.1px,0.694vw,11.1px)] py-[clamp(3.6px,0.347vw,5.6px)] font-kyg text-[clamp(8.2px,0.799vw,12.8px)] font-bold uppercase leading-[1.478] tracking-[0.14em] text-eden">
+          <span className="inline-flex w-fit items-center rounded-sm bg-mint px-[clamp(7.1px,0.694vw,11.1px)] py-[clamp(3.6px,0.347vw,5.6px)] font-kyg text-[clamp(10px,0.799vw,12.8px)] font-bold uppercase leading-[1.478] tracking-[0.14em] text-eden">
             {products.length} {products.length === 1 ? 'test' : 'tests'}
           </span>
 
@@ -122,7 +122,7 @@ function CategoryCard({ category }: { category: TestCategory }) {
 
           <Rule className="mt-[clamp(14px,1.667vw,26.7px)]" />
 
-          <p className="mt-[clamp(12px,1.389vw,22.2px)] font-kyg text-[clamp(10.3px,1.007vw,16.1px)] font-normal leading-[1.517] text-boulder">
+          <p className="mt-[clamp(12px,1.389vw,22.2px)] font-kyg text-[clamp(12px,1.007vw,16.1px)] font-normal leading-[1.517] text-boulder">
             <b className="font-bold text-fusc">Inside</b> · {insideLine(products)}
           </p>
 

@@ -48,10 +48,23 @@ export function PageMasthead({
   return (
     <section
       aria-labelledby={id}
-      className={cn('w-full bg-linenw bg-cover bg-center bg-no-repeat', className)}
-      style={{
-        backgroundImage: `linear-gradient(90deg,rgba(250,246,239,0.96) 0%,rgba(250,246,239,0.86) 52%,rgba(250,246,239,0.42) 100%),url(${image})`,
-      }}
+      /* TWO WASHES, and the narrow one is not a weaker copy of the wide one.
+         The frame's 90deg ramp fades to 0.42 by the right edge because on a
+         1360 rail the copy stops around 46% of it. On a phone the rail IS the
+         copy: both the h1 and the lede run to ~95%, where that ramp is only
+         0.47 opaque, so text would sit on a half-covered photograph. Below `lg`
+         the wash is therefore near-flat and near-opaque; from `lg` up it is the
+         frame's exact gradient.
+
+         Keyed by class rather than inline style because an inline style cannot
+         carry a breakpoint - the photograph rides in on a custom property. */
+      className={cn(
+        'w-full bg-linenw bg-cover bg-center bg-no-repeat',
+        'bg-[image:linear-gradient(90deg,rgba(250,246,239,0.97)_0%,rgba(250,246,239,0.93)_100%),var(--masthead)]',
+        'lg:bg-[image:linear-gradient(90deg,rgba(250,246,239,0.96)_0%,rgba(250,246,239,0.86)_52%,rgba(250,246,239,0.42)_100%),var(--masthead)]',
+        className
+      )}
+      style={{ '--masthead': `url(${image})` } as React.CSSProperties}
     >
       <Container className={SECTION_Y}>
         <Eyebrow data-rise-load="1">{eyebrow}</Eyebrow>

@@ -206,7 +206,7 @@ export const CATEGORIES: TestCategory[] = [
         ],
         blurb: 'Diet, weight, fitness and detox - 52 traits from one saliva kit, delivered as four reports in 7 days.',
         href: '/categories/wellness/my-wellness',
-        image: { src: '/tests/my-wellness/hero-wellness.png', alt: 'A person mid-stride on a morning walk' },
+        image: { src: '/tests/my-wellness/hero-wellness.webp', alt: 'A person mid-stride on a morning walk' },
         icon: 'sprout',
         tone: 'moss',
         keywords: [
@@ -403,7 +403,7 @@ export const CATEGORIES: TestCategory[] = [
         blurb:
           'Ancestors In Me - where you come from, mapped across up to 10 global regions from 42,000+ markers, written up as a Gene Journey.',
         href: '/categories/wellness/ancestry',
-        image: { src: '/tests/ancestry/hero-map.png', alt: 'A map tracing ancestral migration routes' },
+        image: { src: '/tests/ancestry/hero-map.webp', alt: 'A map tracing ancestral migration routes' },
         icon: 'compass',
         tone: 'moss',
         keywords: [

@@ -72,7 +72,7 @@ export const NAV_MENUS: MegaMenu[] = [
         title: 'Ancestry DNA',
         desc: 'Trace your heritage and genetic origins.',
         href: '/categories/wellness/ancestry',
-        image: '/tests/ancestry/hero-map.png',
+        image: '/tests/ancestry/hero-map.webp',
         imageAlt: 'Ancestry DNA',
       },
       {
@@ -80,7 +80,7 @@ export const NAV_MENUS: MegaMenu[] = [
         title: 'My Wellness',
         desc: 'Diet, weight, fitness and detox insights in one report.',
         href: '/categories/wellness/my-wellness',
-        image: '/tests/my-wellness/hero-wellness.png',
+        image: '/tests/my-wellness/hero-wellness.webp',
         imageAlt: 'My Wellness',
       },
     ],

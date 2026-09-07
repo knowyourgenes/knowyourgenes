@@ -1,110 +1,70 @@
-// =============================================================================
-// About Us - SECTION 10 · WHAT WE BELIEVE (manifesto)
-// -----------------------------------------------------------------------------
-// Figma frame: 1440 x 1105, ink ground (#141b1a), pad 120/220. The inner rail is
-// 1000 with its own 32 -> a 936 content column, narrower than the page's usual
-// 1216, so the block is re-centred inside the shared <Section> at max-w-[936px].
-//
-// The list is four contiguous rows (161/161/161/162) that each carry a 1px
-// #faf6ef stroke; contiguous stroked rows read as horizontal rules, so they are
-// built as border-t per row plus a closing border-b on the list.
-//
-// RADIUS: one radius site-wide - rounded-sm. See docs/DESIGN.md §2.
-// =============================================================================
-
-import { Body, Eyebrow, Heading, Section } from '../ui';
+import { Eyebrow, Heading, Section } from '@/components/shared/kyg';
+import { MANIFESTO as C } from '../../constants';
+import { Hint } from '../ui';
 
 /**
- * Frame line 15-29 - the four manifesto statements, verbatim.
+ * 10 · What we believe - Figma 558:447.
  *
- * CASE: these are textCase=AS_TYPED in the frame and must stay sentence case.
- * This section's ONLY textCase=UPPER run is the eyebrow (y=10799.7); the audit of
- * all 61 uppercase runs found nothing between it and SECTION 11 (y=11876), so the
- * four statements below render exactly as typed. Do not "match the eyebrow" here.
+ * Four belief cards in a 2x2, each with an oversized Cormorant numeral behind
+ * it and a `why` that the frame reveals on hover.
+ *
+ * THE REVEAL IS NOT HOVER-ONLY. Tailwind gates `hover:` behind
+ * `@media (hover:hover)`, so on a touch screen a hover-only reveal is content
+ * that simply never appears. The `why` is therefore open by default wherever
+ * hovering is impossible, and collapses to the frame's behaviour only on a real
+ * pointer. It also opens on keyboard focus, so tabbing through reveals it.
+ *
+ * The height animates via `grid-template-rows: 0fr -> 1fr`, which is the only
+ * way to transition to an unknown content height without measuring it.
  */
-const BELIEFS = [
-  {
-    n: '01',
-    // "Your genes don't decide who you\nbecome."
-    html: 'Your genes don\'t decide who you<br class="hidden lg:inline" /> become.',
-  },
-  {
-    n: '02',
-    // "Genetic information should inform, not\nfrighten."
-    html: 'Genetic information should inform, not<br class="hidden lg:inline" /> frighten.',
-  },
-  {
-    n: '03',
-    // "Complex information should be\nunderstandable."
-    html: 'Complex information should be<br class="hidden lg:inline" /> understandable.',
-  },
-  {
-    n: '04',
-    // "Prevention can mean knowing more\nbefore you need to react."
-    html: 'Prevention can mean knowing more<br class="hidden lg:inline" /> before you need to react.',
-  },
-];
-
 export default function Manifesto() {
   return (
-    <Section
-      ground="ink"
-      id="what-we-believe"
-      // Frame pad is 120 top/bottom, taller than the shared 92 default.
-      innerClassName="py-[clamp(56px,8.3vw,120px)]"
-    >
-      <div className="mx-auto w-full max-w-[936px]">
-        {/* ---- header (frame 'div.text-center', gap 20, centred) ------------ */}
-        <div className="flex flex-col items-center gap-5 text-center">
-          {/* Frame pill: pad 8/17/8/13, gap 9, glyph 19x23, label Figtree 700
-              13.5/20.2 ls 1.49 - every one of those is already the shared
-              <Eyebrow> default, so this carries NO local override. The old one
-              re-stated the pad/type and forced the glyph into a 19x19 box, which
-              letterboxed the 19x23 artwork down ~17% (min(19/19, 19/23) = 0.826)
-              and made this eyebrow visibly smaller than its siblings. */}
-          {/* textCase=UPPER in the frame (y=10799.7, 13.5/700, ls 1.49 = 0.11em,
-              measured width 142) - it renders "WHAT WE BELIEVE", not the sentence
-              case stored in `characters`. The shared <Eyebrow> already emits
-              `uppercase` at exactly that tracking, so this needs no local class
-              and must NOT be given a normal-case override. */}
-          <Eyebrow label="What we believe" icon="10799-633" tone="ink" />
-
+    <Section id="what-we-believe" labelledBy="believe-heading">
+      <div className="flex flex-col gap-[clamp(16px,2.148vw,34.4px)] lg:flex-row lg:items-end lg:justify-between">
+        <div className="min-w-0">
+          <Eyebrow icon="dna">{C.eyebrow}</Eyebrow>
           <Heading
-            as="h2"
-            html={'We don\'t believe in <em class="abt-grad-ink">predicting your future.</em>'}
-            // Figtree 700 50/51.5, ls -0.9 (-0.018em), #faf6ef.
-            className="text-[clamp(30px,3.5vw,50px)] leading-[1.03] tracking-[-0.018em] text-linenw"
-          />
-
-          <Body
-            html="We believe in helping you understand your present a little better."
-            // Figtree 400 18/27, #faf6ef at 70%.
-            className="mx-auto max-w-[560px] leading-[1.5] text-linenw/70"
-          />
+            id="believe-heading"
+            className="mt-[clamp(12px,1.172vw,18.8px)] max-w-[clamp(560px,54.688vw,875px)] text-[clamp(24px,3.193vw,51.1px)] leading-[1.162]"
+          >
+            {C.headline}
+          </Heading>
+          <p className="mt-[clamp(10px,0.977vw,15.6px)] max-w-[clamp(560px,54.688vw,875px)] font-kyg text-[clamp(15px,1.465vw,23.4px)] font-normal leading-[1.4] text-heavy">
+            {C.body}
+          </p>
         </div>
 
-        {/* ---- the four beliefs (frame 'div.flex', gap 64 below the header) - */}
-        <ol className="mt-[clamp(40px,4.4vw,64px)] w-full list-none border-b border-linenw">
-          {BELIEFS.map((belief) => (
-            <li
-              key={belief.n}
-              className="flex items-start gap-[18px] border-t border-linenw py-8 sm:gap-[28px] lg:gap-[39px]"
-            >
-              {/* The frame drops the index 11px below the statement block's top in
-                  all four rows (385-374, 546-535, 707-696, 867-856). */}
-              <span className="mt-[6px] shrink-0 font-kyg text-[clamp(22px,2.4vw,34px)] font-semibold leading-none text-java2/50 sm:mt-[10px] lg:mt-[11px]">
-                {belief.n}
-              </span>
-              <Heading
-                as="h3"
-                html={belief.html}
-                // Figtree 700 46/47.8, ls -0.46 (-0.01em), #faf6ef.
-                className="min-w-0 flex-1 tracking-[-0.01em] text-linenw"
-              />
-            </li>
-          ))}
-        </ol>
+        <Hint>{C.hint}</Hint>
       </div>
+
+      <ul className="mt-[clamp(20px,2.93vw,46.9px)] grid list-none gap-[clamp(12px,1.172vw,18.8px)] sm:grid-cols-2">
+        {C.beliefs.map((b) => (
+          <li
+            key={b.n}
+            tabIndex={0}
+            className="group/belief relative isolate flex min-h-[clamp(150px,14.648vw,234.4px)] flex-col justify-end overflow-hidden rounded-sm bg-white p-[clamp(18px,2.148vw,34.4px)] ring-1 ring-inset ring-zeus/[0.12] outline-none transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:ring-eden/50 hover:shadow-[0_14px_34px_0_rgba(20,27,26,0.1)] motion-reduce:transition-none"
+          >
+            {/* The frame's ghost numeral - decoration, so it is hidden from the
+                accessibility tree and never read out as "zero one". */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute right-[clamp(10px,1.172vw,18.8px)] top-[clamp(-14px,-1.367vw,-8px)] -z-10 select-none font-tst text-[clamp(64px,8.594vw,137.5px)] italic leading-none text-eden/[0.08]"
+            >
+              {b.n}
+            </span>
+
+            <p className="font-kyg text-[clamp(16px,1.563vw,25px)] font-bold leading-[1.313] tracking-[-0.01em] text-heavy">
+              {b.title}
+            </p>
+
+            <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-focus-visible/belief:grid-rows-[1fr] group-hover/belief:grid-rows-[1fr] motion-reduce:transition-none [@media(hover:none)]:grid-rows-[1fr]">
+              <p className="overflow-hidden font-kyg text-[clamp(11.7px,1.143vw,18.3px)] font-normal leading-[1.5] text-fusc">
+                <span className="block pt-[clamp(8px,0.781vw,12.5px)]">{b.why}</span>
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }

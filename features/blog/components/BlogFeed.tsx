@@ -75,7 +75,13 @@ export default function BlogFeed({ posts, initialCategory }: { posts: BlogListIt
         {initialCategory ? (
           <span className="inline-flex items-center gap-2 rounded-sm bg-mint px-[10px] py-[5px] font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold uppercase tracking-[0.14em] text-eden">
             {categoryLabel(initialCategory)}
-            <Link href="/blog" aria-label="Clear category filter" className="text-eden/70 hover:text-eden">
+            {/* 44x44 target pulled back with negative margin, so the chip keeps its
+                drawn height. This is the only control that clears the filter. */}
+            <Link
+              href="/blog"
+              aria-label="Clear category filter"
+              className="-my-[16px] -mr-[10px] inline-flex h-[44px] w-[44px] items-center justify-center text-eden/70 hover:text-eden"
+            >
               <Icon name="cross" strokeWidth={2.4} className="h-[11px] w-[11px]" />
             </Link>
           </span>
