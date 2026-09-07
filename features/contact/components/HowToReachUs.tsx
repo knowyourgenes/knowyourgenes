@@ -42,7 +42,7 @@ export default function HowToReachUs() {
             style={{ left: '70.1%', top: '30%', width: '44.8%' }}
           />
 
-          <p className="font-kyg text-[clamp(8.2px,0.799vw,12.8px)] font-bold uppercase leading-[1.478] tracking-[0.16em] text-linenw/60">
+          <p className="font-kyg text-[clamp(10px,0.799vw,12.8px)] font-bold uppercase leading-[1.478] tracking-[0.16em] text-linenw/60">
             {REACH.whatsapp.kicker}
           </p>
           <p className="mt-[clamp(7.1px,0.694vw,11.1px)] font-kyg text-[clamp(24px,3.056vw,48.9px)] font-bold leading-[1.227] tracking-[-0.025em] text-linenw tabular-nums">
@@ -75,7 +75,7 @@ export default function HowToReachUs() {
               </span>
 
               <div className="flex min-w-[12rem] flex-1 flex-col gap-[clamp(2.8px,0.278vw,4.4px)]">
-                <p className="font-kyg text-[clamp(7.8px,0.764vw,12.2px)] font-bold uppercase leading-[1.455] tracking-[0.16em] text-boulder">
+                <p className="font-kyg text-[clamp(9.5px,0.764vw,12.2px)] font-bold uppercase leading-[1.455] tracking-[0.16em] text-boulder">
                   {r.kicker}
                 </p>
                 <p className="font-kyg text-[clamp(14.2px,1.389vw,22.2px)] font-bold leading-[1.35] tracking-[-0.02em] text-black">

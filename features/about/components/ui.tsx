@@ -27,7 +27,14 @@ export function Kicker({
   className,
 }: {
   children: ReactNode;
-  /** lg = 8.2/0.2em (the section-internal label), sm = 7.6/0.16em (a flag). */
+  /**
+   * lg = the section-internal label (0.2em), sm = a flag (0.16em).
+   *
+   * The clamp FLOORS are raised above the frame's 8.2 and 7.6: those are the
+   * values at a 1024 artboard, and a clamp floor is what a 360px phone actually
+   * renders - 8px uppercase with 0.2em tracking is not readable. Only the floor
+   * moves, so every width from 1024 up is still the frame's exact size.
+   */
   size?: 'sm' | 'lg';
   tone?: 'eden' | 'java' | 'ice' | 'muted' | 'dim';
   className?: string;
@@ -37,8 +44,8 @@ export function Kicker({
       className={cn(
         'font-kyg font-bold uppercase',
         size === 'lg'
-          ? 'text-[clamp(8.2px,0.801vw,12.8px)] leading-[1.5] tracking-[0.2em]'
-          : 'text-[clamp(7.6px,0.742vw,11.9px)] leading-[1.5] tracking-[0.16em]',
+          ? 'text-[clamp(10px,0.801vw,12.8px)] leading-[1.5] tracking-[0.2em]'
+          : 'text-[clamp(9.5px,0.742vw,11.9px)] leading-[1.5] tracking-[0.16em]',
         tone === 'eden' ? 'text-eden' : null,
         tone === 'java' ? 'text-java2' : null,
         tone === 'ice' ? 'text-ice' : null,

@@ -58,7 +58,7 @@ export default function BuildingFor() {
                 aria-checked={active}
                 onClick={() => setP(n)}
                 className={cn(
-                  'flex min-w-[clamp(150px,0px,0px)] flex-1 items-center gap-[clamp(8px,0.977vw,15.6px)] rounded-sm py-[clamp(10px,1.172vw,18.8px)] pl-[clamp(9px,0.977vw,15.6px)] pr-[clamp(10px,1.25vw,20px)] text-left outline-none transition duration-300 focus-visible:ring-2 focus-visible:ring-java2 motion-reduce:transition-none lg:flex-none',
+                  'flex min-w-[150px] flex-1 items-center gap-[clamp(8px,0.977vw,15.6px)] rounded-sm py-[clamp(10px,1.172vw,18.8px)] pl-[clamp(9px,0.977vw,15.6px)] pr-[clamp(10px,1.25vw,20px)] text-left outline-none transition duration-300 focus-visible:ring-2 focus-visible:ring-java2 motion-reduce:transition-none lg:flex-none',
                   active ? 'bg-java2' : 'bg-white/[0.05] ring-1 ring-inset ring-white/[0.12] hover:bg-white/[0.09]'
                 )}
               >

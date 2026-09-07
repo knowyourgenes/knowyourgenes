@@ -104,7 +104,7 @@ function CategoryCard({ category }: { category: TestCategory }) {
         />
 
         <div className="flex flex-col p-[clamp(20px,3.333vw,53.3px)]">
-          <span className="inline-flex w-fit items-center rounded-sm bg-mint px-[clamp(7.1px,0.694vw,11.1px)] py-[clamp(3.6px,0.347vw,5.6px)] font-kyg text-[clamp(8.2px,0.799vw,12.8px)] font-bold uppercase leading-[1.478] tracking-[0.14em] text-eden">
+          <span className="inline-flex w-fit items-center rounded-sm bg-mint px-[clamp(7.1px,0.694vw,11.1px)] py-[clamp(3.6px,0.347vw,5.6px)] font-kyg text-[clamp(10px,0.799vw,12.8px)] font-bold uppercase leading-[1.478] tracking-[0.14em] text-eden">
             {products.length} {products.length === 1 ? 'test' : 'tests'}
           </span>
 

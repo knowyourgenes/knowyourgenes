@@ -52,7 +52,7 @@ export const ancestry: TestPage = {
         { label: 'Results in 3 weeks', icon: 'clock' },
       ],
       footnoteHtml: 'One saliva sample tells the story.',
-      image: { src: `${IMG}/hero-map.png`, alt: 'Ancient migration lines converging on South Asia' },
+      image: { src: `${IMG}/hero-map.webp`, alt: 'Ancient migration lines converging on South Asia' },
       resultCard: {
         title: 'Your breakdown',
         icon: 'flask',

@@ -54,7 +54,7 @@ export const myWellness: TestPage = {
       ],
       footnoteHtml: 'Same diet, same effort, different results. Your DNA explains why.',
       image: {
-        src: `${IMG}/hero-wellness.png`,
+        src: `${IMG}/hero-wellness.webp`,
         alt: 'Diet, weight, fitness and detox, decoded from one sample',
       },
       resultCard: {
