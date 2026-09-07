@@ -83,7 +83,10 @@ export default function WhyWeExist() {
                     onClick={() => setI(n)}
                     aria-current={active ? 'step' : undefined}
                     aria-label={`${p.n} · ${p.label} · ${p.when}`}
-                    className="group/pt flex flex-col items-center outline-none"
+                    /* 44x44 floor. Below `sm` the button is only a dot and a numeral -
+                       about 17x33 - and it is the section's primary control. Five
+                       44px targets is 220px, comfortably inside the 324px rail. */
+                    className="group/pt flex min-h-[44px] min-w-[44px] flex-col items-center justify-center px-[4px] outline-none"
                   >
                     <span
                       className={cn(
@@ -175,7 +178,7 @@ export default function WhyWeExist() {
               type="button"
               onClick={() => setI((n) => Math.max(0, n - 1))}
               disabled={i === 0}
-              className="inline-flex items-center gap-[6px] rounded-sm bg-eden px-[10px] py-[7px] font-kyg text-[clamp(10.5px,1.025vw,16.4px)] font-semibold text-white transition disabled:opacity-40 hover:bg-eden2 disabled:hover:bg-eden motion-reduce:transition-none"
+              className="inline-flex min-h-[44px] items-center gap-[6px] rounded-sm bg-eden px-[12px] py-[7px] font-kyg text-[clamp(12px,1.025vw,16.4px)] font-semibold text-white transition disabled:opacity-40 hover:bg-eden2 disabled:hover:bg-eden motion-reduce:transition-none"
             >
               <Icon name="arrow" strokeWidth={2} className="h-[11px] w-[11px] rotate-180" />
               {i === 0 ? 'Start' : C.points[i - 1].label}
@@ -184,7 +187,7 @@ export default function WhyWeExist() {
               type="button"
               onClick={() => setI((n) => Math.min(last, n + 1))}
               disabled={i === last}
-              className="inline-flex items-center gap-[6px] rounded-sm bg-eden px-[10px] py-[7px] font-kyg text-[clamp(10.5px,1.025vw,16.4px)] font-semibold text-white transition disabled:opacity-40 hover:bg-eden2 disabled:hover:bg-eden motion-reduce:transition-none"
+              className="inline-flex min-h-[44px] items-center gap-[6px] rounded-sm bg-eden px-[12px] py-[7px] font-kyg text-[clamp(12px,1.025vw,16.4px)] font-semibold text-white transition disabled:opacity-40 hover:bg-eden2 disabled:hover:bg-eden motion-reduce:transition-none"
             >
               {i === last ? 'End' : C.points[i + 1].label}
               <Icon name="arrow" strokeWidth={2} className="h-[11px] w-[11px]" />

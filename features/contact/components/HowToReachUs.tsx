@@ -56,7 +56,7 @@ export default function HowToReachUs() {
             <Button href="https://wa.me/910000000000" variant="onDark">
               {REACH.whatsapp.cta}
             </Button>
-            <span className="font-kyg text-[clamp(10.3px,1.007vw,16.1px)] font-medium leading-[1.517] text-linenw/55">
+            <span className="font-kyg text-[clamp(12px,1.007vw,16.1px)] font-medium leading-[1.517] text-linenw/55">
               {REACH.whatsapp.note}
             </span>
           </div>
@@ -81,7 +81,7 @@ export default function HowToReachUs() {
                 <p className="font-kyg text-[clamp(14.2px,1.389vw,22.2px)] font-bold leading-[1.35] tracking-[-0.02em] text-black">
                   {r.title}
                 </p>
-                <p className="font-kyg text-[clamp(10.7px,1.042vw,16.7px)] font-normal leading-[1.6] text-fusc">
+                <p className="font-kyg text-[clamp(12px,1.042vw,16.7px)] font-normal leading-[1.6] text-fusc">
                   {r.body}
                 </p>
               </div>

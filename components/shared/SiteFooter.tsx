@@ -142,7 +142,7 @@ export default function SiteFooter() {
                 type="email"
                 placeholder="Your email address"
                 aria-label="Email"
-                className="w-full bg-white/[0.04] border border-white/[0.12] rounded-sm outline-none text-white py-[11px] px-[18px] text-[13.5px] placeholder:text-[rgba(250,246,239,.5)] transition-colors focus:border-(--peach-2)"
+                className="w-full bg-white/[0.04] border border-white/[0.12] rounded-sm outline-none text-white py-[11px] px-[18px] text-[16px] lg:text-[13.5px] placeholder:text-[rgba(250,246,239,.5)] transition-colors focus:border-(--peach-2)"
               />
               <button
                 type="submit"

@@ -105,7 +105,7 @@ export default function WhyGenetics() {
                         onClick={() => setOpen(i)}
                         aria-expanded={isOpen}
                         aria-controls={`ladder-panel-${i}`}
-                        className="flex w-full items-center gap-[clamp(10px,0.977vw,15.6px)] text-left outline-none focus-visible:underline focus-visible:decoration-eden focus-visible:underline-offset-4"
+                        className="flex min-h-[44px] w-full items-center gap-[clamp(10px,0.977vw,15.6px)] text-left outline-none focus-visible:underline focus-visible:decoration-eden focus-visible:underline-offset-4"
                       >
                         <span
                           className={cn(

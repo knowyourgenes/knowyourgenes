@@ -28,10 +28,12 @@ import type { ContactSubmitState } from '../types';
  * the field sends nothing and validates fine.
  */
 const FIELD =
-  'w-full rounded-sm border border-zeus/[0.14] bg-white px-[clamp(11.4px,1.111vw,17.8px)] font-kyg text-[clamp(11px,1.076vw,17.2px)] leading-[1.549] text-heavy outline-none transition placeholder:text-boulder focus:border-eden/40 focus:ring-4 focus:ring-java/10 disabled:opacity-60';
-const INPUT = `${FIELD} h-[clamp(34.1px,3.333vw,53.3px)]`;
+  'w-full rounded-sm border border-zeus/[0.14] bg-white px-[clamp(11.4px,1.111vw,17.8px)] font-kyg text-[16px] leading-[1.549] text-heavy lg:text-[clamp(11px,1.076vw,17.2px)] outline-none transition placeholder:text-boulder focus:border-eden/40 focus:ring-4 focus:ring-java/10 disabled:opacity-60';
+// 44px floor: 3.333vw only reaches 44 at a 1319 viewport, so the frame's 34.1
+// would apply at every phone, tablet and 1280 laptop.
+const INPUT = `${FIELD} h-[clamp(44px,3.333vw,53.3px)]`;
 const LABEL = 'font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold leading-[1.462] text-heavy';
-const ERR = 'mt-[4px] block font-kyg text-[clamp(9.6px,0.9375vw,15px)] leading-[1.5] text-mojo';
+const ERR = 'mt-[4px] block font-kyg text-[clamp(12px,0.9375vw,15px)] leading-[1.5] text-mojo';
 /** 5.689 label -> field, 12.8 between one field group and the next. */
 const GROUP = 'flex min-w-0 flex-col gap-[clamp(5.7px,0.556vw,8.9px)]';
 
@@ -109,7 +111,7 @@ export default function ContactForm() {
         <button
           type="button"
           onClick={() => setState({ status: 'idle' })}
-          className="mt-2 font-kyg text-[14px] font-bold text-eden underline"
+          className="mt-2 inline-flex min-h-[44px] items-center px-[8px] font-kyg text-[14px] font-bold text-eden underline"
         >
           Send another message
         </button>
@@ -225,11 +227,11 @@ export default function ContactForm() {
           type="checkbox"
           disabled={busy}
           aria-invalid={!!errs.consent}
-          className="mt-[3px] h-[clamp(12.8px,1.25vw,20px)] w-[clamp(12.8px,1.25vw,20px)] shrink-0 rounded-sm border border-eden/30 bg-white accent-eden"
+          className="mt-[3px] h-[20px] w-[20px] shrink-0 rounded-sm border border-eden/30 bg-white accent-eden"
         />
         <label
           htmlFor={`${uid}-consent`}
-          className="font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-normal leading-[1.555] text-fusc"
+          className="font-kyg text-[clamp(12px,0.9375vw,15px)] font-normal leading-[1.555] text-fusc"
         >
           {FORM_COPY.consent}
         </label>
@@ -237,7 +239,7 @@ export default function ContactForm() {
       {errs.consent ? <span className={ERR}>{errs.consent}</span> : null}
 
       {state.status === 'error' && state.message ? (
-        <p role="alert" className="font-kyg text-[clamp(9.6px,0.9375vw,15px)] leading-[1.5] text-mojo">
+        <p role="alert" className="font-kyg text-[clamp(12px,0.9375vw,15px)] leading-[1.5] text-mojo">
           {state.message}
         </p>
       ) : null}

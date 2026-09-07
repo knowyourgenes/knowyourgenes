@@ -123,7 +123,7 @@ export default function PostCard({ post }: { post: BlogListItem }) {
         </h3>
 
         {post.excerpt ? (
-          <p className="line-clamp-3 font-kyg text-[clamp(10.3px,1.007vw,16.1px)] font-normal leading-[1.448] text-fusc">
+          <p className="line-clamp-3 font-kyg text-[clamp(13px,1.007vw,16.1px)] font-normal leading-[1.448] text-fusc">
             {post.excerpt}
           </p>
         ) : null}

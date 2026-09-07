@@ -71,7 +71,12 @@ export default function NotDestiny() {
               onMouseLeave={() => setHot(null)}
               onFocus={() => setHot(n)}
               onBlur={() => setHot(null)}
-              onClick={() => setHot((c) => (c === n ? null : n))}
+              // SET, never toggle. A touch tap emits mouseenter -> focus ->
+              // click; the first two already selected this term, so a toggle
+              // would immediately clear it and the reveal would never appear
+              // on any phone. mouseleave does not fire on touch either, so
+              // the selection correctly persists until another term is tapped.
+              onClick={() => setHot(n)}
               aria-describedby="equation-reveal"
               className={cn(
                 'flex min-w-[clamp(96px,10.742vw,171.9px)] flex-1 flex-col gap-[4px] rounded-sm px-[clamp(12px,1.563vw,25px)] py-[clamp(12px,1.367vw,21.9px)] text-left outline-none ring-1 ring-inset transition duration-300 motion-reduce:transition-none',

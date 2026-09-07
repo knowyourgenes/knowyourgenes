@@ -7,8 +7,12 @@ import { cn } from '@/lib/utils';
 import { Icon } from './Icon';
 
 /** The frame's control box: 31.29 tall at the 1024 artboard, white, hairline. */
+// 44px FLOOR, not the frame's 31.3. 3.056vw only reaches 44px at a 1440
+// viewport, so the floor is what 360 through 1280 all render - and this box is
+// the search field and every filter on three listing pages. Nothing changes
+// from 1440 up, where the vw term already exceeds 44.
 const CONTROL =
-  'h-[clamp(31.3px,3.056vw,48.9px)] rounded-sm bg-white ring-1 ring-inset ring-zeus/[0.13] font-kyg leading-none';
+  'h-[clamp(44px,3.056vw,48.9px)] rounded-sm bg-white ring-1 ring-inset ring-zeus/[0.13] font-kyg leading-none';
 
 export interface SortOption {
   value: string;
@@ -95,7 +99,13 @@ export function Toolbar({
           value={query}
           onChange={(e) => onQuery(e.target.value)}
           placeholder={searchPlaceholder}
-          className="min-w-0 flex-1 bg-transparent font-kyg text-[clamp(10.7px,1.042vw,16.7px)] text-heavy outline-none placeholder:text-boulder"
+          /* `self-stretch` so the input fills the pill. Tailwind preflight zeroes its
+             padding and it inherits `leading-none`, so without this it is an ~11px
+             strip centred in a 44px box and most of the visible control is dead.
+             16px floor because iOS Safari auto-zooms the page on focusing any
+             control under 16px - there is no `export const viewport` in this app
+             to suppress it, so that zoom is a real layout break, not just size. */
+          className="min-w-0 flex-1 self-stretch bg-transparent font-kyg text-[clamp(16px,1.042vw,16.7px)] text-heavy outline-none placeholder:text-boulder"
         />
       </div>
 
@@ -113,14 +123,14 @@ export function Toolbar({
               'relative flex shrink-0 items-center gap-[clamp(5.7px,0.556vw,8.9px)] pl-[clamp(11.4px,1.111vw,17.8px)] pr-[clamp(9.2px,0.903vw,14.4px)] focus-within:ring-eden/40'
             )}
           >
-            <span className="shrink-0 font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-medium text-boulder">
+            <span className="shrink-0 font-kyg text-[clamp(13px,0.9375vw,15px)] font-medium text-boulder">
               {sel.label}
             </span>
             <select
               id={`${uid}-sel-${i}`}
               value={sel.value}
               onChange={(e) => sel.onChange(e.target.value)}
-              className="cursor-pointer appearance-none bg-transparent pr-[16px] font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-bold text-fusc outline-none"
+              className="cursor-pointer self-stretch appearance-none bg-transparent pr-[16px] font-kyg text-[16px] font-bold text-fusc outline-none lg:text-[15px]"
             >
               {sel.options.map((o) => (
                 <option key={o.value} value={o.value}>

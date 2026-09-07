@@ -53,7 +53,7 @@ export default function GenesToInsight() {
                 type="button"
                 onClick={() => setS(n)}
                 aria-current={active ? 'step' : undefined}
-                className="group/step flex w-full items-center gap-[clamp(10px,1.172vw,18.8px)] pr-[clamp(0px,1.172vw,18.8px)] text-left outline-none"
+                className="group/step flex min-h-[44px] w-full items-center gap-[clamp(10px,1.172vw,18.8px)] pr-[clamp(0px,1.172vw,18.8px)] text-left outline-none"
               >
                 <span
                   className={cn(
@@ -125,7 +125,7 @@ export default function GenesToInsight() {
             <button
               type="button"
               onClick={() => setS(s + 1)}
-              className="inline-flex w-fit items-center gap-[6px] font-kyg text-[clamp(10.7px,1.045vw,16.7px)] font-bold text-eden outline-none hover:underline focus-visible:underline"
+              className="-mx-[8px] inline-flex min-h-[44px] w-fit items-center gap-[6px] px-[8px] font-kyg text-[clamp(12px,1.045vw,16.7px)] font-bold text-eden outline-none hover:underline focus-visible:underline"
             >
               Next · {next.title}
               <Icon name="arrow" strokeWidth={2} className="h-[11px] w-[11px]" />

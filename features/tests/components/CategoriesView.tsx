@@ -122,7 +122,7 @@ function CategoryCard({ category }: { category: TestCategory }) {
 
           <Rule className="mt-[clamp(14px,1.667vw,26.7px)]" />
 
-          <p className="mt-[clamp(12px,1.389vw,22.2px)] font-kyg text-[clamp(10.3px,1.007vw,16.1px)] font-normal leading-[1.517] text-boulder">
+          <p className="mt-[clamp(12px,1.389vw,22.2px)] font-kyg text-[clamp(12px,1.007vw,16.1px)] font-normal leading-[1.517] text-boulder">
             <b className="font-bold text-fusc">Inside</b> · {insideLine(products)}
           </p>
 

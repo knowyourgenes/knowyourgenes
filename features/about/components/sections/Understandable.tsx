@@ -51,7 +51,7 @@ export default function Understandable() {
                 aria-selected={n === t}
                 onClick={() => setT(n)}
                 className={cn(
-                  'rounded-sm px-[clamp(9px,1.074vw,17.2px)] py-[clamp(6px,0.684vw,10.9px)] font-kyg text-[clamp(11px,1.074vw,17.2px)] leading-none outline-none transition duration-300 focus-visible:ring-2 focus-visible:ring-java2 motion-reduce:transition-none',
+                  'inline-flex min-h-[44px] items-center rounded-sm px-[clamp(9px,1.074vw,17.2px)] py-[clamp(6px,0.684vw,10.9px)] font-kyg text-[clamp(12px,1.074vw,17.2px)] leading-none outline-none transition duration-300 focus-visible:ring-2 focus-visible:ring-java2 motion-reduce:transition-none',
                   n === t
                     ? 'bg-java2 font-bold text-abyss'
                     : 'bg-white/[0.07] font-medium text-white/[0.88] ring-1 ring-inset ring-white/[0.16] hover:bg-white/[0.12]'

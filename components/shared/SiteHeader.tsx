@@ -355,7 +355,7 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
                                 <div className="text-[21px] font-semibold leading-[1.12] mt-[12px] tracking-[-0.015em]">
                                   {card.title}
                                 </div>
-                                <div className="text-[13px] leading-[1.45] mt-[6px] max-h-0 overflow-hidden opacity-0 transition-[opacity,max-height,margin-top] duration-500 ease-(--e-out) group-hover:opacity-[.92] group-hover:max-h-[80px] group-hover:mt-[8px]">
+                                <div className="text-[13px] leading-[1.45] mt-[6px] max-h-0 overflow-hidden opacity-0 transition-[opacity,max-height,margin-top] duration-500 ease-(--e-out) group-hover:opacity-[.92] group-hover:max-h-[80px] group-hover:mt-[8px] group-focus-visible:opacity-[.92] group-focus-visible:max-h-[80px] group-focus-visible:mt-[8px] [@media(hover:none)]:max-h-[80px] [@media(hover:none)]:opacity-[.92] [@media(hover:none)]:mt-[8px]">
                                   {card.desc}
                                 </div>
                               </div>
