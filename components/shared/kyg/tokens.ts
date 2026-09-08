@@ -57,13 +57,6 @@ export const PIN_PANE = 'kyg-pin';
 export const PIN_TRACK = 'kyg-pin-track';
 
 /**
- * Put on BOTH the track and the pane of a section that is nearly a full screen
- * on its own, so it only pins where it actually fits. See the note beside
- * `.kyg-pin-roomy` in globals.css.
- */
-export const PIN_ROOMY = 'kyg-pin-roomy';
-
-/**
  * The section grounds, in the order the page alternates them.
  *
  * `ink` and `abyss` set their own ink colour because everything inside them

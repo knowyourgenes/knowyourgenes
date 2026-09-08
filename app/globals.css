@@ -1050,33 +1050,6 @@ body {
   }
 }
 
-/* -----------------------------------------------------------------------------
-   kyg-pin-roomy - for a section that is nearly a full screen on its own.
-   -----------------------------------------------------------------------------
-   700px of viewport is enough for most of the pinned sections. It is not enough
-   for the homepage's explore grid: its detail panel alone is 490px at 1366 wide
-   (a 169px image over 321px of copy), and with the heading and the footer row
-   the section needs about 940px before it fits behind the header. Below that it
-   was losing 40-100px off the bottom - and the panel is the whole point of the
-   section, so there is nothing there to trim.
-
-   Put this class on BOTH the track and the pane. Between 700 and 939px tall the
-   section then renders as an ordinary scrollable band with click-driven
-   selection, which is what `useScrollPin` already falls back to. A pin is an
-   enhancement; it should not cost anyone the content.
-   ----------------------------------------------------------------------------- */
-@media (min-width: 768px) and (max-height: 939px) {
-  .kyg-pin-roomy.kyg-pin {
-    position: static;
-    display: block;
-    height: auto;
-  }
-
-  .kyg-pin-roomy.kyg-pin-track {
-    height: auto;
-  }
-}
-
 /* =============================================================================
    Press feedback on touch
    -----------------------------------------------------------------------------

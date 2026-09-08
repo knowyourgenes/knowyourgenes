@@ -5,19 +5,7 @@ import { type CSSProperties, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { useScrollPin } from '@/hooks/use-scroll-pin';
-import {
-  Button,
-  Icon,
-  Lead,
-  PHOTO,
-  PIN_PANE,
-  PIN_ROOMY,
-  PIN_TRACK,
-  Rule,
-  Section,
-  SectionTitle,
-  type IconName,
-} from '../ui';
+import { Button, Icon, Lead, PHOTO, PIN_PANE, PIN_TRACK, Rule, Section, SectionTitle, type IconName } from '../ui';
 
 /**
  * The six directions, as a selector.
@@ -205,29 +193,40 @@ export default function ExploreKyg({
 
   return (
     <Section id="what-would-you-like-to-know" ground="ink" labelledBy="explore-kyg-heading">
+      <SectionTitle
+        id="explore-kyg-heading"
+        eyebrow="Explore KYG"
+        tone="dark"
+        eyebrowTone={eyebrowTone}
+        aside={
+          <Lead tone="dark">Six directions, one set of genes. Choose the question that sounds most like yours.</Lead>
+        }
+      >
+        What would you like to know <em>about yourself?</em>
+      </SectionTitle>
+
+      {/* THE HEADING SITS OUTSIDE THE PANE. It is 173px of the ~780 this
+          section needs, and the pane cannot grow past `100svh - header`, so
+          with the heading inside it the walk only fitted on a screen ~940px
+          tall - which is to say it never ran on an ordinary laptop. Out
+          here the pane holds 608px in a 735px box at 1535x800: it fits from
+          the standard 700px threshold up, with no type or image shrunk to
+          buy the room. The heading scrolls away as the walk starts, which is
+          what a pinned section is meant to do.
+
+          06 on /about keeps ITS head row inside the pane for the opposite
+          reason: that pane holds only ~415px, so leaving the head out left
+          160px of dead air in the middle. Same rule, different answer -
+          put in whatever makes the pane close to a screenful. */}
       {/* The pin, from md up and only when asked for. Below that the track is
           auto-height, the pane is static, and progress comes from the section's
           own travel through the viewport instead. */}
       <div
         ref={track}
-        className={cn('relative', pinned && [PIN_TRACK, PIN_ROOMY])}
+        className={cn('relative', pinned && PIN_TRACK)}
         style={{ '--pin-track': '240vh' } as CSSProperties}
       >
-        <div ref={pane} className={cn(pinned && [PIN_PANE, PIN_ROOMY])}>
-          <SectionTitle
-            id="explore-kyg-heading"
-            eyebrow="Explore KYG"
-            tone="dark"
-            eyebrowTone={eyebrowTone}
-            aside={
-              <Lead tone="dark">
-                Six directions, one set of genes. Choose the question that sounds most like yours.
-              </Lead>
-            }
-          >
-            What would you like to know <em>about yourself?</em>
-          </SectionTitle>
-
+        <div ref={pane} className={cn(pinned && PIN_PANE)}>
           <div className="mt-[clamp(18px,min(3.7vw,3.6vh),52px)] grid gap-[8px] md:gap-[clamp(20px,2.2vw,32px)] md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] lg:grid-cols-[minmax(0,404px)_minmax(0,1fr)]">
             {/* The picker. Buttons, not links: choosing a direction changes what is
             shown here, it does not navigate - the CTA inside the panel does. */}

@@ -48,17 +48,6 @@ const SORTS = [
   { value: 'most-tests', label: 'Most tests' },
 ] as const;
 
-/**
- * Search and sort only appear once there is something to search.
- *
- * The frame assumes a populated grid; the data has one category. A search box
- * and a sort control over a single card are not faithfulness to the design,
- * they are two controls that visibly do nothing. The label and the rule stay -
- * those are structure, not controls - and the moment a second category lands
- * the rest appears on its own.
- */
-const TOOLBAR_MIN = 2;
-
 /** The 2.13 accent bar across the top of the card. */
 const ACCENT: Record<TestCategory['accent'], string> = {
   wellness: 'bg-[linear-gradient(90deg,#0E4D4B_0%,#2AC3A2_100%)]',
@@ -150,7 +139,6 @@ function CategoryCard({ category }: { category: TestCategory }) {
 export function CategoriesView({ categories }: { categories: TestCategory[] }) {
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<string>('default');
-  const showToolbar = categories.length >= TOOLBAR_MIN;
 
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -179,20 +167,20 @@ export function CategoriesView({ categories }: { categories: TestCategory[] }) {
 
       <section aria-label="Test categories" className="w-full bg-linenw">
         <Container className={SECTION_Y}>
-          {showToolbar ? (
-            <Toolbar
-              label={TOOLBAR.label}
-              query={query}
-              onQuery={setQuery}
-              searchPlaceholder={TOOLBAR.searchPlaceholder}
-              searchLabel="Search categories"
-              selects={[{ label: 'Sort', value: sort, onChange: setSort, options: SORTS }]}
-            />
-          ) : (
-            <p className="font-kyg text-[clamp(11px,0.903vw,14.4px)] font-bold uppercase leading-[1.462] tracking-[0.2em] text-boulder">
-              {TOOLBAR.label}
-            </p>
-          )}
+          {/* The frame draws the toolbar over a single card (343:4449), so it is
+              always here. It had been gated behind a two-category minimum on the
+              grounds that a search box over one card does nothing - but the
+              search matches the PRODUCT names inside a category too, not just
+              the category, so with nine products behind one card it does have
+              something to match, and the design is the design. */}
+          <Toolbar
+            label={TOOLBAR.label}
+            query={query}
+            onQuery={setQuery}
+            searchPlaceholder={TOOLBAR.searchPlaceholder}
+            searchLabel="Search categories"
+            selects={[{ label: 'Sort', value: sort, onChange: setSort, options: SORTS }]}
+          />
 
           <Rule className="mt-[clamp(12px,1.528vw,24.4px)]" />
 
