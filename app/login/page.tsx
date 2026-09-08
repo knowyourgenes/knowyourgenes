@@ -122,7 +122,7 @@ function LoginForm() {
           <HelixCanvas config={HERO_HELIX} className="absolute inset-0 -z-10 h-full w-full" />
 
           <Link href="/" aria-label="Know Your Genes, home" className="relative w-fit">
-            <KygLogo tone="light" className="h-16 w-auto" />
+            <KygLogo tone="light" title="Know Your Genes" className="h-16 w-auto" />
           </Link>
 
           <div className="relative flex flex-col gap-[clamp(12px,2.1vh,19.2px)] py-[clamp(12px,3vh,27px)]">
@@ -208,7 +208,7 @@ function LoginForm() {
               otherwise open with no mark on it at all. */}
           <div className="mx-auto mb-4 w-full max-w-[404px] sm:mb-6 lg:hidden">
             <Link href="/" aria-label="Know Your Genes, home" className="block w-fit">
-              <KygLogo tone="dark" className="h-11 w-auto" />
+              <KygLogo tone="brand" className="h-11 w-auto" />
             </Link>
           </div>
 

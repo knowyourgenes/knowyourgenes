@@ -53,7 +53,7 @@ function Shell({ children }: { children: React.ReactNode }) {
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#FAF7F2] px-5 py-12">
       <div className="w-full max-w-[440px]">
         <Link href="/" aria-label="Know Your Genes" className="mb-8 inline-block">
-          <KygLogo className="h-[38px] w-auto" />
+          <KygLogo tone="brand" title="Know Your Genes" className="h-[38px] w-auto" />
         </Link>
         {children}
       </div>

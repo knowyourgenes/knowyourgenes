@@ -239,10 +239,10 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
           {/* ---- SECTION 1: logo ------------------------------------------- */}
           <Link
             href="/"
-            className="col-start-1 row-start-1 flex items-center shrink-0"
+            className="col-start-1 row-start-1 flex min-h-[44px] items-center shrink-0"
             aria-label="KYG, Know Your Genes"
           >
-            <KygLogo tone="dark" className="h-9! w-auto" />
+            <KygLogo tone="brand" className="h-9! w-auto" />
           </Link>
 
           {/* ---- SECTION 2: nav links -------------------------------------
@@ -349,7 +349,7 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
                                 <ArrowUpRight />
                               </div>
                               <div className="absolute left-[18px] right-[18px] bottom-[18px] text-white">
-                                <div className="text-[10.5px] tracking-[0.22em] uppercase opacity-85 font-semibold inline-flex items-center gap-2 py-[5px] px-[10px] bg-white/[0.16] backdrop-blur-[10px] rounded-sm">
+                                <div className="text-[11px] tracking-[0.22em] uppercase opacity-85 font-semibold inline-flex items-center gap-2 py-[5px] px-[10px] bg-white/[0.16] backdrop-blur-[10px] rounded-sm">
                                   {card.kicker}
                                 </div>
                                 <div className="text-[21px] font-semibold leading-[1.12] mt-[12px] tracking-[-0.015em]">

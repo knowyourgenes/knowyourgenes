@@ -85,7 +85,7 @@ export default function SiteFooter() {
           {/* Brand */}
           <div className="max-w-[300px] max-[640px]:max-w-none">
             <div className="mb-[22px]">
-              <KygLogo tone="light" className="h-[42px]! w-auto" />
+              <KygLogo tone="light" title="Know Your Genes" className="h-[42px]! w-auto" />
             </div>
             <p className="text-[14.5px] leading-[1.6] text-[rgba(250,246,239,.7)] mb-[24px]">
               A genomics brand built for Indian biology. Your health deserves specificity.
@@ -100,7 +100,7 @@ export default function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="flex items-center justify-center w-[38px] h-[38px] rounded-sm border border-white/[0.12] bg-white/[0.04] text-[rgba(250,246,239,.72)] transition-[background,color,border-color] duration-300 ease-(--e-out) hover:bg-(--peach-2)! hover:text-(--ink-1) hover:border-transparent"
+                  className="flex items-center justify-center w-[44px] h-[44px] rounded-sm border border-white/[0.12] bg-white/[0.04] text-[rgba(250,246,239,.72)] transition-[background,color,border-color] duration-300 ease-(--e-out) hover:bg-(--peach-2)! hover:text-(--ink-1) hover:border-transparent"
                 >
                   {social.icon}
                 </a>
@@ -114,12 +114,12 @@ export default function SiteFooter() {
               <div className="text-[11px] tracking-[0.22em] uppercase font-semibold text-(--peach-2) mb-[18px]">
                 {col.title}
               </div>
-              <ul className="flex flex-col gap-[12px]">
+              <ul className="flex flex-col">
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-[14px] text-[rgba(250,246,239,.72)] transition-colors duration-300 ease-(--e-out) hover:text-(--teal-light)"
+                      className="flex min-h-[40px] items-center text-[14px] text-[rgba(250,246,239,.72)] transition-colors duration-300 ease-(--e-out) hover:text-(--teal-light)"
                     >
                       {link.label}
                     </Link>
