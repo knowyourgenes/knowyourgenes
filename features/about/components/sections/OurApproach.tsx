@@ -71,10 +71,16 @@ export default function OurApproach() {
               <button
                 key={x.n}
                 type="button"
+                /* Same contract as 03's ladder: hover swaps the card and the
+                   last one hovered stays, because there is no "nothing
+                   selected" state for the card to show. Click and focus are
+                   carried too - a finger cannot hover and nor can a keyboard. */
+                onMouseEnter={() => setP(n)}
+                onFocus={() => setP(n)}
                 onClick={() => setP(n)}
                 aria-pressed={active}
                 className={cn(
-                  'flex w-full items-center gap-[clamp(10px,1.172vw,18.8px)] rounded-sm py-[clamp(11px,1.27vw,20.3px)] pl-[clamp(12px,1.563vw,25px)] pr-[clamp(11px,1.367vw,21.9px)] text-left outline-none ring-1 ring-inset transition duration-300 focus-visible:ring-2 focus-visible:ring-eden motion-reduce:transition-none',
+                  'flex min-h-[44px] w-full items-center gap-[clamp(10px,1.172vw,18.8px)] rounded-sm py-[clamp(11px,1.27vw,20.3px)] pl-[clamp(12px,1.563vw,25px)] pr-[clamp(11px,1.367vw,21.9px)] text-left outline-none ring-1 ring-inset transition duration-300 focus-visible:ring-2 focus-visible:ring-eden motion-reduce:transition-none',
                   active ? 'bg-white ring-eden/50' : 'bg-white ring-zeus/10 hover:ring-eden/25'
                 )}
               >
@@ -102,7 +108,7 @@ export default function OurApproach() {
             );
           })}
 
-          <p className="mt-[clamp(4px,0.391vw,6.3px)] font-kyg text-[clamp(10.7px,1.045vw,16.7px)] font-normal leading-[1.449] text-nevada">
+          <p className="mt-[clamp(4px,0.391vw,6.3px)] font-kyg text-[clamp(11px,1.045vw,16.7px)] font-normal leading-[1.449] text-nevada">
             {C.note}
           </p>
         </div>

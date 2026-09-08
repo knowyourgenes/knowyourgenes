@@ -53,9 +53,16 @@ export const metadata: Metadata = {
   description:
     'Book a DNA test. We come to you. NABL-certified labs, plain-language reports, optional genetic counselling. Delhi NCR only.',
   icons: {
-    icon: '/favicon.png',
+    // The brand's own favicon mark (Figma 590:1506). SVG first because it stays
+    // sharp at every tab size and in the bookmark bar; the PNG is the fallback
+    // for anything that will not take one, and Safari's apple-touch-icon never
+    // does - it wants a real raster at 180.
+    icon: [
+      { url: '/kyg/logo/kyg-favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', type: 'image/png', sizes: '250x250' },
+    ],
     shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    apple: '/apple-touch-icon.png',
   },
 };
 

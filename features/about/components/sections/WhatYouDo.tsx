@@ -90,7 +90,7 @@ export default function WhatYouDo() {
                   onClick={() => setOpen(i)}
                   aria-expanded={isOpen}
                   aria-controls={`q-panel-${i}`}
-                  className="flex w-full items-center gap-[clamp(10px,1.367vw,21.9px)] text-left outline-none focus-visible:underline focus-visible:decoration-eden focus-visible:underline-offset-4"
+                  className="flex min-h-[44px] w-full items-center gap-[clamp(10px,1.367vw,21.9px)] text-left outline-none focus-visible:underline focus-visible:decoration-eden focus-visible:underline-offset-4"
                 >
                   <span
                     aria-hidden="true"

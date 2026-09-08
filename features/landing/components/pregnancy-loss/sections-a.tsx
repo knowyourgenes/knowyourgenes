@@ -97,7 +97,7 @@ export function HeroSection() {
                 <FigIcon src="/landing/icons/pl-activity-monitor.svg" className="size-[22px] text-[#F3D5B2]" />
                 <div className="leading-tight">
                   <div className="font-hind text-[18px] font-semibold leading-[22.5px] text-[#FAF6EF]">10 to 20%</div>
-                  <div className="text-[10.5px] font-normal uppercase tracking-[0.06em] text-[rgba(243,213,178,0.85)]">
+                  <div className="text-[11px] font-normal uppercase tracking-[0.06em] text-[rgba(243,213,178,0.85)]">
                     of pregnancies
                   </div>
                 </div>

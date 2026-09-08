@@ -17,12 +17,12 @@ function Card({ card }: { card: UpgradeCard }) {
       )}
     >
       {card.badge && (
-        <span className="absolute -top-[10px] left-[34px] rounded-sm bg-sea px-4 py-[6px] text-[10.5px] font-bold uppercase tracking-[0.08em] text-white">
+        <span className="absolute -top-[10px] left-[34px] rounded-sm bg-sea px-4 py-[6px] text-[11px] font-bold uppercase tracking-[0.08em] text-white">
           {card.badge}
         </span>
       )}
 
-      <span className="pb-2 pt-1 text-[10.5px] font-bold uppercase tracking-[0.08em] text-greenpea">{card.kicker}</span>
+      <span className="pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-greenpea">{card.kicker}</span>
       <h3 className="text-[20px] font-extrabold leading-[1.25] tracking-[-0.018em] text-heavy">{card.title}</h3>
       <p className="mt-[10px] text-[14px] leading-[1.62] text-fusc">{card.desc}</p>
 

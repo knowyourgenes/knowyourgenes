@@ -87,7 +87,7 @@ export default function UserNav({
           </Avatar>
           <div className={cn('hidden text-left leading-tight', compact ? '' : 'sm:block')}>
             <div className="text-sm font-medium">{name}</div>
-            <div className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{role}</div>
+            <div className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">{role}</div>
           </div>
         </DropdownMenuTrigger>
 
@@ -104,7 +104,7 @@ export default function UserNav({
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-sm font-medium">{name}</div>
                   <div className="truncate text-xs text-muted-foreground">{email}</div>
-                  <Badge variant="outline" className="mt-1 text-[10px]">
+                  <Badge variant="outline" className="mt-1 text-[11px]">
                     <UserCog className="h-3 w-3" /> {role}
                   </Badge>
                 </div>

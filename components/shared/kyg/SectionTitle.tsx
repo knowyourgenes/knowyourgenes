@@ -88,7 +88,7 @@ export function Eyebrow({
         // they land on its 1024 values too
         'inline-flex items-center rounded-sm',
         'gap-[clamp(6.4px,0.625vw,10px)] py-[clamp(5.7px,0.556vw,8.9px)] pl-[clamp(9.2px,0.903vw,14.4px)] pr-[clamp(12.1px,1.181vw,18.9px)]',
-        'font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-bold leading-[1.46]',
+        'font-kyg text-[clamp(11px,0.9375vw,15px)] font-bold leading-[1.46]',
         caps ? 'uppercase tracking-[0.11em]' : 'tracking-[0.03em]',
         tone === 'dark' ? 'bg-linenw/[0.07] text-java2 ring-1 ring-inset ring-linenw/[0.18]' : null,
         tone === 'teal' ? 'bg-java2/[0.14] text-ice ring-1 ring-inset ring-java2/[0.3]' : null,

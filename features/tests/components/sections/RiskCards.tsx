@@ -277,7 +277,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                   </span>
                   <span
                     className={cn(
-                      'absolute bottom-[10px] left-3 right-3 truncate font-kyg text-[10px] font-bold leading-[15px] tracking-[0.1em]',
+                      'absolute bottom-[10px] left-3 right-3 truncate font-kyg text-[11px] font-bold leading-[15px] tracking-[0.1em]',
                       a.caption
                     )}
                   >
@@ -336,7 +336,7 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                   </p>
 
                   <div className="flex flex-col gap-1.5 border-t border-mine/10 pt-4">
-                    <span className="font-kyg text-[10.5px] font-bold leading-[15.8px] tracking-[0.12em] text-boulder">
+                    <span className="font-kyg text-[11px] font-bold leading-[15.8px] tracking-[0.12em] text-boulder">
                       {c.sample.label}
                     </span>
                     <p

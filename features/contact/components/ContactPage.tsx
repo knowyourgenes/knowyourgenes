@@ -24,13 +24,18 @@ import SendMessage from './SendMessage';
  */
 export default function ContactPage() {
   return (
-    <>
+    /* `kyg-reveals` turns on the page's appear animations - the same CSS-only
+       `animation-timeline: view()` block the homepage, /about, /blog and
+       /categories already run. This page was the only rebuilt one still
+       without it, so its sections simply appeared. The markers it reads are
+       written by Eyebrow / Heading / Lead unconditionally. */
+    <div className="kyg-reveals">
       <ContactHero />
       <SendMessage /> {/* cream */}
       <HowToReachUs /> {/* sand  */}
       <MightBeQuicker /> {/* ink   */}
       <Journal /> {/* cream */}
       <FinalCta /> {/* sand  */}
-    </>
+    </div>
   );
 }

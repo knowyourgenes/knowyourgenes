@@ -73,7 +73,7 @@ export default function BlogFeed({ posts, initialCategory }: { posts: BlogListIt
         selects={[{ label: FEED.sortLabel, value: sort, onChange: (v) => setSort(v as SortValue), options: SORTS }]}
       >
         {initialCategory ? (
-          <span className="inline-flex items-center gap-2 rounded-sm bg-mint px-[10px] py-[5px] font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold uppercase tracking-[0.14em] text-eden">
+          <span className="inline-flex items-center gap-2 rounded-sm bg-mint px-[10px] py-[5px] font-kyg text-[clamp(11px,0.903vw,14.4px)] font-bold uppercase tracking-[0.14em] text-eden">
             {categoryLabel(initialCategory)}
             {/* 44x44 target pulled back with negative margin, so the chip keeps its
                 drawn height. This is the only control that clears the filter. */}

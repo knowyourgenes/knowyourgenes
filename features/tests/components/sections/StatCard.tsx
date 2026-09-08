@@ -27,7 +27,7 @@ export default function StatCard({ data, accent }: { data: Stat; accent: string 
       className="flex min-w-0 flex-col gap-[11px] rounded-sm border border-linenw bg-white/[0.04] p-7 text-center"
     >
       {/* Figtree 700 10.5/15.8 ls 0.12em #faf6ef@80 */}
-      <div className="break-words font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.12em] text-linenw/80">
+      <div className="break-words font-kyg text-[11px] font-bold uppercase leading-[15.8px] tracking-[0.12em] text-linenw/80">
         {data.kicker}
       </div>
 

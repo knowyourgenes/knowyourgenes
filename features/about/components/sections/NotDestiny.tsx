@@ -135,7 +135,7 @@ export default function NotDestiny() {
             className="inline-flex items-center gap-[6px] rounded-sm bg-white/[0.06] px-[clamp(9px,0.977vw,15.6px)] py-[clamp(6px,0.586vw,9.4px)] ring-1 ring-inset ring-white/[0.14]"
           >
             <Icon name="tick" strokeWidth={2.4} className="h-[10px] w-[10px] shrink-0 text-java2" />
-            <span className="font-kyg text-[clamp(10.7px,1.045vw,16.7px)] font-medium leading-none text-white/[0.86]">
+            <span className="font-kyg text-[clamp(11px,1.045vw,16.7px)] font-medium leading-none text-white/[0.86]">
               {chip}
             </span>
           </span>
@@ -146,8 +146,14 @@ export default function NotDestiny() {
       <div
         className="mt-[clamp(20px,2.93vw,46.9px)] flex min-h-[clamp(200px,25.391vw,406.3px)] flex-col justify-center gap-[clamp(10px,1.172vw,18.8px)] overflow-hidden rounded-sm bg-cover bg-center px-[clamp(20px,3.125vw,50px)] py-[clamp(22px,2.734vw,43.8px)]"
         style={{
+          /* NO GREEN WASH. This was two abyss stops at 0.86 and 0.92, which is
+             not a scrim - at that strength it is a fill, and the photograph
+             underneath may as well not have been there. The frame lays the
+             picture in plain. What is left is a neutral bottom-weighted
+             gradient, and it exists only so the white copy keeps its contrast
+             over the lighter parts of the image - not to tint it. */
           backgroundImage:
-            'linear-gradient(180deg,rgba(6,41,39,0.86) 0%,rgba(6,41,39,0.92) 100%),url(/about/img/key-statement.jpg)',
+            'linear-gradient(180deg,rgba(11,15,14,0.15) 0%,rgba(11,15,14,0.55) 100%),url(/about/img/key-statement.jpg)',
         }}
       >
         <p className="flex flex-wrap items-baseline gap-x-[clamp(8px,1.172vw,18.8px)] gap-y-1">

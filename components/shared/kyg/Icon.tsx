@@ -89,6 +89,9 @@ const PATHS = {
   /** Clock - the read time beside it. */
   clock: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 7.2V12l3.3 2.4',
 
+  /** A pennant on a pole - the two markers About 02 plants on its timeline. */
+  flag: 'M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7',
+
   /** A head over a wide open arc - station 05, "as your body changes". */
   figure:
     'M4 17C7 11 9 9 12 9C15 9 17 11 20 17M12 8.4C13.33 8.4 14.4 7.33 14.4 6C14.4 4.67 13.33 3.6 12 3.6C10.67 3.6 9.6 4.67 9.6 6C9.6 7.33 10.67 8.4 12 8.4Z',

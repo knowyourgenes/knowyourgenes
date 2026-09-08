@@ -74,7 +74,7 @@ export function Toolbar({
 
   return (
     <div className={cn('flex flex-wrap items-center gap-[clamp(12px,1.667vw,26.7px)]', className)}>
-      <p className="font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold uppercase leading-[1.462] tracking-[0.2em] text-boulder">
+      <p className="font-kyg text-[clamp(11px,0.903vw,14.4px)] font-bold uppercase leading-[1.462] tracking-[0.2em] text-boulder">
         {label}
       </p>
 

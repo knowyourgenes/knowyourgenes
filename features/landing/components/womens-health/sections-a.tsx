@@ -111,7 +111,7 @@ export function HeroSection() {
             <div className="float-slow absolute -top-4 right-3 grid size-[88px] place-items-center rounded-sm bg-[#0E4D4B] text-center shadow-[0_16px_40px_-8px_rgba(14,77,75,0.5)]">
               <div>
                 <div className="font-hind text-[26px] font-semibold leading-none text-[#FAF6EF]">1 in 5</div>
-                <div className="mt-[4px] text-[9.5px] font-normal uppercase leading-none tracking-[0.12em] text-[rgba(243,213,178,0.9)]">
+                <div className="mt-[4px] text-[11px] font-normal uppercase leading-none tracking-[0.12em] text-[rgba(243,213,178,0.9)]">
                   has PCOS
                 </div>
               </div>
@@ -123,7 +123,7 @@ export function HeroSection() {
                 <FigIcon src="/landing/icons/hero-gene.svg" className="size-[20px]" />
               </span>
               <div className="leading-tight">
-                <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Gene tested</div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">Gene tested</div>
                 <div className="text-[15px] font-semibold text-[#1F1A14]">THADA</div>
               </div>
             </div>
@@ -137,7 +137,7 @@ export function HeroSection() {
                 <FigIcon src="/landing/icons/hero-clock.svg" className="size-[21px]" />
               </span>
               <div className="leading-tight">
-                <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B6358]">
                   Lab to report
                 </div>
                 <div className="text-[19px] font-semibold text-[#1F1A14]">7 days</div>

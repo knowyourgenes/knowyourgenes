@@ -102,6 +102,16 @@ export default function WhyGenetics() {
                     <h3>
                       <button
                         type="button"
+                        /* HOVER OPENS IT, and it stays open when the pointer
+                           leaves - the row is only ever swapped for another
+                           one, never closed, so the column is never a stack of
+                           bare titles. `onClick` is what actually makes this
+                           work on a touchscreen and `onFocus` on a keyboard;
+                           hover alone would leave both with a dead control,
+                           since Tailwind gates `hover:` behind
+                           `@media (hover:hover)` and a finger has no hover. */
+                        onMouseEnter={() => setOpen(i)}
+                        onFocus={() => setOpen(i)}
                         onClick={() => setOpen(i)}
                         aria-expanded={isOpen}
                         aria-controls={`ladder-panel-${i}`}

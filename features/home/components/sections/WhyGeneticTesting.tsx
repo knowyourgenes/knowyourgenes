@@ -107,7 +107,7 @@ export default function WhyGeneticTesting({ hoverTint = false }: { hoverTint?: b
               {/* Figtree 500 at 0.16em on boulder - NOT bold, and not pewter */}
               <span
                 className={
-                  'font-kyg text-[clamp(8.2px,0.799vw,12.8px)] font-medium uppercase leading-[1.48] tracking-[0.16em] text-boulder'
+                  'font-kyg text-[clamp(11px,0.799vw,12.8px)] font-medium uppercase leading-[1.48] tracking-[0.16em] text-boulder'
                 }
               >
                 {item.n}

@@ -83,11 +83,11 @@ export default function Understandable() {
               <span className="font-kyg text-[clamp(12px,1.172vw,18.8px)] font-bold leading-none text-white">
                 {term.example.title}
               </span>
-              <span className="rounded-sm bg-java2/[0.18] px-[7px] py-[3px] font-kyg text-[clamp(10px,0.801vw,12.8px)] font-bold uppercase leading-none tracking-[0.08em] text-ice">
+              <span className="rounded-sm bg-java2/[0.18] px-[7px] py-[3px] font-kyg text-[clamp(11px,0.801vw,12.8px)] font-bold uppercase leading-none tracking-[0.08em] text-ice">
                 {term.example.tag}
               </span>
             </span>
-            <p className="font-kyg text-[clamp(10.8px,1.055vw,16.9px)] font-normal leading-[1.481] text-white/[0.78]">
+            <p className="font-kyg text-[clamp(11px,1.055vw,16.9px)] font-normal leading-[1.481] text-white/[0.78]">
               {term.example.body}
             </p>
           </div>

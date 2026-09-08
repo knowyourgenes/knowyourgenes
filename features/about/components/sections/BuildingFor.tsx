@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { type CSSProperties, useState } from 'react';
 
-import { Button, Eyebrow, Heading, Icon, Section } from '@/components/shared/kyg';
+import { Button, Eyebrow, Heading, Icon, PIN_PANE, PIN_TRACK, Section } from '@/components/shared/kyg';
+import { useScrollPin } from '@/hooks/use-scroll-pin';
 import { cn } from '@/lib/utils';
 import { BUILDING_FOR as C, PERSONA_ICONS } from '../../constants';
 import { Hr } from '../ui';
@@ -18,8 +19,21 @@ import { Hr } from '../ui';
  * rows plus a 210-tall image is most of a phone screen otherwise.
  */
 export default function BuildingFor() {
-  const [p, setP] = useState(0);
+  const { track, pane, walked, pinning, scrollToWalked } = useScrollPin();
+  const [clicked, setClicked] = useState(0);
+
+  const last = C.personas.length - 1;
+  /** Where persona `n` sits in the walk, 0..1. */
+  const at = (n: number) => n / last;
+
+  // SCROLL OWNS THE PERSONA while the section is pinned; the click state owns
+  // it otherwise (below `md`, and on a screen too short to pin).
+  const p = pinning ? Math.min(last, Math.floor(walked * last)) : clicked;
   const persona = C.personas[p];
+
+  // Move the PAGE, not the state, while pinned - state set inside a pin is
+  // overwritten by the next scroll frame and the control reads as broken.
+  const goTo = (n: number) => (pinning ? scrollToWalked(at(n)) : setClicked(n));
 
   return (
     <Section id="building-for" ground="ink" labelledBy="building-for-heading">
@@ -41,99 +55,119 @@ export default function BuildingFor() {
         </p>
       </div>
 
-      <div className="mt-[clamp(22px,3.027vw,48.4px)] grid gap-[clamp(14px,2.217vw,35.5px)] lg:grid-cols-[minmax(0,287fr)_minmax(0,658fr)]">
-        {/* ---- the options ---- */}
-        <div
-          role="radiogroup"
-          aria-label="Which sounds most like you?"
-          className="flex min-w-0 flex-wrap gap-[clamp(6px,0.557vw,8.9px)] lg:flex-col"
-        >
-          {C.personas.map((x, n) => {
-            const active = n === p;
-            return (
-              <button
-                key={x.title}
-                type="button"
-                role="radio"
-                aria-checked={active}
-                onClick={() => setP(n)}
-                className={cn(
-                  'flex min-w-[150px] flex-1 items-center gap-[clamp(8px,0.977vw,15.6px)] rounded-sm py-[clamp(10px,1.172vw,18.8px)] pl-[clamp(9px,0.977vw,15.6px)] pr-[clamp(10px,1.25vw,20px)] text-left outline-none transition duration-300 focus-visible:ring-2 focus-visible:ring-java2 motion-reduce:transition-none lg:flex-none',
-                  active ? 'bg-java2' : 'bg-white/[0.05] ring-1 ring-inset ring-white/[0.12] hover:bg-white/[0.09]'
-                )}
+      {/* THE PIN. A tall track holds a sticky pane, so page-scroll walks the
+          four personas while the section stays still - `position: sticky` and
+          nothing else. No wheel handler, no hijack: the scrollbar keeps its
+          meaning and a fast flick goes straight past.
+
+          THE PANE HOLDS THE OPTIONS AND THE CARD, and nothing else. The head
+          row above and the closing line below stay outside it, so the section
+          still opens and closes normally and the pane is exactly the pair the
+          walk is moving between.
+
+          `md` and up only: below that the hook reports `pinning: false`, the
+          pane is static, and taps drive the persona. */}
+      <div
+        ref={track}
+        className={cn('relative mt-[clamp(22px,3.027vw,48.4px)]', PIN_TRACK)}
+        style={{ '--pin-track': '200vh' } as CSSProperties}
+      >
+        <div ref={pane} {...{ className: PIN_PANE }}>
+          <div className="grid gap-[clamp(14px,min(2.217vw,3.871vh),35.5px)] lg:grid-cols-[minmax(0,287fr)_minmax(0,658fr)]">
+            {/* ---- the options ---- */}
+            <div
+              role="radiogroup"
+              aria-label="Which sounds most like you?"
+              className="flex min-w-0 flex-wrap gap-[clamp(6px,min(0.557vw,0.973vh),8.9px)] lg:flex-col"
+            >
+              {C.personas.map((x, n) => {
+                const active = n === p;
+                return (
+                  <button
+                    key={x.title}
+                    type="button"
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => goTo(n)}
+                    className={cn(
+                      'flex min-w-[150px] flex-1 items-center gap-[clamp(8px,min(0.977vw,1.706vh),15.6px)] rounded-sm py-[clamp(10px,min(1.172vw,2.046vh),18.8px)] pl-[clamp(9px,0.977vw,15.6px)] pr-[clamp(10px,1.25vw,20px)] text-left outline-none transition duration-300 focus-visible:ring-2 focus-visible:ring-java2 motion-reduce:transition-none lg:flex-none',
+                      active ? 'bg-java2' : 'bg-white/[0.05] ring-1 ring-inset ring-white/[0.12] hover:bg-white/[0.09]'
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'grid h-[clamp(24px,2.637vw,42.2px)] w-[clamp(24px,2.637vw,42.2px)] shrink-0 place-items-center rounded-sm',
+                        active ? 'bg-abyss/[0.18] text-abyss' : 'bg-white/[0.06] text-white'
+                      )}
+                    >
+                      <Icon name={PERSONA_ICONS[n]} className="h-[13px] w-[13px]" />
+                    </span>
+                    <span
+                      className={cn(
+                        'min-w-0 flex-1 font-kyg text-[clamp(11.7px,min(1.143vw,1.996vh),18.3px)] leading-[1.25] tracking-[-0.006em]',
+                        active ? 'font-bold text-abyss' : 'font-medium text-white/90'
+                      )}
+                    >
+                      {x.title}
+                    </span>
+                    <Icon
+                      name="arrow"
+                      strokeWidth={2}
+                      className={cn('h-[12px] w-[12px] shrink-0', active ? 'text-abyss' : 'text-white/50')}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* ---- the detail ---- */}
+            <div className="flex min-w-0 flex-col overflow-hidden rounded-sm bg-white/[0.04] ring-1 ring-inset ring-white/10">
+              <div
+                className="h-[clamp(140px,20.508vw,328.1px)] shrink-0 bg-cover bg-center"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(180deg,rgba(20,27,26,0.1) 0%,rgba(20,27,26,0.55) 100%),url(/about/img/persona-detail.jpg)',
+                }}
+              />
+              <div
+                aria-live="polite"
+                className="flex flex-col gap-[clamp(8px,min(0.977vw,1.706vh),15.6px)] px-[clamp(16px,2.227vw,35.6px)] pb-[clamp(16px,2.08vw,33.3px)] pt-[clamp(15px,1.943vw,31.1px)]"
               >
-                <span
-                  className={cn(
-                    'grid h-[clamp(24px,2.637vw,42.2px)] w-[clamp(24px,2.637vw,42.2px)] shrink-0 place-items-center rounded-sm',
-                    active ? 'bg-abyss/[0.18] text-abyss' : 'bg-white/[0.06] text-white'
-                  )}
-                >
-                  <Icon name={PERSONA_ICONS[n]} className="h-[13px] w-[13px]" />
-                </span>
-                <span
-                  className={cn(
-                    'min-w-0 flex-1 font-kyg text-[clamp(11.7px,1.143vw,18.3px)] leading-[1.25] tracking-[-0.006em]',
-                    active ? 'font-bold text-abyss' : 'font-medium text-white/90'
-                  )}
-                >
-                  {x.title}
-                </span>
-                <Icon
-                  name="arrow"
-                  strokeWidth={2}
-                  className={cn('h-[12px] w-[12px] shrink-0', active ? 'text-abyss' : 'text-white/50')}
-                />
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ---- the detail ---- */}
-        <div className="flex min-w-0 flex-col overflow-hidden rounded-sm bg-white/[0.04] ring-1 ring-inset ring-white/10">
-          <div
-            className="h-[clamp(140px,20.508vw,328.1px)] shrink-0 bg-cover bg-center"
-            style={{
-              backgroundImage:
-                'linear-gradient(180deg,rgba(20,27,26,0.1) 0%,rgba(20,27,26,0.55) 100%),url(/about/img/persona-detail.jpg)',
-            }}
-          />
-          <div
-            aria-live="polite"
-            className="flex flex-col gap-[clamp(8px,0.977vw,15.6px)] px-[clamp(16px,2.227vw,35.6px)] pb-[clamp(16px,2.08vw,33.3px)] pt-[clamp(15px,1.943vw,31.1px)]"
-          >
-            <span className="inline-flex items-center gap-[7px]">
-              <span className="grid h-[clamp(18px,2.051vw,32.8px)] w-[clamp(18px,2.051vw,32.8px)] shrink-0 place-items-center rounded-sm bg-java2/[0.16] text-java2">
-                <Icon name={PERSONA_ICONS[p]} className="h-[11px] w-[11px]" />
-              </span>
-              <span className="font-tst text-[clamp(12.5px,1.221vw,19.5px)] font-semibold italic leading-none text-java2">
-                {persona.title}
-              </span>
-            </span>
-
-            <p className="font-kyg text-[clamp(18px,2.227vw,35.6px)] font-bold leading-[1.228] tracking-[-0.02em] text-white">
-              {persona.question}
-            </p>
-            <p className="font-kyg text-[clamp(11.7px,1.143vw,18.3px)] font-normal leading-[1.598] text-white/70">
-              {persona.body}
-            </p>
-
-            <ul className="flex list-none flex-wrap gap-[clamp(5.7px,0.557vw,8.9px)]">
-              {persona.markers.map((m) => (
-                <li
-                  key={m}
-                  className="rounded-sm bg-white/[0.06] px-[clamp(8.5px,0.83vw,13.3px)] py-[clamp(5px,0.488vw,7.8px)] ring-1 ring-inset ring-white/[0.14]"
-                >
-                  <span className="font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-medium leading-none text-white/85">
-                    {m}
+                <span className="inline-flex items-center gap-[7px]">
+                  <span className="grid h-[clamp(18px,2.051vw,32.8px)] w-[clamp(18px,2.051vw,32.8px)] shrink-0 place-items-center rounded-sm bg-java2/[0.16] text-java2">
+                    <Icon name={PERSONA_ICONS[p]} className="h-[11px] w-[11px]" />
                   </span>
-                </li>
-              ))}
-            </ul>
+                  <span className="font-tst text-[clamp(12.5px,min(1.221vw,2.132vh),19.5px)] font-semibold italic leading-none text-java2">
+                    {persona.title}
+                  </span>
+                </span>
 
-            <div className="mt-[clamp(4px,0.391vw,6.3px)] flex">
-              <Button href={C.cta.href} variant="onDark">
-                {C.cta.label}
-              </Button>
+                <p className="font-kyg text-[clamp(18px,min(2.227vw,3.888vh),35.6px)] font-bold leading-[1.228] tracking-[-0.02em] text-white">
+                  {persona.question}
+                </p>
+                <p className="font-kyg text-[clamp(11.7px,min(1.143vw,1.996vh),18.3px)] font-normal leading-[1.598] text-white/70">
+                  {persona.body}
+                </p>
+
+                <ul className="flex list-none flex-wrap gap-[clamp(5.7px,min(0.557vw,0.973vh),8.9px)]">
+                  {persona.markers.map((m) => (
+                    <li
+                      key={m}
+                      className="rounded-sm bg-white/[0.06] px-[clamp(8.5px,0.83vw,13.3px)] py-[clamp(5px,min(0.488vw,0.852vh),7.8px)] ring-1 ring-inset ring-white/[0.14]"
+                    >
+                      <span className="font-kyg text-[clamp(11px,min(0.9375vw,1.637vh),15px)] font-medium leading-none text-white/85">
+                        {m}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-[clamp(4px,min(0.391vw,0.683vh),6.3px)] flex">
+                  <Button href={C.cta.href} variant="onDark">
+                    {C.cta.label}
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

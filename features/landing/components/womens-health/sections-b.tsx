@@ -151,7 +151,7 @@ function MockReport() {
         <div className="pointer-events-none absolute -right-6 -top-8 size-[176px] rounded-full bg-[rgba(37,181,171,0.2)] blur-[40px]" />
         <div className="relative flex items-center justify-between">
           <ReportLogo />
-          <span className="rounded-sm bg-white/15 px-[12px] py-[6px] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-[8px]">
+          <span className="rounded-sm bg-white/15 px-[12px] py-[6px] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#FAF6EF] backdrop-blur-[8px]">
             Panel 01 / 05
           </span>
         </div>

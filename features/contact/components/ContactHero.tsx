@@ -37,7 +37,7 @@ export default function ContactHero() {
         <div className="flex flex-wrap items-center gap-[clamp(11.4px,1.111vw,17.8px)]">
           <Eyebrow>{HERO.eyebrow}</Eyebrow>
           <span aria-hidden="true" className="hidden h-px w-[clamp(142.2px,13.889vw,222.2px)] bg-mine/10 sm:block" />
-          <span className="font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold uppercase leading-[1.5] tracking-[0.2em] text-boulder">
+          <span className="font-kyg text-[clamp(11px,0.903vw,14.4px)] font-bold uppercase leading-[1.5] tracking-[0.2em] text-boulder">
             {HERO.aside}
           </span>
         </div>
@@ -83,7 +83,7 @@ export default function ContactHero() {
           <span className="grid h-[clamp(31.3px,3.056vw,48.9px)] w-[clamp(31.3px,3.056vw,48.9px)] shrink-0 place-items-center rounded-sm border border-white bg-[linear-gradient(135deg,rgba(14,77,75,0.05)_0%,rgba(37,181,171,0.06)_71%)] text-eden">
             <Icon name="message" className="h-[clamp(15.6px,1.527vw,24.4px)] w-[clamp(15.6px,1.527vw,24.4px)]" />
           </span>
-          <span className="max-w-[16ch] font-kyg text-[clamp(9.6px,0.9375vw,15px)] font-bold leading-[1.252] text-[#2D2A24]">
+          <span className="max-w-[16ch] font-kyg text-[clamp(11px,0.9375vw,15px)] font-bold leading-[1.252] text-[#2D2A24]">
             {HERO.pill}
           </span>
         </div>

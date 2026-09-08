@@ -52,7 +52,7 @@ function TraitCard({
           <span className="h-full flex-1 bg-java" />
           <span className="h-full flex-1 bg-mojo" />
         </div>
-        <div className="mt-[6px] flex justify-between text-[10.5px] font-medium text-cord">
+        <div className="mt-[6px] flex justify-between text-[11px] font-medium text-cord">
           <span>{low}</span>
           <span>{high}</span>
         </div>

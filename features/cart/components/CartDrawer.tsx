@@ -139,7 +139,7 @@ export function CartDrawer() {
             type="button"
             onClick={closeDrawer}
             aria-label="Close cart"
-            className="grid h-9 w-9 place-items-center rounded-sm text-cape transition hover:bg-zeus/[0.06] hover:text-mine"
+            className="grid h-11 w-11 place-items-center rounded-sm text-cape transition hover:bg-zeus/[0.06] hover:text-mine"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" className="h-[18px] w-[18px]">
               <path d="M18 6 6 18M6 6l12 12" strokeLinecap="round" />
@@ -188,7 +188,7 @@ export function CartDrawer() {
                     {line.coverImageUrl ? (
                       <Image src={line.coverImageUrl} alt="" fill sizes="72px" className="object-cover" />
                     ) : (
-                      <span className="grid h-full w-full place-items-center text-[10px] font-bold uppercase tracking-[0.08em] text-eden/50">
+                      <span className="grid h-full w-full place-items-center text-[11px] font-bold uppercase tracking-[0.08em] text-eden/50">
                         KYG
                       </span>
                     )}
