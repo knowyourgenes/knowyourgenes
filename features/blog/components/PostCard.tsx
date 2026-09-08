@@ -28,7 +28,7 @@ export function PostMeta({
   className?: string;
 }) {
   const date = formatPostDate(post.publishedAt);
-  const type = size === 'sm' ? 'text-[clamp(9.2px,0.903vw,14.4px)]' : 'text-[clamp(10.3px,1.007vw,16.1px)]';
+  const type = size === 'sm' ? 'text-[clamp(11px,0.903vw,14.4px)]' : 'text-[clamp(11px,1.007vw,16.1px)]';
   const glyph =
     size === 'sm'
       ? 'h-[clamp(10px,0.972vw,15.6px)] w-[clamp(10px,0.972vw,15.6px)]'
@@ -65,8 +65,8 @@ export function Tag({ category, size = 'sm' }: { category?: string; size?: 'sm' 
       className={cn(
         'inline-flex w-fit items-center rounded-sm bg-mint font-kyg font-bold uppercase text-eden',
         size === 'sm'
-          ? 'px-[clamp(6.4px,0.625vw,10px)] py-[clamp(2.8px,0.278vw,4.4px)] text-[clamp(9.2px,0.903vw,14.4px)] leading-[1.5] tracking-[0.14em]'
-          : 'px-[clamp(7.1px,0.694vw,11.1px)] py-[clamp(3.6px,0.347vw,5.6px)] text-[clamp(10px,0.799vw,12.8px)] leading-[1.478] tracking-[0.14em]'
+          ? 'px-[clamp(6.4px,0.625vw,10px)] py-[clamp(2.8px,0.278vw,4.4px)] text-[clamp(11px,0.903vw,14.4px)] leading-[1.5] tracking-[0.14em]'
+          : 'px-[clamp(7.1px,0.694vw,11.1px)] py-[clamp(3.6px,0.347vw,5.6px)] text-[clamp(11px,0.799vw,12.8px)] leading-[1.478] tracking-[0.14em]'
       )}
     >
       {categoryLabel(category)}

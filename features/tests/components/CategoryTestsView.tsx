@@ -141,7 +141,7 @@ function TestCard({ product, pricing }: { product: CategoryProduct; pricing?: Ki
              interchangeable - ancestry's 10 are global regions, not parameters,
              and my-wellness is "52 traits · 4 reports", which "52 PARAMETERS"
              would silently halve. */
-          <span className="inline-flex w-fit items-center rounded-sm bg-mint px-[clamp(7.1px,0.694vw,11.1px)] py-[clamp(3.6px,0.347vw,5.6px)] font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold uppercase leading-[1.5] tracking-[0.14em] text-eden">
+          <span className="inline-flex w-fit items-center rounded-sm bg-mint px-[clamp(7.1px,0.694vw,11.1px)] py-[clamp(3.6px,0.347vw,5.6px)] font-kyg text-[clamp(11px,0.903vw,14.4px)] font-bold uppercase leading-[1.5] tracking-[0.14em] text-eden">
             {product.meta}
           </span>
         ) : null}

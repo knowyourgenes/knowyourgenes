@@ -95,7 +95,7 @@ function CheckRow({
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className="h-[15px] w-[15px] shrink-0 cursor-pointer accent-eden"
+        className="h-[18px] w-[18px] shrink-0 cursor-pointer accent-eden"
       />
       <span className={cn('min-w-0 flex-1 truncate', checked && 'font-semibold text-eden')}>{label}</span>
       <span className="shrink-0 text-[12px] text-cord tabular-nums">({count})</span>
@@ -379,7 +379,7 @@ export function SearchResultsView({ catalog }: { catalog: SearchProduct[] }) {
               <select
                 value={sort}
                 onChange={(e) => setParams({ sort: e.target.value === 'relevance' ? null : e.target.value })}
-                className="rounded-sm border border-zeus/[0.12] bg-white px-[12px] py-[8px] text-[13.5px] font-medium normal-case tracking-normal text-mine outline-none transition focus:border-eden/40"
+                className="min-h-[44px] rounded-sm border border-zeus/[0.12] bg-white px-[12px] py-[8px] text-[13.5px] font-medium normal-case tracking-normal text-mine outline-none transition focus:border-eden/40"
               >
                 {SORT_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>
@@ -436,7 +436,7 @@ export function SearchResultsView({ catalog }: { catalog: SearchProduct[] }) {
                         className="aspect-[4/3] w-full overflow-hidden"
                       />
                       <div className="flex flex-1 flex-col p-[16px]">
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-cord">
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cord">
                           {p.categoryName}
                         </div>
                         <div className="mt-[6px] text-[16px] font-semibold leading-[1.25] text-mine">{p.name}</div>

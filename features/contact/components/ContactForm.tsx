@@ -32,7 +32,7 @@ const FIELD =
 // 44px floor: 3.333vw only reaches 44 at a 1319 viewport, so the frame's 34.1
 // would apply at every phone, tablet and 1280 laptop.
 const INPUT = `${FIELD} h-[clamp(44px,3.333vw,53.3px)]`;
-const LABEL = 'font-kyg text-[clamp(9.2px,0.903vw,14.4px)] font-bold leading-[1.462] text-heavy';
+const LABEL = 'font-kyg text-[clamp(11px,0.903vw,14.4px)] font-bold leading-[1.462] text-heavy';
 const ERR = 'mt-[4px] block font-kyg text-[clamp(12px,0.9375vw,15px)] leading-[1.5] text-mojo';
 /** 5.689 label -> field, 12.8 between one field group and the next. */
 const GROUP = 'flex min-w-0 flex-col gap-[clamp(5.7px,0.556vw,8.9px)]';
@@ -227,7 +227,7 @@ export default function ContactForm() {
           type="checkbox"
           disabled={busy}
           aria-invalid={!!errs.consent}
-          className="mt-[3px] h-[20px] w-[20px] shrink-0 rounded-sm border border-eden/30 bg-white accent-eden"
+          className="mt-[3px] h-[24px] w-[24px] shrink-0 rounded-sm border border-eden/30 bg-white accent-eden"
         />
         <label
           htmlFor={`${uid}-consent`}

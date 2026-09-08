@@ -38,7 +38,7 @@ function TonePill({ tone, label }: { tone: RiskTone; label: string }) {
   return (
     <span
       className={cn(
-        'inline-block shrink-0 rounded-sm px-2.5 py-1 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
+        'inline-block shrink-0 rounded-sm px-2.5 py-1 font-kyg text-[11px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
         TONE_PILL[tone]
       )}
     >

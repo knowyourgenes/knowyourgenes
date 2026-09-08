@@ -996,3 +996,139 @@ body {
     animation: kyg-dot-pulse 3.2s ease-in-out infinite both;
   }
 }
+
+/* =============================================================================
+   kyg-pin - the pinned-section contract, in ONE place
+   -----------------------------------------------------------------------------
+   Five sections hold themselves still while page-scroll walks their content:
+   the homepage's explore grid, step track and life curve, and About's stepper
+   and personas. Each had its own copy of the same six declarations, which is
+   how three of them were still engaging on a phone in landscape after the other
+   two had been fixed.
+
+   IT ASKS FOR HEIGHT AS WELL AS WIDTH, and that is the whole point. A pinned
+   pane is locked to `100svh - header` and CANNOT GROW, so on a short viewport
+   the bottom of the section is not scrolled past - it is unreachable. Width
+   alone (`md`) engaged the pin on an 844x390 phone in landscape, where the box
+   is 325px tall and the homepage's explore grid lost 395px inside it.
+
+   Below the threshold every rule here simply does not apply: the track is
+   auto-height, the pane is static, and `useScrollPin` reports `pinning: false`
+   on its own because `trackH - paneH` is 0. Nothing needs to be told twice.
+
+   Written as plain CSS rather than a Tailwind variant because a `@custom-variant`
+   carrying this media query produced no utilities at all under Tailwind 4.2.
+   ============================================================================= */
+.kyg-pin-only {
+  display: none;
+}
+
+@media (min-width: 768px) and (min-height: 700px) {
+  /* the tall track the pane is stuck inside - each section sets its own length
+     with `--pin-track`, because how far a walk should run depends on how much
+     there is to walk through */
+  .kyg-pin-track {
+    height: var(--pin-track, 200vh);
+  }
+
+  .kyg-pin {
+    position: sticky;
+    top: var(--site-header-h, 104px);
+    display: flex;
+    height: calc(100svh - var(--site-header-h, 104px));
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* a section that draws two different things - a pinned one and a static
+     fallback - swaps them on the same threshold */
+  .kyg-pin-only {
+    display: block;
+  }
+  .kyg-pin-else {
+    display: none;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   kyg-pin-roomy - for a section that is nearly a full screen on its own.
+   -----------------------------------------------------------------------------
+   700px of viewport is enough for most of the pinned sections. It is not enough
+   for the homepage's explore grid: its detail panel alone is 490px at 1366 wide
+   (a 169px image over 321px of copy), and with the heading and the footer row
+   the section needs about 940px before it fits behind the header. Below that it
+   was losing 40-100px off the bottom - and the panel is the whole point of the
+   section, so there is nothing there to trim.
+
+   Put this class on BOTH the track and the pane. Between 700 and 939px tall the
+   section then renders as an ordinary scrollable band with click-driven
+   selection, which is what `useScrollPin` already falls back to. A pin is an
+   enhancement; it should not cost anyone the content.
+   ----------------------------------------------------------------------------- */
+@media (min-width: 768px) and (max-height: 939px) {
+  .kyg-pin-roomy.kyg-pin {
+    position: static;
+    display: block;
+    height: auto;
+  }
+
+  .kyg-pin-roomy.kyg-pin-track {
+    height: auto;
+  }
+}
+
+/* =============================================================================
+   Press feedback on touch
+   -----------------------------------------------------------------------------
+   THE WHOLE SITE'S MOTION IS HOVER-DRIVEN, and a finger cannot hover. Tailwind
+   compiles every `hover:` behind `@media (hover: hover)`, so on a phone the
+   tints, lifts, underline slides and arrow nudges on ~40 components simply do
+   not exist: a card looks exactly the same whether you are touching it or not.
+   There was not one `active:` state anywhere in the rebuilt pages.
+
+   This is the touch counterpart, once, for everything: a control dips slightly
+   while your finger is down. It is deliberately small - 0.98 - because it is
+   feedback, not an effect, and it should read as the surface giving rather than
+   as something animating.
+
+   `@media (hover: none)` rather than `(pointer: coarse)`: a laptop with a
+   touchscreen has both, and there the hover states already do the work.
+   Inline links in prose are unaffected, since `transform` does not apply to
+   non-replaced inline boxes - which is the right outcome, as a word in a
+   paragraph should not move when tapped.
+   ============================================================================= */
+@media (hover: none) {
+  a,
+  button,
+  [role='button'],
+  [role='radio'],
+  summary {
+    transition: transform 140ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  a:active,
+  button:not(:disabled):active,
+  [role='button']:active,
+  [role='radio']:active,
+  summary:active {
+    transform: scale(0.98);
+  }
+}
+
+@media (hover: none) and (prefers-reduced-motion: reduce) {
+  a,
+  button,
+  [role='button'],
+  [role='radio'],
+  summary {
+    transition: none;
+  }
+
+  a:active,
+  button:not(:disabled):active,
+  [role='button']:active,
+  [role='radio']:active,
+  summary:active {
+    transform: none;
+  }
+}

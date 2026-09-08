@@ -5,7 +5,7 @@ import type { CSSProperties } from 'react';
 
 import { cn } from '@/lib/utils';
 import { useScrollPin } from '@/hooks/use-scroll-pin';
-import { Button, Icon, PHOTO, Section, SectionTitle, type IconName } from '../ui';
+import { Button, Icon, PHOTO, PIN_PANE, Section, SectionTitle, type IconName } from '../ui';
 
 /**
  * 04 - One life. One DNA. Five stations on a rising curve that LIGHTS AS YOU
@@ -164,7 +164,7 @@ const SIZE = {
   node: 'h-[clamp(32.7px,3.194vw,51.1px)] w-[clamp(32.7px,3.194vw,51.1px)]',
   nodeIcon: 'h-[clamp(14.2px,1.389vw,22.2px)] w-[clamp(14.2px,1.389vw,22.2px)]',
   title: 'text-[clamp(12.8px,1.25vw,20px)]',
-  line: 'text-[clamp(10.3px,1.007vw,16.1px)]',
+  line: 'text-[clamp(11px,1.007vw,16.1px)]',
 } as const;
 
 /**
@@ -222,11 +222,12 @@ export default function OneLifetimeCurve() {
           scrollbar keeps its meaning, and a flick past the section still gets
           you past it. lg and up only - below 1024 five stations across a 2.27:1
           box puts the captions at ~6px, so the same five run as a list. ──── */}
-      <div ref={track} className="relative hidden h-[200vh] md:block">
-        <div
-          ref={pane}
-          className="sticky top-[var(--site-header-h,104px)] flex h-[calc(100svh-var(--site-header-h,104px))] flex-col justify-center"
-        >
+      <div
+        ref={track}
+        className="kyg-pin-only kyg-pin-track relative"
+        style={{ '--pin-track': '200vh' } as CSSProperties}
+      >
+        <div ref={pane} className={PIN_PANE}>
           {/* max-h-full is the short-screen valve: the band gives height back
               rather than growing past the pane and clipping station 05. */}
           {/* THE BAND IS TALLER BELOW 1024, and it has to be. At 768 the rail
@@ -376,7 +377,7 @@ export default function OneLifetimeCurve() {
           travel through the viewport instead - see the unpinned branch of
           useScrollPin - and it fills DOWNWARD, which is the direction a phone
           is read in anyway. Stations light exactly as they do on the band. */}
-      <div ref={smallTrack} className="md:hidden">
+      <div ref={smallTrack} className="kyg-pin-else">
         <SectionTitle id="one-life-heading-sm" eyebrow="One life. One DNA." tone="dark" eyebrowTone="teal">
           Before you knew yourself, <em>your genes were already there.</em>
         </SectionTitle>

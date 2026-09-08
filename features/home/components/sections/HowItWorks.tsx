@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { type CSSProperties, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { useScrollPin } from '@/hooks/use-scroll-pin';
-import { Button, Icon, PHOTO, Section, SectionTitle } from '../ui';
+import { Button, Icon, PHOTO, PIN_PANE, PIN_TRACK, Section, SectionTitle } from '../ui';
 
 /** The five steps, verbatim. Only one body is on screen at a time. */
 const STEPS = [
@@ -119,7 +119,7 @@ export default function HowItWorks({
             <button
               type="button"
               onClick={(e) => goTo(i + 1, e.currentTarget)}
-              className="group/next mt-[24px] inline-flex w-fit items-center gap-[8px] font-kyg text-[15px] font-semibold text-eden transition-colors duration-300 hover:text-eden2"
+              className="group/next -my-[10px] mt-[14px] inline-flex min-h-[44px] w-fit items-center gap-[8px] font-kyg text-[15px] font-semibold text-eden transition-colors duration-300 hover:text-eden2"
             >
               Next · {after.title}
               <Icon
@@ -139,14 +139,12 @@ export default function HowItWorks({
       {/* The pin, from md up and only when asked for. Below that the track is
           auto-height and the pane is static, and progress comes from the
           section's own travel through the viewport instead. */}
-      <div ref={track} className={cn('relative', pinned && 'md:h-[200vh]')}>
-        <div
-          ref={pane}
-          className={cn(
-            pinned &&
-              'md:sticky md:top-[var(--site-header-h,104px)] md:flex md:h-[calc(100svh-var(--site-header-h,104px))] md:flex-col md:justify-center'
-          )}
-        >
+      <div
+        ref={track}
+        className={cn('relative', pinned && PIN_TRACK)}
+        style={{ '--pin-track': '200vh' } as CSSProperties}
+      >
+        <div ref={pane} className={cn(pinned && PIN_PANE)}>
           <SectionTitle
             id="hiw-heading"
             eyebrow="How it works"

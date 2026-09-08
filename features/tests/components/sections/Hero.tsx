@@ -237,12 +237,12 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
                       <Icon name={card.icon ?? 'flask'} className="size-[18px] text-eden" />
                     )}
                   </span>
-                  <span className="truncate font-kyg text-[10px] font-bold uppercase leading-[15px] tracking-[0.14em] text-boulder">
+                  <span className="truncate font-kyg text-[11px] font-bold uppercase leading-[15px] tracking-[0.14em] text-boulder">
                     {card.title}
                   </span>
                 </span>
                 {card.titleRight ? (
-                  <span className="shrink-0 font-kyg text-[10px] font-bold uppercase leading-[15px] tracking-[0.14em] text-boulder">
+                  <span className="shrink-0 font-kyg text-[11px] font-bold uppercase leading-[15px] tracking-[0.14em] text-boulder">
                     {card.titleRight}
                   </span>
                 ) : null}
@@ -267,7 +267,7 @@ export default function Hero({ data, ground = 'cream' }: { data: HeroSection; gr
 
               {card.footNoteHtml ? (
                 <p
-                  className="mt-3 border-t border-mine/10 pt-3 font-kyg text-[10px] font-bold uppercase leading-[15px] tracking-[0.12em] text-crimson-deep"
+                  className="mt-3 border-t border-mine/10 pt-3 font-kyg text-[11px] font-bold uppercase leading-[15px] tracking-[0.12em] text-crimson-deep"
                   dangerouslySetInnerHTML={{ __html: card.footNoteHtml }}
                 />
               ) : null}

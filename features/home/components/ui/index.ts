@@ -5,5 +5,14 @@
 // spacing) still lives beside this file in ./tokens.
 export { Section, Button, Rule, SectionTitle, Eyebrow, Heading, Lead, Icon, IconWell } from '@/components/shared/kyg';
 export type { ButtonVariant, IconName, Ground } from '@/components/shared/kyg';
-export { GROUND, RULE_DARK, RULE_LIGHT, SECTION_Y, isDark } from '@/components/shared/kyg';
+export {
+  GROUND,
+  PIN_PANE,
+  PIN_ROOMY,
+  PIN_TRACK,
+  RULE_DARK,
+  RULE_LIGHT,
+  SECTION_Y,
+  isDark,
+} from '@/components/shared/kyg';
 export { HEAD_GAP, MEDIA_CAP, PHOTO } from './tokens';

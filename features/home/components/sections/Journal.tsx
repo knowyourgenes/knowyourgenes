@@ -158,7 +158,10 @@ export default function Journal() {
         <Button href="/blog">Explore The Journal</Button>
 
         <div className="flex items-center gap-[24px]">
-          <div aria-hidden="true" className="h-[3px] w-[200px] overflow-hidden rounded-sm bg-eden/[0.13]">
+          {/* The one fixed width in this row, and at 320px it was the whole reason
+              the page scrolled sideways: 200 + 24 + 106 = 330 in a 320 viewport.
+              It is a progress read-out, so it can be any length. */}
+          <div aria-hidden="true" className="h-[3px] w-[min(200px,34vw)] overflow-hidden rounded-sm bg-eden/[0.13]">
             <div
               className="h-full rounded-sm bg-eden transition-[width] duration-300"
               style={{ width: `${Math.max(12, progress * 100)}%` }}

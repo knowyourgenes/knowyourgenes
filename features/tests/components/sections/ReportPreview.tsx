@@ -70,7 +70,7 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
               Its 32px inset is the card's own left padding, so it tracks the same
               clamp - otherwise it drifts away from the rows once the padding
               starts shrinking (below ~1392, where 2.3vw drops under 32). */}
-          <span className="absolute -top-3 left-[clamp(20px,2.3vw,32px)] whitespace-nowrap rounded-sm bg-eden px-4 py-1.5 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.12em] text-white">
+          <span className="absolute -top-3 left-[clamp(20px,2.3vw,32px)] whitespace-nowrap rounded-sm bg-eden px-4 py-1.5 font-kyg text-[11px] font-bold uppercase leading-[15.8px] tracking-[0.12em] text-white">
             {data.sample.badge}
           </span>
 
@@ -96,7 +96,7 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
                 </span>
                 <span
                   className={cn(
-                    'shrink-0 rounded-sm px-[10px] py-1 font-kyg text-[10.5px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
+                    'shrink-0 rounded-sm px-[10px] py-1 font-kyg text-[11px] font-bold uppercase leading-[15.8px] tracking-[0.06em]',
                     TONE_PILL[r.tone]
                   )}
                 >

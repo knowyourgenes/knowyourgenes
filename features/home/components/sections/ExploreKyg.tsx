@@ -1,11 +1,23 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { type CSSProperties, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { useScrollPin } from '@/hooks/use-scroll-pin';
-import { Button, Icon, Lead, PHOTO, Rule, Section, SectionTitle, type IconName } from '../ui';
+import {
+  Button,
+  Icon,
+  Lead,
+  PHOTO,
+  PIN_PANE,
+  PIN_ROOMY,
+  PIN_TRACK,
+  Rule,
+  Section,
+  SectionTitle,
+  type IconName,
+} from '../ui';
 
 /**
  * The six directions, as a selector.
@@ -120,16 +132,29 @@ export default function ExploreKyg({
   const { track, pane, walked, pinning, scrollToWalked } = useScrollPin();
   const [clicked, setClicked] = useState(0);
 
-  // SCROLL OWNS THE CHOICE AT EVERY WIDTH: above md it is the walk through the
-  // pin, below md the section's own travel through the viewport.
+  // SCROLL OWNS THE CHOICE ONLY WHERE THE SECTION IS ACTUALLY PINNED, and that
+  // is `pinning` - what the hook measured - not `pinned`, which is only the
+  // caller asking for it.
   //
-  // What made this jump before was not the scroll - it was MOVING one panel
-  // between the rows. A tall block re-ordered past a list item teleports every
-  // item it crosses. Below md each row now owns its own panel and they open and
-  // close by animating height, so one shrinks exactly as the next grows: the
-  // rows slide instead of hopping, and the section's total height never
-  // changes, which is also why the scroll maths cannot oscillate.
-  const driven = pinned;
+  // The difference is the whole behaviour on a phone. There the pin does not
+  // engage (see `kyg-pin`: it wants height as well as width), so the walk fell
+  // back to the section's own travel through the viewport - about 1190px shared
+  // by six cards, or roughly 200px each. A card's panel is taller than a phone
+  // screen, so the scroll you use to READ one is the same scroll that switches
+  // it away: it changed under you every quarter-screen and could not be held
+  // still. Slowing it is not possible without inventing scroll distance, and
+  // the only place to get that is blank space or a pinned pane, which on a
+  // 655px screen would cut the panel in half.
+  //
+  // So below the pin threshold the card is TAPPED, like every other accordion
+  // on the site. This also fixes the taps, which did nothing: with `driven`
+  // true a tap called `scrollToWalked`, and that returns early when there is no
+  // travel to scroll - tapping row 3 landed on row 1.
+  //
+  // Where the pin IS engaged nothing changes: the rows each own their panel and
+  // animate height, so one shrinks exactly as the next grows, the section's
+  // total height never changes, and the walk cannot oscillate.
+  const driven = pinning;
   const active = driven ? Math.min(AREAS.length - 1, Math.floor(walked * AREAS.length)) : clicked;
   const area = AREAS[active]!;
 
@@ -183,14 +208,12 @@ export default function ExploreKyg({
       {/* The pin, from md up and only when asked for. Below that the track is
           auto-height, the pane is static, and progress comes from the section's
           own travel through the viewport instead. */}
-      <div ref={track} className={cn('relative', pinned && 'md:h-[240vh]')}>
-        <div
-          ref={pane}
-          className={cn(
-            pinned &&
-              'md:sticky md:top-[var(--site-header-h,104px)] md:flex md:h-[calc(100svh-var(--site-header-h,104px))] md:flex-col md:justify-center'
-          )}
-        >
+      <div
+        ref={track}
+        className={cn('relative', pinned && [PIN_TRACK, PIN_ROOMY])}
+        style={{ '--pin-track': '240vh' } as CSSProperties}
+      >
+        <div ref={pane} className={cn(pinned && [PIN_PANE, PIN_ROOMY])}>
           <SectionTitle
             id="explore-kyg-heading"
             eyebrow="Explore KYG"

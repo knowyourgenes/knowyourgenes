@@ -181,7 +181,7 @@ export default function Discover({ hoverTint = false }: { hoverTint?: boolean } 
                   <Link
                     href={row.href}
                     className={
-                      'inline-flex items-center gap-[clamp(6.4px,0.625vw,10px)] pt-[clamp(2.8px,0.278vw,4.4px)] font-kyg text-[clamp(11.4px,1.111vw,17.8px)] font-bold leading-[1.32] tracking-[-0.008em] text-eden transition-colors duration-300 hover:text-eden2'
+                      'inline-flex min-h-[44px] items-center gap-[clamp(6.4px,0.625vw,10px)] pt-[clamp(2.8px,0.278vw,4.4px)] font-kyg text-[clamp(11.4px,1.111vw,17.8px)] font-bold leading-[1.32] tracking-[-0.008em] text-eden transition-colors duration-300 hover:text-eden2'
                     }
                   >
                     {row.cta}

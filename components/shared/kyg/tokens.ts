@@ -36,6 +36,34 @@
 export const SECTION_Y = 'py-[clamp(24px,min(5.972vw,9.4vh),96px)]';
 
 /**
+ * THE PINNED PANE, in one place because five sections use it - the homepage's
+ * explore grid, step track and life curve, and About's stepper and personas.
+ *
+ * It was copied into each of them, which is how three of the five ended up
+ * still engaging on a phone in landscape after the other two were fixed. The
+ * `kyg-pin` block in globals.css carries the height requirement; see the note
+ * beside it there for why width alone was not enough.
+ *
+ * A section pairs it with PIN_TRACK and its own walk length, and MUST use both:
+ * a tall track under a static pane is a screen of empty ground.
+ */
+export const PIN_PANE = 'kyg-pin';
+
+/**
+ * The track a `PIN_PANE` is stuck inside. Pair it with the walk's length:
+ *   <div ref={track} className={cn('relative', pinned && PIN_TRACK)}
+ *        style={{ '--pin-track': '240vh' }}>
+ */
+export const PIN_TRACK = 'kyg-pin-track';
+
+/**
+ * Put on BOTH the track and the pane of a section that is nearly a full screen
+ * on its own, so it only pins where it actually fits. See the note beside
+ * `.kyg-pin-roomy` in globals.css.
+ */
+export const PIN_ROOMY = 'kyg-pin-roomy';
+
+/**
  * The section grounds, in the order the page alternates them.
  *
  * `ink` and `abyss` set their own ink colour because everything inside them

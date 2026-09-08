@@ -49,7 +49,7 @@ export default function FeaturedPost({ post }: { post: BlogListItem }) {
             strokeWidth={1.6}
             className="h-[clamp(10px,0.972vw,15.6px)] w-[clamp(10px,0.972vw,15.6px)] text-linenw"
           />
-          <span className="font-kyg text-[clamp(10px,0.799vw,12.8px)] font-bold uppercase leading-[1.478] tracking-[0.16em] text-linenw">
+          <span className="font-kyg text-[clamp(11px,0.799vw,12.8px)] font-bold uppercase leading-[1.478] tracking-[0.16em] text-linenw">
             {FEED.editorsPick}
           </span>
         </span>
