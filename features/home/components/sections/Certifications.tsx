@@ -12,6 +12,16 @@ import { Section } from '../ui';
  * THE CREAM GROUND IS LOAD-BEARING. The logos are white-ground JPEGs on
  * `mix-blend-multiply`, which is what drops those white boxes out into the band.
  * Move this onto any other ground and six pale rectangles come back.
+ *
+ * THEY ARE IN COLOUR AND AT FULL STRENGTH. They used to sit at `grayscale` and
+ * 60% opacity and only come up on hover - which meant a phone, where nothing
+ * hovers, never saw them properly at all. These are accreditations: NABL, ISO,
+ * FDA. Their whole job is to be recognised on sight, and a grey ghost of a mark
+ * you have to point at is not doing that job.
+ *
+ * Hover is now polish rather than the reveal - a small scale, nothing else, so
+ * the mark lifts toward you without moving off its line. Nothing is behind it,
+ * so touch loses only the flourish.
  */
 const CERTS = [
   { src: '/home/brand/nabl.jpg', alt: 'NABL accreditation' },
@@ -41,7 +51,7 @@ export default function Certifications() {
                 alt={c.alt}
                 width={520}
                 height={300}
-                className="h-[clamp(30px,3.4vw,44px)] w-auto max-w-full opacity-60 mix-blend-multiply grayscale contrast-[0.95] transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:opacity-100 hover:grayscale-0 motion-reduce:transition-none"
+                className="h-[clamp(40px,4.6vw,64px)] w-auto max-w-full mix-blend-multiply transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 motion-reduce:transition-none motion-reduce:hover:scale-100"
               />
             </li>
           ))}
