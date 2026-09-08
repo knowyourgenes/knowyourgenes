@@ -36,6 +36,14 @@ export interface TimelinePoint {
   when: string;
   headline: string;
   body: string;
+  /**
+   * The marker the frame plants ABOVE this point, on a stem down to its node.
+   * Only two points carry one, and which two is the section's whole argument:
+   * our story starts at birth, most people's starts at a symptom. It lives on
+   * the point rather than in a separate list so the flag cannot drift off the
+   * node it is pointing at.
+   */
+  flag?: { label: string; tone: 'ours' | 'theirs' };
 }
 
 export const WHY_WE_EXIST = {
@@ -47,7 +55,6 @@ export const WHY_WE_EXIST = {
     turn: 'Our story begins earlier than that.',
   },
   zones: { before: 'Before anything feels wrong', after: 'After a health problem shows up' },
-  flags: { ours: 'Our story starts here', theirs: 'Most people start here' },
   /** The point the design opens on - the symptom, index 2. */
   initial: 2,
   points: [
@@ -55,6 +62,7 @@ export const WHY_WE_EXIST = {
       n: '01',
       label: 'Birth',
       when: 'Day one',
+      flag: { label: 'Our story starts here', tone: 'ours' },
       headline: 'You already have the information.',
       body: 'Every variation that shapes how your body responds is present from the start. None of it is visible, and none of it is doing anything yet.',
     },
@@ -69,6 +77,7 @@ export const WHY_WE_EXIST = {
       n: '03',
       label: 'A symptom',
       when: 'One day',
+      flag: { label: 'Most people start here', tone: 'theirs' },
       headline: 'Something feels wrong.',
       body: 'This is usually the first time anyone looks. Health suddenly has a start date, but it began long before.',
     },

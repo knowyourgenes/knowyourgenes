@@ -44,8 +44,8 @@ export function Kicker({
       className={cn(
         'font-kyg font-bold uppercase',
         size === 'lg'
-          ? 'text-[clamp(10px,0.801vw,12.8px)] leading-[1.5] tracking-[0.2em]'
-          : 'text-[clamp(9.5px,0.742vw,11.9px)] leading-[1.5] tracking-[0.16em]',
+          ? 'text-[clamp(11px,0.801vw,12.8px)] leading-[1.5] tracking-[0.2em]'
+          : 'text-[clamp(11px,0.742vw,11.9px)] leading-[1.5] tracking-[0.16em]',
         tone === 'eden' ? 'text-eden' : null,
         tone === 'java' ? 'text-java2' : null,
         tone === 'ice' ? 'text-ice' : null,
@@ -95,7 +95,7 @@ export function Chain({
             <span
               className={cn(
                 'inline-flex shrink-0 items-center rounded-sm px-[clamp(8.5px,0.83vw,13.3px)] py-[clamp(5px,0.488vw,7.8px)]',
-                'font-kyg text-[clamp(9.6px,0.9375vw,15px)] leading-[1.48]',
+                'font-kyg text-[clamp(11px,0.9375vw,15px)] leading-[1.48]',
                 last
                   ? 'bg-eden font-bold text-white'
                   : dark
