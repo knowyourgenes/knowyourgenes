@@ -3,7 +3,7 @@
 
 # Component inventory
 
-**175 components.** Read this before you build a new one.
+**171 components.** Read this before you build a new one.
 
 The rule this file exists to enforce: **if a component already exists, use it - do
 not build a second one on another page.** A "Button" that exists three times is
@@ -65,7 +65,7 @@ Used by 2+ features. Anything here is the canonical version.
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
 | `Container` | [components/shared/Container.tsx](../components/shared/Container.tsx) | server | Site-wide 1600px content column - the ONE page shell width (docs/DESIGN.md §1). |
-| `KygLogo` | [components/shared/Logo.tsx](../components/shared/Logo.tsx) | server |  |
+| `KygLogo` | [components/shared/Logo.tsx](../components/shared/Logo.tsx) | server | components/shared/Logo - the KYG mark |
 | `SearchOverlay` | [components/shared/SearchOverlay.tsx](../components/shared/SearchOverlay.tsx) | client | components/shared - the full-width search overlay |
 | `SiteFooter` | [components/shared/SiteFooter.tsx](../components/shared/SiteFooter.tsx) | client | Shared KYG dark footer. Self-contained (tokens applied inline on <footer>). |
 | `SiteHeader` | [components/shared/SiteHeader.tsx](../components/shared/SiteHeader.tsx) | client | Shared KYG warm-modern site header. Self-contained: design tokens are applied |
@@ -99,23 +99,20 @@ Owned by one feature. Needed by a second feature? Promote it to
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `AboutIcon, ABOUT_ICON_IDS` | [features/about/components/AboutIcon.tsx](../features/about/components/AboutIcon.tsx) | server | features/about - the design's own icons |
-| `AboutPage` | [features/about/components/AboutPage.tsx](../features/about/components/AboutPage.tsx) | server | The /about page body, in the Figma frame's order. |
-| `AboutReveal` | [features/about/components/AboutReveal.tsx](../features/about/components/AboutReveal.tsx) | client | Scroll-reveal wrapper for the About page. |
-| `BiggerPicture` | [features/about/components/sections/BiggerPicture.tsx](../features/about/components/sections/BiggerPicture.tsx) | server | About Us - SECTION 11 · THE BIGGER PICTURE |
-| `BuildingFor` | [features/about/components/sections/BuildingFor.tsx](../features/about/components/sections/BuildingFor.tsx) | server | About Us - SECTION 09 · "Who we're building for" |
-| `FinalCta` | [features/about/components/sections/FinalCta.tsx](../features/about/components/sections/FinalCta.tsx) | server | About Us - SECTION 12 · FINAL CTA |
-| `GenesToInsight` | [features/about/components/sections/GenesToInsight.tsx](../features/about/components/sections/GenesToInsight.tsx) | server | About Us - SECTION 06 · FROM GENES TO INSIGHT |
-| `Hero` | [features/about/components/sections/Hero.tsx](../features/about/components/sections/Hero.tsx) | server | features/about - SECTION 01 · HERO (editorial cinematic masthead) |
-| `KeyStatement` | [features/about/components/sections/KeyStatement.tsx](../features/about/components/sections/KeyStatement.tsx) | server | features/about - KEY VISUAL STATEMENT |
-| `Manifesto` | [features/about/components/sections/Manifesto.tsx](../features/about/components/sections/Manifesto.tsx) | server | About Us - SECTION 10 · WHAT WE BELIEVE (manifesto) |
-| `NotDestiny` | [features/about/components/sections/NotDestiny.tsx](../features/about/components/sections/NotDestiny.tsx) | server | About Us - SECTION 04 · GENES ≠ DESTINY |
-| `OurApproach` | [features/about/components/sections/OurApproach.tsx](../features/about/components/sections/OurApproach.tsx) | server | features/about - SECTION 08 · OUR APPROACH |
-| `Understandable` | [features/about/components/sections/Understandable.tsx](../features/about/components/sections/Understandable.tsx) | server | About Us - SECTION 05 · MAKING GENETICS UNDERSTANDABLE |
-| `WhatYouDo` | [features/about/components/sections/WhatYouDo.tsx](../features/about/components/sections/WhatYouDo.tsx) | server | About Us - SECTION 07 · WHAT DO YOU DO WITH THE INFORMATION |
-| `WhyGenetics` | [features/about/components/sections/WhyGenetics.tsx](../features/about/components/sections/WhyGenetics.tsx) | server | features/about - SECTION 03 · WHY GENETICS |
-| `WhyWeExist` | [features/about/components/sections/WhyWeExist.tsx](../features/about/components/sections/WhyWeExist.tsx) | server | About Us - SECTION 02 · WHY WE EXIST |
-| `Photo, Section, Eyebrow, Heading, Body, Pill, GROUND` | [features/about/components/ui.tsx](../features/about/components/ui.tsx) | server | The designer's placeholder photography, dropped into the frame's `div.imgslot` |
+| `AboutPage` | [features/about/components/AboutPage.tsx](../features/about/components/AboutPage.tsx) | server | The /about page body, in the Figma frame's order (343:3582). |
+| `BiggerPicture` | [features/about/components/sections/BiggerPicture.tsx](../features/about/components/sections/BiggerPicture.tsx) | server | 11 · The bigger picture - Figma 560:387. |
+| `BuildingFor` | [features/about/components/sections/BuildingFor.tsx](../features/about/components/sections/BuildingFor.tsx) | client | 09 · Who we're building for - Figma 555:538, on ink. |
+| `FinalCta` | [features/about/components/sections/FinalCta.tsx](../features/about/components/sections/FinalCta.tsx) | server | 12 · Start with knowing - Figma 518:44. |
+| `GenesToInsight` | [features/about/components/sections/GenesToInsight.tsx](../features/about/components/sections/GenesToInsight.tsx) | client | 06 · From genes to insight - Figma 506:139. |
+| `Hero` | [features/about/components/sections/Hero.tsx](../features/about/components/sections/Hero.tsx) | server | 01 · Hero - Figma 343:3584. |
+| `Manifesto` | [features/about/components/sections/Manifesto.tsx](../features/about/components/sections/Manifesto.tsx) | server | 10 · What we believe - Figma 558:447. |
+| `NotDestiny` | [features/about/components/sections/NotDestiny.tsx](../features/about/components/sections/NotDestiny.tsx) | client | 04 · Genes ≠ Destiny - Figma 546:102, on ink. |
+| `OurApproach` | [features/about/components/sections/OurApproach.tsx](../features/about/components/sections/OurApproach.tsx) | client | 08 · Our approach - Figma 553:368. |
+| `Understandable` | [features/about/components/sections/Understandable.tsx](../features/about/components/sections/Understandable.tsx) | client | 05 · Making genetics understandable - Figma 548:316. |
+| `WhatYouDo` | [features/about/components/sections/WhatYouDo.tsx](../features/about/components/sections/WhatYouDo.tsx) | client | 07 · What do you do with it - Figma 551:436. |
+| `WhyGenetics` | [features/about/components/sections/WhyGenetics.tsx](../features/about/components/sections/WhyGenetics.tsx) | client | 03 · Why genetics - Figma 544:556. |
+| `WhyWeExist` | [features/about/components/sections/WhyWeExist.tsx](../features/about/components/sections/WhyWeExist.tsx) | client | 02 · Why we exist - Figma 487:129. |
+| `Kicker, Chain, Hint, Hr, Coda` | [features/about/components/ui.tsx](../features/about/components/ui.tsx) | server | The bare uppercase label. NOT the eyebrow pill - this frame uses both, and the |
 
 ### `features/admin`
 
@@ -139,6 +136,12 @@ Owned by one feature. Needed by a second feature? Promote it to
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
 | `AttributionBeacon` | [features/attribution/components/AttributionBeacon.tsx](../features/attribution/components/AttributionBeacon.tsx) | client | Paid click-ids (gclid, fbclid, msclkid, ttclid, gbraid, wbraid, li_fat_id, twclid) |
+
+### `features/auth`
+
+| Export | File | Env | What it is |
+| --- | --- | --- | --- |
+| `Field, GoogleIcon, CtaArrow, AuthScreen, CardHead, LABEL, MICRO_LINK, PRIMARY_BTN, ALT_BTN` | [features/auth/components/auth-ui.tsx](../features/auth/components/auth-ui.tsx) | client | Figtree 600 11/14, #1b1712. |
 
 ### `features/blog`
 
@@ -173,7 +176,7 @@ Owned by one feature. Needed by a second feature? Promote it to
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `ContactForm` | [features/contact/components/ContactForm.tsx](../features/contact/components/ContactForm.tsx) | client | Validate with the SAME schema the API uses, so the user sees field errors |
+| `ContactForm` | [features/contact/components/ContactForm.tsx](../features/contact/components/ContactForm.tsx) | client | 44px floor: 3.333vw only reaches 44 at a 1319 viewport, so the frame's 34.1 |
 | `ContactHero` | [features/contact/components/ContactHero.tsx](../features/contact/components/ContactHero.tsx) | server | /contact hero - Figma 346:1114. |
 | `ContactPage` | [features/contact/components/ContactPage.tsx](../features/contact/components/ContactPage.tsx) | server | /contact - Figma 346:1112 ("06 · Contact — 1024"). |
 | `HowToReachUs` | [features/contact/components/HowToReachUs.tsx](../features/contact/components/HowToReachUs.tsx) | server | 04 · How to reach us - Figma 346:1201. |
@@ -191,7 +194,6 @@ Owned by one feature. Needed by a second feature? Promote it to
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
 | `Homepage` | [features/home/components/Homepage.tsx](../features/home/components/Homepage.tsx) | server | Composition only. Every decision that could vary between sections has been |
-| `NewHomepage` | [features/home/components/NewHomepage.tsx](../features/home/components/NewHomepage.tsx) | server | features/home - the homepage, as the design currently draws it |
 | `HelixCanvas, HERO_HELIX, FINAL_HELIX` | [features/home/components/lib/HelixCanvas.tsx](../features/home/components/lib/HelixCanvas.tsx) | client | Hero strand - tall, tight, bright. |
 | `HelixGround` | [features/home/components/lib/HelixGround.tsx](../features/home/components/lib/HelixGround.tsx) | server | The brand helix artwork, laid in behind four sections as a ground texture. |
 | `HomeIcon, HOME_ICON_IDS` | [features/home/components/lib/HomeIcon.tsx](../features/home/components/lib/HomeIcon.tsx) | server | features/home/v2 - the homepage design's own icons |
@@ -207,7 +209,6 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `HowItWorks` | [features/home/components/sections/HowItWorks.tsx](../features/home/components/sections/HowItWorks.tsx) | client | A stepper, not five columns. |
 | `Journal` | [features/home/components/sections/Journal.tsx](../features/home/components/sections/Journal.tsx) | client | The rail is a carousel, at every width - it is never a grid that happens to |
 | `MeetGenee` | [features/home/components/sections/MeetGenee.tsx](../features/home/components/sections/MeetGenee.tsx) | server | `plate` is the shape of the character slot. |
-| `OneLifetime` | [features/home/components/sections/OneLifetime.tsx](../features/home/components/sections/OneLifetime.tsx) | server | Five moments, in the order a life reaches them. |
 | `OneLifetimeCurve` | [features/home/components/sections/OneLifetimeCurve.tsx](../features/home/components/sections/OneLifetimeCurve.tsx) | client | The small-screen spine has no pane to pin, so it measures its own travel. |
 | `Privacy` | [features/home/components/sections/Privacy.tsx](../features/home/components/sections/Privacy.tsx) | server | The quietest section on the page - no card, no panel, no photography. |
 | `ScienceTrust` | [features/home/components/sections/ScienceTrust.tsx](../features/home/components/sections/ScienceTrust.tsx) | server | `hoverTint` on an INK ground is a java2 wash, not the pale `mist` the |

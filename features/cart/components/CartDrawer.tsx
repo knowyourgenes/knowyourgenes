@@ -124,9 +124,19 @@ export function CartDrawer() {
         aria-modal="true"
         aria-label="Your cart"
         tabIndex={-1}
+        // THE SHADOW IS TIED TO `drawerOpen`, not left on permanently.
+        //
+        // Closed, the panel is only translated off the right edge - it is still
+        // painted, and a 60px blur reaches 60px back INTO the viewport. Clipping
+        // cannot fix that: the wrapper is the viewport, so the bleed is inside
+        // the clip rect, not outside it. The only fix is not to draw it.
+        //
+        // On the white pages this was invisible. On cream - /login, /register -
+        // it was a grey smudge down the full height of the right edge, on every
+        // page carrying the site chrome.
         className={
-          'absolute inset-y-0 right-0 flex w-[min(92vw,420px)] flex-col bg-spring shadow-[0_0_60px_rgba(0,0,0,0.22)] outline-none transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ' +
-          (drawerOpen ? 'translate-x-0' : 'translate-x-full')
+          'absolute inset-y-0 right-0 flex w-[min(92vw,420px)] flex-col bg-spring outline-none transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ' +
+          (drawerOpen ? 'translate-x-0 shadow-[0_0_60px_rgba(0,0,0,0.22)]' : 'translate-x-full')
         }
       >
         {/* ---- head ---- */}
