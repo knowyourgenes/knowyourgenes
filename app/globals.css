@@ -204,10 +204,12 @@ body {
    shadcn palette above so nothing collides.
    ============================================================================= */
 @theme {
-  /* Homepage trust marquee - registering the animation here (not as a bare
-     arbitrary utility) makes Tailwind v4 emit the @keyframes below when
-     `animate-kyg-marquee` is used, instead of tree-shaking it away. */
-  --animate-kyg-marquee: kyg-marquee 60s linear infinite;
+  /* Homepage accreditation strip - registering the animation here (not as a
+     bare arbitrary utility) makes Tailwind v4 emit the @keyframes below when
+     `animate-kyg-marquee` is used, instead of tree-shaking it away.
+     Was 60s for a TrustMarquee component that no longer exists; 32s is the
+     medium pace the accreditation strip now runs at. */
+  --animate-kyg-marquee: kyg-marquee 32s linear infinite;
   /* The test pages' accreditation strip runs faster than the homepage's. */
   --animate-tst-marquee: kyg-marquee 34s linear infinite;
 
@@ -776,6 +778,25 @@ body {
   [data-slot='sidebar-menu-button']:not(:disabled),
   [data-slot='dialog-close']:not(:disabled) {
     cursor: pointer;
+  }
+}
+
+/* ---- homepage accreditation strip ---------------------------------------
+   THE STRIP ONLY SCROLLS ON A PHONE. From `md` (48rem) up it is the centred
+   static row it has always been, and under `prefers-reduced-motion` it is that
+   row at every width.
+
+   The fade is on a class rather than inline because it has to switch off in
+   both of those cases: fading the ends of a centred static row does not soften
+   an edge, it just clips the two outermost marks. */
+.kyg-certs-strip {
+  -webkit-mask: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  mask: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+}
+@media (min-width: 48rem), (prefers-reduced-motion: reduce) {
+  .kyg-certs-strip {
+    -webkit-mask: none;
+    mask: none;
   }
 }
 
