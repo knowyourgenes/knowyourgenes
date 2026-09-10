@@ -8,8 +8,33 @@ const PROMISES = [
   'Just better questions and clearer understanding.',
 ];
 
+/**
+ * The two floating quotes.
+ *
+ * SMALLER BELOW `sm`, because the plate is not. On a 390px phone the plate is
+ * 354x308 against roughly 700x610 on a desktop, but the bubbles kept their full
+ * 15.5px/15px box - so together they covered the middle of the plate instead of
+ * hanging off its corners, and the dark one cut straight through the caption.
+ * Scaling them down is half the fix; `BUBBLE_TOP`/`BUBBLE_BOTTOM` below are the
+ * other half.
+ */
 const BUBBLE =
-  'absolute z-[3] max-w-[min(76%,300px)] rounded-sm px-5 py-[15px] font-kyg text-[15.5px] font-semibold leading-[1.4] tracking-[-0.01em] shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)]';
+  'absolute z-[3] max-w-[min(76%,300px)] rounded-sm px-4 py-3 font-kyg text-[14px] font-semibold leading-[1.4] tracking-[-0.01em] shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)] sm:px-5 sm:py-[15px] sm:text-[15.5px]';
+
+/**
+ * On a phone the bubbles are pinned to the WRAPPER's edges, and the wrapper
+ * carries 26px of vertical padding - so each one overhangs the plate by about
+ * half its height and leaves the plate's middle clear. That is also where they
+ * want to be once the artwork lands: a bubble over GENEe's face is the same bug
+ * as a bubble over the caption.
+ *
+ * The padding lives on the wrapper rather than on the section, so the overhang
+ * is inside the grid item's box and the row gap below still measures 28px to
+ * the heading. From `sm` up the plate is big enough to hold them and the
+ * original percentages take over.
+ */
+const BUBBLE_TOP = 'right-0 top-0 sm:top-[6%] lg:right-[-4%]';
+const BUBBLE_BOTTOM = 'bottom-0 left-0 sm:bottom-[9%] lg:left-[-5%]';
 
 /**
  * `plate` is the shape of the character slot.
@@ -44,7 +69,7 @@ export default function MeetGenee({
             labelled placeholder is honest where a stock illustration would not
             be. The two bubbles are the section's whole personality, so they ship
             with the plate rather than waiting on it. */}
-        <div className="relative w-full min-w-0 max-w-[460px] lg:max-w-none">
+        <div className="relative w-full min-w-0 max-w-[460px] py-[26px] sm:py-0 lg:max-w-none">
           <div
             className={cn(
               'grid w-full place-items-center rounded-sm p-[28px] text-center',
@@ -62,12 +87,12 @@ export default function MeetGenee({
             </div>
           </div>
 
-          <p className={cn(BUBBLE, 'right-0 top-[6%] bg-linenw text-eden lg:right-[-4%]')}>
+          <p className={cn(BUBBLE, BUBBLE_TOP, 'bg-linenw text-eden')}>
             Let&rsquo;s ask your genes.
             <span aria-hidden="true" className="absolute -bottom-[6px] left-[32px] block h-4 w-4 rotate-45 bg-linenw" />
           </p>
 
-          <p className={cn(BUBBLE, 'bottom-[9%] left-0 bg-eden text-linenw lg:left-[-5%]')}>
+          <p className={cn(BUBBLE, BUBBLE_BOTTOM, 'bg-eden text-linenw')}>
             Why does the same diet affect two people differently?
             <span aria-hidden="true" className="absolute -top-[6px] right-[36px] block h-4 w-4 rotate-45 bg-eden" />
           </p>
