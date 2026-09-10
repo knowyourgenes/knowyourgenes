@@ -31,6 +31,23 @@
 // they carry `preserveAspectRatio="none"`, so they need both dimensions set
 // outright - a single scaled dimension would stretch them.
 //
+// IT IS PINNED, AND IT IS CAPPED SO THAT PINNING IS WORTH SOMETHING.
+//
+// `lg:sticky lg:top-[81px] lg:self-start` holds the gallery while the buy box -
+// which is roughly twice its height once the accordions are open - scrolls past
+// it, and lets go when the grid row ends. `self-start` is load-bearing: a grid
+// item stretches to the row by default, and a full-height item has nowhere to
+// stick to.
+//
+// The cap is the part that is easy to miss. This column is about 1.05x as tall
+// as it is wide (slot 0.852 + thumbs 0.155 + gap 0.041), so on a 1535x713
+// window it stands 768px tall in a 616px gap and the THUMBNAILS SIT BELOW THE
+// FOLD FOR AS LONG AS IT IS PINNED - i.e. permanently unreachable, which is a
+// worse gallery than an unpinned one. `max-w: (100svh - 97px)/1.05` bounds the
+// width by the height available, so the whole column always fits the window it
+// is pinned in. It only binds when the window is short: at 1440x800 and above
+// it never engages and the gallery keeps its full track width.
+//
 // This is also the only part of the section that needs browser state (which
 // slide is showing), so it is the only part that is a client component.
 // =============================================================================
@@ -69,7 +86,7 @@ export default function BuyPdpGallery({ gallery, title }: { gallery: BuyPdpSecti
   const step = (d: number) => setActive((i) => (i + d + slides.length) % slides.length);
 
   return (
-    <div className="@container flex flex-col gap-[clamp(14px,4.07cqw,31px)]">
+    <div className="@container flex flex-col gap-[clamp(14px,4.07cqw,31px)] lg:sticky lg:top-[81px] lg:max-w-[calc((100svh-97px)/1.05)] lg:self-start">
       {/* ---------------- image slot ---------------- */}
       <div className="relative isolate aspect-[542/462] w-full overflow-hidden rounded-sm border border-heavy/10 bg-gin shadow-[0_4px_16px_0_rgba(20,27,26,0.06),0_18px_50px_0_rgba(20,27,26,0.08)]">
         {slide && (
