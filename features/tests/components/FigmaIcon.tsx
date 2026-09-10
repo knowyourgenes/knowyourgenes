@@ -60,3 +60,47 @@ export function FigmaIcon({
 }
 
 export default FigmaIcon;
+
+// ---------------------------------------------------------------------------
+// The buy surface's glyphs
+// ---------------------------------------------------------------------------
+// Same idea as FigmaIcon above - the design's own vectors, fills baked in,
+// served as static files - but keyed by NAME rather than by frame position,
+// because these were exported from the PDP frame where the "<y>-<x>" scheme
+// has nothing to anchor to. Sizes are always passed in pairs: several of these
+// are not square (venus is 8.55x14.15, the play triangle 9.4x10.8) and the
+// exports carry `preserveAspectRatio="none"`, so a single size prop would
+// quietly stretch them.
+
+const PDP_BASE = '/tests/womens-health/pdp';
+
+export function PdpIcon({
+  name,
+  width,
+  height,
+  className,
+  alt = '',
+}: {
+  /** Basename in public/tests/womens-health/pdp/, no extension. */
+  name: string;
+  width: number;
+  height: number;
+  className?: string;
+  alt?: string;
+}) {
+  return (
+    /* Deliberate <img>, for the reasons given on FigmaIcon. */
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`${PDP_BASE}/${name}.svg`}
+      alt={alt}
+      aria-hidden={alt ? undefined : true}
+      width={width}
+      height={height}
+      style={{ width, height }}
+      loading="lazy"
+      decoding="async"
+      className={className}
+    />
+  );
+}

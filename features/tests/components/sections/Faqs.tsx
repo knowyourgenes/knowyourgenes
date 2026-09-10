@@ -4,7 +4,7 @@ import { useId, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { FaqsSection, Ground } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
-import { Heading, Lead, Section } from '../ui';
+import { HeadRow, Section } from '../ui';
 
 // =============================================================================
 // FAQ - 1440 frame, section spec 016367_faq. Geometry read 1:1 from the frame:
@@ -47,27 +47,26 @@ export default function Faqs({ data, ground }: { data: FaqsSection; ground?: Gro
 
   return (
     <Section ground={ground ?? 'cream'} id="faq">
-      {/* the frame's 796 rail, with its own 48 gap between head and list */}
-      <div className="mx-auto flex w-full max-w-[796px] flex-col gap-[clamp(32px,3.34vw,48px)]">
+      {/* the full rail, with the frame's own 48 gap between head and list */}
+      <div className="flex w-full flex-col gap-[clamp(32px,3.34vw,48px)]">
         {/* ---------------------------------------------------------- head ---- */}
         {/* A CRIMSON-TINTED pill, not the white/uppercase one in ui.tsx, so it is
             built here rather than borrowing <Eyebrow/>. */}
-        <div className="flex flex-col items-center gap-4 text-center">
-          {eyebrow ? (
-            <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
-              {/* 22x22 slot; the glyph is 22x26 and overhangs 2px, as in the frame */}
-              <FigmaIcon id="16377-622" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
-              <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-crimson-deep">
-                {eyebrow.label}
+        <HeadRow
+          eyebrow={
+            eyebrow ? (
+              <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+                {/* 22x22 slot; the glyph is 22x26 and overhangs 2px, as in the frame */}
+                <FigmaIcon id="16377-622" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
+                <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-crimson-deep">
+                  {eyebrow.label}
+                </span>
               </span>
-            </span>
-          ) : null}
-
-          {/* h2 is the full 796 rail in the frame - no narrower measure. */}
-          <Heading html={titleHtml} />
-
-          {leadHtml ? <Lead html={leadHtml} /> : null}
-        </div>
+            ) : null
+          }
+          titleHtml={titleHtml}
+          leadHtml={leadHtml}
+        />
 
         {/* --------------------------------------------------------- rows ---- */}
         <ul className="flex flex-col gap-3">

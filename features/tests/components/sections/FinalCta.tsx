@@ -58,7 +58,7 @@ export default function FinalCta({ data, ground }: { data: FinalCtaSection; grou
       {/* The frame's 32px column padding is the FRAME's own gutter - below sm it
           would sit on top of the shell's px-5 and squeeze the 261px eyebrow into
           216px, so it only kicks in once the viewport can afford it. */}
-      <div className="relative mx-auto flex w-full max-w-[720px] flex-col items-center gap-4 text-center sm:px-8">
+      <div className="relative flex w-full flex-col items-start gap-4">
         {/* ---- eyebrow: 261x46, pad 11/22/11/17, gap 10 -------------------- */}
         {/* min-h + py-[9px] instead of a hard h-[46px]: 26 (glyph) + 18 + 2
             (border) = 46 exactly, so the pill is pixel-identical on the frame,
@@ -79,11 +79,11 @@ export default function FinalCta({ data, ground }: { data: FinalCtaSection; grou
             a custom text-[...] size is passed in. */}
         <Heading
           html={data.titleHtml}
-          className="tst-flat pb-[2px] pt-[11px] text-[clamp(32px,3.96vw,57px)] leading-[1.08] text-linenw [&_.tst-em-teal]:text-java2"
+          className="tst-flat pb-[2px] pt-[11px] text-[clamp(32px,3.96vw,57px)] leading-[1.08] text-linenw [&>em]:block [&>em]:w-fit [&_.tst-em-teal]:text-java2"
         />
 
         {/* ---- ticks: gap 24, pad-bottom 16 -------------------------------- */}
-        <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pb-4">
+        <ul className="flex flex-wrap items-center justify-start gap-x-6 gap-y-2 pb-4">
           {data.chips.map((c, i) => (
             // min-w-0: the three ticks total 453 of the frame's 656, so they
             // never shrink there - but on a 280px phone column a long label has

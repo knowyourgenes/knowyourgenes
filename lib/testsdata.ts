@@ -30,7 +30,9 @@ import { sleep } from '@/lib/tests/sleep';
 
 const IMG = '/tests/womens-health';
 
-// The five panels, reused by the hero card, the body map and the sample report.
+// The five panels and their sample result. The buy surface's "Key insights"
+// card reads from this, so the number a buyer sees in the hero and the one the
+// report preview shows further down can never drift apart.
 const PANEL_RESULTS = [
   { label: 'PCOS', value: 'Good', tone: 'good' as const },
   { label: 'Pregnancy Loss', value: 'Good', tone: 'good' as const },
@@ -38,6 +40,15 @@ const PANEL_RESULTS = [
   { label: 'Bones', value: 'Poor', tone: 'poor' as const },
   { label: 'Joints', value: 'Good', tone: 'good' as const },
 ];
+
+/** The glyph the buy surface draws beside each panel. */
+const PANEL_GLYPH: Record<string, string> = {
+  PCOS: 'venus',
+  'Pregnancy Loss': 'leaf',
+  Mood: 'smile',
+  Bones: 'bone',
+  Joints: 'joint',
+};
 
 export const womensHealth: TestPage = {
   slug: 'womens-health',
@@ -50,222 +61,119 @@ export const womensHealth: TestPage = {
   },
 
   sections: [
-    // --------------------------------------------------------------- hero ----
+    // --------------------------------------------------------- buy · pdp ----
     {
-      type: 'hero',
-      eyebrow: { label: "Women's Health · Genetic Test", icon: 'scan-heart' },
-      titleHtml: 'The fittest women you know didn\'t guess. <em class="tst-em">They read their genes first.</em>',
-      kickerHtml: 'One saliva test, at home.',
-      subHtml: 'Five answers in 3 weeks. Early enough to act.',
-      ctas: [
-        { label: 'Check My Risk', href: '#the-five-tests' },
-        { label: 'How does it work?', href: '#how-it-works-steps', variant: 'ghost', icon: 'arrow-down' },
+      type: 'buyPdp',
+      ground: 'cream',
+      breadcrumb: [
+        { label: 'Home', href: '/' },
+        { label: 'Tests', href: '/categories' },
+        { label: "Women's Health Genetic Test" },
       ],
-      chips: [
-        { label: 'No needles', icon: 'droplet' },
-        { label: 'NABL lab', icon: 'badge-check' },
-        { label: 'Results in 3 weeks', icon: 'clock' },
-      ],
-      footnoteHtml: 'Prevention only works if you find out early.',
-      image: { src: `${IMG}/hero-woman.jpg`, alt: 'A woman sitting at home, looking calmly out of frame' },
-      resultCard: { title: 'Your results', icon: 'flask', rows: PANEL_RESULTS },
-    },
-
-    // ------------------------------------------------------------- who for ----
-    {
-      type: 'whoFor',
-      ground: 'sage',
-      head: {
-        eyebrow: { label: 'Who should take this test', icon: 'users' },
-        titleHtml: 'This test is for every woman.<br/>But it might be for <em class="tst-em">you</em> most of all.',
+      gallery: {
+        badge: 'MOST POPULAR',
+        slides: [
+          { src: `${IMG}/hero-woman.jpg`, alt: 'A woman sitting at home, looking out of a window' },
+          {
+            src: `${IMG}/bodymap-figure.png`,
+            alt: 'The five areas this test reads, mapped on a body',
+            fit: 'contain',
+          },
+          { src: `${IMG}/worth-mother.jpg`, alt: 'A mother holding her daughter' },
+          { src: `${IMG}/whofor-pregnant.jpg`, alt: 'A pregnant woman resting at home' },
+        ],
+        insights: {
+          title: 'Key insights',
+          rows: PANEL_RESULTS.map((r) => ({
+            glyph: PANEL_GLYPH[r.label] ?? 'smile',
+            label: r.label,
+            // The card speaks in risk, not in grades - the grade is what the
+            // report itself uses, and it is shown in full further down.
+            value: r.tone === 'good' ? 'Low risk' : 'Higher risk',
+            tone: r.tone,
+          })),
+        },
+        overlay: ['Understand your genes.', 'Make informed choices.'],
+        video: { label: 'See how the kit works' },
       },
-      image: {
-        src: `${IMG}/whofor-pregnant.jpg`,
-        alt: 'A pregnant woman resting by a window with a cup of tea',
-      },
-      introTitleHtml: 'This test is for you if&hellip;',
-      introBodyHtml:
-        'Your genes never change, so testing once protects you for life. Some women, though, have every reason to know sooner rather than later. If even one of the signs below sounds like you, knowing now gives you years to act.',
-      chips: [
-        { label: 'Test once, for life', icon: 'clock' },
-        { label: 'Preventive, not reactive', icon: 'chart' },
+      pills: [
+        { glyph: 'file', label: '5 reports' },
+        { glyph: 'flask', label: '1 saliva kit' },
+        { glyph: 'truck', label: 'Results in 3 weeks' },
       ],
-      signs: [
-        {
-          icon: 'calendar',
-          accent: 'crimson',
-          textHtml: 'Your periods have never been regular, and no one has ever really explained why.',
-        },
-        {
-          icon: 'baby',
-          accent: 'teal',
-          textHtml: '<b>You are thinking about a baby - now, or somewhere down the line.</b>',
-        },
-        {
-          icon: 'pregnancy-loss',
-          accent: 'crimson',
-          textHtml: 'You have lost a pregnancy, and were never given a real reason why.',
-        },
-        {
-          icon: 'family',
-          accent: 'teal',
-          // Figtree 600 in the frame, unlike its neighbours at 400 - the <b> is
-          // what WhoFor maps to font-semibold.
-          textHtml: '<b>PCOS, thyroid, weak bones or arthritis runs in your family.</b>',
-        },
-        {
-          icon: 'frown',
-          accent: 'crimson',
-          textHtml: 'You often feel low, anxious, or not quite yourself - around your cycle, or after a baby.',
-        },
-        {
-          icon: 'person',
-          accent: 'teal',
-          textHtml: 'Your joints ache or stiffen more than they should for your age.',
-        },
-        {
-          icon: 'shield',
-          accent: 'teal',
-          textHtml:
-            '<b>You are in your 20s or 30s and feel perfectly fine - which is exactly when acting early works best.</b>',
-        },
-        {
-          icon: 'file',
-          accent: 'crimson',
-          textHtml: 'You are simply tired of guessing, and want clear answers about your own body.',
-        },
+      title: "Women's Health Genetic Test",
+      rating: { value: 5, count: 5, href: '#reviews' },
+      taxNote: 'Inclusive of all taxes',
+      blurb:
+        'A simple saliva test to understand your genetic risk for PCOS, pregnancy loss, mood, bones and joints.',
+      features: [
+        { tile: 'tile0', lines: ['5 reports'] },
+        { tile: 'tile1', lines: ['At-home kit'] },
+        { tile: 'tile2', lines: ['Free shipping'] },
+        { tile: 'tile3', lines: ['Results in', '3 weeks'] },
       ],
-      closingHtml: 'If even one of these is you, knowing now gives you years to act instead of regret.',
-      ctas: [
-        { label: 'Book a Test', href: '#kit' },
-        { label: 'Learn More', href: '#the-five-tests', variant: 'ghost' },
+      cta: { addToCart: 'Add to cart', buyNow: 'Buy now', href: '#kit' },
+      assurances: [
+        { glyph: 'shield', lines: ['Secure checkout', 'via Razorpay'] },
+        { glyph: 'geneleaf', lines: ['Free GENEous', 'care call'] },
       ],
-    },
-
-    // ---------------------------------------------------------- aspiration ----
-    {
-      type: 'aspiration',
-      ground: 'ivory',
-      head: {
-        eyebrow: { label: 'From Hollywood to Bollywood', icon: 'star' },
-        titleHtml: 'The women you look up to have <em class="tst-em-teal">already had their genes tested.</em>',
-      },
-      image: {
-        src: `${IMG}/aspiration-stage.jpg`,
-        alt: 'A performer in a gown facing a packed, softly lit auditorium',
-      },
-      badgeTop: { label: 'Always a step ahead', icon: 'award' },
-      badgeBottom: { label: 'Same science, now yours', icon: 'zap' },
-      rows: [
-        { icon: 'film', title: 'The actors', subtitle: 'you watch on screen.' },
-        { icon: 'rocket', title: 'The founders', subtitle: 'you read about.' },
-        { icon: 'award', title: 'The women', subtitle: 'who always seem one step ahead.' },
-      ],
-      bodyHtml:
-        'So many of them quietly read their genes years ago, not because they were unwell, but because they refused to leave their health to luck. It gave them the one thing money usually cannot buy: time to act before anything went wrong.',
-      quoteHtml:
-        '<em class="tst-em">They had the doctors, the money and the access to do it first.</em> <b class="tst-strong">Today, that same head start is no longer theirs alone. It is finally yours too.</b>',
-    },
-
-    // ------------------------------------------------------------ then/now ----
-    {
-      type: 'thenNow',
-      ground: 'ivory',
-      then: {
-        icon: 'lock',
-        kicker: 'How it used to be',
-        title: 'Only a few could get it',
+      included: {
+        title: "What's included",
         items: [
-          'It meant a private doctor and a special clinic.',
-          'It cost more than most families could ever spend.',
-          'Most women simply did not know it existed.',
+          {
+            name: 'PCOS',
+            genes: 'THADA',
+            question: 'Do my genes put me at risk of PCOS?',
+            answer:
+              'PCOS happens when your hormones go out of balance. It affects your periods, your weight and your skin.',
+          },
+          {
+            name: 'Pregnancy Loss',
+            genes: 'MTHFR, FOXP3',
+            question: 'Could I have trouble having a baby?',
+            answer: 'Two genes affect folate and how your immune system reacts in pregnancy.',
+          },
+          {
+            name: 'Mood',
+            genes: 'COMT',
+            question: 'Could pregnancy affect my mental health?',
+            answer: 'The COMT gene shows how well your body handles stress hormones.',
+          },
+          {
+            name: 'Bones',
+            genes: 'AKAP11, LRP5, ZBTB40',
+            question: 'Will my bones get weak as I get older?',
+            answer: 'Three genes show how fast yours may weaken after 30.',
+          },
+          {
+            name: 'Joints',
+            genes: 'HLA-DRB1',
+            question: 'Could my immune system damage my joints?',
+            answer: 'The HLA-DRB1 gene is the clearest warning sign for rheumatoid arthritis.',
+          },
         ],
       },
-      now: {
-        icon: 'truck',
-        kicker: 'How it works now',
-        title: 'It comes to your door',
-        items: [
-          'A small test kit arrives at your home.',
-          '<b>The same science. The same head start.</b>',
-          'No clinic. No needles. Only preventive care.',
-        ],
-      },
-      closingHtml: "What was once a star's advantage now fits inside an <br> envelope, for everyone.",
-      cta: { label: 'Book a Test', href: '#kit' },
-    },
-
-    // ----------------------------------------------------------- body map ----
-    {
-      type: 'bodyMap',
-      ground: 'sage',
-      head: {
-        eyebrow: { label: "Inside your Women's Health report", icon: 'target' },
-        titleHtml: 'Five answers, from one <em class="tst-em-teal">saliva sample.</em>',
-        leadHtml: 'Tap any part of the body to see what we check there.',
-      },
-      image: { src: `${IMG}/bodymap-figure.png`, alt: 'Anatomical figure marking the five tested areas' },
-      hotspots: [
+      // The frame draws these three collapsed, so it carries no body copy for
+      // them. What follows is the page's own facts, stated once more in the
+      // place a buyer goes looking for them.
+      specs: [
         {
-          key: 'mood',
-          label: 'Mood',
-          caption: 'Depression around pregnancy',
-          tipTitle: 'Mood · Peripartum depression',
-          tipBody:
-            'Could pregnancy affect my mental health? The COMT gene shows how well your body handles stress hormones, and half of it begins before the baby is born.',
-          x: 49.7,
-          y: 5.6,
-          side: 'left',
+          title: 'Sample type',
+          body: 'Saliva. You spit into the tube in the kit at home - no blood, no needle, no clinic visit, and nothing to fast for.',
         },
         {
-          key: 'bones',
-          label: 'Bones',
-          caption: 'Osteoporosis',
-          tipTitle: 'Bones · Osteoporosis',
-          tipBody:
-            'Will my bones get weak as I get older? Three genes show how fast yours may weaken. Most women only find out when a bone breaks.',
-          x: 69.3,
-          y: 21.0,
-          side: 'right',
+          title: 'Testing technique',
+          body: 'Illumina genotyping at a NABL-accredited lab, with every report reviewed by a scientist before it reaches you.',
         },
         {
-          key: 'pcos',
-          label: 'PCOS',
-          caption: 'Hormones and your cycle',
-          tipTitle: 'PCOS · Gene THADA',
-          tipBody:
-            'Do my genes put me at risk of PCOS? The THADA gene tells you how likely you are to get it. Left alone, it can lead to diabetes.',
-          x: 42.4,
-          y: 43.9,
-          side: 'left',
-        },
-        {
-          key: 'pregnancy',
-          label: 'Pregnancy',
-          caption: 'Trouble having a baby',
-          tipTitle: 'Pregnancy Loss · MTHFR, FOXP3',
-          tipBody:
-            'Could I have trouble having a baby? Two genes affect folate and how your immune system reacts in pregnancy. Most women never get an answer.',
-          x: 58.1,
-          y: 46.3,
-          side: 'right',
-        },
-        {
-          key: 'joints',
-          label: 'Joints',
-          caption: 'Rheumatoid arthritis',
-          tipTitle: 'Joints · Gene HLA-DRB1',
-          tipBody:
-            'Could my immune system damage my joints? In rheumatoid arthritis the HLA-DRB1 gene is the clearest warning sign, and joint damage cannot be undone.',
-          x: 41.3,
-          y: 73.4,
-          side: 'left',
+          title: "What you'll receive",
+          body: 'Five results - PCOS, pregnancy loss, mood, bones and joints - each marked Good, Average or Poor, in plain language, with what to do next. Ready in 3 weeks.',
         },
       ],
     },
 
-    // --------------------------------------------------------- risk cards ----
-    {
+    // ----------------------------------------------------- what we check ----
+{
       type: 'riskCards',
       ground: 'cream',
       head: {
@@ -340,13 +248,154 @@ export const womensHealth: TestPage = {
       ctaNoteHtml: '5 tests · 1 saliva sample · <b>results in 3 weeks</b>',
     },
 
-    // -------------------------------------------------------------- stats ----
-    {
+    // ------------------------------------------------ inside your report ----
+{
+      type: 'bodyMap',
+      ground: 'sage',
+      head: {
+        eyebrow: { label: "Inside your Women's Health report", icon: 'target' },
+        titleHtml: 'Five answers, <em class="tst-em-teal">from one saliva sample.</em>',
+        leadHtml: 'Tap any part of the body to see what we check there.',
+      },
+      image: { src: `${IMG}/bodymap-figure.png`, alt: 'Anatomical figure marking the five tested areas' },
+      hotspots: [
+        {
+          key: 'mood',
+          label: 'Mood',
+          caption: 'Depression around pregnancy',
+          tipTitle: 'Mood · Peripartum depression',
+          tipBody:
+            'Could pregnancy affect my mental health? The COMT gene shows how well your body handles stress hormones, and half of it begins before the baby is born.',
+          x: 49.7,
+          y: 5.6,
+          side: 'left',
+        },
+        {
+          key: 'bones',
+          label: 'Bones',
+          caption: 'Osteoporosis',
+          tipTitle: 'Bones · Osteoporosis',
+          tipBody:
+            'Will my bones get weak as I get older? Three genes show how fast yours may weaken. Most women only find out when a bone breaks.',
+          x: 69.3,
+          y: 21.0,
+          side: 'right',
+        },
+        {
+          key: 'pcos',
+          label: 'PCOS',
+          caption: 'Hormones and your cycle',
+          tipTitle: 'PCOS · Gene THADA',
+          tipBody:
+            'Do my genes put me at risk of PCOS? The THADA gene tells you how likely you are to get it. Left alone, it can lead to diabetes.',
+          x: 42.4,
+          y: 43.9,
+          side: 'left',
+        },
+        {
+          key: 'pregnancy',
+          label: 'Pregnancy',
+          caption: 'Trouble having a baby',
+          tipTitle: 'Pregnancy Loss · MTHFR, FOXP3',
+          tipBody:
+            'Could I have trouble having a baby? Two genes affect folate and how your immune system reacts in pregnancy. Most women never get an answer.',
+          x: 58.1,
+          y: 46.3,
+          side: 'right',
+        },
+        {
+          key: 'joints',
+          label: 'Joints',
+          caption: 'Rheumatoid arthritis',
+          tipTitle: 'Joints · Gene HLA-DRB1',
+          tipBody:
+            'Could my immune system damage my joints? In rheumatoid arthritis the HLA-DRB1 gene is the clearest warning sign, and joint damage cannot be undone.',
+          x: 41.3,
+          y: 73.4,
+          side: 'left',
+        },
+      ],
+    },
+
+    // ----------------------------------------- who should take this test ----
+{
+      type: 'whoFor',
+      ground: 'sage',
+      head: {
+        eyebrow: { label: 'Who should take this test', icon: 'users' },
+        titleHtml:
+          'This test is for every woman. <em class="tst-em">But it might be for you most of all.</em>',
+      },
+      image: {
+        src: `${IMG}/whofor-pregnant.jpg`,
+        alt: 'A pregnant woman resting by a window with a cup of tea',
+      },
+      introTitleHtml: 'This test is for you if&hellip;',
+      introBodyHtml:
+        'Your genes never change, so testing once protects you for life. Some women, though, have every reason to know sooner rather than later. If even one of the signs below sounds like you, knowing now gives you years to act.',
+      chips: [
+        { label: 'Test once, for life', icon: 'clock' },
+        { label: 'Preventive, not reactive', icon: 'chart' },
+      ],
+      signs: [
+        {
+          icon: 'calendar',
+          accent: 'crimson',
+          textHtml: 'Your periods have never been regular, and no one has ever really explained why.',
+        },
+        {
+          icon: 'baby',
+          accent: 'teal',
+          textHtml: '<b>You are thinking about a baby - now, or somewhere down the line.</b>',
+        },
+        {
+          icon: 'pregnancy-loss',
+          accent: 'crimson',
+          textHtml: 'You have lost a pregnancy, and were never given a real reason why.',
+        },
+        {
+          icon: 'family',
+          accent: 'teal',
+          // Figtree 600 in the frame, unlike its neighbours at 400 - the <b> is
+          // what WhoFor maps to font-semibold.
+          textHtml: '<b>PCOS, thyroid, weak bones or arthritis runs in your family.</b>',
+        },
+        {
+          icon: 'frown',
+          accent: 'crimson',
+          textHtml: 'You often feel low, anxious, or not quite yourself - around your cycle, or after a baby.',
+        },
+        {
+          icon: 'person',
+          accent: 'teal',
+          textHtml: 'Your joints ache or stiffen more than they should for your age.',
+        },
+        {
+          icon: 'shield',
+          accent: 'teal',
+          textHtml:
+            '<b>You are in your 20s or 30s and feel perfectly fine - which is exactly when acting early works best.</b>',
+        },
+        {
+          icon: 'file',
+          accent: 'crimson',
+          textHtml: 'You are simply tired of guessing, and want clear answers about your own body.',
+        },
+      ],
+      closingHtml: 'If even one of these is you, knowing now gives you years to act instead of regret.',
+      ctas: [
+        { label: 'Book a Test', href: '#kit' },
+        { label: 'Learn More', href: '#the-five-tests', variant: 'ghost' },
+      ],
+    },
+
+    // ------------------------------------------------------- the numbers ----
+{
       type: 'stats',
       ground: 'ink',
       head: {
         eyebrow: { label: 'The numbers', icon: 'chart', accent: 'teal' },
-        titleHtml: 'These five problems are common in Indian women.',
+        titleHtml: 'These five problems are <em class="tst-em-teal">common in Indian women.</em>',
         leadHtml: 'Most only find out once the damage is done.',
       },
       stats: [
@@ -384,8 +433,8 @@ export const womensHealth: TestPage = {
       cta: { label: 'Check My Risk', href: '#kit' },
     },
 
-    // ---------------------------------------------------------- explainer ----
-    {
+    // -------------------------------------------- how gene testing works ----
+{
       type: 'explainer',
       ground: 'ivory',
       head: {
@@ -409,131 +458,8 @@ export const womensHealth: TestPage = {
       closingHtml: 'One saliva sample. That is all it takes.',
     },
 
-    // ----------------------------------------------------------- timeline ----
-    {
-      type: 'timeline',
-      ground: 'cream',
-      head: {
-        eyebrow: { label: 'The gap', icon: 'clock' },
-        // The frame breaks the accent AFTER "you": that word is still Figtree 700,
-        // and only "since birth." is the Cormorant italic run.
-        titleHtml: 'The answer has been within you <em class="tst-em-teal">since birth.</em>',
-        leadHtml: 'Most women only find out once the damage is already done.',
-      },
-      startLabel: 'Your genes already know',
-      endLabel: 'You feel the first symptom',
-      ticks: ['Birth', 'Age 20', 'Age 30', 'Age 40'],
-      centreChip: { label: 'The years you could have used', icon: 'hourglass' },
-    },
-
-    // ----------------------------------------------------------- contrast ----
-    {
-      type: 'contrast',
-      ground: 'ivory',
-      head: {
-        eyebrow: { label: 'Why it is worth it', icon: 'scale' },
-        titleHtml: 'Take one test now. <em class="tst-em-teal">Stay in control for life.</em>',
-      },
-      negative: {
-        badge: { label: 'Regret', icon: 'frown' },
-        image: { src: `${IMG}/contrast-regret.jpg`, alt: 'A woman looking away, deep in thought' },
-        kicker: 'She never tested',
-        title: 'Ten years later, still guessing',
-        items: [
-          'She still cannot lose weight, and she blames herself for it.',
-          'She keeps losing pregnancies. No doctor can tell her why.',
-          'She feels low after her baby, and thinks it is normal.',
-          'She breaks a bone, and only then learns her bones were weak.',
-          'Her hands hurt more every year. She just lives with it.',
-        ],
-      },
-      positive: {
-        badge: { label: 'Peace of mind', icon: 'smile' },
-        image: { src: `${IMG}/contrast-peace.jpg`, alt: 'A woman smiling, relaxed at home' },
-        kicker: 'She tested early',
-        title: 'Ten years later, still ahead',
-        items: [
-          'She knows it is in her genes. She treats it early, and the weight comes off.',
-          'She saw the right doctor before trying. Today she is a mother.',
-          'She got help before the baby came, so she could enjoy those first months.',
-          'She started calcium and exercise early. Her bones are still strong.',
-          "She caught the arthritis early. She can still hold her grandchild's hand.",
-        ],
-      },
-      closingHtml: 'One test today can save you years of pain later.',
-      cta: { label: 'Book a Test', href: '#kit' },
-    },
-
-    // -------------------------------------------------------------- worth ----
-    {
-      type: 'worth',
-      ground: 'cream',
-      head: {
-        eyebrow: { label: 'What it is really worth', icon: 'piggy' },
-        titleHtml:
-          'The cost of knowing is small. <em class="tst-em-teal">The cost of finding out too late is a lifetime.</em>',
-        leadHtml:
-          'Think of everything you have already spent this year on things you can barely remember. This costs less than most of them, and it is the only one that could quietly change how the whole rest of your life unfolds.',
-      },
-      emphasisHtml:
-        '<em class="tst-em-teal">Because deep down, this was never really about a test.</em> <b class="tst-strong">It is about the years, and the people, you get to keep.</b>',
-      price: {
-        badge: { label: 'One test · Once in your whole life', icon: 'award' },
-        titleHtml: 'Just &#8377;____, one time.<br/>And you never have to wonder again.',
-        bodyHtml:
-          'Your genes never change, so you test <b>only once</b> and the answers stay true for the rest of your life. Spread across all the years it quietly protects, it comes to less than a cup of coffee a month, to finally stop being afraid of your own body, and start understanding it.',
-        chips: [
-          { label: 'Less than one salon visit' },
-          { label: 'Less than one dinner out' },
-          { label: 'Priceless, lasts a lifetime' },
-        ],
-        image: { src: `${IMG}/worth-mother.jpg`, alt: 'A daughter hugging her mother from behind' },
-      },
-    },
-
-    // ----------------------------------------------------------- outcomes ----
-    {
-      type: 'outcomes',
-      ground: 'cream',
-      cards: [
-        {
-          icon: 'moon',
-          kicker: 'Tonight',
-          title: 'You finally rest',
-          bodyHtml:
-            'No more lying awake in the dark asking <b>"is something quietly wrong with me?"</b> For the first time, you know. And you get to breathe out, and simply sleep.',
-        },
-        {
-          icon: 'sprout',
-          kicker: 'In a few years',
-          title: 'You catch it while it is still small',
-          bodyHtml:
-            'A gentle change today can be almost nothing at all. The same thing, found too late, can take your savings, your strength, and years you can never get back. <b>You get to be the one who saw it coming.</b>',
-        },
-        {
-          icon: 'users',
-          kicker: 'Decades from now',
-          title: 'You are still the one right there',
-          bodyHtml:
-            "Still strong enough to dance at the wedding. Still holding your grandchild's hand instead of watching from a chair. <b>The people who love you get more of you, for longer.</b>",
-        },
-      ],
-    },
-
-    // -------------------------------------------------------- testimonial ----
-    {
-      type: 'testimonial',
-      ground: 'cream',
-      quoteHtml: 'Finally&hellip; my <em class="tst-em-teal">dream body</em> doesn\'t feel impossible anymore.',
-      bodyHtml:
-        'For years you may have blamed yourself for the weight that would not move. When you finally see what your genes are doing, everything changes: you can stop fighting your own body and start working with it, and feel <b>strong, confident, and at home in your own skin again.</b>',
-      closingHtml:
-        'You are not paying for a test. You are buying back the years, and the moments, you would have lost.',
-      cta: { label: 'Book a Test', href: '#kit' },
-    },
-
-    // ----------------------------------------------------- report preview ----
-    {
+    // ------------------------------------------------------- your report ----
+{
       type: 'reportPreview',
       ground: 'sage',
       head: {
@@ -561,8 +487,8 @@ export const womensHealth: TestPage = {
       },
     },
 
-    // -------------------------------------------------------------- steps ----
-    {
+    // ------------------------------------------------------ how it works ----
+{
       type: 'steps',
       ground: 'ivory',
       head: {
@@ -581,39 +507,8 @@ export const womensHealth: TestPage = {
       ctaNoteHtml: 'Ships in 2 to 3 days · <b>Free GENEous Care call after</b>',
     },
 
-    // --------------------------------------------------------- counsellor ----
-    {
-      type: 'counsellor',
-      ground: 'cream',
-      head: {
-        eyebrow: { label: 'GENEous Care · Not Google, a real expert', icon: 'users', accent: 'teal' },
-        titleHtml: 'Our <em class="tst-em-teal">GENEous Care</em> expert explains it to you.',
-      },
-      image: {
-        src: `${IMG}/counsellor-placeholder.jpg`,
-        alt: 'GENEous Care genetic counsellor',
-      },
-      points: [
-        'Every single report is checked by a scientist before it reaches you.',
-        'Want your report explained? Book a free GENEous Care session with us.',
-        'Our experts tell you what it means, and what to do next.',
-      ],
-      floatCard: {
-        icon: 'users',
-        title: 'GENEous Care',
-        subtitle: 'Genetic counselling, on call',
-        noteHtml: 'Free with every report',
-      },
-      expert: {
-        initials: 'VS',
-        name: 'Dr. Varun Sharma, Ph.D',
-        role: 'Scientist, Human Genetics',
-        reviewedByLabel: 'Every report reviewed by',
-      },
-    },
-
-    // ---------------------------------------------------------------- kit ----
-    {
+    // ----------------------------------------------------------- the kit ----
+{
       type: 'kit',
       ground: 'ivory',
       head: {
@@ -644,8 +539,39 @@ export const womensHealth: TestPage = {
       },
     },
 
-    // -------------------------------------------------------------- trust ----
-    {
+    // ------------------------------------------------------ geneous care ----
+{
+      type: 'counsellor',
+      ground: 'cream',
+      head: {
+        eyebrow: { label: 'GENEous Care · Not Google, a real expert', icon: 'users', accent: 'teal' },
+        titleHtml: 'Our GENEous Care expert <em class="tst-em-teal">explains it to you.</em>',
+      },
+      image: {
+        src: `${IMG}/counsellor-placeholder.jpg`,
+        alt: 'GENEous Care genetic counsellor',
+      },
+      points: [
+        'Every single report is checked by a scientist before it reaches you.',
+        'Want your report explained? Book a free GENEous Care session with us.',
+        'Our experts tell you what it means, and what to do next.',
+      ],
+      floatCard: {
+        icon: 'users',
+        title: 'GENEous Care',
+        subtitle: 'Genetic counselling, on call',
+        noteHtml: 'Free with every report',
+      },
+      expert: {
+        initials: 'VS',
+        name: 'Dr. Varun Sharma, Ph.D',
+        role: 'Scientist, Human Genetics',
+        reviewedByLabel: 'Every report reviewed by',
+      },
+    },
+
+    // --------------------------------------------- certified and trusted ----
+{
       type: 'trust',
       ground: 'sand',
       head: {
@@ -681,11 +607,20 @@ export const womensHealth: TestPage = {
       ],
     },
 
-    // --------------------------------------------------------------- faqs ----
-    // NOTE: the Figma frame shows every accordion CLOSED, so the answers below
-    // are drafted from this page's own copy and MUST be reviewed by the medical
-    // /content owner before launch. The questions are verbatim from the design.
-    {
+    // ------------------------------------------------------- testimonial ----
+{
+      type: 'testimonial',
+      ground: 'cream',
+      quoteHtml: 'Finally&hellip; my <em class="tst-em-teal">dream body</em> doesn\'t feel impossible anymore.',
+      bodyHtml:
+        'For years you may have blamed yourself for the weight that would not move. When you finally see what your genes are doing, everything changes: you can stop fighting your own body and start working with it, and feel <b>strong, confident, and at home in your own skin again.</b>',
+      closingHtml:
+        'You are not paying for a test. You are buying back the years, and the moments, you would have lost.',
+      cta: { label: 'Book a Test', href: '#kit' },
+    },
+
+    // -------------------------------------------------------------- faqs ----
+{
       type: 'faqs',
       ground: 'cream',
       head: {
@@ -720,23 +655,24 @@ export const womensHealth: TestPage = {
       ],
     },
 
-    // ---------------------------------------------------------- final cta ----
-    {
+    // --------------------------------------------------------- final cta ----
+{
       type: 'finalCta',
       ground: 'ink',
       eyebrow: { label: 'Know now, not later', icon: 'zap', accent: 'teal' },
       titleHtml: 'Health Without <em class="tst-em-teal">Guesswork.</em>',
       chips: [{ label: '5 tests, 1 saliva kit' }, { label: 'Results in 3 weeks' }, { label: 'Expert guidance' }],
-      cta: { label: 'Book a Test', href: '#kit' },
+      cta: { label: 'Buy Now', href: '#kit' },
       noteHtml: 'At-home saliva kit · NABL certified lab · Results in 3 weeks',
     },
 
-    // --------------------------------------------------------- disclaimer ----
-    {
+    // -------------------------------------------------------- disclaimer ----
+{
       type: 'disclaimer',
       bodyHtml:
         'This is general educational information, not medical advice. Talk to a doctor about your own case. If you are struggling with your mental health, please reach out to a doctor or someone you trust.',
     },
+
   ],
 };
 

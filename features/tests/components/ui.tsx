@@ -103,16 +103,53 @@ export function Body({ html, className }: { html: string; className?: string }) 
   );
 }
 
-/** The centred closing line: Cormorant Garamond 700 italic 30/45. */
+/**
+ * The closing line: Cormorant Garamond 700 italic 30/45.
+ *
+ * LEFT, not centred - the frame sets every section flush to the 28.4 gutter,
+ * closings included (see `06 · How gene testing works`, whose "One saliva
+ * sample. That is all it takes." starts at the same x as its eyebrow).
+ */
 export function Closing({ html, className }: { html: string; className?: string }) {
   return (
     <p
       className={cn(
-        'mx-auto max-w-[820px] text-center font-tst text-[clamp(20px,2.2vw,30px)] font-bold italic leading-[1.5] text-mine',
+        'max-w-[820px] font-tst text-[clamp(20px,2.2vw,30px)] font-bold italic leading-[1.5] text-mine',
         className
       )}
       dangerouslySetInnerHTML={{ __html: html }}
     />
+  );
+}
+
+/**
+ * The closing ROW: note on the left, CTA on the right.
+ *
+ * The frame closes four sections this way (`02 · What we check`,
+ * `04 · Who should take this test`, `05 · The numbers`, `08 · How it works`) -
+ * a note flush left and the button flush right, on one line. The note itself
+ * differs per section (small sans in 02 and 08, Cormorant italic in 04 and 05),
+ * so it arrives as a node; only the row is shared.
+ */
+export function ClosingRow({
+  note,
+  cta,
+  className,
+}: {
+  note?: React.ReactNode;
+  cta?: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        'flex w-full flex-col items-start gap-[18px] sm:flex-row sm:items-center sm:justify-between sm:gap-[32px]',
+        className
+      )}
+    >
+      <div className="min-w-0">{note}</div>
+      {cta ? <div className="shrink-0">{cta}</div> : null}
+    </div>
   );
 }
 
@@ -141,6 +178,88 @@ export function Eyebrow({ data, className }: { data: EyebrowT; className?: strin
         {data.label}
       </span>
     </span>
+  );
+}
+
+// ---- head row --------------------------------------------------------------
+// Figma `Head row` (744:502 and its eight twins) @ 967.1 x 112.8, x=28.4.
+// The frame sets every section head as TWO COLUMNS, not a centred stack:
+//
+//   left   620 of 967.1 (64.1%), shrink-0 - eyebrow, then the two-run heading
+//   right  flex-1 - a 39.8x1.4 (-> 56x2) Eden rule, then the note at 12.1/1.6
+//          (-> 17px) #5c6b68
+//   gap    justify-between; the block gap is 11.4 -> 16
+//
+// THE NOTE BASELINES WITH THE HEADING, which the frame does not do. Top-aligned
+// against a two-line display heading it hangs at the ceiling of a 440px column
+// with the whole depth of the heading empty beneath it, and reads as something
+// left behind rather than placed. `items-end` sets its foot on the heading's,
+// so the two blocks close together and the empty space moves ABOVE the note,
+// where it belongs - it is the quieter of the two. Every section that carries
+// a note has a two-line heading, so there is no case where this collapses.
+//
+// It stacks below `lg`, where 620 + a note column will not both fit.
+
+export function HeadRow({
+  eyebrow,
+  titleHtml,
+  leadHtml,
+  headingClassName,
+  leadClassName,
+  ruleClassName,
+  emOwnLine = true,
+  className,
+}: {
+  /** The section's own eyebrow pill - each one ships its own glyph and tint. */
+  eyebrow?: React.ReactNode;
+  titleHtml: string;
+  leadHtml?: string;
+  /**
+   * The frame sets the serif accent as its OWN line under the bold run -
+   * eyebrow, bold heading, cursive next line. Two heads break that pattern
+   * because their accent is a word inside the sentence rather than the tail of
+   * it ("...might be for *you* most of all"), and those pass false.
+   *
+   * `block` + `w-fit` is not cosmetic: .tst-em / .tst-em-teal paint a
+   * multi-stop gradient across the element's own box, so a full-width block
+   * would stretch the ramp to the column and clip the end stops off the glyphs.
+   */
+  emOwnLine?: boolean;
+  headingClassName?: string;
+  leadClassName?: string;
+  ruleClassName?: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        'flex w-full flex-col items-start gap-[22px] lg:flex-row lg:items-end lg:justify-between lg:gap-[40px]',
+        className
+      )}
+    >
+      <div className="flex min-w-0 flex-col items-start gap-[16px] lg:w-[64.1%] lg:shrink-0">
+        {eyebrow}
+        <Heading
+          html={titleHtml}
+          className={cn('w-full', emOwnLine && '[&>em]:mt-px [&>em]:block [&>em]:w-fit', headingClassName)}
+        />
+      </div>
+
+      {leadHtml ? (
+        <div className="flex min-w-0 flex-col items-start gap-[14px] lg:flex-1 lg:pb-[10px]">
+          <span aria-hidden className={cn('block h-[2px] w-[56px] shrink-0 bg-eden', ruleClassName)} />
+          {/* `ch` and not px: the note is one sentence and it should set as two
+              tight lines under the rule, which is a measure in CHARACTERS, not
+              a width. At 17px this lands around 300-340px - roughly half the
+              column - so the block reads as a deliberate deck rather than a
+              lone line ranged across 440px of empty rail. */}
+          <Lead
+            html={leadHtml}
+            className={cn('max-w-[34ch] text-[clamp(15px,1.18vw,17px)] leading-[1.55] text-[#5c6b68]', leadClassName)}
+          />
+        </div>
+      ) : null}
+    </div>
   );
 }
 

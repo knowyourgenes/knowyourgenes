@@ -36,8 +36,9 @@ export default function ReportPreview({ data, ground }: { data: ReportPreviewSec
             </span>
           ) : null}
 
-          {/* Figtree 700 51/55 ls -0.02em #222222 + the Cormorant italic accent. */}
-          <Heading html={data.head.titleHtml} />
+          {/* Figtree 700 51/55 ls -0.02em #222222 + the Cormorant italic accent,
+              which the frame sets on its own line under the bold run. */}
+          <Heading html={data.head.titleHtml} className="[&>em]:mt-px [&>em]:block [&>em]:w-fit" />
 
           {data.head.leadHtml ? <Lead html={data.head.leadHtml} /> : null}
 

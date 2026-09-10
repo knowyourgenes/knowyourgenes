@@ -100,7 +100,7 @@ export default function Counsellor({ data, ground }: { data: CounsellorSection; 
               is already carried by `.tst-em-teal`, which the data's <em> uses -
               so it is NOT re-declared here. w-full keeps the h2 at the column's
               580 so "explains it to you." breaks onto line two as in the frame. */}
-          <Heading html={data.head.titleHtml} className="w-full break-words" />
+          <Heading html={data.head.titleHtml} className="w-full break-words [&>em]:mt-px [&>em]:block [&>em]:w-fit" />
 
           {data.head.leadHtml ? <Lead html={data.head.leadHtml} className="w-full" /> : null}
 

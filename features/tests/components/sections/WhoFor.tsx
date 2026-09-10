@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 import type { Ground, WhoForSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
 import { Icon } from '../icons';
-import { Closing, CtaRow, Heading, Media, Section } from '../ui';
+import { Closing, ClosingRow, CtaRow, HeadRow, Media, Section } from '../ui';
 
 // ---- the frame's own glyphs -------------------------------------------------
 // A FigmaIcon id is "<y>-<x>" in PAGE space. This section starts at y=970, so a
@@ -73,29 +73,28 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
   return (
     <Section ground={ground ?? 'sage'} id="who-for">
       {/* ---- head: 720 wide, eyebrow + h2, gap 16 --------------------------- */}
-      <div className="mx-auto flex max-w-[720px] flex-col items-center gap-4 text-center">
-        {eyebrow ? (
-          /* The pill's intrinsic width is 307 (17+22+10+234+22) - wider than the
-             280 a 320px viewport leaves. `max-w-full` pins it to the rail, and
-             px-4 below sm buys back 7px so it stays a one-liner from 375 up and
-             only wraps on the very narrowest phones. That wrap already centres
-             itself: `text-align` inherits from the head's `text-center`. The
-             frame's own 17/22 padding is restored from sm up. */
-          <span className="inline-flex max-w-full items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 px-4 py-[11px] shadow-tst-crimson sm:pl-[17px] sm:pr-[22px]">
-            <Glyph id={EYEBROW_GLYPH} box="size-[22px]" className="h-[26px] w-[22px]" />
-            <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-crimson-deep">
-              {eyebrow.label}
+      {/* The serif "you" is GRADIENT_LINEAR(#9a2855,#c73c70,#c73c70) in the
+          frame - exactly what `.tst-em` already paints (globals.css), so do NOT
+          re-declare it here: a local `bg-gradient-to-r` would move the middle
+          stop from 55% to 50%. */}
+      <HeadRow
+        eyebrow={
+          eyebrow ? (
+            /* The pill's intrinsic width is 307 (17+22+10+234+22) - wider than
+               the 280 a 320px viewport leaves. `max-w-full` pins it to the rail
+               and px-4 below sm buys back 7px, so it stays a one-liner from 375
+               up. The frame's own 17/22 padding is restored from sm. */
+            <span className="inline-flex max-w-full items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 px-4 py-[11px] shadow-tst-crimson sm:pl-[17px] sm:pr-[22px]">
+              <Glyph id={EYEBROW_GLYPH} box="size-[22px]" className="h-[26px] w-[22px]" />
+              <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-crimson-deep">
+                {eyebrow.label}
+              </span>
             </span>
-          </span>
-        ) : null}
-
-        {/* H2 Figtree 700 51/55 ls -0.02em #222222. The serif "you" is
-            GRADIENT_LINEAR(#9a2855,#c73c70,#c73c70) in the frame - which is
-            exactly what `.tst-em` already paints (globals.css), so do NOT
-            re-declare it here: a local `bg-gradient-to-r` would move the middle
-            stop from 55% to 50%. */}
-        <Heading html={data.head.titleHtml} className="max-w-[720px]" />
-      </div>
+          ) : null
+        }
+        titleHtml={data.head.titleHtml}
+        leadHtml={data.head.leadHtml}
+      />
 
       {/* ---- portrait 503 + intro 681, gap 32, block pad-top 16 ------------- */}
       <div className="mt-8 grid items-center gap-8 pt-4 lg:grid-cols-[503fr_681fr]">
@@ -184,10 +183,11 @@ export default function WhoFor({ data, ground }: { data: WhoForSection; ground?:
           The frame's closing frame is 640 with its own 3px side padding, so the
           serif measures 635 - that inset is what puts the break after
           "years to". */}
-      <div className="mt-8 pt-4">
-        <Closing html={data.closingHtml} className="max-w-[640px] px-[3px] text-[#2d2a24]" />
-        <CtaRow items={ctas} className="mt-6" />
-      </div>
+      <ClosingRow
+        className="mt-8 pt-4"
+        note={<Closing html={data.closingHtml} className="max-w-[640px] text-[#2d2a24]" />}
+        cta={<CtaRow items={ctas} />}
+      />
     </Section>
   );
 }

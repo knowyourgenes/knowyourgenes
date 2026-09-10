@@ -16,9 +16,11 @@ import type { DisclaimerSection, Ground } from '../../types';
 //                 shrink the inner rail to 1278. Height 59.75 =
 //                 19 padTop + 19.75 content + 20 padBottom + 1 top stroke
 //                 (strokesIncludedInLayout).
-//   div.mx-auto   1280 × 20, pad 0/20/0.75/20, CENTER
-//   copy          Figtree 400 12.5/18.75, centred, #5b564e (fuscous - not the
-//                 lighter boulder grey).
+//   div.mx-auto   1280 × 20, pad 0/20/0.75/20
+//   copy          Figtree 400 12.5/18.75, #5b564e (fuscous - not the lighter
+//                 boulder grey). FLUSH LEFT: in the buy frame this line's ink
+//                 runs from x=31 in a 1024 board whose gutter is 28.4, where
+//                 centring it would start it at 86.
 //
 // SMALL SCREENS. The rail's own 20px pad is a 1280-rail inset, and on a phone
 // it stacks on top of the section gutter: 20 + 20 a side leaves a 240 measure
@@ -35,7 +37,7 @@ export default function Disclaimer({ data }: { data: DisclaimerSection; ground?:
     <div className="border-t border-mine/10 bg-white px-5 pb-5 pt-[19px] sm:px-10 lg:px-20">
       <div className="mx-auto w-full max-w-[1600px] px-0 pb-[0.75px] sm:px-5">
         <p
-          className="break-words text-center font-kyg text-[12.5px] font-normal leading-[18.75px] text-fusc"
+          className="break-words font-kyg text-[12.5px] font-normal leading-[18.75px] text-fusc"
           dangerouslySetInnerHTML={{ __html: data.bodyHtml }}
         />
       </div>

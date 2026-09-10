@@ -210,8 +210,10 @@ body {
      Was 60s for a TrustMarquee component that no longer exists; 32s is the
      medium pace the accreditation strip now runs at. */
   --animate-kyg-marquee: kyg-marquee 32s linear infinite;
-  /* The test pages' accreditation strip runs faster than the homepage's. */
-  --animate-tst-marquee: kyg-marquee 34s linear infinite;
+  /* The test pages' strip had a --animate-tst-marquee twin at 34s. It is gone:
+     that strip now takes its direction from the reader's scroll, which a CSS
+     animation cannot reverse without jumping (see sections/TrustStrip.tsx), so
+     it is driven from rAF and needs no keyframes. */
 
   /* ---- homepage v2 (features/home/components/v2) --------------------------
      Ported 1:1 from the designer's build, "New Homepage Build/index.html".

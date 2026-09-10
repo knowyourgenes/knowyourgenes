@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import Icon from './Icon';
 
 // Expand/collapse row.
 //   variant "row"  → buy-box list (top/bottom hairlines; ExtraBold 0.08em UPPER head)
@@ -9,11 +10,14 @@ import { cn } from '@/lib/utils';
 // Toggle is the Figma's rounded-square glyph button:
 //   emphasis → Sea Green fill + white glyph (What's Included)
 //   else     → Gin fill + Green Pea glyph
+// `toggle="chevron"` swaps that glyph button for the bare rotating chevron
+// the test-page buy box draws. Same row, same a11y - only the affordance differs.
 export default function Accordion({
   title,
   defaultOpen = false,
   variant = 'row',
   emphasis = false,
+  toggle = 'sign',
   titleClassName,
   children,
 }: {
@@ -21,6 +25,7 @@ export default function Accordion({
   defaultOpen?: boolean;
   variant?: 'row' | 'card';
   emphasis?: boolean;
+  toggle?: 'sign' | 'chevron';
   titleClassName?: string;
   children: ReactNode;
 }) {
@@ -51,14 +56,21 @@ export default function Accordion({
         >
           {title}
         </span>
-        <span
-          className={cn(
-            'grid shrink-0 place-items-center rounded-sm pb-[2px] font-extrabold leading-none',
-            emphasis ? 'size-[37px] bg-sea text-[18px] text-white' : 'size-[26px] bg-gin text-[18px] text-greenpea'
-          )}
-        >
-          {open ? '−' : '+'}
-        </span>
+        {toggle === 'chevron' ? (
+          <Icon
+            name="chevron-down"
+            className={cn('h-[8px] w-[16px] text-heavy transition-transform duration-300', open && '-scale-y-100')}
+          />
+        ) : (
+          <span
+            className={cn(
+              'grid shrink-0 place-items-center rounded-sm pb-[2px] font-extrabold leading-none',
+              emphasis ? 'size-[37px] bg-sea text-[18px] text-white' : 'size-[26px] bg-gin text-[18px] text-greenpea'
+            )}
+          >
+            {open ? '−' : '+'}
+          </span>
+        )}
       </button>
 
       <div

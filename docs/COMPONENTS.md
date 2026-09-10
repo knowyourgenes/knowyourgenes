@@ -3,7 +3,7 @@
 
 # Component inventory
 
-**171 components.** Read this before you build a new one.
+**174 components.** Read this before you build a new one.
 
 The rule this file exists to enforce: **if a component already exists, use it - do
 not build a second one on another page.** A "Button" that exists three times is
@@ -141,7 +141,7 @@ Owned by one feature. Needed by a second feature? Promote it to
 
 | Export | File | Env | What it is |
 | --- | --- | --- | --- |
-| `Field, GoogleIcon, CtaArrow, AuthScreen, CardHead, LABEL, MICRO_LINK, PRIMARY_BTN, ALT_BTN` | [features/auth/components/auth-ui.tsx](../features/auth/components/auth-ui.tsx) | client | Figtree 600 11/14, #1b1712. |
+| `Field, GoogleIcon, CtaArrow, AuthScreen, CardHead, OrRule, CardFoot, LABEL, MICRO_LINK, PRIMARY_BTN, ALT_BTN` | [features/auth/components/auth-ui.tsx](../features/auth/components/auth-ui.tsx) | client | Figtree 600 11/14, #1b1712. |
 
 ### `features/blog`
 
@@ -199,7 +199,7 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `HomeIcon, HOME_ICON_IDS` | [features/home/components/lib/HomeIcon.tsx](../features/home/components/lib/HomeIcon.tsx) | server | features/home/v2 - the homepage design's own icons |
 | `Reveal, HeroReveal, LifeStrand` | [features/home/components/lib/motion.tsx](../features/home/components/lib/motion.tsx) | client | The source's `.rv` / `.rv-l` / `.rv-s` classes plus its single shared |
 | `BornInIndia` | [features/home/components/sections/BornInIndia.tsx](../features/home/components/sections/BornInIndia.tsx) | server | 17.067 / 24.889 on linenw at 78%, and it does not wrap: the design |
-| `Certifications` | [features/home/components/sections/Certifications.tsx](../features/home/components/sections/Certifications.tsx) | server | The accreditation strip. |
+| `Certifications` | [features/home/components/sections/Certifications.tsx](../features/home/components/sections/Certifications.tsx) | server | Its OWN size, not the strip's 520x300. The mark is sized by height with an |
 | `Discover` | [features/home/components/sections/Discover.tsx](../features/home/components/sections/Discover.tsx) | server | Measured off the design and written as shares of the rail, the same way |
 | `ExploreKyg` | [features/home/components/sections/ExploreKyg.tsx](../features/home/components/sections/ExploreKyg.tsx) | client | `eyebrowTone` picks which of the design's two dark pills opens the section - |
 | `FinalCta` | [features/home/components/sections/FinalCta.tsx](../features/home/components/sections/FinalCta.tsx) | server | The closing panel. |
@@ -275,13 +275,15 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `CategoriesView, HERO` | [features/tests/components/CategoriesView.tsx](../features/tests/components/CategoriesView.tsx) | client | The frame draws ONE category card in full ("Wellness · 9 TESTS"), which is |
 | `CardArt` | [features/tests/components/CategoryCardArt.tsx](../features/tests/components/CategoryCardArt.tsx) | server | features/tests - card artwork for the category + product cards |
 | `CategoryTestsView` | [features/tests/components/CategoryTestsView.tsx](../features/tests/components/CategoryTestsView.tsx) | client | /categories/[category_slug] - Figma 343:3047 ("03 · Tests") |
-| `FigmaIcon, FIGMA_ICON_IDS` | [features/tests/components/FigmaIcon.tsx](../features/tests/components/FigmaIcon.tsx) | server | Every id present on disk - exported so a data file can be validated. |
+| `FigmaIcon, PdpIcon, FIGMA_ICON_IDS` | [features/tests/components/FigmaIcon.tsx](../features/tests/components/FigmaIcon.tsx) | server | Every id present on disk - exported so a data file can be validated. |
 | `RevealRoot` | [features/tests/components/RevealRoot.tsx](../features/tests/components/RevealRoot.tsx) | client | threshold 0, NOT the reference build's 0.12: its `.reveal` targets are small |
 | `ScrollProgress` | [features/tests/components/ScrollProgress.tsx](../features/tests/components/ScrollProgress.tsx) | client | Fixed reading-progress bar across the top of a test page. |
 | `TestPageView` | [features/tests/components/TestPage.tsx](../features/tests/components/TestPage.tsx) | server | The kit section shows this report's price; every other section renders |
 | `Icon, Arrow, ICON_KEYS` | [features/tests/components/icons.tsx](../features/tests/components/icons.tsx) | server | Kept as a named export for `Categories.tsx`, which predates the registry. |
 | `Aspiration` | [features/tests/components/sections/Aspiration.tsx](../features/tests/components/sections/Aspiration.tsx) | server | STAR TREATMENT - top half ("From Hollywood to Bollywood") |
 | `BodyMap` | [features/tests/components/sections/BodyMap.tsx](../features/tests/components/sections/BodyMap.tsx) | client | BODY MAP - frame 'BODY MAP' @ 1440 × 935, pad 88/80. |
+| `BuyPdp` | [features/tests/components/sections/BuyPdp.tsx](../features/tests/components/sections/BuyPdp.tsx) | server | BUY PDP - "Women's Health Genetic Test" |
+| `BuyPdpGallery` | [features/tests/components/sections/BuyPdpGallery.tsx](../features/tests/components/sections/BuyPdpGallery.tsx) | client | Figma `01 · Buy · PDP` @ node 727:581. Every number here is the frame's own, |
 | `Contrast` | [features/tests/components/sections/Contrast.tsx](../features/tests/components/sections/Contrast.tsx) | server | "She never tested" vs "She tested early" - two illustrated outcome columns. |
 | `Counsellor` | [features/tests/components/sections/Counsellor.tsx](../features/tests/components/sections/Counsellor.tsx) | server | DOCTOR - "Our GENEous Care expert explains it to you." |
 | `Disclaimer` | [features/tests/components/sections/Disclaimer.tsx](../features/tests/components/sections/Disclaimer.tsx) | server | The medical/legal line between the closing CTA and the footer |
@@ -299,10 +301,11 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `StatCard` | [features/tests/components/sections/StatCard.tsx](../features/tests/components/sections/StatCard.tsx) | client | One card in THE NUMBERS band. |
 | `Stats` | [features/tests/components/sections/Stats.tsx](../features/tests/components/sections/Stats.tsx) | server | THE NUMBERS - ink band, 1440x888 |
 | `Steps` | [features/tests/components/sections/Steps.tsx](../features/tests/components/sections/Steps.tsx) | server | HOW IT WORKS - 1440 frame, section y 13269, height 912. |
-| `Testimonial` | [features/tests/components/sections/Testimonial.tsx](../features/tests/components/sections/Testimonial.tsx) | server | PRICE VALUE - blocks 4 and 5 of 5: the pull quote, then the closing line + CTA. |
+| `Testimonial` | [features/tests/components/sections/Testimonial.tsx](../features/tests/components/sections/Testimonial.tsx) | server | PRICE VALUE - the pull quote, then the closing line + CTA. |
 | `ThenNow` | [features/tests/components/sections/ThenNow.tsx](../features/tests/components/sections/ThenNow.tsx) | server | Before/after pair. The "then" card is a muted linen panel with dash bullets; |
 | `Timeline` | [features/tests/components/sections/Timeline.tsx](../features/tests/components/sections/Timeline.tsx) | server | "The gap" - the years between what your genes already encode and the first |
 | `Trust` | [features/tests/components/sections/Trust.tsx](../features/tests/components/sections/Trust.tsx) | server | TRUST / ACCREDITATION - 1440 frame, section y 15619, height 656. |
+| `TrustStrip` | [features/tests/components/sections/TrustStrip.tsx](../features/tests/components/sections/TrustStrip.tsx) | client | The accreditation strip - scroll-reactive marquee |
 | `WhoFor` | [features/tests/components/sections/WhoFor.tsx](../features/tests/components/sections/WhoFor.tsx) | server | "This test is for every woman" - intro block, then a two-column sign grid. |
 | `Worth` | [features/tests/components/sections/Worth.tsx](../features/tests/components/sections/Worth.tsx) | server | PRICE VALUE - "The cost of knowing is small." |
-| `Section, Heading, Lead, Body, Closing, Eyebrow, Head, Cta, CtaRow, Chip, ChipRow, ResultBar, Card, Media, GROUND, TONE_TEXT, TONE_DOT, TONE_PILL` | [features/tests/components/ui.tsx](../features/tests/components/ui.tsx) | server | Section shell: ground + the frame's 80px gutter + the 1280px inner rail. |
+| `Section, Heading, Lead, Body, Closing, ClosingRow, Eyebrow, HeadRow, Head, Cta, CtaRow, Chip, ChipRow, ResultBar, Card, Media, GROUND, TONE_TEXT, TONE_DOT, TONE_PILL` | [features/tests/components/ui.tsx](../features/tests/components/ui.tsx) | server | Section shell: ground + the frame's 80px gutter + the 1280px inner rail. |

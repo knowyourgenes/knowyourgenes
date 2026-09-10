@@ -34,16 +34,18 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { AlertCircle, Lock, Mail } from 'lucide-react';
+import { AlertCircle, Lock, Mail, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 import {
   ALT_BTN,
   AuthScreen,
+  CardFoot,
   CardHead,
   CtaArrow,
   Field,
   GoogleIcon,
+  OrRule,
   PRIMARY_BTN,
 } from '@/features/auth/components/auth-ui';
 import { cn } from '@/lib/utils';
@@ -136,9 +138,9 @@ function SignUpCard() {
 
   return (
     <>
-      <CardHead title="Create account" prompt="Already have an account?" linkLabel="Sign in" href="/login" />
+      <CardHead title="Create your account" blurb="One account for every test, report and next step." />
 
-      <form onSubmit={handleSubmit} className="mt-[33.75px]" noValidate>
+      <form onSubmit={handleSubmit} className="mt-[22px]" noValidate>
         {/* No glyph, and the same 46px text inset as the two below it. That is
             how the frame draws it - see the `icon` prop's note in auth-ui. */}
         <Field
@@ -151,7 +153,7 @@ function SignUpCard() {
           required
         />
 
-        <div className="mt-[16.9px]">
+        <div className="mt-[16px]">
           <Field
             id="email"
             label="Email or phone"
@@ -164,7 +166,7 @@ function SignUpCard() {
           />
         </div>
 
-        <div className="mt-[16.9px]">
+        <div className="mt-[16px]">
           <Field
             id="password"
             label="Password"
@@ -181,23 +183,25 @@ function SignUpCard() {
         {error ? (
           <p
             role="alert"
-            className="mt-[16px] flex items-center gap-2 rounded-sm bg-mojo/[0.08] px-3 py-2.5 font-kyg text-[14.5px] text-mojo"
+            className="mt-[12px] flex items-center gap-2 rounded-sm bg-mojo/[0.08] px-3 py-2.5 font-kyg text-[14px] text-mojo"
           >
             <AlertCircle className="h-4 w-4 shrink-0" aria-hidden />
             {error}
           </p>
         ) : null}
 
-        <button type="submit" disabled={loading} className={cn(PRIMARY_BTN, 'mt-[31px]')}>
+        <button type="submit" disabled={loading} className={cn(PRIMARY_BTN, 'mt-[20px]')}>
           {loading ? 'Creating...' : 'Create account'}
-          {loading ? null : <CtaArrow className="h-[19px] w-[19px]" />}
+          {loading ? null : <CtaArrow className="h-[17px] w-[17px]" />}
         </button>
       </form>
 
-      <div className="mt-[16.9px] flex gap-[16.9px]">
+      <OrRule />
+
+      <div className="flex gap-[12px]">
         <button type="button" onClick={() => signIn('google', { callbackUrl: safeFrom(params.get('from')) })} className={ALT_BTN}>
-          <GoogleIcon className="h-[22px] w-[22px] lg:h-[25.3px] lg:w-[25.3px]" />
-          Google
+          <GoogleIcon className="h-[19px] w-[19px]" />
+          Continue with Google
         </button>
         <button
           type="button"
@@ -208,9 +212,12 @@ function SignUpCard() {
           }
           className={ALT_BTN}
         >
+          <MessageCircle className="h-[18px] w-[18px] text-eden" aria-hidden />
           Sign up with OTP
         </button>
       </div>
+
+      <CardFoot prompt="Already have an account?" linkLabel="Sign in" href="/login" />
 
       {/*
         NOTHING BELOW THE ALT ROW. The frame's card is a fixed 675px box whose
@@ -228,9 +235,9 @@ function SignUpCard() {
 export default function RegisterPage() {
   return (
     <AuthScreen
-      headline={['Start with what your', 'body already knows,']}
-      italic="from day one."
-      blurb="One account for every test, report and next step."
+      eyebrow="At-home DNA insights"
+      headline={'Start with what\nyour body\nalready knows.'}
+      blurb="Science-backed reports on PCOS, pregnancy, mood, bones and more."
     >
       <Suspense fallback={<div className="min-h-[400px]" />}>
         <SignUpCard />

@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="10.7" height="10.7" viewBox="0 0 10.7 10.7" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon/truck" clip-path="url(#clip0_0_20)">
+<path id="Vector" d="M6.24167 8.025V2.675C6.24167 2.43852 6.14772 2.21172 5.9805 2.0445C5.81328 1.87728 5.58648 1.78333 5.35 1.78333H1.78333C1.54685 1.78333 1.32005 1.87728 1.15283 2.0445C0.98561 2.21172 0.891667 2.43852 0.891667 2.675V7.57917C0.891667 7.69741 0.938638 7.81081 1.02225 7.89442C1.10586 7.97803 1.21926 8.025 1.3375 8.025H2.22917" stroke="#1F5F41" stroke-width="2.36667" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M6.6875 8.025H4.0125" stroke="#1F5F41" stroke-width="2.36667" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M8.47083 8.025H9.3625C9.48074 8.025 9.59414 7.97803 9.67775 7.89442C9.76136 7.81081 9.80833 7.69741 9.80833 7.57917V5.95187C9.80775 5.85131 9.77318 5.7539 9.71025 5.67546L8.15875 3.73608C8.11723 3.68354 8.06441 3.64103 8.00421 3.6117C7.944 3.58237 7.87797 3.56698 7.811 3.56667H6.24167" stroke="#1F5F41" stroke-width="2.36667" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M7.57917 8.91667C8.07162 8.91667 8.47083 8.51745 8.47083 8.025C8.47083 7.53255 8.07162 7.13333 7.57917 7.13333C7.08671 7.13333 6.6875 7.53255 6.6875 8.025C6.6875 8.51745 7.08671 8.91667 7.57917 8.91667Z" stroke="#1F5F41" stroke-width="2.36667" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M3.12083 8.91667C3.61329 8.91667 4.0125 8.51745 4.0125 8.025C4.0125 7.53255 3.61329 7.13333 3.12083 7.13333C2.62838 7.13333 2.22917 7.53255 2.22917 8.025C2.22917 8.51745 2.62838 8.91667 3.12083 8.91667Z" stroke="#1F5F41" stroke-width="2.36667" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_0_20">
+<rect width="10.7" height="10.7" fill="white"/>
+</clipPath>
+</defs>
+</svg>
