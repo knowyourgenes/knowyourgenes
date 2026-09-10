@@ -1,3 +1,6 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
 import { cn } from '@/lib/utils';
 import { Button, Icon, Lead, Section, SectionTitle } from '../ui';
 
@@ -8,8 +11,36 @@ const PROMISES = [
   'Just better questions and clearer understanding.',
 ];
 
+/**
+ * The two floating quotes.
+ *
+ * SMALLER BELOW `sm`, because the plate is not. On a 390px phone the plate is
+ * 354 wide against roughly 700 on a desktop, but the bubbles kept their full
+ * 15.5px/20px box - so together they covered the middle of the plate instead of
+ * hanging off its corners, and the dark one cut straight through the caption.
+ */
 const BUBBLE =
-  'absolute z-[3] max-w-[min(76%,300px)] rounded-sm px-5 py-[15px] font-kyg text-[15.5px] font-semibold leading-[1.4] tracking-[-0.01em] shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)]';
+  'absolute z-[3] rounded-sm px-[14px] py-[16px] font-kyg text-[16px] font-semibold leading-[1.4] tracking-[-0.01em] shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)] sm:px-5 sm:py-[15px] sm:text-[15.5px]';
+
+/**
+ * The blobs behind the character.
+ *
+ * Circles, not the plate's own radial washes - the design draws discrete soft
+ * discs with a visible edge, which a background gradient cannot do without
+ * banding. `w-[N%] aspect-square` rather than `h-[N%] w-[N%]`, because the
+ * plate is not square and percentage height would make every one an ellipse.
+ *
+ * Positions are the disc's top-left, worked back from its centre in the design:
+ * a centre at 13%/14% with a diameter of 52% of the width lands at -13% left,
+ * and -3% top once 26% of the WIDTH is converted into a share of the HEIGHT.
+ * They therefore only hold at the phone's 2:3 plate, which is why they stop at
+ * `sm` - the desktop plate has its own gradient treatment and is untouched.
+ */
+const BLOBS = [
+  'left-[-13%] top-[-3%] w-[52%]',
+  'left-[56%] top-[51%] w-[68%]',
+  'left-[-13%] top-[62%] w-[41%]',
+];
 
 /**
  * `plate` is the shape of the character slot.
@@ -19,6 +50,12 @@ const BUBBLE =
  *   wide      455.111 x 396.089, which is what the design actually DRAWS: the
  *             plate is wider than tall and the two columns hang off a shared
  *             bottom edge rather than a shared centre line
+ *
+ * Neither applies on a phone, where the plate is 2:3 regardless. A wide plate
+ * at 354px is 308px tall, and two quotes plus a caption do not fit in that
+ * without one of them sitting on another. Portrait is also the shape the real
+ * artwork wants, so this is the one width where the placeholder is already
+ * standing in the right box.
  *
  * They differ because the artwork does not exist yet. Once it does, the plate
  * stops being a placeholder and this prop stops being interesting.
@@ -43,34 +80,84 @@ export default function MeetGenee({
             one slot on this page whose artwork has not been delivered, and a
             labelled placeholder is honest where a stock illustration would not
             be. The two bubbles are the section's whole personality, so they ship
-            with the plate rather than waiting on it. */}
-        <div className="relative w-full min-w-0 max-w-[460px] lg:max-w-none">
+            with the plate rather than waiting on it.
+
+            The top padding is what the white quote hangs into. It is on the
+            wrapper rather than the section so the overhang stays inside the grid
+            item's box and the row gap below still measures its full 28px to the
+            heading. */}
+        <div className="relative w-full min-w-0 max-w-[460px] pb-[40px] pt-[35px] sm:pb-0 sm:pt-0 lg:max-w-none">
           <div
             className={cn(
-              'grid w-full place-items-center rounded-sm p-[28px] text-center',
-              wide ? 'aspect-[455/396]' : 'aspect-[9/10]',
+              'relative flex w-full items-end justify-center overflow-hidden rounded-sm',
+              // On a phone the question card straddles the plate's bottom edge,
+              // so the ground GENEe stands on is the card's top edge and not the
+              // plate's floor - hence 38px, which is half a card.
+              'px-[20px] pb-[38px] pt-[16px] sm:p-[28px]',
+              'aspect-[4/5]',
+              wide ? 'sm:aspect-[455/396]' : 'sm:aspect-[9/10]',
               'bg-[radial-gradient(118%_84%_at_18%_12%,rgba(42,195,162,0.34),transparent_58%),radial-gradient(96%_78%_at_88%_88%,rgba(237,221,184,0.34),transparent_60%),linear-gradient(158deg,#20605B_0%,#154744_58%,#0E3634_100%)]',
               'shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)]'
             )}
           >
-            <div className="flex flex-col items-center gap-[10px] text-linenw/70">
-              <Icon name="chat" className="h-[54px] w-[54px] text-java2" strokeWidth={1.4} />
-              <p className="font-kyg text-[14px] font-bold tracking-[0.06em] text-linenw">GENEe Character Asset</p>
-              <p className="max-w-[280px] font-kyg text-[12.5px] leading-[1.5]">
-                GENEe, the KYG guide character · transparent PNG · 900 × 1000 · 9:10
-              </p>
-            </div>
+            {BLOBS.map((pos) => (
+              <span
+                key={pos}
+                aria-hidden="true"
+                className={cn(
+                  'pointer-events-none absolute aspect-square rounded-full bg-java2/[0.09] blur-[4px] sm:hidden',
+                  pos
+                )}
+              />
+            ))}
+
+            <Image
+              src="/home/brand/genee.webp"
+              alt="GENEe, the KYG guide character"
+              width={758}
+              height={1475}
+              sizes="(min-width: 1024px) 30vw, 60vw"
+              className="relative h-full w-auto max-w-full select-none object-contain"
+            />
           </div>
 
-          <p className={cn(BUBBLE, 'right-0 top-[6%] bg-linenw text-eden lg:right-[-4%]')}>
+          <p className={cn(BUBBLE, 'right-0 top-0 max-w-[min(76%,300px)] bg-linenw text-eden sm:top-[6%] lg:right-[-4%]')}>
             Let&rsquo;s ask your genes.
-            <span aria-hidden="true" className="absolute -bottom-[6px] left-[32px] block h-4 w-4 rotate-45 bg-linenw" />
+            <span aria-hidden="true" className="absolute -bottom-[6px] left-[33%] block h-4 w-4 rotate-45 bg-linenw sm:left-[32px]" />
           </p>
 
-          <p className={cn(BUBBLE, 'bottom-[9%] left-0 bg-eden text-linenw lg:left-[-5%]')}>
-            Why does the same diet affect two people differently?
-            <span aria-hidden="true" className="absolute -top-[6px] right-[36px] block h-4 w-4 rotate-45 bg-eden" />
-          </p>
+          {/*
+            The question, as a link rather than a caption.
+            The design gives it an arrow in a filled circle, and an arrow in a
+            circle is a promise - so it goes where the section's own CTA goes,
+            rather than being a button that does nothing. On a phone it spans the
+            plate and sits on its bottom edge; from `sm` it returns to the tailed
+            quote hanging off the plate's lower-left.
+          */}
+          <Link
+            href="/categories"
+            className={cn(
+              BUBBLE,
+              'group/ask flex items-center gap-3 bg-eden text-linenw transition-colors hover:bg-eden2',
+              'px-[21px] py-[16px] sm:px-5 sm:py-[15px]',
+              'bottom-[40px] left-[5%] right-[5%] translate-y-1/2',
+              'sm:bottom-[9%] sm:left-0 sm:right-auto sm:block sm:max-w-[min(76%,300px)] sm:translate-y-0 lg:left-[-5%]'
+            )}
+          >
+            <span>Why does the same diet affect two people differently?</span>
+            {/* A true circle, which is the one place rounded-full is legal
+                (docs/DESIGN.md §2). 44px is also the minimum touch target. */}
+            <span
+              aria-hidden="true"
+              className="grid h-[44px] w-[44px] shrink-0 place-items-center rounded-full bg-java2 text-eden sm:hidden"
+            >
+              <Icon name="arrow" className="h-[19px] w-[19px]" />
+            </span>
+            <span
+              aria-hidden="true"
+              className="absolute -top-[6px] right-[36px] hidden h-4 w-4 rotate-45 bg-eden group-hover/ask:bg-eden2 sm:block"
+            />
+          </Link>
         </div>
 
         <div className="min-w-0">
