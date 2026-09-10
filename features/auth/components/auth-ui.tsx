@@ -31,7 +31,6 @@ import Link from 'next/link';
 import { useState, type ComponentType, type ReactNode } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
-import { Container } from '@/components/shared/Container';
 import { cn } from '@/lib/utils';
 
 // -----------------------------------------------------------------------------
@@ -57,25 +56,12 @@ const FIELD_SHELL =
  * 390px screen.
  */
 const INPUT =
-  'h-[54px] w-full rounded-sm bg-transparent pr-[16px] font-kyg text-[16px] ' +
-  'tracking-[-0.008em] text-bistre outline-none placeholder:text-[#8a8378] ' +
-  'lg:h-[62px] lg:text-[17.6px]';
+  'h-[44px] min-h-[44px] w-full rounded-sm bg-transparent pr-[16px] font-kyg text-[16px] ' +
+  'tracking-[-0.008em] text-bistre outline-none placeholder:text-[#8a8378]';
 
-/**
- * The frame insets this content 40px in 1024 - 56.25 at true scale - which is
- * WIDER than the site's own 40px chrome gutter, so the panel sits a little
- * inside the nav above it. That is how the frame draws it, and Container is
- * built to take a gutter override for exactly this (see its doc comment), so
- * the shell width rule is still satisfied - only the gutter moves.
- *
- * Left at the ambient gutter below lg, where the frame says nothing and the
- * page needs every pixel it can get.
- */
-const GUTTER = 'lg:px-[56.25px]';
 
 /** Figtree 600 11/14, #1b1712. */
-export const LABEL =
-  'font-kyg text-[13.5px] font-semibold leading-[17px] text-bistre lg:text-[15.5px] lg:leading-[19.7px]';
+export const LABEL = 'font-kyg text-[14px] font-semibold leading-[20px] text-bistre';
 
 /**
  * Figtree 600 10.5, eden - the "Forgot password?" affordance.
@@ -85,8 +71,11 @@ export const LABEL =
  * makes the taller line box and pushes everything under it down 2.8px.
  */
 export const MICRO_LINK =
-  'font-kyg text-[13px] font-semibold leading-[17px] text-eden underline-offset-[3px] ' +
-  'hover:underline lg:text-[14.8px] lg:leading-[19.7px]';
+  'font-kyg text-[13px] font-semibold leading-[20px] text-eden underline-offset-[3px] hover:underline ' +
+  // The link sits ALONE in the label row, so it does not get the target-size
+  // exception that covers a link inline in a sentence. Padding buys a ~40px
+  // target; the negative margin keeps the row the same height as the label.
+  '-my-[10px] py-[10px]';
 
 /**
  * Primary CTA: 42px tall at frame scale, with the eden drop shadow.
@@ -98,17 +87,17 @@ export const MICRO_LINK =
  * 59 > 44, so the touch target it protects is still met.
  */
 export const PRIMARY_BTN =
-  'flex h-[52px] w-full items-center justify-center gap-[8.4px] rounded-sm bg-eden ' +
-  'font-kyg text-[15.5px] font-bold leading-[21px] tracking-[-0.007em] text-linenw ' +
+  'flex h-[44px] min-h-[44px] w-full items-center justify-center gap-[8px] rounded-sm bg-eden ' +
+  'font-kyg text-[15px] font-bold leading-[20px] tracking-[-0.007em] text-linenw ' +
   'shadow-[0_6px_18px_0_rgba(14,77,75,0.18)] transition-colors hover:bg-eden2 ' +
-  'disabled:cursor-not-allowed disabled:opacity-60 lg:h-[59px] lg:text-[17.6px]';
+  'disabled:cursor-not-allowed disabled:opacity-60';
 
 /** The two secondary buttons under it: 44px at frame scale, a field's own ring. */
 export const ALT_BTN =
-  'flex h-[54px] flex-1 items-center justify-center gap-[11.25px] rounded-sm bg-white ' +
-  'font-kyg text-[16px] font-medium leading-[28px] text-bistre ' +
+  'flex h-[44px] min-h-[44px] flex-1 items-center justify-center gap-[9px] rounded-sm bg-white ' +
+  'font-kyg text-[15px] font-medium leading-[20px] text-bistre ' +
   'shadow-[inset_0_0_0_1.5px_rgba(27,23,18,0.11)] transition-shadow ' +
-  'hover:shadow-[inset_0_0_0_1.5px_rgba(27,23,18,0.22)] lg:h-[62px] lg:text-[19.7px]';
+  'hover:shadow-[inset_0_0_0_1.5px_rgba(27,23,18,0.22)]';
 
 // -----------------------------------------------------------------------------
 // Field
@@ -157,9 +146,9 @@ export function Field({
         {aside}
       </div>
 
-      <div className={cn(FIELD_SHELL, 'mt-[8.4px]')}>
+      <div className={cn(FIELD_SHELL, 'mt-[6px]')}>
         {Icon ? (
-          <Icon className="pointer-events-none absolute left-[13px] h-[18px] w-[18px] text-eden lg:left-[15.2px] lg:h-[19.7px] lg:w-[19.7px]" />
+          <Icon className="pointer-events-none absolute left-[12px] h-[18px] w-[18px] text-eden" />
         ) : null}
         <input
           id={id}
@@ -169,7 +158,7 @@ export function Field({
           placeholder={placeholder}
           autoComplete={autoComplete}
           required={required}
-          className={cn(INPUT, 'pl-[40px] lg:pl-[46.1px]', isPassword && 'pr-[46px] lg:pr-[52px]')}
+          className={cn(INPUT, 'pl-[38px]', isPassword && 'pr-[44px]')}
         />
         {isPassword ? (
           <button
@@ -177,16 +166,15 @@ export function Field({
             onClick={() => setShow((s) => !s)}
             aria-label={show ? 'Hide password' : 'Show password'}
             aria-pressed={show}
-            tabIndex={-1}
             // The frame puts the glyph 18.56px in from the field's right edge.
             // The button is bigger than the glyph so it can be pressed, so the
             // offset is measured to the glyph: 12.45 + (32 - 19.7) / 2 = 18.6.
-            className="absolute right-[6px] grid h-[32px] w-[32px] place-items-center rounded-sm text-[#8a8378] transition-colors hover:text-eden lg:right-[12.45px]"
+            className="absolute right-0 grid h-full w-[44px] place-items-center rounded-sm text-[#8a8378] transition-colors hover:text-eden"
           >
             {show ? (
-              <EyeOff className="h-[18px] w-[18px] lg:h-[19.7px] lg:w-[19.7px]" />
+              <EyeOff className="h-[18px] w-[18px]" />
             ) : (
-              <Eye className="h-[18px] w-[18px] lg:h-[19.7px] lg:w-[19.7px]" />
+              <Eye className="h-[18px] w-[18px]" />
             )}
           </button>
         ) : null}
@@ -244,6 +232,19 @@ export function CtaArrow({ className }: { className?: string }) {
  */
 const WHY_PATHS = {
   panels: <path d="M2.66667 6H13.3333M6 2.66667V13.3333M2.66667 2.66667H13.3333V13.3333H2.66667V2.66667Z" />,
+  home: <path d="M2 6.5 L8 1.8 L14 6.5 L14 13.6 L2 13.6 Z M6.1 13.6 L6.1 9.2 L9.9 9.2 L9.9 13.6" strokeLinecap="round" />,
+  lock: (
+    <path
+      d="M3.2 7.2 L12.8 7.2 L12.8 14 L3.2 14 Z M5.3 7.2 L5.3 4.9 C5.3 3.4 6.5 2.2 8 2.2 C9.5 2.2 10.7 3.4 10.7 4.9 L10.7 7.2"
+      strokeLinecap="round"
+    />
+  ),
+  leaf: (
+    <path
+      d="M2.4 13.6 C2.4 6.4 7.2 2.6 13.6 2.6 C13.6 9 9.6 13.6 2.4 13.6 Z M2.8 13.2 L10.2 5.4"
+      strokeLinecap="round"
+    />
+  ),
   shield: (
     <path
       d="M6 8L7.33333 9.33333L10 6.66667M8 1.33333L12.6667 4V8C12.6667 11.3333 10.3333 13.3333 8 14.6667C5.66667 13.3333 3.33333 11.3333 3.33333 8V4L8 1.33333Z"
@@ -253,7 +254,7 @@ const WHY_PATHS = {
   lines: <path d="M2.66667 4H13.3333M2.66667 8H9.33333M2.66667 12H11.3333" strokeLinecap="round" />,
 } as const;
 
-function WhyIcon({ name }: { name: keyof typeof WHY_PATHS }) {
+function WhyIcon({ name, className }: { name: keyof typeof WHY_PATHS; className?: string }) {
   return (
     <svg
       viewBox="0 0 16 16"
@@ -262,7 +263,7 @@ function WhyIcon({ name }: { name: keyof typeof WHY_PATHS }) {
       strokeWidth="1.33333"
       strokeLinejoin="round"
       aria-hidden
-      className="h-[22.5px] w-[22.5px] text-eden"
+      className={cn('h-[22.5px] w-[22.5px] text-eden', className)}
     >
       {WHY_PATHS[name]}
     </svg>
@@ -273,133 +274,183 @@ function WhyIcon({ name }: { name: keyof typeof WHY_PATHS }) {
 // The reassurance strip
 // -----------------------------------------------------------------------------
 
+/**
+ * The three points that ride the photograph.
+ *
+ * Each is a mark, a title and a half-line of support - the shape the design
+ * draws. They live on the panel rather than under the screen, so they cost no
+ * vertical space in a layout that has to hold one viewport.
+ */
 const POINTS: { icon: keyof typeof WHY_PATHS; title: string; body: string }[] = [
-  {
-    icon: 'panels',
-    title: 'Your reports, one place',
-    body: 'Every test you take is added to the same account and read against the same genome.',
-  },
-  {
-    icon: 'shield',
-    title: 'NABL-certified labs',
-    body: 'Samples are processed by accredited labs; results are reviewed before they reach you.',
-  },
-  {
-    icon: 'lines',
-    title: 'Written in plain language',
-    body: 'No genetics jargon. Every insight comes with what it means and what to do next.',
-  },
+  { icon: 'panels', title: 'Comprehensive reports', body: 'All key health insights' },
+  { icon: 'shield', title: 'NABL-certified labs', body: 'Trusted & accurate' },
+  { icon: 'home', title: 'At-home convenience', body: 'Simple & hassle-free' },
 ];
 
-function WhyStrip() {
-  return (
-    <Container as="section" className={cn(GUTTER, 'grid gap-[28px] pb-[65px] pt-[14px] md:grid-cols-3')}>
-      {POINTS.map((p) => (
-        <div key={p.title} className="rounded-sm border border-[rgba(27,23,18,0.08)] bg-white/60 p-[25px]">
-          <span className="grid h-[42px] w-[42px] place-items-center rounded-sm bg-eden/[0.08]">
-            <WhyIcon name={p.icon} />
-          </span>
-          <p className="mt-[22.5px] font-kyg text-[18.3px] font-semibold leading-[23.9px] tracking-[-0.01em] text-bistre">
-            {p.title}
-          </p>
-          <p className="mt-[8.4px] font-kyg text-[16.2px] leading-[23.9px] text-[#646e6c]">{p.body}</p>
-        </div>
-      ))}
-    </Container>
-  );
-}
+/** Lock / shield / leaf, under the card on the cream. */
+const TRUST: { icon: keyof typeof WHY_PATHS; title: string; body: string }[] = [
+  { icon: 'lock', title: 'Secure & private', body: 'Your data is protected' },
+  { icon: 'shield', title: 'Trusted by thousands', body: 'Across India' },
+  { icon: 'leaf', title: 'Better health ahead', body: 'Powered by your genes' },
+];
 
 // -----------------------------------------------------------------------------
 // The screen
 // -----------------------------------------------------------------------------
 
 type AuthScreenProps = {
-  /** The two Figtree lines. Rendered as given, so the break is the designer's. */
-  headline: [string, string];
-  /** The Cormorant italic line that closes the headline. */
-  italic: string;
+  /** Uppercase kicker over the headline. */
+  eyebrow: string;
+  /** One string; the line breaks are the designer's, so they ship as written. */
+  headline: string;
   blurb: string;
   children: ReactNode;
 };
 
-export function AuthScreen({ headline, italic, blurb, children }: AuthScreenProps) {
+/**
+ * The split screen.
+ *
+ * FULL BLEED, NOT `Container`. The photograph runs to the left edge and the
+ * cream ground to the right one, which is the whole idea of the composition -
+ * a 1600px column with gutters would float both halves in the middle of the
+ * window. The CONTENT inside each half is still capped (560 left, 540 card),
+ * so nothing sprawls on a wide monitor, which is what DESIGN.md 1 is actually
+ * protecting against.
+ *
+ * ONE VIEWPORT. `100svh` less the 65px header, so the footer starts at the
+ * fold. `svh` rather than `vh` because mobile reports `vh` as the tallest the
+ * viewport ever gets, which overshoots while the URL bar is showing.
+ */
+export function AuthScreen({ eyebrow, headline, blurb, children }: AuthScreenProps) {
   return (
-    <div className="bg-linenw">
-      {/*
-        548 : 372 in the frame, kept as fr so the proportion survives every
-        width rather than only 1440. The card gains a few pixels on a wide
-        monitor, which is what a field stack should do; pinning it to 523 would
-        have opened a gutter that is in no frame.
-      */}
-      <Container
-        as="section"
-        className={cn(GUTTER, 'grid gap-[33.75px] pb-[28px] pt-[28px] lg:grid-cols-[548fr_372fr] lg:items-stretch')}
-      >
-        {/* ---------------- brand panel ---------------- */}
-        <div className="relative isolate h-[320px] overflow-hidden rounded-sm sm:h-[420px] lg:h-auto lg:min-h-[675px]">
-          <Image
-            src="/auth/brand-panel.webp"
-            alt=""
-            fill
-            priority
-            sizes="(min-width: 1024px) 58vw, 100vw"
-            className="object-cover"
-          />
-          {/* 8% -> 55% at the 35% stop -> 94%, so the copy sits on ink and the top stays open. */}
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,18,18,0.08)_0%,rgba(13,18,18,0.55)_35%,rgba(13,18,18,0.94)_100%)]"
-          />
-          {/* Anchored bottom-left at the frame's 40px inset on both axes. */}
-          <div className="absolute inset-x-[24px] bottom-[24px] lg:inset-x-[56.25px] lg:bottom-[56.25px]">
-            <h2 className="font-kyg text-[30px] font-normal leading-[34px] tracking-[-0.03em] text-white sm:text-[38px] sm:leading-[44px] lg:text-[47.8px] lg:leading-[54.84px]">
-              {headline[0]}
-              <br />
-              {headline[1]}
-              <span className="-mt-[2.8px] block font-tst text-[33px] font-medium italic leading-[38px] tracking-normal text-[#eaf6f3] sm:text-[42px] sm:leading-[47px] lg:text-[53.4px] lg:leading-[59.06px]">
-                {italic}
-              </span>
+    <div className="grid lg:min-h-[calc(100svh-65px)] lg:grid-cols-2">
+      {/* ---------------- left: the photograph ---------------- */}
+      <div className="relative isolate h-[220px] overflow-hidden sm:h-[280px] lg:h-auto">
+        <Image
+          src="/auth/signin-panel.webp"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="object-cover object-[0%_22%] lg:object-[0%_50%]"
+        />
+        {/*
+          THE CROP IS THE LAYOUT. The panel is roughly square at every desktop
+          size (0.93-1.09), so the frame is cut to 1070x1146 - narrower than all
+          of them - and a left anchor pins it. Cover scales to WIDTH almost
+          everywhere, which makes the subject's horizontal position a
+          fixed FRACTION of the panel (his face starts at 64.5%) instead of
+          something that drifts with the window. The copy runs to 423px, so at
+          1366 and up the type lands on the window and the plant and stops well
+          before his face. What slack a tall panel does create is taken off the
+          right, where there is only background.
+
+          Two ramps: a light vertical one so the carousel dots have ink under
+          them, and a left-weighted one because the subject sits right of frame
+          looking left - the copy goes where he is looking, and the gradient has
+          to be heaviest exactly there. Its tail is spent by 76%, before him.
+        */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,14,13,0.20)_0%,rgba(8,14,13,0.10)_45%,rgba(8,14,13,0.42)_100%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,14,13,0.88)_0%,rgba(8,14,13,0.66)_34%,rgba(8,14,13,0.30)_56%,rgba(8,14,13,0)_76%)]"
+        />
+
+        <div className="absolute inset-0 flex flex-col justify-center px-[24px] py-[28px] sm:px-[40px] lg:px-[64px]">
+          <div className="w-full max-w-[560px]">
+            <p className="font-kyg text-[12px] font-bold uppercase leading-[16px] tracking-[0.14em] text-[#a9c8c0] lg:text-[13px]">
+              {eyebrow}
+            </p>
+            <h2 className="mt-[14px] whitespace-pre-line font-kyg text-[30px] font-extrabold leading-[1.12] tracking-[-0.028em] text-white sm:text-[36px] lg:mt-[18px] lg:text-[50px]">
+              {headline}
             </h2>
-            <p className="mt-[22.5px] max-w-[506px] font-kyg text-[15px] leading-[23px] text-[#c9dad6] lg:text-[19px] lg:leading-[29.5px]">
+            <p className="mt-[14px] max-w-[420px] font-kyg text-[15px] leading-[24px] text-[#cfdcd8] lg:mt-[20px] lg:text-[18px] lg:leading-[27px]">
               {blurb}
             </p>
+
+            <ul className="mt-[26px] hidden list-none lg:mt-[40px] lg:grid lg:gap-[22px]">
+              {POINTS.map((p) => (
+                <li key={p.title} className="flex items-center gap-[16px]">
+                  <span className="grid h-[54px] w-[54px] shrink-0 place-items-center rounded-sm bg-white/[0.12] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.18)]">
+                    <WhyIcon name={p.icon} className="h-[23px] w-[23px] text-[#8fe0cf]" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block font-kyg text-[17px] font-semibold leading-[22px] tracking-[-0.01em] text-white">
+                      {p.title}
+                    </span>
+                    <span className="mt-[2px] block font-kyg text-[13px] leading-[18px] text-[#b6c9c4]">{p.body}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* ---------------- form card ---------------- */}
-        <div className="flex flex-col justify-center rounded-sm border border-[rgba(27,23,18,0.08)] bg-white p-[26px] shadow-[0_4px_14px_0_rgba(45,32,18,0.05),0_1px_2px_0_rgba(45,32,18,0.05)] sm:p-[32px] lg:min-h-[675px] lg:p-[39px]">
+        {/* The carousel the design draws. Static: there is one panel image, so
+            an interactive control here would promise slides that do not exist. */}
+        <div aria-hidden className="absolute bottom-[28px] left-[24px] hidden gap-[7px] sm:left-[40px] lg:left-[64px] lg:flex">
+          <span className="h-[4px] w-[26px] rounded-full bg-white/90" />
+          <span className="h-[4px] w-[16px] rounded-full bg-white/35" />
+          <span className="h-[4px] w-[16px] rounded-full bg-white/35" />
+        </div>
+      </div>
+
+      {/* ---------------- right: the cream ground ---------------- */}
+      <div className="flex flex-col items-center justify-center gap-[20px] bg-[#f7f5f0] px-[20px] py-[32px] sm:px-[32px] lg:px-[48px] lg:py-[28px]">
+        <div className="w-full max-w-[540px] rounded-sm bg-white p-[24px] shadow-[0_1px_2px_0_rgba(45,32,18,0.04),0_12px_34px_-8px_rgba(45,32,18,0.10)] sm:p-[32px] lg:p-[40px]">
           {children}
         </div>
-      </Container>
 
-      <WhyStrip />
+        {/* <ul className="grid w-full max-w-[540px] list-none grid-cols-1 gap-[16px] sm:grid-cols-3 lg:gap-[12px]">
+          {TRUST.map((t) => (
+            <li key={t.title} className="flex items-center gap-[10px]">
+              <WhyIcon name={t.icon} className="h-[19px] w-[19px] shrink-0 text-eden" />
+              <span className="min-w-0">
+                <span className="block font-kyg text-[13px] font-semibold leading-[17px] text-bistre">{t.title}</span>
+                <span className="block font-kyg text-[12px] leading-[16px] text-[#8a8378]">{t.body}</span>
+              </span>
+            </li>
+          ))}
+        </ul> */}
+      </div>
     </div>
   );
 }
 
-/** Title + the "Don't have an account? Create account" line under it. */
-export function CardHead({
-  title,
-  prompt,
-  linkLabel,
-  href,
-}: {
-  title: string;
-  prompt: string;
-  linkLabel: string;
-  href: string;
-}) {
+/** The card's title and the line under it. */
+export function CardHead({ title, blurb }: { title: string; blurb: string }) {
   return (
     <>
-      <h1 className="font-kyg text-[30px] font-normal leading-[35px] tracking-[-0.03em] text-bistre sm:text-[34px] sm:leading-[39px] lg:text-[39.4px] lg:leading-[45px]">
+      <h1 className="font-kyg text-[28px] font-extrabold leading-[34px] tracking-[-0.025em] text-bistre sm:text-[32px] sm:leading-[38px] lg:text-[38px] lg:leading-[45px]">
         {title}
       </h1>
-      <p className="mt-[14px] font-kyg text-[16px] leading-[24px] text-[#8a8378] lg:text-[19.7px] lg:leading-[28.1px]">
-        {prompt}{' '}
-        <Link href={href} className="font-semibold text-eden underline-offset-[3px] hover:underline">
-          {linkLabel}
-        </Link>
-      </p>
+      <p className="mt-[8px] font-kyg text-[16px] leading-[24px] text-[#8a8378]">{blurb}</p>
     </>
+  );
+}
+
+/** The "OR" rule between the primary CTA and the two alternatives. */
+export function OrRule() {
+  return (
+    <div aria-hidden className="my-[16px] flex items-center gap-[14px]">
+      <span className="h-px flex-1 bg-[rgba(27,23,18,0.12)]" />
+      <span className="font-kyg text-[12px] font-semibold uppercase tracking-[0.1em] text-[#8a8378]">or</span>
+      <span className="h-px flex-1 bg-[rgba(27,23,18,0.12)]" />
+    </div>
+  );
+}
+
+/** The account-switch line that closes the card. */
+export function CardFoot({ prompt, linkLabel, href }: { prompt: string; linkLabel: string; href: string }) {
+  return (
+    <p className="mt-[18px] text-center font-kyg text-[14px] leading-[20px] text-[#8a8378]">
+      {prompt}{' '}
+      <Link href={href} className="font-semibold text-eden underline-offset-[3px] hover:underline">
+        {linkLabel}
+      </Link>
+    </p>
   );
 }
