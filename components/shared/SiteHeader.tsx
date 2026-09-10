@@ -242,7 +242,7 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean } = 
             className="col-start-1 row-start-1 flex min-h-[44px] items-center shrink-0"
             aria-label="KYG, Know Your Genes"
           >
-            <KygLogo tone="brand" className="h-9! w-auto" />
+            <KygLogo tone="brand" className="h-auto! w-16!" />
           </Link>
 
           {/* ---- SECTION 2: nav links -------------------------------------
