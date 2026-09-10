@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
@@ -19,7 +20,7 @@ const PROMISES = [
  * hanging off its corners, and the dark one cut straight through the caption.
  */
 const BUBBLE =
-  'absolute z-[3] rounded-sm px-4 py-3 font-kyg text-[15px] font-semibold leading-[1.4] tracking-[-0.01em] shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)] sm:px-5 sm:py-[15px] sm:text-[15.5px]';
+  'absolute z-[3] rounded-sm px-[14px] py-[16px] font-kyg text-[16px] font-semibold leading-[1.4] tracking-[-0.01em] shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)] sm:px-5 sm:py-[15px] sm:text-[15.5px]';
 
 /**
  * The blobs behind the character.
@@ -85,15 +86,15 @@ export default function MeetGenee({
             wrapper rather than the section so the overhang stays inside the grid
             item's box and the row gap below still measures its full 28px to the
             heading. */}
-        <div className="relative w-full min-w-0 max-w-[460px] pt-[26px] sm:pt-0 lg:max-w-none">
+        <div className="relative w-full min-w-0 max-w-[460px] pb-[40px] pt-[35px] sm:pb-0 sm:pt-0 lg:max-w-none">
           <div
             className={cn(
-              'relative grid w-full place-items-center overflow-hidden rounded-sm p-[28px] text-center',
-              // The question card owns the bottom of the plate, so the group
-              // centres against a shorter box and lands on the optical middle
-              // rather than the geometric one.
-              'pb-[64px] sm:pb-[28px]',
-              'aspect-[2/3]',
+              'relative flex w-full items-end justify-center overflow-hidden rounded-sm',
+              // On a phone the question card straddles the plate's bottom edge,
+              // so the ground GENEe stands on is the card's top edge and not the
+              // plate's floor - hence 38px, which is half a card.
+              'px-[20px] pb-[38px] pt-[16px] sm:p-[28px]',
+              'aspect-[4/5]',
               wide ? 'sm:aspect-[455/396]' : 'sm:aspect-[9/10]',
               'bg-[radial-gradient(118%_84%_at_18%_12%,rgba(42,195,162,0.34),transparent_58%),radial-gradient(96%_78%_at_88%_88%,rgba(237,221,184,0.34),transparent_60%),linear-gradient(158deg,#20605B_0%,#154744_58%,#0E3634_100%)]',
               'shadow-[0_4px_16px_0_rgba(45,32,18,0.07),0_18px_50px_0_rgba(45,32,18,0.09)]'
@@ -110,29 +111,19 @@ export default function MeetGenee({
               />
             ))}
 
-            <div className="relative flex flex-col items-center gap-[10px] text-linenw/70">
-              <span className="relative grid place-items-center">
-                {/* The glow the design puts under the mark. Its own circle
-                    rather than a shadow, so the blur can be far wider than the
-                    glyph without smearing the strokes. */}
-                <span
-                  aria-hidden="true"
-                  className="absolute h-[118px] w-[118px] rounded-full bg-java2/[0.16] blur-2xl sm:hidden"
-                />
-                <Icon name="chat" className="relative h-[70px] w-[70px] text-java2 sm:h-[54px] sm:w-[54px]" strokeWidth={1.4} />
-              </span>
-              <p className="font-kyg text-[19px] font-bold tracking-[-0.012em] text-linenw sm:text-[14px] sm:tracking-[0.06em]">
-                GENEe Character Asset
-              </p>
-              <p className="max-w-[280px] font-kyg text-[13.5px] leading-[1.5] sm:text-[12.5px]">
-                GENEe, the KYG guide character · transparent PNG · 900 × 1000 · 9:10
-              </p>
-            </div>
+            <Image
+              src="/home/brand/genee.webp"
+              alt="GENEe, the KYG guide character"
+              width={758}
+              height={1475}
+              sizes="(min-width: 1024px) 30vw, 60vw"
+              className="relative h-full w-auto max-w-full select-none object-contain"
+            />
           </div>
 
           <p className={cn(BUBBLE, 'right-0 top-0 max-w-[min(76%,300px)] bg-linenw text-eden sm:top-[6%] lg:right-[-4%]')}>
             Let&rsquo;s ask your genes.
-            <span aria-hidden="true" className="absolute -bottom-[6px] left-[32px] block h-4 w-4 rotate-45 bg-linenw" />
+            <span aria-hidden="true" className="absolute -bottom-[6px] left-[33%] block h-4 w-4 rotate-45 bg-linenw sm:left-[32px]" />
           </p>
 
           {/*
@@ -148,8 +139,9 @@ export default function MeetGenee({
             className={cn(
               BUBBLE,
               'group/ask flex items-center gap-3 bg-eden text-linenw transition-colors hover:bg-eden2',
-              'bottom-0 left-[5%] right-[5%]',
-              'sm:bottom-[9%] sm:left-0 sm:right-auto sm:block sm:max-w-[min(76%,300px)] lg:left-[-5%]'
+              'px-[21px] py-[16px] sm:px-5 sm:py-[15px]',
+              'bottom-[40px] left-[5%] right-[5%] translate-y-1/2',
+              'sm:bottom-[9%] sm:left-0 sm:right-auto sm:block sm:max-w-[min(76%,300px)] sm:translate-y-0 lg:left-[-5%]'
             )}
           >
             <span>Why does the same diet affect two people differently?</span>
