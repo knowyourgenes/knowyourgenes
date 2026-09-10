@@ -1,6 +1,6 @@
 import type { ExplainerSection, Ground } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
-import { Closing, Heading, Lead, Media, Section } from '../ui';
+import { Closing, HeadRow, Media, Section } from '../ui';
 
 // =============================================================================
 // Figma: "30-SECOND EXPLAINER" - 1440 x 827.
@@ -54,22 +54,22 @@ export default function Explainer({ data, ground }: { data: ExplainerSection; gr
     >
       <div className="flex flex-col items-center gap-[clamp(30px,3.06vw,44px)]">
         {/* ---- head: eyebrow + H2, 680 wide, gap 16 ---------------------- */}
-        <div className="flex w-full max-w-[680px] flex-col items-center gap-4 text-center">
-          {eyebrow ? (
-            <span className="inline-flex max-w-full items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/7 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
-              <span className="flex size-[22px] shrink-0 items-center justify-center">
-                <FigmaIcon id="7892-592" className="h-[26px] w-[22px] max-w-none" />
+        <HeadRow
+          eyebrow={
+            eyebrow ? (
+              <span className="inline-flex max-w-full items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/7 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+                <span className="flex size-[22px] shrink-0 items-center justify-center">
+                  <FigmaIcon id="7892-592" className="h-[26px] w-[22px] max-w-none" />
+                </span>
+                <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-eden">
+                  {eyebrow.label}
+                </span>
               </span>
-              <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-eden">
-                {eyebrow.label}
-              </span>
-            </span>
-          ) : null}
-
-          <Heading html={data.head.titleHtml} className="w-full" />
-
-          {data.head.leadHtml ? <Lead html={data.head.leadHtml} className="w-full" /> : null}
-        </div>
+            ) : null
+          }
+          titleHtml={data.head.titleHtml}
+          leadHtml={data.head.leadHtml}
+        />
 
         {/* ---- three cards: pad-top 12, gap 24 ---------------------------- */}
         <div className="grid w-full grid-cols-1 items-stretch gap-6 pt-3 sm:grid-cols-2 lg:grid-cols-3">

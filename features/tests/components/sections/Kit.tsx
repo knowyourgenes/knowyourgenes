@@ -5,7 +5,7 @@ import { discountPercent, formatPaise } from '@/lib/catalog';
 import type { KitPricing } from '@/features/products/types';
 import type { Ground, KitSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
-import { Heading, Section } from '../ui';
+import { HeadRow, Section } from '../ui';
 
 // =============================================================================
 // ORDER KIT - "Everything you need, in one box."
@@ -87,26 +87,30 @@ export default function Kit({
     <Section ground={ground ?? 'ivory'} id="kit" className="border-y border-mine/10">
       <div className="flex flex-col items-center gap-12">
         {/* ---- head: 680 column, eyebrow + H2, gap 16 --------------------- */}
-        <div className="flex w-full max-w-170 flex-col items-center gap-4 text-center">
-          {eyebrow ? (
-            /* Tinted crimson pill (#c73c70@10 on #c73c70@24), not the white
-               eyebrow in ui.tsx: pad 11/22/11/17, gap 10, 0 6 18 crimson@10. */
-            <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-2.75 pl-4.25 pr-5.5 shadow-tst-crimson">
-              {/* 22px slot; the glyph is 22x26 and overhangs 2px either side */}
-              <FigmaIcon id="14935-541" className="-my-0.5 block h-6.5 w-5.5 shrink-0" />
-              {/* 321 wide at 1440 against ~209 of usable pill at 320: min-w-0 lets
-                  it wrap inside the pill instead of widening it past the gutter. */}
-              <span className="min-w-0 break-words font-kyg text-[14px] font-extrabold uppercase leading-5.25 tracking-[0.08em] text-crimson-deep">
-                {eyebrow.label}
+        <HeadRow
+          eyebrow={
+            eyebrow ? (
+              /* Tinted crimson pill (#c73c70@10 on #c73c70@24), not the white
+                 eyebrow in ui.tsx: pad 11/22/11/17, gap 10, 0 6 18 crimson@10. */
+              <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-2.75 pl-4.25 pr-5.5 shadow-tst-crimson">
+                {/* 22px slot; the glyph is 22x26 and overhangs 2px either side */}
+                <FigmaIcon id="14935-541" className="-my-0.5 block h-6.5 w-5.5 shrink-0" />
+                {/* 321 wide at 1440 against ~209 of usable pill at 320: min-w-0
+                    lets it wrap inside the pill instead of widening it. */}
+                <span className="min-w-0 break-words font-kyg text-[14px] font-extrabold uppercase leading-5.25 tracking-[0.08em] text-crimson-deep">
+                  {eyebrow.label}
+                </span>
               </span>
-            </span>
-          ) : null}
+            ) : null
+          }
+          titleHtml={titleHtml}
+          headingClassName={cn('break-words', EM_PER_LINE)}
+        />
 
-          <Heading html={titleHtml} className={cn('w-full break-words', EM_PER_LINE)} />
-        </div>
-
-        {/* ---- the 920 card: 528 contents / 390 order --------------------- */}
-        <div className="grid w-full max-w-230 overflow-hidden rounded-sm border border-mine/10 bg-white shadow-tst-card lg:grid-cols-[minmax(0,528fr)_minmax(0,390fr)]">
+        {/* ---- the card: 528 contents / 390 order, on the FULL rail -------
+            The frame runs this edge to edge (967.1 of 967.1), not as a 920
+            block floated in the middle, so there is no max-width here. */}
+        <div className="grid w-full overflow-hidden rounded-sm border border-mine/10 bg-white shadow-tst-card lg:grid-cols-[minmax(0,528fr)_minmax(0,390fr)]">
           {/* ---- contents ------------------------------------------------ */}
           {/* border-r is the frame's seam hairline, and it is what makes the
               inner measure 447: 528 - 1 - 40 - 40. Only once the grid splits. */}
@@ -140,7 +144,7 @@ export default function Kit({
           </div>
 
           {/* ---- order --------------------------------------------------- */}
-          <div className={cn('flex flex-col bg-linenw py-[clamp(22px,2.78vw,40px)] text-center', PAD)}>
+          <div className={cn('flex flex-col bg-linenw py-[clamp(22px,2.78vw,40px)] text-left', PAD)}>
             <span className={cn(KICKER, 'mb-4')}>{data.order.kicker}</span>
 
             {/* 17/32.3 - the frame runs this at 1.9 leading, not the usual 1.5.
@@ -171,7 +175,7 @@ export default function Kit({
             {/* price - sits directly above the button so the number and the
                 commitment are read together */}
             {pricing && (
-              <div className="mb-5 flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1">
+              <div className="mb-5 flex flex-wrap items-baseline justify-start gap-x-3 gap-y-1">
                 <span className="font-kyg text-[clamp(28px,2.4vw,34px)] font-extrabold leading-none tracking-[-0.02em] text-mine">
                   {formatPaise(pricing.price)}
                 </span>

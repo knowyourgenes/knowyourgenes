@@ -2,7 +2,8 @@ import { cn } from '@/lib/utils';
 import type { Ground, TrustSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
 import { Icon } from '../icons';
-import { Heading, Section } from '../ui';
+import { HeadRow, Section } from '../ui';
+import TrustStrip from './TrustStrip';
 
 // =============================================================================
 // TRUST / ACCREDITATION - 1440 frame, section y 15619, height 656.
@@ -111,47 +112,41 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
     // the frame pads 88 top and bottom, not the 92 the shell defaults to
     <Section ground={ground ?? 'sand'} innerClassName="py-[clamp(56px,6.2vw,88px)]">
       {/* ---- head: 680 column, 16px gap ------------------------------------ */}
-      <div className="mx-auto flex max-w-[680px] flex-col items-center gap-4 text-center">
-        {eyebrow ? (
-          <span className="inline-flex items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
-            {/* 22x22 slot; the glyph is 22x26 and overhangs by 2px */}
-            <FigmaIcon id="15717-605" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
-            <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-eden">
-              {eyebrow.label}
+      <HeadRow
+        eyebrow={
+          eyebrow ? (
+            <span className="inline-flex items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+              {/* 22x22 slot; the glyph is 22x26 and overhangs by 2px */}
+              <FigmaIcon id="15717-605" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
+              <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-eden">
+                {eyebrow.label}
+              </span>
             </span>
-          </span>
-        ) : null}
+          ) : null
+        }
+        titleHtml={titleHtml}
+        leadHtml={leadHtml}
+      />
 
-        <Heading html={titleHtml} />
-
-        {leadHtml ? (
-          <p
-            className="font-kyg text-[clamp(15px,1.29vw,18.5px)] leading-[1.5] text-fusc"
-            dangerouslySetInnerHTML={{ __html: leadHtml }}
-          />
-        ) : null}
-      </div>
-
-      {/* ---- moving certification carousel --------------------------------- */}
-      {/* The frame holds the track twice over; translateX(-50%) therefore
-          scrolls exactly one copy and the loop never seams. At rest the first
-          card sits flush on the rail's left edge, as in the frame. */}
-      <div className="group mt-8 w-full overflow-hidden" style={{ maskImage: STRIP_MASK, WebkitMaskImage: STRIP_MASK }}>
-        <div className="flex w-max animate-tst-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none">
-          {[0, 1].map((copy) => (
-            <div key={copy} aria-hidden={copy > 0} className="flex w-max">
-              {data.badges.map((b, i) => (
-                <div key={`${b.line1}-${i}`} className="pr-[18px]">
-                  <BadgeCard badge={b} />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* ---- moving certification carousel ---------------------------------
+          The row is held TWICE so the wrap at 50% of the track never seams.
+          Which way it travels is the reader's own scroll direction - see
+          TrustStrip, which owns the loop. The badges themselves stay server
+          components; only the track that moves them is client-side. */}
+      <TrustStrip mask={STRIP_MASK}>
+        {[0, 1].map((copy) => (
+          <div key={copy} aria-hidden={copy > 0} className="flex w-max">
+            {data.badges.map((b, i) => (
+              <div key={`${b.line1}-${i}`} className="pr-[18px]">
+                <BadgeCard badge={b} />
+              </div>
+            ))}
+          </div>
+        ))}
+      </TrustStrip>
 
       {/* ---- headline trust facts ------------------------------------------ */}
-      <div className="mx-auto mt-8 grid w-full max-w-[980px] gap-5 pt-3 md:grid-cols-3">
+      <div className="mt-8 grid w-full gap-5 pt-3 md:grid-cols-3">
         {data.tiles.map((t) => {
           const crimson = t.accent === 'crimson';
           const glyph = t.icon ? TILE_GLYPH[t.icon] : undefined;
@@ -162,7 +157,7 @@ export default function Trust({ data, ground }: { data: TrustSection; ground?: G
               // 28 is the frame's card padding. Between md and lg the three-up
               // row is only ~216 wide, so 28+28 leaves the 16px title 158px to
               // sit in; 24 until lg buys it back. Unchanged from lg up.
-              className="flex flex-col items-center gap-1.5 rounded-sm border border-mine/10 bg-white p-6 text-center shadow-tst-soft lg:p-7"
+              className="flex flex-col items-start gap-1.5 rounded-sm border border-mine/10 bg-white p-6 text-left shadow-tst-soft lg:p-7"
             >
               {t.statHtml ? (
                 <span

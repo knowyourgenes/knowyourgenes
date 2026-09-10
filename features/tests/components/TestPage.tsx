@@ -5,6 +5,7 @@ import RevealRoot from './RevealRoot';
 import ScrollProgress from './ScrollProgress';
 import Aspiration from './sections/Aspiration';
 import BodyMap from './sections/BodyMap';
+import BuyPdp from './sections/BuyPdp';
 import Contrast from './sections/Contrast';
 import Counsellor from './sections/Counsellor';
 import Disclaimer from './sections/Disclaimer';
@@ -37,8 +38,9 @@ import Worth from './sections/Worth';
  * cannot drift apart silently.
  *
  * This component stays a server component. Only the four sections that need
- * browser state (Nav, BodyMap, RiskCards, Faqs) and the reveal wrapper are
- * `'use client'`, so the bulk of this very long page ships as zero JS.
+ * browser state (Nav, BodyMap, RiskCards, Faqs, and the buy surface's gallery
+ * and accordions) and the reveal wrapper are `'use client'`, so the bulk of
+ * this very long page ships as zero JS.
  */
 function renderSection(
   section: Section & { ground?: TestPage['sections'][number]['ground'] },
@@ -52,6 +54,8 @@ function renderSection(
   switch (section.type) {
     case 'nav':
       return <Nav key={key} data={section} />;
+    case 'buyPdp':
+      return <BuyPdp key={key} data={section} ground={ground} pricing={product.pricing} />;
     case 'hero':
       return <Hero key={key} data={section} />;
     case 'whoFor':

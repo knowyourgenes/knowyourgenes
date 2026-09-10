@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { BodyMapSection, Ground, HotspotGeom, PanelKey } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
-import { Heading, Section } from '../ui';
+import { HeadRow, Section } from '../ui';
 
 // =============================================================================
 // BODY MAP - frame 'BODY MAP' @ 1440 × 935, pad 88/80.
@@ -117,36 +117,26 @@ export default function BodyMap({ data, ground }: { data: BodyMapSection; ground
       innerClassName="py-[clamp(56px,6.2vw,88px)]"
     >
       {/* ---- head - 680 rail, 14px gaps ------------------------------------ */}
-      <div className="mx-auto flex max-w-[680px] flex-col items-center gap-[14px] text-center">
-        {eyebrow ? (
-          // pill: r999, #c73c70@10 ground, 1px #c73c70@24, 0 6 18 rgba(199,60,112,.1)
-          <span className="inline-flex min-h-[47px] items-center gap-[10px] rounded-sm border border-crimson/24 bg-crimson/10 pb-[11px] pl-[17px] pr-[22px] pt-[10px] shadow-tst-crimson">
-            {/* The glyph is 22x26, so forcing it square squashed it ~15%. Render
-                it at its true ratio and pull the overhang back to the frame's
-                22px msym slot. `min-h-47` pins the frame's height (1 + 10 + 24 +
-                11 + 1) because the 23.2px line box is 0.8 short of the 24 content
-                row; below `lg` the label wraps and the pill grows past it. */}
-            <FigmaIcon id="4199-529" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
-            <span className="font-kyg text-[15.5px] font-extrabold leading-[23.2px] tracking-[0.08em] text-crimson-deep">
-              {eyebrow.label}
+      <HeadRow
+        eyebrow={
+          eyebrow ? (
+            // pill: r6, #c73c70@10 ground, 1px #c73c70@24, 0 6 18 rgba(199,60,112,.1)
+            <span className="inline-flex min-h-[47px] items-center gap-[10px] rounded-sm border border-crimson/24 bg-crimson/10 pb-[11px] pl-[17px] pr-[22px] pt-[10px] shadow-tst-crimson">
+              {/* The glyph is 22x26, so forcing it square squashed it ~15%. Render
+                  it at its true ratio and pull the overhang back to the frame's
+                  22px msym slot. `min-h-47` pins the frame's height (1 + 10 + 24 +
+                  11 + 1) because the 23.2px line box is 0.8 short of the 24 row. */}
+              <FigmaIcon id="4199-529" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
+              <span className="font-kyg text-[15.5px] font-extrabold leading-[23.2px] tracking-[0.08em] text-crimson-deep">
+                {eyebrow.label}
+              </span>
             </span>
-          </span>
-        ) : null}
-
-        {/* Figtree 700 51/55 ls -0.02em - the shared Heading's leading-[1.08] is
-            already the frame's ramp, so this only sets the 680 measure. (The h2
-            box reads 116 in the frame; that is Figma's font-box overshoot on the
-            last line, which the CSS line-box model does not reproduce.) */}
-        <Heading html={data.head.titleHtml} className={cn('max-w-[680px]', EM_WRAP)} />
-
-        {/* Figtree 400 18.5/27.8 #5b564e - half a pixel under the shared Lead, so it is local */}
-        {data.head.leadHtml ? (
-          <p
-            className="max-w-[680px] font-kyg text-[clamp(15px,1.3vw,18.5px)] font-normal leading-[1.503] text-fusc"
-            dangerouslySetInnerHTML={{ __html: data.head.leadHtml }}
-          />
-        ) : null}
-      </div>
+          ) : null
+        }
+        titleHtml={data.head.titleHtml}
+        leadHtml={data.head.leadHtml}
+        headingClassName={EM_WRAP}
+      />
 
       {/* ---- diagram - 1216 row, 720 × 492 box centred, gap 48 -------------- */}
       <div className="mt-[clamp(32px,3.4vw,48px)] hidden items-center justify-center lg:flex">

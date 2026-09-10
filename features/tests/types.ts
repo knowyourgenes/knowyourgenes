@@ -55,6 +55,13 @@ export type Ground = 'cream' | 'ivory' | 'sage' | 'sand' | 'ink';
 /** Named icon key - resolved by `features/tests/components/icons.tsx`. */
 export type IconKey = string;
 
+/**
+ * A glyph in `public/tests/womens-health/pdp/` - the basename, no extension.
+ * These are the buy surface's own vectors, exported from the Figma frame with
+ * their fills baked in, so they render as <img> rather than as a tinted mask.
+ */
+export type PdpGlyph = string;
+
 // ---------------------------------------------------------------------------
 // Shared leaf shapes
 // ---------------------------------------------------------------------------
@@ -103,6 +110,53 @@ export interface NavSection {
   brandHref: string;
   links: { label: string; href: string }[];
   cta: Cta;
+}
+
+/**
+ * The buy surface - Figma `01 · Buy · PDP`.
+ *
+ * This is the test page's own product-detail block: gallery on the left, buy
+ * box on the right, and it hands off to the kit page with this report already
+ * ticked (see features/tests/kit-link.ts, which rewrites `buyHref`).
+ *
+ * NO PRICE LIVES HERE. The number comes from the live Package row the route
+ * already loads for the kit section, so the hero and the kit panel can never
+ * quote two different figures.
+ */
+export interface BuyPdpSection {
+  type: 'buyPdp';
+  breadcrumb: { label: string; href?: string }[];
+  gallery: {
+    /** "MOST POPULAR" flag, top-left of the image slot. */
+    badge?: string;
+    /** Slides, in order. The first is the one the page opens on. */
+    slides: (Img & { fit?: 'cover' | 'contain' })[];
+    /** Floating results card over the lower-left of the image. */
+    insights: {
+      title: string;
+      rows: { glyph: PdpGlyph; label: string; value: string; tone: RiskTone }[];
+    };
+    /** Two lines set over the bottom-right of the image. */
+    overlay: string[];
+    /** Trailing thumbnail that opens a clip rather than a still. */
+    video?: { label: string };
+  };
+  pills: { glyph: PdpGlyph; label: string }[];
+  title: string;
+  rating: { value: number; count: number; href: string };
+  /** Under the price, e.g. "Inclusive of all taxes". */
+  taxNote: string;
+  blurb: string;
+  /** Four tiles under the blurb. `tile` is the glyph file's basename. */
+  features: { tile: PdpGlyph; lines: string[] }[];
+  cta: { addToCart: string; buyNow: string; href: string };
+  assurances: { glyph: PdpGlyph; lines: string[] }[];
+  included: {
+    title: string;
+    items: { name: string; genes: string; question: string; answer: string }[];
+  };
+  /** Collapsed rows under WHAT'S INCLUDED. */
+  specs: { title: string; body: string }[];
 }
 
 export interface HeroSection {
@@ -368,6 +422,14 @@ export interface TestimonialSection {
   type: 'testimonial';
   quoteHtml: Html;
   bodyHtml: Html;
+  /**
+   * Who said it. Rendered only when present, and DELIBERATELY absent from
+   * Women's Health: the copy there is written in the second person ("you may
+   * have blamed yourself"), so it is brand voice, not a customer's. Fill this
+   * in only with a real, consented quote - a name invented to fill the slot is
+   * a fabricated review.
+   */
+  attribution?: { name: string; detail?: string };
   closingHtml: Html;
   cta?: Cta;
 }
@@ -458,6 +520,7 @@ export interface FooterSection {
 /** Every section variant. Add a new page layout by adding a member here. */
 export type Section =
   | NavSection
+  | BuyPdpSection
   | HeroSection
   | WhoForSection
   | AspirationSection

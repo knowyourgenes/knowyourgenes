@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import type { Ground, StepsSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
 import { Icon } from '../icons';
-import { Cta, Heading, Section } from '../ui';
+import { ClosingRow, Cta, HeadRow, Section } from '../ui';
 
 // =============================================================================
 // HOW IT WORKS - 1440 frame, section y 13269, height 912.
@@ -36,27 +36,21 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
   return (
     <Section ground={ground ?? 'ivory'} id="how-it-works-steps" className="border-y border-mine/10">
       {/* ---- head: 680 column, 14px gaps ---------------------------------- */}
-      <div className="mx-auto flex max-w-[680px] flex-col items-center gap-3.5 text-center">
-        {eyebrow ? (
-          <span className="inline-flex items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
-            {/* 22x22 slot; the glyph itself is 22x26 and overhangs by 2px, as in the frame */}
-            <FigmaIcon id="13372-642" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
-            <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-eden">
-              {eyebrow.label}
+      <HeadRow
+        eyebrow={
+          eyebrow ? (
+            <span className="inline-flex items-center gap-2.5 rounded-sm border border-eden/15 bg-eden/[0.07] py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+              {/* 22x22 slot; the glyph itself is 22x26 and overhangs by 2px, as in the frame */}
+              <FigmaIcon id="13372-642" className="-my-0.5 block h-[26px] w-[22px] shrink-0" />
+              <span className="font-kyg text-[14px] font-extrabold uppercase leading-[21px] tracking-[0.08em] text-eden">
+                {eyebrow.label}
+              </span>
             </span>
-          </span>
-        ) : null}
-
-        {/* Figtree 700 51/55 ls -0.02em #222222; the serif run is .tst-em-teal. */}
-        <Heading html={titleHtml} />
-
-        {leadHtml ? (
-          <p
-            className="font-kyg text-[clamp(15px,1.25vw,18px)] leading-[1.5] text-fusc"
-            dangerouslySetInnerHTML={{ __html: leadHtml }}
-          />
-        ) : null}
-      </div>
+          ) : null
+        }
+        titleHtml={titleHtml}
+        leadHtml={leadHtml}
+      />
 
       {/* ---- the five cards -----------------------------------------------
           The frame's row of five only works once each card can hold the 169px
@@ -118,15 +112,18 @@ export default function Steps({ data, ground }: { data: StepsSection; ground?: G
 
       {/* ---- closing CTA --------------------------------------------------- */}
       {data.cta ? (
-        <div className="mt-[clamp(28px,3.4vw,48px)] flex flex-col items-center text-center">
-          <Cta data={data.cta} className="text-[18px] leading-[27px] tracking-[0.004em]" />
-          {data.ctaNoteHtml ? (
-            <p
-              className="mt-4 font-kyg text-[16px] leading-6 text-fusc"
-              dangerouslySetInnerHTML={{ __html: data.ctaNoteHtml }}
-            />
-          ) : null}
-        </div>
+        <ClosingRow
+          className="mt-[clamp(28px,3.4vw,48px)]"
+          note={
+            data.ctaNoteHtml ? (
+              <p
+                className="font-kyg text-[16px] leading-6 text-fusc"
+                dangerouslySetInnerHTML={{ __html: data.ctaNoteHtml }}
+              />
+            ) : null
+          }
+          cta={<Cta data={data.cta} className="text-[18px] leading-[27px] tracking-[0.004em]" />}
+        />
       ) : null}
     </Section>
   );

@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import type { Ground, PanelKey, RiskCardsSection } from '../../types';
 import { FigmaIcon } from '../FigmaIcon';
 import { Icon } from '../icons';
-import { Body, Heading, Lead, Media, ResultBar, Section, TONE_TEXT } from '../ui';
+import { Body, ClosingRow, HeadRow, Media, ResultBar, Section, TONE_TEXT } from '../ui';
 
 // =============================================================================
 // Figma: "THE 5 TESTS" - inner rail 1280 @ x=80, pad 0/32 -> 1216 content,
@@ -171,35 +171,29 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
 
   return (
     <Section ground={ground ?? 'cream'} id="what-we-check">
-      <div className="flex flex-col items-center gap-[clamp(28px,2.78vw,40px)]">
+      <div className="flex flex-col items-start gap-[clamp(28px,2.78vw,40px)]">
         {/* ---- head: 720 wide, gap 14 -------------------------------------- */}
-        <div className="flex w-full max-w-[720px] flex-col items-center gap-[14px] text-center">
-          {eyebrow ? (
-            <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
-              <Glyph id="5137-634" box="size-[22px]" w="w-[22px]" h="h-[26px]" />
-              <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-crimson-deep">
-                {eyebrow.label}
+        {/* The <em> stays block + w-fit so .tst-em-teal sizes its 5-stop ramp to
+            the glyph run rather than to the column, but it is now flush LEFT -
+            the frame sets the head as two columns, not a centred stack. */}
+        <HeadRow
+          eyebrow={
+            eyebrow ? (
+              <span className="inline-flex items-center gap-2.5 rounded-sm border border-crimson/24 bg-crimson/10 py-[11px] pl-[17px] pr-[22px] shadow-tst-crimson">
+                <Glyph id="5137-634" box="size-[22px]" w="w-[22px]" h="h-[26px]" />
+                <span className="font-kyg text-[14px] font-extrabold leading-[21px] tracking-[0.08em] text-crimson-deep">
+                  {eyebrow.label}
+                </span>
               </span>
-            </span>
-          ) : null}
+            ) : null
+          }
+          titleHtml={data.head.titleHtml}
+          leadHtml={data.head.leadHtml}
+          headingClassName="pt-0.5"
+        />
 
-          {/* h2 frame: 2 of top pad, the two runs 1 apart -> 2 + 55 + 1 + 55 = 113.
-           *  The <em> is forced block for that 1px gap, so it must also be w-fit +
-           *  mx-auto: .tst-em-teal paints its 5-stop gradient across the element's
-           *  own box, and a full-width block would size the ramp to 720 and clip
-           *  the #0e4d4b ends off the 328-wide glyph run. */}
-          <Heading
-            html={data.head.titleHtml}
-            className="w-full pt-0.5 [&>em]:mx-auto [&>em]:mt-px [&>em]:block [&>em]:w-fit"
-          />
-
-          {data.head.leadHtml ? (
-            <Lead html={data.head.leadHtml} className="w-full text-[clamp(15px,1.29vw,18.5px)] leading-[1.5027]" />
-          ) : null}
-        </div>
-
-        {/* ---- filter pills: gap 10, centred ------------------------------- */}
-        <div className="flex w-full flex-wrap items-center justify-center gap-2.5">
+        {/* ---- filter pills: gap 10, flush left (frame x=28.4) ------------- */}
+        <div className="flex w-full flex-wrap items-center justify-start gap-2.5">
           <button
             type="button"
             onClick={() => setFilter('all')}
@@ -360,33 +354,37 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
           })}
         </div>
 
-        {/* ---- CTA: pad-top 8, gap 8 --------------------------------------- */}
+        {/* ---- closing row: note flush left, CTA flush right ----------------
+         *  The shared <Cta/> is the 60-tall button (pad 16/34/18/34, label
+         *  16/24); this frame's is the big one - h69, pad 20/44, label 18/27
+         *  - so it is spelt out here with the same tokens and the frame's own
+         *  arrow glyph. */}
         {data.cta ? (
-          <div className="flex w-full flex-col items-center gap-2 pt-2">
-            {/* The shared <Cta/> is the 60-tall button (pad 16/34/18/34, label
-             *  16/24); this frame's is the big one - h69, pad 20/44, label 18/27
-             *  - so it is spelt out here with the same tokens and the frame's own
-             *  arrow glyph. */}
-            <Link
-              href={data.cta.href}
-              className={cn(
-                BTN,
-                'group border border-eden bg-eden px-[44px] font-kyg text-[18px] font-extrabold leading-[27px] tracking-[0.07px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java'
-              )}
-            >
-              {data.cta.label}
-              <span className="flex size-5 shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5">
-                <FigmaIcon id="6730-778" className="h-6 w-5 max-w-none" />
-              </span>
-            </Link>
-
-            {data.ctaNoteHtml ? (
-              <p
-                className="pb-px pt-[13px] text-center font-kyg text-[16px] leading-[21.8px] text-fusc"
-                dangerouslySetInnerHTML={{ __html: data.ctaNoteHtml }}
-              />
-            ) : null}
-          </div>
+          <ClosingRow
+            className="pt-2"
+            note={
+              data.ctaNoteHtml ? (
+                <p
+                  className="font-kyg text-[16px] leading-[21.8px] text-fusc"
+                  dangerouslySetInnerHTML={{ __html: data.ctaNoteHtml }}
+                />
+              ) : null
+            }
+            cta={
+              <Link
+                href={data.cta.href}
+                className={cn(
+                  BTN,
+                  'group border border-eden bg-eden px-[44px] font-kyg text-[18px] font-extrabold leading-[27px] tracking-[0.07px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java'
+                )}
+              >
+                {data.cta.label}
+                <span className="flex size-5 shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5">
+                  <FigmaIcon id="6730-778" className="h-6 w-5 max-w-none" />
+                </span>
+              </Link>
+            }
+          />
         ) : null}
       </div>
     </Section>
