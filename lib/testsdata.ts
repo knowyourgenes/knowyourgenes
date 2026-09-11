@@ -18,7 +18,9 @@
 // is registered in TEST_PAGES at the bottom.
 // =============================================================================
 
+import { withBuyStructure, type ListingFacts } from '@/features/tests/structure';
 import type { TestPage } from '@/features/tests/types';
+import { CATEGORIES } from '@/lib/categoriesdata';
 import { ancestry } from '@/lib/tests/ancestry';
 import { eyeHealth } from '@/lib/tests/eye-health';
 import { immunityHealth } from '@/lib/tests/immunity-health';
@@ -104,8 +106,7 @@ export const womensHealth: TestPage = {
       title: "Women's Health Genetic Test",
       rating: { value: 5, count: 5, href: '#reviews' },
       taxNote: 'Inclusive of all taxes',
-      blurb:
-        'A simple saliva test to understand your genetic risk for PCOS, pregnancy loss, mood, bones and joints.',
+      blurb: 'A simple saliva test to understand your genetic risk for PCOS, pregnancy loss, mood, bones and joints.',
       features: [
         { tile: 'tile0', lines: ['5 reports'] },
         { tile: 'tile1', lines: ['At-home kit'] },
@@ -173,7 +174,7 @@ export const womensHealth: TestPage = {
     },
 
     // ----------------------------------------------------- what we check ----
-{
+    {
       type: 'riskCards',
       ground: 'cream',
       head: {
@@ -249,7 +250,7 @@ export const womensHealth: TestPage = {
     },
 
     // ------------------------------------------------ inside your report ----
-{
+    {
       type: 'bodyMap',
       ground: 'sage',
       head: {
@@ -318,13 +319,12 @@ export const womensHealth: TestPage = {
     },
 
     // ----------------------------------------- who should take this test ----
-{
+    {
       type: 'whoFor',
       ground: 'sage',
       head: {
         eyebrow: { label: 'Who should take this test', icon: 'users' },
-        titleHtml:
-          'This test is for every woman. <em class="tst-em">But it might be for you most of all.</em>',
+        titleHtml: 'This test is for every woman. <em class="tst-em">But it might be for you most of all.</em>',
       },
       image: {
         src: `${IMG}/whofor-pregnant.jpg`,
@@ -390,7 +390,7 @@ export const womensHealth: TestPage = {
     },
 
     // ------------------------------------------------------- the numbers ----
-{
+    {
       type: 'stats',
       ground: 'ink',
       head: {
@@ -434,7 +434,7 @@ export const womensHealth: TestPage = {
     },
 
     // -------------------------------------------- how gene testing works ----
-{
+    {
       type: 'explainer',
       ground: 'ivory',
       head: {
@@ -459,7 +459,7 @@ export const womensHealth: TestPage = {
     },
 
     // ------------------------------------------------------- your report ----
-{
+    {
       type: 'reportPreview',
       ground: 'sage',
       head: {
@@ -488,7 +488,7 @@ export const womensHealth: TestPage = {
     },
 
     // ------------------------------------------------------ how it works ----
-{
+    {
       type: 'steps',
       ground: 'ivory',
       head: {
@@ -508,7 +508,7 @@ export const womensHealth: TestPage = {
     },
 
     // ----------------------------------------------------------- the kit ----
-{
+    {
       type: 'kit',
       ground: 'ivory',
       head: {
@@ -540,7 +540,7 @@ export const womensHealth: TestPage = {
     },
 
     // ------------------------------------------------------ geneous care ----
-{
+    {
       type: 'counsellor',
       ground: 'cream',
       head: {
@@ -571,7 +571,7 @@ export const womensHealth: TestPage = {
     },
 
     // --------------------------------------------- certified and trusted ----
-{
+    {
       type: 'trust',
       ground: 'sand',
       head: {
@@ -608,7 +608,7 @@ export const womensHealth: TestPage = {
     },
 
     // ------------------------------------------------------- testimonial ----
-{
+    {
       type: 'testimonial',
       ground: 'cream',
       quoteHtml: 'Finally&hellip; my <em class="tst-em-teal">dream body</em> doesn\'t feel impossible anymore.',
@@ -620,7 +620,7 @@ export const womensHealth: TestPage = {
     },
 
     // -------------------------------------------------------------- faqs ----
-{
+    {
       type: 'faqs',
       ground: 'cream',
       head: {
@@ -656,7 +656,7 @@ export const womensHealth: TestPage = {
     },
 
     // --------------------------------------------------------- final cta ----
-{
+    {
       type: 'finalCta',
       ground: 'ink',
       eyebrow: { label: 'Know now, not later', icon: 'zap', accent: 'teal' },
@@ -667,18 +667,33 @@ export const womensHealth: TestPage = {
     },
 
     // -------------------------------------------------------- disclaimer ----
-{
+    {
       type: 'disclaimer',
       bodyHtml:
         'This is general educational information, not medical advice. Talk to a doctor about your own case. If you are struggling with your mental health, please reach out to a doctor or someone you trust.',
     },
-
   ],
 };
 
+/** The category card's facts for a test - its name, count chip, vetted photo
+ *  and tone tile - which the derived buy surface takes rather than re-deciding. */
+function listingFor(slug: string): ListingFacts | undefined {
+  for (const category of CATEGORIES) {
+    const p = category.products.find((x) => x.slug === slug);
+    if (p) return { name: p.name, meta: p.meta, image: p.image, icon: p.icon, tone: p.tone };
+  }
+  return undefined;
+}
+
 /** All test pages served by the /categories/[category_slug]/[test_slug] route.
  *  Order here is the order they prerender in; it does not affect the listing,
- *  which is driven by lib/categoriesdata.ts. */
+ *  which is driven by lib/categoriesdata.ts.
+ *
+ *  EVERY PAGE GOES THROUGH `withBuyStructure` - that is what makes the buy
+ *  frame the default rather than a Women's Health special case. A page file
+ *  lists what it contains; the order, the buy surface at the top and the
+ *  retirement of the old editorial blocks all happen here, so a tenth test
+ *  added to this list is born with the same layout as the other nine. */
 export const TEST_PAGES: TestPage[] = [
   womensHealth,
   mensHealth,
@@ -689,7 +704,7 @@ export const TEST_PAGES: TestPage[] = [
   kidneyHealth,
   ancestry,
   sleep,
-];
+].map((page) => withBuyStructure(page, listingFor(page.slug)));
 
 export function getTestPage(slug: string): TestPage | undefined {
   return TEST_PAGES.find((t) => t.slug === slug);

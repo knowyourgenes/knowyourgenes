@@ -10,7 +10,7 @@
 // which is a legitimate state - callers are expected to fall back.
 // =============================================================================
 
-import type { FaqsSection, HeroSection, Img, Section, TestPage } from './types';
+import type { BuyPdpSection, FaqsSection, HeroSection, Img, Section, TestPage } from './types';
 
 /** First section of a given `type`, or undefined if the page has none. */
 export function findSection<T extends Section['type']>(
@@ -22,9 +22,19 @@ export function findSection<T extends Section['type']>(
     | undefined;
 }
 
-/** The page's lead image - used for cards and social previews. */
+/**
+ * The page's lead image - used for cards and social previews.
+ *
+ * Pages in TEST_PAGES have had their `hero` retired by `withBuyStructure`, so
+ * this falls back to the buy surface's first slide. That slide is only ever a
+ * vetted photograph (see structure.ts), so a test without one returns
+ * undefined here - which is correct: Men's old hero was a blood draw.
+ */
 export function getHeroImage(page: TestPage): Img | undefined {
-  return (findSection(page, 'hero') as HeroSection | undefined)?.image;
+  return (
+    (findSection(page, 'hero') as HeroSection | undefined)?.image ??
+    (findSection(page, 'buyPdp') as BuyPdpSection | undefined)?.gallery.slides[0]
+  );
 }
 
 /** FAQ pairs, for llms.txt and FAQPage structured data. */

@@ -22,6 +22,11 @@ export const skinHealth: TestPage = {
       'Ten skin conditions, six food sensitivities and four nutrients - twenty genetic markers from a single at-home saliva kit. Oxidative stress, glycation, collagen, acne, sun and pollution, graded and explained.',
   },
 
+  // The first three risk-card images are real photographs (not the
+  // 136-byte stubs some pages still carry), so the buy surface's
+  // gallery may use them - see `buy` on TestPage.
+  buy: { galleryFromRiskCards: 3 },
+
   sections: [
     // --------------------------------------------------------------- hero ----
     {
