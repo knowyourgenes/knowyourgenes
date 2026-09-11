@@ -112,16 +112,20 @@ export default function BuyPdp({
             {data.title}
           </h1>
 
-          <div className="mt-[12.7px] flex flex-wrap items-center gap-[9.8px]">
-            <Stars count={5} className="text-[18px]" />
-            <b className="font-kyg text-[16px] font-bold text-heavy">{data.rating.value.toFixed(2)}</b>
-            <Link
-              href={data.rating.href}
-              className="font-kyg text-[16px] font-medium text-eden underline underline-offset-2"
-            >
-              ({data.rating.count} reviews)
-            </Link>
-          </div>
+          {/* Only where a page carries real reviews - the derived pages do not,
+              and a star row with nothing behind it is a claim, not decoration. */}
+          {data.rating ? (
+            <div className="mt-[12.7px] flex flex-wrap items-center gap-[9.8px]">
+              <Stars count={5} className="text-[18px]" />
+              <b className="font-kyg text-[16px] font-bold text-heavy">{data.rating.value.toFixed(2)}</b>
+              <Link
+                href={data.rating.href}
+                className="font-kyg text-[16px] font-medium text-eden underline underline-offset-2"
+              >
+                ({data.rating.count} reviews)
+              </Link>
+            </div>
+          ) : null}
 
           {pricing && (
             <div className="mt-[22.5px] flex flex-wrap items-center gap-[15.5px]">
@@ -213,9 +217,12 @@ export default function BuyPdp({
 
           {/* ---------------- accordions ---------------- */}
           <div className="mt-[12px]">
+            {/* Open by default only while it is short. Immunity has eleven risk
+                cards and Skin ten; opened, that is a buy box three screens long
+                with the CTAs already scrolled away. Collapsed, it is one row. */}
             <Accordion
               title={data.included.title}
-              defaultOpen
+              defaultOpen={data.included.items.length <= 6}
               toggle="chevron"
               titleClassName="text-[13.5px] tracking-[0.06em]"
             >
@@ -224,13 +231,18 @@ export default function BuyPdp({
                   <div key={it.name} className="rounded-sm border border-heavy/10 bg-white px-[16px] py-[14px]">
                     <div className="mb-[3.9px] flex items-center justify-between gap-[12px]">
                       <span className="font-kyg text-[14.5px] font-extrabold text-heavy">{it.name}</span>
-                      <span className="shrink-0 rounded-sm border border-sea/[0.28] bg-gin px-[10px] py-[3px] font-kyg text-[11px] font-bold leading-none text-greenpea">
-                        {it.genes}
-                      </span>
+                      {it.genes ? (
+                        <span className="shrink-0 rounded-sm border border-sea/[0.28] bg-gin px-[10px] py-[3px] font-kyg text-[11px] font-bold leading-none text-greenpea">
+                          {it.genes}
+                        </span>
+                      ) : null}
                     </div>
-                    <p className="font-kyg text-[12.9px] leading-[20.7px] text-fusc">
-                      <span className="font-semibold text-heavy">{it.question}</span> {it.answer}
-                    </p>
+                    {it.question || it.answer ? (
+                      <p className="font-kyg text-[12.9px] leading-[20.7px] text-fusc">
+                        {it.question ? <span className="font-semibold text-heavy">{it.question} </span> : null}
+                        {it.answer}
+                      </p>
+                    ) : null}
                   </div>
                 ))}
               </div>

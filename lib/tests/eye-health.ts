@@ -34,6 +34,11 @@ export const eyeHealth: TestPage = {
       'Glaucoma, diabetic retinopathy, cataract, myopia, eye pressure, macular degeneration and retinal occlusion - seven genetic findings from a single at-home saliva kit. NABL-accredited lab, results in 3 weeks.',
   },
 
+  // The first three risk-card images are real photographs (not the
+  // 136-byte stubs some pages still carry), so the buy surface's
+  // gallery may use them - see `buy` on TestPage.
+  buy: { galleryFromRiskCards: 3 },
+
   sections: [
     // --------------------------------------------------------------- hero ----
     {

@@ -20,6 +20,11 @@ export const kidneyHealth: TestPage = {
       'Uric acid, polycystic kidney disease, magnesium retention, chronic kidney disease, nephrotic syndrome, membranous nephropathy and kidney stones - twelve genetic markers from a single at-home saliva kit.',
   },
 
+  // The first three risk-card images are real photographs (not the
+  // 136-byte stubs some pages still carry), so the buy surface's
+  // gallery may use them - see `buy` on TestPage.
+  buy: { galleryFromRiskCards: 3 },
+
   sections: [
     // --------------------------------------------------------------- hero ----
     {

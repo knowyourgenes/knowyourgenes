@@ -375,7 +375,12 @@ export default function RiskCards({ data, ground }: { data: RiskCardsSection; gr
                 href={data.cta.href}
                 className={cn(
                   BTN,
-                  'group border border-eden bg-eden px-[44px] font-kyg text-[18px] font-extrabold leading-[27px] tracking-[0.07px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java'
+                  // 44px of side padding and 18px type suit "Check My Risk". The derived
+                  // pages carry longer labels ("Get My Wellness Report", "Take The Real
+                  // Eye Test") that ran 321px wide in a 280px column at 320. Below sm the
+                  // padding and size step down, as Stats' CTA already does; and a label
+                  // that STILL cannot fit may wrap - min-h keeps the 44px floor.
+                  'group h-auto min-h-[44px] whitespace-normal border border-eden bg-eden px-[20px] py-[9px] font-kyg text-[16px] font-extrabold leading-[22px] tracking-[0.07px] text-white shadow-tst-cta transition duration-200 hover:-translate-y-px hover:bg-eden2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-java sm:h-[44px] sm:whitespace-nowrap sm:px-[44px] sm:py-0 sm:text-[18px] sm:leading-[27px]'
                 )}
               >
                 {data.cta.label}

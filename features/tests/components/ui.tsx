@@ -148,7 +148,10 @@ export function ClosingRow({
       )}
     >
       <div className="min-w-0">{note}</div>
-      {cta ? <div className="shrink-0">{cta}</div> : null}
+      {/* max-w-full: stacked below sm, the row is items-start, so a child is
+          sized to its content - and a long CTA label then walks straight out of
+          the column. Capping the wrapper hands the button a real width to fit. */}
+      {cta ? <div className="max-w-full shrink-0">{cta}</div> : null}
     </div>
   );
 }

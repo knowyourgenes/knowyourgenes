@@ -19,6 +19,10 @@
 // =============================================================================
 
 /** A string that may contain trusted inline HTML. Authored in `lib/testsdata.ts` only. */
+
+// The buy surface borrows the category card's no-photo tile, so it takes its
+// tone type from the same place rather than redeclaring it.
+import type { CardTone } from '@/lib/categoriesdata';
 export type Html = string;
 
 /**
@@ -129,12 +133,18 @@ export interface BuyPdpSection {
   gallery: {
     /** "MOST POPULAR" flag, top-left of the image slot. */
     badge?: string;
-    /** Slides, in order. The first is the one the page opens on. */
+    /**
+     * Slides, in order. The first is the one the page opens on. MAY BE EMPTY:
+     * a test with no real photograph shows `fallback` instead of a blank box.
+     */
     slides: (Img & { fit?: 'cover' | 'contain' })[];
+    /** The card tile's icon + tone, drawn when `slides` is empty. */
+    fallback?: { icon: IconKey; tone: CardTone };
     /** Floating results card over the lower-left of the image. */
     insights: {
       title: string;
-      rows: { glyph: PdpGlyph; label: string; value: string; tone: RiskTone }[];
+      /** `glyph` only where the design drew one - Women's Health's five. */
+      rows: { glyph?: PdpGlyph; label: string; value: string; tone: RiskTone }[];
     };
     /** Two lines set over the bottom-right of the image. */
     overlay: string[];
@@ -143,7 +153,12 @@ export interface BuyPdpSection {
   };
   pills: { glyph: PdpGlyph; label: string }[];
   title: string;
-  rating: { value: number; count: number; href: string };
+  /**
+   * OPTIONAL, and absent on every derived page. A star rating and a review count
+   * are claims about real customers; a page with no reviews behind it must not
+   * print one, and the default structure never invents it.
+   */
+  rating?: { value: number; count: number; href: string };
   /** Under the price, e.g. "Inclusive of all taxes". */
   taxNote: string;
   blurb: string;
@@ -559,6 +574,20 @@ export interface TestPage {
   slug: string;
   categorySlug: string;
   seo: { title: string; description: string };
-  /** Rendered in order. This IS the page layout. */
+  /**
+   * The page's sections, in any order. `withBuyStructure` (features/tests/
+   * structure.ts) is what turns them into the page: it retires the editorial
+   * blocks, derives the buy surface when there is none, and sorts the rest into
+   * the one canonical order. Every page in TEST_PAGES goes through it.
+   */
   sections: (Section & SectionEntry)[];
+  /**
+   * Opt-ins for the derived buy surface. The one that matters is the gallery:
+   * five of the nine tests still ship 136-byte placeholder stubs under
+   * public/tests/<slug>/, and a stub renders as a blank box, so section artwork
+   * only goes into the gallery when the page ASSERTS it is real by naming how
+   * many of its risk cards to take. Default: none - the gallery is just the
+   * listing's vetted photo, or its tone tile.
+   */
+  buy?: { galleryFromRiskCards?: number };
 }

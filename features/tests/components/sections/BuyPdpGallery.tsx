@@ -56,6 +56,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { BuyPdpSection } from '../../types';
+import { CardArt } from '../CategoryCardArt';
 import { PdpIcon } from '../FigmaIcon';
 
 /**
@@ -89,7 +90,7 @@ export default function BuyPdpGallery({ gallery, title }: { gallery: BuyPdpSecti
     <div className="@container flex flex-col gap-[clamp(14px,4.07cqw,31px)] lg:sticky lg:top-[81px] lg:max-w-[calc((100svh-97px)/1.05)] lg:self-start">
       {/* ---------------- image slot ---------------- */}
       <div className="relative isolate aspect-[542/462] w-full overflow-hidden rounded-sm border border-heavy/10 bg-gin shadow-[0_4px_16px_0_rgba(20,27,26,0.06),0_18px_50px_0_rgba(20,27,26,0.08)]">
-        {slide && (
+        {slide ? (
           <Image
             key={slide.src}
             src={slide.src}
@@ -99,7 +100,25 @@ export default function BuyPdpGallery({ gallery, title }: { gallery: BuyPdpSecti
             sizes="(min-width: 1024px) 56vw, 100vw"
             className={cn(slide.fit === 'contain' ? 'object-contain' : 'object-cover', 'object-center')}
           />
-        )}
+        ) : gallery.fallback ? (
+          // No real photograph for this test yet. The category card already
+          // solves exactly this, so the buy box borrows its tile rather than
+          // inventing a second answer to the same question - the card and the
+          // page it links to then show the same mark.
+          //
+          // Wrapped, not given `absolute` directly: CardArt's root hard-codes
+          // `relative` and concatenates the caller's class rather than merging
+          // it, so an `absolute` passed in loses to it and the tile collapses to
+          // zero height. The wrapper takes the slot; the tile fills the wrapper.
+          <div className="absolute inset-0">
+            <CardArt
+              icon={gallery.fallback.icon}
+              tone={gallery.fallback.tone}
+              sizes="(min-width: 1024px) 56vw, 100vw"
+              className="h-full w-full"
+            />
+          </div>
+        ) : null}
 
         {/* wash - transparent to 62%, then down to 42% ink, so the overlay
             lines below have something to sit on without dimming the subject */}
@@ -146,44 +165,60 @@ export default function BuyPdpGallery({ gallery, title }: { gallery: BuyPdpSecti
             is room, a proportion of the slot below that. A 434px slot gets a
             269px card that still fits its labels instead of a 293px one that
             does not fit the slot. */}
-        <div className="absolute bottom-[3.2%] left-[2.3%] hidden w-[min(62%,293px)] rounded-sm bg-white/95 px-[clamp(10px,2.23cqw,17px)] pb-[clamp(4px,0.92cqw,7px)] pt-[clamp(9px,1.97cqw,15px)] shadow-[0_11px_31px_0_rgba(46,33,18,0.14)] sm:block">
-          <div className="flex items-center gap-[clamp(5px,1.05cqw,8px)]">
-            <PdpIcon name="insights" width={13.4} height={13.4} />
-            <span className="truncate font-kyg text-[clamp(9px,1.55cqw,11.8px)] font-bold uppercase leading-none tracking-[0.065em] text-boulder">
-              {gallery.insights.title}
-            </span>
+        {gallery.insights.rows.length > 0 ? (
+          <div className="absolute bottom-[3.2%] left-[2.3%] hidden w-[min(62%,293px)] rounded-sm bg-white/95 px-[clamp(10px,2.23cqw,17px)] pb-[clamp(4px,0.92cqw,7px)] pt-[clamp(9px,1.97cqw,15px)] shadow-[0_11px_31px_0_rgba(46,33,18,0.14)] sm:block">
+            <div className="flex items-center gap-[clamp(5px,1.05cqw,8px)]">
+              <PdpIcon name="insights" width={13.4} height={13.4} />
+              <span className="truncate font-kyg text-[clamp(9px,1.55cqw,11.8px)] font-bold uppercase leading-none tracking-[0.065em] text-boulder">
+                {gallery.insights.title}
+              </span>
+            </div>
+            <ul className="mt-[clamp(6px,1.31cqw,10px)] list-none">
+              {gallery.insights.rows.map((r, i) => {
+                const box = r.glyph ? (ROW_GLYPH[r.glyph] ?? [17.7, 17.7]) : null;
+                return (
+                  <li
+                    key={r.label}
+                    className={cn(
+                      'flex items-center gap-[clamp(6px,1.44cqw,11px)] py-[clamp(6px,2.23cqw,17px)]',
+                      i > 0 && 'border-t border-heavy/[0.08]'
+                    )}
+                  >
+                    {r.glyph && box ? (
+                      <PdpIcon name={r.glyph} width={box[0]} height={box[1]} className="shrink-0" />
+                    ) : null}
+                    <span className="min-w-0 flex-1 truncate font-kyg text-[clamp(10px,1.84cqw,14px)] font-medium text-heavy">
+                      {r.label}
+                    </span>
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'size-[clamp(5px,0.96cqw,7.3px)] shrink-0 rounded-full',
+                        DOT[r.tone] ?? DOT.neutral
+                      )}
+                    />
+                    <span className="shrink-0 whitespace-nowrap font-kyg text-[clamp(9.5px,1.71cqw,13px)] font-medium text-heavy">
+                      {r.value}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-          <ul className="mt-[clamp(6px,1.31cqw,10px)] list-none">
-            {gallery.insights.rows.map((r, i) => {
-              const box = ROW_GLYPH[r.glyph] ?? [17.7, 17.7];
-              return (
-                <li
-                  key={r.label}
-                  className={cn(
-                    'flex items-center gap-[clamp(6px,1.44cqw,11px)] py-[clamp(6px,2.23cqw,17px)]',
-                    i > 0 && 'border-t border-heavy/[0.08]'
-                  )}
-                >
-                  <PdpIcon name={r.glyph} width={box[0]} height={box[1]} className="shrink-0" />
-                  <span className="min-w-0 flex-1 truncate font-kyg text-[clamp(10px,1.84cqw,14px)] font-medium text-heavy">
-                    {r.label}
-                  </span>
-                  <span
-                    aria-hidden
-                    className={cn('size-[clamp(5px,0.96cqw,7.3px)] shrink-0 rounded-full', DOT[r.tone] ?? DOT.neutral)}
-                  />
-                  <span className="shrink-0 whitespace-nowrap font-kyg text-[clamp(9.5px,1.71cqw,13px)] font-medium text-heavy">
-                    {r.value}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        ) : null}
 
-        {/* Headline overlay. Only from a 620px slot: any narrower and it runs
-            into the insights card, and it is decorative. */}
-        <p className="absolute left-[44%] top-[84.2%] hidden font-kyg text-[clamp(15px,3.23cqw,24.6px)] font-medium leading-[1.46] text-white @[620px]:block">
+        {/* Headline overlay. It starts where the insights card ENDS - the same
+            `2.3% + min(62%,293px)` the card is sized by, plus a 16px gutter -
+            not at the frame's fixed 44%. Once the card became proportional,
+            a fixed 44% put the caption's first letter underneath the card on
+            any slot under ~760px ("nderstand your genes"). Only from a 620px
+            slot: below that the two cannot share a line, and it is decorative. */}
+        <p
+          className={cn(
+            'absolute top-[84.2%] hidden font-kyg text-[clamp(15px,3.23cqw,24.6px)] font-medium leading-[1.46] text-white @[620px]:block',
+            gallery.insights.rows.length > 0 ? 'left-[calc(2.3%+min(62%,293px)+16px)]' : 'left-[4%]'
+          )}
+        >
           {gallery.overlay.map((line) => (
             <span key={line} className="block whitespace-nowrap">
               {line}
@@ -192,44 +227,48 @@ export default function BuyPdpGallery({ gallery, title }: { gallery: BuyPdpSecti
         </p>
       </div>
 
-      {/* ---------------- thumbnails ---------------- */}
-      <div className="flex gap-[clamp(6px,1.76cqw,13.4px)]">
-        {slides.map((s, i) => (
-          <button
-            key={s.src}
-            type="button"
-            onClick={() => setActive(i)}
-            aria-label={`Show image ${i + 1} of ${title}`}
-            aria-current={i === active}
-            className={cn(
-              'relative h-[clamp(52px,15.49cqw,118px)] min-w-0 flex-1 overflow-hidden rounded-sm bg-gin transition-opacity',
-              i === active
-                ? 'border-2 border-eden shadow-[0_6px_18px_0_rgba(46,125,91,0.16)]'
-                : 'border border-heavy/10 opacity-65 hover:opacity-90'
-            )}
-          >
-            <Image
-              src={s.src}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 12vw, 20vw"
-              className={s.fit === 'contain' ? 'object-contain' : 'object-cover'}
-            />
-          </button>
-        ))}
+      {/* ---------------- thumbnails ----------------
+          Only when there is something to choose between. One slide and no clip
+          is a row of one thumbnail that selects the image already showing. */}
+      {slides.length + (gallery.video ? 1 : 0) > 1 ? (
+        <div className="flex gap-[clamp(6px,1.76cqw,13.4px)]">
+          {slides.map((s, i) => (
+            <button
+              key={s.src}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-label={`Show image ${i + 1} of ${title}`}
+              aria-current={i === active}
+              className={cn(
+                'relative h-[clamp(52px,15.49cqw,118px)] min-w-0 flex-1 overflow-hidden rounded-sm bg-gin transition-opacity',
+                i === active
+                  ? 'border-2 border-eden shadow-[0_6px_18px_0_rgba(46,125,91,0.16)]'
+                  : 'border border-heavy/10 opacity-65 hover:opacity-90'
+              )}
+            >
+              <Image
+                src={s.src}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 12vw, 20vw"
+                className={s.fit === 'contain' ? 'object-contain' : 'object-cover'}
+              />
+            </button>
+          ))}
 
-        {gallery.video && (
-          <span
-            className="relative grid h-[clamp(52px,15.49cqw,118px)] min-w-0 flex-1 place-items-center rounded-sm border border-heavy/10 bg-[#edeae5]"
-            title={gallery.video.label}
-          >
-            <span className="grid size-[clamp(26px,5.46cqw,41.6px)] place-items-center rounded-full bg-white/90 shadow-[0_2px_8px_0_rgba(20,27,26,0.12)]">
-              <PdpIcon name="play-tri" width={13.2} height={15.2} className="ml-[3px]" />
+          {gallery.video && (
+            <span
+              className="relative grid h-[clamp(52px,15.49cqw,118px)] min-w-0 flex-1 place-items-center rounded-sm border border-heavy/10 bg-[#edeae5]"
+              title={gallery.video.label}
+            >
+              <span className="grid size-[clamp(26px,5.46cqw,41.6px)] place-items-center rounded-full bg-white/90 shadow-[0_2px_8px_0_rgba(20,27,26,0.12)]">
+                <PdpIcon name="play-tri" width={13.2} height={15.2} className="ml-[3px]" />
+              </span>
+              <span className="sr-only">{gallery.video.label}</span>
             </span>
-            <span className="sr-only">{gallery.video.label}</span>
-          </span>
-        )}
-      </div>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }
