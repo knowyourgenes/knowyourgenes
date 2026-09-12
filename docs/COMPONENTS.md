@@ -3,7 +3,7 @@
 
 # Component inventory
 
-**174 components.** Read this before you build a new one.
+**175 components.** Read this before you build a new one.
 
 The rule this file exists to enforce: **if a component already exists, use it - do
 not build a second one on another page.** A "Button" that exists three times is
@@ -207,6 +207,7 @@ Owned by one feature. Needed by a second feature? Promote it to
 | `Hero` | [features/home/components/sections/Hero.tsx](../features/home/components/sections/Hero.tsx) | server | The hero is an inset CARD, not a full-bleed band. It sits BELOW the navbar, |
 | `HeroVideo` | [features/home/components/sections/HeroVideo.tsx](../features/home/components/sections/HeroVideo.tsx) | client | features/home/v3 - the hero's background video |
 | `HowItWorks` | [features/home/components/sections/HowItWorks.tsx](../features/home/components/sections/HowItWorks.tsx) | client | A stepper, not five columns. |
+| `IndiaMap` | [features/home/components/sections/IndiaMap.tsx](../features/home/components/sections/IndiaMap.tsx) | client | The map in "Born in India" - and what it does under a pointer |
 | `Journal` | [features/home/components/sections/Journal.tsx](../features/home/components/sections/Journal.tsx) | client | The rail is a carousel, at every width - it is never a grid that happens to |
 | `MeetGenee` | [features/home/components/sections/MeetGenee.tsx](../features/home/components/sections/MeetGenee.tsx) | server | `plate` is the shape of the character slot. |
 | `OneLifetimeCurve` | [features/home/components/sections/OneLifetimeCurve.tsx](../features/home/components/sections/OneLifetimeCurve.tsx) | client | The small-screen spine has no pane to pin, so it measures its own travel. |

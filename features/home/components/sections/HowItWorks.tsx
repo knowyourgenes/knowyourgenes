@@ -233,8 +233,16 @@ export default function HowItWorks({
                         className={cn(
                           'grid h-[46px] w-[46px] shrink-0 place-items-center rounded-sm font-kyg text-[19px] font-extrabold tabular-nums',
                           'transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+                          // The designer's note: a subtle glow IN TEAL on the
+                          // active step. A soft java halo (#25b5ab) over a thin
+                          // java ring, replacing the flat 7px eden ring - that one
+                          // read as a border, not a light. The tile itself stays
+                          // eden, so the numeral keeps its contrast.
+                          // Below md the tiles are a ladder only 10px apart, so
+                          // the halo is held to ~9px there (8px blur + 1px) - the
+                          // full 25px one washed teal over the tile above.
                           on
-                            ? 'bg-eden text-linenw shadow-[0_0_0_7px_rgba(14,77,75,0.1)]'
+                            ? 'bg-eden text-linenw shadow-[0_0_0_4px_rgba(37,181,171,0.18),0_0_8px_1px_rgba(37,181,171,0.4)] md:shadow-[0_0_0_4px_rgba(37,181,171,0.18),0_0_22px_3px_rgba(37,181,171,0.4)]'
                             : 'bg-white text-pewter ring-1 ring-inset ring-zeus/[0.14] hover:ring-eden/40'
                         )}
                       >

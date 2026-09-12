@@ -33,7 +33,7 @@ function TraitCard({
   return (
     <figure
       className={cn(
-        'w-[min(268px,72vw)] rounded-sm border border-white/70 bg-white/[0.92] p-[14px] shadow-kyg-deep backdrop-blur-[6px]',
+        'group w-[min(268px,72vw)] rounded-sm border border-white/70 bg-white/[0.92] p-[14px] shadow-kyg-deep backdrop-blur-[6px]',
         className
       )}
     >
@@ -43,11 +43,25 @@ function TraitCard({
       {/* Two segments, not a gradient: the report says which BAND you are in,
           and a gradient would imply a precision the science does not have. */}
       <div className="relative mt-[14px]">
-        <span
+        {/* The marker. An SVG, not the old CSS border triangle: a zero-size box
+            whose "arrow" is only its borders drew fine in a browser but vanished
+            when the page was captured into Figma, which is why the designer saw
+            no arrow on the Diabetes card at all.
+
+            ON HOVER it travels the scale - back to the low end, up past the
+            reading, and settles on it - so the card reads as a result being
+            placed rather than a static label. It starts AND ends on `--pos`, so
+            there is no jump when the pointer arrives or leaves. The reading
+            itself never changes: letting a pointer drag it would suggest the
+            result is adjustable, which a genetic finding is not. */}
+        <svg
           aria-hidden="true"
-          className="absolute -top-[9px] block h-0 w-0 -translate-x-1/2 border-x-[5px] border-t-[6px] border-x-transparent border-t-mine"
-          style={{ left: `${position}%` }}
-        />
+          viewBox="0 0 12 7"
+          className="absolute -top-[10px] block h-[7px] w-[12px] -translate-x-1/2 fill-mine group-hover:animate-kyg-trait-sweep motion-reduce:group-hover:animate-none"
+          style={{ left: `${position}%`, ['--pos' as string]: `${position}%` }}
+        >
+          <path d="M0 0h12L6 7z" />
+        </svg>
         <div className="flex h-[5px] w-full overflow-hidden rounded-sm">
           <span className="h-full flex-1 bg-java" />
           <span className="h-full flex-1 bg-mojo" />
@@ -109,6 +123,24 @@ export default function Hero() {
               id="hero-heading"
               className="font-kyg text-[clamp(34px,4.6vw,62px)] font-bold leading-[1.1] tracking-[-0.025em] text-white text-balance"
             >
+              {/* The brand, named in the view. The mark in the navbar is the KYG
+                  monogram only, so until now "Know Your Genes" appeared nowhere
+                  above the fold. It leads the h1 rather than sitting in its own
+                  line above it: that is the most prominent text on the page, and
+                  it puts the brand in the heading search engines read first. */}
+              {/* ice, not java. The helix in the video is java's own hue AND
+                  lightness, so java letters dissolved wherever a bright strand
+                  crossed them - measured down to 1.3:1. ice (#7fe3d6) is the same
+                  teal, lighter, so it stays the brand colour but clears the
+                  strands. The halo is for the video, not decoration: a tight
+                  3px/10px edge where the letters meet a strand, and the wide
+                  28px one to darken the ground around the whole line. */}
+              <span className="block text-ice [text-shadow:0_0_3px_rgba(4,30,28,0.85),0_0_10px_rgba(4,30,28,0.8),0_0_28px_rgba(4,30,28,0.9)]">
+                Know Your Genes.
+              </span>{' '}
+              {/* The space is for anything that reads the markup without layout
+                  (text extractors, some crawlers): without it they get
+                  "Genes.The". It collapses at the line start, so nothing moves. */}
               The answers are already in you.
             </h1>
 

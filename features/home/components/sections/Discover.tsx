@@ -60,6 +60,76 @@ const ROWS: { n: string; icon: IconName; title: string; desc: string; cta: strin
   },
 ];
 
+// -----------------------------------------------------------------------------
+// The helix behind the left column
+// -----------------------------------------------------------------------------
+// The designer's note: "A subtle DNA helix visual in the background", pinned in
+// the empty space under the sticky headline. Drawn, not a photograph: this is a
+// texture on the sand ground, and a raster helix at this opacity is a smudge.
+//
+// ONE PERIOD, TILED. Two sine strands half a turn apart with rungs between them,
+// built once here and repeated down an SVG <pattern>. A sine is periodic, so the
+// tile meets itself seamlessly and the helix runs the full height of the list
+// however many rows it grows to.
+
+const HELIX_W = 200;
+const HELIX_P = 260; // one full turn, top to bottom
+const HELIX_A = 68; // strand amplitude from the axis
+
+function strand(sign: 1 | -1): string {
+  const pts: string[] = [];
+  for (let y = 0; y <= HELIX_P; y += 4) {
+    const x = HELIX_W / 2 + sign * HELIX_A * Math.sin((2 * Math.PI * y) / HELIX_P);
+    pts.push(`${pts.length ? 'L' : 'M'}${x.toFixed(2)} ${y}`);
+  }
+  return pts.join(' ');
+}
+
+/** Rungs every twelfth of a turn - except where the strands cross, and a rung
+ *  would be a dot. */
+const RUNGS = Array.from({ length: 12 }, (_, i) => ((i + 0.5) * HELIX_P) / 12)
+  .map((y) => ({ y, dx: HELIX_A * Math.sin((2 * Math.PI * y) / HELIX_P) }))
+  .filter((r) => Math.abs(r.dx) > HELIX_A * 0.25);
+
+function DnaHelix({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" width={HELIX_W} className={className}>
+      <defs>
+        <pattern id="kyg-discover-helix" width={HELIX_W} height={HELIX_P} patternUnits="userSpaceOnUse">
+          <g fill="none" stroke="currentColor" strokeLinecap="round">
+            {RUNGS.map((r) => (
+              <line
+                key={r.y}
+                x1={HELIX_W / 2 - r.dx}
+                x2={HELIX_W / 2 + r.dx}
+                y1={r.y}
+                y2={r.y}
+                strokeWidth={1.4}
+                strokeOpacity={0.55}
+              />
+            ))}
+            <path d={strand(1)} strokeWidth={2.2} />
+            <path d={strand(-1)} strokeWidth={2.2} />
+          </g>
+        </pattern>
+        {/* Barely there behind the headline and fully there under the CTA -
+            which is where the designer pinned the note - then gone again at the
+            foot. It should read as texture, never as an edge. */}
+        <linearGradient id="kyg-discover-helix-fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.42" stopColor="#fff" stopOpacity="1" />
+          <stop offset="0.82" stopColor="#fff" stopOpacity="1" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <mask id="kyg-discover-helix-mask" maskContentUnits="objectBoundingBox">
+          <rect width="1" height="1" fill="url(#kyg-discover-helix-fade)" />
+        </mask>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#kyg-discover-helix)" mask="url(#kyg-discover-helix-mask)" />
+    </svg>
+  );
+}
+
 /**
  * Measured off the design and written as shares of the rail, the same way
  * WhyGeneticTesting is - see the note there for why fixed pixels do not
@@ -77,6 +147,9 @@ export default function Discover({ hoverTint = false }: { hoverTint?: boolean } 
       id="discover"
       ground="sand"
       labelledBy="discover-heading"
+      // `isolate` so the helix's -z-10 lands above the sand ground and below the
+      // copy, instead of slipping behind the section's own background.
+      className="isolate"
       // NO PADDING OVERRIDE. This section used to compact itself to 34px at
       // 1024 against the page's shared 61, to keep inside a "no section needs
       // scrolling" budget. The design does not agree: it draws 61.156 here like
@@ -87,7 +160,18 @@ export default function Discover({ hoverTint = false }: { hoverTint?: boolean } 
       {/* 440.89 / 484.98 of the rail with a 41.24 gutter. The left column is
           STICKY and must not stretch: `self-start` is what gives sticky slack to
           travel through. */}
-      <div className="grid gap-[clamp(28px,4.027vw,64px)] lg:grid-cols-[minmax(0,0.909fr)_minmax(0,1fr)]">
+      <div className="relative grid gap-[clamp(28px,4.027vw,64px)] lg:grid-cols-[minmax(0,0.909fr)_minmax(0,1fr)]">
+        {/* The helix. It spans the LEFT column's share of the grid (0.909 of
+            1.909) at the grid's full height - which is the list's height, the
+            taller side - so it fills the empty space under the sticky headline
+            at every scroll position without being sticky itself. Only from lg:
+            below that the columns stack and there is no empty space to fill. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 -z-10 hidden w-[47.6%] lg:block">
+          {/* Exactly one tile wide: the pattern repeats sideways as well as down,
+              so any wider and the edge of a second helix shows. */}
+          <DnaHelix className="mx-auto block h-full text-eden opacity-[0.16]" />
+        </div>
+
         <div className="flex min-w-0 flex-col gap-[clamp(13.5px,1.319vw,21px)] self-start lg:sticky lg:top-[108px]">
           {/* THIS HEADLINE IS SIZED DOWN ON PURPOSE, and it is the only one that
               is. The design sets it at 31.29px in a 440.89 column, and

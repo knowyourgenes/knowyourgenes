@@ -1,7 +1,6 @@
-import Image from 'next/image';
-
 import { cn } from '@/lib/utils';
 import { Lead, Rule, Section, SectionTitle } from '../ui';
+import { IndiaMap } from './IndiaMap';
 
 /** The four "this is for…" lines, in source order. */
 const AUDIENCE = [
@@ -129,45 +128,10 @@ export default function BornInIndia({
             aria-hidden="true"
             className="pointer-events-none absolute left-1/2 top-1/2 h-[86%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(42,195,162,0.16),transparent_68%)]"
           />
-          <div className="relative aspect-square w-[min(78%,340px)]">
-            <Image
-              src="/home/brand/map-india-teal.png"
-              alt="Map of India"
-              fill
-              sizes="340px"
-              className="object-contain [filter:brightness(1.6)_saturate(1.35)]"
-            />
-            {DOTS.map(([x, y, r], i) => (
-              <span key={i} className="absolute" style={{ left: `${x * 100}%`, top: `${y * 100}%` }}>
-                {r >= 4.5 ? (
-                  <span
-                    aria-hidden="true"
-                    className="kyg-aura absolute rounded-full ring-1 ring-ice/60"
-                    style={{
-                      width: r * 5,
-                      height: r * 5,
-                      left: -r * 2.5,
-                      top: -r * 2.5,
-                      animationDelay: `${(i % 7) * 0.37}s`,
-                    }}
-                  />
-                ) : null}
-                <span
-                  aria-hidden="true"
-                  className="kyg-dot absolute rounded-full bg-ice"
-                  style={{
-                    width: r * 2,
-                    height: r * 2,
-                    left: -r,
-                    top: -r,
-                    // 7 is prime against 28, so the stagger never lines the
-                    // dots up into a pulse sweeping across the map
-                    animationDelay: `${(i % 7) * 0.37}s`,
-                  }}
-                />
-              </span>
-            ))}
-          </div>
+          {/* The map and its hover interaction live in IndiaMap - the one part
+              of this section that needs the browser. The points stay here, with
+              the notes on how they were chosen. */}
+          <IndiaMap dots={DOTS} />
         </div>
 
         {/* The four lines as a set you pick from, rather than four dashes on

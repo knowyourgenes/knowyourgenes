@@ -21,6 +21,26 @@ const QUESTIONS = [
 ];
 
 /**
+ * The designer's shaded cells: 02, 03 and 06 on the two-column board, a warm
+ * grey that zig-zags down it.
+ *
+ * `zeus` at 4% - the palette's own warm near-black laid over the cream - rather
+ * than the cool `athens` grey, which reads as blue against #faf6ef.
+ *
+ * IN ONE COLUMN THE PATTERN IS RE-READ, NOT COPIED. Below `sm` the board is a
+ * single stack, where 02 and 03 land back to back and the zig-zag becomes two
+ * grey rows then three plain ones. Every other cell (02, 04, 06) is the same
+ * rhythm read top to bottom. Written out in full, not built from a variable:
+ * Tailwind only emits classes it can see whole in the source.
+ */
+const SHADE: Record<number, string> = {
+  1: 'bg-zeus/[0.04]',
+  2: 'sm:bg-zeus/[0.04]',
+  3: 'bg-zeus/[0.04] sm:bg-transparent',
+  5: 'bg-zeus/[0.04]',
+};
+
+/**
  * EVERY MEASUREMENT HERE IS READ OFF THE DESIGN AND WRITTEN AS A SHARE OF THE
  * RAIL, never as a fixed pixel value.
  *
@@ -101,6 +121,9 @@ export default function WhyGeneticTesting({ hoverTint = false }: { hoverTint?: b
                 // which cells start a row changes with the column count
                 i > 0 ? 'border-t' : null,
                 i === 1 ? 'sm:border-t-0' : null,
+                SHADE[i],
+                // hover still wins on a shaded cell: `:hover` out-specifies the
+                // plain and `sm:` background classes it sits beside
                 hoverTint && 'transition-colors duration-300 hover:bg-mist active:bg-mist'
               )}
             >
